@@ -287,13 +287,13 @@ test('Search suggestion arrow navigation does loop correctly', async(t) => {
     .expect(items.count).gt(0)
     .pressKey('down');
 
-  let maxItemIndex = await items.count - 1;
+  let maxItemCount = await items.count;
   await t
     // After first key down we expect focused suggestion to be at first item
     .expect(items.nth(0).getStyleProperty('box-shadow')).contains(expectedBoxShadowColor, 'Focused suggestion index should be set to first item')
     .pressKey('up')
     // After pressing key up on first item expect focused suggestion to loop to last item
-    .expect(items.nth(maxItemIndex).getStyleProperty('box-shadow')).contains(expectedBoxShadowColor, 'Focused suggestion index should loop to last item')
+    .expect(items.nth(maxItemCount - 1).getStyleProperty('box-shadow')).contains(expectedBoxShadowColor, 'Focused suggestion index should loop to last item')
     .pressKey('down')
     // After pressing key down on last item expect focused suggestion to loop to first item
     .expect(items.nth(0).getStyleProperty('box-shadow')).contains(expectedBoxShadowColor, 'Focused suggestion index should loop to first item');

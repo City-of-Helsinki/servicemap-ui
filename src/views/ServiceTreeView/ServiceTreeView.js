@@ -22,10 +22,20 @@ const ServiceTreeView = (props) => {
     prevSelected,
     prevOpened,
     settings,
+    variant,
   } = props;
   const getLocaleText = useLocaleText();
   const isMobile = useMobileStatus();
   const theme = useTheme();
+  const serviceApi = variant === 'ServiceTree'
+    ? `${config.serviceMapAPI.root}${config.serviceMapAPI.version}/service_node/`
+    : `${config.serviceMapAPI.root}${config.serviceMapAPI.version}/mobility/`;
+  const titleKey = variant === 'ServiceTree'
+    ? 'general.pageTitles.serviceTree.title'
+    : 'general.pageTitles.mobility.title';
+  const guidanceKey = variant === 'ServiceTree'
+    ? 'services.info'
+    : 'mobility.info';
 
   // State
   const [services, setServices] = useState(prevServices);
@@ -59,7 +69,7 @@ const ServiceTreeView = (props) => {
 
   const fetchRootNodes = () => (
     // Fetch all top level 0 nodes (root nodes)
-    fetch(`${config.serviceMapAPI.root}${config.serviceMapAPI.version}/service_node/?level=0&page=1&page_size=100`)
+    fetch(`${serviceApi}?level=0&page=1&page_size=100`)
       .then(response => response.json())
       .then(data => data.results)
   );
@@ -72,7 +82,7 @@ const ServiceTreeView = (props) => {
 
   const fetchChildServices = async (service) => {
     // Fetch and set to state the child nodes of the opened node
-    fetch(`${config.serviceMapAPI.root}${config.serviceMapAPI.version}/service_node/?parent=${service}&page=1&page_size=1000`)
+    fetch(`${serviceApi}?parent=${service}&page=1&page_size=1000`)
       .then(response => response.json())
       .then((data) => {
         setServices([...services, ...data.results]);
@@ -207,15 +217,14 @@ const ServiceTreeView = (props) => {
     }
   }, []);
 
-  const expandingComponent = (item, level, last = []) => {
-    const hasChildren = item.children.length;
-    const isOpen = opened.includes(item.id);
-    const children = hasChildren ? services.filter(e => e.parent === item.id) : null;
-
+  function calculateTitle(item) {
+    if (variant === 'Mobility') {
+      return getLocaleText(item.name);
+    }
     let resultCount = 0;
 
     if (!citySettings.length || citySettings.length === config.cities.length) {
-      resultCount = item.unit_count.total;
+      resultCount = item.unit_count?.total || 0;
     } else {
       config.cities
         .filter(city => settings.cities[city])
@@ -223,6 +232,14 @@ const ServiceTreeView = (props) => {
           resultCount += getUnitCount(item, city);
         });
     }
+    return `${getLocaleText(item.name)} (${resultCount})`;
+  }
+
+  const expandingComponent = (item, level, last = []) => {
+    const hasChildren = item.children.length;
+    const isOpen = opened.includes(item.id);
+    const children = hasChildren ? services.filter(e => e.parent === item.id) : null;
+    const titleText = calculateTitle(item);
 
     const checkboxSrTitle = `${intl.formatMessage({ id: 'services.tree.level' })} ${level + 1} ${getLocaleText(item.name)} ${intl.formatMessage({ id: 'services.category.select' })}`;
     const itemSrTitle = `${getLocaleText(item.name)} ${intl.formatMessage({ id: 'services.category.open' })}`;
@@ -264,7 +281,7 @@ const ServiceTreeView = (props) => {
           )}
           titleContent={(
             <StyledText aria-hidden>
-              {`${getLocaleText(item.name)} (${resultCount})`}
+              {titleText}
             </StyledText>
           )}
           collapseContent={
@@ -311,11 +328,11 @@ const ServiceTreeView = (props) => {
   return (
     <StyledFlexContainer>
       <StyledTitleBar
-        title={intl.formatMessage({ id: 'general.pageTitles.serviceTree.title' })}
+        title={intl.formatMessage({ id: titleKey })}
         titleComponent="h3"
         backButton={!isMobile}
       />
-      <StyledGuidanceInfoText variant="body2">{intl.formatMessage({ id: 'services.info' })}</StyledGuidanceInfoText>
+      <StyledGuidanceInfoText variant="body2">{intl.formatMessage({ id: guidanceKey })}</StyledGuidanceInfoText>
       <StyledMainContent>
         {renderServiceNodeList()}
       </StyledMainContent>
@@ -447,6 +464,7 @@ ServiceTreeView.propTypes = {
   prevSelected: PropTypes.arrayOf(PropTypes.any),
   prevOpened: PropTypes.arrayOf(PropTypes.any),
   settings: PropTypes.objectOf(PropTypes.any).isRequired,
+  variant: PropTypes.oneOf(['ServiceTree', 'Mobility']).isRequired,
 };
 
 ServiceTreeView.defaultProps = {

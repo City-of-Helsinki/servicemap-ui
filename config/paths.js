@@ -24,6 +24,10 @@ const paths = {
     generate: () => `/services`,
     regex: /\/[a-zA-Z]{2}\/services/
   },
+  mobility: {
+    generate: () => '/mobility',
+    regex: /\/[a-zA-Z]{2}\/mobility/,
+  },
   embed: {
     regex: /\/[a-zA-Z]{2}\/embed/,
   },

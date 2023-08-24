@@ -134,7 +134,15 @@ const Address = () => (
 const ServiceTree = () => (
   <TitleWrapper messageId="general.pageTitles.serviceTree">
     <PageWrapper headMsgId="general.pageTitles.serviceTree.title" page="serviceTree">
-      <ServiceTreeView />
+      <ServiceTreeView variant="ServiceTree" />
+    </PageWrapper>
+  </TitleWrapper>
+);
+
+const Mobility = () => (
+  <TitleWrapper messageId="general.pageTitles.mobility">
+    <PageWrapper headMsgId="general.pageTitles.mobility.title" page="mobility">
+      <ServiceTreeView variant="Mobility" />
     </PageWrapper>
   </TitleWrapper>
 );
@@ -181,6 +189,7 @@ class ViewRouter extends React.Component {
         <Route exact path="/:lng/unit/:unit" component={Unit} />
         <Route path="/:lng/search" component={Search} />
         <Route path="/:lng/services" component={ServiceTree} />
+        <Route path="/:lng/mobility" component={Mobility} />
         <Route path="/:lng/service/:service" component={Service} />
         <Route path="/:lng/event/:event" component={Event} />
         <Route path="/:lng/address/:municipality/:street" component={Address} />

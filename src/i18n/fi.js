@@ -298,6 +298,7 @@ const translations = {
   'general.backToHome': 'Sulje haku ja palaa alkuun',
   'general.backToStart': 'Palaa sivun alkuun',
   'general.back.serviceTree': 'Palaa palveluluettelosivulle',
+  'general.back.mobility': 'Palaa liikenne- ja liikkuminen sivulle',
   'general.cancel': 'Peruuta',
   'general.close': 'Sulje',
   'general.distance.meters': 'Metrin päässä',
@@ -338,7 +339,10 @@ const translations = {
   'general.pageTitles.info': 'Tietoa palvelusta',
   'general.pageTitles.feedback': 'Palautesivu',
   'general.pageTitles.area': 'Aluesivu',
+  'general.pageTitles.mobility': 'Liikenne- ja liikkuminen sivu',
+  'general.pageTitles.mobility.title': 'Liikenne ja liikkuminen',
   'general.pageLink.area': 'Alueesi palvelut',
+  'general.pageLink.mobility': 'Liikenne ja liikkuminen',
   // Readspeaker
   'general.readspeaker.buttonText': 'Kuuntele',
   'general.readspeaker.title': 'Kuuntele ReadSpeaker webReaderilla',
@@ -367,6 +371,7 @@ const translations = {
   // Home
   'home.buttons.settings': 'Tallenna omat kaupunki- ja esteettömyysasetuksesi',
   'home.buttons.services': 'Tutustu palveluihin palveluluettelon avulla',
+  'home.buttons.mobility': 'Tutustu liikkumisen monipuolisiin vaihtoehtoihin',
   'home.buttons.closeByServices': 'Näytä lähellä olevat palvelut',
   'home.buttons.instructions': 'Vinkkejä Palvelukartan käyttöön',
   'home.buttons.area': 'Katso terveys-, neuvola-, oppilaaksiotto-, esiopetus-, väestön- ja luonnonsuojelualueet sekä kaupunginosat',
@@ -600,6 +605,7 @@ const translations = {
   'services.category.open': 'Avaa kategoria',
   'services.info': 'Valitse vähintään yksi palvelu alla olevasta palveluluettelosta, että voit suorittaa haun.',
   'services.tree.level': 'Taso',
+  'mobility.info': 'Tutustu liikkumisen vaihtoehtoihin valitsemalla vähintään yksi palvelu alla olevista vaihtoehdoista suorittaaksesi haun.',
 
   // Settings
   'settings': 'Asetukset',
