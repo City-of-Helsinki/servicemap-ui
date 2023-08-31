@@ -15,6 +15,7 @@ const MapSettings = () => {
 
   const settings = useSelector(state => state.settings);
   const map = useSelector(state => state.mapRef);
+  const locale = useSelector(state => state.user.locale);
 
   const mapSettings = {};
   SettingsUtility.mapSettings.forEach((setting) => {
@@ -27,7 +28,7 @@ const MapSettings = () => {
 
   const createUrl = () => {
     const { lng, lat } = map.getCenter();
-    return ExternalMapUrlCreator.create3DMapUrl(lng, lat, map.getZoom());
+    return ExternalMapUrlCreator.create3DMapUrl(lng, lat, map.getZoom(), locale);
   };
 
   return (
