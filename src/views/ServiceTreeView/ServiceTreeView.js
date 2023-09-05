@@ -16,25 +16,32 @@ import { SMAccordion, SMButton, TitleBar } from '../../components';
 import useMobileStatus from '../../utils/isMobile';
 import { getUnitCount } from '../../utils/units';
 
+const getVariantDependentVariables = (variant) => {
+  if (variant === 'ServiceTree') {
+    return {
+      serviceApi: `${config.serviceMapAPI.root}${config.serviceMapAPI.version}/service_node/`,
+      titleKey: 'general.pageTitles.serviceTree.title',
+      guidanceKey: 'services.info',
+    };
+  }
+  return {
+    serviceApi: `${config.serviceMapAPI.root}${config.serviceMapAPI.version}/mobility/`,
+    titleKey: 'general.pageTitles.mobility.title',
+    guidanceKey: 'mobility.info',
+  };
+};
+
 const ServiceTreeView = ({ intl, variant }) => {
   const navigator = useSelector(state => state.navigator);
   const settings = useSelector(state => state.settings);
-  const prevServices = useSelector((state) => state.serviceTree.services);
+  const prevServices = useSelector(state => state.serviceTree.services);
   const prevSelected = useSelector(state => state.serviceTree.selected);
   const prevOpened = useSelector(state => state.serviceTree.opened);
   const dispatch = useDispatch();
   const getLocaleText = useLocaleText();
   const isMobile = useMobileStatus();
   const theme = useTheme();
-  const serviceApi = variant === 'ServiceTree'
-    ? `${config.serviceMapAPI.root}${config.serviceMapAPI.version}/service_node/`
-    : `${config.serviceMapAPI.root}${config.serviceMapAPI.version}/mobility/`;
-  const titleKey = variant === 'ServiceTree'
-    ? 'general.pageTitles.serviceTree.title'
-    : 'general.pageTitles.mobility.title';
-  const guidanceKey = variant === 'ServiceTree'
-    ? 'services.info'
-    : 'mobility.info';
+  const { serviceApi, titleKey, guidanceKey } = getVariantDependentVariables(variant);
 
   // State
   const [services, setServices] = useState(prevServices);
