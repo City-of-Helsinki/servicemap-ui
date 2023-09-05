@@ -8,6 +8,7 @@ import styled from '@emotion/styled';
 import { css } from '@emotion/css';
 import { useSelector } from 'react-redux';
 import { useTheme } from '@mui/styles';
+import { useSelector } from 'react-redux';
 import config from '../../../config';
 import useLocaleText from '../../utils/useLocaleText';
 import { SMAccordion, SMButton, TitleBar } from '../../components';
@@ -16,15 +17,15 @@ import { getUnitCount } from '../../utils/units';
 
 const ServiceTreeView = (props) => {
   const {
-    navigator,
     intl,
     setTreeState,
-    prevServices,
-    prevSelected,
-    prevOpened,
-    settings,
     variant,
   } = props;
+  const navigator = useSelector(state => state.navigator);
+  const settings = useSelector(state => state.settings);
+  const prevServices = useSelector(state => state.serviceTree?.services) || [];
+  const prevSelected = useSelector(state => state.serviceTree?.selected) || [];
+  const prevOpened = useSelector(state => state.serviceTree?.opened) || [];
   const getLocaleText = useLocaleText();
   const isMobile = useMobileStatus();
   const theme = useTheme();
@@ -474,21 +475,9 @@ const StyledAccordion = styled(SMAccordion)(({ level }) => {
 });
 
 ServiceTreeView.propTypes = {
-  navigator: PropTypes.objectOf(PropTypes.any),
   intl: PropTypes.objectOf(PropTypes.any).isRequired,
   setTreeState: PropTypes.func.isRequired,
-  prevServices: PropTypes.arrayOf(PropTypes.any),
-  prevSelected: PropTypes.arrayOf(PropTypes.any),
-  prevOpened: PropTypes.arrayOf(PropTypes.any),
-  settings: PropTypes.objectOf(PropTypes.any).isRequired,
   variant: PropTypes.oneOf(['ServiceTree', 'Mobility']).isRequired,
-};
-
-ServiceTreeView.defaultProps = {
-  navigator: null,
-  prevServices: [],
-  prevSelected: [],
-  prevOpened: [],
 };
 
 export default ServiceTreeView;
