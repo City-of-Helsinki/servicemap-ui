@@ -8,24 +8,21 @@ import styled from '@emotion/styled';
 import { css } from '@emotion/css';
 import { useSelector } from 'react-redux';
 import { useTheme } from '@mui/styles';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import config from '../../../config';
+import setServiceTree from '../../redux/actions/serviceTree';
 import useLocaleText from '../../utils/useLocaleText';
 import { SMAccordion, SMButton, TitleBar } from '../../components';
 import useMobileStatus from '../../utils/isMobile';
 import { getUnitCount } from '../../utils/units';
 
-const ServiceTreeView = (props) => {
-  const {
-    intl,
-    setTreeState,
-    variant,
-  } = props;
+const ServiceTreeView = ({ intl, variant }) => {
   const navigator = useSelector(state => state.navigator);
   const settings = useSelector(state => state.settings);
-  const prevServices = useSelector(state => state.serviceTree?.services) || [];
-  const prevSelected = useSelector(state => state.serviceTree?.selected) || [];
-  const prevOpened = useSelector(state => state.serviceTree?.opened) || [];
+  const prevServices = useSelector((state) => state.serviceTree.services);
+  const prevSelected = useSelector(state => state.serviceTree.selected);
+  const prevOpened = useSelector(state => state.serviceTree.opened);
+  const dispatch = useDispatch();
   const getLocaleText = useLocaleText();
   const isMobile = useMobileStatus();
   const theme = useTheme();
@@ -362,7 +359,7 @@ const ServiceTreeView = (props) => {
           icon={<Search />}
           messageID="services.search"
           onClick={() => {
-            setTreeState({ services, selected, opened });
+            dispatch(setServiceTree({ services, selected, opened }));
             navigator.push('search', { service_node: ids });
           }}
         />
@@ -476,7 +473,6 @@ const StyledAccordion = styled(SMAccordion)(({ level }) => {
 
 ServiceTreeView.propTypes = {
   intl: PropTypes.objectOf(PropTypes.any).isRequired,
-  setTreeState: PropTypes.func.isRequired,
   variant: PropTypes.oneOf(['ServiceTree', 'Mobility']).isRequired,
 };
 
