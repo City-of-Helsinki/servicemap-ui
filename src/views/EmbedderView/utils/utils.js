@@ -25,6 +25,9 @@ export const getEmbedURL = (url, params = {}) => {
   if (cities.length > 0) {
     data.city = cities.join(',');
   }
+  if (params.organization?.length > 0) {
+    data.organization = params.organization.map(org => org.id).join(',');
+  }
   if (params.service && params.service !== 'none') {
     data.level = params.service;
   }

@@ -75,6 +75,7 @@ const SearchView = (props) => {
       q,
       category,
       city,
+      organization,
       municipality,
       address,
       service,
@@ -153,6 +154,12 @@ const SearchView = (props) => {
     // Parse municipality
     if (municipality || city) {
       options.municipality = municipality || city;
+    }
+
+
+    // Parse organization
+    if (organization) {
+      options.organization = organization;
     }
 
     // Parse search language
