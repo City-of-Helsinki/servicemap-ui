@@ -19,7 +19,7 @@ const MapSettings = () => {
   const intl = useIntl();
   const dispatch = useDispatch();
 
-  const settings = useSelector(state => state.settings);
+  const mapType = useSelector(state => state.settings.mapType);
   const map = useSelector(state => state.mapRef);
   const locale = useSelector(state => state.user.locale);
 
@@ -47,7 +47,7 @@ const MapSettings = () => {
           sx={{ pt: 2, pl: 1 }}
           name="mapType"
           onChange={(event, value) => dispatch(setMapType(value))}
-          value={settings.mapType}
+          value={mapType}
         >
           {Object.keys(mapSettings).map((key) => {
             if (Object.prototype.hasOwnProperty.call(mapSettings, key)) {
