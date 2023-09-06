@@ -252,9 +252,11 @@ const ServiceTreeView = (props) => {
       resultCount = Math.min(resultCount, organisationCount);
     }
 
-    if (hasCitySettings && hasOrganizationSettings) {
-      const approximationText = resultCount ? intl.formatMessage({ id: 'general.approximate' }).toLowerCase() : ''
-      return `${getLocaleText(item.name)} (${approximationText} ${resultCount})`
+    if (hasOrganizationSettings) {
+      const approximationText = resultCount
+        ? `${intl.formatMessage({ id: 'general.approximate' }).toLowerCase()} `
+        : '';
+      return `${getLocaleText(item.name)} (${approximationText}${resultCount})`;
     }
     return `${getLocaleText(item.name)} (${resultCount})`;
   }
