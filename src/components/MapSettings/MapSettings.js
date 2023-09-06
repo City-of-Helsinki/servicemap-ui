@@ -1,5 +1,11 @@
+import styled from '@emotion/styled';
 import {
-  FormControl, FormControlLabel, Link, Radio, RadioGroup, Typography,
+  FormControl,
+  FormControlLabel,
+  Link,
+  Radio,
+  RadioGroup,
+  Typography,
 } from '@mui/material';
 import React from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
@@ -58,13 +64,20 @@ const MapSettings = () => {
           })}
         </RadioGroup>
       </FormControl>
-      <div>
+      <Styled3DMapContainer>
+        <MobileSettingsHeader textId="settings.3dmap.title" />
+        <Typography><FormattedMessage id="settings.3dmap.info" /></Typography>
         <Link target="_blank" href={createUrl()}>
-          <FormattedMessage id="accessibility.details.summary" />
+          <FormattedMessage id="settings.3dmap.link" />
         </Link>
-      </div>
+      </Styled3DMapContainer>
     </>
   );
 };
+
+const Styled3DMapContainer = styled('div')(({ theme }) => ({
+  paddingTop: theme.spacing(3),
+  textAlign: 'left',
+}));
 
 export default MapSettings;
