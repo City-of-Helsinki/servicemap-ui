@@ -34,7 +34,7 @@ const MapSettings = () => {
 
   const createUrl = () => {
     const { lng, lat } = map.getCenter();
-    return ExternalMapUrlCreator.create3DMapUrl(lng, lat, map.getZoom(), locale);
+    return ExternalMapUrlCreator.create3DMapUrl(lng, lat, map.getZoom(), mapType, locale);
   };
 
   return (
