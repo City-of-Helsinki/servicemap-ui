@@ -6,6 +6,7 @@ import {
 import { Search } from '@mui/icons-material';
 import styled from '@emotion/styled';
 import { css } from '@emotion/css';
+import { useSelector } from 'react-redux';
 import { useTheme } from '@mui/styles';
 import config from '../../../config';
 import useLocaleText from '../../utils/useLocaleText';
@@ -50,6 +51,11 @@ const ServiceTreeView = (props) => {
   if (citySettings.length === config.cities.length) {
     citySettings = [];
   }
+
+  const organizationSettings = useSelector((state) => {
+    const { organizations } = state.settings;
+    return config.organizations?.filter(org => organizations[org.id]);
+  });
 
   const checkChildNodes = (node, nodes = []) => {
     // Find all visible child nodes, so they can be selected when the parent checkbox is selected
@@ -223,14 +229,28 @@ const ServiceTreeView = (props) => {
     }
     let resultCount = 0;
 
-    if (!citySettings.length || citySettings.length === config.cities.length) {
+    // Calculate count
+    const hasCitySettings = citySettings.length && citySettings.length !== config.cities.length;
+    const hasOrganizationSettings = organizationSettings.length;
+
+    if (!hasCitySettings && !hasOrganizationSettings) {
       resultCount = item.unit_count?.total || 0;
-    } else {
+    } else if (hasCitySettings && !hasOrganizationSettings) {
       config.cities
         .filter(city => settings.cities[city])
         .forEach((city) => {
           resultCount += getUnitCount(item, city);
         });
+    } else if (hasOrganizationSettings) {
+      organizationSettings.forEach((org) => {
+        const orgNameId = org.name.fi.toLowerCase();
+        resultCount += getUnitCount(item, orgNameId);
+      })
+    }
+
+    if (hasCitySettings && hasOrganizationSettings) {
+      const approximationText = resultCount ? intl.formatMessage({ id: 'general.approximate' }).toLowerCase() : ''
+      return `${getLocaleText(item.name)} (${approximationText} ${resultCount})`
     }
     return `${getLocaleText(item.name)} (${resultCount})`;
   }

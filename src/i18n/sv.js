@@ -279,6 +279,7 @@ const translations = {
   'sorting.match.desc': 'Bästa träffarna först',
 
   // General
+  'general.approximate': 'Cirka',
   'general.frontPage': 'Framsidan',
   'general.contrast': 'Kontrast',
   'general.contrast.ariaLabel.on': 'Aktivera högkontrastläge',
