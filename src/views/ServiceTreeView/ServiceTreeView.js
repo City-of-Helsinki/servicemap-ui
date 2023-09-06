@@ -227,25 +227,29 @@ const ServiceTreeView = (props) => {
     if (variant === 'Mobility') {
       return getLocaleText(item.name);
     }
-    let resultCount = 0;
 
     // Calculate count
     const hasCitySettings = citySettings.length && citySettings.length !== config.cities.length;
     const hasOrganizationSettings = organizationSettings.length;
+    const sum = (a, b) => a + b;
 
-    if (!hasCitySettings && !hasOrganizationSettings) {
+    let resultCount;
+    if (!hasCitySettings) {
       resultCount = item.unit_count?.total || 0;
-    } else if (hasCitySettings && !hasOrganizationSettings) {
-      config.cities
-        .filter(city => settings.cities[city])
-        .forEach((city) => {
-          resultCount += getUnitCount(item, city);
-        });
-    } else if (hasOrganizationSettings) {
-      organizationSettings.forEach((org) => {
+    } else {
+      resultCount = config.cities
+        .filter((city) => settings.cities[city])
+        .map((city) => getUnitCount(item, city))
+        .reduce(sum, 0);
+    }
+
+    if (hasOrganizationSettings) {
+      const organisationCount = organizationSettings.map((org) => {
         const orgNameId = org.name.fi.toLowerCase();
-        resultCount += getUnitCount(item, orgNameId);
+        return getUnitCount(item, orgNameId);
       })
+        .reduce(sum, 0);
+      resultCount = Math.min(resultCount, organisationCount);
     }
 
     if (hasCitySettings && hasOrganizationSettings) {
