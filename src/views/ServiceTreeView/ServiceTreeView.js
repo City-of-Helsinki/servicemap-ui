@@ -6,6 +6,7 @@ import {
 import { Search } from '@mui/icons-material';
 import styled from '@emotion/styled';
 import { css } from '@emotion/css';
+import { useSelector } from 'react-redux';
 import { useTheme } from '@mui/styles';
 import config from '../../../config';
 import useLocaleText from '../../utils/useLocaleText';
@@ -42,14 +43,12 @@ const ServiceTreeView = (props) => {
   const [opened, setOpened] = useState(prevOpened);
   const [selected, setSelected] = useState(prevSelected);
 
-  let citySettings = [];
-  config.cities.forEach((city) => {
-    citySettings.push(...settings.cities[city] ? [city] : []);
-  });
+  const citySettings = config.cities.filter((city) => settings.cities[city]);
 
-  if (citySettings.length === config.cities.length) {
-    citySettings = [];
-  }
+  const organizationSettings = useSelector((state) => {
+    const { organizations } = state.settings;
+    return config.organizations?.filter(org => organizations[org.id]);
+  });
 
   const checkChildNodes = (node, nodes = []) => {
     // Find all visible child nodes, so they can be selected when the parent checkbox is selected
@@ -221,16 +220,34 @@ const ServiceTreeView = (props) => {
     if (variant === 'Mobility') {
       return getLocaleText(item.name);
     }
-    let resultCount = 0;
 
-    if (!citySettings.length || citySettings.length === config.cities.length) {
+    // Calculate count
+    const hasCitySettings = citySettings.length && citySettings.length !== config.cities.length;
+    const hasOrganizationSettings = organizationSettings.length;
+    const sum = (a, b) => a + b;
+
+    let resultCount;
+    if (!hasCitySettings) {
       resultCount = item.unit_count?.total || 0;
     } else {
-      config.cities
-        .filter(city => settings.cities[city])
-        .forEach((city) => {
-          resultCount += getUnitCount(item, city);
-        });
+      resultCount = citySettings
+        .map((city) => getUnitCount(item, city))
+        .reduce(sum, 0);
+    }
+
+    if (hasOrganizationSettings) {
+      const organisationCount = organizationSettings
+        .map((org) => org.name.fi.toLowerCase())
+        .map((orgNameId) => getUnitCount(item, orgNameId))
+        .reduce(sum, 0);
+      resultCount = Math.min(resultCount, organisationCount);
+    }
+
+    if (hasOrganizationSettings) {
+      const approximationText = resultCount
+        ? `${intl.formatMessage({ id: 'general.approximate' }).toLowerCase()} `
+        : '';
+      return `${getLocaleText(item.name)} (${approximationText}${resultCount})`;
     }
     return `${getLocaleText(item.name)} (${resultCount})`;
   }

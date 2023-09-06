@@ -278,6 +278,7 @@ const translations = {
   'sorting.match.desc': 'Osuvin ensin',
 
   // General
+  'general.approximate': 'Noin',
   'general.frontPage': 'Etusivu',
   'general.contrast': 'Kontrasti',
   'general.contrast.ariaLabel.on': 'Siirry suurikontrastiseen tilaan',

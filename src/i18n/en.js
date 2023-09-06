@@ -278,6 +278,7 @@ const translations = {
   'sorting.match.desc': 'Most relevant first',
 
   // General
+  'general.approximate': 'About',
   'general.frontPage': 'Front page',
   'general.contrast': 'Contrast',
   'general.contrast.ariaLabel.on': 'Turn on the high contrast mode',
