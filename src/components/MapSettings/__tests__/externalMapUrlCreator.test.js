@@ -22,6 +22,18 @@ const testDefaults = (url) => {
 };
 
 describe('ExternalMapUrlCreator', () => {
+  const distances1 = [
+    { level: 9, distance: 256000 },
+    { level: 10, distance: 128000 },
+    { level: 11, distance: 64000 },
+    { level: 12, distance: 32000 },
+    { level: 13, distance: 16000 },
+    { level: 14, distance: 8000 },
+    { level: 15, distance: 4000 },
+    { level: 16, distance: 2000 },
+    { level: 17, distance: 1000 },
+    { level: 18, distance: 500 },
+  ];
   const distanceTests = [
     {
       mapType: 'ortographic',
@@ -38,33 +50,11 @@ describe('ExternalMapUrlCreator', () => {
     },
     {
       mapType: 'servicemap',
-      distances: [
-        { level: 9, distance: 256000 },
-        { level: 10, distance: 128000 },
-        { level: 11, distance: 64000 },
-        { level: 12, distance: 32000 },
-        { level: 13, distance: 16000 },
-        { level: 14, distance: 8000 },
-        { level: 15, distance: 4000 },
-        { level: 16, distance: 2000 },
-        { level: 17, distance: 1000 },
-        { level: 18, distance: 500 },
-      ],
+      distances: distances1,
     },
     {
       mapType: 'accessible_map',
-      distances: [
-        { level: 9, distance: 256000 },
-        { level: 10, distance: 128000 },
-        { level: 11, distance: 64000 },
-        { level: 12, distance: 32000 },
-        { level: 13, distance: 16000 },
-        { level: 14, distance: 8000 },
-        { level: 15, distance: 4000 },
-        { level: 16, distance: 2000 },
-        { level: 17, distance: 1000 },
-        { level: 18, distance: 500 },
-      ],
+      distances: distances1,
     },
     {
       mapType: 'guideMap',
