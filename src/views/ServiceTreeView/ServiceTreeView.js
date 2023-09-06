@@ -8,6 +8,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import config from '../../../config';
 import { SMAccordion, SMButton, TitleBar } from '../../components';
+import setMobilityTree from '../../redux/actions/mobilityTree';
 import setServiceTree from '../../redux/actions/serviceTree';
 import useMobileStatus from '../../utils/isMobile';
 import { getUnitCount } from '../../utils/units';
@@ -40,9 +41,9 @@ const ServiceTreeView = ({ intl, variant }) => {
     prevOpened: useSelector(state => state.serviceTree.opened),
   };
   const mobilityServices = {
-    prevServices: useSelector(state => state.serviceTree.services),
-    prevSelected: useSelector(state => state.serviceTree.selected),
-    prevOpened: useSelector(state => state.serviceTree.opened),
+    prevServices: useSelector(state => state.mobilityTree.services),
+    prevSelected: useSelector(state => state.mobilityTree.selected),
+    prevOpened: useSelector(state => state.mobilityTree.opened),
   };
   const dispatch = useDispatch();
   const getLocaleText = useLocaleText();
@@ -376,7 +377,12 @@ const ServiceTreeView = ({ intl, variant }) => {
           icon={<Search />}
           messageID="services.search"
           onClick={() => {
-            dispatch(setServiceTree({ services, selected, opened }));
+            const stateVariables = { services, selected, opened };
+            if (variant === 'ServiceTree') {
+              dispatch(setServiceTree(stateVariables));
+            } else {
+              dispatch(setMobilityTree(stateVariables));
+            }
             navigator.push('search', { service_node: ids });
           }}
         />
