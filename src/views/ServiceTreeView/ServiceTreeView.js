@@ -1,30 +1,29 @@
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import {
-  List, Checkbox, Typography,
-} from '@mui/material';
-import { Search } from '@mui/icons-material';
-import styled from '@emotion/styled';
 import { css } from '@emotion/css';
-import { useSelector } from 'react-redux';
+import styled from '@emotion/styled';
+import { Search } from '@mui/icons-material';
+import { Checkbox, List, Typography } from '@mui/material';
 import { useTheme } from '@mui/styles';
+import PropTypes from 'prop-types';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import config from '../../../config';
-import setServiceTree from '../../redux/actions/serviceTree';
-import useLocaleText from '../../utils/useLocaleText';
 import { SMAccordion, SMButton, TitleBar } from '../../components';
+import setServiceTree from '../../redux/actions/serviceTree';
 import useMobileStatus from '../../utils/isMobile';
 import { getUnitCount } from '../../utils/units';
+import useLocaleText from '../../utils/useLocaleText';
 
-const getVariantDependentVariables = (variant) => {
+const getVariantDependentVariables = (variant, serviceTreeServices, mobilityServices) => {
   if (variant === 'ServiceTree') {
     return {
+      ...serviceTreeServices,
       serviceApi: `${config.serviceMapAPI.root}${config.serviceMapAPI.version}/service_node/`,
       titleKey: 'general.pageTitles.serviceTree.title',
       guidanceKey: 'services.info',
     };
   }
   return {
+    ...mobilityServices,
     serviceApi: `${config.serviceMapAPI.root}${config.serviceMapAPI.version}/mobility/`,
     titleKey: 'general.pageTitles.mobility.title',
     guidanceKey: 'mobility.info',
@@ -34,14 +33,28 @@ const getVariantDependentVariables = (variant) => {
 const ServiceTreeView = ({ intl, variant }) => {
   const navigator = useSelector(state => state.navigator);
   const settings = useSelector(state => state.settings);
-  const prevServices = useSelector(state => state.serviceTree.services);
-  const prevSelected = useSelector(state => state.serviceTree.selected);
-  const prevOpened = useSelector(state => state.serviceTree.opened);
+  const serviceTreeServices = {
+    prevServices: useSelector(state => state.serviceTree.services),
+    prevSelected: useSelector(state => state.serviceTree.selected),
+    prevOpened: useSelector(state => state.serviceTree.opened),
+  };
+  const mobilityServices = {
+    prevServices: useSelector(state => state.serviceTree.services),
+    prevSelected: useSelector(state => state.serviceTree.selected),
+    prevOpened: useSelector(state => state.serviceTree.opened),
+  };
   const dispatch = useDispatch();
   const getLocaleText = useLocaleText();
   const isMobile = useMobileStatus();
   const theme = useTheme();
-  const { serviceApi, titleKey, guidanceKey } = getVariantDependentVariables(variant);
+  const {
+    serviceApi,
+    titleKey,
+    guidanceKey,
+    prevServices,
+    prevSelected,
+    prevOpened,
+  } = getVariantDependentVariables(variant, serviceTreeServices, mobilityServices);
 
   // State
   const [services, setServices] = useState(prevServices);
