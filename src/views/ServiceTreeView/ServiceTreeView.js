@@ -43,14 +43,7 @@ const ServiceTreeView = (props) => {
   const [opened, setOpened] = useState(prevOpened);
   const [selected, setSelected] = useState(prevSelected);
 
-  let citySettings = [];
-  config.cities.forEach((city) => {
-    citySettings.push(...settings.cities[city] ? [city] : []);
-  });
-
-  if (citySettings.length === config.cities.length) {
-    citySettings = [];
-  }
+  const citySettings = config.cities.filter((city) => settings.cities[city]);
 
   const organizationSettings = useSelector((state) => {
     const { organizations } = state.settings;
@@ -237,17 +230,15 @@ const ServiceTreeView = (props) => {
     if (!hasCitySettings) {
       resultCount = item.unit_count?.total || 0;
     } else {
-      resultCount = config.cities
-        .filter((city) => settings.cities[city])
+      resultCount = citySettings
         .map((city) => getUnitCount(item, city))
         .reduce(sum, 0);
     }
 
     if (hasOrganizationSettings) {
-      const organisationCount = organizationSettings.map((org) => {
-        const orgNameId = org.name.fi.toLowerCase();
-        return getUnitCount(item, orgNameId);
-      })
+      const organisationCount = organizationSettings
+        .map((org) => org.name.fi.toLowerCase())
+        .map((orgNameId) => getUnitCount(item, orgNameId))
         .reduce(sum, 0);
       resultCount = Math.min(resultCount, organisationCount);
     }
