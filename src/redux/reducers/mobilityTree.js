@@ -6,10 +6,10 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case 'SET_SERVICE_TREE':
+    case 'SET_MOBILITY_TREE':
       return {
         ...state,
-        ...action.serviceTree,
+        ...action.mobilityTree,
       };
     default:
       return state;

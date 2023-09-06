@@ -21,8 +21,8 @@ const paths = {
     regex: /\/[a-zA-Z]{2}\/service\/([0-9]+)/
   },
   serviceTree: {
-    generate: () => `/services`,
-    regex: /\/[a-zA-Z]{2}\/services/
+    generate: () => '/services',
+    regex: /\/[a-zA-Z]{2}\/services/,
   },
   mobility: {
     generate: () => '/mobility',
