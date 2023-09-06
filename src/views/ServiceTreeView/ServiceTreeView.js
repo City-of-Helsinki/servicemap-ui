@@ -32,7 +32,8 @@ const getVariantDependentVariables = (variant, serviceTreeServices, mobilityServ
 
 const ServiceTreeView = ({ intl, variant }) => {
   const navigator = useSelector(state => state.navigator);
-  const settings = useSelector(state => state.settings);
+  const cities = useSelector(state => state.settings.cities);
+  const organizations = useSelector(state => state.settings.organizations);
   const serviceTreeServices = {
     prevServices: useSelector(state => state.serviceTree.services),
     prevSelected: useSelector(state => state.serviceTree.selected),
@@ -61,12 +62,8 @@ const ServiceTreeView = ({ intl, variant }) => {
   const [opened, setOpened] = useState(prevOpened);
   const [selected, setSelected] = useState(prevSelected);
 
-  const citySettings = config.cities.filter((city) => settings.cities[city]);
-
-  const organizationSettings = useSelector((state) => {
-    const { organizations } = state.settings;
-    return config.organizations?.filter(org => organizations[org.id]);
-  });
+  const citySettings = config.cities?.filter((city) => cities[city]) || [];
+  const organizationSettings = config.organizations?.filter((city) => organizations[city]) || [];
 
   const checkChildNodes = (node, nodes = []) => {
     // Find all visible child nodes, so they can be selected when the parent checkbox is selected
