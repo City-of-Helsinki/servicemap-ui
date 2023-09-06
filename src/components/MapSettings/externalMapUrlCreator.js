@@ -4,6 +4,7 @@ class ExternalMapUrlCreator {
    * @param lng given by (leaflet) map.getCenter()
    * @param lat given by (leaflet) map.getCenter()
    * @param zoom given by (leaflet) map.getZoom()
+   * @param lang locale in what the map should be opened
    * @returns url to kartta.hel.fi/3d
    */
   static create3DMapUrl(lng, lat, zoom, lang) {
