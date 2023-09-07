@@ -64,7 +64,7 @@ const ServiceTreeView = ({ intl, variant }) => {
   const [selected, setSelected] = useState(prevSelected);
 
   const citySettings = config.cities?.filter((city) => cities[city]) || [];
-  const organizationSettings = config.organizations?.filter((city) => organizations[city]) || [];
+  const organizationSettings = config.organizations?.filter((org) => organizations[org.id]) || [];
 
   const checkChildNodes = (node, nodes = []) => {
     // Find all visible child nodes, so they can be selected when the parent checkbox is selected
