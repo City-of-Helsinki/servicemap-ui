@@ -12,6 +12,7 @@ class OwnSettingsMenuButton extends React.Component {
         buttonIcon={<AccountCircle />}
         buttonText={buttonText}
         id="SettingsMenuButton"
+        dataSm="SettingsMenuButton"
         menuAriaLabel={menuAriaLabel}
         panelID="SettingsMenuPanel"
         menuHeader="general.ownSettings"

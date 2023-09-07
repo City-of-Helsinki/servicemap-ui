@@ -43,6 +43,15 @@ test('Settings does opens and closes correctly', async (t) => {
   ;
 });
 
+test('Map tool menu should contain 3d map link', async (t) => {
+  const mapLink = Selector('[data-sm="3dMapLink"]');
+  await t
+    .expect(mapLink.visible).notOk()
+    .click(Selector('[data-sm="ToolMenuButton"]'))
+    .expect(mapLink.visible).ok()
+  ;
+});
+
 // TODO: fix this unstable test
 // test('Settings saves correctly', async (t) => {
 //   openSettings(t);

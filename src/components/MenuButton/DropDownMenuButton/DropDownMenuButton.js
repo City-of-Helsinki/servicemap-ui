@@ -15,6 +15,7 @@ class DropDownMenuButton extends React.Component {
         buttonIcon={<Settings />}
         buttonText={buttonText}
         id="ToolMenuButton"
+        dataSm="ToolMenuButton"
         panelID="ToolMenuPanel"
         menuAriaLabel={menuAriaLabel}
         menuHeader="general.tools"
