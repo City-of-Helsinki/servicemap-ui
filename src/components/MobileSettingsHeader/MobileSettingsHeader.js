@@ -10,7 +10,6 @@ const MobileSettingsHeader = ({ textId }) => (
   </StyledFormLabel>
 );
 
-
 const StyledFormLabel = styled(FormLabel)(() => ({
   fontWeight: 700,
   fontSize: '1.03rem',

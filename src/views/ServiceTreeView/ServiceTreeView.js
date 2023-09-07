@@ -1,55 +1,70 @@
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import {
-  List, Checkbox, Typography,
-} from '@mui/material';
-import { Search } from '@mui/icons-material';
-import styled from '@emotion/styled';
 import { css } from '@emotion/css';
+import styled from '@emotion/styled';
+import { Search } from '@mui/icons-material';
+import { Checkbox, List, Typography } from '@mui/material';
 import { useTheme } from '@mui/styles';
+import PropTypes from 'prop-types';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import config from '../../../config';
-import useLocaleText from '../../utils/useLocaleText';
 import { SMAccordion, SMButton, TitleBar } from '../../components';
+import setMobilityTree from '../../redux/actions/mobilityTree';
+import setServiceTree from '../../redux/actions/serviceTree';
 import useMobileStatus from '../../utils/isMobile';
 import { getUnitCount } from '../../utils/units';
+import useLocaleText from '../../utils/useLocaleText';
 
-const ServiceTreeView = (props) => {
-  const {
-    navigator,
-    intl,
-    setTreeState,
-    prevServices,
-    prevSelected,
-    prevOpened,
-    settings,
-    variant,
-  } = props;
+const getVariantDependentVariables = (variant, serviceTreeServices, mobilityServices) => {
+  if (variant === 'ServiceTree') {
+    return {
+      ...serviceTreeServices,
+      serviceApi: `${config.serviceMapAPI.root}${config.serviceMapAPI.version}/service_node/`,
+      titleKey: 'general.pageTitles.serviceTree.title',
+      guidanceKey: 'services.info',
+    };
+  }
+  return {
+    ...mobilityServices,
+    serviceApi: `${config.serviceMapAPI.root}${config.serviceMapAPI.version}/mobility/`,
+    titleKey: 'general.pageTitles.mobility.title',
+    guidanceKey: 'mobility.info',
+  };
+};
+
+const ServiceTreeView = ({ intl, variant }) => {
+  const navigator = useSelector(state => state.navigator);
+  const cities = useSelector(state => state.settings.cities);
+  const organizations = useSelector(state => state.settings.organizations);
+  const serviceTreeServices = {
+    prevServices: useSelector(state => state.serviceTree.services),
+    prevSelected: useSelector(state => state.serviceTree.selected),
+    prevOpened: useSelector(state => state.serviceTree.opened),
+  };
+  const mobilityServices = {
+    prevServices: useSelector(state => state.mobilityTree.services),
+    prevSelected: useSelector(state => state.mobilityTree.selected),
+    prevOpened: useSelector(state => state.mobilityTree.opened),
+  };
+  const dispatch = useDispatch();
   const getLocaleText = useLocaleText();
   const isMobile = useMobileStatus();
   const theme = useTheme();
-  const serviceApi = variant === 'ServiceTree'
-    ? `${config.serviceMapAPI.root}${config.serviceMapAPI.version}/service_node/`
-    : `${config.serviceMapAPI.root}${config.serviceMapAPI.version}/mobility/`;
-  const titleKey = variant === 'ServiceTree'
-    ? 'general.pageTitles.serviceTree.title'
-    : 'general.pageTitles.mobility.title';
-  const guidanceKey = variant === 'ServiceTree'
-    ? 'services.info'
-    : 'mobility.info';
+  const {
+    serviceApi,
+    titleKey,
+    guidanceKey,
+    prevServices,
+    prevSelected,
+    prevOpened,
+  } = getVariantDependentVariables(variant, serviceTreeServices, mobilityServices);
 
   // State
   const [services, setServices] = useState(prevServices);
   const [opened, setOpened] = useState(prevOpened);
   const [selected, setSelected] = useState(prevSelected);
 
-  let citySettings = [];
-  config.cities.forEach((city) => {
-    citySettings.push(...settings.cities[city] ? [city] : []);
-  });
-
-  if (citySettings.length === config.cities.length) {
-    citySettings = [];
-  }
+  const citySettings = config.cities?.filter((city) => cities[city]) || [];
+  const organizationSettings = config.organizations?.filter((org) => organizations[org.id]) || [];
 
   const checkChildNodes = (node, nodes = []) => {
     // Find all visible child nodes, so they can be selected when the parent checkbox is selected
@@ -221,16 +236,34 @@ const ServiceTreeView = (props) => {
     if (variant === 'Mobility') {
       return getLocaleText(item.name);
     }
-    let resultCount = 0;
 
-    if (!citySettings.length || citySettings.length === config.cities.length) {
+    // Calculate count
+    const hasCitySettings = citySettings.length && citySettings.length !== config.cities.length;
+    const hasOrganizationSettings = organizationSettings.length;
+    const sum = (a, b) => a + b;
+
+    let resultCount;
+    if (!hasCitySettings) {
       resultCount = item.unit_count?.total || 0;
     } else {
-      config.cities
-        .filter(city => settings.cities[city])
-        .forEach((city) => {
-          resultCount += getUnitCount(item, city);
-        });
+      resultCount = citySettings
+        .map((city) => getUnitCount(item, city))
+        .reduce(sum, 0);
+    }
+
+    if (hasOrganizationSettings) {
+      const organisationCount = organizationSettings
+        .map((org) => org.name.fi.toLowerCase())
+        .map((orgNameId) => getUnitCount(item, orgNameId))
+        .reduce(sum, 0);
+      resultCount = Math.min(resultCount, organisationCount);
+    }
+
+    if (hasOrganizationSettings) {
+      const approximationText = resultCount
+        ? `${intl.formatMessage({ id: 'general.approximate' }).toLowerCase()} `
+        : '';
+      return `${getLocaleText(item.name)} (${approximationText}${resultCount})`;
     }
     return `${getLocaleText(item.name)} (${resultCount})`;
   }
@@ -344,7 +377,12 @@ const ServiceTreeView = (props) => {
           icon={<Search />}
           messageID="services.search"
           onClick={() => {
-            setTreeState({ services, selected, opened });
+            const stateVariables = { services, selected, opened };
+            if (variant === 'ServiceTree') {
+              dispatch(setServiceTree(stateVariables));
+            } else {
+              dispatch(setMobilityTree(stateVariables));
+            }
             navigator.push('search', { service_node: ids });
           }}
         />
@@ -457,21 +495,8 @@ const StyledAccordion = styled(SMAccordion)(({ level }) => {
 });
 
 ServiceTreeView.propTypes = {
-  navigator: PropTypes.objectOf(PropTypes.any),
   intl: PropTypes.objectOf(PropTypes.any).isRequired,
-  setTreeState: PropTypes.func.isRequired,
-  prevServices: PropTypes.arrayOf(PropTypes.any),
-  prevSelected: PropTypes.arrayOf(PropTypes.any),
-  prevOpened: PropTypes.arrayOf(PropTypes.any),
-  settings: PropTypes.objectOf(PropTypes.any).isRequired,
   variant: PropTypes.oneOf(['ServiceTree', 'Mobility']).isRequired,
-};
-
-ServiceTreeView.defaultProps = {
-  navigator: null,
-  prevServices: [],
-  prevSelected: [],
-  prevOpened: [],
 };
 
 export default ServiceTreeView;
