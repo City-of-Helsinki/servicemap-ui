@@ -92,7 +92,7 @@ class MenuButton extends React.Component {
 
   render() {
     const {
-      buttonIcon, buttonText, id, panelID,
+      buttonIcon, buttonText, id, panelID, dataSm,
     } = this.props;
     const { open } = this.state;
 
@@ -100,6 +100,7 @@ class MenuButton extends React.Component {
       <StyledContainer>
         <StyledButton
           id={id}
+          data-sm={dataSm}
           ref={(node) => {
             this.anchorEl = node;
           }}
@@ -196,6 +197,7 @@ MenuButton.propTypes = {
   panelID: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
   menuHeader: PropTypes.string.isRequired,
+  dataSm: PropTypes.string.isRequired,
   menuItems: PropTypes.arrayOf(PropTypes.shape({
     key: PropTypes.string.isRequired,
     id: PropTypes.string,

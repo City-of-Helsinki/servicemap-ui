@@ -116,7 +116,7 @@ export const parseInitialMapPositionFromHostname = (req, Sentry) => {
             Array.isArray(values)
             && values.length === 3
             && host === values[0]
-          ) {
+          ) {
             initialMapPosition = `${values[1]},${values[2]}`;
           }
         });
