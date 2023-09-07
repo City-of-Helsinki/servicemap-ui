@@ -72,9 +72,9 @@ const MapSettings = () => {
       <Styled3DMapContainer>
         <MobileSettingsHeader textId="settings.3dmap.title" />
         <Typography><FormattedMessage id="settings.3dmap.info" /></Typography>
-        <SMButton onClick={openUrl}>
+        <Styled3DMapLinkButton onClick={openUrl} role="link" data-sm="3dMapLink">
           <Typography><FormattedMessage id="settings.3dmap.link" /></Typography>
-        </SMButton>
+        </Styled3DMapLinkButton>
       </Styled3DMapContainer>
     </>
   );
@@ -83,6 +83,10 @@ const MapSettings = () => {
 const Styled3DMapContainer = styled('div')(({ theme }) => ({
   paddingTop: theme.spacing(3),
   textAlign: 'left',
+}));
+
+const Styled3DMapLinkButton = styled(SMButton)(({ theme }) => ({
+  marginTop: theme.spacing(2),
 }));
 
 export default MapSettings;
