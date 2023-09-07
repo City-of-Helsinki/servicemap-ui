@@ -2,7 +2,6 @@ import styled from '@emotion/styled';
 import {
   FormControl,
   FormControlLabel,
-  Link,
   Radio,
   RadioGroup,
   Typography,
@@ -13,6 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setMapType } from '../../redux/actions/settings';
 import SettingsUtility from '../../utils/settings';
 import MobileSettingsHeader from '../MobileSettingsHeader/MobileSettingsHeader';
+import SMButton from '../ServiceMapButton';
 import ExternalMapUrlCreator from './externalMapUrlCreator';
 
 const MapSettings = () => {
@@ -35,6 +35,11 @@ const MapSettings = () => {
   const createUrl = () => {
     const { lng, lat } = map.getCenter();
     return ExternalMapUrlCreator.create3DMapUrl(lng, lat, map.getZoom(), mapType, locale);
+  };
+
+  const openUrl = () => {
+    const urlTo3dMap = createUrl();
+    window.open(urlTo3dMap);
   };
 
   return (
@@ -67,9 +72,9 @@ const MapSettings = () => {
       <Styled3DMapContainer>
         <MobileSettingsHeader textId="settings.3dmap.title" />
         <Typography><FormattedMessage id="settings.3dmap.info" /></Typography>
-        <Link target="_blank" href={createUrl()}>
-          <FormattedMessage id="settings.3dmap.link" />
-        </Link>
+        <SMButton onClick={openUrl}>
+          <Typography><FormattedMessage id="settings.3dmap.link" /></Typography>
+        </SMButton>
       </Styled3DMapContainer>
     </>
   );
