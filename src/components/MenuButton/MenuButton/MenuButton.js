@@ -6,6 +6,7 @@ import {
 import { FormattedMessage } from 'react-intl';
 import styled from '@emotion/styled';
 import { keyboardHandler } from '../../../utils';
+import config from '../../../../config';
 
 class MenuButton extends React.Component {
   state = {
@@ -133,6 +134,8 @@ const StyledMenuPanel = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   position: 'absolute',
+  overflowY: 'auto',
+  maxHeight: `calc(100vh - ${config.topBarHeight}px)`,
   width: 450,
   padding: theme.spacing(2),
   paddingTop: theme.spacing(3),
@@ -151,7 +154,6 @@ const StyledMenuItemButton = styled(ButtonBase)(({ theme }) => ({
   padding: theme.spacing(1),
   paddingRight: theme.spacing(2),
   justifyContent: 'start',
-  flex: '1 0 auto',
   alignItems: 'center',
   cursor: 'pointer',
   ...theme.typography.body2,
