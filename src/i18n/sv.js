@@ -204,6 +204,7 @@ const translations = {
   // Embedder
   'embedder.city.title': 'Staden',
   'embedder.city.aria.label': 'Välj stadsgränser för inbäddningen',
+  'embedder.organization.title': 'Palveluntarjoaja', // TODO: translate
   'embedder.close': 'Stäng inbäddningsverktyget',
   'embedder.code.title': 'Kopiera HTML-koden',
   'embedder.height.title': 'Inbäddningens höjd',
