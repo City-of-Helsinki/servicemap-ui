@@ -203,6 +203,7 @@ const translations = {
   // Embedder
   'embedder.city.title': 'City',
   'embedder.city.aria.label': 'Choose city limits for the embedding',
+  'embedder.organization.title': 'Palveluntarjoaja', // TODO: translate
   'embedder.close': 'Close embedding tool',
   'embedder.code.title': 'Copy the HTML code',
   'embedder.height.title': 'Height of the embedding',

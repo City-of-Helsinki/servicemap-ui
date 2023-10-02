@@ -203,6 +203,7 @@ const translations = {
   // Embedder
   'embedder.city.title': 'Kaupunki',
   'embedder.city.aria.label': 'Valitse upotukselle kaupunkirajaus',
+  'embedder.organization.title': 'Palveluntarjoaja',
   'embedder.close': 'Sulje upotustyökalu',
   'embedder.code.title': 'Kopioi HTML-koodi',
   'embedder.height.title': 'Upotuksen korkeus',

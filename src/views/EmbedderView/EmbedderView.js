@@ -83,6 +83,11 @@ const EmbedderView = ({
   const page = useSelector(state => state.user.page);
   const selectedUnit = useSelector(state => state.selectedUnit.unit.data);
   const currentService = useSelector(state => state.service.current);
+  const organizationSettings = useSelector((state) => {
+    const { organizations } = state.settings;
+    return config.organizations?.filter(org => organizations[org.id]);
+  });
+  
   const getLocaleText = useLocaleText();
   const userLocale = useUserLocale();
 
@@ -90,6 +95,7 @@ const EmbedderView = ({
   const [language, setLanguage] = useState(defaultLanguage);
   const [map, setMap] = useState(defaultMap);
   const [city, setCity] = useState(defaultCities);
+  const [organization, setOrganization] = useState(organizationSettings);
   const [service, setService] = useState(defaultService);
   const [customWidth, setCustomWidth] = useState(embedderConfig.DEFAULT_CUSTOM_WIDTH || 100);
   const [widthMode, setWidthMode] = useState('auto');
@@ -112,6 +118,7 @@ const EmbedderView = ({
     language,
     map,
     city,
+    organization,
     service,
     defaultLanguage,
     transit,
@@ -324,6 +331,32 @@ const EmbedderView = ({
         titleComponent="h2"
         checkboxControls={cityControls}
         checkboxLabelledBy="embedder.city.title"
+      />
+    );
+  };
+
+  /**
+   * Render organization controls
+   */
+  const renderOrganizationControl = () => {
+    const organizations = organization;
+    const organizationControls = embedderConfig.ORGANIZATIONS.map(org => ({
+      key: org.id,
+      value:!!organizations.some(value => value.id === org.id),
+      label: uppercaseFirst(getLocaleText(org.name)),
+      icon: null,
+      onChange: (v) => {
+        if (v) setOrganization([...organizations, org]);
+        else setOrganization(organizations.filter(values => values.id !== org.id));
+      },
+    }));
+
+    return (
+      <EmbedController
+        titleID="embedder.organization.title"
+        titleComponent="h2"
+        checkboxControls={organizationControls}
+        checkboxLabelledBy="embedder.organization.title"
       />
     );
   };
@@ -566,6 +599,9 @@ const EmbedderView = ({
               }
                 {
                 renderCityControl()
+              }
+              {
+                renderOrganizationControl()
               }
                 {
                 renderWidthControl()
