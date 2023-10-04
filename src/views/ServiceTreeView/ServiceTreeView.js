@@ -95,9 +95,12 @@ const ServiceTreeView = ({ intl, variant }) => {
     // Do not fetch unit counts again for nodes that have the data, unless specified by fullSearch
     const filteredIdList = fullSearch ? idList : idList.filter(id => !unitCounts.some(count => count.id === id))
     const smAPI = new ServiceMapAPI();
-    const fetchOptions = {
-      organization: organizationSettings.map(setting => setting.id),
-      municipality: citySettings,
+    const fetchOptions = {};
+    if (organizationSettings.length) {
+      fetchOptions.organization = organizationSettings.map(setting => setting.id);
+    }
+    if (citySettings.length) {
+      fetchOptions.municipality = citySettings;
     }
     const counts = await Promise.all(
       filteredIdList.map(async (id) => {
