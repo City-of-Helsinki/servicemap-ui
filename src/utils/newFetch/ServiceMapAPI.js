@@ -53,9 +53,9 @@ export default class ServiceMapAPI extends HttpClient {
     return this.getSinglePage('search', options);
   }
 
-  serviceNodeSearch = async (idList, additionalOptions) => {
-    if (typeof idList !== 'string') {
-      throw new APIFetchError('Invalid query string provided to ServiceMapAPI search method');
+  serviceNodeSearch = async (idList, additionalOptions, onlyCount) => {
+    if (!['string', 'number'].includes(typeof idList)) {
+      throw new APIFetchError('Invalid query string provided to ServiceMapAPI serviceNodeSearch method');
     }
     const options = {
       page: 1,
@@ -67,6 +67,7 @@ export default class ServiceMapAPI extends HttpClient {
       ...additionalOptions,
     };
 
+    if (onlyCount) return this.getCount('unit', options);
     return this.getConcurrent('unit', options);
   }
 

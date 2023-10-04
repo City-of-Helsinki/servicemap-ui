@@ -11,8 +11,8 @@ import { SMAccordion, SMButton, TitleBar } from '../../components';
 import setMobilityTree from '../../redux/actions/mobilityTree';
 import setServiceTree from '../../redux/actions/serviceTree';
 import useMobileStatus from '../../utils/isMobile';
-import { getUnitCount } from '../../utils/units';
 import useLocaleText from '../../utils/useLocaleText';
+import ServiceMapAPI from '../../utils/newFetch/ServiceMapAPI';
 
 const getVariantDependentVariables = (variant, serviceTreeServices, mobilityServices) => {
   if (variant === 'ServiceTree') {
@@ -62,6 +62,7 @@ const ServiceTreeView = ({ intl, variant }) => {
   const [services, setServices] = useState(prevServices);
   const [opened, setOpened] = useState(prevOpened);
   const [selected, setSelected] = useState(prevSelected);
+  const [unitCounts, setUnitCounts] = useState([]);
 
   const citySettings = config.cities?.filter((city) => cities[city]) || [];
   const organizationSettings = config.organizations?.filter((org) => organizations[org.id]) || [];
@@ -89,10 +90,39 @@ const ServiceTreeView = ({ intl, variant }) => {
       .then(data => data.results)
   );
 
+  const fetchNodeCounts = async (nodes, fullSearch) => {
+    const idList = nodes.map(node => node.id);
+    // Do not fetch unit counts again for nodes that have the data, unless specified by fullSearch
+    const filteredIdList = fullSearch ? idList : idList.filter(id => !unitCounts.some(count => count.id === id))
+    const smAPI = new ServiceMapAPI();
+    const fetchOptions = {};
+    if (organizationSettings.length) {
+      fetchOptions.organization = organizationSettings.map(setting => setting.id);
+    }
+    if (citySettings.length) {
+      fetchOptions.municipality = citySettings;
+    }
+    const counts = await Promise.all(
+      filteredIdList.map(async (id) => {
+        const count = await smAPI.serviceNodeSearch(id, fetchOptions, true);
+        return { id, count };
+      })
+    
+    );
+    if (fullSearch) {
+      setUnitCounts(counts)
+    } else {
+      setUnitCounts([...unitCounts, ...counts])
+    }
+  }
+
   const setInitialServices = () => {
     // Fetch initially shown service nodes when first entering the pag
     fetchRootNodes()
-      .then(data => setServices(data));
+      .then(data => {
+        setServices(data)
+        fetchNodeCounts(data)
+      });
   };
 
   const fetchChildServices = async (service) => {
@@ -101,6 +131,7 @@ const ServiceTreeView = ({ intl, variant }) => {
       .then(response => response.json())
       .then((data) => {
         setServices([...services, ...data.results]);
+        fetchNodeCounts(data.results)
         // Expand the opened parent node once the child nodes have been fetched
         setOpened([...opened, service]);
         if (selected.find(e => e.id === service)) {
@@ -131,7 +162,7 @@ const ServiceTreeView = ({ intl, variant }) => {
     if (typeof item === 'number') {
       child = selected.find(e => e.id === item);
     }
-    if (child && child.children) {
+    if (child?.children) {
       data.push(...child.children);
       child.children.forEach((c) => {
         getSelectedChildNodes(c, data);
@@ -172,7 +203,7 @@ const ServiceTreeView = ({ intl, variant }) => {
 
       // If all other sibling nodes are selected too, select parent node as well
       const parent = services.find(service => service.id === item.parent);
-      if (parent && parent.children.every(child => [...selected, item].some(i => i.id === child))) {
+      if (parent?.children.every(child => [...selected, item].some(i => i.id === child))) {
         newState = [...newState, parent];
       }
 
@@ -232,40 +263,19 @@ const ServiceTreeView = ({ intl, variant }) => {
     }
   }, []);
 
+  useEffect(() => {
+    setUnitCounts([]);
+    fetchNodeCounts(services, true);
+  }, [cities, organizations]);
+
   function calculateTitle(item) {
     if (variant === 'Mobility') {
       return getLocaleText(item.name);
     }
 
     // Calculate count
-    const hasCitySettings = citySettings.length && citySettings.length !== config.cities.length;
-    const hasOrganizationSettings = organizationSettings.length;
-    const sum = (a, b) => a + b;
-
-    let resultCount;
-    if (!hasCitySettings) {
-      resultCount = item.unit_count?.total || 0;
-    } else {
-      resultCount = citySettings
-        .map((city) => getUnitCount(item, city))
-        .reduce(sum, 0);
-    }
-
-    if (hasOrganizationSettings) {
-      const organisationCount = organizationSettings
-        .map((org) => org.name.fi.toLowerCase())
-        .map((orgNameId) => getUnitCount(item, orgNameId))
-        .reduce(sum, 0);
-      resultCount = Math.min(resultCount, organisationCount);
-    }
-
-    if (hasOrganizationSettings) {
-      const approximationText = resultCount
-        ? `${intl.formatMessage({ id: 'general.approximate' }).toLowerCase()} `
-        : '';
-      return `${getLocaleText(item.name)} (${approximationText}${resultCount})`;
-    }
-    return `${getLocaleText(item.name)} (${resultCount})`;
+    const countItem = unitCounts.find(countItem => countItem.id === item.id)
+    return `${getLocaleText(item.name)} ${countItem !== null && countItem !== undefined ? `(${countItem.count})` : ''}`;
   }
 
   const expandingComponent = (item, level, last = []) => {
@@ -318,7 +328,7 @@ const ServiceTreeView = ({ intl, variant }) => {
             </StyledText>
           )}
           collapseContent={
-            children && children.length ? (
+            children?.length ? (
               <List disablePadding>
                 {children.map((child, i) => (
                   expandingComponent(
@@ -340,7 +350,7 @@ const ServiceTreeView = ({ intl, variant }) => {
 
   const renderServiceNodeList = () => (
     <List role="list" disablePadding>
-      {services && services.map(service => (
+      {services?.map(service => (
         !service.parent && (
           expandingComponent(service, 0)
         )

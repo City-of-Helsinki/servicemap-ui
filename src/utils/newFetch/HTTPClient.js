@@ -214,6 +214,9 @@ export default class HttpClient {
     const newOptions = {
       ...options,
       page_size: 1,
+      only: 'id',
+      include: null,
+      geometry: false,
     };
     return this.fetch(endpoint, this.optionsToSearchParams(newOptions, true), 'count');
   }
