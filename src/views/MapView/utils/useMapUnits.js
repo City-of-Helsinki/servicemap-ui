@@ -6,6 +6,7 @@ import { getDistrictPrimaryUnits, getFilteredSubdistrictUnits, getParkingUnits }
 import { getOrderedData } from '../../../redux/selectors/results';
 import { getSelectedUnit } from '../../../redux/selectors/selectedUnit';
 import { getServiceUnits } from '../../../redux/selectors/service';
+import orderUnits from '../../../utils/orderUnits';
 import { useEmbedStatus } from '../../../utils/path';
 import { getServiceFilteredStatisticalDistrictUnits } from '../../../redux/selectors/statisticalDistrict';
 
@@ -96,6 +97,7 @@ const useMapUnits = () => {
   const statisticalDistrictUnits = useSelector(getServiceFilteredStatisticalDistrictUnits);
   const parkingAreaUnits = useSelector(state => getParkingUnits(state));
   const highlightedUnit = useSelector(state => getSelectedUnit(state));
+  const locale = useSelector(state => state.user.locale);
 
   const searchUnitsLoading = useSelector(state => state.searchResults.isFetching);
   const serviceUnitsLoading = useSelector(state => state.service.isFetching);
@@ -135,17 +137,19 @@ const useMapUnits = () => {
         if (serviceUnits && !unitsLoading) return serviceUnits;
         return [];
 
-      case 'area':
-        return [
+      case 'area': {
+        const results = [
           ...(districtPrimaryUnits.length ? districtPrimaryUnits : []),
           ...(districtServiceUnits.length ? districtServiceUnits : []),
           ...(parkingAreaUnits.length ? parkingAreaUnits : []),
-          ...(statisticalDistrictUnits.length && statisticalTabOpen
+          ...((statisticalDistrictUnits.length && statisticalTabOpen)
             ? statisticalDistrictUnits
             : []
           ),
         ];
 
+        return orderUnits(results, { locale, direction: 'desc', order: 'alphabetical' });
+      }
       default:
         return [];
     }
