@@ -66,6 +66,7 @@ exports[`<UnitDataList /> should work 1`] = `
               class="MuiTypography-root MuiTypography-body2  ResultItem-title css-1eygwv7-MuiTypography-root"
               data-sm="ResultItemTitle"
               role="textbox"
+              simpleitem="0"
             >
               Suomen kielen kielikahvila
             </p>
@@ -77,6 +78,7 @@ exports[`<UnitDataList /> should work 1`] = `
       >
         <hr
           class="MuiDivider-root MuiDivider-inset css-1tvkns7-MuiDivider-root"
+          simpleitem="0"
         />
       </li>
       <li
@@ -125,6 +127,7 @@ exports[`<UnitDataList /> should work 1`] = `
               class="MuiTypography-root MuiTypography-body2  ResultItem-title css-1eygwv7-MuiTypography-root"
               data-sm="ResultItemTitle"
               role="textbox"
+              simpleitem="0"
             >
               R&A x Armas: Vanhenemisen estetiikka
             </p>
@@ -136,6 +139,7 @@ exports[`<UnitDataList /> should work 1`] = `
       >
         <hr
           class="MuiDivider-root MuiDivider-inset css-1tvkns7-MuiDivider-root"
+          simpleitem="0"
         />
       </li>
       <li
@@ -184,6 +188,7 @@ exports[`<UnitDataList /> should work 1`] = `
               class="MuiTypography-root MuiTypography-body2  ResultItem-title css-1eygwv7-MuiTypography-root"
               data-sm="ResultItemTitle"
               role="textbox"
+              simpleitem="0"
             >
               Digital guidance for seniors
             </p>

@@ -42,6 +42,7 @@ exports[`<UnitItem /> should work 1`] = `
           class="MuiTypography-root MuiTypography-body2 css-in3yi3 ResultItem-title css-1eygwv7-MuiTypography-root"
           data-sm="ResultItemTitle"
           role="textbox"
+          simpleitem="0"
         >
           Lippulaivan kirjasto
         </p>
@@ -64,6 +65,7 @@ exports[`<UnitItem /> should work 1`] = `
   >
     <hr
       class="MuiDivider-root MuiDivider-inset css-1tvkns7-MuiDivider-root"
+      simpleitem="0"
     />
   </li>
 </div>
