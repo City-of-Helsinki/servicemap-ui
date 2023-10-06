@@ -90,6 +90,7 @@ const DrawerMenu = (props) => {
       anchor="right"
       open={isOpen}
       classes={{ paper: pageType === 'mobile' ? drawerContainerMobileClass : drawerContainerClass }}
+      PaperProps={{ sx: { top: `${pageType === 'mobile' ? topBarHeightMobile : topBarHeight}px` } }}
     >
       <StyledScrollContainer>
         {/* Main links */}
