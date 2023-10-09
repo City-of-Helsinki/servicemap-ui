@@ -65,7 +65,6 @@ const MapView = (props) => {
     location,
     settings,
     unitsLoading,
-    districtViewFetching,
     hideUserMarker,
     highlightedUnit,
     highlightedDistrict,
@@ -93,7 +92,9 @@ const MapView = (props) => {
   const getAddressNavigatorParams = useNavigationParams();
   const districtUnitsFetch = useSelector(state => state.districts.unitFetch);
   const statisticalDistrictFetch = useSelector(getStatisticalDistrictUnitsState);
-
+  const districtUnitsFetching = districtUnitsFetch.isFetching;
+  const districtsFetching = useSelector(state => !!state.districts.districtsFetching?.length);
+  const districtViewFetching = districtUnitsFetching || districtsFetching;
   const unitData = useMapUnits();
 
   // This unassigned selector is used to trigger re-render after events are fetched
@@ -407,7 +408,6 @@ MapView.propTypes = {
   isMobile: PropTypes.bool,
   location: PropTypes.objectOf(PropTypes.any).isRequired,
   navigator: PropTypes.objectOf(PropTypes.any),
-  districtViewFetching: PropTypes.bool.isRequired,
   findUserLocation: PropTypes.func.isRequired,
   setMapRef: PropTypes.func.isRequired,
   settings: PropTypes.objectOf(PropTypes.any).isRequired,
