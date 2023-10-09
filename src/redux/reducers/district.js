@@ -194,11 +194,13 @@ export default (state = initialState, action) => {
     case 'START_DISTRICT_FETCH':
       return {
         ...state,
-        districtsFetching: [...state.districtsFetching, action.districtType],
+        districtsFetching: state.districtsFetching.includes(action.districtType)
+          ? state.districtsFetching
+          : [...state.districtsFetching, action.districtType],
         unitFetch: {
           ...state.unitFetch,
           isFetching: true,
-        }
+        },
       };
 
     case 'END_DISTRICT_FETCH':
