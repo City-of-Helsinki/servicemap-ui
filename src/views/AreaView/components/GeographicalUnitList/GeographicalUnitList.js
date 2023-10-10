@@ -71,7 +71,7 @@ const GeographicalUnitList = ({ initialOpenItems }) => {
     const servicesArray = [];
     const educationServicesArray = [];
 
-    filteredSubdistrictUnits.map((unit) => {
+    filteredSubdistrictUnits.forEach((unit) => {
       const categories = unit.services;
       categories.forEach((category) => {
         let serviceList;
@@ -99,6 +99,9 @@ const GeographicalUnitList = ({ initialOpenItems }) => {
       ...sortUnitCategories(servicesArray),
       ...sortUnitCategories(educationServicesArray),
     ];
+    serviceList.forEach((service) => {
+      service.units = sortUnitCategories(service.units);
+    });
 
     // Remove selected empty categories
     const emptyCategories = selectedServices.filter(id => !serviceList.some(obj => obj.id === id));
