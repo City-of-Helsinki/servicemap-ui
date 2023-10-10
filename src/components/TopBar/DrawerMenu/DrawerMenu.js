@@ -100,6 +100,8 @@ const DrawerMenu = (props) => {
         <Divider />
         {menuMainButton('services', 'home.buttons.services', 'services')}
         <Divider />
+        {menuMainButton('general.pageLink.mobility', 'home.buttons.mobility', 'mobility')}
+        <Divider />
 
         {/* Smaller buttons  */}
         {menuSecondaryButton(
