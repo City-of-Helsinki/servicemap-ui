@@ -3,7 +3,7 @@ import {
   AccountCircle, ArrowBack, Map, Settings,
 } from '@mui/icons-material';
 import {
-  BottomNavigation, BottomNavigationAction, Drawer, Paper,
+  BottomNavigation, BottomNavigationAction, Drawer, Paper, useMediaQuery,
 } from '@mui/material';
 import React, { useState } from 'react';
 import { useIntl } from 'react-intl';
@@ -19,6 +19,7 @@ const { bottomNavHeight } = config;
 const BottomNav = () => {
   const location = useLocation();
   const intl = useIntl();
+  const small = useMediaQuery('(max-width:477px)');
 
   const navigator = useSelector(state => state.navigator);
   const breadcrumb = useSelector(state => state.breadcrumb);
@@ -84,7 +85,6 @@ const BottomNav = () => {
     }
   };
 
-
   return (
     <>
       <StyledDrawer
@@ -126,20 +126,24 @@ const BottomNav = () => {
         <StyledPaper elevation={10}>
           <StyledBottomNavigation showLabels onChange={(event, newValue) => handleNav(newValue)}>
             <StyledBottomNavigationAction
+              small={+small}
               label={intl.formatMessage({ id: 'general.backTo' })}
               icon={<ArrowBack />}
             />
             <StyledBottomNavigationAction
+              small={+small}
               label={!mapPage || mapSettingsOpen
                 ? intl.formatMessage({ id: 'map.open' })
                 : intl.formatMessage({ id: 'map.close' })}
               icon={<Map />}
             />
             <StyledBottomNavigationAction
+              small={+small}
               label={intl.formatMessage({ id: 'general.ownSettings' })}
               icon={<AccountCircle />}
             />
             <StyledBottomNavigationAction
+              small={+small}
               label={intl.formatMessage({ id: 'general.tools' })}
               icon={<Settings />}
             />
@@ -169,9 +173,17 @@ const StyledBottomNavigation = styled(BottomNavigation)(() => ({
 }));
 
 
-const StyledBottomNavigationAction = styled(BottomNavigationAction)(() => ({
-  color: '#000',
-}));
+const StyledBottomNavigationAction = styled(BottomNavigationAction)(({ small }) => {
+  const styles = {
+    color: '#000',
+  };
+  if (small) {
+    Object.assign(styles, {
+      '& span': { height: '34px' },
+    });
+  }
+  return styles;
+});
 
 const StyledDiv = styled('div')(({ theme }) => ({
   paddingTop: theme.spacing(3),
