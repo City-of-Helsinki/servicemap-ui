@@ -242,9 +242,11 @@ const AreaView = ({
       }
 
       // Set selected geographical districts from url parameters and handle map focus
-      if (searchParams.districts && !mapFocusDisabled) {
+      if (searchParams.districts) {
         setSelectedSubdistricts(searchParams.districts.split(','));
-        setFocusTo('subdistricts');
+        if (!mapFocusDisabled) {
+          setFocusTo('subdistricts');
+        }
       }
 
       // Set selected geographical services from url parameters
