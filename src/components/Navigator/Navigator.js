@@ -92,13 +92,16 @@ class Navigator extends React.Component {
    * Generate url based on path string and data
    * @param target - Key string for path config
    * @param data - Data for path used if target is path key
+   * @param embed - Override isEmbed() check
    */
-  generatePath = (target, data) => {
+  generatePath = (target, data, embed) => {
     const { match } = this.props;
     const { params } = match;
     const locale = params && params.lng;
 
-    return generatePath(target, locale, data, isEmbed());
+    const embedValue = typeof embed !== 'undefined' ? embed : isEmbed();
+
+    return generatePath(target, locale, data, embedValue);
   }
 
 
@@ -122,7 +125,7 @@ class Navigator extends React.Component {
       this.trackPageView({ mobility, senses });
       breadcrumbPop();
     } else {
-      history.push(this.generatePath('home'));
+      history.push(this.generatePath('home', null, false));
       breadcrumbPush({ location });
     }
   }
