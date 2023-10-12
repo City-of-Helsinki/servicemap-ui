@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  Button, ButtonBase, ClickAwayListener, Divider, Typography,
+  Button, ButtonBase, ClickAwayListener, Container, Divider, Typography,
 } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 import styled from '@emotion/styled';
@@ -52,6 +52,8 @@ class MenuButton extends React.Component {
           id={panelID}
           aria-label={menuAriaLabel}
           role="region"
+          disableGutters
+          sx={{ overflowY: panelID === 'SettingsMenuPanel' ? 'visible' : 'auto' }}
         >
           <Typography sx={{
             textAlign: 'left', fontWeight: 700, fontSize: '1.03rem', pb: 1,
@@ -130,16 +132,14 @@ class MenuButton extends React.Component {
   }
 }
 
-const StyledMenuPanel = styled('div')(({ theme }) => ({
+const StyledMenuPanel = styled(Container)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   position: 'absolute',
-  overflowY: 'auto',
   maxHeight: `calc(100vh - ${config.topBarHeight}px)`,
   width: 450,
   padding: theme.spacing(2),
   paddingTop: theme.spacing(3),
-  paddingBottom: theme.spacing(2),
   boxSizing: 'border-box',
   backgroundColor: 'white',
   color: 'black',
