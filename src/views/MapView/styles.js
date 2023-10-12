@@ -225,7 +225,9 @@ const styles = theme => ({
     ...theme.typography.body2,
     paddingTop: theme.spacing(1),
     textAlign: 'center',
-    color: theme.palette.primary.link,
+    color: theme.palette.link.main,
+    textDecoration: 'underline',
+    cursor: 'pointer',
   },
   unitTooltipWrapper: {
     padding: theme.spacing(3),

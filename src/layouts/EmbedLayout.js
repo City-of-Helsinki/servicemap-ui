@@ -152,7 +152,7 @@ const EmbedLayout = ({ intl }) => {
             messageID="unit.showInformation"
             onClick={() => {
               const { origin } = window.location;
-              const path = navigator.generatePath('unit', { id: selectedUnitData.id });
+              const path = navigator.generatePath('unit', { id: selectedUnitData.id }, false);
               window.open(`${origin}${path}`);
             }}
           />
