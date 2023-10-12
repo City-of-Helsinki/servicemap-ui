@@ -92,9 +92,8 @@ const MapView = (props) => {
   const getAddressNavigatorParams = useNavigationParams();
   const districtUnitsFetch = useSelector(state => state.districts.unitFetch);
   const statisticalDistrictFetch = useSelector(getStatisticalDistrictUnitsState);
-  const districtUnitsFetching = districtUnitsFetch.isFetching;
   const districtsFetching = useSelector(state => !!state.districts.districtsFetching?.length);
-  const districtViewFetching = districtUnitsFetching || districtsFetching;
+  const districtViewFetching = districtUnitsFetch.isFetching || districtsFetching;
   const unitData = useMapUnits();
 
   // This unassigned selector is used to trigger re-render after events are fetched
