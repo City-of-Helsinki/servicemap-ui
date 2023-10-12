@@ -248,7 +248,10 @@ const MapView = (props) => {
       showLoadingReducer = statisticalDistrictFetch;
       hideLoadingNumbers = true;
     } else if (districtViewFetching) {
-      showLoadingReducer = districtUnitsFetch;
+      showLoadingReducer = {
+        ...districtUnitsFetch,
+        isFetching: districtViewFetching,
+      };
     }
     const userLocationAriaLabel = intl.formatMessage({ id: !userLocation ? 'location.notAllowed' : 'location.center' });
     const eventSearch = parseSearchParams(location.search).events;
