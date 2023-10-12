@@ -15,7 +15,7 @@ function getVersion() {
   if (typeof window !== 'undefined' && typeof window.nodeEnvSettings !== 'undefined') {
     version = window.nodeEnvSettings.appVersion;
   }
-  console.log('Palvelukartta version', version);
+  console.log('Palvelukartta version:', `${version.tag} / ${version.commit}`);
   return version;
 }
 
