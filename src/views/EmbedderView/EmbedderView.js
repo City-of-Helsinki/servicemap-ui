@@ -565,8 +565,9 @@ const EmbedderView = ({
               onClick={closeView}
               role="link"
               textID="embedder.close"
+              data-sm="EmbedderToolCloseButton"
             />
-            <StyledTitle align="left" variant="h1">
+            <StyledTitle align="left" variant="h1" data-sm="EmbedderToolTitle">
               <FormattedMessage id="embedder.title" />
             </StyledTitle>
           </StyledTitleContainer>

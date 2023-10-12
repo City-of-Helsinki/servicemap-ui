@@ -2,6 +2,7 @@
 import { Selector } from 'testcafe';
 import { waitForReact } from 'testcafe-react-selectors';
 import config from '../config';
+import { mapToolsButton } from '../utility/pageObjects';
 
 const { server } = config;
 
@@ -47,7 +48,7 @@ test('Map tool menu should contain 3d map link', async (t) => {
   const mapLink = Selector('[data-sm="3dMapLink"]');
   await t
     .expect(mapLink.visible).notOk()
-    .click(Selector('[data-sm="ToolMenuButton"]'))
+    .click(mapToolsButton)
     .expect(mapLink.visible).ok()
   ;
 });

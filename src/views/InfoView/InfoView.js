@@ -28,6 +28,7 @@ function InfoView({ locale }) {
       backButton={!isMobile}
       title={<FormattedMessage id="info.title" />}
       titleComponent="h3"
+      data-sm="InfoPageTitle"
     />
   );
   const renderFinnishInfo = () => (

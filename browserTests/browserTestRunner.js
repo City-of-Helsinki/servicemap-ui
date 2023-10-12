@@ -16,6 +16,7 @@ createTestCafe('localhost')
         'browserTests/generic/browserTest.js',
         'browserTests/views/embedTest.js',
         'browserTests/generic/generalTest.js',
+        'browserTests/generic/navigationTest.js',
         'browserTests/views/searchTest.js',
         'browserTests/views/serviceTest.js',
         'browserTests/views/settingsTest.js',
