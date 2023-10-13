@@ -12,7 +12,7 @@ import styles from './styles';
 // Get redux states as props to component
 const mapStateToProps = (state) => {
   const {
-    navigator, settings, user, measuringMode, districts,
+    navigator, settings, user, measuringMode,
   } = state;
   const serviceUnitsLoading = state.service.isFetching;
   const searchUnitsLoading = state.searchResults.isFetching;
@@ -21,14 +21,11 @@ const mapStateToProps = (state) => {
   const {
     customPosition, locale, page, position,
   } = user;
-  const districtUnitsFetching = districts.unitFetch.isFetching;
-  const { districtsFetching } = districts;
 
   const userLocation = customPosition.coordinates || position.coordinates;
   return {
     highlightedDistrict,
     highlightedUnit,
-    districtViewFetching: !!(districtUnitsFetching || districtsFetching?.length),
     unitsLoading: serviceUnitsLoading || searchUnitsLoading,
     currentPage: page,
     userLocation,
