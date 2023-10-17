@@ -2,6 +2,9 @@ import { useSelector } from 'react-redux';
 import { getOrderedData } from '../redux/selectors/results';
 import { getServiceUnits } from '../redux/selectors/service';
 
+// to get rid of https://redux.js.org/usage/deriving-data-selectors#optimizing-selectors-with-memoization
+const emptyArray = [];
+
 // Custom hook that returns correct set of data for download data tool
 const useDownloadData = () => {
   let selector;
@@ -20,7 +23,7 @@ const useDownloadData = () => {
       selector = state => state.address.units;
       break;
     default:
-      selector = () => [];
+      selector = () => emptyArray;
       break;
   }
   return useSelector(selector);
