@@ -232,6 +232,9 @@ export default class ServiceMapAPI extends HttpClient {
 
     const baseUrlOverride = config.serviceMapAPI.root;
 
-    return this.post('stats', data, baseUrlOverride);
+    const urlOverride = baseUrlOverride.substring(baseUrlOverride.length - 1) === '/'
+      ? baseUrlOverride.substring(0, baseUrlOverride.length - 1)
+      : baseUrlOverride;
+    return this.post('stats', data, urlOverride);
   }
 }
