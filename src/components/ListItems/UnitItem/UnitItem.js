@@ -26,7 +26,8 @@ const UnitItem = ({
     let accessText = null;
     let accessibilityProblems = null;
     if (accessSettingsSet && unit && settings) {
-      accessibilityProblems = UnitHelper.getShortcomingCount(unit, settings);
+      const currentSettings = SettingsUtility.parseShortcomingSettings(settings);
+      accessibilityProblems = UnitHelper.getShortcomingCount(unit, currentSettings);
       accessText = intl.formatMessage({ id: 'unit.accessibility.noInfo' });
       if (accessibilityProblems !== null && typeof accessibilityProblems !== 'undefined') {
         switch (accessibilityProblems) {

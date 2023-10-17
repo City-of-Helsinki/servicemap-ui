@@ -40,10 +40,15 @@ class UnitHelper {
 
   static isUnitPage = () => paths.unit.regex.test(window.location.href);
 
-  static getShortcomingCount(unit, settings) {
-    if (unit && settings) {
+  /**
+   *
+   * @param unit
+   * @param currentSettings list of shortcomings (parsed from settings)
+   * @returns {null|number}
+   */
+  static getShortcomingCount(unit, currentSettings) {
+    if (unit && currentSettings) {
       // Check if user has settings
-      const currentSettings = SettingsUtility.parseShortcomingSettings(settings);
       if (currentSettings.length) {
         // eslint-disable-next-line camelcase
         const shortcomings = unit.accessibility_shortcoming_count;
@@ -113,7 +118,8 @@ class UnitHelper {
       const icon = UnitHelper.markerIcons.default[2];
       return icon;
     }
-    const shortcomingCount = UnitHelper.getShortcomingCount(unit, settings);
+    const currentSettings = SettingsUtility.parseShortcomingSettings(settings);
+    const shortcomingCount = UnitHelper.getShortcomingCount(unit, currentSettings);
     const markerType = UnitHelper.getMarkerType(shortcomingCount);
 
     let iconIndex = 2;
