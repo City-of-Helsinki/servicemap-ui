@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect';
 import { getFilteredData } from './results';
+import { selectCities, selectOrganizations } from './settings';
 
 export const getHighlightedDistrict = state => state.districts.highlitedDistrict;
 
@@ -9,8 +10,6 @@ const getAddressDistrictData = state => state.districts.districtAddressData.dist
 export const getSubdistrictUnits = state => state.districts.subdistrictUnits;
 const getSubdistrictSelection = state => state.districts.selectedSubdistricts;
 const getSelectedDistrictServices = state => state.districts.selectedDistrictServices;
-const getSettings = state => state.settings;
-const getCitySettings = state => state.settings.cities;
 const selectParkingUnits = state => state.districts.parkingUnits;
 
 export const selectParkingUnitUnits = createSelector(
@@ -19,7 +18,7 @@ export const selectParkingUnitUnits = createSelector(
 );
 
 export const getDistrictsByType = createSelector(
-  [getSelectedDistrict, getDistrictData, getCitySettings],
+  [getSelectedDistrict, getDistrictData, selectCities],
   (selectedDistrictType, districtData, citySettings) => {
     if (selectedDistrictType && districtData.length) {
       const districtType = districtData.find(obj => obj.id === selectedDistrictType);
@@ -73,9 +72,9 @@ export const getDistrictPrimaryUnits = createSelector(
 
 // Get selected geographical district units
 export const getFilteredSubdistrictServices = createSelector(
-  [getSubdistrictSelection, getSubdistrictUnits, getSettings],
-  (selectedSubdistricts, unitData, settings) => {
-    const cityFilteredUnits = getFilteredData(unitData, settings);
+  [getSubdistrictSelection, getSubdistrictUnits, selectCities, selectOrganizations],
+  (selectedSubdistricts, unitData, cities, organizations) => {
+    const cityFilteredUnits = getFilteredData(unitData, { cities, organizations });
     if (selectedSubdistricts?.length && unitData) {
       return cityFilteredUnits.filter(
         unit => selectedSubdistricts.some(district => district === unit.division_id),

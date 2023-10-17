@@ -2,8 +2,8 @@ import { createSelector } from 'reselect';
 import config from '../../../config';
 
 export const getCitySettings = state => state.settings.cities;
-const selectCities = state => state.settings.cities;
-const selectOrganizations = state => state.settings.organizations;
+export const selectCities = state => state.settings.cities;
+export const selectOrganizations = state => state.settings.organizations;
 
 export const selectSelectedCities = createSelector(
   [selectCities],
