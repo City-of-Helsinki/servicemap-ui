@@ -1,15 +1,18 @@
-import { useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import distance from '@turf/distance';
 import flip from '@turf/flip';
-import { createSelector } from 'reselect';
-import { getDistrictPrimaryUnits, getFilteredSubdistrictUnits, selectParkingUnits } from '../../../redux/selectors/district';
+import { useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
+import {
+  getDistrictPrimaryUnits, getFilteredSubdistrictUnits, selectParkingUnitUnits,
+} from '../../../redux/selectors/district';
 import { getOrderedData } from '../../../redux/selectors/results';
 import { getSelectedUnit } from '../../../redux/selectors/selectedUnit';
 import { getServiceUnits } from '../../../redux/selectors/service';
+import {
+  getServiceFilteredStatisticalDistrictUnits,
+} from '../../../redux/selectors/statisticalDistrict';
 import orderUnits from '../../../utils/orderUnits';
 import { useEmbedStatus } from '../../../utils/path';
-import { getServiceFilteredStatisticalDistrictUnits } from '../../../redux/selectors/statisticalDistrict';
 
 
 // Helper function to handle address view units
@@ -96,7 +99,7 @@ const useMapUnits = () => {
   const districtPrimaryUnits = useSelector(state => getDistrictPrimaryUnits(state));
   const districtServiceUnits = useSelector(state => getFilteredSubdistrictUnits(state));
   const statisticalDistrictUnits = useSelector(getServiceFilteredStatisticalDistrictUnits);
-  const parkingAreaUnits = createSelector(selectParkingUnits, parkingUnits => parkingUnits.filter(unit => unit.object_type === 'unit'));
+  const parkingAreaUnits = useSelector(selectParkingUnitUnits);
   const highlightedUnit = useSelector(state => getSelectedUnit(state));
   const locale = useSelector(state => state.user.locale);
 
