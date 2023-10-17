@@ -1,11 +1,10 @@
-import SettingsUtility from './settings';
 import UnitHelper from './unitHelper';
 import { getLocaleString } from '../redux/selectors/locale';
 import { calculateDistance } from '../redux/selectors/unit';
 
 const orderUnits = (unitData, sortingParameters) => {
   const {
-    usedPosition, direction, order, locale, settings,
+    usedPosition, direction, order, locale, selectedAccessibilitySettings,
   } = sortingParameters;
 
   let results = Array.from(unitData);
@@ -17,10 +16,11 @@ const orderUnits = (unitData, sortingParameters) => {
       const unitResults = results.filter(result => result.object_type === 'unit');
       const otherResults = results.filter(result => result.object_type !== 'unit');
 
-      const currentSettings = SettingsUtility.parseShortcomingSettings(settings);
       unitResults.forEach((element) => {
         // eslint-disable-next-line no-param-reassign
-        element.shorcomingCount = UnitHelper.getShortcomingCount(element, currentSettings);
+        element.shorcomingCount = UnitHelper.getShortcomingCount(
+          element, selectedAccessibilitySettings,
+        );
       });
       unitResults.sort((a, b) => {
         const aSC = a.shorcomingCount;
