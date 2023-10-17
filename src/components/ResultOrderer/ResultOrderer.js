@@ -6,7 +6,8 @@ import {
 } from '@mui/material';
 import { Tune } from '@mui/icons-material';
 import styled from '@emotion/styled';
-import { useAcccessibilitySettings } from '../../utils/settings';
+import { useSelector } from 'react-redux';
+import { selectSelectedAccessibilitySettings } from '../../redux/selectors/settings';
 import SMAutocomplete from '../SMAutocomplete';
 import { keyboardHandler } from '../../utils';
 
@@ -40,7 +41,7 @@ const ResultOrderer = ({
   setOrder,
   userLocation,
 }) => {
-  const accessibiliySettingsLength = useAcccessibilitySettings().length;
+  const accessibiliySettingsLength = useSelector(selectSelectedAccessibilitySettings).length;
   const [openSettings, setOpenSettings] = useState(false);
   const [selectedOption, setSelectedOption] = useState({ direction, order });
   const highlightedOption = useRef(null);
