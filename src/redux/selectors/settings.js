@@ -20,11 +20,7 @@ export const selectSelectedOrganizations = createSelector(
 export const selectSelectedAccessibilitySettings = createSelector(
   [selectSettings],
   (settings) => {
-    const selected = [
-      settings.mobility !== 'none' ? settings.mobility : null,
-      ...SettingsUtility.accessibilityImpairmentKeys.filter(key => settings[key]),
-    ]
-      .filter(i => (i !== false && i !== null));
+    const selected = SettingsUtility.parseShortcomingSettings(settings);
     selected.sort();
     return selected;
   },
