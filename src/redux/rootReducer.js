@@ -32,25 +32,27 @@ import {
   direction,
   mapRef,
   measuringMode,
-  order
+  order,
 } from './reducers/simpleReducers';
 import statisticalDistrict from './reducers/statisticalDistrict';
 import user from './reducers/user';
 
 // Export all redux reducers here
 export default combineReducers({
+  address,
   alerts: combineReducers({
     errors: alertErrors,
     news: alertNews,
   }),
   breadcrumb,
+  districts,
+  event,
   mapRef,
   measuringMode,
+  mobilityTree,
   navigator,
+  redirectService,
   searchResults,
-  user,
-  districts,
-  service,
   selectedUnit: combineReducers({
     accessibilitySentences,
     unit: selectedUnit,
@@ -58,9 +60,7 @@ export default combineReducers({
     events: unitEvents,
     hearingMaps,
   }),
-  event,
-  address,
-  mobilityTree,
+  service,
   serviceTree,
   settings: combineReducers({
     colorblind,
@@ -77,5 +77,5 @@ export default combineReducers({
     order,
   }),
   statisticalDistrict,
-  redirectService,
+  user,
 });
