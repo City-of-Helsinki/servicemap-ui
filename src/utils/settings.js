@@ -186,13 +186,3 @@ export const useAcccessibilitySettings = () => {
 };
 
 export default SettingsUtility;
-
-export const useMobilitySettings = () => {
-  const userSettings = useSelector(state => state.settings);
-  return userSettings.mobility;
-};
-
-export const useSenseSettings = () => {
-  const userSettings = useSelector(state => state.settings);
-  return SettingsUtility.accessibilityImpairmentKeys.filter(key => userSettings[key]);
-};
