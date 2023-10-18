@@ -21,7 +21,7 @@ export const selectSelectedAccessibilitySettings = createSelector(
   [selectSettings],
   (settings) => {
     const selected = SettingsUtility.parseShortcomingSettings(settings);
-    selected.sort();
+    selected.sort((a, b) => +(a > b));
     return selected;
   },
   {
