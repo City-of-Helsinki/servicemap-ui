@@ -10,6 +10,7 @@ import {
 import URI from 'urijs';
 import { Helmet } from 'react-helmet';
 import { useSelector } from 'react-redux';
+import { selectSelectedOrganizations } from '../../redux/selectors/settings';
 import * as smurl from './utils/url';
 import isClient, { uppercaseFirst } from '../../utils';
 import { getEmbedURL, getLanguage } from './utils/utils';
@@ -83,11 +84,8 @@ const EmbedderView = ({
   const page = useSelector(state => state.user.page);
   const selectedUnit = useSelector(state => state.selectedUnit.unit.data);
   const currentService = useSelector(state => state.service.current);
-  const organizationSettings = useSelector((state) => {
-    const { organizations } = state.settings;
-    return config.organizations?.filter(org => organizations[org.id]);
-  });
-  
+  const organizationSettings = useSelector(selectSelectedOrganizations);
+
   const getLocaleText = useLocaleText();
   const userLocale = useUserLocale();
 

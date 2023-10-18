@@ -10,6 +10,7 @@ import config from '../../../config';
 import { SMAccordion, SMButton, TitleBar } from '../../components';
 import setMobilityTree from '../../redux/actions/mobilityTree';
 import setServiceTree from '../../redux/actions/serviceTree';
+import { selectSelectedCities, selectSelectedOrganizations } from '../../redux/selectors/settings';
 import useMobileStatus from '../../utils/isMobile';
 import useLocaleText from '../../utils/useLocaleText';
 import ServiceMapAPI from '../../utils/newFetch/ServiceMapAPI';
@@ -33,8 +34,8 @@ const getVariantDependentVariables = (variant, serviceTreeServices, mobilityServ
 
 const ServiceTreeView = ({ intl, variant }) => {
   const navigator = useSelector(state => state.navigator);
-  const cities = useSelector(state => state.settings.cities);
-  const organizations = useSelector(state => state.settings.organizations);
+  const citySettings = useSelector(selectSelectedCities);
+  const organizationSettings = useSelector(selectSelectedOrganizations);
   const serviceTreeServices = {
     prevServices: useSelector(state => state.serviceTree.services),
     prevSelected: useSelector(state => state.serviceTree.selected),
@@ -63,9 +64,6 @@ const ServiceTreeView = ({ intl, variant }) => {
   const [opened, setOpened] = useState(prevOpened);
   const [selected, setSelected] = useState(prevSelected);
   const [unitCounts, setUnitCounts] = useState([]);
-
-  const citySettings = config.cities?.filter((city) => cities[city]) || [];
-  const organizationSettings = config.organizations?.filter((org) => organizations[org.id]) || [];
 
   const checkChildNodes = (node, nodes = []) => {
     // Find all visible child nodes, so they can be selected when the parent checkbox is selected
@@ -266,7 +264,7 @@ const ServiceTreeView = ({ intl, variant }) => {
   useEffect(() => {
     setUnitCounts([]);
     fetchNodeCounts(services, true);
-  }, [cities, organizations]);
+  }, [citySettings, organizationSettings]);
 
   function calculateTitle(item) {
     if (variant === 'Mobility') {

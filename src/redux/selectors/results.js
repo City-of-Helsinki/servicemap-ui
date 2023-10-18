@@ -5,10 +5,10 @@ import { filterEmptyServices, filterCitiesAndOrganizations, filterResultTypes } 
 import isClient from '../../utils';
 import orderUnits from '../../utils/orderUnits';
 import getSortingParameters from './ordering';
+import { selectCities, selectOrganizations } from './settings';
 
 const isFetching = state => state.searchResults.isFetching;
 const results = state => state.searchResults.data;
-const settings = state => state.settings;
 
 /**
  * Returns given data after filtering it
@@ -50,8 +50,8 @@ export const getFilteredData = (data, settings, options) => {
  * Gets unordered processed result data for rendering search results
  */
 export const getProcessedData = createSelector(
-  [results, isFetching, settings],
-  (data, isFetching, settings) => {
+  [results, isFetching, selectCities, selectOrganizations],
+  (data, isFetching, cities, organizations) => {
     // Prevent processing data if fetch is in process
     if (isFetching) return [];
 
@@ -61,7 +61,7 @@ export const getProcessedData = createSelector(
       options.municipality = overrideMunicipality;
     }
 
-    return getFilteredData(data, settings, options);
+    return getFilteredData(data, { cities, organizations }, options);
   },
 );
 

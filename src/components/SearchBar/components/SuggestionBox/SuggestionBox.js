@@ -6,13 +6,16 @@ import {
 import { List } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
+import {
+  selectSelectedCities,
+  selectSelectedOrganizations,
+} from '../../../../redux/selectors/settings';
 import createSuggestions from '../../createSuggestions';
 import SuggestionItem from '../../../ListItems/SuggestionItem';
 import { keyboardHandler, uppercaseFirst } from '../../../../utils';
 import { getIcon } from '../../../SMIcon';
 import useLocaleText from '../../../../utils/useLocaleText';
 import UnitIcon from '../../../SMIcon/UnitIcon';
-import config from '../../../../../config';
 import { getPreviousSearches, removeSearchFromHistory, saveSearchToHistory } from '../../previousSearchData';
 import { useNavigationParams } from '../../../../utils/address';
 import { getLocale } from '../../../../redux/selectors/locale';
@@ -50,17 +53,8 @@ const SuggestionBox = (props) => {
   const getAddressNavigatorParams = useNavigationParams();
   const listRef = useRef(null);
   const fetchController = useRef(null);
-
-  const citySettings = useSelector((state) => {
-    const { cities } = state.settings;
-    return config.cities.filter(c => cities[c]);
-  });
-
-  const organizationSettings = useSelector((state) => {
-    const { organizations } = state.settings;
-    return config.organizations?.filter(org => organizations[org.id]);
-  });
-
+  const citySettings = useSelector(selectSelectedCities);
+  const organizationSettings = useSelector(selectSelectedOrganizations);
 
   const getAddressText = (item) => {
     if (item.isExact) {

@@ -242,6 +242,7 @@ test('Unit view share link does work correctly', async (t) => {
     .expect(copyLinkButton.textContent).notContains('senses=', 'Link should not contain sense settings')
     .expect(copyLinkButton.textContent).notContains('mobility=', 'Link should not contain mobility settings')
     .click(radio.nth(0)) // Select to show accessibility settings
+    // This is order dependant :(
     .expect(copyLinkButton.textContent).contains('senses=hearingAid%2CvisuallyImpaired', 'Link should contain sense settings')
     .expect(copyLinkButton.textContent).contains('mobility=wheelchair', 'Link should contain mobility settings')
   ;

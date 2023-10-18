@@ -4,7 +4,7 @@ import { calculateDistance } from '../redux/selectors/unit';
 
 const orderUnits = (unitData, sortingParameters) => {
   const {
-    usedPosition, direction, order, locale, settings,
+    usedPosition, direction, order, locale, selectedAccessibilitySettings,
   } = sortingParameters;
 
   let results = Array.from(unitData);
@@ -18,7 +18,9 @@ const orderUnits = (unitData, sortingParameters) => {
 
       unitResults.forEach((element) => {
         // eslint-disable-next-line no-param-reassign
-        element.shorcomingCount = UnitHelper.getShortcomingCount(element, settings);
+        element.shorcomingCount = UnitHelper.getShortcomingCount(
+          element, selectedAccessibilitySettings,
+        );
       });
       unitResults.sort((a, b) => {
         const aSC = a.shorcomingCount;
