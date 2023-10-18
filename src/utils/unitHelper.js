@@ -65,7 +65,7 @@ class UnitHelper {
     let shortcomingCount = 0;
     // Loop through currentSetting keys and see if unit has shortcomings
     currentSettings.forEach((settingKey) => {
-      if (Object.prototype.hasOwnProperty.call(shortcomings, settingKey)) {
+      if (Object.hasOwn(shortcomings, settingKey)) {
         shortcomingCount += shortcomings[settingKey];
       }
     });
