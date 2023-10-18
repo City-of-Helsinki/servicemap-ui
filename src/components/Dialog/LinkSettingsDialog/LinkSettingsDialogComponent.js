@@ -54,7 +54,11 @@ const LinkSettingsDialogComponent = ({
   const intl = useIntl();
   const getLocaleText = useLocaleText();
   const unit = useSelectedUnit();
-  const a11ySettings = useSelector(selectSelectedAccessibilitySettings);
+  const a11ySettings = useSelector(selectSelectedAccessibilitySettings)
+    .map(setting => {
+      const impairmentKey = SettingsUtility.mapValidAccessibilitySenseImpairmentValueToKey(setting);
+      return impairmentKey || setting;
+    });
   const [selected, setSelected] = useState('none');
   const [copyTooltipOpen1, setCopyTooltipOpen1] = useState(false);
   const [copyTooltipOpen2, setCopyTooltipOpen2] = useState(false);
@@ -95,12 +99,12 @@ const LinkSettingsDialogComponent = ({
   const getLinkUrl = () => {
     const url = new URL(window.location.href);
     if (a11ySettings.length && selected !== 'none') {
-      const mobility = a11ySettings.filter(v => SettingsUtility.isValidMobilitySetting(v));
+      const mobility = a11ySettings.find(v => SettingsUtility.isValidMobilitySetting(v));
       const senses = a11ySettings
         .filter(v => SettingsUtility.isValidAccessibilitySenseImpairment(v));
 
-      if (mobility.length) {
-        url.searchParams.append('mobility', mobility[0]);
+      if (mobility) {
+        url.searchParams.append('mobility', mobility);
       }
 
       if (senses.length) {

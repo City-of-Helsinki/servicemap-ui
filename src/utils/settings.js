@@ -44,6 +44,11 @@ class SettingsUtility {
     return true;
   }
 
+  static mapValidAccessibilitySenseImpairmentValueToKey(value) {
+    return SettingsUtility.accessibilityImpairmentKeys
+      .find(key => ACCESSIBILITY_MAPPING[key] === value);
+  }
+
   static isValidMobilitySetting(value) {
     if (SettingsUtility.mobilitySettings.indexOf(value) < 0) {
       return false;
