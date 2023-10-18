@@ -47,38 +47,30 @@ class UnitHelper {
    * @returns {null|number}
    */
   static getShortcomingCount(unit, currentSettings) {
-    if (unit && currentSettings) {
-      // Check if user has settings
-      if (currentSettings.length) {
-        // eslint-disable-next-line camelcase
-        const shortcomings = unit.accessibility_shortcoming_count;
-        // Check if unit has shortcoming info
-        if (shortcomings) {
-          const shortcomingKeys = Object.keys(shortcomings);
-          if (shortcomingKeys.length) {
-            let shortcomingCount = 0;
-
-            if (currentSettings.length) {
-              // Loop through currentSetting keys and see if unit has shortcomings
-              currentSettings.forEach((settingKey) => {
-                if (
-                  Object.prototype.hasOwnProperty.call(
-                    shortcomings,
-                    settingKey,
-                  )
-                ) {
-                  shortcomingCount += shortcomings[settingKey];
-                }
-              });
-
-              return shortcomingCount;
-            }
-          }
-        }
-        return null;
-      }
+    // Check if user has settings
+    if (!unit || !currentSettings?.length) {
+      return 0;
     }
-    return 0;
+    // eslint-disable-next-line camelcase
+    const shortcomings = unit.accessibility_shortcoming_count;
+    // Check if unit has shortcoming info
+    if (!shortcomings) {
+      return null;
+    }
+    const shortcomingKeys = Object.keys(shortcomings);
+    if (!shortcomingKeys.length) {
+      return null;
+    }
+
+    let shortcomingCount = 0;
+    // Loop through currentSetting keys and see if unit has shortcomings
+    currentSettings.forEach((settingKey) => {
+      if (Object.prototype.hasOwnProperty.call(shortcomings, settingKey)) {
+        shortcomingCount += shortcomings[settingKey];
+      }
+    });
+
+    return shortcomingCount;
   }
 
   // Currently only default markers are used
