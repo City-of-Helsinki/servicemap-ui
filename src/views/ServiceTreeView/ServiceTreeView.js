@@ -102,10 +102,9 @@ const ServiceTreeView = ({ intl, variant }) => {
     }
     const counts = await Promise.all(
       filteredIdList.map(async (id) => {
-        const count = await smAPI.serviceNodeSearch(id, fetchOptions, true);
+        const count = await smAPI.serviceNodeSearch(variant, id, fetchOptions, true);
         return { id, count };
-      })
-    
+      }),
     );
     if (fullSearch) {
       setUnitCounts(counts)
@@ -388,10 +387,11 @@ const ServiceTreeView = ({ intl, variant }) => {
             const stateVariables = { services, selected, opened };
             if (variant === 'ServiceTree') {
               dispatch(setServiceTree(stateVariables));
+              navigator.push('search', { service_node: ids });
             } else {
               dispatch(setMobilityTree(stateVariables));
+              navigator.push('search', { mobility_node: ids });
             }
-            navigator.push('search', { service_node: ids });
           }}
         />
       </StyledFloatingDiv>

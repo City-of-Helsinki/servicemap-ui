@@ -54,7 +54,7 @@ export default class ServiceMapAPI extends HttpClient {
     return this.getSinglePage('search', options);
   }
 
-  serviceNodeSearch = async (idList, additionalOptions, onlyCount) => {
+  serviceNodeSearch = async (variant, idList, additionalOptions, onlyCount) => {
     if (!['string', 'number'].includes(typeof idList)) {
       throw new APIFetchError('Invalid query string provided to ServiceMapAPI serviceNodeSearch method');
     }
@@ -62,17 +62,20 @@ export default class ServiceMapAPI extends HttpClient {
     let onlyValues = ['street_address', 'location', 'name', 'municipality', 'accessibility_shortcoming_count', 'service_nodes', 'contract_type', 'organizer_type'];
     if (isEmbed()) onlyValues = [...onlyValues, 'connections', 'phone', 'call_charge_info', 'email', 'www', 'address_zip'];
 
+    const idOptions = variant === 'ServiceTree' ? { service_node: idList } : { mobility_node: idList };
     const options = {
       page: 1,
       page_size: 200,
       only: onlyValues,
       geometry: true,
       include: 'service_nodes,services,accessibility_properties,department,root_department',
-      service_node: idList,
+      ...idOptions,
       ...additionalOptions,
     };
 
-    if (onlyCount) return this.getCount('unit', options);
+    if (onlyCount) {
+      return this.getCount('unit', options);
+    }
     return this.getConcurrent('unit', options);
   }
 
