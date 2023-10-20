@@ -34,7 +34,7 @@ const smFetch = (dispatch, options) => {
   } else if (options.mobility_node) { // Mobility node fetch
     const { mobility_node, ...additionalOptions } = options;
     smAPI.setOnProgressUpdate(onProgressUpdateConcurrent);
-    results = smAPI.serviceNodeSearch('Mobility', mobility_node, additionalOptions);
+    results = smAPI.serviceNodeSearch('MobilityTree', mobility_node, additionalOptions);
   } else if (options.address) { // Search units and addresses with address
     const { address, ...additionalOptions } = options;
     // Fetch units and addresses from two different endpoints

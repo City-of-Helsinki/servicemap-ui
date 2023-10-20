@@ -15,8 +15,11 @@ import useMobileStatus from '../../utils/isMobile';
 import useLocaleText from '../../utils/useLocaleText';
 import ServiceMapAPI from '../../utils/newFetch/ServiceMapAPI';
 
+const SERVICE_TREE = 'ServiceTree';
+const MOBILITY_TREE = 'MobilityTree';
+
 const getVariantDependentVariables = (variant, serviceTreeServices, mobilityServices) => {
-  if (variant === 'ServiceTree') {
+  if (variant === SERVICE_TREE) {
     return {
       ...serviceTreeServices,
       serviceApi: `${config.serviceMapAPI.root}${config.serviceMapAPI.version}/service_node/`,
@@ -118,8 +121,10 @@ const ServiceTreeView = ({ intl, variant }) => {
     // Fetch initially shown service nodes when first entering the pag
     fetchRootNodes()
       .then(data => {
-        setServices(data)
-        fetchNodeCounts(data)
+        setServices(data);
+        if (variant === SERVICE_TREE) {
+          fetchNodeCounts(data);
+        }
       });
   };
 
@@ -129,7 +134,9 @@ const ServiceTreeView = ({ intl, variant }) => {
       .then(response => response.json())
       .then((data) => {
         setServices([...services, ...data.results]);
-        fetchNodeCounts(data.results)
+        if (variant === SERVICE_TREE) {
+          fetchNodeCounts(data.results);
+        }
         // Expand the opened parent node once the child nodes have been fetched
         setOpened([...opened, service]);
         if (selected.find(e => e.id === service)) {
@@ -262,12 +269,14 @@ const ServiceTreeView = ({ intl, variant }) => {
   }, []);
 
   useEffect(() => {
-    setUnitCounts([]);
-    fetchNodeCounts(services, true);
+    if (variant === SERVICE_TREE) {
+      setUnitCounts([]);
+      fetchNodeCounts(services, true);
+    }
   }, [citySettings, organizationSettings]);
 
   function calculateTitle(item) {
-    if (variant === 'Mobility') {
+    if (variant === MOBILITY_TREE) {
       return getLocaleText(item.name);
     }
 
@@ -386,7 +395,7 @@ const ServiceTreeView = ({ intl, variant }) => {
           messageID="services.search"
           onClick={() => {
             const stateVariables = { services, selected, opened };
-            if (variant === 'ServiceTree') {
+            if (variant === SERVICE_TREE) {
               dispatch(setServiceTree(stateVariables));
               navigator.push('search', { service_node: ids });
             } else {
@@ -505,7 +514,7 @@ const StyledAccordion = styled(SMAccordion)(({ level }) => {
 
 ServiceTreeView.propTypes = {
   intl: PropTypes.objectOf(PropTypes.any).isRequired,
-  variant: PropTypes.oneOf(['ServiceTree', 'Mobility']).isRequired,
+  variant: PropTypes.oneOf([SERVICE_TREE, MOBILITY_TREE]).isRequired,
 };
 
 export default ServiceTreeView;
