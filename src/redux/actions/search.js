@@ -99,7 +99,7 @@ const fetchSearchResults = (options = null) => async (dispatch, getState) => {
       saveSearchToHistory(searchQuery, { object_type: 'searchHistory', text: searchQuery });
     }
     // Handle unit results that have no object_type
-    if (options.service_node || options.service_id || options.id || options.level) {
+    if (options.service_node || options.mobility_node || options.service_id || options.id || options.level) {
       results.forEach((item) => {
         item.object_type = 'unit';
       });
