@@ -142,7 +142,7 @@ const ServiceTree = () => (
 const Mobility = () => (
   <TitleWrapper messageId="general.pageTitles.mobility">
     <PageWrapper headMsgId="general.pageTitles.mobility.title" page="mobility">
-      <ServiceTreeView variant="Mobility" />
+      <ServiceTreeView variant="MobilityTree" />
     </PageWrapper>
   </TitleWrapper>
 );
