@@ -96,6 +96,7 @@ const ServiceTreeView = ({ intl, variant }) => {
     const fetchOptions = {};
     if (organizationSettings.length) {
       fetchOptions.organization = organizationSettings.map(setting => setting.id);
+      fetchOptions.no_private_services = true;
     }
     if (citySettings.length) {
       fetchOptions.municipality = citySettings;
