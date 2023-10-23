@@ -301,7 +301,7 @@ const translations = {
   'general.backToHome': 'Stäng sökningen och gå tillbaka till början',
   'general.backToStart': 'Gå tillbaka till början av sidan',
   'general.back.serviceTree': 'Gå tillbaka till servicekatalogen',
-  'general.back.mobility': 'Gå tillbaka till sidan trafik och rörelse',
+  'general.back.mobilityTree': 'Gå tillbaka till sidan trafik och rörelse',
   'general.cancel': 'Ångra',
   'general.close': 'Stäng',
   'general.distance.meters': 'Meters avstånd',
@@ -342,10 +342,10 @@ const translations = {
   'general.pageTitles.info': 'Infosida',
   'general.pageTitles.feedback': 'Responssida',
   'general.pageTitles.area': 'Områdessida',
-  'general.pageTitles.mobility': 'Trafik och rörlighet sida',
-  'general.pageTitles.mobility.title': 'Trafik och rörlighet',
+  'general.pageTitles.mobilityTree': 'Trafik och rörlighet sida',
+  'general.pageTitles.mobilityTree.title': 'Trafik och rörlighet',
   'general.pageLink.area': 'Tjänster i ditt område',
-  'general.pageLink.mobility': 'Trafik och rörlighet',
+  'general.pageLink.mobilityTree': 'Trafik och rörlighet',
 
   // General - Pagination
   'general.pagination.previous': 'Föregående sida',
@@ -374,7 +374,7 @@ const translations = {
   // Home
   'home.buttons.settings': 'Spara dina egna stads- och tillgänglighetsinställningar',
   'home.buttons.services': 'Läs mer om tjänsterna i servicekatalogen',
-  'home.buttons.mobility': 'Bekanta dig med de mångsidiga alternativen för rörelse',
+  'home.buttons.mobilityTree': 'Bekanta dig med de mångsidiga alternativen för rörelse',
   'home.buttons.closeByServices': 'Visa närtjänster',
   'home.buttons.instructions': 'Tips för användning av servicekartan',
   'home.buttons.area': 'Se hälsovårds-, rådgivnings-, elevupptagnings-, förskole-, befolkningsskydds- och naturskyddsområdena samt stadsdelarna',
@@ -605,7 +605,7 @@ const translations = {
   'services.category.open': 'Öppna kategori',
   'services.info': 'Välj minst en tjänst från listan över tjänster nedan som du kan utföra sökningen.',
   'services.tree.level': 'Nivå',
-  'mobility.info': 'Bekanta dig med de olika alternativen för att röra sig genom att välja minst en av alternativen nedan för att göra en sökning.',
+  'mobilityTree.info': 'Bekanta dig med de olika alternativen för att röra sig genom att välja minst en av alternativen nedan för att göra en sökning.',
 
   // Settings
   'settings': 'Inställningar',

@@ -6,7 +6,7 @@ import config from '../../../config';
 import CardSmall from '../../components/CardSmall/CardSmall';
 import areaServices from '../../assets/images/area-services.jpg';
 import serviceTree from '../../assets/images/service-tree.jpg';
-import mobility from '../../assets/images/mobility.jpg';
+import mobilityTree from '../../assets/images/mobility-tree.jpg';
 
 const HomeView = (props) => {
   const { navigator } = props;
@@ -35,10 +35,10 @@ const HomeView = (props) => {
           onClick={() => navigator.push('serviceTree')}
         />
         <CardSmall
-          image={mobility}
-          headerMessageID="general.pageTitles.mobility.title"
-          messageID="home.buttons.mobility"
-          onClick={() => navigator.push('mobility')}
+          image={mobilityTree}
+          headerMessageID="general.pageTitles.mobilityTree.title"
+          messageID="home.buttons.mobilityTree"
+          onClick={() => navigator.push('mobilityTree')}
         />
         <NewsInfo showCount={2} />
       </StyledContainer>

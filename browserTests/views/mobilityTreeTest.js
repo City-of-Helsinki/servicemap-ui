@@ -44,7 +44,7 @@ test('Mobility tree search works correctly', async (t) => {
     .expect(searchButton.getAttribute('disabled')).notOk('Search button should be active after selecting services')
     .click(searchButton)
     .expect(getLocation()).contains('/fi/search?mobility_node=')
-    .expect(searchBackButton.getAttribute('aria-label')).eql(finnish['general.back.mobility'])
+    .expect(searchBackButton.getAttribute('aria-label')).eql(finnish['general.back.mobilityTree'])
     .click(searchBackButton)
     .expect(getLocation()).contains('/fi/mobility')
   ;

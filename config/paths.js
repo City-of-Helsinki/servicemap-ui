@@ -24,7 +24,7 @@ const paths = {
     generate: () => '/services',
     regex: /\/[a-zA-Z]{2}\/services/,
   },
-  mobility: {
+  mobilityTree: {
     generate: () => '/mobility',
     regex: /\/[a-zA-Z]{2}\/mobility/,
   },

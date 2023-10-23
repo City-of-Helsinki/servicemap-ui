@@ -114,8 +114,8 @@ const TopBar = (props) => {
         }
         break;
 
-      case 'mobility':
-        navigator.push('mobility');
+      case 'mobilityTree':
+        navigator.push('mobilityTree');
         break;
 
       case 'area':
@@ -211,7 +211,7 @@ const TopBar = (props) => {
                           {navigationButton('general.frontPage', () => handleNavigation('home'), currentPage === 'home', 'HomePage')}
                           {navigationButton('general.pageLink.area', () => handleNavigation('area'), currentPage === 'area', 'AreaPage')}
                           {navigationButton('services', () => handleNavigation('services'), currentPage === 'services', 'ServicePage')}
-                          {navigationButton('general.pageLink.mobility', () => handleNavigation('mobility'), currentPage === 'mobility', 'MobilityPage')}
+                          {navigationButton('general.pageLink.mobilityTree', () => handleNavigation('mobilityTree'), currentPage === 'mobilityTree', 'MobilityPage')}
                         </StyledNavigationButtonsContainer>
                       ) : (
                         <>

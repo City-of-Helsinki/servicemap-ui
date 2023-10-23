@@ -18,7 +18,7 @@ import ServiceMapAPI from '../../utils/newFetch/ServiceMapAPI';
 const SERVICE_TREE = 'ServiceTree';
 const MOBILITY_TREE = 'MobilityTree';
 
-const getVariantDependentVariables = (variant, serviceTreeServices, mobilityServices) => {
+const getVariantDependentVariables = (variant, serviceTreeServices, mobilityTreeServices) => {
   if (variant === SERVICE_TREE) {
     return {
       ...serviceTreeServices,
@@ -28,10 +28,10 @@ const getVariantDependentVariables = (variant, serviceTreeServices, mobilityServ
     };
   }
   return {
-    ...mobilityServices,
+    ...mobilityTreeServices,
     serviceApi: `${config.serviceMapAPI.root}${config.serviceMapAPI.version}/mobility/`,
-    titleKey: 'general.pageTitles.mobility.title',
-    guidanceKey: 'mobility.info',
+    titleKey: 'general.pageTitles.mobilityTree.title',
+    guidanceKey: 'mobilityTree.info',
   };
 };
 
@@ -44,7 +44,7 @@ const ServiceTreeView = ({ intl, variant }) => {
     prevSelected: useSelector(state => state.serviceTree.selected),
     prevOpened: useSelector(state => state.serviceTree.opened),
   };
-  const mobilityServices = {
+  const mobilityTreeServices = {
     prevServices: useSelector(state => state.mobilityTree.services),
     prevSelected: useSelector(state => state.mobilityTree.selected),
     prevOpened: useSelector(state => state.mobilityTree.opened),
@@ -60,7 +60,7 @@ const ServiceTreeView = ({ intl, variant }) => {
     prevServices,
     prevSelected,
     prevOpened,
-  } = getVariantDependentVariables(variant, serviceTreeServices, mobilityServices);
+  } = getVariantDependentVariables(variant, serviceTreeServices, mobilityTreeServices);
 
   // State
   const [services, setServices] = useState(prevServices);
