@@ -81,6 +81,7 @@ const SearchView = (props) => {
       service,
       service_id,
       service_node,
+      mobility_node,
       search_language,
       events,
       units,
@@ -106,6 +107,9 @@ const SearchView = (props) => {
       }
 
       // Parse service_node
+      if (mobility_node) {
+        options.mobility_node = mobility_node;
+      }
       if (service_node) {
         options.service_node = service_node;
       }
@@ -180,6 +184,7 @@ const SearchView = (props) => {
     const searchQuery = data.q
       || data.address
       || data.service_node
+      || data.mobility_node
       || data.service_id
       || data.id
       || data.events;
