@@ -214,8 +214,8 @@ const MarkerCluster = ({
     list.className = classes.unitPopupList;
 
     // Add units to list
-    units.forEach((unit) => {
-      if (unit?.name) {
+    units.filter(unit => unit?.name)
+      .forEach((unit) => {
         const listItem = document.createElement('li');
         // Create span for interactive list item content
         const span = document.createElement('span');
@@ -247,8 +247,7 @@ const MarkerCluster = ({
         divider.className = 'popup-divider';
         divider.innerHTML = '<hr />';
         list.appendChild(divider);
-      }
-    });
+      });
     container.appendChild(list);
 
     return container;
@@ -348,9 +347,8 @@ const MarkerCluster = ({
     const markers = [];
 
     // Add unit markers to clusterlayer
-    unitListFiltered.forEach((unit) => {
-      // Show markers with location
-      if (unit && unit.location) {
+    unitListFiltered.filter(unit => unit?.location)
+      .forEach((unit) => {
         // Distance
         const distance = getDistance(unit, intl);
         const tooltipContent = createTooltipContent(
@@ -417,8 +415,7 @@ const MarkerCluster = ({
         }
 
         markers.push(markerElem);
-      }
-    });
+      });
 
     // Add markers in bulk
     cluster.addLayers(markers);
