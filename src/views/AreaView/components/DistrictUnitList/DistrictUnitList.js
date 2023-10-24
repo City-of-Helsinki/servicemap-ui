@@ -6,8 +6,10 @@ import { FormattedMessage } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { DivisionItem } from '../../../../components';
 import { getAddressDistrict } from '../../../../redux/selectors/district';
+import { getLocale } from '../../../../redux/selectors/user';
 import { formatDistanceObject } from '../../../../utils';
 import { getAddressFromUnit } from '../../../../utils/address';
+import orderUnits from '../../../../utils/orderUnits';
 import useLocaleText from '../../../../utils/useLocaleText';
 import { sortByOriginID } from '../../utils';
 import {
@@ -26,6 +28,7 @@ const DistrictUnitList = (props) => {
   const citySettings = useSelector(state => state.settings.cities);
   const addressDistrict = useSelector(state => getAddressDistrict(state));
   const districtsFetching = useSelector(state => state.districts.districtsFetching);
+  const locale = useSelector(getLocale);
   const getLocaleText = useLocaleText();
 
   const sortDistricts = (units) => {
@@ -121,6 +124,7 @@ const DistrictUnitList = (props) => {
 
     // Filter out non unit objects
     unitList = unitList.filter(u => typeof u === 'object' && typeof u.id === 'number');
+    unitList = orderUnits(unitList, { locale, direction: 'desc', order: 'alphabetical' })
 
     if (selectedAddress && addressDistrict) {
       unitList.forEach((unit) => {
