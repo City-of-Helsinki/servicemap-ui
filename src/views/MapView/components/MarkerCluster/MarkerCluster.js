@@ -4,6 +4,9 @@ import { useIntl } from 'react-intl';
 import 'leaflet.markercluster/dist/MarkerCluster.css';
 import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
 import { useMap } from 'react-leaflet';
+import { useSelector } from 'react-redux';
+import { getLocale } from '../../../../redux/selectors/user';
+import orderUnits from '../../../../utils/orderUnits';
 import { drawMarkerIcon } from '../../utils/drawIcon';
 import { isEmbed } from '../../../../utils/path';
 import { createMarkerClusterLayer, createTooltipContent, createPopupContent } from './clusterUtils';
@@ -60,6 +63,7 @@ const MarkerCluster = ({
   const embeded = isEmbed();
   const isMobile = useMobileStatus();
   const intl = useIntl();
+  const locale = useSelector(getLocale);
   const [cluster, setCluster] = useState(null);
 
   // Get highlighted unit's marker or cluster marker
@@ -273,7 +277,7 @@ const MarkerCluster = ({
     if (cluster.isPopupOpen()) {
       return;
     }
-    const units = parseUnitData(cluster);
+    const units = orderUnits(parseUnitData(cluster), { locale, direction: 'desc', order: 'alphabetical' });
 
     // Create popuelement and add events
     const elem = clusterPopupContent(units);
