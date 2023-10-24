@@ -390,7 +390,7 @@ const translations = {
   // Loading
   'loading.events': 'Haetaan tapahtumia {count} / {max}',
   'loading.events.srInfo': 'Haetaan {count} tapahtumaa',
-  'search.loading.units': 'Haetaan toimipisteitä {count} / {max}',
+  'search.loading.units': 'Haetaan toimipisteitä: {percentage}%',
   'search.loading.units.srInfo': 'Haetaan {count} toimipistettä',
   'search.loading.units.simple': 'Haetaan toimipisteitä',
 

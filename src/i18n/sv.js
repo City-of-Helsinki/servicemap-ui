@@ -391,7 +391,7 @@ const translations = {
   // Loading
   'loading.events': 'Söker evenemang {count} / {max}',
   'loading.events.srInfo': 'Söker {count} evenemange(n)',
-  'search.loading.units': 'Söker verksamhetsställen {count} / {max}',
+  'search.loading.units': 'Söker verksamhetsställen: {percentage}%',
   'search.loading.units.srInfo': 'Söker {count} verksamhetsställe(n)',
   'search.loading.units.simple': 'Söker verksamhetsställen',
 
