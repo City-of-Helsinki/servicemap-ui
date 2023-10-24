@@ -115,19 +115,13 @@ const MarkerCluster = ({
 
   // Parse unitData from clusterMarker
   const parseUnitData = (marker) => {
-    if (marker instanceof global.L.MarkerCluster) {
-      const clusterMarkers = marker.getAllChildMarkers();
-      const units = clusterMarkers.map((marker) => {
-        if (marker && marker.options && marker.options.customUnitData) {
-          const data = marker.options.customUnitData;
-          return data;
-        }
-        return null;
-      });
-
-      return units;
+    if (!(marker instanceof global.L.MarkerCluster)) {
+      return null;
     }
-    return null;
+    return marker.getAllChildMarkers()
+      .map(marker => marker?.options?.customUnitData)
+      .filter(unitData => !!unitData);
+
   };
 
   // Function for creating custom icon for cluster group
