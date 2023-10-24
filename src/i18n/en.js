@@ -390,7 +390,7 @@ const translations = {
   // Loading texts
   'loading.events': 'Loading events {count} / {max}',
   'loading.events.srInfo': 'Loading {count} event(s)',
-  'search.loading.units': 'Searching service points {count} / {max}',
+  'search.loading.units': 'Searching service points: {percentage}%',
   'search.loading.units.srInfo': 'Searching {count} service point(s)',
   'search.loading.units.simple': 'Searching service points',
 
