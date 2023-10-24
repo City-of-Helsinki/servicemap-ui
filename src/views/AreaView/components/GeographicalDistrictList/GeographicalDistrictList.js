@@ -11,6 +11,8 @@ import {
   setSelectedDistrictServices, setSelectedSubdistricts,
 } from '../../../../redux/actions/district';
 import { getDistrictsByType } from '../../../../redux/selectors/district';
+import { getLocale } from '../../../../redux/selectors/user';
+import orderUnits from '../../../../utils/orderUnits';
 import useLocaleText from '../../../../utils/useLocaleText';
 import { panViewToBounds } from '../../../MapView/utils/mapActions';
 import { StyledBoldText, StyledCheckBoxIcon } from '../styled/styled';
@@ -22,6 +24,7 @@ const GeographicalDistrictList = ({ district }) => {
   const citySettings = useSelector(state => state.settings.cities);
   const selectedSubdistricts = useSelector(state => state.districts.selectedSubdistricts);
   const selectedDistrictData = useSelector(state => getDistrictsByType(state));
+  const locale = useSelector(getLocale);
 
   const handleCheckboxChange = (event, district) => {
     let newArray;
@@ -46,8 +49,7 @@ const GeographicalDistrictList = ({ district }) => {
     dispatch(setSelectedSubdistricts(newArray));
   };
 
-  const districList = district.data;
-  districList.sort((a, b) => getLocaleText(a.name).localeCompare(getLocaleText(b.name)));
+  const districList = orderUnits(district.data, { locale, direction: 'desc', order: 'alphabetical' });
 
   const groupedData = districList.reduce((acc, cur) => {
     const duplicate = acc.find(list => list[0].municipality === cur.municipality);
