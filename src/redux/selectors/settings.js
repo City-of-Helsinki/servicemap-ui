@@ -8,11 +8,17 @@ export const getCitySettings = state => state.settings.cities;
 export const selectCities = state => state.settings.cities;
 export const selectOrganizations = state => state.settings.organizations;
 
+/**
+ * Returns an array of city ids.
+ */
 export const selectSelectedCities = createSelector(
   [selectCities],
   cities => config.cities.filter(c => cities[c]),
 );
 
+/**
+ * Returns an array of organization objects.
+ */
 export const selectSelectedOrganizations = createSelector(
   [selectOrganizations],
   organizations => config.organizations?.filter(org => organizations[org.id]),
