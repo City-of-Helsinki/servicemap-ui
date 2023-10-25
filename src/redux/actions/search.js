@@ -1,6 +1,7 @@
 import { saveSearchToHistory } from '../../components/SearchBar/previousSearchData';
 import LinkedEventsAPI from '../../utils/newFetch/LinkedEventsAPI';
 import ServiceMapAPI from '../../utils/newFetch/ServiceMapAPI';
+import optionsToSearchQuery from '../../utils/search';
 import { getLocaleString } from '../selectors/locale';
 import { searchResults } from './fetchDataActions';
 import { isEmbed } from '../../utils/path';
@@ -62,13 +63,7 @@ const fetchSearchResults = (options = null) => async (dispatch, getState) => {
   const searchFetchState = getState().searchResults;
   const { locale } = getState().user;
 
-  const searchQuery = options.q
-    || options.address
-    || options.service_node
-    || options.mobility_node
-    || options.service_id
-    || options.id
-    || options.events;
+  const searchQuery = optionsToSearchQuery(options);
 
   if (searchFetchState.isFetching) {
     throw Error('Unable to fetch search results because previous fetch is still active');
@@ -99,7 +94,8 @@ const fetchSearchResults = (options = null) => async (dispatch, getState) => {
       saveSearchToHistory(searchQuery, { object_type: 'searchHistory', text: searchQuery });
     }
     // Handle unit results that have no object_type
-    if (options.service_node || options.mobility_node || options.service_id || options.id || options.level) {
+    const keys = ['service_node', 'mobility_node', 'service_id', 'id', 'level'];
+    if (keys.some(key => !!options[key])) {
       results.forEach((item) => {
         item.object_type = 'unit';
       });

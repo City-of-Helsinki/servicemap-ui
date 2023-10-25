@@ -11,6 +11,7 @@ import { visuallyHidden } from '@mui/utils';
 import { FormattedMessage, useIntl } from 'react-intl';
 import fetchSearchResults from '../../redux/actions/search';
 import { parseSearchParams, getSearchParam, keyboardHandler } from '../../utils';
+import optionsToSearchQuery from '../../utils/search';
 import { fitUnitsToMap } from '../MapView/utils/mapActions';
 import { isEmbed } from '../../utils/path';
 import { useNavigationParams } from '../../utils/address';
@@ -181,13 +182,7 @@ const SearchView = (props) => {
       return false;
     }
     const data = getSearchParamData();
-    const searchQuery = data.q
-      || data.address
-      || data.service_node
-      || data.mobility_node
-      || data.service_id
-      || data.id
-      || data.events;
+    const searchQuery = optionsToSearchQuery(data);
 
     // Should fetch if previousSearch has changed and data has required parameters
     if (previousSearch) {
@@ -389,12 +384,17 @@ const SearchView = (props) => {
     const { previousSearch, isFetching } = searchFetchState;
     const shouldRender = !isFetching && previousSearch && !searchResults.length;
     const messageIDs = ['spelling', 'city', 'service', 'address', 'keyword'];
+    // This was same as previousSearch, but the text was not user-friendly when searching by nodes.
+    const options = parseSearchParams(location.search);
+    delete options.mobility_node;
+    delete options.service_node;
+    const searchQuery = optionsToSearchQuery(options);
 
     return shouldRender ? (
       <Container className={classes.noVerticalPadding}>
         <Container className={classes.noVerticalPadding}>
           <Typography align="left" variant="subtitle1" component="p">
-            <FormattedMessage id={typeof previousSearch === 'string' ? 'search.notFoundWith' : 'search.notFound'} values={{ query: previousSearch }} />
+            <FormattedMessage id={typeof searchQuery === 'string' ? 'search.notFoundWith' : 'search.notFound'} values={{ query: searchQuery }} />
           </Typography>
         </Container>
         <Divider aria-hidden="true" />
