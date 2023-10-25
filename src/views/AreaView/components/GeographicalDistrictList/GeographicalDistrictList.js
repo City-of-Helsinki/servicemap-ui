@@ -11,6 +11,7 @@ import {
   setSelectedDistrictServices, setSelectedSubdistricts,
 } from '../../../../redux/actions/district';
 import { getDistrictsByType } from '../../../../redux/selectors/district';
+import { selectMapRef } from '../../../../redux/selectors/general';
 import { getLocale } from '../../../../redux/selectors/user';
 import orderUnits from '../../../../utils/orderUnits';
 import useLocaleText from '../../../../utils/useLocaleText';
@@ -20,7 +21,7 @@ import { StyledBoldText, StyledCheckBoxIcon } from '../styled/styled';
 const GeographicalDistrictList = ({ district }) => {
   const dispatch = useDispatch();
   const getLocaleText = useLocaleText();
-  const map = useSelector(state => state.mapRef);
+  const map = useSelector(selectMapRef);
   const citySettings = useSelector(state => state.settings.cities);
   const selectedSubdistricts = useSelector(state => state.districts.selectedSubdistricts);
   const selectedDistrictData = useSelector(state => getDistrictsByType(state));

@@ -10,6 +10,7 @@ import config from '../../../config';
 import { SMAccordion, SMButton, TitleBar } from '../../components';
 import setMobilityTree from '../../redux/actions/mobilityTree';
 import setServiceTree from '../../redux/actions/serviceTree';
+import { selectNavigator } from '../../redux/selectors/general';
 import { selectSelectedCities, selectSelectedOrganizations } from '../../redux/selectors/settings';
 import useMobileStatus from '../../utils/isMobile';
 import useLocaleText from '../../utils/useLocaleText';
@@ -36,7 +37,7 @@ const getVariantDependentVariables = (variant, serviceTreeServices, mobilityTree
 };
 
 const ServiceTreeView = ({ intl, variant }) => {
-  const navigator = useSelector(state => state.navigator);
+  const navigator = useSelector(selectNavigator);
   const citySettings = useSelector(selectSelectedCities);
   const organizationSettings = useSelector(selectSelectedOrganizations);
   const serviceTreeServices = {
