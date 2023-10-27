@@ -7,6 +7,8 @@ export default () => {
     const alphabeticalFirstItemContent = await listItems.nth(0).textContent;
 
     await t
+      // fails might be caused by re-rendering after search results have arrived
+      .wait(100)
       .click(select)
       .expect(select.focused).ok('Select should be focused when active')
       .expect(listItems.nth(0).textContent).eql(alphabeticalFirstItemContent, 'Initial first item should be same as in alphabetical order')
