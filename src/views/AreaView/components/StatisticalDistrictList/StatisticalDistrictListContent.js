@@ -9,6 +9,7 @@ import { SMAccordion } from '../../../../components';
 import {
   addAreaSelection, removeAreaSelection, replaceAreaSelection,
 } from '../../../../redux/actions/statisticalDistrict';
+import { selectMapRef } from '../../../../redux/selectors/general';
 import {
   getCityGroupedData, getStatisticalDistrictAreaSelections, getStatisticalDistrictSelection,
 } from '../../../../redux/selectors/statisticalDistrict';
@@ -25,7 +26,7 @@ const StatisticalDistrictListContent = () => {
   const areaSelections = useSelector(getStatisticalDistrictAreaSelections);
   const selection = useSelector(getStatisticalDistrictSelection);
   const { formatMessage } = useIntl();
-  const map = useSelector(state => state.mapRef);
+  const map = useSelector(selectMapRef);
 
   useEffect(() => {
     // Focus to districts when area selections change

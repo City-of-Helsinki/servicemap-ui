@@ -2,13 +2,14 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import fetchSearchResults from '../../redux/actions/search';
+import { selectMapRef } from '../../redux/selectors/general';
 import { fitBbox } from '../../views/MapView/utils/mapActions';
 import { searchParamFetchOptions } from './helpers';
 import { getSearchParam } from '../../utils';
 
 const DataFetcher = ({ location }) => {
   const currentPage = useSelector(state => state.user.page);
-  const map = useSelector(state => state.mapRef);
+  const map = useSelector(selectMapRef);
   const dispatch = useDispatch();
 
   /**

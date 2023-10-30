@@ -1,3 +1,4 @@
+import { styled } from '@mui/material/styles';
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Typography, Link } from '@mui/material';
@@ -29,7 +30,6 @@ const Districts = ({
   setSelectedSubdistricts,
   setSelectedDistrictServices,
   embedded,
-  classes,
   navigator,
   intl,
 }) => {
@@ -107,12 +107,9 @@ const Districts = ({
               unit.location.coordinates[0],
             ]}
           >
-            <Typography
-              noWrap
-              className={classes.popup}
-            >
+            <StyledPopupTypography noWrap>
               {getLocaleText(unit.name)}
-            </Typography>
+            </StyledPopupTypography>
           </Tooltip>
         </Marker>
       ) : null
@@ -241,14 +238,14 @@ const Districts = ({
 
   const renderAreaPopup = () => (
     <Popup onClose={() => setAreaPopup(null)} position={areaPopup.position}>
-      <div className={classes.areaPopup}>
+      <StyledAreaPopup>
         <Typography>{getLocaleText(areaPopup.name)}</Typography>
         {areaPopup.link && (
-          <Link className={classes.areaLink} href={areaPopup.link} target="_blank">
+          <StyledAreaLink href={areaPopup.link} target="_blank">
             <Typography><FormattedMessage id="area.popupLink" /></Typography>
-          </Link>
+          </StyledAreaLink>
         )}
-      </div>
+      </StyledAreaPopup>
     </Popup>
   );
 
@@ -300,6 +297,23 @@ const Districts = ({
   } return null;
 };
 
+const StyledPopupTypography = styled(Typography)(() => ({
+  padding: 12,
+}));
+
+const StyledAreaLink = styled(Link)(({ theme }) => ({
+  textAlign: 'center',
+  paddingTop: theme.spacing(0.5),
+}));
+
+const StyledAreaPopup = styled('div')(({ theme }) => ({
+  padding: theme.spacing(1.5),
+  paddingTop: 22,
+  paddingBottom: 14,
+  display: 'flex',
+  flexDirection: 'column',
+}));
+
 Districts.propTypes = {
   highlightedDistrict: PropTypes.objectOf(PropTypes.any),
   mapOptions: PropTypes.objectOf(PropTypes.any).isRequired,
@@ -314,7 +328,6 @@ Districts.propTypes = {
   setSelectedDistrictServices: PropTypes.func.isRequired,
   embedded: PropTypes.bool.isRequired,
   navigator: PropTypes.objectOf(PropTypes.any).isRequired,
-  classes: PropTypes.objectOf(PropTypes.any).isRequired,
   intl: PropTypes.objectOf(PropTypes.any).isRequired,
   theme: PropTypes.oneOf(['default', 'dark']).isRequired,
 };

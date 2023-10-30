@@ -80,7 +80,7 @@ const AddressPopup = ({
 
   return (
     <Popup className="popup" key="addressPopup" closeButton={false} autoPan={false} position={[mapClickPoint.lat, mapClickPoint.lng]}>
-      <StyledPopupContainer>
+      <StyledAddressPopupContainer>
         <Typography ref={addressTextRef} variant="subtitle2" component="p">
           <FormattedMessage id="map.address.searching" />
         </Typography>
@@ -100,7 +100,7 @@ const AddressPopup = ({
           messageID="map.address.coordinate"
           color="primary"
         />
-      </StyledPopupContainer>
+      </StyledAddressPopupContainer>
     </Popup>
   );
 };
@@ -119,7 +119,7 @@ const StyledCloseButton = styled(SMButton)(() => ({
   marginLeft: 'auto',
 }));
 
-const StyledPopupContainer = styled.div(({ theme }) => ({
+const StyledAddressPopupContainer = styled.div(({ theme }) => ({
   lineHeight: '6px',
   width: 'auto',
   display: 'flex',

@@ -1,3 +1,4 @@
+import styled from '@emotion/styled';
 import React, { useEffect, useState } from 'react';
 import {
   ButtonBase, List, ListItem, Typography,
@@ -7,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Close } from '@mui/icons-material';
 import { useLocation } from 'react-router-dom';
 import { useMap } from 'react-leaflet';
+import { selectNavigator } from '../../../../redux/selectors/general';
 import useLocaleText from '../../../../utils/useLocaleText';
 import { getAddressFromUnit } from '../../../../utils/address';
 import formatEventDate from '../../../../utils/events';
@@ -14,9 +16,10 @@ import { changeSelectedEvent } from '../../../../redux/actions/event';
 import { drawMarkerIcon } from '../../utils/drawIcon';
 import { generatePath, isEmbed } from '../../../../utils/path';
 import { parseSearchParams } from '../../../../utils';
+import { StyledCloseText, StyledUnitTooltipTitle } from '../styled/styled';
 
-
-const EventMarkers = ({ searchData, classes, navigator }) => {
+const EventMarkers = ({ searchData }) => {
+  const navigator = useSelector(selectNavigator);
   const getLocaleText = useLocaleText();
   const dispatch = useDispatch();
   const location = useLocation();
@@ -112,46 +115,110 @@ const EventMarkers = ({ searchData, classes, navigator }) => {
           ]}
         >
           <Popup autoPan closeButton={false}>
-            <div className={classes.popupContainer}>
-              <div className={classes.popupTopArea}>
-                <div className={classes.popoupTitleArea}>
-                  <Typography className={classes.unitTooltipTitle}>
+            <StyledPopupContainer>
+              <StyledPopupTopArea>
+                <StyledPopupTitleArea>
+                  <StyledUnitTooltipTitle>
                     {getLocaleText(unit.name)}
-                  </Typography>
-                  <ButtonBase onClick={() => closePopup()} className={classes.popupCloseButton}>
-                    <Typography className={classes.closeText}><FormattedMessage id="general.close" /></Typography>
-                    <Close className={classes.infoIcon} />
-                  </ButtonBase>
-                </div>
-                <div className={classes.addressContainer}>
-                  <Typography className={classes.unitTooltipSubtitle}>
+                  </StyledUnitTooltipTitle>
+                  <StyledPopupCloseButton onClick={() => closePopup()}>
+                    <StyledCloseText><FormattedMessage id="general.close" /></StyledCloseText>
+                    <StyledCloseIcon />
+                  </StyledPopupCloseButton>
+                </StyledPopupTitleArea>
+                <StyledAddressContainer>
+                  <StyledUnitTooltipSubtitle>
                     {streetAddress}
-                  </Typography>
-                </div>
-              </div>
-              <List className={classes.popupList} disablePadding>
+                  </StyledUnitTooltipSubtitle>
+                </StyledAddressContainer>
+              </StyledPopupTopArea>
+              <StyledPopupList disablePadding>
                 {eventList.map(event => (
-                  <ListItem
+                  <StyledPopupListItem
                     key={event.id}
                     button
                     role="link"
                     disableGutters
-                    className={classes.popupListItem}
                     onClick={(e) => { handleEventClick(e, event); }}
                   >
                     <Typography>{getLocaleText(event.name)}</Typography>
-                    <Typography className={classes.eventDate}>
+                    <StyledEventDateText>
                       {formatEventDate(event, intl)}
-                    </Typography>
-                  </ListItem>
+                    </StyledEventDateText>
+                  </StyledPopupListItem>
                 ))}
-              </List>
-            </div>
+              </StyledPopupList>
+            </StyledPopupContainer>
           </Popup>
         </Marker>
       );
     })
   );
 };
+
+const StyledEventDateText = styled(Typography)(() => ({
+  fontSize: '0.75rem',
+}));
+
+const StyledPopupListItem = styled(ListItem)(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'start',
+  paddingBottom: 0,
+  paddingLeft: theme.spacing(2),
+  paddingRight: theme.spacing(2),
+}));
+
+const StyledPopupList = styled(List)(() => ({
+  backgroundColor: '#fafafa',
+  boxShadow: 'inset 0px 4px 4px rgba(0, 0, 0, 0.06)',
+  maxHeight: 175,
+  overflow: 'scroll',
+}));
+
+const StyledUnitTooltipSubtitle = styled(Typography)(({ theme }) => ({
+  ...theme.typography.body2,
+  margin: theme.spacing(0, 1),
+}));
+
+const StyledAddressContainer = styled.div(({ theme }) => ({
+  display: 'flex',
+  justifyContent: 'space-between',
+  paddingBottom: theme.spacing(1),
+}));
+
+const StyledCloseIcon = styled(Close)(() => ({
+  fontSize: 18,
+  width: 18,
+  height: 18,
+  lineHeight: '21px',
+  marginLeft: 6,
+  marginRight: 4,
+}));
+
+const StyledPopupCloseButton = styled(ButtonBase)(({ theme }) => ({
+  marginLeft: 'auto',
+  marginBottom: 'auto',
+  marginRight: -theme.spacing(1),
+  marginTop: 3,
+  paddingLeft: theme.spacing(1),
+}));
+
+const StyledPopupTitleArea = styled.div(() => ({
+  display: 'flex',
+}));
+
+const StyledPopupTopArea = styled.div(({ theme }) => ({
+  paddingRight: theme.spacing(2),
+  paddingLeft: theme.spacing(2),
+}));
+
+const StyledPopupContainer = styled.div(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  padding: theme.spacing(2),
+  paddingRight: 0,
+  paddingLeft: 0,
+}));
 
 export default EventMarkers;

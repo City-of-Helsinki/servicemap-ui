@@ -10,6 +10,7 @@ import {
 import { visuallyHidden } from '@mui/utils';
 import { FormattedMessage, useIntl } from 'react-intl';
 import fetchSearchResults from '../../redux/actions/search';
+import { selectMapRef, selectNavigator } from '../../redux/selectors/general';
 import { parseSearchParams, getSearchParam, keyboardHandler } from '../../utils';
 import optionsToSearchQuery from '../../utils/search';
 import { fitUnitsToMap } from '../MapView/utils/mapActions';
@@ -39,8 +40,8 @@ const SearchView = (props) => {
   const unorderedSearchResults = useSelector(state => state.searchResults.data);
   const searchFetchState = useSelector(state => state.searchResults);
   const isRedirectFetching = useSelector(state => state.redirectService.isFetching);
-  const map = useSelector(state => state.mapRef);
-  const navigator = useSelector(state => state.navigator);
+  const map = useSelector(selectMapRef);
+  const navigator = useSelector(selectNavigator);
 
   const getAddressNavigatorParams = useNavigationParams();
   const dispatch = useDispatch();

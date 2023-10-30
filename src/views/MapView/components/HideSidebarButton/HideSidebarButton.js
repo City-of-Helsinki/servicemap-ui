@@ -1,28 +1,40 @@
+import styled from '@emotion/styled';
+import { useTheme } from '@mui/styles';
 import React from 'react';
+import { css } from '@emotion/css';
 import PropTypes from 'prop-types';
 import { ButtonBase, Typography } from '@mui/material';
 import { ChevronLeft, ChevronRight } from '@mui/icons-material';
 import { FormattedMessage } from 'react-intl';
 import { useMap } from 'react-leaflet';
 
-const HideSidebarButton = ({
-  classes, sidebarHidden, toggleSidebar,
-}) => {
+const HideSidebarButton = ({ sidebarHidden, toggleSidebar }) => {
   const map = useMap();
+  const theme = useTheme();
+  const keyboardFocusClass = css({
+    boxShadow: 'none !important',
+    backgroundColor: theme.palette.primary.main,
+    color: '#fff',
+    maxWidth: 200,
+    '& p': {
+      display: 'block',
+      maxWidth: 200,
+    },
+  })
   return (
-    <ButtonBase
+    <StyledHideButton
       aria-hidden
-      className={`${classes.hideSidebarButton} ${sidebarHidden ? classes.fullLength : ''}`}
-      classes={{ focusVisible: classes.keyboardFocus }}
+      sidebarhidden={+sidebarHidden}
+      classes={{ focusVisible: keyboardFocusClass }}
       onClick={() => {
         toggleSidebar();
         // Update lealfet map size after sidebar has been hidden
         setTimeout(() => (
-        map?.invalidateSize()
+          map?.invalidateSize()
         ), 1);
       }}
     >
-      <div className={`${classes.buttonContent} ${sidebarHidden ? classes.reversed : ''}`}>
+      <StyledButtonContainer sidebarhidden={+sidebarHidden}>
         {sidebarHidden
           ? <ChevronRight />
           : <ChevronLeft />
@@ -30,16 +42,70 @@ const HideSidebarButton = ({
         <Typography>
           <FormattedMessage id={sidebarHidden ? 'map.button.sidebar.show' : 'map.button.sidebar.hide'} />
         </Typography>
-      </div>
-    </ButtonBase>
+      </StyledButtonContainer>
+    </StyledHideButton>
   );
 };
 
+const StyledButtonContainer = styled.div(({ sidebarhidden }) => {
+  const styles = {
+    width: '100%',
+    display: 'flex',
+    alignItems: 'center',
+  };
+  if (sidebarhidden) {
+    Object.assign(styles, {
+      flexDirection: 'row-reverse',
+    });
+  }
+  return styles;
+});
+
+const StyledHideButton = styled(ButtonBase)(({ theme, sidebarhidden }) => {
+  const styles = {
+    pointerEvents: 'auto',
+    maxWidth: 50,
+    minWidth: 50,
+    height: 40,
+    marginLeft: -10,
+    marginTop: -4,
+    padding: 10,
+    backgroundColor: '#fff',
+    transition: '0.2s',
+    '& p': {
+      display: 'none',
+      maxWidth: 0,
+      paddingLeft: theme.spacing(1),
+      paddingRight: theme.spacing(1),
+      whiteSpace: 'nowrap',
+      overflow: 'hidden',
+    },
+    '&:hover': {
+      backgroundColor: theme.palette.primary.main,
+      color: '#fff',
+      maxWidth: 200,
+      '& p': {
+        display: 'block', maxWidth: 200,
+      },
+    },
+  };
+  if (sidebarhidden) {
+    Object.assign(styles, {
+      minWidth: 200,
+      maxWidth: 200,
+      color: '#000',
+      '& p': {
+        display: 'block',
+        maxWidth: 200,
+      },
+    });
+  }
+  return styles;
+});
+
 HideSidebarButton.propTypes = {
-  classes: PropTypes.objectOf(PropTypes.any).isRequired,
   sidebarHidden: PropTypes.bool.isRequired,
   toggleSidebar: PropTypes.func.isRequired,
 };
-
 
 export default HideSidebarButton;
