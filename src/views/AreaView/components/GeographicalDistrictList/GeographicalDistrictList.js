@@ -10,7 +10,9 @@ import { SMAccordion } from '../../../../components';
 import {
   setSelectedDistrictServices, setSelectedSubdistricts,
 } from '../../../../redux/actions/district';
-import { getDistrictsByType } from '../../../../redux/selectors/district';
+import {
+  getDistrictsByType, selectSelectedSubdistricts,
+} from '../../../../redux/selectors/district';
 import { selectMapRef } from '../../../../redux/selectors/general';
 import { getLocale } from '../../../../redux/selectors/user';
 import orderUnits from '../../../../utils/orderUnits';
@@ -23,8 +25,8 @@ const GeographicalDistrictList = ({ district }) => {
   const getLocaleText = useLocaleText();
   const map = useSelector(selectMapRef);
   const citySettings = useSelector(state => state.settings.cities);
-  const selectedSubdistricts = useSelector(state => state.districts.selectedSubdistricts);
-  const selectedDistrictData = useSelector(state => getDistrictsByType(state));
+  const selectedSubdistricts = useSelector(selectSelectedSubdistricts);
+  const selectedDistrictData = useSelector(getDistrictsByType);
   const locale = useSelector(getLocale);
 
   const handleCheckboxChange = (event, district) => {

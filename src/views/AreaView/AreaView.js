@@ -10,6 +10,7 @@ import {
   BusinessCenter, EscalatorWarning, LocationCity, Map,
 } from '@mui/icons-material';
 import { visuallyHidden } from '@mui/utils';
+import { selectMapRef, selectNavigator } from '../../redux/selectors/general';
 import { focusDistrict, focusDistricts, useMapFocusDisabled } from '../MapView/utils/mapActions';
 import GeographicalTab from './components/GeographicalTab';
 import { parseSearchParams, stringifySearchParams } from '../../utils';
@@ -19,7 +20,15 @@ import fetchAddress from '../MapView/utils/fetchAddress';
 import { dataStructure, geographicalDistricts } from './utils/districtDataHelper';
 import { fetchParkingAreaGeometry, fetchParkingUnits, handleOpenItems } from '../../redux/actions/district';
 import useLocaleText from '../../utils/useLocaleText';
-import { getAddressDistrict } from '../../redux/selectors/district';
+import {
+  getAddressDistrict,
+  getDistrictsByType, selectDistrictAddressData,
+  selectDistrictData,
+  selectDistrictsFetching,
+  selectSelectedDistrictType,
+  selectSelectedSubdistricts,
+  selectSubdistrictUnits,
+} from '../../redux/selectors/district';
 import { getAddressText } from '../../utils/address';
 import {
   AddressSearchBar,
@@ -42,15 +51,6 @@ const AreaView = ({
   setSelectedParkingAreas,
   fetchDistrictUnitList,
   fetchDistricts,
-  unitsFetching,
-  districtData,
-  districtAddressData,
-  selectedDistrictData,
-  subdistrictUnits,
-  selectedSubdistricts,
-  mapState,
-  map,
-  navigator,
   embed,
   intl,
 }) => {
@@ -58,9 +58,18 @@ const AreaView = ({
   const location = useLocation();
   const history = useHistory();
   const isMobile = useMobileStatus();
+  const districtData = useSelector(selectDistrictData);
+  const districtAddressData = useSelector(selectDistrictAddressData);
+  const subdistrictUnits = useSelector(selectSubdistrictUnits);
+  const selectedSubdistricts = useSelector(selectSelectedSubdistricts);
+  const mapState = useSelector(state => state.districts.mapState);
+  const unitsFetching = useSelector(state => state.districts.unitFetch.nodesFetching);
+  const selectedDistrictData = useSelector(getDistrictsByType);
+  const navigator = useSelector(selectNavigator);
+  const map = useSelector(selectMapRef);
   const addressDistrict = useSelector(getAddressDistrict);
-  const selectedDistrictType = useSelector(state => state.districts.selectedDistrictType);
-  const districtsFetching = useSelector(state => state.districts.districtsFetching);
+  const selectedDistrictType = useSelector(selectSelectedDistrictType);
+  const districtsFetching = useSelector(selectDistrictsFetching);
   const getLocaleText = useLocaleText();
   const openItems = useSelector(state => state.districts.openItems);
   const selectedDistrictGeometry = selectedDistrictData[0]?.boundary;

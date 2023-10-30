@@ -14,6 +14,10 @@ import {
   setSelectedDistrictType,
   setSelectedParkingAreas,
 } from '../../../../redux/actions/district';
+import {
+  selectDistrictsFetching,
+  selectSelectedDistrictType,
+} from '../../../../redux/selectors/district';
 import { dataStructure, getDistrictCategory } from '../../utils/districtDataHelper';
 import DistrictAreaList from '../DistrictAreaList';
 import DistrictToggleButton from '../DistrictToggleButton';
@@ -34,8 +38,8 @@ const ServiceTab = (props) => {
     initialOpenItems,
   } = props;
   const dispatch = useDispatch();
-  const districtsFetching = useSelector(state => state.districts.districtsFetching);
-  const selectedDistrictType = useSelector(state => state.districts.selectedDistrictType);
+  const districtsFetching = useSelector(selectDistrictsFetching);
+  const selectedDistrictType = useSelector(selectSelectedDistrictType);
   const selectedParkingAreas = useSelector(state => state.districts.selectedParkingAreas);
   const parkingUnits = useSelector(state => state.districts.parkingUnits);
   const citySettings = useSelector(state => state.settings.cities);
