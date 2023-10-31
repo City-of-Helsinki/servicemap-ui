@@ -4,7 +4,17 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 import {
-  fetchParkingAreaGeometry, fetchParkingUnits, handleOpenItems,
+  fetchDistricts,
+  fetchDistrictUnitList,
+  fetchParkingAreaGeometry,
+  fetchParkingUnits,
+  handleOpenItems,
+  setDistrictAddressData,
+  setMapState,
+  setSelectedDistrictServices,
+  setSelectedDistrictType,
+  setSelectedParkingAreas,
+  setSelectedSubdistricts,
 } from '../../redux/actions/district';
 import {
   getAddressDistrict,
@@ -25,17 +35,7 @@ import { focusDistrict, focusDistricts, useMapFocusDisabled } from '../MapView/u
 import SideBar from './components/SideBar/SideBar';
 import { dataStructure, geographicalDistricts } from './utils/districtDataHelper';
 
-const AreaView = ({
-  setSelectedDistrictType,
-  setSelectedSubdistricts,
-  setSelectedDistrictServices,
-  setDistrictAddressData,
-  setMapState,
-  setSelectedParkingAreas,
-  fetchDistrictUnitList,
-  fetchDistricts,
-  embed,
-}) => {
+const AreaView = ({ embed }) => {
   const dispatch = useDispatch();
   const location = useLocation();
   const history = useHistory();
@@ -80,10 +80,10 @@ const AreaView = ({
     };
     await districtFetch(options)
       .then((data) => {
-        setDistrictAddressData({
+        dispatch(setDistrictAddressData({
           address: selectedAddress,
           districts: data.results,
-        });
+        }));
       });
   };
 
@@ -95,7 +95,7 @@ const AreaView = ({
   useEffect(() => () => {
     if (map && MapUtility.mapHasMapPane(map)) {
       // On unmount, save map position
-      setMapState(getViewState());
+      dispatch(setMapState(getViewState()));
     }
   }, [map]);
 
@@ -114,7 +114,7 @@ const AreaView = ({
         fetchAddressDistricts();
       }
     } else {
-      setDistrictAddressData(null);
+      dispatch(setDistrictAddressData(null));
     }
   }, [selectedAddress]);
 
@@ -123,7 +123,7 @@ const AreaView = ({
       // Fetch geographical districts unless currently fetching or already fetched
       if (!unitsFetching.includes(district)
         && !subdistrictUnits.some(unit => unit.division_id === district)) {
-        fetchDistrictUnitList(district);
+        dispatch(fetchDistrictUnitList(district));
       }
     });
   }, [selectedSubdistricts]);
@@ -167,7 +167,7 @@ const AreaView = ({
         /* Remove selected area parameter from url, otherwise it will override
         user area selection when returning to area view */
         history.replace();
-        setSelectedDistrictType(null);
+        dispatch(setSelectedDistrictType(null));
         // Switch to geographical tab if geographical area
         if (geographicalDistricts.includes(selectedAreaType)) {
           const geoTab = document.getElementById('Tab1');
@@ -177,24 +177,24 @@ const AreaView = ({
 
       // Fetch and select area from url parameters
       if (selectedArea && !dataStructure.some(obj => obj.id === selectedArea)) {
-        fetchDistricts(selectedAreaType);
+        dispatch(fetchDistricts(selectedAreaType));
         if (!embed) {
           const category = dataStructure.find(
             data => data.districts.some(obj => obj.id === selectedAreaType),
           );
           dispatch(handleOpenItems(category.id));
         } else {
-          fetchDistricts(selectedAreaType, true);
+          dispatch(fetchDistricts(selectedAreaType, true));
         }
-        setSelectedDistrictType(selectedArea);
+        dispatch(setSelectedDistrictType(selectedArea));
       } else if (!embed) {
-        fetchDistricts();
+        dispatch(fetchDistricts());
       }
 
       // Set selected parking spaces from url parameters
       if (searchParams.parkingSpaces) {
         const parkingAreas = searchParams.parkingSpaces.split(',');
-        setSelectedParkingAreas(parkingAreas);
+        dispatch(setSelectedParkingAreas(parkingAreas));
         parkingAreas.forEach((area) => {
           dispatch(fetchParkingAreaGeometry(area));
         });
@@ -205,7 +205,7 @@ const AreaView = ({
 
       // Set selected geographical districts from url parameters and handle map focus
       if (searchParams.districts) {
-        setSelectedSubdistricts(searchParams.districts.split(','));
+        dispatch(setSelectedSubdistricts(searchParams.districts.split(',')));
         if (!mapFocusDisabled) {
           setFocusTo('subdistricts');
         }
@@ -215,7 +215,7 @@ const AreaView = ({
       if (searchParams.services) {
         const services = searchParams.services.split(',');
         const convertedServices = services.map(service => parseInt(service, 10));
-        setSelectedDistrictServices(convertedServices);
+        dispatch(setSelectedDistrictServices(convertedServices));
       }
 
       // Set address from url paramters
@@ -224,7 +224,7 @@ const AreaView = ({
           .then(data => setSelectedAddress(data));
       }
     } else if (!districtData.length) { // Arriving to page first time, without url parameters
-      fetchDistricts();
+      dispatch(fetchDistricts());
     } else if (mapState) { // Returning to page, without url parameters
       // Returns map to the previous spot
       const { center, zoom } = mapState;
@@ -243,7 +243,11 @@ const AreaView = ({
 };
 
 AreaView.propTypes = {
-  setSelectedDistrictType: PropTypes.func.isRequired,
+  embed: PropTypes.bool,
+};
+
+AreaView.defaultProps = {
+  embed: false,
 };
 
 export default AreaView;
