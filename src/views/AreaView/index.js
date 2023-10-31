@@ -1,4 +1,3 @@
-import { injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import {
   fetchDistricts,
@@ -12,7 +11,7 @@ import {
 } from '../../redux/actions/district';
 import AreaView from './AreaView';
 
-export default injectIntl(connect(
+export default connect(
   () => ({}),
   {
     setSelectedDistrictType,
@@ -24,4 +23,4 @@ export default injectIntl(connect(
     fetchDistricts,
     setSelectedParkingAreas,
   },
-)(AreaView));
+)(AreaView);
