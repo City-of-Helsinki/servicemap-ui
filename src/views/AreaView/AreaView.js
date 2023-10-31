@@ -20,7 +20,6 @@ import {
   getAddressDistrict,
   getDistrictsByType,
   selectDistrictAddressData,
-  selectDistrictData,
   selectSelectedSubdistricts,
   selectSubdistrictUnits,
 } from '../../redux/selectors/district';
@@ -39,7 +38,6 @@ const AreaView = ({ embed }) => {
   const dispatch = useDispatch();
   const location = useLocation();
   const history = useHistory();
-  const districtData = useSelector(selectDistrictData);
   const districtAddressData = useSelector(selectDistrictAddressData);
   const subdistrictUnits = useSelector(selectSubdistrictUnits);
   const selectedSubdistricts = useSelector(selectSelectedSubdistricts);
@@ -223,8 +221,6 @@ const AreaView = ({ embed }) => {
         fetchAddress({ lat: searchParams.lat, lng: searchParams.lng })
           .then(data => setSelectedAddress(data));
       }
-    } else if (!districtData.length) { // Arriving to page first time, without url parameters
-      dispatch(fetchDistricts());
     } else if (mapState) { // Returning to page, without url parameters
       // Returns map to the previous spot
       const { center, zoom } = mapState;

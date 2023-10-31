@@ -7,15 +7,15 @@ import {
 } from '@mui/icons-material';
 import { List, Typography } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import {
   AddressSearchBar, MobileComponent, SMAccordion, SMButton, TitleBar,
 } from '../../../../components';
 import {
-  setSelectedDistrictServices, setSelectedDistrictType, setSelectedSubdistricts,
+  fetchDistricts, setSelectedDistrictServices, setSelectedDistrictType, setSelectedSubdistricts,
 } from '../../../../redux/actions/district';
 import {
   selectDistrictAddressData,
@@ -33,6 +33,7 @@ import StatisticalDistrictList from '../StatisticalDistrictList';
 import { StyledListItem, StyledLoadingText } from '../styled/styled';
 
 function SideBar() {
+  const dispatch = useDispatch();
   const intl = useIntl();
   const location = useLocation();
   const isMobile = useMobileStatus();
@@ -59,6 +60,12 @@ function SideBar() {
     return openItems;
   };
   const [initialOpenItems] = useState(getInitialOpenItems);
+
+  useEffect(() => {
+    if (!districtData.length) { // Arriving to page first time
+      dispatch(fetchDistricts());
+    }
+  }, [districtData]);
 
   const clearRadioButtonValue = useCallback(() => {
     setSelectedDistrictType(null);
