@@ -216,7 +216,7 @@ const AreaView = ({ embed }) => {
   if (embed) {
     return null;
   }
-  return <SideBar />;
+  return <SideBar setSelectedAddress={setSelectedAddress} selectedAddress={selectedAddress} />;
 };
 
 AreaView.propTypes = {

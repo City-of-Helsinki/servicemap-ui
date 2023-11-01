@@ -7,6 +7,7 @@ import {
 } from '@mui/icons-material';
 import { List, Typography } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
+import PropTypes from 'prop-types';
 import React, { useCallback, useEffect, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
@@ -22,7 +23,6 @@ import {
   setSelectedSubdistricts,
 } from '../../../../redux/actions/district';
 import {
-  selectDistrictAddressData,
   selectDistrictData,
   selectDistrictsFetching,
   selectSelectedDistrictType,
@@ -37,7 +37,7 @@ import ServiceTab from '../ServiceTab';
 import StatisticalDistrictList from '../StatisticalDistrictList';
 import { StyledListItem, StyledLoadingText } from '../styled/styled';
 
-function SideBar() {
+function SideBar({ selectedAddress, setSelectedAddress }) {
   const dispatch = useDispatch();
   const intl = useIntl();
   const location = useLocation();
@@ -46,7 +46,6 @@ function SideBar() {
   const navigator = useSelector(selectNavigator);
   const selectedDistrictType = useSelector(selectSelectedDistrictType);
   const districtsFetching = useSelector(selectDistrictsFetching);
-  const districtAddressData = useSelector(selectDistrictAddressData);
   const openItems = useSelector(state => state.districts.openItems);
   const mapState = useSelector(state => state.districts.mapState);
   const map = useSelector(selectMapRef);
@@ -55,7 +54,6 @@ function SideBar() {
   const selectedAreaType = selectedArea?.split(/([\d]+)/)[0];
   // Selected category handling
   const [areaSelection, setAreaSelection] = useState(null);
-  const [selectedAddress, setSelectedAddress] = useState(districtAddressData.address);
 
   const getInitialOpenItems = () => {
     if (selectedAreaType) {
@@ -237,5 +235,14 @@ const StyledInfoText = styled(Typography)(({ theme }) => ({
   backgroundColor: theme.palette.primary.main,
   color: '#fff',
 }));
+
+SideBar.propTypes = {
+  selectedAddress: PropTypes.objectOf(PropTypes.any),
+  setSelectedAddress: PropTypes.func.isRequired,
+};
+
+SideBar.defaultProps = {
+  selectedAddress: null,
+};
 
 export default SideBar;
