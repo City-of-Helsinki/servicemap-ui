@@ -10,7 +10,6 @@ import {
   fetchParkingUnits,
   handleOpenItems,
   setDistrictAddressData,
-  setMapState,
   setSelectedDistrictServices,
   setSelectedDistrictType,
   setSelectedParkingAreas,
@@ -27,7 +26,6 @@ import { selectMapRef } from '../../redux/selectors/general';
 import { parseSearchParams } from '../../utils';
 import { getAddressText } from '../../utils/address';
 import { districtFetch } from '../../utils/fetch';
-import MapUtility from '../../utils/mapUtility';
 import useLocaleText from '../../utils/useLocaleText';
 import fetchAddress from '../MapView/utils/fetchAddress';
 import { focusDistrict, focusDistricts, useMapFocusDisabled } from '../MapView/utils/mapActions';
@@ -41,7 +39,6 @@ const AreaView = ({ embed }) => {
   const districtAddressData = useSelector(selectDistrictAddressData);
   const subdistrictUnits = useSelector(selectSubdistrictUnits);
   const selectedSubdistricts = useSelector(selectSelectedSubdistricts);
-  const mapState = useSelector(state => state.districts.mapState);
   const unitsFetching = useSelector(state => state.districts.unitFetch.nodesFetching);
   const selectedDistrictData = useSelector(getDistrictsByType);
   const map = useSelector(selectMapRef);
@@ -84,18 +81,6 @@ const AreaView = ({ embed }) => {
         }));
       });
   };
-
-  const getViewState = () => ({
-    center: map.getCenter(),
-    zoom: map.getZoom(),
-  });
-
-  useEffect(() => () => {
-    if (map && MapUtility.mapHasMapPane(map)) {
-      // On unmount, save map position
-      dispatch(setMapState(getViewState()));
-    }
-  }, [map]);
 
   useEffect(() => {
     // Focus map to local district when new address is selected
@@ -221,10 +206,6 @@ const AreaView = ({ embed }) => {
         fetchAddress({ lat: searchParams.lat, lng: searchParams.lng })
           .then(data => setSelectedAddress(data));
       }
-    } else if (mapState) { // Returning to page, without url parameters
-      // Returns map to the previous spot
-      const { center, zoom } = mapState;
-      if (map && center && zoom) map.setView(center, zoom);
     }
   }, []);
 

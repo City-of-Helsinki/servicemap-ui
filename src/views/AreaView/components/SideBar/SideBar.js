@@ -15,7 +15,11 @@ import {
   AddressSearchBar, MobileComponent, SMAccordion, SMButton, TitleBar,
 } from '../../../../components';
 import {
-  fetchDistricts, setSelectedDistrictServices, setSelectedDistrictType, setSelectedSubdistricts,
+  fetchDistricts,
+  setMapState,
+  setSelectedDistrictServices,
+  setSelectedDistrictType,
+  setSelectedSubdistricts,
 } from '../../../../redux/actions/district';
 import {
   selectDistrictAddressData,
@@ -23,9 +27,10 @@ import {
   selectDistrictsFetching,
   selectSelectedDistrictType,
 } from '../../../../redux/selectors/district';
-import { selectNavigator } from '../../../../redux/selectors/general';
+import { selectMapRef, selectNavigator } from '../../../../redux/selectors/general';
 import { parseSearchParams, stringifySearchParams } from '../../../../utils';
 import useMobileStatus from '../../../../utils/isMobile';
+import MapUtility from '../../../../utils/mapUtility';
 import { dataStructure } from '../../utils/districtDataHelper';
 import GeographicalTab from '../GeographicalTab';
 import ServiceTab from '../ServiceTab';
@@ -43,12 +48,15 @@ function SideBar() {
   const districtsFetching = useSelector(selectDistrictsFetching);
   const districtAddressData = useSelector(selectDistrictAddressData);
   const openItems = useSelector(state => state.districts.openItems);
+  const mapState = useSelector(state => state.districts.mapState);
+  const map = useSelector(selectMapRef);
   const searchParams = parseSearchParams(location.search);
   const selectedArea = searchParams.selected;
   const selectedAreaType = selectedArea?.split(/([\d]+)/)[0];
   // Selected category handling
   const [areaSelection, setAreaSelection] = useState(null);
   const [selectedAddress, setSelectedAddress] = useState(districtAddressData.address);
+
   const getInitialOpenItems = () => {
     if (selectedAreaType) {
       const category = dataStructure.find(
@@ -61,11 +69,29 @@ function SideBar() {
   };
   const [initialOpenItems] = useState(getInitialOpenItems);
 
+  const getViewState = () => ({
+    center: map.getCenter(),
+    zoom: map.getZoom(),
+  });
+
+  useEffect(() => () => {
+    if (map && MapUtility.mapHasMapPane(map)) {
+      // On unmount, save map position
+      dispatch(setMapState(getViewState()));
+    }
+  }, [map]);
+
   useEffect(() => {
     if (!districtData.length) { // Arriving to page first time
       dispatch(fetchDistricts());
+    } else if (mapState) {
+      // Returns map to the previous spot
+      const { center, zoom } = mapState;
+      if (map && center && zoom) {
+        map.setView(center, zoom);
+      }
     }
-  }, [districtData]);
+  }, []);
 
   const clearRadioButtonValue = useCallback(() => {
     setSelectedDistrictType(null);
