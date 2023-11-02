@@ -44,7 +44,7 @@ const AreaView = ({ embed }) => {
   const map = useSelector(selectMapRef);
   const addressDistrict = useSelector(getAddressDistrict);
   const getLocaleText = useLocaleText();
-  const selectedDistrictGeometry = selectedDistrictData[0]?.boundary;
+  const geometryLoaded = !!selectedDistrictData[0]?.boundary;
 
   const searchParams = parseSearchParams(location.search);
   const selectedArea = searchParams.selected;
@@ -115,12 +115,12 @@ const AreaView = ({ embed }) => {
     // If pending district focus, focus to districts when distitct data is loaded
     if (!mapFocusDisabled && focusTo && selectedDistrictData.length) {
       if (focusTo === 'districts') {
-        if (selectedDistrictGeometry) {
+        if (geometryLoaded) {
           setFocusTo(null);
           focusDistricts(map, selectedDistrictData);
         }
       } else if (focusTo === 'subdistricts') {
-        if (selectedDistrictGeometry) {
+        if (geometryLoaded) {
           const filtetedDistricts = selectedDistrictData.filter(
             i => selectedSubdistricts.includes(i.ocd_id),
           );
@@ -136,10 +136,10 @@ const AreaView = ({ embed }) => {
       && map
       && !focusTo
       && !addressDistrict
-      && selectedDistrictGeometry) {
+      && geometryLoaded) {
       focusDistricts(map, selectedDistrictData);
     }
-  }, [selectedDistrictGeometry]);
+  }, [geometryLoaded]);
 
   useEffect(() => {
     if (searchParams.selected
