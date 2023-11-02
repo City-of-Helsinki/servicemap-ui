@@ -37,6 +37,11 @@ import ServiceTab from '../ServiceTab';
 import StatisticalDistrictList from '../StatisticalDistrictList';
 import { StyledListItem, StyledLoadingText } from '../styled/styled';
 
+const getViewState = (map) => ({
+  center: map.getCenter(),
+  zoom: map.getZoom(),
+});
+
 function SideBar({ selectedAddress, setSelectedAddress }) {
   const dispatch = useDispatch();
   const intl = useIntl();
@@ -67,27 +72,25 @@ function SideBar({ selectedAddress, setSelectedAddress }) {
   };
   const [initialOpenItems] = useState(getInitialOpenItems);
 
-  const getViewState = () => ({
-    center: map.getCenter(),
-    zoom: map.getZoom(),
-  });
-
-  useEffect(() => () => {
-    if (map && MapUtility.mapHasMapPane(map)) {
-      // On unmount, save map position
-      dispatch(setMapState(getViewState()));
-    }
-  }, [map]);
-
   useEffect(() => {
-    if (!districtData.length) { // Arriving to page first time
-      dispatch(fetchDistricts());
-    } else if (mapState) {
+    if (mapState) {
       // Returns map to the previous spot
       const { center, zoom } = mapState;
       if (map && center && zoom) {
         map.setView(center, zoom);
       }
+    }
+    return () => {
+      if (map && MapUtility.mapHasMapPane(map)) {
+        // On unmount, save map position
+        dispatch(setMapState(getViewState(map)));
+      }
+    };
+  }, [mapState, map]);
+
+  useEffect(() => {
+    if (!districtData.length) { // Arriving to page first time
+      dispatch(fetchDistricts());
     }
   }, []);
 
