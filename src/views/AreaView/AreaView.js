@@ -56,6 +56,8 @@ const AreaView = ({ embed }) => {
   const [selectedAddress, setSelectedAddress] = useState(districtAddressData.address);
   // Pending request to focus map to districts. Executed once district data is loaded
   const [focusTo, setFocusTo] = useState(null);
+  // Has a pending focusTo request been made. Use this to not double focus
+  const [focusInitiated, setFocusInitiated] = useState(false);
 
   const focusMapToDistrict = (district) => {
     if (!mapFocusDisabled && map && district?.boundary) {
@@ -111,35 +113,28 @@ const AreaView = ({ embed }) => {
     });
   }, [selectedSubdistricts]);
 
+  const isPossibleToFocus = () => !!map && !mapFocusDisabled && geometryLoaded;
+
   useEffect(() => {
-    // If pending district focus, focus to districts when distitct data is loaded
-    if (!mapFocusDisabled && focusTo && selectedDistrictData.length) {
+    // If pending district focus, focus to districts when district data is loaded
+    if (isPossibleToFocus()) {
       if (focusTo === 'districts') {
-        if (geometryLoaded) {
-          setFocusTo(null);
-          focusDistricts(map, selectedDistrictData);
-        }
-      } else if (focusTo === 'subdistricts') {
-        if (geometryLoaded) {
-          const filtetedDistricts = selectedDistrictData.filter(
-            i => selectedSubdistricts.includes(i.ocd_id),
-          );
-          setFocusTo(null);
-          focusDistricts(map, filtetedDistricts);
-        }
+        setFocusTo(null);
+        focusDistricts(map, selectedDistrictData);
+      }
+      if (focusTo === 'subdistricts') {
+        const filteredDistricts = selectedDistrictData.filter(i => selectedSubdistricts.includes(i.ocd_id));
+        setFocusTo(null);
+        focusDistricts(map, filteredDistricts);
       }
     }
   }, [selectedDistrictData, focusTo]);
 
   useEffect(() => {
-    if (!mapFocusDisabled
-      && map
-      && !focusTo
-      && !addressDistrict
-      && geometryLoaded) {
+    if (isPossibleToFocus() && !focusTo && !addressDistrict && !focusInitiated) {
       focusDistricts(map, selectedDistrictData);
     }
-  }, [geometryLoaded]);
+  }, [selectedDistrictData, addressDistrict]);
 
   useEffect(() => {
     if (searchParams.selected
@@ -191,6 +186,7 @@ const AreaView = ({ embed }) => {
         dispatch(setSelectedSubdistricts(searchParams.districts.split(',')));
         if (!mapFocusDisabled) {
           setFocusTo('subdistricts');
+          setFocusInitiated(true);
         }
       }
 
