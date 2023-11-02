@@ -161,7 +161,19 @@ const Districts = ({
       filteredData = areasWithBoundary;
     }
 
-    return filteredData.map((district) => {
+    filteredData = filteredData
+      .filter(district => {
+        // In embed view, limit the rendered districts only to the selected ones
+        if (!embedded || !geographicalDistricts.includes(district.type)) {
+          return true;
+        }
+        if (!selectedSubdistricts.length) {
+          return true;
+        }
+        return selectedSubdistricts.some(item => item === district.ocd_id);
+      });
+
+    return filteredData.map(district => {
       let dimmed;
       if (geographicalDistricts.includes(district.type)) {
         if (selectedSubdistricts.length) {
@@ -170,7 +182,6 @@ const Districts = ({
       } else {
         dimmed = addressDistrict && district.id !== addressDistrict.id;
       }
-
       const area = district.boundary.coordinates.map(
         coords => swapCoordinates(coords),
       );
