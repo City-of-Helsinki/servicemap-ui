@@ -61,6 +61,20 @@ export const filterCitiesAndOrganizations = (
   return cityMatch && isOrganizationMatch(result, organizations);
 };
 
+/**
+ * Creates a filter that filters by municipality against citySettings
+ * @param citySettings given by state with selectCities
+ * @param getter access to municipality data, defaults to y => y.municipality
+ * @returns filter that checks for municipality
+ */
+export const filterByCitySettings = (citySettings, getter = y => y.municipality) => {
+  const selectedCities = Object.keys(citySettings).filter(city => citySettings[city]);
+  if (!selectedCities.length) {
+    return () => true;
+  }
+  return x => citySettings[getter(x)];
+};
+
 export const filterResultTypes = () => (obj) => {
   const allowedTypes = ['unit', 'service', 'address', 'event'];
   return (allowedTypes.includes(obj.object_type));

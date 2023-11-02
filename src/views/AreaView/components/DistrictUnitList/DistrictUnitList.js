@@ -10,6 +10,7 @@ import { selectCities } from '../../../../redux/selectors/settings';
 import { getLocale } from '../../../../redux/selectors/user';
 import { formatDistanceObject } from '../../../../utils';
 import { getAddressFromUnit } from '../../../../utils/address';
+import { filterByCitySettings } from '../../../../utils/filters';
 import orderUnits from '../../../../utils/orderUnits';
 import useLocaleText from '../../../../utils/useLocaleText';
 import { sortByOriginID } from '../../utils';
@@ -86,11 +87,7 @@ const DistrictUnitList = (props) => {
       );
     }
 
-
-    const selectedCities = Object.values(citySettings).filter(city => city);
-    const cityFilteredDistricts = !selectedCities.length
-      ? district.data
-      : district.data.filter(obj => citySettings[obj.municipality]);
+    const cityFilteredDistricts = district.data.filter(filterByCitySettings(citySettings));
 
     if (district.id === 'rescue_area') {
       sortByOriginID(cityFilteredDistricts);

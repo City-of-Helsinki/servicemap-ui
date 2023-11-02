@@ -1,4 +1,6 @@
 import { createSelector } from 'reselect';
+import { arraysEqual } from '../../utils';
+import { filterByCitySettings } from '../../utils/filters';
 import { getFilteredData } from './results';
 import { selectCities, selectOrganizations } from './settings';
 
@@ -19,19 +21,30 @@ export const selectParkingUnitUnits = createSelector(
   parkingUnits => parkingUnits.filter(unit => unit.object_type === 'unit'),
 );
 
-export const getDistrictsByType = createSelector(
-  [selectSelectedDistrictType, selectDistrictData, selectCities],
-  (selectedDistrictType, districtData, citySettings) => {
-    if (selectedDistrictType && districtData.length) {
-      const districtType = districtData.find(obj => obj.id === selectedDistrictType);
-      const selectedCities = Object.values(citySettings).filter(city => city);
-      // Filter distircts by user city settings
-      if (districtType && selectedCities.length) {
-        return districtType.data.filter(district => citySettings[district.municipality]);
-      }
-      return districtType ? districtType.data : [];
+const selectDistrictDataBySelectedType = createSelector(
+  [selectSelectedDistrictType, selectDistrictData],
+  (selectedDistrictType, districtData) => {
+    if (!selectedDistrictType || !districtData?.length) {
+      return [];
     }
-    return [];
+    return districtData.find(obj => obj.id === selectedDistrictType)?.data || [];
+  },
+  {
+    memoizeOptions: {
+      // Check for equal array content, assume non-nil and sorted arrays
+      resultEqualityCheck: (a, b) => arraysEqual(a, b),
+    },
+  },
+);
+
+export const getDistrictsByType = createSelector(
+  [selectDistrictDataBySelectedType, selectCities],
+  (districtData, citySettings) => districtData.filter(filterByCitySettings(citySettings)),
+  {
+    memoizeOptions: {
+      // Check for equal array content, assume non-nil and sorted arrays
+      resultEqualityCheck: (a, b) => arraysEqual(a, b),
+    },
   },
 );
 

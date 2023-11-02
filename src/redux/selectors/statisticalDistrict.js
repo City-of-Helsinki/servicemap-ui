@@ -2,8 +2,9 @@ import booleanPointInPolygon from '@turf/boolean-point-in-polygon';
 import flip from '@turf/flip';
 import { createSelector } from 'reselect';
 import dataVisualization from '../../utils/dataVisualization';
+import { filterByCitySettings } from '../../utils/filters';
 import { getUnitCount, unitsSortAlphabetically } from '../../utils/units';
-import { selectCities } from './settings';
+import { selectCities, selectSelectedCities } from './settings';
 import { getLocale } from './user';
 
 export const getStatisticalDistrictSelection = state => (
@@ -54,8 +55,6 @@ const calculateScaleAdjustedProportion = (proportion, scales) => {
 export const getSelectedStatisticalDistricts = createSelector(
   [getStatisticalDistrictSelection, getData, selectCities],
   (selection, data, citySettings) => {
-    // Create array of selected cities
-    const selectedCities = Object.keys(citySettings).filter(city => citySettings[city]);
     let selectedDivisions = [];
     const { forecast, proportionScales, section } = selection;
 
@@ -80,11 +79,7 @@ export const getSelectedStatisticalDistricts = createSelector(
         });
 
       // Filter out district based on city settings
-      if (selectedCities.length > 0) {
-        selectedDivisions = selectedDivisions.filter(
-          district => selectedCities.includes(district.municipality),
-        );
-      }
+      selectedDivisions = selectedDivisions.filter(filterByCitySettings(citySettings));
     }
 
     return selectedDivisions.sort((a, b) => {
@@ -157,14 +152,13 @@ export const getServiceFilteredStatisticalDistrictUnits = createSelector(
 );
 
 export const getOrderedStatisticalDistrictServices = createSelector(
-  [getStatisticalDistrictServices, getLocale, selectCities],
-  (services, locale, citySettings) => {
+  [getStatisticalDistrictServices, getLocale, selectSelectedCities],
+  (services, locale, selectedCities) => {
     if (services.length) {
       if (typeof locale !== 'string') {
         return services;
       }
 
-      const selectedCities = Object.keys(citySettings).filter(city => citySettings[city]);
       return services
         .filter((s) => {
           // Filter services that have any units or with city
