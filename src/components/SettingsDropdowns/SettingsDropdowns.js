@@ -7,11 +7,18 @@ import React, { useRef, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import config from '../../../config';
+import { selectSettings } from '../../redux/selectors/settings';
 import { keyboardHandler } from '../../utils';
 import SMAutocomplete from '../SMAutocomplete';
 import constants from '../SettingsComponent/constants';
 import {
-  setMapType, setMobility, toggleCity, toggleColorblind, toggleHearingAid, toggleOrganization, toggleVisuallyImpaired,
+  setMapType,
+  setMobility,
+  toggleCity,
+  toggleColorblind,
+  toggleHearingAid,
+  toggleOrganization,
+  toggleVisuallyImpaired,
 } from '../../redux/actions/settings';
 import useLocaleText from '../../utils/useLocaleText';
 
@@ -19,7 +26,7 @@ const SettingsDropdowns = ({ variant }) => {
   const intl = useIntl();
   const dispatch = useDispatch();
   const getLocaleText = useLocaleText();
-  const settings = useSelector(state => state.settings);
+  const settings = useSelector(selectSettings);
   // Format settings from redux to easier structure
   const settingsValues = constants.convertToSettingsValues(settings);
   const [openSettings, setOpenSettings] = useState(null);
