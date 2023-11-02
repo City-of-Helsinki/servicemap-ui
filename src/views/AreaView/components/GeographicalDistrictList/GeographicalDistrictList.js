@@ -14,6 +14,7 @@ import {
   getDistrictsByType, selectSelectedSubdistricts,
 } from '../../../../redux/selectors/district';
 import { selectMapRef } from '../../../../redux/selectors/general';
+import { selectCities } from '../../../../redux/selectors/settings';
 import { getLocale } from '../../../../redux/selectors/user';
 import orderUnits from '../../../../utils/orderUnits';
 import useLocaleText from '../../../../utils/useLocaleText';
@@ -24,7 +25,7 @@ const GeographicalDistrictList = ({ district }) => {
   const dispatch = useDispatch();
   const getLocaleText = useLocaleText();
   const map = useSelector(selectMapRef);
-  const citySettings = useSelector(state => state.settings.cities);
+  const citySettings = useSelector(selectCities);
   const selectedSubdistricts = useSelector(selectSelectedSubdistricts);
   const selectedDistrictData = useSelector(getDistrictsByType);
   const locale = useSelector(getLocale);

@@ -6,6 +6,7 @@ import { FormattedMessage } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { DivisionItem } from '../../../../components';
 import { getAddressDistrict, selectDistrictsFetching } from '../../../../redux/selectors/district';
+import { selectCities } from '../../../../redux/selectors/settings';
 import { getLocale } from '../../../../redux/selectors/user';
 import { formatDistanceObject } from '../../../../utils';
 import { getAddressFromUnit } from '../../../../utils/address';
@@ -25,7 +26,7 @@ const DistrictUnitList = (props) => {
     intl, selectedAddress, district,
   } = props;
 
-  const citySettings = useSelector(state => state.settings.cities);
+  const citySettings = useSelector(selectCities);
   const addressDistrict = useSelector(state => getAddressDistrict(state));
   const districtsFetching = useSelector(selectDistrictsFetching);
   const locale = useSelector(getLocale);

@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 import { selectSelectedDistrictType } from '../../../../redux/selectors/district';
+import { selectCities } from '../../../../redux/selectors/settings';
 import { drawMarkerIcon } from '../../utils/drawIcon';
 import swapCoordinates from '../../utils/swapCoordinates';
 import AddressMarker from '../AddressMarker';
@@ -15,7 +16,6 @@ import useLocaleText from '../../../../utils/useLocaleText';
 import { geographicalDistricts, getCategoryDistricts } from '../../../AreaView/utils/districtDataHelper';
 import UnitHelper from '../../../../utils/unitHelper';
 import ParkingAreas from './ParkingAreas';
-
 
 const Districts = ({
   highlightedDistrict,
@@ -40,7 +40,7 @@ const Districts = ({
   const useContrast = theme === 'dark';
   const location = useLocation();
   const getLocaleText = useLocaleText();
-  const citySettings = useSelector(state => state.settings.cities);
+  const citySettings = useSelector(selectCities);
   const selectedDistrictType = useSelector(selectSelectedDistrictType);
   const selectedParkingAreas = useSelector(state => state.districts.selectedParkingAreas);
   const [areaPopup, setAreaPopup] = useState(null);
