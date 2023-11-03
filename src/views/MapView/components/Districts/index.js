@@ -1,8 +1,6 @@
 import { connect } from 'react-redux';
 import { injectIntl } from 'react-intl';
-import { withStyles } from '@mui/styles';
 import Districts from './Districts';
-import styles from '../../styles';
 import { getDistrictsByType, getAddressDistrict, getHighlightedDistrict } from '../../../../redux/selectors/district';
 import { setSelectedSubdistricts, setSelectedDistrictServices } from '../../../../redux/actions/district';
 
@@ -27,7 +25,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default injectIntl(withStyles(styles)(connect(
+export default injectIntl(connect(
   mapStateToProps,
   { setSelectedSubdistricts, setSelectedDistrictServices },
-)(Districts)));
+)(Districts));

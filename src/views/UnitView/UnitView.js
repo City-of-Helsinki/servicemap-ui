@@ -24,6 +24,7 @@ import {
   TitleBar,
   TitledList,
 } from '../../components';
+import { selectMapRef } from '../../redux/selectors/general';
 import AccessibilityInfo from './components/AccessibilityInfo';
 import ContactInfo from './components/ContactInfo';
 import Highlights from './components/Highlights';
@@ -78,7 +79,7 @@ const UnitView = (props) => {
   const getLocaleText = useLocaleText();
   const dispatch = useDispatch();
 
-  const map = useSelector(state => state.mapRef);
+  const map = useSelector(selectMapRef);
 
   const getImageAlt = () => `${intl.formatMessage({ id: 'unit.picture' })}${getLocaleText(unit.name)}`;
 

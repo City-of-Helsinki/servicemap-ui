@@ -90,6 +90,7 @@ const DrawerMenu = (props) => {
       anchor="right"
       open={isOpen}
       classes={{ paper: pageType === 'mobile' ? drawerContainerMobileClass : drawerContainerClass }}
+      PaperProps={{ sx: { top: `${pageType === 'mobile' ? topBarHeightMobile : topBarHeight}px` } }}
     >
       <StyledScrollContainer>
         {/* Main links */}
@@ -98,6 +99,8 @@ const DrawerMenu = (props) => {
         {menuMainButton('general.pageLink.area', 'home.buttons.area', 'area')}
         <Divider />
         {menuMainButton('services', 'home.buttons.services', 'services')}
+        <Divider />
+        {menuMainButton('general.pageLink.mobilityTree', 'home.buttons.mobilityTree', 'mobilityTree')}
         <Divider />
 
         {/* Smaller buttons  */}

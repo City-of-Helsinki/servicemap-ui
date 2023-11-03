@@ -11,21 +11,20 @@ const { server } = config;
 const searchBackButton = Selector('#SearchBar .SMBackButton');
 
 /* eslint-disable */
-fixture`Service tree page tests`
-  .page`http://${server.address}:${server.port}/fi/services`
+fixture`Mobility tree page tests`
+  .page`http://${server.address}:${server.port}/fi/mobility`
   .beforeEach(async () => {
     await waitForReact();
   });
 
-treeViewAccordionTest();
+  treeViewAccordionTest();
 
-test('Service tree search works correctly', async (t) => {
+test('Mobility tree search works correctly', async (t) => {
   await treeSearchTest(t);
-
   await t
-    .expect(getLocation()).contains('/fi/search?service_node=')
-    .expect(searchBackButton.getAttribute('aria-label')).eql(finnish['general.back.serviceTree'])
+    .expect(getLocation()).contains('/fi/search?mobility_node=')
+    .expect(searchBackButton.getAttribute('aria-label')).eql(finnish['general.back.mobilityTree'])
     .click(searchBackButton)
-    .expect(getLocation()).contains('/fi/services')
+    .expect(getLocation()).contains('/fi/mobility')
   ;
 });

@@ -10,7 +10,9 @@ import {
 import { visuallyHidden } from '@mui/utils';
 import { FormattedMessage, useIntl } from 'react-intl';
 import fetchSearchResults from '../../redux/actions/search';
+import { selectMapRef, selectNavigator } from '../../redux/selectors/general';
 import { parseSearchParams, getSearchParam, keyboardHandler } from '../../utils';
+import optionsToSearchQuery from '../../utils/search';
 import { fitUnitsToMap } from '../MapView/utils/mapActions';
 import { isEmbed } from '../../utils/path';
 import { useNavigationParams } from '../../utils/address';
@@ -38,8 +40,8 @@ const SearchView = (props) => {
   const unorderedSearchResults = useSelector(state => state.searchResults.data);
   const searchFetchState = useSelector(state => state.searchResults);
   const isRedirectFetching = useSelector(state => state.redirectService.isFetching);
-  const map = useSelector(state => state.mapRef);
-  const navigator = useSelector(state => state.navigator);
+  const map = useSelector(selectMapRef);
+  const navigator = useSelector(selectNavigator);
 
   const getAddressNavigatorParams = useNavigationParams();
   const dispatch = useDispatch();
@@ -75,11 +77,13 @@ const SearchView = (props) => {
       q,
       category,
       city,
+      organization,
       municipality,
       address,
       service,
       service_id,
       service_node,
+      mobility_node,
       search_language,
       events,
       units,
@@ -105,6 +109,9 @@ const SearchView = (props) => {
       }
 
       // Parse service_node
+      if (mobility_node) {
+        options.mobility_node = mobility_node;
+      }
       if (service_node) {
         options.service_node = service_node;
       }
@@ -155,6 +162,12 @@ const SearchView = (props) => {
       options.municipality = municipality || city;
     }
 
+
+    // Parse organization
+    if (organization) {
+      options.organization = organization;
+    }
+
     // Parse search language
     if (search_language) {
       options.search_language = search_language;
@@ -170,12 +183,7 @@ const SearchView = (props) => {
       return false;
     }
     const data = getSearchParamData();
-    const searchQuery = data.q
-      || data.address
-      || data.service_node
-      || data.service_id
-      || data.id
-      || data.events;
+    const searchQuery = optionsToSearchQuery(data);
 
     // Should fetch if previousSearch has changed and data has required parameters
     if (previousSearch) {
@@ -377,12 +385,17 @@ const SearchView = (props) => {
     const { previousSearch, isFetching } = searchFetchState;
     const shouldRender = !isFetching && previousSearch && !searchResults.length;
     const messageIDs = ['spelling', 'city', 'service', 'address', 'keyword'];
+    // This was same as previousSearch, but the text was not user-friendly when searching by nodes.
+    const options = parseSearchParams(location.search);
+    delete options.mobility_node;
+    delete options.service_node;
+    const searchQuery = optionsToSearchQuery(options);
 
     return shouldRender ? (
       <Container className={classes.noVerticalPadding}>
         <Container className={classes.noVerticalPadding}>
           <Typography align="left" variant="subtitle1" component="p">
-            <FormattedMessage id={typeof previousSearch === 'string' ? 'search.notFoundWith' : 'search.notFound'} values={{ query: previousSearch }} />
+            <FormattedMessage id={typeof searchQuery === 'string' ? 'search.notFoundWith' : 'search.notFound'} values={{ query: searchQuery }} />
           </Typography>
         </Container>
         <Divider aria-hidden="true" />

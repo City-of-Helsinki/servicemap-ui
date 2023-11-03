@@ -8,6 +8,7 @@ import { Close } from '@mui/icons-material';
 import { fetchStopData } from '../../../utils/transitFetch';
 import useLocaleText from '../../../../../utils/useLocaleText';
 import { getIcon } from '../../../../../components';
+import { StyledCloseText } from '../../styled/styled';
 
 const TransitStopInfo = ({
   stop, onCloseClick, type, classes,
@@ -98,7 +99,7 @@ const TransitStopInfo = ({
   return (
     <div aria-hidden className={classes.tranistInfoContainer}>
       <ButtonBase onClick={() => onCloseClick()} className={classes.closeButton}>
-        <Typography className={classes.closeText}><FormattedMessage id="general.close" /></Typography>
+        <StyledCloseText><FormattedMessage id="general.close" /></StyledCloseText>
         <Close className={classes.infoIcon} />
       </ButtonBase>
       <div className={classes.transitInfoTitle}>

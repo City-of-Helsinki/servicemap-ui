@@ -40,40 +40,37 @@ class UnitHelper {
 
   static isUnitPage = () => paths.unit.regex.test(window.location.href);
 
-  static getShortcomingCount(unit, settings) {
-    if (unit && settings) {
-      // Check if user has settings
-      const currentSettings = SettingsUtility.parseShortcomingSettings(settings);
-      if (currentSettings.length) {
-        // eslint-disable-next-line camelcase
-        const shortcomings = unit.accessibility_shortcoming_count;
-        // Check if unit has shortcoming info
-        if (shortcomings) {
-          const shortcomingKeys = Object.keys(shortcomings);
-          if (shortcomingKeys.length) {
-            let shortcomingCount = 0;
-
-            if (currentSettings.length) {
-              // Loop through currentSetting keys and see if unit has shortcomings
-              currentSettings.forEach((settingKey) => {
-                if (
-                  Object.prototype.hasOwnProperty.call(
-                    shortcomings,
-                    settingKey,
-                  )
-                ) {
-                  shortcomingCount += shortcomings[settingKey];
-                }
-              });
-
-              return shortcomingCount;
-            }
-          }
-        }
-        return null;
-      }
+  /**
+   *
+   * @param unit
+   * @param currentSettings list of shortcomings (parsed from settings)
+   * @returns {null|number}
+   */
+  static getShortcomingCount(unit, currentSettings) {
+    // Check if user has settings
+    if (!unit || !currentSettings?.length) {
+      return 0;
     }
-    return 0;
+    // eslint-disable-next-line camelcase
+    const shortcomings = unit.accessibility_shortcoming_count;
+    // Check if unit has shortcoming info
+    if (!shortcomings) {
+      return null;
+    }
+    const shortcomingKeys = Object.keys(shortcomings);
+    if (!shortcomingKeys.length) {
+      return null;
+    }
+
+    let shortcomingCount = 0;
+    // Loop through currentSetting keys and see if unit has shortcomings
+    currentSettings.forEach((settingKey) => {
+      if (Object.hasOwn(shortcomings, settingKey)) {
+        shortcomingCount += shortcomings[settingKey];
+      }
+    });
+
+    return shortcomingCount;
   }
 
   // Currently only default markers are used
@@ -113,7 +110,8 @@ class UnitHelper {
       const icon = UnitHelper.markerIcons.default[2];
       return icon;
     }
-    const shortcomingCount = UnitHelper.getShortcomingCount(unit, settings);
+    const currentSettings = SettingsUtility.parseShortcomingSettings(settings);
+    const shortcomingCount = UnitHelper.getShortcomingCount(unit, currentSettings);
     const markerType = UnitHelper.getMarkerType(shortcomingCount);
 
     let iconIndex = 2;

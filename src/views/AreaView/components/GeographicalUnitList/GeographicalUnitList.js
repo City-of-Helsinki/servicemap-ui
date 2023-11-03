@@ -10,6 +10,7 @@ import {
 } from '../../../../redux/actions/district';
 import { getFilteredSubdistrictServices } from '../../../../redux/selectors/district';
 import { uppercaseFirst } from '../../../../utils';
+import orderUnits from '../../../../utils/orderUnits';
 import useLocaleText from '../../../../utils/useLocaleText';
 import {
   StyledAccordionServiceTitle,
@@ -48,6 +49,7 @@ const GeographicalUnitList = ({ initialOpenItems }) => {
   const getLocaleText = useLocaleText();
   const filteredSubdistrictUnits = useSelector(state => getFilteredSubdistrictServices(state));
   const selectedServices = useSelector(state => state.districts.selectedDistrictServices);
+  const locale = useSelector(state => state.user.locale);
   const [serviceList, setServiceList] = useState([]);
   const [initialCheckedItems] = useState(selectedServices);
 
@@ -61,7 +63,7 @@ const GeographicalUnitList = ({ initialOpenItems }) => {
   }, []);
 
   const sortUnitCategories = (categories) => {
-    categories.sort((a, b) => getLocaleText(a.name).localeCompare(getLocaleText(b.name)));
+    return orderUnits(categories, { locale, direction: 'desc', order: 'alphabetical' });
   };
 
 
@@ -69,7 +71,7 @@ const GeographicalUnitList = ({ initialOpenItems }) => {
     const servicesArray = [];
     const educationServicesArray = [];
 
-    filteredSubdistrictUnits.map((unit) => {
+    filteredSubdistrictUnits.forEach((unit) => {
       const categories = unit.services;
       categories.forEach((category) => {
         let serviceList;
@@ -93,9 +95,13 @@ const GeographicalUnitList = ({ initialOpenItems }) => {
       return null;
     });
 
-    sortUnitCategories(servicesArray);
-    sortUnitCategories(educationServicesArray);
-    const serviceList = [...servicesArray, ...educationServicesArray];
+    const serviceList = [
+      ...sortUnitCategories(servicesArray),
+      ...sortUnitCategories(educationServicesArray),
+    ];
+    serviceList.forEach((service) => {
+      service.units = sortUnitCategories(service.units);
+    });
 
     // Remove selected empty categories
     const emptyCategories = selectedServices.filter(id => !serviceList.some(obj => obj.id === id));

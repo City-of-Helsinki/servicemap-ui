@@ -195,8 +195,12 @@ export default class HttpClient {
     }
 
     const fetchOptions = {};
+    // this will prevent http 301 responses for "...unit?page=..." and immediate retries
+    // with "...unit/?page=..."
+    const appendSlash = endpoint.lastIndexOf('/') !== endpoint.length - 1;
 
-    return this.handleFetch(endpoint, `${this.baseURL}/${endpoint}?${searchParams}`, fetchOptions, type);
+    const url = `${this.baseURL}/${endpoint}${appendSlash ? '/' : ''}?${searchParams}`;
+    return this.handleFetch(endpoint, url, fetchOptions, type);
   }
 
   post = async (endpoint, data, overrideBaseUrl) => this.postFetch(endpoint, data, overrideBaseUrl)
@@ -210,6 +214,9 @@ export default class HttpClient {
     const newOptions = {
       ...options,
       page_size: 1,
+      only: 'id',
+      include: null,
+      geometry: false,
     };
     return this.fetch(endpoint, this.optionsToSearchParams(newOptions, true), 'count');
   }

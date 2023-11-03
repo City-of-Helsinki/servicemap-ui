@@ -5,6 +5,7 @@ import { viewTitleID } from '../../src/utils/accessibility';
 
 import config from '../config';
 import { getLocation } from '../utility';
+import { searchBarInput } from '../utility/pageObjects';
 import paginationTest from '../utility/paginationTest';
 import resultOrdererTest from '../utility/resultOrdererTest';
 const { server } = config;
@@ -18,14 +19,12 @@ fixture`Search view test`
   });
 
 const searchUnits = async (t, search = 'uimastadion') => {
-  const input = Selector('#SearchBar input');
-
   // Make new search
   await t
     .expect(getLocation()).contains(`http://${server.address}:${server.port}/fi/search`)
-    .click(input)
+    .click(searchBarInput)
     .pressKey('ctrl+a delete')
-    .typeText(input, search, { replace: true })
+    .typeText(searchBarInput, search, { replace: true })
     .pressKey('enter');
 }
 
@@ -44,7 +43,6 @@ paginationTest(searchPage);
 test('Navigate search view', async (t) => {
   // Test result orderer navigation
   const unitCount = await searchUnits(t, 'kirjasto');
-  const input = Selector('#SearchBar input');
   const select = Selector('[data-sm="ResultSorterInput"]')
   const listItems = Selector('#paginatedList-Toimipisteet-results li[role="link"]')
 
@@ -53,7 +51,7 @@ test('Navigate search view', async (t) => {
   await t
     // .click(input)
     // .pressKey('ctrl+a delete')
-    .typeText(input, 't')
+    .typeText(searchBarInput, 't')
     .click(select)
     .pressKey('down')
     .pressKey('enter');
@@ -65,7 +63,7 @@ test('Navigate search view', async (t) => {
 
   // Test result list navigation
   await t
-    .typeText(input, 't')
+    .typeText(searchBarInput, 't')
     .pressKey('tab') // Tabs to cancel button
     .pressKey('tab') // Tabs to search icon button
     .pressKey('tab') // Address search
@@ -182,7 +180,7 @@ test('ServiceItem click event takes to service page', async(t) => {
 test('SearchBar accessibility is OK', async(t) => {
 
   // Check searchbar input accessibility attributes
-  const searchbar = await Selector('#SearchBar input');
+  const searchbar = await searchBarInput;
   const role = await searchbar.getAttribute('role');
   const placeholder = await searchbar.getAttribute('placeholder');
   await t
@@ -279,9 +277,8 @@ test('Search suggestion arrow navigation does loop correctly', async(t) => {
   // Suggestion items selector
   const items = Selector('#SuggestionList li[role="option"]');
   // Get SearchBar input
-  const input = Selector('#SearchBar input');
   await t
-    .click(input)
+    .click(searchBarInput)
     .expect(Selector('[data-cm="SuggestionsLoading"]').exists).notOk()
     .expect(items.exists).ok()
     .expect(items.count).gt(0)
@@ -301,13 +298,11 @@ test('Search suggestion arrow navigation does loop correctly', async(t) => {
 
 // TODO: update this test
 // test('Search suggestion click works correctly', async(t) => {
-//   // Get SearchBar input
-//   const input = Selector('#SearchBar input');
 
 //   // Make new search
 //   await t
 //     .expect(getLocation()).contains(`http://${server.address}:${server.port}/fi/search`)
-//     .click(input)
+//     .click(searchBarInput)
 //     .pressKey('ctrl+a delete')
 //     .typeText(input, 'kirjastoa');
 

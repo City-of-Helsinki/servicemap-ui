@@ -1,5 +1,7 @@
 import { getUnitCount } from './units';
 
+const PRIVATE_ORGANIZATION_TYPES = [10, 'PRIVATE_ENTERPRISE'];
+
 export const filterEmptyServices = (cities, organizations) => (obj) => {
   if (!obj || obj.object_type !== 'service' || !obj.unit_count) {
     return true;
@@ -20,6 +22,27 @@ export const filterEmptyServices = (cities, organizations) => (obj) => {
   return unitsByCity && unitsByOrg;
 };
 
+const isOrganizationMatch = (result, organizations) => {
+  if (organizations.length === 0) {
+    return true;
+  }
+  // There are organizations so we filter by organization
+  const contractTypeId = result.contract_type?.id;
+  // we do not want NOT_DISPLAYED services
+  if (contractTypeId === 'NOT_DISPLAYED') {
+    return false;
+  }
+  // we do not want private services
+  if (contractTypeId === 'PRIVATE_SERVICE' || PRIVATE_ORGANIZATION_TYPES.includes(result.organizer_type)) {
+    return false;
+  }
+  const resultDepartment = result.department?.id || result.department;
+  const resultRootDepartment = result.root_department?.id || result.root_department;
+
+  return organizations.includes(resultDepartment)
+    || organizations.includes(resultRootDepartment);
+};
+
 export const filterCitiesAndOrganizations = (
   cities = [], organizations = [], onlyUnits = false,
 ) => (result) => {
@@ -28,8 +51,6 @@ export const filterCitiesAndOrganizations = (
   if (['service', 'servicenode'].includes(result.object_type)) return true;
 
   const resultMunicipality = result.municipality?.id || result.municipality;
-  const resultDepartment = result.department?.id || result.department;
-  const resultRootDepartment = result.root_department?.id || result.root_department;
 
   const cityMatch = cities.length === 0
     || (cities.includes(resultMunicipality));
@@ -37,16 +58,7 @@ export const filterCitiesAndOrganizations = (
   // Addresses are not filtered by organizations
   if (result.object_type === 'address') return cityMatch;
 
-  // Private service units need to be filtered out
-  const privateOrganizerTypes = [10, 'PRIVATE_ENTERPRISE'];
-  const isNotPrivateService = result.contract_type?.id !== 'PRIVATE_SERVICE' && !privateOrganizerTypes.includes(result.organizer_type);
-
-  const organizationMatch = organizations.length === 0
-    || (isNotPrivateService
-    && (organizations.includes(resultDepartment)
-    || organizations.includes(resultRootDepartment)));
-
-  return cityMatch && organizationMatch;
+  return cityMatch && isOrganizationMatch(result, organizations);
 };
 
 export const filterResultTypes = () => (obj) => {

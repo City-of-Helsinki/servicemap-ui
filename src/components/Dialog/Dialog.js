@@ -9,6 +9,7 @@ import { useIntl } from 'react-intl';
 import styled from '@emotion/styled';
 import SMButton from '../ServiceMapButton';
 import CloseButton from '../CloseButton';
+import useMobileStatus from '../../utils/isMobile';
 
 const Dialog = ({
   title,
@@ -21,6 +22,7 @@ const Dialog = ({
 }) => {
   const intl = useIntl();
   const dialogRef = useRef();
+  const isMobile = useMobileStatus();
 
   const handleClose = () => {
     setOpen(false);
@@ -59,9 +61,10 @@ const Dialog = ({
         open={open}
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
-        classes={{
-          root: muiRootClass,
-        }}
+        fullScreen={isMobile}
+        classes={
+          !isMobile ? { root: muiRootClass } : null
+        }
       >
         <StyledRoot>
           {/* Empty element that makes keyboard focus loop in dialog */}

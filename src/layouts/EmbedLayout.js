@@ -10,6 +10,7 @@ import { useTheme } from '@mui/styles';
 import { useSelector } from 'react-redux';
 import { OpenInNew, Map } from '@mui/icons-material';
 import { visuallyHidden } from '@mui/utils';
+import { selectMapRef, selectNavigator } from '../redux/selectors/general';
 import MapView from '../views/MapView';
 import PageHandler from './components/PageHandler';
 import AddressView from '../views/AddressView';
@@ -95,11 +96,11 @@ const createContentStyles = (theme, unitListPosition) => {
 const EmbedLayout = ({ intl }) => {
   const theme = useTheme();
   const location = useLocation();
-  const navigator = useSelector(state => state.navigator);
+  const navigator = useSelector(selectNavigator);
   const getLocaleText = useLocaleText();
   const units = useMapUnits();
   const searchParams = parseSearchParams(location.search);
-  const map = useSelector(state => state.mapRef);
+  const map = useSelector(selectMapRef);
 
   const showList = searchParams?.show_list;
   const selectedUnit = searchParams?.selectedUnit;
@@ -152,7 +153,7 @@ const EmbedLayout = ({ intl }) => {
             messageID="unit.showInformation"
             onClick={() => {
               const { origin } = window.location;
-              const path = navigator.generatePath('unit', { id: selectedUnitData.id });
+              const path = navigator.generatePath('unit', { id: selectedUnitData.id }, false);
               window.open(`${origin}${path}`);
             }}
           />

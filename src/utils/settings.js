@@ -1,4 +1,3 @@
-import { useSelector } from 'react-redux';
 import LocalStorageUtility from './localStorage';
 import config from '../../config';
 
@@ -43,6 +42,11 @@ class SettingsUtility {
       return false;
     }
     return true;
+  }
+
+  static mapValidAccessibilitySenseImpairmentValueToKey(value) {
+    return SettingsUtility.accessibilityImpairmentKeys
+      .find(key => ACCESSIBILITY_MAPPING[key] === value);
   }
 
   static isValidMobilitySetting(value) {
@@ -175,24 +179,4 @@ class SettingsUtility {
   }
 }
 
-// Return active accessibility settings
-export const useAcccessibilitySettings = () => {
-  const userSettings = useSelector(state => state.settings);
-  return [
-    userSettings.mobility !== 'none' ? userSettings.mobility : null,
-    ...SettingsUtility.accessibilityImpairmentKeys.filter(key => userSettings[key]),
-  ]
-    .filter(i => (i !== false && i !== null));
-};
-
 export default SettingsUtility;
-
-export const useMobilitySettings = () => {
-  const userSettings = useSelector(state => state.settings);
-  return userSettings.mobility;
-};
-
-export const useSenseSettings = () => {
-  const userSettings = useSelector(state => state.settings);
-  return SettingsUtility.accessibilityImpairmentKeys.filter(key => userSettings[key]);
-};

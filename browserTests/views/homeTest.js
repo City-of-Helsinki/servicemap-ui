@@ -4,6 +4,7 @@ import { waitForReact } from 'testcafe-react-selectors';
 
 import config from '../config';
 import { getLocation } from '../utility';
+import { feedbackButton, infoButton } from '../utility/pageObjects';
 const { server } = config;
 
 const viewUrl = `http://${server.address}:${server.port}/fi/`;
@@ -19,8 +20,6 @@ test('Test home page navigation button clicks take user to correct pages', async
   //Buttons
   const areaButton = Selector('#AreaPage');
   const servicesButton = Selector('#ServicePage');
-  const feedbackButton = Selector('#FeedbackLink');
-  const infoButton = Selector('#PageInfoLink');
 
   await t
     // Test area button
@@ -44,7 +43,7 @@ test('Test home page navigation button clicks take user to correct pages', async
 
 // TODO: update this test
 // test('Home view search does take user to search view', async(t) => {
-//   const searchInput = Selector('#SearchBar input');
+//   const searchInput = searchBarInput;
 //   const backButton = Selector(`button[aria-label="${finnish['general.back.home']}"]`)
 //   const searchButton = Selector('#SearchButton')
 

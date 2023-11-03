@@ -4,6 +4,9 @@ import { useIntl } from 'react-intl';
 import 'leaflet.markercluster/dist/MarkerCluster.css';
 import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
 import { useMap } from 'react-leaflet';
+import { useSelector } from 'react-redux';
+import { getLocale } from '../../../../redux/selectors/user';
+import orderUnits from '../../../../utils/orderUnits';
 import { drawMarkerIcon } from '../../utils/drawIcon';
 import { isEmbed } from '../../../../utils/path';
 import { createMarkerClusterLayer, createTooltipContent, createPopupContent } from './clusterUtils';
@@ -60,6 +63,7 @@ const MarkerCluster = ({
   const embeded = isEmbed();
   const isMobile = useMobileStatus();
   const intl = useIntl();
+  const locale = useSelector(getLocale);
   const [cluster, setCluster] = useState(null);
 
   // Get highlighted unit's marker or cluster marker
@@ -115,19 +119,13 @@ const MarkerCluster = ({
 
   // Parse unitData from clusterMarker
   const parseUnitData = (marker) => {
-    if (marker instanceof global.L.MarkerCluster) {
-      const clusterMarkers = marker.getAllChildMarkers();
-      const units = clusterMarkers.map((marker) => {
-        if (marker && marker.options && marker.options.customUnitData) {
-          const data = marker.options.customUnitData;
-          return data;
-        }
-        return null;
-      });
-
-      return units;
+    if (!(marker instanceof global.L.MarkerCluster)) {
+      return null;
     }
-    return null;
+    return marker.getAllChildMarkers()
+      .map(marker => marker?.options?.customUnitData)
+      .filter(unitData => !!unitData);
+
   };
 
   // Function for creating custom icon for cluster group
@@ -220,8 +218,8 @@ const MarkerCluster = ({
     list.className = classes.unitPopupList;
 
     // Add units to list
-    units.forEach((unit) => {
-      if (unit?.name) {
+    units.filter(unit => unit?.name)
+      .forEach((unit) => {
         const listItem = document.createElement('li');
         // Create span for interactive list item content
         const span = document.createElement('span');
@@ -253,8 +251,7 @@ const MarkerCluster = ({
         divider.className = 'popup-divider';
         divider.innerHTML = '<hr />';
         list.appendChild(divider);
-      }
-    });
+      });
     container.appendChild(list);
 
     return container;
@@ -280,7 +277,7 @@ const MarkerCluster = ({
     if (cluster.isPopupOpen()) {
       return;
     }
-    const units = parseUnitData(cluster);
+    const units = orderUnits(parseUnitData(cluster), { locale, direction: 'desc', order: 'alphabetical' });
 
     // Create popuelement and add events
     const elem = clusterPopupContent(units);
@@ -354,9 +351,8 @@ const MarkerCluster = ({
     const markers = [];
 
     // Add unit markers to clusterlayer
-    unitListFiltered.forEach((unit) => {
-      // Show markers with location
-      if (unit && unit.location) {
+    unitListFiltered.filter(unit => unit?.location)
+      .forEach((unit) => {
         // Distance
         const distance = getDistance(unit, intl);
         const tooltipContent = createTooltipContent(
@@ -423,8 +419,7 @@ const MarkerCluster = ({
         }
 
         markers.push(markerElem);
-      }
-    });
+      });
 
     // Add markers in bulk
     cluster.addLayers(markers);

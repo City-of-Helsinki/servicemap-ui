@@ -10,6 +10,7 @@ import React from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { setMapType } from '../../redux/actions/settings';
+import { selectMapRef } from '../../redux/selectors/general';
 import SettingsUtility from '../../utils/settings';
 import MobileSettingsHeader from '../MobileSettingsHeader/MobileSettingsHeader';
 import SMButton from '../ServiceMapButton';
@@ -20,7 +21,7 @@ const MapSettings = () => {
   const dispatch = useDispatch();
 
   const mapType = useSelector(state => state.settings.mapType);
-  const map = useSelector(state => state.mapRef);
+  const map = useSelector(selectMapRef);
   const locale = useSelector(state => state.user.locale);
 
   const mapSettings = {};

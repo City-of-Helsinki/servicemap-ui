@@ -11,17 +11,21 @@ createTestCafe('localhost')
     return runner
       .src([
         'browserTests/generic/accessibilityTest.js',
+        'browserTests/generic/browserTest.js',
+        'browserTests/generic/generalTest.js',
+        'browserTests/generic/mapTest.js',
+        'browserTests/generic/navigationTest.js',
         'browserTests/views/addressTest.js',
         'browserTests/views/areaTest.js',
-        'browserTests/generic/browserTest.js',
-        'browserTests/views/embedTest.js',
-        'browserTests/generic/generalTest.js',
+        'browserTests/views/embeddedViewsTest.js',
+        'browserTests/views/homeTest.js',
+        'browserTests/views/mobilityTreeTest.js',
         'browserTests/views/searchTest.js',
         'browserTests/views/serviceTest.js',
+        'browserTests/views/serviceTreeTest.js',
         'browserTests/views/settingsTest.js',
-        // 'browserTests/titleBarTest.js',
-        'browserTests/views/unitPageTest.js',
         'browserTests/views/unitPageExtendedDataTest.js',
+        'browserTests/views/unitPageTest.js',
       ])
       .browsers(['chrome:headless'])
       // .reporter('list')

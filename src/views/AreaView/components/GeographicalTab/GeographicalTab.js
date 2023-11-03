@@ -15,6 +15,7 @@ import {
   setSelectedSubdistricts,
 } from '../../../../redux/actions/district';
 import { getFilteredSubdistrictServices } from '../../../../redux/selectors/district';
+import { selectMapRef } from '../../../../redux/selectors/general';
 import { getAddressText } from '../../../../utils/address';
 import useLocaleText from '../../../../utils/useLocaleText';
 import { geographicalDistricts } from '../../utils/districtDataHelper';
@@ -42,7 +43,7 @@ const GeographicalTab = ({
   const localAddressData = useSelector(state => state.districts.districtAddressData);
   const selectedDistrictType = useSelector(state => state.districts.selectedDistrictType);
   const districtData = useSelector(state => state.districts.districtData);
-  const map = useSelector(state => state.mapRef);
+  const map = useSelector(selectMapRef);
   const getLocaleText = useLocaleText();
 
   const [openCategory, setOpenCategory] = useState(

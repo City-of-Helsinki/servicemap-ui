@@ -10,6 +10,7 @@ import {
 import URI from 'urijs';
 import { Helmet } from 'react-helmet';
 import { useSelector } from 'react-redux';
+import { selectSelectedOrganizations } from '../../redux/selectors/settings';
 import * as smurl from './utils/url';
 import isClient, { uppercaseFirst } from '../../utils';
 import { getEmbedURL, getLanguage } from './utils/utils';
@@ -83,6 +84,8 @@ const EmbedderView = ({
   const page = useSelector(state => state.user.page);
   const selectedUnit = useSelector(state => state.selectedUnit.unit.data);
   const currentService = useSelector(state => state.service.current);
+  const organizationSettings = useSelector(selectSelectedOrganizations);
+
   const getLocaleText = useLocaleText();
   const userLocale = useUserLocale();
 
@@ -90,6 +93,7 @@ const EmbedderView = ({
   const [language, setLanguage] = useState(defaultLanguage);
   const [map, setMap] = useState(defaultMap);
   const [city, setCity] = useState(defaultCities);
+  const [organization, setOrganization] = useState(organizationSettings);
   const [service, setService] = useState(defaultService);
   const [customWidth, setCustomWidth] = useState(embedderConfig.DEFAULT_CUSTOM_WIDTH || 100);
   const [widthMode, setWidthMode] = useState('auto');
@@ -112,6 +116,7 @@ const EmbedderView = ({
     language,
     map,
     city,
+    organization,
     service,
     defaultLanguage,
     transit,
@@ -329,6 +334,32 @@ const EmbedderView = ({
   };
 
   /**
+   * Render organization controls
+   */
+  const renderOrganizationControl = () => {
+    const organizations = organization;
+    const organizationControls = embedderConfig.ORGANIZATIONS.map(org => ({
+      key: org.id,
+      value:!!organizations.some(value => value.id === org.id),
+      label: uppercaseFirst(getLocaleText(org.name)),
+      icon: null,
+      onChange: (v) => {
+        if (v) setOrganization([...organizations, org]);
+        else setOrganization(organizations.filter(values => values.id !== org.id));
+      },
+    }));
+
+    return (
+      <EmbedController
+        titleID="embedder.organization.title"
+        titleComponent="h2"
+        checkboxControls={organizationControls}
+        checkboxLabelledBy="embedder.organization.title"
+      />
+    );
+  };
+
+  /**
    * Render service control
    */
   const renderServiceControl = () => {
@@ -532,8 +563,9 @@ const EmbedderView = ({
               onClick={closeView}
               role="link"
               textID="embedder.close"
+              data-sm="EmbedderToolCloseButton"
             />
-            <StyledTitle align="left" variant="h1">
+            <StyledTitle align="left" variant="h1" data-sm="EmbedderToolTitle">
               <FormattedMessage id="embedder.title" />
             </StyledTitle>
           </StyledTitleContainer>
@@ -566,6 +598,9 @@ const EmbedderView = ({
               }
                 {
                 renderCityControl()
+              }
+              {
+                renderOrganizationControl()
               }
                 {
                 renderWidthControl()

@@ -201,10 +201,6 @@ const styles = theme => ({
     display: 'flex',
     justifyContent: 'space-between',
   },
-  unitTooltipSubtitle: {
-    ...theme.typography.body2,
-    margin: theme.spacing(0, 1),
-  },
   unitTooltipCaption: {
     fontSize: '0.7725rem',
     lineHeight: '1rem',
@@ -225,7 +221,9 @@ const styles = theme => ({
     ...theme.typography.body2,
     paddingTop: theme.spacing(1),
     textAlign: 'center',
-    color: theme.palette.primary.link,
+    color: theme.palette.link.main,
+    textDecoration: 'underline',
+    cursor: 'pointer',
   },
   unitTooltipWrapper: {
     padding: theme.spacing(3),
@@ -310,52 +308,6 @@ const styles = theme => ({
   entranceType: {
     paddingTop: theme.spacing(0.5),
   },
-
-  // Event markers
-  popupContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    padding: theme.spacing(2),
-    paddingRight: 0,
-    paddingLeft: 0,
-  },
-  popupTopArea: {
-    paddingRight: theme.spacing(2),
-    paddingLeft: theme.spacing(2),
-  },
-  popoupTitleArea: {
-    display: 'flex',
-  },
-  popupCloseButton: {
-    marginLeft: 'auto',
-    marginBottom: 'auto',
-    marginRight: -theme.spacing(1),
-    marginTop: 3,
-    paddingLeft: theme.spacing(1),
-  },
-  addressContainer: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    paddingBottom: theme.spacing(1),
-  },
-  popupList: {
-    backgroundColor: '#fafafa',
-    boxShadow: 'inset 0px 4px 4px rgba(0, 0, 0, 0.06)',
-    maxHeight: 175,
-    overflow: 'scroll',
-  },
-  popupListItem: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'start',
-    paddingBottom: 0,
-    paddingLeft: theme.spacing(2),
-    paddingRight: theme.spacing(2),
-  },
-  eventDate: {
-    fontSize: '0.75rem',
-  },
-
   // Transit stops
   transitBackground: {
     fontFamily: 'hsl-piktoframe',

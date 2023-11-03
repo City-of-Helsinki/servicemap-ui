@@ -102,7 +102,7 @@ const ResultItem = ({
           </StyledListItemIcon>
           )
         }
-        <StyledItemTextContainer simpleitem={simpleItem || undefined}>
+        <StyledItemTextContainer simpleitem={+simpleItem}>
           <StyledTopRow data-sm="ResultItemTopRow">
             {
               // SROnly element with full readable text
@@ -119,7 +119,7 @@ const ResultItem = ({
               // Title
             }
             <StyledTitle
-              simpleitem={simpleItem || undefined}
+              simpleitem={+simpleItem}
               data-sm="ResultItemTitle"
               className={`${typographyClasses.title || ''} ResultItem-title`}
               component="p"
@@ -191,7 +191,7 @@ const ResultItem = ({
       {divider && (
         <li aria-hidden>
           <StyledDivider
-            simpleitem={simpleItem || undefined}
+            simpleitem={+simpleItem}
             variant={icon ? 'inset' : 'fullWidth'}
           />
         </li>

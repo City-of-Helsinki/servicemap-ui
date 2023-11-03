@@ -1,3 +1,4 @@
+import styled from '@emotion/styled';
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
@@ -10,7 +11,7 @@ const POSITION_CLASSES = {
   topright: 'leaflet-top leaflet-right',
 };
 
-const CustomControls = ({ position, classes, children }) => {
+const CustomControls = ({ position, children }) => {
   // This converts children into array, even if children prop is single object or array of objects
   const controls = [children].flat().filter(item => item);
 
@@ -32,23 +33,25 @@ const CustomControls = ({ position, classes, children }) => {
   );
 
   return (
-    <div className={`${positionClass} ${classes.controlsContainer}`} id={`controlsContainer${position}`}>
+    <StyledControlsContainer className={`${positionClass}`} id={`controlsContainer${position}`}>
       {controls.map(component => (
         renderControl(component)
       ))}
-    </div>
+    </StyledControlsContainer>
   );
 };
+
+const StyledControlsContainer = styled.div(({ theme }) => ({
+  marginBottom: theme.spacing(2),
+}));
 
 CustomControls.propTypes = {
   children: PropTypes.node,
   position: PropTypes.oneOf(Object.keys(POSITION_CLASSES)).isRequired,
-  classes: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 CustomControls.defaultProps = {
   children: null,
 };
-
 
 export default CustomControls;

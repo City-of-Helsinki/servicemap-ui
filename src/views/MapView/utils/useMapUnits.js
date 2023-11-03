@@ -1,13 +1,18 @@
-import { useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import distance from '@turf/distance';
 import flip from '@turf/flip';
-import { getDistrictPrimaryUnits, getFilteredSubdistrictUnits, getParkingUnits } from '../../../redux/selectors/district';
+import { useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
+import {
+  getDistrictPrimaryUnits, getFilteredSubdistrictUnits, selectParkingUnitUnits,
+} from '../../../redux/selectors/district';
 import { getOrderedData } from '../../../redux/selectors/results';
 import { getSelectedUnit } from '../../../redux/selectors/selectedUnit';
 import { getServiceUnits } from '../../../redux/selectors/service';
+import {
+  getServiceFilteredStatisticalDistrictUnits,
+} from '../../../redux/selectors/statisticalDistrict';
+import orderUnits from '../../../utils/orderUnits';
 import { useEmbedStatus } from '../../../utils/path';
-import { getServiceFilteredStatisticalDistrictUnits } from '../../../redux/selectors/statisticalDistrict';
 
 
 // Helper function to handle address view units
@@ -94,8 +99,9 @@ const useMapUnits = () => {
   const districtPrimaryUnits = useSelector(state => getDistrictPrimaryUnits(state));
   const districtServiceUnits = useSelector(state => getFilteredSubdistrictUnits(state));
   const statisticalDistrictUnits = useSelector(getServiceFilteredStatisticalDistrictUnits);
-  const parkingAreaUnits = useSelector(state => getParkingUnits(state));
+  const parkingAreaUnits = useSelector(selectParkingUnitUnits);
   const highlightedUnit = useSelector(state => getSelectedUnit(state));
+  const locale = useSelector(state => state.user.locale);
 
   const searchUnitsLoading = useSelector(state => state.searchResults.isFetching);
   const serviceUnitsLoading = useSelector(state => state.service.isFetching);
@@ -135,17 +141,19 @@ const useMapUnits = () => {
         if (serviceUnits && !unitsLoading) return serviceUnits;
         return [];
 
-      case 'area':
-        return [
+      case 'area': {
+        const results = [
           ...(districtPrimaryUnits.length ? districtPrimaryUnits : []),
           ...(districtServiceUnits.length ? districtServiceUnits : []),
           ...(parkingAreaUnits.length ? parkingAreaUnits : []),
-          ...(statisticalDistrictUnits.length && statisticalTabOpen
+          ...((statisticalDistrictUnits.length && statisticalTabOpen)
             ? statisticalDistrictUnits
             : []
           ),
         ];
 
+        return orderUnits(results, { locale, direction: 'desc', order: 'alphabetical' });
+      }
       default:
         return [];
     }

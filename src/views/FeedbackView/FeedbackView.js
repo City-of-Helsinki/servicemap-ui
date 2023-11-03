@@ -288,6 +288,7 @@ const FeedbackView = ({
           backButtonSrText={backButtonSrText}
           title={feedbackTitle}
           titleComponent="h3"
+          data-sm="FeedbackTitle"
         />
         <StyledContentArea>
           {/* Email field */}

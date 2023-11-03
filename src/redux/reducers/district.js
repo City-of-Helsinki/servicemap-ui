@@ -194,11 +194,9 @@ export default (state = initialState, action) => {
     case 'START_DISTRICT_FETCH':
       return {
         ...state,
-        districtsFetching: [...state.districtsFetching, action.districtType],
-        unitFetch: {
-          ...state.unitFetch,
-          isFetching: true,
-        }
+        districtsFetching: state.districtsFetching.includes(action.districtType)
+          ? state.districtsFetching
+          : [...state.districtsFetching, action.districtType],
       };
 
     case 'END_DISTRICT_FETCH':
@@ -207,10 +205,6 @@ export default (state = initialState, action) => {
         districtsFetching: [
           ...state.districtsFetching.filter(item => item !== action.districtType),
         ],
-        unitFetch: {
-          ...state.unitFetch,
-          isFetching: false,
-        }
       };
 
     case 'UPDATE_PARKING_AREAS':

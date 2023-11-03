@@ -43,6 +43,7 @@ test('AddressView map renders correctly', async (t) => {
   const zoomOut = await Selector('.zoomOut');
   await t
     .click(zoomOut)
+    .wait(500)
     .click(zoomOut)
     .wait(500)
   ;

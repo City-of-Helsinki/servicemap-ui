@@ -203,6 +203,7 @@ const translations = {
   // Embedder
   'embedder.city.title': 'City',
   'embedder.city.aria.label': 'Choose city limits for the embedding',
+  'embedder.organization.title': 'Palveluntarjoaja', // TODO: translate
   'embedder.close': 'Close embedding tool',
   'embedder.code.title': 'Copy the HTML code',
   'embedder.height.title': 'Height of the embedding',
@@ -299,7 +300,7 @@ const translations = {
   'general.backToHome': 'Close search and return to beginning',
   'general.backToStart': 'Back to beginning of page',
   'general.back.serviceTree': 'Back to service list page',
-  'general.back.mobility': 'Return to the traffic and movement page',
+  'general.back.mobilityTree': 'Return to the traffic and movement page',
   'general.cancel': 'Cancel',
   'general.close': 'Close',
   'general.distance.meters': 'Meters away',
@@ -340,10 +341,10 @@ const translations = {
   'general.pageTitles.info': 'Info page',
   'general.pageTitles.feedback': 'Feedback page',
   'general.pageTitles.area': 'Area page',
-  'general.pageTitles.mobility': 'Traffic and movement page',
-  'general.pageTitles.mobility.title': 'Traffic and movement',
+  'general.pageTitles.mobilityTree': 'Traffic and movement page',
+  'general.pageTitles.mobilityTree.title': 'Traffic and movement',
   'general.pageLink.area': 'Services in your area',
-  'general.pageLink.mobility': 'Traffic and movement',
+  'general.pageLink.mobilityTree': 'Traffic and movement',
   'general.tools': 'Map Tools',
   // Readspeaker
   'general.readspeaker.buttonText': 'Listen',
@@ -372,7 +373,7 @@ const translations = {
   // Home
   'home.buttons.settings': 'Save your own city and accessibility options',
   'home.buttons.services': 'Get to know the services using the Services list',
-  'home.buttons.mobility': 'Get to know the versatile options for movement',
+  'home.buttons.mobilityTree': 'Get to know the versatile options for movement',
   'home.buttons.closeByServices': 'Show nearby services',
   'home.buttons.instructions': 'Tips for using the service map',
   'home.buttons.area': 'View the areas for healthcare, education, pre-primary education, civil defence, nature and neighborhoods.',
@@ -389,7 +390,7 @@ const translations = {
   // Loading texts
   'loading.events': 'Loading events {count} / {max}',
   'loading.events.srInfo': 'Loading {count} event(s)',
-  'search.loading.units': 'Searching service points {count} / {max}',
+  'search.loading.units': 'Searching service points: {percentage}%',
   'search.loading.units.srInfo': 'Searching {count} service point(s)',
   'search.loading.units.simple': 'Searching service points',
 
@@ -603,7 +604,7 @@ const translations = {
   'services.category.open': 'Open category',
   'services.info': 'Before you can perform a search you must choose at least one service from services list below.',
   'services.tree.level': 'Level',
-  'mobility.info': 'Get to know the movement options by selecting at least one service from the options below to complete the search.',
+  'mobilityTree.info': 'Get to know the movement options by selecting at least one service from the options below to complete the search.',
 
   // Settings
   'settings': 'Settings',

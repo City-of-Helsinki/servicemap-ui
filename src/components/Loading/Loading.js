@@ -16,8 +16,9 @@ const Loading = (props) => {
     // Render loading text if currently loading information
     if (isFetching) {
       if (max) {
-        const progress = (isFetching && count) ? Math.floor((count / max * 100)) : 0;
-        const text = intl && intl.formatMessage({ id: 'search.loading.units' }, { count, max });
+        const percentage = Math.floor(((count / max) * 100));
+        const progress = count ? percentage : 0;
+        const text = intl?.formatMessage({ id: 'search.loading.units' }, { percentage });
         return (
           <StyledDivRoot>
             <Typography variant="body2" aria-hidden="true">{(!hideNumbers && text) || <FormattedMessage id="general.fetching" />}</Typography>

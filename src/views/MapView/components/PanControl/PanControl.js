@@ -1,3 +1,4 @@
+import styled from '@emotion/styled';
 import {
   Add,
   ArrowDropDown,
@@ -8,7 +9,6 @@ import {
 } from '@mui/icons-material';
 import { ButtonBase } from '@mui/material';
 import React, { useCallback } from 'react';
-import PropTypes from 'prop-types';
 import { useMap } from 'react-leaflet';
 import isClient from '../../../../utils';
 import { isEmbed } from '../../../../utils/path';
@@ -17,7 +17,7 @@ const embedded = isEmbed();
 
 const panOffset = 100;
 
-const PanControl = ({ classes }) => {
+function PanControl() {
   const map = useMap();
   // Button callback function
   const callback = useCallback((direction) => {
@@ -87,86 +87,126 @@ const PanControl = ({ classes }) => {
   }
 
   return (
-    <div className={classes.container}>
+    <StyledContainer>
       {!embedded && (
         <>
-          <ButtonBase
+          <StyledTopButton
             type="button"
             aria-hidden
-            className={classes.top}
             onClick={() => callback('up')}
             onKeyDown={keyboardCallback}
             tabIndex={0}
           >
             <ArrowDropUp />
-          </ButtonBase>
-          <ButtonBase
+          </StyledTopButton>
+          <StyledLeftButton
             type="button"
             aria-hidden
-            className={classes.left}
             onClick={() => callback('left')}
             onKeyDown={keyboardCallback}
             tabIndex={0}
           >
             <ArrowLeft />
-          </ButtonBase>
-          <ButtonBase
+          </StyledLeftButton>
+          <StyledRightButton
             type="button"
             aria-hidden
-            className={classes.right}
             onClick={() => callback('right')}
             onKeyDown={keyboardCallback}
             tabIndex={0}
           >
             <ArrowRight />
-          </ButtonBase>
-          <ButtonBase
+          </StyledRightButton>
+          <StyledBottomButton
             type="button"
             aria-hidden
-            className={classes.bottom}
             onClick={() => callback('down')}
             onKeyDown={keyboardCallback}
             tabIndex={0}
           >
             <ArrowDropDown />
-          </ButtonBase>
+          </StyledBottomButton>
         </>
       )}
-      <ButtonBase
+      <StyledZoomInButton
         type="button"
         aria-hidden
-        className={`${classes.zoomIn} ${embedded ? classes.embedded : ''} zoomIn `}
+        className="zoomIn"
+        embedded={+embedded}
         onClick={() => callback('in')}
         onKeyDown={keyboardCallback}
         tabIndex={0}
       >
         <Add />
-      </ButtonBase>
-      <ButtonBase
+      </StyledZoomInButton>
+      <StyledZoomOutButton
         type="button"
         aria-hidden
-        className={`${classes.zoomOut} ${embedded ? classes.embedded : ''} zoomOut`}
+        className="zoomOut"
+        embedded={+embedded}
         onClick={() => callback('out')}
         onKeyDown={keyboardCallback}
         tabIndex={0}
       >
         <Remove />
-      </ButtonBase>
-    </div>
+      </StyledZoomOutButton>
+    </StyledContainer>
   );
-};
+}
 
-PanControl.propTypes = {
-  classes: PropTypes.shape({
-    container: PropTypes.string,
-    top: PropTypes.string,
-    bottom: PropTypes.string,
-    left: PropTypes.string,
-    right: PropTypes.string,
-    zoomIn: PropTypes.string,
-    zoomOut: PropTypes.string,
-    embedded: PropTypes.string,
-  }).isRequired,
-};
+const StyledTopButton = styled(ButtonBase)(() => ({
+  right: 34,
+}));
+const StyledBottomButton = styled(ButtonBase)(() => ({
+  bottom: 76,
+  right: 34,
+}));
+const StyledLeftButton = styled(ButtonBase)(() => ({
+  left: 0,
+  top: 34,
+}));
+const StyledRightButton = styled(ButtonBase)(() => ({
+  right: 0,
+  top: 34,
+}));
+
+const StyledZoomInButton = styled(ButtonBase)(({ embedded }) => {
+  const styles = {
+    bottom: 31,
+    right: 34,
+  };
+  if (embedded) {
+    Object.assign(styles, { right: 2 });
+  }
+  return styles;
+});
+const StyledZoomOutButton = styled(ButtonBase)(({ embedded }) => {
+  const styles = {
+    bottom: 0,
+    right: 34,
+  };
+  if (embedded) {
+    Object.assign(styles, { right: 2 });
+  }
+  return styles;
+});
+
+const StyledContainer = styled.div(() => ({
+  height: 178,
+  width: 102,
+  '& button': {
+    backgroundClip: 'padding-box',
+    backgroundColor: '#fff',
+    borderRadius: 2,
+    border: '2px solid rgba(0,0,0,0.2)',
+    color: '#000',
+    position: 'absolute',
+    width: 34,
+    height: 34,
+    lineHeight: '30px',
+    padding: 0,
+    pointerEvents: 'auto',
+  },
+}));
 
 export default PanControl;
