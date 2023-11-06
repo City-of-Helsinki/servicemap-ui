@@ -53,8 +53,8 @@ const SuggestionBox = (props) => {
   const getAddressNavigatorParams = useNavigationParams();
   const listRef = useRef(null);
   const fetchController = useRef(null);
-  const citySettings = useSelector(selectSelectedCities);
-  const organizationSettings = useSelector(selectSelectedOrganizations);
+  const selectedCities = useSelector(selectSelectedCities);
+  const selectedOrganizations = useSelector(selectSelectedOrganizations);
 
   const getAddressText = (item) => {
     if (item.isExact) {
@@ -99,8 +99,8 @@ const SuggestionBox = (props) => {
         query,
         fetchController.current,
         getLocaleText,
-        citySettings,
-        organizationSettings,
+        selectedCities,
+        selectedOrganizations,
         locale,
       ))
         .then((data) => {

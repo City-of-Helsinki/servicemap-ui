@@ -17,15 +17,10 @@ const results = state => state.searchResults.data;
  * @param {*} settings - user settings, used in filtering
  */
 export const getFilteredData = (data, settings, options) => {
-  let cities = [];
-  config.cities.forEach((city) => {
-    cities.push(...settings.cities[city] ? [city] : []);
-  });
+  let cities = config.cities.filter(city => settings.cities[city]);
 
-  let organizations = [];
-  config.organizations.forEach((organization) => {
-    organizations.push(...settings.organizations[organization.id] ? [organization.id] : []);
-  });
+  let organizationIds = config.organizations.map(organization => organization.id)
+    .filter(id => settings.organizations[id]);
 
   let embed = false;
   if (global.window) {
@@ -33,15 +28,13 @@ export const getFilteredData = (data, settings, options) => {
   }
 
   let filteredData = data
-    .filter(filterEmptyServices(cities, organizations))
+    .filter(filterEmptyServices(cities, organizationIds))
     .filter(filterResultTypes());
 
   if (!embed) {
-    if (options) {
-      if (options.municipality) cities = options.municipality.split(',');
-      if (options.organizations) organizations = options.organizations.split(',');
-    }
-    filteredData = filteredData.filter(filterCitiesAndOrganizations(cities, organizations));
+    if (options?.municipality) cities = options.municipality.split(',');
+    if (options?.organizations) organizationIds = options.organizations.split(',');
+    filteredData = filteredData.filter(filterCitiesAndOrganizations(cities, organizationIds));
   }
   return filteredData;
 };
