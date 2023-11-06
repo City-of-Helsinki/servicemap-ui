@@ -171,9 +171,9 @@ test('ServiceItem click event takes to service page', async(t) => {
 
   await t
     .click(services.nth(0));
-  const serviceTitle = await (await serviceTitleSelector.textContent).toLowerCase();
+  const serviceTitle = await serviceTitleSelector.textContent;
   await t
-    .expect(serviceTitle).eql(serviceName.toLowerCase())
+    .expect(serviceTitle.toLowerCase()).eql(serviceName.toLowerCase())
   ;
 });
 
