@@ -4,13 +4,15 @@ import { selectCities, selectOrganizations } from './settings';
 
 export const getHighlightedDistrict = state => state.districts.highlitedDistrict;
 
-const getSelectedDistrict = state => state.districts.selectedDistrictType;
-const getDistrictData = state => state.districts.districtData;
+export const selectSelectedDistrictType = state => state.districts.selectedDistrictType;
+export const selectDistrictData = state => state.districts.districtData;
 const getAddressDistrictData = state => state.districts.districtAddressData.districts;
-export const getSubdistrictUnits = state => state.districts.subdistrictUnits;
-const getSubdistrictSelection = state => state.districts.selectedSubdistricts;
+export const selectSubdistrictUnits = state => state.districts.subdistrictUnits;
+export const selectSelectedSubdistricts = state => state.districts.selectedSubdistricts;
 const getSelectedDistrictServices = state => state.districts.selectedDistrictServices;
 const selectParkingUnits = state => state.districts.parkingUnits;
+export const selectDistrictsFetching = state => state.districts.districtsFetching;
+export const selectDistrictAddressData = state => state.districts.districtAddressData;
 
 export const selectParkingUnitUnits = createSelector(
   [selectParkingUnits],
@@ -18,7 +20,7 @@ export const selectParkingUnitUnits = createSelector(
 );
 
 export const getDistrictsByType = createSelector(
-  [getSelectedDistrict, getDistrictData, selectCities],
+  [selectSelectedDistrictType, selectDistrictData, selectCities],
   (selectedDistrictType, districtData, citySettings) => {
     if (selectedDistrictType && districtData.length) {
       const districtType = districtData.find(obj => obj.id === selectedDistrictType);
@@ -72,7 +74,7 @@ export const getDistrictPrimaryUnits = createSelector(
 
 // Get selected geographical district units
 export const getFilteredSubdistrictServices = createSelector(
-  [getSubdistrictSelection, getSubdistrictUnits, selectCities, selectOrganizations],
+  [selectSelectedSubdistricts, selectSubdistrictUnits, selectCities, selectOrganizations],
   (selectedSubdistricts, unitData, cities, organizations) => {
     const cityFilteredUnits = getFilteredData(unitData, { cities, organizations });
     if (selectedSubdistricts?.length && unitData) {

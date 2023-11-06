@@ -1,93 +1,63 @@
 /* eslint-disable camelcase */
-import { styled } from '@mui/material/styles';
-import React, { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
-import { useHistory, useLocation } from 'react-router-dom';
-import { FormattedMessage } from 'react-intl';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { List, Typography } from '@mui/material';
+import { useHistory, useLocation } from 'react-router-dom';
 import {
-  BusinessCenter, EscalatorWarning, LocationCity, Map,
-} from '@mui/icons-material';
-import { visuallyHidden } from '@mui/utils';
-import { focusDistrict, focusDistricts, useMapFocusDisabled } from '../MapView/utils/mapActions';
-import GeographicalTab from './components/GeographicalTab';
-import { parseSearchParams, stringifySearchParams } from '../../utils';
-import ServiceTab from './components/ServiceTab';
-import { districtFetch } from '../../utils/fetch';
-import fetchAddress from '../MapView/utils/fetchAddress';
-import { dataStructure, geographicalDistricts } from './utils/districtDataHelper';
-import { fetchParkingAreaGeometry, fetchParkingUnits, handleOpenItems } from '../../redux/actions/district';
-import useLocaleText from '../../utils/useLocaleText';
-import { getAddressDistrict } from '../../redux/selectors/district';
-import { getAddressText } from '../../utils/address';
-import {
-  AddressSearchBar,
-  MobileComponent,
-  TitleBar,
-  SMButton,
-  SMAccordion,
-} from '../../components';
-import StatisticalDistrictList from './components/StatisticalDistrictList';
-import useMobileStatus from '../../utils/isMobile';
-import MapUtility from '../../utils/mapUtility';
-import { StyledListItem, StyledLoadingText } from './components/styled/styled';
-
-const AreaView = ({
-  setSelectedDistrictType,
-  setSelectedSubdistricts,
-  setSelectedDistrictServices,
-  setDistrictAddressData,
-  setMapState,
-  setSelectedParkingAreas,
-  fetchDistrictUnitList,
   fetchDistricts,
-  unitsFetching,
-  districtData,
-  districtAddressData,
-  selectedDistrictData,
-  subdistrictUnits,
-  selectedSubdistricts,
-  mapState,
-  map,
-  navigator,
-  embed,
-  intl,
-}) => {
+  fetchDistrictUnitList,
+  fetchParkingAreaGeometry,
+  fetchParkingUnits,
+  handleOpenItems,
+  setDistrictAddressData,
+  setSelectedDistrictServices,
+  setSelectedDistrictType,
+  setSelectedParkingAreas,
+  setSelectedSubdistricts,
+} from '../../redux/actions/district';
+import {
+  getAddressDistrict,
+  getDistrictsByType,
+  selectDistrictAddressData,
+  selectSelectedSubdistricts,
+  selectSubdistrictUnits,
+} from '../../redux/selectors/district';
+import { selectMapRef } from '../../redux/selectors/general';
+import { parseSearchParams } from '../../utils';
+import { getAddressText } from '../../utils/address';
+import { districtFetch } from '../../utils/fetch';
+import useLocaleText from '../../utils/useLocaleText';
+import fetchAddress from '../MapView/utils/fetchAddress';
+import { focusDistrict, focusDistricts, useMapFocusDisabled } from '../MapView/utils/mapActions';
+import SideBar from './components/SideBar/SideBar';
+import { dataStructure, geographicalDistricts } from './utils/districtDataHelper';
+
+const AreaView = ({ embed }) => {
   const dispatch = useDispatch();
   const location = useLocation();
   const history = useHistory();
-  const isMobile = useMobileStatus();
+  const districtAddressData = useSelector(selectDistrictAddressData);
+  const subdistrictUnits = useSelector(selectSubdistrictUnits);
+  const selectedSubdistricts = useSelector(selectSelectedSubdistricts);
+  const unitsFetching = useSelector(state => state.districts.unitFetch.nodesFetching);
+  const selectedDistrictData = useSelector(getDistrictsByType);
+  const map = useSelector(selectMapRef);
   const addressDistrict = useSelector(getAddressDistrict);
-  const selectedDistrictType = useSelector(state => state.districts.selectedDistrictType);
-  const districtsFetching = useSelector(state => state.districts.districtsFetching);
   const getLocaleText = useLocaleText();
-  const openItems = useSelector(state => state.districts.openItems);
-  const selectedDistrictGeometry = selectedDistrictData[0]?.boundary;
+  const geometryLoaded = !!selectedDistrictData[0]?.boundary;
 
   const searchParams = parseSearchParams(location.search);
   const selectedArea = searchParams.selected;
   // Get area parameter without year data
   const selectedAreaType = selectedArea?.split(/([\d]+)/)[0];
   const mapFocusDisabled = useMapFocusDisabled();
-  // Selected category handling
-  const [areaSelection, setAreaSelection] = useState(null);
-
-  const getInitialOpenItems = () => {
-    if (selectedAreaType) {
-      const category = dataStructure.find(
-        data => data.id === selectedAreaType
-        || data.districts.some(obj => obj.id === selectedAreaType),
-      );
-      return [category?.id];
-    } return openItems;
-  };
 
   // State
   const [selectedAddress, setSelectedAddress] = useState(districtAddressData.address);
-  const [initialOpenItems] = useState(getInitialOpenItems);
   // Pending request to focus map to districts. Executed once district data is loaded
   const [focusTo, setFocusTo] = useState(null);
+  // Has a pending focusTo request been made. Use this to not double focus
+  const [focusInitiated, setFocusInitiated] = useState(false);
 
   const focusMapToDistrict = (district) => {
     if (!mapFocusDisabled && map && district?.boundary) {
@@ -107,32 +77,12 @@ const AreaView = ({
     };
     await districtFetch(options)
       .then((data) => {
-        setDistrictAddressData({
+        dispatch(setDistrictAddressData({
           address: selectedAddress,
           districts: data.results,
-        });
+        }));
       });
   };
-
-
-  const getViewState = () => ({
-    center: map.getCenter(),
-    zoom: map.getZoom(),
-  });
-
-  const clearRadioButtonValue = useCallback(() => {
-    setSelectedDistrictType(null);
-    setSelectedDistrictServices([]);
-    setSelectedSubdistricts([]);
-  }, []);
-
-  useEffect(() => () => {
-    if (map && MapUtility.mapHasMapPane(map)) {
-      // On unmount, save map position
-      setMapState(getViewState());
-    }
-  }, [map]);
-
 
   useEffect(() => {
     // Focus map to local district when new address is selected
@@ -140,7 +90,6 @@ const AreaView = ({
       focusMapToDistrict(addressDistrict);
     }
   }, [addressDistrict, map]);
-
 
   useEffect(() => {
     if (selectedAddress) {
@@ -150,51 +99,42 @@ const AreaView = ({
         fetchAddressDistricts();
       }
     } else {
-      setDistrictAddressData(null);
+      dispatch(setDistrictAddressData(null));
     }
   }, [selectedAddress]);
-
 
   useEffect(() => {
     selectedSubdistricts.forEach((district) => {
       // Fetch geographical districts unless currently fetching or already fetched
       if (!unitsFetching.includes(district)
         && !subdistrictUnits.some(unit => unit.division_id === district)) {
-        fetchDistrictUnitList(district);
+        dispatch(fetchDistrictUnitList(district));
       }
     });
   }, [selectedSubdistricts]);
 
+  const isPossibleToFocus = () => !!map && !mapFocusDisabled && geometryLoaded;
 
   useEffect(() => {
-    // If pending district focus, focus to districts when distitct data is loaded
-    if (!mapFocusDisabled && focusTo && selectedDistrictData.length) {
+    // If pending district focus, focus to districts when district data is loaded
+    if (isPossibleToFocus()) {
       if (focusTo === 'districts') {
-        if (selectedDistrictGeometry) {
-          setFocusTo(null);
-          focusDistricts(map, selectedDistrictData);
-        }
-      } else if (focusTo === 'subdistricts') {
-        if (selectedDistrictGeometry) {
-          const filtetedDistricts = selectedDistrictData.filter(
-            i => selectedSubdistricts.includes(i.ocd_id),
-          );
-          setFocusTo(null);
-          focusDistricts(map, filtetedDistricts);
-        }
+        setFocusTo(null);
+        focusDistricts(map, selectedDistrictData);
+      }
+      if (focusTo === 'subdistricts') {
+        const filteredDistricts = selectedDistrictData.filter(i => selectedSubdistricts.includes(i.ocd_id));
+        setFocusTo(null);
+        focusDistricts(map, filteredDistricts);
       }
     }
   }, [selectedDistrictData, focusTo]);
 
   useEffect(() => {
-    if (!mapFocusDisabled
-      && map
-      && !focusTo
-      && !addressDistrict
-      && selectedDistrictGeometry) {
+    if (isPossibleToFocus() && !focusTo && !addressDistrict && !focusInitiated) {
       focusDistricts(map, selectedDistrictData);
     }
-  }, [selectedDistrictGeometry]);
+  }, [selectedDistrictData, addressDistrict]);
 
   useEffect(() => {
     if (searchParams.selected
@@ -205,7 +145,7 @@ const AreaView = ({
         /* Remove selected area parameter from url, otherwise it will override
         user area selection when returning to area view */
         history.replace();
-        setSelectedDistrictType(null);
+        dispatch(setSelectedDistrictType(null));
         // Switch to geographical tab if geographical area
         if (geographicalDistricts.includes(selectedAreaType)) {
           const geoTab = document.getElementById('Tab1');
@@ -215,24 +155,24 @@ const AreaView = ({
 
       // Fetch and select area from url parameters
       if (selectedArea && !dataStructure.some(obj => obj.id === selectedArea)) {
-        fetchDistricts(selectedAreaType);
+        dispatch(fetchDistricts(selectedAreaType));
         if (!embed) {
           const category = dataStructure.find(
             data => data.districts.some(obj => obj.id === selectedAreaType),
           );
           dispatch(handleOpenItems(category.id));
         } else {
-          fetchDistricts(selectedAreaType, true);
+          dispatch(fetchDistricts(selectedAreaType, true));
         }
-        setSelectedDistrictType(selectedArea);
+        dispatch(setSelectedDistrictType(selectedArea));
       } else if (!embed) {
-        fetchDistricts();
+        dispatch(fetchDistricts());
       }
 
       // Set selected parking spaces from url parameters
       if (searchParams.parkingSpaces) {
         const parkingAreas = searchParams.parkingSpaces.split(',');
-        setSelectedParkingAreas(parkingAreas);
+        dispatch(setSelectedParkingAreas(parkingAreas));
         parkingAreas.forEach((area) => {
           dispatch(fetchParkingAreaGeometry(area));
         });
@@ -243,9 +183,10 @@ const AreaView = ({
 
       // Set selected geographical districts from url parameters and handle map focus
       if (searchParams.districts) {
-        setSelectedSubdistricts(searchParams.districts.split(','));
+        dispatch(setSelectedSubdistricts(searchParams.districts.split(',')));
         if (!mapFocusDisabled) {
           setFocusTo('subdistricts');
+          setFocusInitiated(true);
         }
       }
 
@@ -253,7 +194,7 @@ const AreaView = ({
       if (searchParams.services) {
         const services = searchParams.services.split(',');
         const convertedServices = services.map(service => parseInt(service, 10));
-        setSelectedDistrictServices(convertedServices);
+        dispatch(setSelectedDistrictServices(convertedServices));
       }
 
       // Set address from url paramters
@@ -261,12 +202,6 @@ const AreaView = ({
         fetchAddress({ lat: searchParams.lat, lng: searchParams.lng })
           .then(data => setSelectedAddress(data));
       }
-    } else if (!districtData.length) { // Arriving to page first time, without url parameters
-      fetchDistricts();
-    } else if (mapState) { // Returning to page, without url parameters
-      // Returns map to the previous spot
-      const { center, zoom } = mapState;
-      if (map && center && zoom) map.setView(center, zoom);
     }
   }, []);
 
@@ -274,156 +209,18 @@ const AreaView = ({
     return null;
   }
 
-  const renderServiceTab = () => (
-    <ServiceTab
-      selectedAddress={selectedAddress}
-      districtData={districtData}
-      initialOpenItems={initialOpenItems}
-    />
-  );
-
-  const renderGeographicalTab = () => (
-    <GeographicalTab
-      initialOpenItems={initialOpenItems}
-      clearRadioButtonValue={clearRadioButtonValue}
-    />
-  );
-
-  const areaSectionSelection = (open, i) => {
-    setAreaSelection(!open ? i : null);
-    if (selectedDistrictType) {
-      clearRadioButtonValue();
-    }
-    // Since TabList component was changed in favor of Accordion this
-    // updates tab search param for keeping similar functionality as
-    // with TabList component
-    if (typeof i === 'number') {
-      searchParams.t = i;
-      // Get new search search params string
-      const searchString = stringifySearchParams(searchParams);
-      // Update select param to current history
-      if (navigator) {
-        navigator.replace({
-          ...location,
-          search: `?${searchString || ''}`,
-        });
-      }
-    }
-  };
-
-
-  const render = () => {
-    const categories = [
-      {
-        component: renderServiceTab(),
-        title: intl.formatMessage({ id: 'area.tab.publicServices' }),
-        icon: <StyledBusinessCenter />,
-      },
-      {
-        component: renderGeographicalTab(),
-        title: intl.formatMessage({ id: 'area.tab.geographical' }),
-        icon: <StyledLocationCity />,
-      },
-      {
-        component: <StatisticalDistrictList />,
-        title: intl.formatMessage({ id: 'area.tab.statisticalDistricts' }),
-        icon: <StyledEscalatorWarning />,
-      },
-    ];
-    if (!embed) {
-      return (
-        <div>
-          <TitleBar
-            title={intl.formatMessage({ id: 'general.pageLink.area' })}
-            titleComponent="p"
-            backButton={!isMobile}
-          />
-          <StyledInfoText>
-            <FormattedMessage id="home.buttons.area" />
-          </StyledInfoText>
-          <AddressSearchBar
-            handleAddressChange={setSelectedAddress}
-            title={(
-              <>
-                <FormattedMessage id="area.searchbar.infoText.address" />
-                {' '}
-                <FormattedMessage id="area.searchbar.infoText.optional" />
-              </>
-              )}
-          />
-          <List>
-            {
-              categories.map((category, i) => (
-                <StyledListItem
-                  divider
-                  disableGutters
-                  key={category.title}
-                >
-                  <SMAccordion // Top level categories
-                    adornment={category.icon}
-                    defaultOpen={false}
-                    disableUnmount
-                    onOpen={(e, open) => areaSectionSelection(open, i)}
-                    isOpen={areaSelection === i}
-                    elevated={areaSelection === i}
-                    titleContent={(
-                      <Typography component="p" variant="subtitle1">
-                        {category.title}
-                      </Typography>
-                    )}
-                    collapseContent={category.component}
-                  />
-                </StyledListItem>
-              ))
-            }
-          </List>
-          <MobileComponent>
-            {!districtsFetching.length && (
-              <SMButton
-                aria-hidden
-                role="link"
-                margin
-                messageID="general.showOnMap"
-                icon={<Map />}
-                onClick={() => navigator.openMap()}
-              />
-            )}
-          </MobileComponent>
-          <StyledLoadingText>
-            <Typography style={visuallyHidden} aria-live="assertive">
-              {districtsFetching.length
-                ? <FormattedMessage id="general.loading" />
-                : <FormattedMessage id="general.loading.done" />
-               }
-            </Typography>
-          </StyledLoadingText>
-        </div>
-      );
-    }
+  if (embed) {
     return null;
-  };
-
-  return render();
+  }
+  return <SideBar setSelectedAddress={setSelectedAddress} selectedAddress={selectedAddress} />;
 };
 
-const iconClass = (theme) => ({
-  padding: theme.spacing(2),
-  paddingLeft: theme.spacing(0),
-});
-
-const StyledBusinessCenter = styled(BusinessCenter)(({ theme }) => iconClass(theme));
-const StyledLocationCity = styled(LocationCity)(({ theme }) => iconClass(theme));
-const StyledEscalatorWarning = styled(EscalatorWarning)(({ theme }) => iconClass(theme));
-const StyledInfoText = styled(Typography)(({ theme }) => ({
-  padding: theme.spacing(2),
-  paddingTop: 0,
-  textAlign: 'start',
-  backgroundColor: theme.palette.primary.main,
-  color: '#fff',
-}));
-
 AreaView.propTypes = {
-  setSelectedDistrictType: PropTypes.func.isRequired,
+  embed: PropTypes.bool,
+};
+
+AreaView.defaultProps = {
+  embed: false,
 };
 
 export default AreaView;

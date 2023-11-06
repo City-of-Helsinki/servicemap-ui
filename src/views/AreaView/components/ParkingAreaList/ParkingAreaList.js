@@ -14,6 +14,7 @@ import {
   setParkingUnits,
   setSelectedDistrictType,
 } from '../../../../redux/actions/district';
+import { selectSelectedDistrictType } from '../../../../redux/selectors/district';
 import ServiceMapAPI from '../../../../utils/newFetch/ServiceMapAPI';
 import useLocaleText from '../../../../utils/useLocaleText';
 import { getDistrictCategory } from '../../utils/districtDataHelper';
@@ -22,7 +23,7 @@ import { StyledAreaListItem, StyledCheckBoxIcon, StyledListLevelThree } from '..
 const ParkingAreaList = ({ areas, variant }) => {
   const dispatch = useDispatch();
   const getLocaleText = useLocaleText();
-  const selectedDistrictType = useSelector(state => state.districts.selectedDistrictType);
+  const selectedDistrictType = useSelector(selectSelectedDistrictType);
   const selectedParkingAreas = useSelector(state => state.districts.selectedParkingAreas);
   const parkingAreas = useSelector(state => state.districts.parkingAreas);
   const parkingUnits = useSelector(state => state.districts.parkingUnits);

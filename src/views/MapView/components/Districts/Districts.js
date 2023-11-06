@@ -5,6 +5,7 @@ import { Typography, Link } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
+import { selectSelectedDistrictType } from '../../../../redux/selectors/district';
 import { drawMarkerIcon } from '../../utils/drawIcon';
 import swapCoordinates from '../../utils/swapCoordinates';
 import AddressMarker from '../AddressMarker';
@@ -40,7 +41,7 @@ const Districts = ({
   const location = useLocation();
   const getLocaleText = useLocaleText();
   const citySettings = useSelector(state => state.settings.cities);
-  const selectedDistrictType = useSelector(state => state.districts.selectedDistrictType);
+  const selectedDistrictType = useSelector(selectSelectedDistrictType);
   const selectedParkingAreas = useSelector(state => state.districts.selectedParkingAreas);
   const [areaPopup, setAreaPopup] = useState(null);
 
@@ -160,7 +161,19 @@ const Districts = ({
       filteredData = areasWithBoundary;
     }
 
-    return filteredData.map((district) => {
+    filteredData = filteredData
+      .filter(district => {
+        // In embed view, limit the rendered districts only to the selected ones
+        if (!embedded || !geographicalDistricts.includes(district.type)) {
+          return true;
+        }
+        if (!selectedSubdistricts.length) {
+          return true;
+        }
+        return selectedSubdistricts.some(item => item === district.ocd_id);
+      });
+
+    return filteredData.map(district => {
       let dimmed;
       if (geographicalDistricts.includes(district.type)) {
         if (selectedSubdistricts.length) {
@@ -169,7 +182,6 @@ const Districts = ({
       } else {
         dimmed = addressDistrict && district.id !== addressDistrict.id;
       }
-
       const area = district.boundary.coordinates.map(
         coords => swapCoordinates(coords),
       );
