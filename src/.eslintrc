@@ -4,7 +4,8 @@
         "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
         "no-shadow": 0,
         "no-console": ["error", { "allow": ["warn"] }],
-        "no-param-reassign": ["error", { "props": false }]
+        "no-param-reassign": ["error", { "props": false }],
+        "arrow-parens": ["warn", "as-needed"]
     },
     "env": {
         "browser": true,
