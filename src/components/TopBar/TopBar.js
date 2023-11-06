@@ -8,6 +8,8 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import styled from '@emotion/styled';
+import { selectNavigator } from '../../redux/selectors/general';
+import { getPage, selectThemeMode } from '../../redux/selectors/user';
 import DrawerMenu from './DrawerMenu';
 import DesktopComponent from '../DesktopComponent';
 import MobileComponent from '../MobileComponent';
@@ -31,17 +33,17 @@ const TopBar = (props) => {
   const location = useLocation();
   const intl = useIntl();
   const locale = useSelector(getLocale);
+  const themeMode = useSelector(selectThemeMode);
+  const currentPage = useSelector(getPage);
+  const breadcrumb = useSelector(state => state.breadcrumb);
+  const navigator = useSelector(selectNavigator);
   const getAddressNavigatorParams = useNavigationParams();
   const isOnHomePage = isHomePage(location?.pathname);
 
   const {
     hideButtons,
-    breadcrumb,
     changeTheme,
-    theme,
     setMapType,
-    navigator,
-    currentPage,
     smallScreen,
   } = props;
 
@@ -81,8 +83,8 @@ const TopBar = (props) => {
   );
 
   const handleContrastChange = () => {
-    changeTheme(theme === 'default' ? 'dark' : 'default');
-    setMapType(theme === 'default' ? 'accessible_map' : 'servicemap');
+    changeTheme(themeMode === 'default' ? 'dark' : 'default');
+    setMapType(themeMode === 'default' ? 'accessible_map' : 'servicemap');
   };
 
   const handleNavigation = (target, data) => {
@@ -147,7 +149,7 @@ const TopBar = (props) => {
   );
 
   const renderTopBar = (pageType) => {
-    const contrastAriaLabel = intl.formatMessage({ id: `general.contrast.ariaLabel.${theme === 'dark' ? 'off' : 'on'}` });
+    const contrastAriaLabel = intl.formatMessage({ id: `general.contrast.ariaLabel.${themeMode === 'dark' ? 'off' : 'on'}` });
 
     const topBarLink = (textId, onClick, isCurrent, ariaLabel, linkId) => (
       <ButtonBase sx={{ ml: 3 }} onClick={onClick} aria-current={isCurrent} aria-label={ariaLabel} id={linkId}>
@@ -328,13 +330,9 @@ const StyledToolbarWhite = styled(Toolbar)(({ theme, mobile }) => (
 ));
 
 TopBar.propTypes = {
-  breadcrumb: PropTypes.arrayOf(PropTypes.any).isRequired,
   changeTheme: PropTypes.func.isRequired,
-  currentPage: PropTypes.string.isRequired,
-  navigator: PropTypes.objectOf(PropTypes.any),
   setMapType: PropTypes.func.isRequired,
   smallScreen: PropTypes.bool.isRequired,
-  theme: PropTypes.string.isRequired,
   hideButtons: PropTypes.bool,
 };
 

@@ -7,7 +7,7 @@ import { useMap } from 'react-leaflet';
 import { useSelector } from 'react-redux';
 import { selectNavigator } from '../../../../redux/selectors/general';
 import { selectMapType } from '../../../../redux/selectors/settings';
-import { getLocale } from '../../../../redux/selectors/user';
+import { getLocale, getPage, selectThemeMode } from '../../../../redux/selectors/user';
 import orderUnits from '../../../../utils/orderUnits';
 import { drawMarkerIcon } from '../../utils/drawIcon';
 import { isEmbed } from '../../../../utils/path';
@@ -49,19 +49,18 @@ const clusterData = {};
 
 const MarkerCluster = ({
   classes,
-  currentPage,
   data,
   getDistance,
   highlightedUnit,
-  theme,
   measuringMode,
   disableInteraction,
 }) => {
   const navigator = useSelector(selectNavigator);
   const mapType = useSelector(selectMapType) || 'servicemap';
+  const currentPage = useSelector(getPage);
+  const useContrast = useSelector(selectThemeMode) === 'dark';
   const map = useMap();
   const getLocaleText = useLocaleText();
-  const useContrast = theme === 'dark';
   const embeded = isEmbed();
   const isMobile = useMobileStatus();
   const intl = useIntl();
@@ -466,7 +465,6 @@ MarkerCluster.propTypes = {
     }),
   ).isRequired,
   getDistance: PropTypes.func.isRequired,
-  theme: PropTypes.string.isRequired,
 };
 
 export default MarkerCluster;

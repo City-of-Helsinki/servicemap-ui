@@ -1,9 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ButtonBase, Divider, ListItem, Typography } from '@mui/material';
+import {
+  ButtonBase,
+  Divider,
+  ListItem,
+  Typography,
+} from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import styled from '@emotion/styled';
+import { useSelector } from 'react-redux';
+import { selectNavigator } from '../../../redux/selectors/general';
 import UnitIcon from '../../SMIcon/UnitIcon';
 import SMLink from '../../Link';
 import { getAddressFromUnit } from '../../../utils/address';
@@ -16,9 +23,9 @@ const DivisionItem = ({
   disableTitle,
   customTitle,
   className,
-  intl,
-  navigator,
 }) => {
+  const intl = useIntl();
+  const navigator = useSelector(selectNavigator);
   const getLocaleText = useLocaleText();
   const { area } = data;
   const aStart = area && area.start ? new Date(area.start).getFullYear() : null;
@@ -284,10 +291,6 @@ DivisionItem.propTypes = {
   divider: PropTypes.bool.isRequired,
   disableTitle: PropTypes.bool,
   customTitle: PropTypes.string,
-  navigator: PropTypes.objectOf(PropTypes.any).isRequired,
-  intl: PropTypes.shape({
-    formatMessage: PropTypes.func,
-  }).isRequired,
 };
 
 DivisionItem.defaultProps = {

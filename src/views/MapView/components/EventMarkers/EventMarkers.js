@@ -9,6 +9,7 @@ import { Close } from '@mui/icons-material';
 import { useLocation } from 'react-router-dom';
 import { useMap } from 'react-leaflet';
 import { selectNavigator } from '../../../../redux/selectors/general';
+import { selectThemeMode } from '../../../../redux/selectors/user';
 import useLocaleText from '../../../../utils/useLocaleText';
 import { getAddressFromUnit } from '../../../../utils/address';
 import formatEventDate from '../../../../utils/events';
@@ -24,7 +25,7 @@ const EventMarkers = ({ searchData }) => {
   const dispatch = useDispatch();
   const location = useLocation();
   const embeded = isEmbed();
-  const theme = useSelector(state => state.user.theme);
+  const useContrast = useSelector(selectThemeMode) === 'dark';
   const intl = useIntl();
   const map = useMap();
   const { Marker, Popup } = global.rL;
@@ -107,7 +108,7 @@ const EventMarkers = ({ searchData }) => {
       return (
         <Marker
           key={unit.id}
-          icon={drawMarkerIcon(theme === 'dark', `unit-marker-${unit.id}`, null, [0, -15])}
+          icon={drawMarkerIcon(useContrast, `unit-marker-${unit.id}`, null, [0, -15])}
           onMouseOver={(e) => { e.target.openPopup(); }}
           position={[
             unit.location.coordinates[1],

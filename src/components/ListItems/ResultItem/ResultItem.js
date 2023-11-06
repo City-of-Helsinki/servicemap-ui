@@ -11,6 +11,7 @@ import locationIcon from '../../../assets/icons/LocationDefault.svg';
 import locationIconHover from '../../../assets/icons/LocationHover.svg';
 import locationIconContrast from '../../../assets/icons/LocationDefaultContrast.svg';
 import locationIconContrastHover from '../../../assets/icons/LocationHoverContrast.svg';
+import { selectThemeMode } from '../../../redux/selectors/user';
 
 const ResultItem = ({
   bottomHighlight,
@@ -30,7 +31,7 @@ const ResultItem = ({
   simpleItem,
   ...rest
 }) => {
-  const theme = useSelector(state => state.user.theme);
+  const themeMode = useSelector(selectThemeMode);
 
   const resetMarkerHighlight = () => {
     // Handle marker highlight removal
@@ -40,7 +41,7 @@ const ResultItem = ({
     }
     marker.classList.remove('markerHighlighted');
     if (marker.nodeName === 'IMG') {
-      const icon = theme === 'dark' ? locationIconContrast : locationIcon;
+      const icon = themeMode === 'dark' ? locationIconContrast : locationIcon;
       marker.setAttribute('src', icon);
     }
   };
@@ -56,7 +57,7 @@ const ResultItem = ({
     if (marker) {
       marker.classList.add('markerHighlighted');
       if (marker.nodeName === 'IMG') {
-        const icon = theme === 'dark' ? locationIconContrastHover : locationIconHover;
+        const icon = themeMode === 'dark' ? locationIconContrastHover : locationIconHover;
         marker.setAttribute('src', icon);
       }
     }

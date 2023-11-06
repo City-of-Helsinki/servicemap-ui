@@ -1,11 +1,15 @@
 /* eslint-disable global-require */
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { useIntl } from 'react-intl';
 import { withRouter } from 'react-router-dom';
 import { ButtonBase } from '@mui/material';
 import { MyLocation, LocationDisabled } from '@mui/icons-material';
 import { useSelector } from 'react-redux';
 import { useMapEvents } from 'react-leaflet';
+import { selectNavigator } from '../../redux/selectors/general';
+import { selectMapType } from '../../redux/selectors/settings';
+import { getLocale, getPage } from '../../redux/selectors/user';
 import { mapOptions } from './config/mapConfig';
 import CreateMap from './utils/createMap';
 import { focusToPosition, getBoundsFromBbox } from './utils/mapActions';
@@ -60,20 +64,15 @@ const EmbeddedActions = () => {
 const MapView = (props) => {
   const {
     classes,
-    currentPage,
-    intl,
     location,
-    settings,
     unitsLoading,
     hideUserMarker,
     highlightedUnit,
     highlightedDistrict,
     isMobile,
     setMapRef,
-    navigator,
     findUserLocation,
     userLocation,
-    locale,
     measuringMode,
     toggleSidebar,
     sidebarHidden,
@@ -89,12 +88,17 @@ const MapView = (props) => {
   const [measuringLine, setMeasuringLine] = useState([]);
 
   const embedded = isEmbed({ url: location.pathname });
+  const navigator = useSelector(selectNavigator);
+  const mapType = useSelector(selectMapType);
+  const locale = useSelector(getLocale);
+  const currentPage = useSelector(getPage);
   const getAddressNavigatorParams = useNavigationParams();
   const districtUnitsFetch = useSelector(state => state.districts.unitFetch);
   const statisticalDistrictFetch = useSelector(getStatisticalDistrictUnitsState);
   const districtsFetching = useSelector(state => !!state.districts.districtsFetching?.length);
   const districtViewFetching = districtUnitsFetch.isFetching || districtsFetching;
   const unitData = useMapUnits();
+  const intl = useIntl();
 
   // This unassigned selector is used to trigger re-render after events are fetched
   useSelector(state => getSelectedUnitEvents(state));
@@ -109,9 +113,9 @@ const MapView = (props) => {
     }
     // Search param map value
     const spMap = parseSearchParams(location.search).map || false;
-    const mapType = spMap || (embedded ? 'servicemap' : settings.mapType);
+    const mapType1 = spMap || (embedded ? 'servicemap' : mapType);
 
-    const newMap = CreateMap(mapType, locale);
+    const newMap = CreateMap(mapType1, locale);
     setMapObject(newMap);
   };
 
@@ -177,7 +181,7 @@ const MapView = (props) => {
   useEffect(() => { // On map type change
     // Init new map and set new ref to redux
     initializeMap();
-  }, [settings.mapType]);
+  }, [mapType]);
 
   useEffect(() => {
     if (mapElement) {
@@ -402,20 +406,15 @@ export default withRouter(MapView);
 // Typechecking
 MapView.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
-  currentPage: PropTypes.string.isRequired,
   hideUserMarker: PropTypes.bool,
   highlightedDistrict: PropTypes.objectOf(PropTypes.any),
   highlightedUnit: PropTypes.objectOf(PropTypes.any),
-  intl: PropTypes.objectOf(PropTypes.any).isRequired,
   isMobile: PropTypes.bool,
   location: PropTypes.objectOf(PropTypes.any).isRequired,
-  navigator: PropTypes.objectOf(PropTypes.any),
   findUserLocation: PropTypes.func.isRequired,
   setMapRef: PropTypes.func.isRequired,
-  settings: PropTypes.objectOf(PropTypes.any).isRequired,
   unitsLoading: PropTypes.bool,
   userLocation: PropTypes.objectOf(PropTypes.any),
-  locale: PropTypes.string.isRequired,
   measuringMode: PropTypes.bool.isRequired,
   toggleSidebar: PropTypes.func,
   sidebarHidden: PropTypes.bool,
@@ -427,7 +426,6 @@ MapView.defaultProps = {
   highlightedDistrict: null,
   highlightedUnit: null,
   isMobile: false,
-  navigator: null,
   unitsLoading: false,
   toggleSidebar: null,
   sidebarHidden: false,

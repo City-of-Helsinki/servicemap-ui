@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
+import { useSelector } from 'react-redux';
 import logoNormal from '../../../assets/images/service-map-logo-fi.svg';
 import logoContrast from '../../../assets/images/service-map-logo-contrast.svg';
 import logoNormalDev from '../../../assets/images/service-map-logo-fi-dev.svg';
@@ -12,13 +13,13 @@ import logoSVContrast from '../../../assets/images/Logo-SWE-Contrast.svg';
 import IconPalvelukarttaPrimary from '../../../assets/icons/IconPalvelukarttaPrimary.svg';
 import IconPalvelukarttaContrast from '../../../assets/icons/IconPalvelukarttaContrast.svg';
 import config from '../../../../config';
-import { useUserLocale } from '../../../utils/user';
+import { getLocale } from '../../../redux/selectors/user';
 
 const HomeLogo = React.forwardRef((props, ref) => {
   const {
     contrast, small, ...rest
   } = props;
-  const locale = useUserLocale();
+  const locale = useSelector(getLocale);
 
   const getSmallLogo = contrast => (
     contrast ? IconPalvelukarttaContrast : IconPalvelukarttaPrimary

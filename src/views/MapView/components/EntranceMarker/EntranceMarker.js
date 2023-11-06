@@ -7,6 +7,7 @@ import { FormattedMessage } from 'react-intl';
 import { useMap } from 'react-leaflet';
 import { useSelector } from 'react-redux';
 import { getSelectedUnit } from '../../../../redux/selectors/selectedUnit';
+import { selectThemeMode } from '../../../../redux/selectors/user';
 import useLocaleText from '../../../../utils/useLocaleText';
 import { drawEntranceMarkreIcon } from '../../utils/drawIcon';
 import { StyledUnitTooltipTitle, StyledUnitTooltipWrapper } from '../styled/styled';
@@ -14,7 +15,7 @@ import { StyledUnitTooltipTitle, StyledUnitTooltipWrapper } from '../styled/styl
 const EntranceMarker = () => {
   const getLocaleText = useLocaleText();
   const unit = useSelector(state => getSelectedUnit(state));
-  const theme = useSelector(state => state.user.theme);
+  const useContrast = useSelector(selectThemeMode) === 'dark';
   const map = useMap();
 
   const unitPoint = flip(unit.location);
@@ -56,7 +57,7 @@ const EntranceMarker = () => {
         return (
           <Marker
             key={`${coordinates[0]},${coordinates[1]}`}
-            icon={drawEntranceMarkreIcon(theme === 'dark')}
+            icon={drawEntranceMarkreIcon(useContrast)}
             position={coordinates}
           >
             <Popup>

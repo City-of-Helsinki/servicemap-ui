@@ -6,10 +6,7 @@ import { calculateDistance, getCurrentlyUsedPosition } from '../../../../redux/s
 import styles from '../../styles';
 import { getSelectedUnit, getSelectedUnitEvents } from '../../../../redux/selectors/selectedUnit';
 
-
 const mapStateToProps = (state) => {
-  const { user } = state;
-  const { page, theme } = user;
   const distanceCoordinates = getCurrentlyUsedPosition(state);
   // TODO: optimization: memoize getDistance (move from mapStateToProps to custom hook)
   const getDistance = (unit, intl) => (
@@ -22,11 +19,9 @@ const mapStateToProps = (state) => {
   }
 
   return {
-    currentPage: page,
     getDistance,
     highlightedUnit,
     highlightedUnitEvents,
-    theme,
   };
 };
 

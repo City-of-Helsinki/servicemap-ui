@@ -11,7 +11,7 @@ import {
   getStatisticalDistrictSelection,
   getStatisticalDistrictSelectedCategory,
 } from '../../../../redux/selectors/statisticalDistrict';
-import { getPage, getTheme } from '../../../../redux/selectors/user';
+import { getPage, selectThemeMode } from '../../../../redux/selectors/user';
 import dataVisualization from '../../../../utils/dataVisualization';
 import useLocaleText from '../../../../utils/useLocaleText';
 import swapCoordinates from '../../utils/swapCoordinates';
@@ -27,8 +27,7 @@ const StatisticalDistrictsComponent = () => {
   const selections = useSelector(getStatisticalDistrictAreaSelections);
   const { section } = useSelector(getStatisticalDistrictSelection);
   const page = useSelector(getPage);
-  const theme = useSelector(getTheme);
-  const useContrast = theme === 'dark';
+  const useContrast = useSelector(selectThemeMode) === 'dark';
   const location = useLocation();
 
   const hasSelections = Object.keys(selections).some(key => selections[key]);

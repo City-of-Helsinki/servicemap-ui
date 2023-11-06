@@ -4,8 +4,9 @@ import {
   AccessTime, ArrowDropUp, LocationOn, Search,
 } from '@mui/icons-material';
 import { List } from '@mui/material';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
+import { selectNavigator } from '../../../../redux/selectors/general';
 import {
   selectSelectedCities,
   selectSelectedOrganizations,
@@ -36,8 +37,6 @@ const SuggestionBox = (props) => {
     handleBlur,
     focusedSuggestion,
     isMobile,
-    intl,
-    navigator,
   } = props;
 
   const [suggestions, setSuggestions] = useState(null);
@@ -49,12 +48,14 @@ const SuggestionBox = (props) => {
 
   const dispatch = useDispatch();
   const locale = useSelector(getLocale);
+  const navigator = useSelector(selectNavigator);
   const getLocaleText = useLocaleText();
   const getAddressNavigatorParams = useNavigationParams();
   const listRef = useRef(null);
   const fetchController = useRef(null);
   const selectedCities = useSelector(selectSelectedCities);
   const selectedOrganizations = useSelector(selectSelectedOrganizations);
+  const intl = useIntl();
 
   const getAddressText = (item) => {
     if (item.isExact) {
@@ -355,14 +356,11 @@ SuggestionBox.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   handleBlur: PropTypes.func.isRequired,
   focusedSuggestion: PropTypes.number,
-  navigator: PropTypes.objectOf(PropTypes.any),
   isMobile: PropTypes.bool,
-  intl: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 SuggestionBox.defaultProps = {
   closeMobileSuggestions: null,
-  navigator: null,
   visible: false,
   searchQuery: null,
   focusedSuggestion: null,

@@ -8,6 +8,7 @@ import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import config from '../../../config';
 import { selectSettings } from '../../redux/selectors/settings';
+import { selectThemeMode } from '../../redux/selectors/user';
 import { keyboardHandler } from '../../utils';
 import SMAutocomplete from '../SMAutocomplete';
 import constants from '../SettingsComponent/constants';
@@ -31,7 +32,7 @@ const SettingsDropdowns = ({ variant }) => {
   const settingsValues = constants.convertToSettingsValues(settings);
   const [openSettings, setOpenSettings] = useState(null);
   const highlightedOption = useRef(null);
-  const theme = useSelector(state => state.user.theme);
+  const themeMode = useSelector(selectThemeMode);
 
   // Configure rendered settings items
   const senseSettingList = [
@@ -131,7 +132,7 @@ const SettingsDropdowns = ({ variant }) => {
         disablePortal
         disableClearable
         ownsettings={+ownSettingsVariant}
-        colormode={theme}
+        colormode={themeMode}
         multiple={!isSingleOption}
         openText={intl.formatMessage({ id: 'settings.open' })}
         closeText={intl.formatMessage({ id: 'settings.close' })}

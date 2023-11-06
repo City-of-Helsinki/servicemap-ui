@@ -11,6 +11,7 @@ import URI from 'urijs';
 import { Helmet } from 'react-helmet';
 import { useSelector } from 'react-redux';
 import { selectSelectedOrganizations } from '../../redux/selectors/settings';
+import { getLocale } from '../../redux/selectors/user';
 import * as smurl from './utils/url';
 import isClient, { uppercaseFirst } from '../../utils';
 import { getEmbedURL, getLanguage } from './utils/utils';
@@ -20,7 +21,6 @@ import paths from '../../../config/paths';
 import embedderConfig from './embedderConfig';
 import SettingsUtility from '../../utils/settings';
 import useLocaleText from '../../utils/useLocaleText';
-import { useUserLocale } from '../../utils/user';
 import EmbedHTML from './components/EmbedHTML';
 import TopBar from '../../components/TopBar';
 import config from '../../../config';
@@ -87,7 +87,7 @@ const EmbedderView = ({
   const organizationSettings = useSelector(selectSelectedOrganizations);
 
   const getLocaleText = useLocaleText();
-  const userLocale = useUserLocale();
+  const userLocale = useSelector(getLocale);
 
   // States
   const [language, setLanguage] = useState(defaultLanguage);
