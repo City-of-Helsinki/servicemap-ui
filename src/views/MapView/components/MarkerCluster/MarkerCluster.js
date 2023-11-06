@@ -5,6 +5,8 @@ import 'leaflet.markercluster/dist/MarkerCluster.css';
 import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
 import { useMap } from 'react-leaflet';
 import { useSelector } from 'react-redux';
+import { selectNavigator } from '../../../../redux/selectors/general';
+import { selectMapType } from '../../../../redux/selectors/settings';
 import { getLocale } from '../../../../redux/selectors/user';
 import orderUnits from '../../../../utils/orderUnits';
 import { drawMarkerIcon } from '../../utils/drawIcon';
@@ -51,12 +53,12 @@ const MarkerCluster = ({
   data,
   getDistance,
   highlightedUnit,
-  navigator,
-  settings,
   theme,
   measuringMode,
   disableInteraction,
 }) => {
+  const navigator = useSelector(selectNavigator);
+  const mapType = useSelector(selectMapType) || 'servicemap';
   const map = useMap();
   const getLocaleText = useLocaleText();
   const useContrast = theme === 'dark';
@@ -178,7 +180,7 @@ const MarkerCluster = ({
   };
 
 
-  const { clusterPopupVisibility } = mapTypes[settings.mapType || 'servicemap'];
+  const { clusterPopupVisibility } = mapTypes[mapType];
   const popupTexts = {
     title: intl.formatMessage({ id: 'unit.plural' }),
     info: count => intl.formatMessage({ id: 'map.unit.cluster.popup.info' }, { count }),
@@ -464,8 +466,6 @@ MarkerCluster.propTypes = {
     }),
   ).isRequired,
   getDistance: PropTypes.func.isRequired,
-  navigator: PropTypes.objectOf(PropTypes.any).isRequired,
-  settings: PropTypes.objectOf(PropTypes.any).isRequired,
   theme: PropTypes.string.isRequired,
 };
 

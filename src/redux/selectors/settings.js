@@ -6,6 +6,7 @@ import SettingsUtility from '../../utils/settings';
 export const selectSettings = state => state.settings;
 export const selectCities = state => state.settings.cities;
 export const selectOrganizations = state => state.settings.organizations;
+export const selectMapType = state => state.settings.mapType;
 
 /**
  * Returns an array of city ids.

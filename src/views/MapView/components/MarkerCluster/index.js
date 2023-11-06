@@ -8,7 +8,7 @@ import { getSelectedUnit, getSelectedUnitEvents } from '../../../../redux/select
 
 
 const mapStateToProps = (state) => {
-  const { navigator, user, settings } = state;
+  const { user } = state;
   const { page, theme } = user;
   const distanceCoordinates = getCurrentlyUsedPosition(state);
   // TODO: optimization: memoize getDistance (move from mapStateToProps to custom hook)
@@ -26,8 +26,6 @@ const mapStateToProps = (state) => {
     getDistance,
     highlightedUnit,
     highlightedUnitEvents,
-    navigator,
-    settings,
     theme,
   };
 };
