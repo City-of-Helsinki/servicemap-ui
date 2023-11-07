@@ -2,32 +2,35 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { css } from '@emotion/css';
+import { useIntl } from 'react-intl';
+import { useSelector } from 'react-redux';
+import { selectNavigator } from '../../../redux/selectors/general';
+import { selectSelectedAccessibilitySettings } from '../../../redux/selectors/settings';
+import { calculateDistance, getCurrentlyUsedPosition } from '../../../redux/selectors/unit';
 import UnitHelper from '../../../utils/unitHelper';
 import ResultItem from '../ResultItem';
-import SettingsUtility from '../../../utils/settings';
 import UnitIcon from '../../SMIcon/UnitIcon';
-import isClient from '../../../utils';
+import isClient, { formatDistanceObject } from '../../../utils';
 import useLocaleText from '../../../utils/useLocaleText';
 
 const UnitItem = ({
-  distance,
   unit,
   onClick,
-  intl,
   divider,
-  navigator,
-  settings,
   simpleItem,
 }) => {
   const getLocaleText = useLocaleText();
+  const intl = useIntl();
+  const selectedShortcomings = useSelector(selectSelectedAccessibilitySettings);
+  const navigator = useSelector(selectNavigator);
+  const currentlyUsedPosition = useSelector(getCurrentlyUsedPosition);
+  const distance = formatDistanceObject(intl, calculateDistance(unit, currentlyUsedPosition));
 
   const parseAccessibilityText = () => {
-    const accessSettingsSet = SettingsUtility.hasActiveAccessibilitySettings(settings);
     let accessText = null;
     let accessibilityProblems = null;
-    if (accessSettingsSet && unit && settings) {
-      const currentSettings = SettingsUtility.parseShortcomingSettings(settings);
-      accessibilityProblems = UnitHelper.getShortcomingCount(unit, currentSettings);
+    if (selectedShortcomings.length && unit) {
+      accessibilityProblems = UnitHelper.getShortcomingCount(unit, selectedShortcomings);
       accessText = intl.formatMessage({ id: 'unit.accessibility.noInfo' });
       if (accessibilityProblems !== null && typeof accessibilityProblems !== 'undefined') {
         switch (accessibilityProblems) {
@@ -125,25 +128,15 @@ export default UnitItem;
 
 // Typechecking
 UnitItem.propTypes = {
-  distance: PropTypes.shape({
-    distance: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-    type: PropTypes.oneOf(['m', 'km']),
-    text: PropTypes.string,
-  }),
   unit: PropTypes.objectOf(PropTypes.any),
   onClick: PropTypes.func,
-  intl: PropTypes.objectOf(PropTypes.any).isRequired,
-  navigator: PropTypes.objectOf(PropTypes.any),
-  settings: PropTypes.objectOf(PropTypes.any).isRequired,
   divider: PropTypes.bool,
   simpleItem: PropTypes.bool,
 };
 
 UnitItem.defaultProps = {
-  distance: null,
   unit: {},
   onClick: null,
-  navigator: null,
   divider: true,
   simpleItem: false,
 };

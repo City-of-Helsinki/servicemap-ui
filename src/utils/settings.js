@@ -155,7 +155,7 @@ class SettingsUtility {
   // Parse current accessibility settings to single shortcoming array
   static parseShortcomingSettings(settings) {
     if (!settings) {
-      return null;
+      return [];
     }
     const data = [];
     const { mobility } = settings;
@@ -170,12 +170,6 @@ class SettingsUtility {
     });
 
     return data;
-  }
-
-  // Check accessibility settings have been activated
-  static hasActiveAccessibilitySettings(settings) {
-    const activeSettings = SettingsUtility.parseShortcomingSettings(settings);
-    return activeSettings && activeSettings.length;
   }
 }
 
