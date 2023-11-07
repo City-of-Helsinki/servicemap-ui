@@ -1,12 +1,12 @@
 import { serviceFetch } from '../../utils/fetch';
+import { selectSelectedCities } from '../selectors/settings';
 import { service } from './fetchDataActions';
 import { addSearchParametersToObject } from '../../utils';
-import SettingsUtility from '../../utils/settings';
 import ServiceMapAPI from '../../utils/newFetch/ServiceMapAPI';
 
 // Actions
 const {
-  fetchError, isFetching, fetchSuccess, fetchProgressUpdate, setNewCurrent,
+  fetchError, isFetching, fetchSuccess, setNewCurrent,
 } = service;
 
 // New fetch implementation. TODO: add progress update info
@@ -21,9 +21,7 @@ export const fetchServiceUnits = serviceIdList => async (dispatch, getState) => 
     }
 
     if (!municipality) {
-      // const citySettings = SettingsUtility.getActiveCitySettings(getState().settings.cities);
-      const citySettings = SettingsUtility.getActiveCitySettings(getState());
-      municipality = citySettings.join(',');
+      municipality = selectSelectedCities(getState()).join(',');
     }
 
     let options = {};
