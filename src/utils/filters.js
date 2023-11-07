@@ -9,17 +9,10 @@ export const filterEmptyServices = (cities, organizationIds) => (obj) => {
   if (obj.unit_count.total === 0) {
     return false;
   }
-  if (!cities.length && !organizationIds.length) {
-    return true;
+  if (cities.length && cities.every(city => getUnitCount(obj, city) === 0)) {
+    return false;
   }
-  const unitsByCity = cities.length
-    ? cities.some(city => getUnitCount(obj, city) > 0)
-    : true;
-  const unitsByOrg = organizationIds.length
-    ? organizationIds.some(org => getUnitCount(obj, org) > 0)
-    : true;
-
-  return unitsByCity && unitsByOrg;
+  return !organizationIds.length || !organizationIds.every(org => getUnitCount(obj, org) === 0);
 };
 
 const isOrganizationMatch = (result, organizationIds) => {

@@ -21,15 +21,27 @@ export const selectSelectedCities = createSelector(
   },
 );
 
+const toIds = a => a.map(x => x.id);
+
 /**
  * Returns an array of organization objects.
  */
 export const selectSelectedOrganizations = createSelector(
   [selectOrganizations],
-  organizations => config.organizations?.filter(org => organizations[org.id]),
+  organizations => config.organizations?.filter(org => organizations[org.id]) || [],
   {
     memoizeOptions: {
-      resultEqualityCheck: (a, b) => arraysEqual(a?.map(x => x.id), b?.map(x => x.id)),
+      resultEqualityCheck: (a, b) => arraysEqual(toIds(a), toIds(b)),
+    },
+  },
+);
+
+export const selectSelectedOrganizationIds = createSelector(
+  [selectSelectedOrganizations],
+  organizations => toIds(organizations),
+  {
+    memoizeOptions: {
+      resultEqualityCheck: (a, b) => arraysEqual(a, b),
     },
   },
 );
