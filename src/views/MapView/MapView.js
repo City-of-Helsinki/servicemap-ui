@@ -1,4 +1,7 @@
 /* eslint-disable global-require */
+import { css } from '@emotion/css';
+import styled from '@emotion/styled';
+import { useTheme } from '@mui/styles';
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useIntl } from 'react-intl';
@@ -63,7 +66,6 @@ const EmbeddedActions = () => {
 
 const MapView = (props) => {
   const {
-    classes,
     location,
     unitsLoading,
     hideUserMarker,
@@ -87,6 +89,7 @@ const MapView = (props) => {
   const [measuringMarkers, setMeasuringMarkers] = useState([]);
   const [measuringLine, setMeasuringLine] = useState([]);
 
+  const theme = useTheme();
   const embedded = isEmbed({ url: location.pathname });
   const navigator = useSelector(selectNavigator);
   const mapType = useSelector(selectMapType);
@@ -102,7 +105,6 @@ const MapView = (props) => {
 
   // This unassigned selector is used to trigger re-render after events are fetched
   useSelector(state => getSelectedUnitEvents(state));
-
 
   const initializeMap = () => {
     if (mapElement) {
@@ -177,7 +179,6 @@ const MapView = (props) => {
     mapUtility.centerMapToUnit(highlightedUnit);
   }, [highlightedUnit, mapUtility, currentPage]);
 
-
   useEffect(() => { // On map type change
     // Init new map and set new ref to redux
     initializeMap();
@@ -200,7 +201,6 @@ const MapView = (props) => {
       }
     }
   }, [mapElement]);
-
 
   useEffect(() => {
     if (!measuringMode) {
@@ -261,12 +261,40 @@ const MapView = (props) => {
     const eventSearch = parseSearchParams(location.search).events;
     const defaultBounds = parseSearchParams(location.search).bbox;
 
+    const mapClass = css({
+      height: '100%',
+      flex: '1 0 auto',
+      '& .leaflet-bottom.leaflet-right .leaflet-control button,a': {
+        '&:hover': {
+          color: '#347865 !important',
+        },
+        '&:focused': {
+          color: '#347865 !important',
+        },
+      },
+      '&:focus': {
+        margin: '4px 4px 4px 0px',
+        height: 'calc(100% - 8px)',
+        outline: '2px solid transparent',
+        boxShadow: `0 0 0 4px ${theme.palette.focusBorder.main}`,
+      },
+      zIndex: theme.zIndex.forward,
+    });
+    const mapNoSidebarClass = css({
+      '&:focus': {
+        margin: 4,
+      },
+    });
+    const locationButtonFocusClass = css({
+      outline: '2px solid transparent',
+      boxShadow: `0 0 0 3px ${theme.palette.primary.highContrast}, 0 0 0 4px ${theme.palette.focusBorder.main}`,
+    });
     return (
       <>
         <MapContainer
           tap={false} // This should fix leaflet safari double click bug
           preferCanvas
-          className={`${classes.map} ${embedded ? classes.mapNoSidebar : ''} `}
+          className={`${mapClass} ${embedded ? mapNoSidebarClass : ''} `}
           key={mapObject.options.name}
           zoomControl={false}
           bounds={getBoundsFromBbox(defaultBounds?.split(','))}
@@ -313,9 +341,9 @@ const MapView = (props) => {
               />
             )}
           {showLoadingScreen ? (
-            <div className={classes.loadingScreen}>
+            <StyledLoadingScreenContainer>
               <Loading reducer={showLoadingReducer} hideNumbers={hideLoadingNumbers} />
-            </div>
+            </StyledLoadingScreenContainer>
           ) : null}
           <StatisticalDistricts />
           <Districts mapOptions={mapOptions} embedded={embedded} />
@@ -337,7 +365,6 @@ const MapView = (props) => {
           {!hideUserMarker && userLocation && (
             <UserMarker
               position={[userLocation.latitude, userLocation.longitude]}
-              classes={classes}
               onClick={() => {
                 navigateToAddress({ lat: userLocation.latitude, lng: userLocation.longitude });
               }}
@@ -372,19 +399,15 @@ const MapView = (props) => {
                 {!embedded ? (
                 /* Custom user location map button */
                   <div key="userLocation" className="UserLocation">
-                    <ButtonBase
+                    <StyledShowLocationButton
                       aria-hidden
                       aria-label={userLocationAriaLabel}
                       disabled={!userLocation}
-                      className={`${classes.showLocationButton} ${!userLocation ? classes.locationDisabled : ''}`}
                       onClick={() => focusOnUser()}
-                      focusVisibleClassName={classes.locationButtonFocus}
+                      focusVisibleClassName={locationButtonFocusClass}
                     >
-                      {userLocation
-                        ? <MyLocation className={classes.showLocationIcon} />
-                        : <LocationDisabled className={classes.showLocationIcon} />
-                  }
-                    </ButtonBase>
+                      {userLocation ? <StyledMyLocation /> : <StyledLocationDisabled />}
+                    </StyledShowLocationButton>
                   </div>
                 ) : null}
 
@@ -403,9 +426,49 @@ const MapView = (props) => {
 
 export default withRouter(MapView);
 
+const StyledLoadingScreenContainer = styled.div(({ theme }) => ({
+  height: '100%',
+  width: '100%',
+  backgroundColor: 'rgba(0, 0, 0, 0.4)',
+  position: 'absolute',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  zIndex: theme.zIndex.infront,
+}));
+
+const StyledShowLocationButton = styled(ButtonBase)(({ theme, disabled }) => {
+  const styles = {
+    marginRight: -3,
+    backgroundColor: theme.palette.primary.main,
+    width: 40,
+    height: 40,
+    borderRadius: '50%',
+    '&:hover': {
+      backgroundColor: theme.palette.primary.highContrast,
+      '& svg': {
+        color: theme.palette.primary.main,
+      },
+    },
+  };
+  if (disabled) {
+    Object.assign(styles, {
+      backgroundColor: theme.palette.disabled.strong,
+    });
+  }
+  return styles;
+});
+
+const StyledMyLocation = styled(MyLocation)(() => ({
+  color: '#fff',
+}));
+
+const StyledLocationDisabled = styled(LocationDisabled)(() => ({
+  color: '#fff',
+}));
+
 // Typechecking
 MapView.propTypes = {
-  classes: PropTypes.objectOf(PropTypes.any).isRequired,
   hideUserMarker: PropTypes.bool,
   highlightedDistrict: PropTypes.objectOf(PropTypes.any),
   highlightedUnit: PropTypes.objectOf(PropTypes.any),

@@ -1,4 +1,3 @@
-import { withStyles } from '@mui/styles';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { setMapRef } from '../../redux/actions/map';
@@ -6,7 +5,6 @@ import { findUserLocation } from '../../redux/actions/user';
 import { getHighlightedDistrict } from '../../redux/selectors/district';
 import { getSelectedUnit } from '../../redux/selectors/selectedUnit';
 import MapView from './MapView';
-import styles from './styles';
 
 // Get redux states as props to component
 const mapStateToProps = (state) => {
@@ -32,7 +30,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default withStyles(styles)(withRouter(connect(
+export default withRouter(connect(
   mapStateToProps,
   { setMapRef, findUserLocation },
-)(MapView)));
+)(MapView));

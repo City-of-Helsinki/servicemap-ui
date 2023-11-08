@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 
+import styled from '@emotion/styled';
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useRouteMatch } from 'react-router-dom';
 import {
@@ -31,8 +31,7 @@ import { changeCustomUserLocation } from '../../redux/actions/user';
 
 const focusClass = 'TabListFocusTarget';
 
-const SearchView = (props) => {
-  const { classes } = props;
+const SearchView = () => {
   const [serviceRedirect, setServiceRedirect] = useState(null);
   const [analyticsSent, setAnalyticsSent] = useState(null);
 
@@ -162,7 +161,6 @@ const SearchView = (props) => {
       options.municipality = municipality || city;
     }
 
-
     // Parse organization
     if (organization) {
       options.organization = organization;
@@ -246,7 +244,6 @@ const SearchView = (props) => {
     }
   }, [match.params]);
 
-
   useEffect(() => {
     if (searchResults.length) {
       if (searchResults.length === 1) {
@@ -272,7 +269,7 @@ const SearchView = (props) => {
   }, [JSON.stringify(unorderedSearchResults)]);
 
   const renderSearchBar = () => (
-    <SearchBar expand className={classes.searchbarPlain} />
+    <StyledSearchBar expand />
   );
 
   const renderSearchInfo = () => (
@@ -294,7 +291,7 @@ const SearchView = (props) => {
   const renderScreenReaderInfo = () => {
     const { isFetching, max } = searchFetchState;
     return (
-      <Paper className={!isFetching ? classes.noPadding : ''} elevation={1} square aria-live="polite">
+      <StyledPaper nopadding={+!isFetching} elevation={1} square aria-live="polite">
         <Typography style={visuallyHidden} component="h3" tabIndex={-1}>
           {!isFetching && (
             <FormattedMessage id="search.results.title" />
@@ -306,7 +303,7 @@ const SearchView = (props) => {
             <FormattedMessage id="search.loading.units.srInfo" values={{ count: max }} />
           )}
         </Typography>
-      </Paper>
+      </StyledPaper>
     );
   };
 
@@ -392,18 +389,18 @@ const SearchView = (props) => {
     const searchQuery = optionsToSearchQuery(options);
 
     return shouldRender ? (
-      <Container className={classes.noVerticalPadding}>
-        <Container className={classes.noVerticalPadding}>
+      <StyledNoVerticalPaddingContainer>
+        <StyledNoVerticalPaddingContainer>
           <Typography align="left" variant="subtitle1" component="p">
             <FormattedMessage id={typeof searchQuery === 'string' ? 'search.notFoundWith' : 'search.notFound'} values={{ query: searchQuery }} />
           </Typography>
-        </Container>
+        </StyledNoVerticalPaddingContainer>
         <Divider aria-hidden="true" />
-        <Container className={classes.noVerticalPadding}>
+        <StyledNoVerticalPaddingContainer>
           <Typography align="left" variant="subtitle1" component="p">
             <FormattedMessage id="search.tryAgain" />
           </Typography>
-          <ul className={classes.list}>
+          <StyledList>
             {
               messageIDs.map(id => (
                 <li key={id}>
@@ -413,19 +410,18 @@ const SearchView = (props) => {
                 </li>
               ))
             }
-          </ul>
-        </Container>
-      </Container>
+          </StyledList>
+        </StyledNoVerticalPaddingContainer>
+      </StyledNoVerticalPaddingContainer>
     ) : null;
   };
-
 
   if (embed) {
     return null;
   }
 
   return (
-    <div className={classes.root}>
+    <StyledContainer>
       {renderSearchBar()}
       {renderSearchInfo()}
       <NoSsr>
@@ -445,13 +441,30 @@ const SearchView = (props) => {
           </Link>
         </Typography>
       ) : null}
-    </div>
+    </StyledContainer>
   );
 };
 
 export default SearchView;
 
 // Typechecking
-SearchView.propTypes = {
-  classes: PropTypes.objectOf(PropTypes.any).isRequired,
-};
+const StyledNoVerticalPaddingContainer = styled(Container)(() => ({
+  paddingTop: 0,
+  paddingBottom: 0,
+}));
+
+const StyledPaper = styled(Paper)(({ nopadding }) => (nopadding ? { padding: 0 } : {}));
+const StyledSearchBar = styled(SearchBar)(({ theme }) => ({
+  background: theme.palette.primary.main,
+  paddingBottom: theme.spacing(1),
+}));
+const StyledList = styled.ul(({ theme }) => ({
+  margin: theme.spacing(1, 0),
+  padding: theme.spacing(0, 0, 0, 2),
+}));
+
+const StyledContainer = styled.div(() => ({
+  display: 'inline-block',
+  position: 'relative',
+  width: '100%',
+}));
