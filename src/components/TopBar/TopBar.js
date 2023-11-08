@@ -337,7 +337,6 @@ TopBar.propTypes = {
 };
 
 TopBar.defaultProps = {
-  navigator: null,
   hideButtons: false,
 };
 

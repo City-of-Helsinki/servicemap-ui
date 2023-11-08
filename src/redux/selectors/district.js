@@ -4,7 +4,6 @@ import { filterByCitySettings } from '../../utils/filters';
 import { getFilteredData } from './results';
 import {
   selectCities,
-  selectOrganizations,
   selectSelectedCities, selectSelectedOrganizationIds,
 } from './settings';
 
