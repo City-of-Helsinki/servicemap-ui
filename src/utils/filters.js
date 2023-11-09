@@ -1,3 +1,4 @@
+import config from '../../config';
 import { getUnitCount } from './units';
 
 const PRIVATE_ORGANIZATION_TYPES = [10, 'PRIVATE_ENTERPRISE'];
@@ -48,22 +49,31 @@ const filterByOrganizationIds = organizationIds => {
  * @returns filter that checks for municipality
  */
 export const filterByCitySettings = (citySettings, getter = y => y.municipality) => {
-  const selectedCities = Object.keys(citySettings).filter(city => citySettings[city]);
+  // This is a bit defensive to go with config.cities
+  const selectedCities = config.cities.filter(city => citySettings[city]);
   if (!selectedCities.length) {
     return () => true;
   }
-  return x => citySettings[getter(x)];
+  const allowedCitySettings = {};
+  selectedCities.forEach(city => {
+    allowedCitySettings[city] = true;
+  });
+  return x => allowedCitySettings[getter(x)];
+};
+
+export const filterByCities = (cities, getter = y => y.municipality) => {
+  const citySettings = {};
+  cities.forEach(city => {
+    citySettings[city] = true;
+  });
+  return filterByCitySettings(citySettings, getter);
 };
 
 export const filterCitiesAndOrganizations = (
   cities = [], organizationIds = [], onlyUnits = false,
 ) => {
-  const citySettings = {};
-  cities.forEach(city => {
-    citySettings[city] = true;
-  });
   const getter = result => result.municipality?.id || result.municipality;
-  const cityFilter = filterByCitySettings(citySettings, getter);
+  const cityFilter = filterByCities(cities, getter);
   const organizationFilter = filterByOrganizationIds(organizationIds);
   return result => {
     if (onlyUnits && result.object_type !== 'unit') return false;

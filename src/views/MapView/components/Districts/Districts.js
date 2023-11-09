@@ -7,6 +7,7 @@ import { useLocation } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 import { selectSelectedDistrictType } from '../../../../redux/selectors/district';
 import { selectCities } from '../../../../redux/selectors/settings';
+import { filterByCities, filterByCitySettings } from '../../../../utils/filters';
 import { drawMarkerIcon } from '../../utils/drawIcon';
 import swapCoordinates from '../../utils/swapCoordinates';
 import AddressMarker from '../AddressMarker';
@@ -144,24 +145,22 @@ const Districts = ({
     );
   };
 
+  function getMunicipalityFilter() {
+    if (!embedded) {
+      return filterByCitySettings(citySettings);
+    }
+    const cities = parseSearchParams(location.search)?.city?.split(',') || [];
+    return filterByCities(cities);
+  }
+
   const renderMultipleDistricts = () => {
     const areasWithBoundary = districtData.filter(obj => obj.boundary);
     if (!areasWithBoundary.length) {
       return null;
     }
 
-    const selectedCities = Object.values(citySettings).filter(city => city);
-    let filteredData = [];
-    if (selectedCities.length) {
-      const searchParams = parseSearchParams(location.search);
-      filteredData = areasWithBoundary.filter(district => (searchParams.city
-        ? embedded && district.municipality === searchParams.city
-        : citySettings[district.municipality]));
-    } else {
-      filteredData = areasWithBoundary;
-    }
-
-    filteredData = filteredData
+    const filteredData = areasWithBoundary
+      .filter(getMunicipalityFilter())
       .filter(district => {
         // In embed view, limit the rendered districts only to the selected ones
         if (!embedded || !geographicalDistricts.includes(district.type)) {
