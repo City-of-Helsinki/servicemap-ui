@@ -4,9 +4,18 @@ import PropTypes from 'prop-types';
 import { Typography, Link } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import { FormattedMessage } from 'react-intl';
-import { selectSelectedDistrictType } from '../../../../redux/selectors/district';
+import { FormattedMessage, useIntl } from 'react-intl';
+import {
+  getAddressDistrict,
+  getDistrictsByType,
+  getHighlightedDistrict,
+  selectDistrictAddressData, selectDistrictUnitFetch,
+  selectSelectedDistrictType,
+  selectSelectedSubdistricts,
+} from '../../../../redux/selectors/district';
+import { selectMeasuringMode, selectNavigator } from '../../../../redux/selectors/general';
 import { selectCities } from '../../../../redux/selectors/settings';
+import { getPage, selectThemeMode } from '../../../../redux/selectors/user';
 import { filterByCities, filterByCitySettings } from '../../../../utils/filters';
 import { drawMarkerIcon } from '../../utils/drawIcon';
 import swapCoordinates from '../../utils/swapCoordinates';
@@ -19,26 +28,25 @@ import UnitHelper from '../../../../utils/unitHelper';
 import ParkingAreas from './ParkingAreas';
 
 const Districts = ({
-  highlightedDistrict,
-  districtData,
-  unitsFetching,
-  addressDistrict,
-  theme,
   mapOptions,
-  currentPage,
-  measuringMode,
-  selectedAddress,
-  selectedSubdistricts,
   setSelectedSubdistricts,
   setSelectedDistrictServices,
   embedded,
-  navigator,
-  intl,
 }) => {
   const {
     Polygon, Marker, Tooltip, Popup,
   } = global.rL;
-  const useContrast = theme === 'dark';
+  const intl = useIntl();
+  const useContrast = useSelector(selectThemeMode) === 'dark';
+  const navigator = useSelector(selectNavigator);
+  const currentPage = useSelector(getPage);
+  const measuringMode = useSelector(selectMeasuringMode);
+  const highlightedDistrict = useSelector(getHighlightedDistrict);
+  const addressDistrict = useSelector(getAddressDistrict);
+  const districtData = useSelector(getDistrictsByType);
+  const selectedSubdistricts = useSelector(selectSelectedSubdistricts);
+  const selectedAddress = useSelector(selectDistrictAddressData).address;
+  const unitsFetching = useSelector(state => selectDistrictUnitFetch(state).isFetching);
   const location = useLocation();
   const getLocaleText = useLocaleText();
   const citySettings = useSelector(selectCities);
@@ -326,29 +334,10 @@ const StyledAreaPopup = styled('div')(({ theme }) => ({
 }));
 
 Districts.propTypes = {
-  highlightedDistrict: PropTypes.objectOf(PropTypes.any),
   mapOptions: PropTypes.objectOf(PropTypes.any).isRequired,
-  currentPage: PropTypes.string.isRequired,
-  measuringMode: PropTypes.bool.isRequired,
-  selectedAddress: PropTypes.objectOf(PropTypes.any),
-  districtData: PropTypes.arrayOf(PropTypes.object),
-  unitsFetching: PropTypes.bool.isRequired,
-  addressDistrict: PropTypes.objectOf(PropTypes.any),
-  selectedSubdistricts: PropTypes.arrayOf(PropTypes.string),
   setSelectedSubdistricts: PropTypes.func.isRequired,
   setSelectedDistrictServices: PropTypes.func.isRequired,
   embedded: PropTypes.bool.isRequired,
-  navigator: PropTypes.objectOf(PropTypes.any).isRequired,
-  intl: PropTypes.objectOf(PropTypes.any).isRequired,
-  theme: PropTypes.oneOf(['default', 'dark']).isRequired,
-};
-
-Districts.defaultProps = {
-  highlightedDistrict: null,
-  selectedAddress: null,
-  districtData: null,
-  addressDistrict: null,
-  selectedSubdistricts: [],
 };
 
 export default Districts;

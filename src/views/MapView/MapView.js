@@ -10,6 +10,7 @@ import { ButtonBase } from '@mui/material';
 import { MyLocation, LocationDisabled } from '@mui/icons-material';
 import { useSelector } from 'react-redux';
 import { useMapEvents } from 'react-leaflet';
+import { selectDistrictUnitFetch } from '../../redux/selectors/district';
 import { selectNavigator } from '../../redux/selectors/general';
 import { selectMapType } from '../../redux/selectors/settings';
 import { getLocale, getPage } from '../../redux/selectors/user';
@@ -96,7 +97,7 @@ const MapView = (props) => {
   const locale = useSelector(getLocale);
   const currentPage = useSelector(getPage);
   const getAddressNavigatorParams = useNavigationParams();
-  const districtUnitsFetch = useSelector(state => state.districts.unitFetch);
+  const districtUnitsFetch = useSelector(selectDistrictUnitFetch);
   const statisticalDistrictFetch = useSelector(getStatisticalDistrictUnitsState);
   const districtsFetching = useSelector(state => !!state.districts.districtsFetching?.length);
   const districtViewFetching = districtUnitsFetch.isFetching || districtsFetching;

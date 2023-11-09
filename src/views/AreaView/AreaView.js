@@ -18,7 +18,7 @@ import {
 import {
   getAddressDistrict,
   getDistrictsByType,
-  selectDistrictAddressData,
+  selectDistrictAddressData, selectDistrictUnitFetch,
   selectSelectedSubdistricts,
   selectSubdistrictUnits,
 } from '../../redux/selectors/district';
@@ -39,7 +39,7 @@ const AreaView = ({ embed }) => {
   const districtAddressData = useSelector(selectDistrictAddressData);
   const subdistrictUnits = useSelector(selectSubdistrictUnits);
   const selectedSubdistricts = useSelector(selectSelectedSubdistricts);
-  const unitsFetching = useSelector(state => state.districts.unitFetch.nodesFetching);
+  const unitsFetching = useSelector(state => selectDistrictUnitFetch(state).nodesFetching);
   const selectedDistrictData = useSelector(getDistrictsByType);
   const map = useSelector(selectMapRef);
   const addressDistrict = useSelector(getAddressDistrict);

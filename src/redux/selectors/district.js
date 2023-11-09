@@ -18,6 +18,7 @@ const getSelectedDistrictServices = state => state.districts.selectedDistrictSer
 const selectParkingUnits = state => state.districts.parkingUnits;
 export const selectDistrictsFetching = state => state.districts.districtsFetching;
 export const selectDistrictAddressData = state => state.districts.districtAddressData;
+export const selectDistrictUnitFetch = state => state.districts.unitFetch;
 
 export const selectParkingUnitUnits = createSelector(
   [selectParkingUnits],
