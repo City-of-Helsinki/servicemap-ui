@@ -15,7 +15,9 @@ const UserMarker = ({ position, onClick }) => {
   });
 
   const icon = divIcon({
-    className: userMarkerClass,
+    // MarkerIcon for browser tests
+    className: `${userMarkerClass} MarkerIcon`,
+    'data-sm': 'MarkerIcon',
     html: renderToStaticMarkup(
       getIcon('locationMarker'),
     ),
