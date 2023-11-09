@@ -107,24 +107,6 @@ class SettingsUtility {
   }
 
   /**
-   * Return active city settings from redux state
-   * @param {*} citySettings - City settings from state
-   * @returns {array} - Array of city settings which are active
-   */
-  static getActiveCitySettings(citySettings) {
-    const result = [];
-    SettingsUtility.citySettings.forEach((city) => {
-      if (
-        Object.prototype.hasOwnProperty.call(citySettings, (city))
-        && citySettings[city]
-      ) {
-        result.push(city);
-      }
-    });
-    return result;
-  }
-
-  /**
    * Get redux compatible settings object from localStorage
    */
   static getSettingsFromLocalStorage() {
@@ -155,7 +137,7 @@ class SettingsUtility {
   // Parse current accessibility settings to single shortcoming array
   static parseShortcomingSettings(settings) {
     if (!settings) {
-      return null;
+      return [];
     }
     const data = [];
     const { mobility } = settings;
@@ -170,12 +152,6 @@ class SettingsUtility {
     });
 
     return data;
-  }
-
-  // Check accessibility settings have been activated
-  static hasActiveAccessibilitySettings(settings) {
-    const activeSettings = SettingsUtility.parseShortcomingSettings(settings);
-    return activeSettings && activeSettings.length;
   }
 }
 

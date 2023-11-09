@@ -1,12 +1,13 @@
-import React from 'react';
+import { Typography } from '@mui/material';
 import PropTypes from 'prop-types';
+import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { Link, Typography } from '@mui/material';
-import unitSectionFilter from '../../utils/unitSectionFilter';
-import useLocaleText from '../../../../utils/useLocaleText';
 import { DescriptionText } from '../../../../components';
+import useLocaleText from '../../../../utils/useLocaleText';
+import unitSectionFilter from '../../utils/unitSectionFilter';
+import { StyledLink } from '../styled/styled';
 
-const PriceInfo = ({ unit, classes }) => {
+const PriceInfo = ({ unit }) => {
   const getLocaleText = useLocaleText();
 
   const data = unitSectionFilter(unit.connections, 'PRICE');
@@ -17,11 +18,11 @@ const PriceInfo = ({ unit, classes }) => {
         key={link.id}
         variant="body2"
       >
-        <Link className={classes.link} href={getLocaleText(link.value.www)} target="_blank">
+        <StyledLink href={getLocaleText(link.value.www)} target="_blank">
           {getLocaleText(link.value.name)}
           {' '}
           <FormattedMessage id="opens.new.tab" />
-        </Link>
+        </StyledLink>
       </Typography>
       <br />
     </>
@@ -60,7 +61,6 @@ const PriceInfo = ({ unit, classes }) => {
 
 PriceInfo.propTypes = {
   unit: PropTypes.objectOf(PropTypes.any).isRequired,
-  classes: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 export default PriceInfo;

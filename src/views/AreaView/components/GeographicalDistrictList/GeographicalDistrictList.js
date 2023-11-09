@@ -14,7 +14,9 @@ import {
   getDistrictsByType, selectSelectedSubdistricts,
 } from '../../../../redux/selectors/district';
 import { selectMapRef } from '../../../../redux/selectors/general';
+import { selectCities } from '../../../../redux/selectors/settings';
 import { getLocale } from '../../../../redux/selectors/user';
+import { filterByCitySettings } from '../../../../utils/filters';
 import orderUnits from '../../../../utils/orderUnits';
 import useLocaleText from '../../../../utils/useLocaleText';
 import { panViewToBounds } from '../../../MapView/utils/mapActions';
@@ -24,7 +26,7 @@ const GeographicalDistrictList = ({ district }) => {
   const dispatch = useDispatch();
   const getLocaleText = useLocaleText();
   const map = useSelector(selectMapRef);
-  const citySettings = useSelector(state => state.settings.cities);
+  const citySettings = useSelector(selectCities);
   const selectedSubdistricts = useSelector(selectSelectedSubdistricts);
   const selectedDistrictData = useSelector(getDistrictsByType);
   const locale = useSelector(getLocale);
@@ -64,14 +66,8 @@ const GeographicalDistrictList = ({ district }) => {
     return acc;
   }, []);
 
-  // Filter data with city settings
-  const selectedCities = Object.values(citySettings).filter(city => city);
-  let cityFilteredData = [];
-  if (!selectedCities.length) {
-    cityFilteredData = groupedData;
-  } else {
-    cityFilteredData = groupedData.filter(data => citySettings[data[0].municipality]);
-  }
+  const getter = data => data[0].municipality;
+  const cityFilteredData = groupedData.filter(filterByCitySettings(citySettings, getter));
 
   // Reorder data order by municipality
   const citiesInOrder = Object.keys(citySettings);

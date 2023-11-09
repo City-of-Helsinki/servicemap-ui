@@ -134,7 +134,7 @@ test('Address search does work', async (t) => {
   await searchUnits(t, 'kirjasto');
   const addressInput = Selector('#addressSearchbar');
   const suggestions = Selector('#address-results div[role="option"]');
-  const marker = Selector('div[class*="userMarker"]');
+  const marker = Selector('div[class*="MarkerIcon"]');
   const distanceText = Selector('div[data-sm="ResultItemRightColumn"]');
 
   await t

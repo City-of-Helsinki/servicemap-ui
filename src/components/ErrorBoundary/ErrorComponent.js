@@ -3,14 +3,15 @@ import { Typography } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { useUserTheme } from '../../utils/user';
+import { useSelector } from 'react-redux';
+import { selectThemeMode } from '../../redux/selectors/user';
 import {
   BackGroundCover, StyledContent, StyledDiv, ViewLogo,
 } from './styles';
 
 export const ErrorComponent = ({ error }) => {
   let content = null;
-  const theme = useUserTheme();
+  const themeMode = useSelector(selectThemeMode);
 
   switch (error) {
     case 'error': {
@@ -38,7 +39,7 @@ export const ErrorComponent = ({ error }) => {
     <StyledDiv>
       <BackGroundCover />
       <StyledContent>
-        <ViewLogo aria-hidden contrast={theme === 'dark'} />
+        <ViewLogo aria-hidden contrast={themeMode === 'dark'} />
         <Typography style={visuallyHidden} component="h1"><FormattedMessage id="app.errorpage.title" /></Typography>
         {content}
       </StyledContent>

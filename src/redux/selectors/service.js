@@ -1,4 +1,5 @@
 import { createSelector } from 'reselect';
+import { arraysEqual } from '../../utils';
 import { filterCitiesAndOrganizations } from '../../utils/filters';
 import getSortingParameters from './ordering';
 import orderUnits from '../../utils/orderUnits';
@@ -9,9 +10,15 @@ const getUnits = state => state.service.data;
 export const getServiceUnits = createSelector(
   [getUnits, selectSelectedCities, selectSelectedOrganizations, getSortingParameters],
   (units, cities, organizations, sortingParameters) => {
-    const filter = filterCitiesAndOrganizations(cities, organizations.map(o => o.id), true);
+    const organizationIds = organizations.map(o => o.id);
+    const filter = filterCitiesAndOrganizations(cities, organizationIds, true);
     const filteredUnits = units.filter(filter);
     return orderUnits(filteredUnits, sortingParameters);
+  },
+  {
+    memoizeOptions: {
+      resultEqualityCheck: (a, b) => arraysEqual(a, b),
+    },
   },
 );
 

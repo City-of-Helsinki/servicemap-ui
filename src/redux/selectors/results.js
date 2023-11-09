@@ -1,11 +1,10 @@
 import { createSelector } from 'reselect';
-import config from '../../../config';
 import { isEmbed } from '../../utils/path';
 import { filterEmptyServices, filterCitiesAndOrganizations, filterResultTypes } from '../../utils/filters';
 import isClient from '../../utils';
 import orderUnits from '../../utils/orderUnits';
 import getSortingParameters from './ordering';
-import { selectCities, selectOrganizations } from './settings';
+import { selectSelectedCities, selectSelectedOrganizationIds } from './settings';
 
 const isFetching = state => state.searchResults.isFetching;
 const results = state => state.searchResults.data;
@@ -13,45 +12,34 @@ const results = state => state.searchResults.data;
 /**
  * Returns given data after filtering it
  * @param {*} data - search data to be filtered
+ * @param {*} cities - selected cities
+ * @param {*} organizationIds - selected organization ids
  * @param {*} options - options for filtering - municipality: to override city setting filtering
- * @param {*} settings - user settings, used in filtering
  */
-export const getFilteredData = (data, settings, options) => {
-  let cities = [];
-  config.cities.forEach((city) => {
-    cities.push(...settings.cities[city] ? [city] : []);
-  });
-
-  let organizations = [];
-  config.organizations.forEach((organization) => {
-    organizations.push(...settings.organizations[organization.id] ? [organization.id] : []);
-  });
-
+export const getFilteredData = (data, cities, organizationIds, options = null) => {
   let embed = false;
   if (global.window) {
     embed = isEmbed({ url: window.location });
   }
 
-  let filteredData = data
-    .filter(filterEmptyServices(cities, organizations))
+  const filteredData = data
+    .filter(filterEmptyServices(cities, organizationIds))
     .filter(filterResultTypes());
 
-  if (!embed) {
-    if (options) {
-      if (options.municipality) cities = options.municipality.split(',');
-      if (options.organizations) organizations = options.organizations.split(',');
-    }
-    filteredData = filteredData.filter(filterCitiesAndOrganizations(cities, organizations));
+  if (embed) {
+    return filteredData;
   }
-  return filteredData;
+  const cities2 = options?.municipality?.split(',') || cities;
+  const orgIds2 = options?.organizations?.split(',') || organizationIds;
+  return filteredData.filter(filterCitiesAndOrganizations(cities2, orgIds2));
 };
 
 /**
  * Gets unordered processed result data for rendering search results
  */
 export const getProcessedData = createSelector(
-  [results, isFetching, selectCities, selectOrganizations],
-  (data, isFetching, cities, organizations) => {
+  [results, isFetching, selectSelectedCities, selectSelectedOrganizationIds],
+  (data, isFetching, selectedCities, selectedOrganizationIds) => {
     // Prevent processing data if fetch is in process
     if (isFetching) return [];
 
@@ -61,7 +49,7 @@ export const getProcessedData = createSelector(
       options.municipality = overrideMunicipality;
     }
 
-    return getFilteredData(data, { cities, organizations }, options);
+    return getFilteredData(data, selectedCities, selectedOrganizationIds, options);
   },
 );
 

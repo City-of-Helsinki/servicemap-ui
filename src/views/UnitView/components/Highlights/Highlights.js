@@ -1,10 +1,10 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import { Typography, Link } from '@mui/material';
+import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import config from '../../../../../config';
-import unitSectionFilter from '../../utils/unitSectionFilter';
 import useLocaleText from '../../../../utils/useLocaleText';
+import unitSectionFilter from '../../utils/unitSectionFilter';
+import { StyledAlignLeftParagraph, StyledLink } from '../styled/styled';
 
 const Highlights = ({ unit, classes, intl }) => {
   const getLocaleText = useLocaleText();
@@ -41,23 +41,22 @@ const Highlights = ({ unit, classes, intl }) => {
   return (
     <div className={classes.marginVertical}>
       {connections.map(item => (
-        <Typography
+        <StyledAlignLeftParagraph
           key={item.id}
-          className={`${classes.left} ${classes.paragraph}`}
           variant="body1"
         >
           {
               item.value.www
                 ? (
-                  <Link className={classes.link} href={getLocaleText(item.value.www)} target="_blank">
+                  <StyledLink href={getLocaleText(item.value.www)} target="_blank">
                     {getLocaleText(item.value.name)}
                     {' '}
                     <FormattedMessage id="opens.new.tab" />
-                  </Link>
+                  </StyledLink>
                 )
                 : getLocaleText(item.value.name)
             }
-        </Typography>
+        </StyledAlignLeftParagraph>
       ))}
     </div>
   );

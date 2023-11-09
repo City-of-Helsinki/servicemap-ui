@@ -5,6 +5,8 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { getAddressDistrict } from '../../../../redux/selectors/district';
 import { DistrictItem } from '../../../../components';
+import { selectCities } from '../../../../redux/selectors/settings';
+import { filterByCitySettings } from '../../../../utils/filters';
 import { sortByOriginID } from '../../utils';
 import {
   StyledDistrictServiceList,
@@ -15,7 +17,7 @@ import {
 
 export const DistrictAreaList = ({ selectedAddress, district }) => {
   const intl = useIntl();
-  const citySettings = useSelector(state => state.settings.cities);
+  const citySettings = useSelector(selectCities);
   const addressDistrict = useSelector(state => getAddressDistrict(state));
   let sectionText = intl.formatMessage({ id: `area.services.all.${district.id}` });
 
@@ -32,15 +34,7 @@ export const DistrictAreaList = ({ selectedAddress, district }) => {
     return null;
   }
 
-  const selectedCities = Object.keys(citySettings).filter(city => citySettings[city]);
-  let filteredData = [];
-  if (!selectedCities.length) {
-    filteredData = districtsWithoutUnits;
-  } else {
-    filteredData = districtsWithoutUnits.filter(d => (
-      selectedCities.includes(d.municipality)
-    ));
-  }
+  const filteredData = districtsWithoutUnits.filter(filterByCitySettings(citySettings));
 
   if (!filteredData.length) {
     return null;

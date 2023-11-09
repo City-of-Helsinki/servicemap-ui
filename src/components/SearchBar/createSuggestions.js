@@ -6,8 +6,8 @@ const createSuggestions = (
   query,
   abortController,
   getLocaleText,
-  citySettings,
-  organizationSettings,
+  cities,
+  organizations,
   locale,
 ) => async () => {
   const smAPI = new ServiceMapAPI();
@@ -20,14 +20,15 @@ const createSuggestions = (
   const administrativeDivisionLimit = 1;
   const pageSize = unitLimit + serviceLimit + addressLimit + servicenodeLimit;
 
+  const organizationIds = organizations.map(org => org.id);
   const additionalOptions = {
     page_size: pageSize,
     unit_limit: unitLimit,
     service_limit: serviceLimit,
     address_limit: addressLimit,
     servicenode_limit: servicenodeLimit,
-    municipality: citySettings.join(','),
-    organization: organizationSettings.map(org => org.id).join(','),
+    municipality: cities.join(','),
+    organization: organizationIds.join(','),
     administrativedivision_limit: administrativeDivisionLimit,
     language: locale,
   };
@@ -37,10 +38,10 @@ const createSuggestions = (
   let filteredResults = results;
 
   // Filter services with city settings
-  if (citySettings.length) {
+  if (cities.length) {
     filteredResults = filteredResults.filter((result) => {
       if (result.object_type === 'service' || result.object_type === 'servicenode') {
-        const totalResultCount = citySettings
+        const totalResultCount = cities
           .map(city => getUnitCount(result, city))
           .reduce((partial, a) => partial + a, 0);
         if (totalResultCount === 0) return false;
@@ -51,7 +52,7 @@ const createSuggestions = (
 
   // Filter units with city and organization settings
   filteredResults = filteredResults.filter(
-    filterCitiesAndOrganizations(citySettings, organizationSettings),
+    filterCitiesAndOrganizations(cities, organizationIds),
   );
 
   // Handle address results
