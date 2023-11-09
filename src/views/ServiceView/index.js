@@ -1,12 +1,9 @@
-
+import { injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { withStyles } from '@mui/styles';
-import { injectIntl } from 'react-intl';
 import { fetchService } from '../../redux/actions/services';
-import ServiceView from './ServiceView';
 import { getServiceUnits } from '../../redux/selectors/service';
-import styles from './styles';
+import ServiceView from './ServiceView';
 
 const mapStateToProps = (state) => {
   const { mapRef, service, user } = state;
@@ -22,7 +19,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default withRouter(injectIntl(withStyles(styles)(connect(
+export default withRouter(injectIntl(connect(
   mapStateToProps,
   { fetchService },
-)(ServiceView))));
+)(ServiceView)));

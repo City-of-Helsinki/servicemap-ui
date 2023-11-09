@@ -1,4 +1,6 @@
 /* eslint-disable no-underscore-dangle */
+import { css } from '@emotion/css';
+import styled from '@emotion/styled';
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
@@ -18,9 +20,12 @@ import { fitUnitsToMap, focusToPosition } from '../MapView/utils/mapActions';
 import coordinateIsActive from '../../utils/coordinate';
 import useLocaleText from '../../utils/useLocaleText';
 
+const StyledTitleBar = styled(TitleBar)(({ theme }) => ({
+  background: theme.palette.primary.main,
+}));
+
 const ServiceView = (props) => {
   const {
-    classes,
     match,
     fetchService,
     customPosition,
@@ -59,10 +64,10 @@ const ServiceView = (props) => {
       fitUnitsToMap(unit, map);
     }
   };
-
+  const iconClass = css({ height: 24 });
 
   useEffect(() => {
-    setIcon(getIcon('service', { className: classes.icon }));
+    setIcon(getIcon('service', { className: iconClass }));
     if (shouldFetch()) {
       fetchService(match.params?.service);
     }
@@ -102,8 +107,7 @@ const ServiceView = (props) => {
         {
           showTitle
           && (
-            <TitleBar
-              className={classes.titlebar}
+            <StyledTitleBar
               icon={icon}
               title={getLocaleText(current.name)}
               titleComponent="h3"
@@ -115,8 +119,7 @@ const ServiceView = (props) => {
         showTitle
         && (
           <MobileComponent>
-            <TitleBar
-              className={classes.titlebar}
+            <StyledTitleBar
               icon={icon}
               title={getLocaleText(current.name)}
               titleComponent="h3"
@@ -148,7 +151,6 @@ const ServiceView = (props) => {
 };
 
 ServiceView.propTypes = {
-  classes: PropTypes.objectOf(PropTypes.any).isRequired,
   customPosition: PropTypes.shape({
     latitude: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     longitude: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
