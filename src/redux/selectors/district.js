@@ -41,24 +41,15 @@ export const selectDistrictDataBySelectedType = createSelector(
   },
 );
 
-export const getDistrictsByType = createSelector(
-  [selectDistrictDataBySelectedType, selectCities],
-  (districtData, citySettings) => districtData.filter(filterByCitySettings(citySettings)),
-  {
-    memoizeOptions: {
-      // Check for equal array content, assume non-nil and sorted arrays
-      resultEqualityCheck: (a, b) => arraysEqual(a, b),
-    },
-  },
-);
-
 export const getAddressDistrict = createSelector(
-  [getDistrictsByType, getAddressDistrictData],
-  (districts, addressDistricts) => {
-    if (districts && addressDistricts) {
-      return districts.find(obj => addressDistricts.some(i => i.id === obj.id));
+  [selectDistrictDataBySelectedType, selectCities, getAddressDistrictData],
+  (districtData, citySettings, addressDistricts) => {
+    if (!addressDistricts) {
+      return null;
     }
-    return null;
+    return districtData
+      .filter(filterByCitySettings(citySettings))
+      .find(obj => addressDistricts.some(i => i.id === obj.id));
   },
 );
 

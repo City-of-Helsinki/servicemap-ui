@@ -1,7 +1,5 @@
 import styled from '@emotion/styled';
-import {
-  Checkbox, FormControlLabel, List, ListItem, Typography,
-} from '@mui/material';
+import { Checkbox, FormControlLabel, List, ListItem, Typography } from '@mui/material';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
@@ -11,7 +9,7 @@ import {
   setSelectedDistrictServices, setSelectedSubdistricts,
 } from '../../../../redux/actions/district';
 import {
-  getDistrictsByType, selectSelectedSubdistricts,
+  selectDistrictDataBySelectedType, selectSelectedSubdistricts,
 } from '../../../../redux/selectors/district';
 import { selectMapRef } from '../../../../redux/selectors/general';
 import { selectCities } from '../../../../redux/selectors/settings';
@@ -28,7 +26,9 @@ const GeographicalDistrictList = ({ district }) => {
   const map = useSelector(selectMapRef);
   const citySettings = useSelector(selectCities);
   const selectedSubdistricts = useSelector(selectSelectedSubdistricts);
-  const selectedDistrictData = useSelector(getDistrictsByType);
+  const districts = useSelector(selectDistrictDataBySelectedType);
+  const cityFilter = filterByCitySettings(filterByCitySettings(citySettings));
+  const selectedDistrictData = districts.filter(cityFilter);
   const locale = useSelector(getLocale);
 
   const handleCheckboxChange = (event, district) => {
