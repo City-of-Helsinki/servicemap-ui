@@ -1,30 +1,33 @@
+import { Link, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Typography, Link } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import { FormattedMessage, useIntl } from 'react-intl';
+import config from '../../../../../config';
 import {
   getAddressDistrict,
-  getDistrictsByType,
   getHighlightedDistrict,
-  selectDistrictAddressData, selectDistrictUnitFetch,
+  selectDistrictAddressData,
+  selectDistrictDataBySelectedType,
+  selectDistrictUnitFetch,
   selectSelectedDistrictType,
   selectSelectedSubdistricts,
 } from '../../../../redux/selectors/district';
 import { selectMeasuringMode, selectNavigator } from '../../../../redux/selectors/general';
 import { selectCities } from '../../../../redux/selectors/settings';
 import { getPage, selectThemeMode } from '../../../../redux/selectors/user';
-import { filterByCities, filterByCitySettings } from '../../../../utils/filters';
+import { parseSearchParams } from '../../../../utils';
+import { filterByCitySettings, resolveCitySettings } from '../../../../utils/filters';
+import UnitHelper from '../../../../utils/unitHelper';
+import useLocaleText from '../../../../utils/useLocaleText';
+import {
+  geographicalDistricts, getCategoryDistricts,
+} from '../../../AreaView/utils/districtDataHelper';
 import { drawMarkerIcon } from '../../utils/drawIcon';
 import swapCoordinates from '../../utils/swapCoordinates';
 import AddressMarker from '../AddressMarker';
-import { parseSearchParams } from '../../../../utils';
-import config from '../../../../../config';
-import useLocaleText from '../../../../utils/useLocaleText';
-import { geographicalDistricts, getCategoryDistricts } from '../../../AreaView/utils/districtDataHelper';
-import UnitHelper from '../../../../utils/unitHelper';
 import ParkingAreas from './ParkingAreas';
 
 const Districts = ({
@@ -43,7 +46,7 @@ const Districts = ({
   const measuringMode = useSelector(selectMeasuringMode);
   const highlightedDistrict = useSelector(getHighlightedDistrict);
   const addressDistrict = useSelector(getAddressDistrict);
-  const districtData = useSelector(getDistrictsByType);
+  const districtData = useSelector(selectDistrictDataBySelectedType);
   const selectedSubdistricts = useSelector(selectSelectedSubdistricts);
   const selectedAddress = useSelector(selectDistrictAddressData).address;
   const unitsFetching = useSelector(state => selectDistrictUnitFetch(state).isFetching);
@@ -153,22 +156,14 @@ const Districts = ({
     );
   };
 
-  function getMunicipalityFilter() {
-    if (!embedded) {
-      return filterByCitySettings(citySettings);
-    }
-    const cities = parseSearchParams(location.search)?.city?.split(',') || [];
-    return filterByCities(cities);
-  }
-
   const renderMultipleDistricts = () => {
     const areasWithBoundary = districtData.filter(obj => obj.boundary);
     if (!areasWithBoundary.length) {
       return null;
     }
-
+    const cityFilter = filterByCitySettings(resolveCitySettings(citySettings, location, embedded));
     const filteredData = areasWithBoundary
-      .filter(getMunicipalityFilter())
+      .filter(cityFilter)
       .filter(district => {
         // In embed view, limit the rendered districts only to the selected ones
         if (!embedded || !geographicalDistricts.includes(district.type)) {

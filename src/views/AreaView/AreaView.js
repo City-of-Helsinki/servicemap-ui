@@ -17,15 +17,18 @@ import {
 } from '../../redux/actions/district';
 import {
   getAddressDistrict,
-  getDistrictsByType,
-  selectDistrictAddressData, selectDistrictUnitFetch,
+  selectDistrictAddressData,
+  selectDistrictDataBySelectedType,
+  selectDistrictUnitFetch,
   selectSelectedSubdistricts,
   selectSubdistrictUnits,
 } from '../../redux/selectors/district';
 import { selectMapRef } from '../../redux/selectors/general';
+import { selectCities } from '../../redux/selectors/settings';
 import { parseSearchParams } from '../../utils';
 import { getAddressText } from '../../utils/address';
 import { districtFetch } from '../../utils/fetch';
+import { filterByCitySettings, resolveCitySettings } from '../../utils/filters';
 import useLocaleText from '../../utils/useLocaleText';
 import fetchAddress from '../MapView/utils/fetchAddress';
 import { focusDistrict, focusDistricts, useMapFocusDisabled } from '../MapView/utils/mapActions';
@@ -39,11 +42,15 @@ const AreaView = ({ embed }) => {
   const districtAddressData = useSelector(selectDistrictAddressData);
   const subdistrictUnits = useSelector(selectSubdistrictUnits);
   const selectedSubdistricts = useSelector(selectSelectedSubdistricts);
+  const citySettings = useSelector(selectCities);
   const unitsFetching = useSelector(state => selectDistrictUnitFetch(state).nodesFetching);
-  const selectedDistrictData = useSelector(getDistrictsByType);
+  const districtData = useSelector(selectDistrictDataBySelectedType);
   const map = useSelector(selectMapRef);
   const addressDistrict = useSelector(getAddressDistrict);
   const getLocaleText = useLocaleText();
+
+  const cityFilter = filterByCitySettings(resolveCitySettings(citySettings, location, embed));
+  const selectedDistrictData = districtData.filter(cityFilter);
   const geometryLoaded = !!selectedDistrictData[0]?.boundary;
 
   const searchParams = parseSearchParams(location.search);

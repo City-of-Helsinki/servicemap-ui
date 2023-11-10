@@ -25,7 +25,7 @@ export const selectParkingUnitUnits = createSelector(
   parkingUnits => parkingUnits.filter(unit => unit.object_type === 'unit'),
 );
 
-const selectDistrictDataBySelectedType = createSelector(
+export const selectDistrictDataBySelectedType = createSelector(
   [selectSelectedDistrictType, selectDistrictData],
   (selectedDistrictType, districtData) => {
     if (!selectedDistrictType || !districtData?.length) {

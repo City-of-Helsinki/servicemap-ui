@@ -1,4 +1,5 @@
 import config from '../../config';
+import { parseSearchParams } from './index';
 import { getUnitCount } from './units';
 
 const PRIVATE_ORGANIZATION_TYPES = [10, 'PRIVATE_ENTERPRISE'];
@@ -61,6 +62,13 @@ export const filterByCitySettings = (citySettings, getter = y => y.municipality)
   return x => allowedCitySettings[getter(x)];
 };
 
+/**
+ * Creates a filter that filters by municipality against cities. This uses logic of
+ * filterByCitySettings.
+ * @param cities list of cities
+ * @param getter access to municipality data, defaults to y => y.municipality
+ * @returns filter that checks for municipality
+ */
 export const filterByCities = (cities, getter = y => y.municipality) => {
   const citySettings = {};
   cities.forEach(city => {
@@ -90,4 +98,24 @@ export const filterCitiesAndOrganizations = (
 export const filterResultTypes = () => (obj) => {
   const allowedTypes = ['unit', 'service', 'address', 'event'];
   return (allowedTypes.includes(obj.object_type));
+};
+
+/**
+ * Helper that resolves the city settings that should be used for filtering. If embedded then use
+ * cities from location ('city' url param). If not embed then use usual city settings
+ * @param citySettings from state.settings.cities
+ * @param location object given by react-router-dom
+ * @param embed state of embedding
+ * @returns citySettings type of object
+ */
+export const resolveCitySettings = (citySettings, location, embed) => {
+  if (!embed) {
+    return citySettings;
+  }
+  const cities = parseSearchParams(location.search)?.city?.split(',') || [];
+  const urlCitySettings = {};
+  cities.forEach(city => {
+    urlCitySettings[city] = true;
+  });
+  return urlCitySettings;
 };
