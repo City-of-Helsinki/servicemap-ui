@@ -1,10 +1,8 @@
-
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 import {
   Switch, Route, useLocation,
 } from 'react-router-dom';
-import { injectIntl } from 'react-intl';
+import { useIntl } from 'react-intl';
 import { Tooltip as MUITooltip, ButtonBase, Typography } from '@mui/material';
 import { useTheme } from '@mui/styles';
 import { useSelector } from 'react-redux';
@@ -93,7 +91,8 @@ const createContentStyles = (theme, unitListPosition) => {
   };
 };
 
-const EmbedLayout = ({ intl }) => {
+const EmbedLayout = () => {
+  const intl = useIntl();
   const theme = useTheme();
   const location = useLocation();
   const navigator = useSelector(selectNavigator);
@@ -272,8 +271,4 @@ const EmbedLayout = ({ intl }) => {
   );
 };
 
-EmbedLayout.propTypes = {
-  intl: PropTypes.objectOf(PropTypes.any).isRequired,
-};
-
-export default injectIntl(EmbedLayout);
+export default EmbedLayout;
