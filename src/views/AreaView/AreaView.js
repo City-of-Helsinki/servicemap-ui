@@ -35,6 +35,18 @@ import { focusDistrict, focusDistricts, useMapFocusDisabled } from '../MapView/u
 import SideBar from './components/SideBar/SideBar';
 import { dataStructure, geographicalDistricts } from './utils/districtDataHelper';
 
+function getAreaType(selectedArea) {
+  return selectedArea?.split(/([\d]+)/)[0];
+}
+
+function getAreaPeriod(selectedArea) {
+  const arr = selectedArea?.split(/([\d]+)/);
+  if (arr?.[1]) {
+    return [arr?.[1], arr?.[2], arr?.[3]].join('');
+  }
+  return undefined;
+}
+
 const AreaView = ({ embed }) => {
   const dispatch = useDispatch();
   const location = useLocation();
@@ -56,7 +68,8 @@ const AreaView = ({ embed }) => {
   const searchParams = parseSearchParams(location.search);
   const selectedArea = searchParams.selected;
   // Get area parameter without year data
-  const selectedAreaType = selectedArea?.split(/([\d]+)/)[0];
+  const selectedAreaType = getAreaType(selectedArea);
+  const selectedAreaPeriod = getAreaPeriod(selectedArea);
   const mapFocusDisabled = useMapFocusDisabled();
 
   // State
@@ -162,14 +175,14 @@ const AreaView = ({ embed }) => {
 
       // Fetch and select area from url parameters
       if (selectedArea && !dataStructure.some(obj => obj.id === selectedArea)) {
-        dispatch(fetchDistricts(selectedAreaType));
+        dispatch(fetchDistricts(selectedAreaType, false, selectedAreaPeriod));
         if (!embed) {
           const category = dataStructure.find(
             data => data.districts.some(obj => obj.id === selectedAreaType),
           );
           dispatch(handleOpenItems(category.id));
         } else {
-          dispatch(fetchDistricts(selectedAreaType, true));
+          dispatch(fetchDistricts(selectedAreaType, true, selectedAreaPeriod));
         }
         dispatch(setSelectedDistrictType(selectedArea));
       } else if (!embed) {
