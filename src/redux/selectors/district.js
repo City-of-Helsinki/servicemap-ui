@@ -64,7 +64,7 @@ export const getAddressDistrict = createSelector(
 
 // Get units that are tied to each area object
 export const getDistrictPrimaryUnits = createSelector(
-  [getDistrictsByType],
+  [selectDistrictDataBySelectedType],
   (districts) => {
     const primaryUnits = [];
 
