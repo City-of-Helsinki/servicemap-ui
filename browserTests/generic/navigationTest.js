@@ -25,7 +25,7 @@ test('Should navigate back to home from embedder tool', async (t) => {
   await t
     .click(mapToolsButton)
     .click(embedderToolButton)
-    .click(Selector('[data-sm="EmbedderToolCloseButton"]'))
+    .click(embedderToolCloseButton)
     .expect(searchBarInput.exists).ok();
 });
 
@@ -37,7 +37,7 @@ fixture`Navigation embedder`
 
 test('Should navigate to home page from embedder tool', async (t) => {
   await t
-    .click(Selector('[data-sm="EmbedderToolCloseButton"]'))
+    .click(embedderToolCloseButton)
     .expect(searchBarInput.exists).ok();
 });
 

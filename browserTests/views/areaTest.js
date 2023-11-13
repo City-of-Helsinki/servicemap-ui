@@ -4,6 +4,9 @@ import { Selector } from 'testcafe';
 
 import config from '../config';
 import { getLocation } from '../utility';
+import {
+  accordionSelector, embedderToolButton, embedderToolCloseButton, mapToolsButton,
+} from '../utility/pageObjects';
 
 const { server } = config;
 
@@ -13,15 +16,15 @@ fixture`Area view test`
     await waitForReact();
   });
 
-const drawerButtons = Selector('[data-sm="ServiceTabComponent"]').find('[data-sm="AccordionComponent"]');
+const drawerButtons = Selector('[data-sm="ServiceTabComponent"]').find(accordionSelector);
 const radioButtons = Selector('[data-sm="DistrictToggleButton"]');
-const accordions = Selector('[data-sm="AccordionComponent"]');
+const accordions = Selector(accordionSelector);
 const unitList = Selector('[data-sm="DistrictUnits"]');
 
 // Get inner accordions for given element
 // Expects ReactSelector element as second parameter
 const openInnerAccordion = async (t, element) => {
-  const clickedAccordion = element.child().find('[data-sm="AccordionComponent"]').nth(0);
+  const clickedAccordion = element.child().find(accordionSelector).nth(0);
   await t
     .click(clickedAccordion)
   ;
@@ -118,23 +121,21 @@ test('Unit list functions correctly' , async (t) => {
 //     .expect(addressBar.value).eql(suggestionText, 'Address search bar did not update text when suggesttion was selected');
 // });
 
-// TODO: fix this unstable test
-// test('Embeder tool does not crash area view', async (t) => {
-//   const toolMenuButton = Selector('#ToolMenuButton')
-//   const toolMenu = Selector('#ToolMenuPanel')
-//   const closeEmbedderButton = Selector('button[class*="closeButton"]')
-//   await t
-//     .click(toolMenuButton)
-//     .click(toolMenu.child(0))
-//     .click(closeEmbedderButton)
-//     .expect(toolMenuButton.exists).ok('Area view was not rendered correctly')
-// });
+test('Embeder tool does not crash area view', async (t) => {
+  await t
+    .click(mapToolsButton)
+    .click(embedderToolButton)
+    .click(embedderToolCloseButton)
+    .expect(Selector('[data-sm="AreaView"]').exists).ok('Area view was not rendered correctly')
+    .expect(mapToolsButton.exists).ok('Area view was not rendered correctly')
+    .expect(accordions.count).eql(3, 'Expect 3 accordions to exist for each section in AreaView')
+});
 
 test('Statistical areas accordions open correctly', async (t) => {
   const totalAccordion = await openStatisticalTotals(t);
 
-  const innerAccordions = totalAccordion.child().find('[data-sm="AccordionComponent"]');
-  const cityAccordions = totalAccordion.child().find('#StatisticalCityList').find('[data-sm="AccordionComponent"]');
+  const innerAccordions = totalAccordion.child().find(accordionSelector);
+  const cityAccordions = totalAccordion.child().find('#StatisticalCityList').find(accordionSelector);
   const serviceAccordion = await innerAccordions.nth(0);
   const helsinkiAccordion = await cityAccordions.nth(0);
   await t
@@ -145,7 +146,7 @@ test('Statistical areas accordions open correctly', async (t) => {
     .click(serviceAccordion)
   ;
 
-  const serviceListAccordions = serviceAccordion.child().find('[data-sm="AccordionComponent"]');
+  const serviceListAccordions = serviceAccordion.child().find(accordionSelector);
   await t
     .expect(serviceListAccordions.count).gt(0, 'Service list should have accordion elements', { timeout: 8000 })
     .click(serviceListAccordions.nth(0).find('input[type="checkbox"]'))
@@ -161,9 +162,8 @@ test('Statistical areas accordions open correctly', async (t) => {
 test('Statistical area district selection works correctly', async (t) => {
   const totalAccordion = await openStatisticalTotals(t);
 
-  const serviceButton = await totalAccordion.child().find('[data-sm="AccordionComponent"]').nth(0).find('button');
-  // const innerAccordions = totalAccordion.child().find('[data-sm="AccordionComponent"]');
-  const cityAccordions = totalAccordion.child().find('#StatisticalCityList').find('[data-sm="AccordionComponent"]');
+  const serviceButton = await totalAccordion.child().find(accordionSelector).nth(0).find('button');
+  const cityAccordions = totalAccordion.child().find('#StatisticalCityList').find(accordionSelector);
   const firstCityAreaCheckbox = cityAccordions.nth(0).find('div').nth(1).find('.MuiCollapse-root input[type="checkbox"]');
   const firstCityCheckbox = cityAccordions.nth(0).find('input[type="checkbox"]');
 
