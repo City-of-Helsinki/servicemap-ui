@@ -94,7 +94,7 @@ const ServiceTab = (props) => {
     const listDistrictAreas = ['rescue_area', 'rescue_district', 'rescue_sub_district'].includes(selectedDistrictType);
     const DistrictList = listDistrictAreas ? DistrictAreaList : DistrictUnitList;
     return (
-      <StyledListLevelThree className="districtList" disablePadding>
+      <StyledListLevelThree data-sm="DistrictList" disablePadding>
         {districList.map(district => (
           <Fragment key={district.id}>
             <StyledAreaListItem

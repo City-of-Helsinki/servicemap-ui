@@ -88,7 +88,7 @@ const ParkingAreaList = ({ areas, variant }) => {
   }, [parkingUnits]);
 
   return (
-    <StyledListLevelThree className="districtList" disablePadding>
+    <StyledListLevelThree data-sm="DistrictList" disablePadding>
       {areaDataInfo.map((area, i) => {
         const fullId = variant === 'helsinki' ? area.extra.class : area.extra.tyyppi;
         return (

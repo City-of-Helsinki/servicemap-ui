@@ -16,6 +16,7 @@ fixture`Area view test`
 const drawerButtons = Selector('[data-sm="ServiceTabComponent"]').find('[data-sm="AccordionComponent"]');
 const radioButtons = Selector('[data-sm="DistrictToggleButton"]');
 const accordions = Selector('[data-sm="AccordionComponent"]');
+const unitList = Selector('[data-sm="DistrictUnits"]');
 
 // Get inner accordions for given element
 // Expects ReactSelector element as second parameter
@@ -40,21 +41,19 @@ const openStatisticalTotals = async (t) => {
 }
 
 test('District lists are fetched and rendered correctly', async (t) => {
-  const rootAccordionLength = await accordions.count;
-
   await t
-    .expect(rootAccordionLength).eql(3, 'Expect 3 accordions to exist for each section in AreaView')
+    .expect(accordions.count).eql(3, 'Expect 3 accordions to exist for each section in AreaView')
     .click(accordions.nth(0));
     
-  const listLength = await drawerButtons.count;
   await t
-    .expect(listLength).gt(0, 'No district buttons rendered')
+    .expect(drawerButtons.count).gt(0, 'No district buttons rendered')
+  const listLength = await drawerButtons.count;
 
   for(let i = 0; i < listLength; i++) {  
     await t 
       .click(drawerButtons.nth(i))
 
-    const districtList = Selector('.districtList')
+    const districtList = Selector('[data-sm="DistrictList"]')
 
     await t
       .expect(districtList.exists).ok('District list not rendered correctly')
@@ -70,22 +69,27 @@ test('District selection is updated' , async (t) => {
     .click(drawerButtons.nth(0))
     .click(radioButtons.nth(0).child())
 
-  const districtDataLength = ReactSelector('Districts').getReact(({props}) => props.districtData.length);
-  const secondButton = radioButtons.nth(1);
+  const districtDataTitle = Selector('[data-sm="DistrictUnitsTitle"]');
 
+  let districtCount = (await districtDataTitle.innerText).match(/\d+/)[0];
   await t
-    .expect(await districtDataLength).gt(0, 'Data not set correctly to Districts component')
+    .expect(parseInt(districtCount, 10)).gt(0, 'Data not set correctly to Districts component')
+    .expect(districtDataTitle.innerText).eql(`Toimipisteet listana (${districtCount})`);
+
+  const firstNameSelector = unitList.find('[data-sm="DivisionItemName"]').nth(0);
+  const firstName = await firstNameSelector.innerText;
+
     // Select another radio button to see if data changes
-    .click(secondButton.child())
-
-  const districtDataType = ReactSelector('Districts').getReact(({props}) => props.districtData[0].type);
-
   await t
-    .expect(await secondButton.getAttribute('id')).eql(await districtDataType, 'Data not updated correctly to Districts component')
+    .click(radioButtons.nth(1).child());
+  districtCount = (await districtDataTitle.innerText).match(/\d+/)[0];
+  await t
+    .expect(parseInt(districtCount, 10)).gt(0, 'Data not set correctly to Districts component')
+    .expect(districtDataTitle.innerText).eql(`Toimipisteet listana (${districtCount})`)
+    .expect(firstNameSelector.innerText).notEql(firstName);
 })
 
 test('Unit list functions correctly' , async (t) => {
-  const unitList = Selector('.districtUnits')
 
   await t
     .click(accordions.nth(0))

@@ -68,8 +68,8 @@ const DistrictUnitList = (props) => {
 
   const renderServiceListAccordion = (title, unitList) => (
     <StyledServiceTabServiceList>
-      <Typography>{`${title} (${unitList.length})`}</Typography>
-      <List className="districtUnits" disablePadding>
+      <Typography data-sm="DistrictUnitsTitle">{`${title} (${unitList.length})`}</Typography>
+      <List data-sm="DistrictUnits" disablePadding>
         {unitList.map(unit => renderDistrictUnitItem(unit))}
       </List>
     </StyledServiceTabServiceList>
