@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 import { arraysEqual } from '../../utils';
 import { filterByCitySettings } from '../../utils/filters';
-import { getFilteredData } from './results';
+import { getCityFilteredData } from './results';
 import {
   selectCities,
   selectSelectedCities, selectSelectedOrganizationIds,
@@ -87,7 +87,7 @@ export const getFilteredSubdistrictServices = createSelector(
     selectSelectedCities, selectSelectedOrganizationIds,
   ],
   (selectedSubdistricts, unitData, selectedCities, selectedOrganizationIds) => {
-    const cityFilteredUnits = getFilteredData(unitData, selectedCities, selectedOrganizationIds);
+    const cityFilteredUnits = getCityFilteredData(unitData, selectedCities, selectedOrganizationIds);
     if (selectedSubdistricts?.length && unitData) {
       return cityFilteredUnits.filter(
         unit => selectedSubdistricts.some(district => district === unit.division_id),

@@ -1,13 +1,21 @@
 import { createSelector } from 'reselect';
-import { isEmbed } from '../../utils/path';
-import { filterEmptyServices, filterCitiesAndOrganizations, filterResultTypes } from '../../utils/filters';
 import isClient from '../../utils';
+import {
+  filterCitiesAndOrganizations, filterEmptyServices, filterResultTypes,
+} from '../../utils/filters';
 import orderUnits from '../../utils/orderUnits';
+import { isEmbed } from '../../utils/path';
 import getSortingParameters from './ordering';
 import { selectSelectedCities, selectSelectedOrganizationIds } from './settings';
 
 const isFetching = state => state.searchResults.isFetching;
 const results = state => state.searchResults.data;
+
+export const getFilteredData = (data, cities, organizationIds) => {
+  return data
+    .filter(filterEmptyServices(cities, organizationIds))
+    .filter(filterResultTypes());
+};
 
 /**
  * Returns given data after filtering it
@@ -16,15 +24,9 @@ const results = state => state.searchResults.data;
  * @param {*} organizationIds - selected organization ids
  * @param {*} options - options for filtering - municipality: to override city setting filtering
  */
-export const getFilteredData = (data, cities, organizationIds, options = null) => {
-  let embed = false;
-  if (global.window) {
-    embed = isEmbed({ url: window.location });
-  }
-
-  const filteredData = data
-    .filter(filterEmptyServices(cities, organizationIds))
-    .filter(filterResultTypes());
+export const getCityFilteredData = (data, cities, organizationIds, options = null) => {
+  const filteredData = getFilteredData(data, cities, organizationIds);
+  const embed = !!global.window && isEmbed({ url: window.location });
 
   if (embed) {
     return filteredData;
@@ -37,7 +39,7 @@ export const getFilteredData = (data, cities, organizationIds, options = null) =
 /**
  * Gets unordered processed result data for rendering search results
  */
-export const getProcessedData = createSelector(
+const getProcessedData = createSelector(
   [results, isFetching, selectSelectedCities, selectSelectedOrganizationIds],
   (data, isFetching, selectedCities, selectedOrganizationIds) => {
     // Prevent processing data if fetch is in process
@@ -49,7 +51,7 @@ export const getProcessedData = createSelector(
       options.municipality = overrideMunicipality;
     }
 
-    return getFilteredData(data, selectedCities, selectedOrganizationIds, options);
+    return getCityFilteredData(data, selectedCities, selectedOrganizationIds, options);
   },
 );
 
