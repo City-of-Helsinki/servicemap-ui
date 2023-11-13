@@ -119,3 +119,23 @@ export const resolveCitySettings = (citySettings, location, embed) => {
   });
   return urlCitySettings;
 };
+
+/**
+ * Helper that resolves the filter to use based on embed state and if embedded then cities and org
+ * ids are parsed from location.
+ * @param cities from state.settings.cities
+ * @param organizationIds from state.settings.cities
+ * @param location object given by react-router-dom
+ * @param embed state of embedding
+ * @returns filter predicate
+ */
+export const resolveCityAndOrganizationFilter = (cities, organizationIds, location, embed) => {
+  if (!embed) {
+    return filterCitiesAndOrganizations(cities, organizationIds);
+  }
+  const searchParam = parseSearchParams(location.search);
+  const cityParam = searchParam?.city || searchParam?.municipality;
+  const cityArray = cityParam?.split(',') || [];
+  const orgIdArray = searchParam?.organizations?.split(',') || [];
+  return filterCitiesAndOrganizations(cityArray, orgIdArray);
+};

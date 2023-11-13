@@ -11,7 +11,11 @@ import { visuallyHidden } from '@mui/utils';
 import { FormattedMessage, useIntl } from 'react-intl';
 import fetchSearchResults from '../../redux/actions/search';
 import { selectMapRef, selectNavigator } from '../../redux/selectors/general';
+import {
+  selectSelectedCities, selectSelectedOrganizationIds,
+} from '../../redux/selectors/settings';
 import { parseSearchParams, getSearchParam, keyboardHandler } from '../../utils';
+import { resolveCityAndOrganizationFilter } from '../../utils/filters';
 import optionsToSearchQuery from '../../utils/search';
 import { fitUnitsToMap } from '../MapView/utils/mapActions';
 import { isEmbed } from '../../utils/path';
@@ -35,10 +39,12 @@ const SearchView = () => {
   const [serviceRedirect, setServiceRedirect] = useState(null);
   const [analyticsSent, setAnalyticsSent] = useState(null);
 
-  const searchResults = useSelector(state => getOrderedData(state));
+  const orderedData = useSelector(getOrderedData);
   const unorderedSearchResults = useSelector(state => state.searchResults.data);
   const searchFetchState = useSelector(state => state.searchResults);
   const isRedirectFetching = useSelector(state => state.redirectService.isFetching);
+  const selectedCities = useSelector(selectSelectedCities);
+  const selectedOrganizationIds = useSelector(selectSelectedOrganizationIds);
   const map = useSelector(selectMapRef);
   const navigator = useSelector(selectNavigator);
 
@@ -49,6 +55,10 @@ const SearchView = () => {
   const location = useLocation();
   const match = useRouteMatch();
   const intl = useIntl();
+  const searchResults = orderedData
+    .filter(
+      resolveCityAndOrganizationFilter(selectedCities, selectedOrganizationIds, location, embed),
+    );
 
   const getResultsByType = type => searchResults.filter(item => item.object_type === type);
 
