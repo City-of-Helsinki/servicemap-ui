@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { ReactSelector, waitForReact } from 'testcafe-react-selectors';
+import { waitForReact } from 'testcafe-react-selectors';
 import { Selector } from 'testcafe';
 
 import config from '../config';

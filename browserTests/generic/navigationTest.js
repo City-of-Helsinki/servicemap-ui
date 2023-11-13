@@ -2,7 +2,12 @@ import { waitForReact } from 'testcafe-react-selectors';
 import { Selector } from 'testcafe';
 import config from '../config';
 import {
-  embedderToolButton, feedbackButton, infoButton, mapToolsButton, searchBarInput,
+  embedderToolButton,
+  embedderToolCloseButton,
+  feedbackButton,
+  infoButton,
+  mapToolsButton,
+  searchBarInput,
 } from '../utility/pageObjects';
 
 /* eslint-disable */
