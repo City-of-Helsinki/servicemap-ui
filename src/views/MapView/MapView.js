@@ -103,9 +103,9 @@ const MapView = (props) => {
   const citySettings = useSelector(selectCities);
   const districtsFetching = useSelector(state => !!state.districts.districtsFetching?.length);
   const districtViewFetching = districtUnitsFetch.isFetching || districtsFetching;
-  const mapUnits = useMapUnits();
   const cityFilter = filterByCitySettings(resolveCitySettings(citySettings, location, embedded));
-  const unitData = mapUnits.filter(cityFilter);
+  const unitData = useMapUnits()
+    .filter(cityFilter);
   const intl = useIntl();
 
   // This unassigned selector is used to trigger re-render after events are fetched

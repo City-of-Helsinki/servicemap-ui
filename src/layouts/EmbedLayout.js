@@ -9,7 +9,6 @@ import { useSelector } from 'react-redux';
 import { OpenInNew, Map } from '@mui/icons-material';
 import { visuallyHidden } from '@mui/utils';
 import { selectMapRef, selectNavigator } from '../redux/selectors/general';
-import { selectCities } from '../redux/selectors/settings';
 import { filterByCitySettings, resolveCitySettings } from '../utils/filters';
 import MapView from '../views/MapView';
 import PageHandler from './components/PageHandler';
@@ -99,9 +98,8 @@ const EmbedLayout = () => {
   const location = useLocation();
   const navigator = useSelector(selectNavigator);
   const getLocaleText = useLocaleText();
-  const citySettings = useSelector(selectCities);
   const mapUnits = useMapUnits();
-  const cityFilter = filterByCitySettings(resolveCitySettings(citySettings, location, true));
+  const cityFilter = filterByCitySettings(resolveCitySettings({ }, location, true));
   const units = mapUnits.filter(cityFilter);
   const searchParams = parseSearchParams(location.search);
   const map = useSelector(selectMapRef);
