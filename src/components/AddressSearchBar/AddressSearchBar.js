@@ -33,6 +33,8 @@ const AddressSearchBar = ({ title, intl, handleAddressChange }) => {
   const [currentLocation, setCurrentLocation] = useState(null);
   const [cleared, setCleared] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
+  const [inputValue, setInputValue] = useState('');
+  const [debouncedInputValue, setDebouncedInputValue] = useState('');
 
   const suggestionCount = 5;
   const inputRef = useRef();
@@ -99,22 +101,38 @@ const AddressSearchBar = ({ title, intl, handleAddressChange }) => {
     clearSuggestions(e);
   };
 
-  const handleInputChange = (text) => {
+  useEffect(() => {
     // Reset cleared text
     if (cleared) {
       setCleared(false);
     }
+    if (isFetching) {
+      return;
+    }
     // Fetch address suggestions
-    if (text.length && text.length > 1) {
+    if (debouncedInputValue.length && debouncedInputValue.length > 1) {
       if (currentLocation) {
         setCurrentLocation(null);
       }
-      fetchAddressResults(text)
-        .then((data) => {
-          if (!isFetching) setAddressResults(data);
+      fetchAddressResults(debouncedInputValue)
+        .then(data => {
+          setAddressResults(data);
         });
-    } else if (addressResults.length) setAddressResults([]);
+    } else if (addressResults.length) {
+      setAddressResults([]);
+    }
+  }, [debouncedInputValue, isFetching]);
+
+  const handleInputChange = (text) => {
+    setInputValue(text);
   };
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      setDebouncedInputValue(inputValue);
+    }, 400);
+    return () => clearTimeout(timeoutId);
+  }, [inputValue]);
 
   useEffect(() => {
     if (defaultAddress) {
@@ -194,6 +212,7 @@ const AddressSearchBar = ({ title, intl, handleAddressChange }) => {
                 <ListItem
                   tabIndex={-1}
                   id={`address-suggestion${i}`}
+                  data-sm="AddressSuggestion"
                   role="option"
                   selected={i === resultIndex}
                   key={getAddressText(address, getLocaleText)}

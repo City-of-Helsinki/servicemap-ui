@@ -155,7 +155,7 @@ export const fetchDistrictGeometry = (type, period) => (
   }
 );
 
-export const fetchDistricts = (selected, single) => (
+export const fetchDistricts = (selected, single, period) => (
   async (dispatch) => {
     const categories = single
       ? selected
@@ -167,7 +167,7 @@ export const fetchDistricts = (selected, single) => (
     const groupedData = groupDistrictData(areas);
     dispatch(setDistrictData(groupedData));
     dispatch(endDistrictFetch(single ? selected : 'all'));
-    if (selected) dispatch(fetchDistrictGeometry(selected));
+    if (selected) dispatch(fetchDistrictGeometry(selected, period));
   }
 );
 

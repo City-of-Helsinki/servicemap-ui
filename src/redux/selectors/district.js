@@ -18,13 +18,14 @@ const getSelectedDistrictServices = state => state.districts.selectedDistrictSer
 const selectParkingUnits = state => state.districts.parkingUnits;
 export const selectDistrictsFetching = state => state.districts.districtsFetching;
 export const selectDistrictAddressData = state => state.districts.districtAddressData;
+export const selectDistrictUnitFetch = state => state.districts.unitFetch;
 
 export const selectParkingUnitUnits = createSelector(
   [selectParkingUnits],
   parkingUnits => parkingUnits.filter(unit => unit.object_type === 'unit'),
 );
 
-const selectDistrictDataBySelectedType = createSelector(
+export const selectDistrictDataBySelectedType = createSelector(
   [selectSelectedDistrictType, selectDistrictData],
   (selectedDistrictType, districtData) => {
     if (!selectedDistrictType || !districtData?.length) {
@@ -40,30 +41,21 @@ const selectDistrictDataBySelectedType = createSelector(
   },
 );
 
-export const getDistrictsByType = createSelector(
-  [selectDistrictDataBySelectedType, selectCities],
-  (districtData, citySettings) => districtData.filter(filterByCitySettings(citySettings)),
-  {
-    memoizeOptions: {
-      // Check for equal array content, assume non-nil and sorted arrays
-      resultEqualityCheck: (a, b) => arraysEqual(a, b),
-    },
-  },
-);
-
 export const getAddressDistrict = createSelector(
-  [getDistrictsByType, getAddressDistrictData],
-  (districts, addressDistricts) => {
-    if (districts && addressDistricts) {
-      return districts.find(obj => addressDistricts.some(i => i.id === obj.id));
+  [selectDistrictDataBySelectedType, selectCities, getAddressDistrictData],
+  (districtData, citySettings, addressDistricts) => {
+    if (!addressDistricts) {
+      return null;
     }
-    return null;
+    return districtData
+      .filter(filterByCitySettings(citySettings))
+      .find(obj => addressDistricts.some(i => i.id === obj.id));
   },
 );
 
 // Get units that are tied to each area object
 export const getDistrictPrimaryUnits = createSelector(
-  [getDistrictsByType],
+  [selectDistrictDataBySelectedType],
   (districts) => {
     const primaryUnits = [];
 

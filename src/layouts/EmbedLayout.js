@@ -1,16 +1,16 @@
-
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 import {
   Switch, Route, useLocation,
 } from 'react-router-dom';
-import { injectIntl } from 'react-intl';
+import { useIntl } from 'react-intl';
 import { Tooltip as MUITooltip, ButtonBase, Typography } from '@mui/material';
 import { useTheme } from '@mui/styles';
 import { useSelector } from 'react-redux';
 import { OpenInNew, Map } from '@mui/icons-material';
 import { visuallyHidden } from '@mui/utils';
 import { selectMapRef, selectNavigator } from '../redux/selectors/general';
+import { selectCities } from '../redux/selectors/settings';
+import { filterByCitySettings, resolveCitySettings } from '../utils/filters';
 import MapView from '../views/MapView';
 import PageHandler from './components/PageHandler';
 import AddressView from '../views/AddressView';
@@ -93,12 +93,16 @@ const createContentStyles = (theme, unitListPosition) => {
   };
 };
 
-const EmbedLayout = ({ intl }) => {
+const EmbedLayout = () => {
+  const intl = useIntl();
   const theme = useTheme();
   const location = useLocation();
   const navigator = useSelector(selectNavigator);
   const getLocaleText = useLocaleText();
-  const units = useMapUnits();
+  const citySettings = useSelector(selectCities);
+  const mapUnits = useMapUnits();
+  const cityFilter = filterByCitySettings(resolveCitySettings(citySettings, location, true));
+  const units = mapUnits.filter(cityFilter);
   const searchParams = parseSearchParams(location.search);
   const map = useSelector(selectMapRef);
 
@@ -272,8 +276,4 @@ const EmbedLayout = ({ intl }) => {
   );
 };
 
-EmbedLayout.propTypes = {
-  intl: PropTypes.objectOf(PropTypes.any).isRequired,
-};
-
-export default injectIntl(EmbedLayout);
+export default EmbedLayout;

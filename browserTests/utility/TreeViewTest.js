@@ -1,8 +1,9 @@
 import { Selector } from 'testcafe';
+import { accordionSelector } from './pageObjects';
 
 const searchButton = Selector('#ServiceTreeSearchButton');
-const accordion = Selector('[data-sm="AccordionComponent"]');
-const innerAccordion = (accordion) => accordion.find('div[class*="MuiCollapse-root"] [data-sm="AccordionComponent"]');
+const accordion = Selector(accordionSelector);
+const innerAccordion = (accordion) => accordion.find('div[class*="MuiCollapse-root"]').find(accordionSelector);
 const accordionCheckbox = (accordion) => accordion.find('input[type="checkbox"]');
 
 export const treeViewAccordionTest = () => {

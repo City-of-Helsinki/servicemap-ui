@@ -10,9 +10,11 @@ import { ButtonBase } from '@mui/material';
 import { MyLocation, LocationDisabled } from '@mui/icons-material';
 import { useSelector } from 'react-redux';
 import { useMapEvents } from 'react-leaflet';
+import { selectDistrictUnitFetch } from '../../redux/selectors/district';
 import { selectNavigator } from '../../redux/selectors/general';
-import { selectMapType } from '../../redux/selectors/settings';
+import { selectCities, selectMapType } from '../../redux/selectors/settings';
 import { getLocale, getPage } from '../../redux/selectors/user';
+import { filterByCitySettings, resolveCitySettings } from '../../utils/filters';
 import { mapOptions } from './config/mapConfig';
 import CreateMap from './utils/createMap';
 import { focusToPosition, getBoundsFromBbox } from './utils/mapActions';
@@ -96,11 +98,14 @@ const MapView = (props) => {
   const locale = useSelector(getLocale);
   const currentPage = useSelector(getPage);
   const getAddressNavigatorParams = useNavigationParams();
-  const districtUnitsFetch = useSelector(state => state.districts.unitFetch);
+  const districtUnitsFetch = useSelector(selectDistrictUnitFetch);
   const statisticalDistrictFetch = useSelector(getStatisticalDistrictUnitsState);
+  const citySettings = useSelector(selectCities);
   const districtsFetching = useSelector(state => !!state.districts.districtsFetching?.length);
   const districtViewFetching = districtUnitsFetch.isFetching || districtsFetching;
-  const unitData = useMapUnits();
+  const mapUnits = useMapUnits();
+  const cityFilter = filterByCitySettings(resolveCitySettings(citySettings, location, embedded));
+  const unitData = mapUnits.filter(cityFilter);
   const intl = useIntl();
 
   // This unassigned selector is used to trigger re-render after events are fetched

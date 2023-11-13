@@ -155,7 +155,7 @@ function SideBar({ selectedAddress, setSelectedAddress }) {
     },
   ];
   return (
-    <div>
+    <div data-sm="AreaView">
       <TitleBar
         title={intl.formatMessage({ id: 'general.pageLink.area' })}
         titleComponent="p"

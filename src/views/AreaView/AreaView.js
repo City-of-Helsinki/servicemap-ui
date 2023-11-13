@@ -17,20 +17,35 @@ import {
 } from '../../redux/actions/district';
 import {
   getAddressDistrict,
-  getDistrictsByType,
   selectDistrictAddressData,
+  selectDistrictDataBySelectedType,
+  selectDistrictUnitFetch,
   selectSelectedSubdistricts,
   selectSubdistrictUnits,
 } from '../../redux/selectors/district';
 import { selectMapRef } from '../../redux/selectors/general';
+import { selectCities } from '../../redux/selectors/settings';
 import { parseSearchParams } from '../../utils';
 import { getAddressText } from '../../utils/address';
 import { districtFetch } from '../../utils/fetch';
+import { filterByCitySettings, resolveCitySettings } from '../../utils/filters';
 import useLocaleText from '../../utils/useLocaleText';
 import fetchAddress from '../MapView/utils/fetchAddress';
 import { focusDistrict, focusDistricts, useMapFocusDisabled } from '../MapView/utils/mapActions';
 import SideBar from './components/SideBar/SideBar';
 import { dataStructure, geographicalDistricts } from './utils/districtDataHelper';
+
+function getAreaType(selectedArea) {
+  return selectedArea?.split(/([\d]+)/)[0];
+}
+
+function getAreaPeriod(selectedArea) {
+  const arr = selectedArea?.split(/([\d]+)/);
+  if (arr?.[1]) {
+    return [arr?.[1], arr?.[2], arr?.[3]].join('');
+  }
+  return undefined;
+}
 
 const AreaView = ({ embed }) => {
   const dispatch = useDispatch();
@@ -39,17 +54,22 @@ const AreaView = ({ embed }) => {
   const districtAddressData = useSelector(selectDistrictAddressData);
   const subdistrictUnits = useSelector(selectSubdistrictUnits);
   const selectedSubdistricts = useSelector(selectSelectedSubdistricts);
-  const unitsFetching = useSelector(state => state.districts.unitFetch.nodesFetching);
-  const selectedDistrictData = useSelector(getDistrictsByType);
+  const citySettings = useSelector(selectCities);
+  const unitsFetching = useSelector(state => selectDistrictUnitFetch(state).nodesFetching);
+  const districtData = useSelector(selectDistrictDataBySelectedType);
   const map = useSelector(selectMapRef);
   const addressDistrict = useSelector(getAddressDistrict);
   const getLocaleText = useLocaleText();
+
+  const cityFilter = filterByCitySettings(resolveCitySettings(citySettings, location, embed));
+  const selectedDistrictData = districtData.filter(cityFilter);
   const geometryLoaded = !!selectedDistrictData[0]?.boundary;
 
   const searchParams = parseSearchParams(location.search);
   const selectedArea = searchParams.selected;
   // Get area parameter without year data
-  const selectedAreaType = selectedArea?.split(/([\d]+)/)[0];
+  const selectedAreaType = getAreaType(selectedArea);
+  const selectedAreaPeriod = getAreaPeriod(selectedArea);
   const mapFocusDisabled = useMapFocusDisabled();
 
   // State
@@ -155,14 +175,14 @@ const AreaView = ({ embed }) => {
 
       // Fetch and select area from url parameters
       if (selectedArea && !dataStructure.some(obj => obj.id === selectedArea)) {
-        dispatch(fetchDistricts(selectedAreaType));
+        dispatch(fetchDistricts(selectedAreaType, false, selectedAreaPeriod));
         if (!embed) {
           const category = dataStructure.find(
             data => data.districts.some(obj => obj.id === selectedAreaType),
           );
           dispatch(handleOpenItems(category.id));
         } else {
-          dispatch(fetchDistricts(selectedAreaType, true));
+          dispatch(fetchDistricts(selectedAreaType, true, selectedAreaPeriod));
         }
         dispatch(setSelectedDistrictType(selectedArea));
       } else if (!embed) {

@@ -119,6 +119,7 @@ const DivisionItem = ({
                       aria-hidden
                       variant="body2"
                       component="p"
+                      data-sm="DivisionItemName"
                     >
                       {name}
                     </StyledWeightBold>
