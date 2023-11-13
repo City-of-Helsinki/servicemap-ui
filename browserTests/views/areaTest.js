@@ -103,23 +103,25 @@ test('Unit list functions correctly' , async (t) => {
     .expect(getLocation()).contains(`${server.address}:${server.port}/fi/unit`);
 })
 
-// TODO: update this test
-// test('Address search bar field updates and gets results', async (t, inputText = 'mann') => {
-//   const addressBar = Selector('#addressSearchbar')
-//   const suggestions = Selector('#address-results div[role="option"]');
+// TODO Flaky test, suggestion list loses focus
+test.skip('Address search bar field updates and gets results', async (t, inputText = 'mann') => {
+  const addressBar = Selector('#addressSearchbar')
+  const suggestions = Selector('#address-results div[role="option"]');
 
-//   await t
-//     .typeText(addressBar, inputText)
-//     .expect(suggestions.count).gt(0)
+  await t
+    .typeText(addressBar, inputText)
+    .expect(suggestions.count).gt(0)
 
-//   const suggestion = suggestions.nth(0);
-//   const suggestionText = await suggestion.textContent;
+  const suggestion = suggestions.nth(0);
+  const suggestionText = await suggestion.textContent;
 
-//   await t
-//     .pressKey('down')
-//     .pressKey('enter')
-//     .expect(addressBar.value).eql(suggestionText, 'Address search bar did not update text when suggesttion was selected');
-// });
+  await t
+    .expect(suggestions.count).gt(0)
+    .pressKey('down')
+    .expect(Selector('[data-sm="AddressSuggestion"].Mui-selected').exists).ok()
+    .pressKey('enter')
+    .expect(addressBar.value).eql(suggestionText, 'Address search bar did not update text when suggestion was selected');
+});
 
 test('Embeder tool does not crash area view', async (t) => {
   await t
