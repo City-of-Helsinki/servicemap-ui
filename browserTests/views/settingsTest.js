@@ -8,6 +8,10 @@ import {
 
 const { server } = config;
 
+const sensesDropdownSelector = Selector(sensesDropdown)
+const mobilityDropdownSelector = Selector(mobilityDropdown)
+const cityDropdownSelector = Selector(cityDropdown)
+const organisationDropdownSelector = Selector(organisationDropdown)
 
 fixture`Settings view tests`
   .page`http://${server.address}:${server.port}/fi/`
@@ -17,10 +21,10 @@ fixture`Settings view tests`
 
 test('Settings does opens and closes correctly', async (t) => {
   await t
-    .expect(sensesDropdown.visible).ok()
-    .expect(mobilityDropdown.visible).ok()
-    .expect(cityDropdown.visible).ok()
-    .expect(organisationDropdown.visible).ok()
+    .expect(sensesDropdownSelector.visible).ok()
+    .expect(mobilityDropdownSelector.visible).ok()
+    .expect(cityDropdownSelector.visible).ok()
+    .expect(organisationDropdownSelector.visible).ok()
   ;
 
   await t
@@ -28,10 +32,10 @@ test('Settings does opens and closes correctly', async (t) => {
   ;
 
   await t
-    .expect(sensesDropdown.visible).notOk()
-    .expect(mobilityDropdown.visible).notOk()
-    .expect(cityDropdown.visible).notOk()
-    .expect(organisationDropdown.visible).notOk()
+    .expect(sensesDropdownSelector.visible).notOk()
+    .expect(mobilityDropdownSelector.visible).notOk()
+    .expect(cityDropdownSelector.visible).notOk()
+    .expect(organisationDropdownSelector.visible).notOk()
   ;
 
   await t
@@ -39,10 +43,10 @@ test('Settings does opens and closes correctly', async (t) => {
   ;
 
   await t
-    .expect(sensesDropdown.visible).ok()
-    .expect(mobilityDropdown.visible).ok()
-    .expect(cityDropdown.visible).ok()
-    .expect(organisationDropdown.visible).ok()
+    .expect(sensesDropdownSelector.visible).ok()
+    .expect(mobilityDropdownSelector.visible).ok()
+    .expect(cityDropdownSelector.visible).ok()
+    .expect(organisationDropdownSelector.visible).ok()
   ;
 });
 

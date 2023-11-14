@@ -16,11 +16,11 @@ const testUrl = `http://${server.address}:${server.port}/fi/unit/51342`
 const selectSettingsAndClose = async (t) => {
   if (t) {
     await t
-      .click(sensesDropdown)
+      .click(Selector(sensesDropdown))
       .click(Selector('#senses-hearingAid'))
       .click(Selector('#senses-visuallyImpaired'))
-      .click(sensesDropdown)
-      .click(Selector('#mobility-setting-dropdown'))
+      .click(Selector(sensesDropdown))
+      .click(Selector(mobilityDropdown))
       .click(Selector('#mobility-wheelchair'))
     ;
   }

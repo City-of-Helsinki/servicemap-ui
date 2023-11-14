@@ -9,7 +9,7 @@ export const accordionSelector = '[data-sm="AccordionComponent"]';
 
 export const searchBarInput = Selector('#SearchBar input');
 
-export const sensesDropdown = Selector('[data-sm="senses-setting-dropdown"]');
-export const mobilityDropdown = Selector('[data-sm="mobility-setting-dropdown"]');
-export const cityDropdown = Selector('[data-sm="cities-setting-dropdown"]');
-export const organisationDropdown = Selector('[data-sm="organizations-setting-dropdown"]');
+export const sensesDropdown = '[data-sm="senses-setting-dropdown"]';
+export const mobilityDropdown = '[data-sm="mobility-setting-dropdown"]';
+export const cityDropdown = '[data-sm="cities-setting-dropdown"]';
+export const organisationDropdown = '[data-sm="organizations-setting-dropdown"]';
