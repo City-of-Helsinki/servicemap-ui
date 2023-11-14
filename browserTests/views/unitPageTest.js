@@ -4,7 +4,7 @@ import config from '../config';
 import { getLocation } from '../utility';
 import appConfig from '../../config';
 import finnish from '../../src/i18n/fi';
-import { sensesDropdown } from '../utility/pageObjects';
+import { mobilityDropdown, sensesDropdown } from '../utility/pageObjects';
 
 const { server } = config;
 
