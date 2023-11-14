@@ -127,7 +127,7 @@ const SettingsDropdowns = ({ variant }) => {
     return (
       <StyledAutocomplete
         open={openSettings === label}
-        id={`${category}-setting-dropdown`}
+        data-sm={`${category}-setting-dropdown`}
         size="small"
         disablePortal
         disableClearable
