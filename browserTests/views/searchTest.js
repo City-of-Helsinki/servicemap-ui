@@ -1,16 +1,28 @@
 /* eslint-disable */
 import { Selector } from 'testcafe';
-import { waitForReact, ReactSelector } from 'testcafe-react-selectors';
-import { viewTitleID } from '../../src/utils/accessibility';
+import { ReactSelector, waitForReact } from 'testcafe-react-selectors';
 
 import config from '../config';
 import { getLocation } from '../utility';
-import { searchBarInput } from '../utility/pageObjects';
+import {
+  cityDropdown,
+  ESPOO_ORG,
+  HELSINKI_ORG,
+  organisationDropdown,
+  searchBarInput,
+  settingsMenuButton,
+  settingsMenuPanel,
+} from '../utility/pageObjects';
 import paginationTest from '../utility/paginationTest';
 import resultOrdererTest from '../utility/resultOrdererTest';
+
 const { server } = config;
 
 const searchPage = `http://${server.address}:${server.port}/fi/search?q=kirjasto`;
+const bathUrl = `http://${server.address}:${server.port}/fi/search?q=maauimala`;
+const resultItemTitle = Selector('[data-sm="ResultItemTitle"]');
+const kumpulaBath = resultItemTitle.withText('Kumpulan maauimala');
+const leppavaaraBath = resultItemTitle.withText('Leppävaaran maauimala');
 
 fixture`Search view test`
   .page`${searchPage}`
@@ -314,3 +326,43 @@ test('Search suggestion arrow navigation does loop correctly', async(t) => {
 //     .expect(getLocation()).contains(`http://${server.address}:${server.port}/fi/search?q=${text}`)
     
 // });
+
+fixture`Search view custom url test`
+  .page`${bathUrl}`
+  .beforeEach(async () => {
+    await waitForReact();
+  });
+
+test('Should override municipality settings by url', async(t) => {
+  await t
+    .click(settingsMenuButton)
+    .click(`${settingsMenuPanel} ${cityDropdown}`)
+    .click('[data-sm="cities-espoo"]')
+    .click(settingsMenuButton)
+    .expect(leppavaaraBath.exists).ok('Should find bath in Espoo')
+    .expect(kumpulaBath.exists).notOk('Should hide baths of Helsinki')
+    .navigateTo(`${bathUrl}&city=helsinki`)
+    .expect(kumpulaBath.exists).ok('Should find bath in Helsinki')
+    .expect(leppavaaraBath.exists).notOk('Should hide baths of Espoo')
+    .navigateTo(`${bathUrl}&city=espoo`)
+    .expect(leppavaaraBath.exists).ok('Should find bath in Espoo')
+    .expect(kumpulaBath.exists).notOk('Should hide baths of Helsinki')
+  ;
+});
+
+test('Should override organization settings by url', async(t) => {
+  await t
+    .click(settingsMenuButton)
+    .click(`${settingsMenuPanel} ${organisationDropdown}`)
+    .click(`[data-sm="organizations-${ESPOO_ORG}"]`)
+    .click(settingsMenuButton)
+    .expect(leppavaaraBath.exists).ok('Should find bath of Espoo org')
+    .expect(kumpulaBath.exists).notOk('Should hide baths of Helsinki org')
+    .navigateTo(`${bathUrl}&organization=${HELSINKI_ORG}`)
+    .expect(kumpulaBath.exists).ok('Should find bath of Helsinki org')
+    .expect(leppavaaraBath.exists).notOk('Should hide baths of Espoo org')
+    .navigateTo(`${bathUrl}&organization=${ESPOO_ORG}`)
+    .expect(leppavaaraBath.exists).ok('Should find bath of Espoo org')
+    .expect(kumpulaBath.exists).notOk('Should hide baths of Helsinki org')
+  ;
+});
