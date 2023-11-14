@@ -14,10 +14,10 @@ const page = `http://${server.address}:${server.port}/fi/`;
 //   .beforeEach(async () => {
 //     await waitForReact();
 //   });
+//   const toolMenu = Selector('[data-sm="ToolMenuButton"]');
+//   const toolMenuItems = Selector('[data-sm="ToolMenuPanel"] span[role="link"]');
 
 // test('ToolMenu does close correctly', async (t) => {
-//   const toolMenu = Selector('#ToolMenuButton');
-//   const toolMenuItems = Selector('#ToolMenuPanel span[role="link"]');
 
 //   // Test esc does work correctly
 //   await t
@@ -63,8 +63,6 @@ const page = `http://${server.address}:${server.port}/fi/`;
 // });
 
 // test('ToolMenu should move focus correctly on tool selection', async (t) => {
-//   const toolMenu = Selector('#ToolMenuButton');
-//   const toolMenuItems = Selector('#ToolMenuPanel span[role="link"]');
 
 //   // Embedder tool selection should move focus correctly
 //   const embedderCloseButton = Selector('button[aria-label="Sulje upotustyökalu"]');
