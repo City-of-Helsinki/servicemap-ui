@@ -20,6 +20,7 @@ const { server } = config;
 
 const searchPage = `http://${server.address}:${server.port}/fi/search?q=kirjasto`;
 const bathUrl = `http://${server.address}:${server.port}/fi/search?q=maauimala`;
+const embedBathUrl = `http://${server.address}:${server.port}/fi/embed/search?q=maauimala&search_language=fi&show_list=side`;
 const resultItemTitle = Selector('[data-sm="ResultItemTitle"]');
 const kumpulaBath = resultItemTitle.withText('Kumpulan maauimala');
 const leppavaaraBath = resultItemTitle.withText('Leppävaaran maauimala');
@@ -335,7 +336,7 @@ fixture`Search view custom url test`
 
 
 test('Should override municipality settings by url', async(t) => {
-  const cityChips = Selector(`${cityDropdown} .MuiAutocomplete-tag`)
+  const cityChips = Selector(`${cityDropdown} .MuiAutocomplete-tag`);
   // the city in url should overwrite settings made by user (and save setting)
   await t
     .click(settingsMenuButton)
@@ -354,6 +355,26 @@ test('Should override municipality settings by url', async(t) => {
     .expect(cityChips.textContent).eql('Espoo')
     .expect(leppavaaraBath.exists).ok('Should find bath in Espoo')
     .expect(kumpulaBath.exists).notOk('Should hide baths of Helsinki')
+  ;
+});
+
+test('Should not mess up city settings between embedded and normal view', async(t) => {
+  await t
+    .click(settingsMenuButton)
+    .click(`${settingsMenuPanel} ${cityDropdown}`)
+    .click('[data-sm="cities-espoo"]')
+    .click(settingsMenuButton)
+    // Espoo is set
+    .navigateTo(`${embedBathUrl}`)
+    .expect(kumpulaBath.exists).ok('Should find bath in Helsinki')
+    .expect(leppavaaraBath.exists).ok('Should hide baths in Espoo')
+    .navigateTo(`${embedBathUrl}&city=helsinki`)
+    .expect(kumpulaBath.exists).ok('Should find baths in Helsinki')
+    .expect(leppavaaraBath.exists).notOk('Should not find baths Espoo')
+    // Returning to normal mode, the visit to embedding should not mess up previous settings
+    .navigateTo(`${bathUrl}`)
+    .expect(kumpulaBath.exists).notOk('Should not find bath in Helsinki')
+    .expect(leppavaaraBath.exists).ok('Should find bath in Espoo')
   ;
 });
 
@@ -377,5 +398,25 @@ test('Should override organization settings by url', async(t) => {
     .expect(orgChips.textContent).eql('Espoon kaupunki')
     .expect(leppavaaraBath.exists).ok('Should find bath of Espoo org')
     .expect(kumpulaBath.exists).notOk('Should hide baths of Helsinki org')
+  ;
+});
+
+test('Should not mess up organization settings between embedded and normal view', async(t) => {
+  await t
+    .click(settingsMenuButton)
+    .click(`${settingsMenuPanel} ${organisationDropdown}`)
+    .click(`[data-sm="organizations-${ESPOO_ORG}"]`)
+    .click(settingsMenuButton)
+    // Espoo is set
+    .navigateTo(`${embedBathUrl}`)
+    .expect(kumpulaBath.exists).ok('Should find bath of Helsinki org')
+    .expect(leppavaaraBath.exists).ok('Should hide baths of Espoo org')
+    .navigateTo(`${embedBathUrl}&city=helsinki`)
+    .expect(kumpulaBath.exists).ok('Should find baths of Helsinki org')
+    .expect(leppavaaraBath.exists).notOk('Should not find baths of Espoo org')
+    // Returning to normal mode, the visit to embedding should not mess up previous settings
+    .navigateTo(`${bathUrl}`)
+    .expect(kumpulaBath.exists).notOk('Should not find bath of Helsinki org')
+    .expect(leppavaaraBath.exists).ok('Should find bath of Espoo org')
   ;
 });

@@ -242,6 +242,10 @@ const SearchView = () => {
   };
 
   useEffect(() => {
+    if (embed) {
+      // Do not mess with settings when embedded
+      return;
+    }
     const options = parseSettingsFromUrlParams();
     if (options.municipality?.length) {
       dispatch(setCities(options.municipality));
