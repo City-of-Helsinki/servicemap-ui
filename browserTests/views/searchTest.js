@@ -333,7 +333,10 @@ fixture`Search view custom url test`
     await waitForReact();
   });
 
+
 test('Should override municipality settings by url', async(t) => {
+  const cityChips = Selector(`${cityDropdown} .MuiAutocomplete-tag`)
+  // the city in url should overwrite settings made by user (and save setting)
   await t
     .click(settingsMenuButton)
     .click(`${settingsMenuPanel} ${cityDropdown}`)
@@ -342,15 +345,21 @@ test('Should override municipality settings by url', async(t) => {
     .expect(leppavaaraBath.exists).ok('Should find bath in Espoo')
     .expect(kumpulaBath.exists).notOk('Should hide baths of Helsinki')
     .navigateTo(`${bathUrl}&city=helsinki`)
+    .expect(cityChips.count).eql(1)
+    .expect(cityChips.textContent).eql('Helsinki')
     .expect(kumpulaBath.exists).ok('Should find bath in Helsinki')
     .expect(leppavaaraBath.exists).notOk('Should hide baths of Espoo')
     .navigateTo(`${bathUrl}&city=espoo`)
+    .expect(cityChips.count).eql(1)
+    .expect(cityChips.textContent).eql('Espoo')
     .expect(leppavaaraBath.exists).ok('Should find bath in Espoo')
     .expect(kumpulaBath.exists).notOk('Should hide baths of Helsinki')
   ;
 });
 
 test('Should override organization settings by url', async(t) => {
+  const orgChips = Selector(`${organisationDropdown} .MuiAutocomplete-tag`)
+  // the organization in url should overwrite settings made by user (and save setting)
   await t
     .click(settingsMenuButton)
     .click(`${settingsMenuPanel} ${organisationDropdown}`)
@@ -359,9 +368,13 @@ test('Should override organization settings by url', async(t) => {
     .expect(leppavaaraBath.exists).ok('Should find bath of Espoo org')
     .expect(kumpulaBath.exists).notOk('Should hide baths of Helsinki org')
     .navigateTo(`${bathUrl}&organization=${HELSINKI_ORG}`)
+    .expect(orgChips.count).eql(1)
+    .expect(orgChips.textContent).eql('Helsingin kaupunki')
     .expect(kumpulaBath.exists).ok('Should find bath of Helsinki org')
     .expect(leppavaaraBath.exists).notOk('Should hide baths of Espoo org')
     .navigateTo(`${bathUrl}&organization=${ESPOO_ORG}`)
+    .expect(orgChips.count).eql(1)
+    .expect(orgChips.textContent).eql('Espoon kaupunki')
     .expect(leppavaaraBath.exists).ok('Should find bath of Espoo org')
     .expect(kumpulaBath.exists).notOk('Should hide baths of Helsinki org')
   ;
