@@ -5,13 +5,7 @@ import { ReactSelector, waitForReact } from 'testcafe-react-selectors';
 import config from '../config';
 import { getLocation } from '../utility';
 import {
-  cityDropdown,
-  ESPOO_ORG,
-  HELSINKI_ORG,
-  organisationDropdown,
-  searchBarInput,
-  settingsMenuButton,
-  settingsMenuPanel,
+  cityDropdown, ESPOO_ORG, HELSINKI_ORG, organisationDropdown, searchBarInput, setLocalStorageItem,
 } from '../utility/pageObjects';
 import paginationTest from '../utility/paginationTest';
 import resultOrdererTest from '../utility/resultOrdererTest';
@@ -338,11 +332,9 @@ fixture`Search view custom url test`
 test('Should override municipality settings by url', async(t) => {
   const cityChips = Selector(`${cityDropdown} .MuiAutocomplete-tag`);
   // the city in url should overwrite settings made by user (and save setting)
+  await setLocalStorageItem('SM:espoo', true);
   await t
-    .click(settingsMenuButton)
-    .click(`${settingsMenuPanel} ${cityDropdown}`)
-    .click('[data-sm="cities-espoo"]')
-    .click(settingsMenuButton)
+    .navigateTo(bathUrl)
     .expect(leppavaaraBath.exists).ok('Should find bath in Espoo')
     .expect(kumpulaBath.exists).notOk('Should hide baths of Helsinki')
     .navigateTo(`${bathUrl}&city=helsinki`)
@@ -359,12 +351,8 @@ test('Should override municipality settings by url', async(t) => {
 });
 
 test('Should not mess up city settings between embedded and normal view', async(t) => {
+  await setLocalStorageItem('SM:espoo', true);
   await t
-    .click(settingsMenuButton)
-    .click(`${settingsMenuPanel} ${cityDropdown}`)
-    .click('[data-sm="cities-espoo"]')
-    .click(settingsMenuButton)
-    // Espoo is set
     .navigateTo(`${embedBathUrl}`)
     .expect(kumpulaBath.exists).ok('Should find bath in Helsinki')
     .expect(leppavaaraBath.exists).ok('Should hide baths in Espoo')
@@ -379,13 +367,11 @@ test('Should not mess up city settings between embedded and normal view', async(
 });
 
 test('Should override organization settings by url', async(t) => {
+  await setLocalStorageItem(`SM:${ESPOO_ORG}`, true);
   const orgChips = Selector(`${organisationDropdown} .MuiAutocomplete-tag`)
   // the organization in url should overwrite settings made by user (and save setting)
   await t
-    .click(settingsMenuButton)
-    .click(`${settingsMenuPanel} ${organisationDropdown}`)
-    .click(`[data-sm="organizations-${ESPOO_ORG}"]`)
-    .click(settingsMenuButton)
+    .navigateTo(`${bathUrl}`)
     .expect(leppavaaraBath.exists).ok('Should find bath of Espoo org')
     .expect(kumpulaBath.exists).notOk('Should hide baths of Helsinki org')
     .navigateTo(`${bathUrl}&organization=${HELSINKI_ORG}`)
@@ -402,12 +388,8 @@ test('Should override organization settings by url', async(t) => {
 });
 
 test('Should not mess up organization settings between embedded and normal view', async(t) => {
+  await setLocalStorageItem(`SM:${ESPOO_ORG}`, true);
   await t
-    .click(settingsMenuButton)
-    .click(`${settingsMenuPanel} ${organisationDropdown}`)
-    .click(`[data-sm="organizations-${ESPOO_ORG}"]`)
-    .click(settingsMenuButton)
-    // Espoo is set
     .navigateTo(`${embedBathUrl}`)
     .expect(kumpulaBath.exists).ok('Should find bath of Helsinki org')
     .expect(leppavaaraBath.exists).ok('Should hide baths of Espoo org')

@@ -1,4 +1,6 @@
-import { Selector } from 'testcafe';
+import { ClientFunction, Selector } from 'testcafe';
+
+export const setLocalStorageItem = ClientFunction((key, value) => window.localStorage.setItem(key, value));
 
 export const mapToolsButton = Selector('[data-sm="ToolMenuButton"]');
 export const embedderToolButton = Selector('#EmbedderToolMenuButton');
