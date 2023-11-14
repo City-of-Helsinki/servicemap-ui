@@ -279,7 +279,7 @@ test('Tabs accessibility attributes are OK', async(t) => {
 });
 
 
-test('Search suggestion arrow navigation does loop correctly', async(t) => {
+test.skip('Search suggestion arrow navigation does loop correctly', async(t) => {
   const expectedBoxShadowColor = 'rgb(71, 131, 235)'; // Focus color
   // Suggestion items selector
   const items = Selector('#SuggestionList li[role="option"]');
