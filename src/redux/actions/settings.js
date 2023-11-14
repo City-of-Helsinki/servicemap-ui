@@ -45,7 +45,7 @@ export const setSettingsAccordionCollapsed = collapsed => async (dispatch) => {
 export const toggleCity = values => async (dispatch) => {
   const keyIsValid = SettingsUtility.isValidCitySetting(values);
   const citySettings = {};
-  config.cities.forEach((city) => { citySettings[city] = values[city]; });
+  config.cities.forEach((city) => { citySettings[city] = !!values[city]; });
 
   if (keyIsValid) {
     dispatch({
@@ -62,7 +62,7 @@ export const toggleOrganization = values => async (dispatch) => {
   const keyIsValid = SettingsUtility.isValidOrganizationSetting(values);
   const organizationSettings = {};
   config.organizations.forEach((organization) => {
-    organizationSettings[organization.id] = values[organization.id];
+    organizationSettings[organization.id] = !!values[organization.id];
   });
 
   if (keyIsValid) {
@@ -74,6 +74,22 @@ export const toggleOrganization = values => async (dispatch) => {
       LocalStorageUtility.saveItem(organization.id, values[organization.id]);
     });
   }
+};
+
+export const setCities = cities => {
+  const newCityValues = {};
+  config.cities.forEach(city => {
+    newCityValues[city] = cities.includes(city);
+  });
+  return toggleCity(newCityValues);
+};
+
+export const setOrganizations = orgIds => {
+  const newOrgValues = {};
+  config.organizations.forEach(org => {
+    newOrgValues[org.id] = orgIds.includes(org.id);
+  });
+  return toggleOrganization(newOrgValues);
 };
 
 export const toggleHearingAid = (value = undefined) => setAccessibilitySelection('HEARING', 'hearingAid', value);

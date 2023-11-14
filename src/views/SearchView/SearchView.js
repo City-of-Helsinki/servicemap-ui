@@ -10,6 +10,7 @@ import {
 import { visuallyHidden } from '@mui/utils';
 import { FormattedMessage, useIntl } from 'react-intl';
 import fetchSearchResults from '../../redux/actions/search';
+import { setCities, setOrganizations } from '../../redux/actions/settings';
 import { selectMapRef, selectNavigator } from '../../redux/selectors/general';
 import {
   selectSelectedCities, selectSelectedOrganizationIds,
@@ -82,9 +83,6 @@ const SearchView = () => {
     const {
       q,
       category,
-      city,
-      organization,
-      municipality,
       address,
       service_id,
       service_node,
@@ -153,22 +151,30 @@ const SearchView = () => {
         }
       }
     }
-
-    // Parse municipality
-    if (municipality || city) {
-      options.municipality = municipality || city;
-    }
-
-    // Parse organization
-    if (organization) {
-      options.organization = organization;
-    }
-
     // Parse search language
     if (search_language) {
       options.search_language = search_language;
     }
 
+    return options;
+  };
+
+  const parseSettingsFromUrlParams = () => {
+    const searchParams = parseSearchParams(location.search);
+    const {
+      city,
+      organization,
+      municipality,
+    } = searchParams;
+    const options = {};
+    // Parse municipality
+    if (municipality || city) {
+      options.municipality = (municipality || city).split(',');
+    }
+    // Parse organization
+    if (organization) {
+      options.organization = organization.split(',');
+    }
     return options;
   };
 
@@ -234,6 +240,16 @@ const SearchView = () => {
       dispatch(changeCustomUserLocation(null));
     }
   };
+
+  useEffect(() => {
+    const options = parseSettingsFromUrlParams();
+    if (options.municipality?.length) {
+      dispatch(setCities(options.municipality));
+    }
+    if (options.organization?.length) {
+      dispatch(setOrganizations(options.organization));
+    }
+  }, []);
 
   useEffect(() => {
     const options = getSearchParamData();
