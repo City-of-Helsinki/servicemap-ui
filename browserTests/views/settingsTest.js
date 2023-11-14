@@ -2,7 +2,9 @@
 import { Selector } from 'testcafe';
 import { waitForReact } from 'testcafe-react-selectors';
 import config from '../config';
-import { mapToolsButton } from '../utility/pageObjects';
+import {
+  cityDropdown, mapToolsButton, mobilityDropdown, organisationDropdown, sensesDropdown,
+} from '../utility/pageObjects';
 
 const { server } = config;
 
@@ -15,10 +17,10 @@ fixture`Settings view tests`
 
 test('Settings does opens and closes correctly', async (t) => {
   await t
-    .expect(Selector('#senses-setting-dropdown').visible).ok()
-    .expect(Selector('#mobility-setting-dropdown').visible).ok()
-    .expect(Selector('#cities-setting-dropdown').visible).ok()
-    .expect(Selector('#organizations-setting-dropdown').visible).ok()
+    .expect(sensesDropdown.visible).ok()
+    .expect(mobilityDropdown.visible).ok()
+    .expect(cityDropdown.visible).ok()
+    .expect(organisationDropdown.visible).ok()
   ;
 
   await t
@@ -26,10 +28,10 @@ test('Settings does opens and closes correctly', async (t) => {
   ;
 
   await t
-    .expect(Selector('#senses-setting-dropdown').visible).notOk()
-    .expect(Selector('#mobility-setting-dropdown').visible).notOk()
-    .expect(Selector('#cities-setting-dropdown').visible).notOk()
-    .expect(Selector('#organizations-setting-dropdown').visible).notOk()
+    .expect(sensesDropdown.visible).notOk()
+    .expect(mobilityDropdown.visible).notOk()
+    .expect(cityDropdown.visible).notOk()
+    .expect(organisationDropdown.visible).notOk()
   ;
 
   await t
@@ -37,10 +39,10 @@ test('Settings does opens and closes correctly', async (t) => {
   ;
 
   await t
-    .expect(Selector('#senses-setting-dropdown').visible).ok()
-    .expect(Selector('#mobility-setting-dropdown').visible).ok()
-    .expect(Selector('#cities-setting-dropdown').visible).ok()
-    .expect(Selector('#organizations-setting-dropdown').visible).ok()
+    .expect(sensesDropdown.visible).ok()
+    .expect(mobilityDropdown.visible).ok()
+    .expect(cityDropdown.visible).ok()
+    .expect(organisationDropdown.visible).ok()
   ;
 });
 

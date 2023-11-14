@@ -8,3 +8,8 @@ export const infoButton = Selector('#PageInfoLink');
 export const accordionSelector = '[data-sm="AccordionComponent"]';
 
 export const searchBarInput = Selector('#SearchBar input');
+
+export const sensesDropdown = Selector('#senses-setting-dropdown');
+export const mobilityDropdown = Selector('#mobility-setting-dropdown');
+export const cityDropdown = Selector('#cities-setting-dropdown');
+export const organisationDropdown = Selector('#organizations-setting-dropdown');
