@@ -36,9 +36,7 @@ import { changeCustomUserLocation } from '../../redux/actions/user';
 const focusClass = 'TabListFocusTarget';
 
 const SearchView = () => {
-  const [serviceRedirect, setServiceRedirect] = useState(null);
   const [analyticsSent, setAnalyticsSent] = useState(null);
-
   const orderedData = useSelector(getOrderedData);
   const unorderedSearchResults = useSelector(state => state.searchResults.data);
   const searchFetchState = useSelector(state => state.searchResults);
@@ -78,8 +76,7 @@ const SearchView = () => {
     }
   };
 
-  const getSearchParamData = (includeService = false) => {
-    const redirectNode = serviceRedirect;
+  const getSearchParamData = () => {
     const searchParams = parseSearchParams(location.search);
 
     const {
@@ -89,7 +86,6 @@ const SearchView = () => {
       organization,
       municipality,
       address,
-      service,
       service_id,
       service_node,
       mobility_node,
@@ -102,11 +98,6 @@ const SearchView = () => {
     if (q) {
       options.q = q;
     } else {
-      // Parse service
-      if (includeService && service) {
-        options.service = service;
-      }
-
       // Parse address search parameter
       if (address) {
         options.address = address;
@@ -123,9 +114,6 @@ const SearchView = () => {
       }
       if (service_node) {
         options.service_node = service_node;
-      }
-      if (!includeService && redirectNode) {
-        options.service_node = redirectNode;
       }
 
       if (events) {
