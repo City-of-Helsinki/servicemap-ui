@@ -323,7 +323,7 @@ test.skip('Search suggestion arrow navigation does loop correctly', async(t) => 
 // });
 
 fixture`Search view custom url test`
-  .page`${bathUrl}`
+  .page`http://${server.address}:${server.port}/fi`
   .beforeEach(async () => {
     await waitForReact();
   });
@@ -335,6 +335,8 @@ test('Should override municipality settings by url', async(t) => {
   await setLocalStorageItem('SM:espoo', true);
   await t
     .navigateTo(bathUrl)
+    .expect(cityChips.count).eql(1)
+    .expect(cityChips.textContent).eql('Espoo')
     .expect(leppavaaraBath.exists).ok('Should find bath in Espoo')
     .expect(kumpulaBath.exists).notOk('Should hide baths of Helsinki')
     .navigateTo(`${bathUrl}&city=helsinki`)
@@ -356,9 +358,12 @@ test('Should not mess up city settings between embedded and normal view', async(
     .navigateTo(`${embedBathUrl}`)
     .expect(kumpulaBath.exists).ok('Should find bath in Helsinki')
     .expect(leppavaaraBath.exists).ok('Should hide baths in Espoo')
+    .navigateTo(`${embedBathUrl}&city=espoo`)
+    .expect(kumpulaBath.exists).notOk('Should not find baths in Helsinki')
+    .expect(leppavaaraBath.exists).ok('Should find baths in Espoo')
     .navigateTo(`${embedBathUrl}&city=helsinki`)
     .expect(kumpulaBath.exists).ok('Should find baths in Helsinki')
-    .expect(leppavaaraBath.exists).notOk('Should not find baths Espoo')
+    .expect(leppavaaraBath.exists).notOk('Should not find baths in Espoo')
     // Returning to normal mode, the visit to embedding should not mess up previous settings
     .navigateTo(`${bathUrl}`)
     .expect(kumpulaBath.exists).notOk('Should not find bath in Helsinki')
@@ -372,6 +377,8 @@ test('Should override organization settings by url', async(t) => {
   // the organization in url should overwrite settings made by user (and save setting)
   await t
     .navigateTo(`${bathUrl}`)
+    .expect(orgChips.count).eql(1)
+    .expect(orgChips.textContent).eql('Espoon kaupunki')
     .expect(leppavaaraBath.exists).ok('Should find bath of Espoo org')
     .expect(kumpulaBath.exists).notOk('Should hide baths of Helsinki org')
     .navigateTo(`${bathUrl}&organizations=${HELSINKI_ORG}`)
@@ -393,6 +400,9 @@ test('Should not mess up organization settings between embedded and normal view'
     .navigateTo(`${embedBathUrl}`)
     .expect(kumpulaBath.exists).ok('Should find bath of Helsinki org')
     .expect(leppavaaraBath.exists).ok('Should hide baths of Espoo org')
+    .navigateTo(`${embedBathUrl}&organizations=${ESPOO_ORG}`)
+    .expect(kumpulaBath.exists).notOk('Should not find baths of Helsinki org')
+    .expect(leppavaaraBath.exists).ok('Should find baths of Espoo org')
     .navigateTo(`${embedBathUrl}&organizations=${HELSINKI_ORG}`)
     .expect(kumpulaBath.exists).ok('Should find baths of Helsinki org')
     .expect(leppavaaraBath.exists).notOk('Should not find baths of Espoo org')
