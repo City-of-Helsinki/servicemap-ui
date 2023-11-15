@@ -12,9 +12,16 @@ import { useSelector } from 'react-redux';
 import { useMapEvents } from 'react-leaflet';
 import { selectDistrictUnitFetch } from '../../redux/selectors/district';
 import { selectNavigator } from '../../redux/selectors/general';
-import { selectCities, selectMapType } from '../../redux/selectors/settings';
+import {
+  selectCities,
+  selectMapType,
+  selectSelectedCities, selectSelectedOrganizationIds,
+} from '../../redux/selectors/settings';
 import { getLocale, getPage } from '../../redux/selectors/user';
-import { filterByCitySettings, resolveCitySettings } from '../../utils/filters';
+import {
+  filterByCitySettings, resolveCityAndOrganizationFilter,
+  resolveCitySettings,
+} from '../../utils/filters';
 import { mapOptions } from './config/mapConfig';
 import CreateMap from './utils/createMap';
 import { focusToPosition, getBoundsFromBbox } from './utils/mapActions';
@@ -100,12 +107,13 @@ const MapView = (props) => {
   const getAddressNavigatorParams = useNavigationParams();
   const districtUnitsFetch = useSelector(selectDistrictUnitFetch);
   const statisticalDistrictFetch = useSelector(getStatisticalDistrictUnitsState);
-  const citySettings = useSelector(selectCities);
   const districtsFetching = useSelector(state => !!state.districts.districtsFetching?.length);
+  const cities = useSelector(selectSelectedCities);
+  const orgIds = useSelector(selectSelectedOrganizationIds);
   const districtViewFetching = districtUnitsFetch.isFetching || districtsFetching;
-  const cityFilter = filterByCitySettings(resolveCitySettings(citySettings, location, embedded));
+  const cityAndOrgFilter = resolveCityAndOrganizationFilter(cities, orgIds, location, embedded);
   const unitData = useMapUnits()
-    .filter(cityFilter);
+    .filter(cityAndOrgFilter);
   const intl = useIntl();
 
   // This unassigned selector is used to trigger re-render after events are fetched
