@@ -143,13 +143,10 @@ const useMapUnits = () => {
 
       case 'area': {
         const results = [
-          ...(districtPrimaryUnits.length ? districtPrimaryUnits : []),
-          ...(districtServiceUnits.length ? districtServiceUnits : []),
-          ...(parkingAreaUnits.length ? parkingAreaUnits : []),
-          ...((statisticalDistrictUnits.length && statisticalTabOpen)
-            ? statisticalDistrictUnits
-            : []
-          ),
+          ...districtPrimaryUnits,
+          ...districtServiceUnits,
+          ...parkingAreaUnits,
+          ...(statisticalTabOpen ? statisticalDistrictUnits : []),
         ];
 
         return orderUnits(results, { locale, direction: 'desc', order: 'alphabetical' });
