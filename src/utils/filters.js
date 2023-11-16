@@ -136,6 +136,6 @@ export const resolveCityAndOrganizationFilter = (cities, organizationIds, locati
   const searchParam = parseSearchParams(location.search);
   const cityParam = searchParam?.city || searchParam?.municipality;
   const cityArray = cityParam?.split(',') || [];
-  const orgIdArray = searchParam?.organizations?.split(',') || [];
+  const orgIdArray = searchParam?.organization?.split(',') || [];
   return filterCitiesAndOrganizations(cityArray, orgIdArray);
 };

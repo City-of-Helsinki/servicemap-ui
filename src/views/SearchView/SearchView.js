@@ -163,7 +163,7 @@ const SearchView = () => {
     const searchParams = parseSearchParams(location.search);
     const {
       city,
-      organizations,
+      organization,
       municipality,
     } = searchParams;
     const options = {};
@@ -172,8 +172,8 @@ const SearchView = () => {
       options.municipality = (municipality || city).split(',');
     }
     // Parse organization
-    if (organizations) {
-      options.organizations = organizations.split(',');
+    if (organization) {
+      options.organization = organization.split(',');
     }
     return options;
   };
@@ -250,8 +250,8 @@ const SearchView = () => {
     if (options.municipality?.length) {
       dispatch(setCities(options.municipality));
     }
-    if (options.organizations?.length) {
-      dispatch(setOrganizations(options.organizations));
+    if (options.organization?.length) {
+      dispatch(setOrganizations(options.organization));
     }
   }, []);
 
