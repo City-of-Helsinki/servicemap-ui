@@ -181,8 +181,10 @@ export default class ServiceMapAPI extends HttpClient {
       throw new APIFetchError('Invalid nodeID string provided to ServiceMapAPI area unit fetch method');
     }
 
-    let onlyValues = ['street_address', 'location', 'name', 'municipality', 'accessibility_shortcoming_count', 'service_nodes', 'contract_type'];
-    if (isEmbed()) onlyValues = [...onlyValues, 'connections', 'phone', 'call_charge_info', 'email', 'www', 'address_zip'];
+    const onlyValues = ['street_address', 'location', 'name', 'municipality', 'accessibility_shortcoming_count', 'service_nodes', 'contract_type', 'department', 'root_department'];
+    if (isEmbed()) {
+      onlyValues.push(...['connections', 'phone', 'call_charge_info', 'email', 'www', 'address_zip']);
+    }
 
     const options = {
       page: 1,
