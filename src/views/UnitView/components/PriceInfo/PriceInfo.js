@@ -28,17 +28,23 @@ const PriceInfo = ({ unit }) => {
     </>
   );
 
-
   const getTextContent = () => (
     <>
       {data.map((item) => {
-        if (item.value?.www) return renderLink(item);
+        const localeText = getLocaleText(item.value?.name);
+        if (item.value?.www) {
+          return (
+            <React.Fragment key={localeText}>
+              {renderLink(item)}
+            </React.Fragment>
+          );
+        }
         if (item.value?.name) {
           return (
-            <>
-              <Typography>{`${getLocaleText(item.value?.name)}`}</Typography>
+            <React.Fragment key={localeText}>
+              <Typography>{`${localeText}`}</Typography>
               <br />
-            </>
+            </React.Fragment>
           );
         }
         return null;
