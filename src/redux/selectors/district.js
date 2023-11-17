@@ -2,10 +2,7 @@ import { createSelector } from 'reselect';
 import { arraysEqual } from '../../utils';
 import { filterByCitySettings } from '../../utils/filters';
 import { getCityFilteredData } from './results';
-import {
-  selectCities,
-  selectSelectedCities, selectSelectedOrganizationIds,
-} from './settings';
+import { selectCities, selectSelectedCities, selectSelectedOrganizationIds } from './settings';
 
 export const getHighlightedDistrict = state => state.districts.highlitedDistrict;
 
@@ -80,31 +77,49 @@ export const getDistrictPrimaryUnits = createSelector(
   },
 );
 
-// Get selected geographical district units
-export const getFilteredSubdistrictServices = createSelector(
-  [
-    selectSelectedSubdistricts, selectSubdistrictUnits,
-    selectSelectedCities, selectSelectedOrganizationIds,
-  ],
-  (selectedSubdistricts, unitData, selectedCities, selectedOrganizationIds) => {
-    const cityFilteredUnits = getCityFilteredData(unitData, selectedCities, selectedOrganizationIds);
-    if (selectedSubdistricts?.length && unitData) {
-      return cityFilteredUnits.filter(
-        unit => selectedSubdistricts.some(district => district === unit.division_id),
+const getSubDistrictUnits = createSelector(
+  [selectSelectedSubdistricts, selectSubdistrictUnits],
+  (selectedSubDistricts, unitData) => {
+    if (selectedSubDistricts?.length && unitData) {
+      return unitData.filter(
+        unit => selectedSubDistricts.some(district => district === unit.division_id),
       );
     }
     return [];
   },
+  {
+    memoizeOptions: {
+      resultEqualityCheck: (a, b) => arraysEqual(a, b),
+    },
+  },
+);
+
+// Get selected geographical district units, used only in non-embed mode
+export const getFilteredSubdistrictServices = createSelector(
+  [
+    getSubDistrictUnits, selectSelectedCities, selectSelectedOrganizationIds,
+  ],
+  (subDistrictUnits, cities, orgIds) => getCityFilteredData(subDistrictUnits, cities, orgIds),
+  {
+    memoizeOptions: {
+      resultEqualityCheck: (a, b) => arraysEqual(a, b),
+    },
+  },
 );
 
 // Get area view units filtered by area view unit tab checkbox selection
-export const getFilteredSubdistrictUnits = createSelector(
-  [getFilteredSubdistrictServices, getSelectedDistrictServices],
-  (districtUnits, serviceFilters) => {
+export const getFilteredSubDistrictUnits = createSelector(
+  [getSubDistrictUnits, getSelectedDistrictServices],
+  (subDistrictUnits, serviceFilters) => {
     if (serviceFilters.length) {
-      return districtUnits.filter(unit => (
+      return subDistrictUnits.filter(unit => (
         unit.services.some(service => serviceFilters.includes(service.id))));
     }
-    return districtUnits;
+    return subDistrictUnits;
+  },
+  {
+    memoizeOptions: {
+      resultEqualityCheck: (a, b) => arraysEqual(a, b),
+    },
   },
 );
