@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { getOrderedData } from '../redux/selectors/results';
+import { getOrderedAndFilteredSearchResultData } from '../redux/selectors/results';
 import { getServiceUnits } from '../redux/selectors/service';
 
 // to get rid of https://redux.js.org/usage/deriving-data-selectors#optimizing-selectors-with-memoization
@@ -11,7 +11,7 @@ const useDownloadData = () => {
   const page = useSelector(state => state.user.page);
   switch (page) {
     case 'search':
-      selector = getOrderedData;
+      selector = getOrderedAndFilteredSearchResultData;
       break;
     case 'unit':
       selector = state => state.selectedUnit.unit.data;

@@ -1,44 +1,37 @@
 /* eslint-disable camelcase */
 
 import styled from '@emotion/styled';
+import { Divider, Link, NoSsr, Paper, Typography } from '@mui/material';
+import { visuallyHidden } from '@mui/utils';
 import React, { useEffect, useState } from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useRouteMatch } from 'react-router-dom';
 import {
-  Paper, Typography, Link, NoSsr, Divider,
-} from '@mui/material';
-import { visuallyHidden } from '@mui/utils';
-import { FormattedMessage, useIntl } from 'react-intl';
+  AddressSearchBar, Container, Loading, SearchBar, SettingsComponent, TabLists,
+} from '../../components';
 import fetchSearchResults from '../../redux/actions/search';
 import { setCities, setOrganizations } from '../../redux/actions/settings';
+import { changeCustomUserLocation } from '../../redux/actions/user';
 import { selectMapRef, selectNavigator } from '../../redux/selectors/general';
+import { getOrderedSearchResultData } from '../../redux/selectors/results';
 import {
   selectSelectedCities, selectSelectedOrganizationIds,
 } from '../../redux/selectors/settings';
-import { parseSearchParams, getSearchParam, keyboardHandler } from '../../utils';
+import { getSearchParam, keyboardHandler, parseSearchParams } from '../../utils';
+import { viewTitleID } from '../../utils/accessibility';
+import { useNavigationParams } from '../../utils/address';
 import { resolveCityAndOrganizationFilter } from '../../utils/filters';
+import useMobileStatus from '../../utils/isMobile';
+import { isEmbed } from '../../utils/path';
 import optionsToSearchQuery from '../../utils/search';
 import { fitUnitsToMap } from '../MapView/utils/mapActions';
-import { isEmbed } from '../../utils/path';
-import { useNavigationParams } from '../../utils/address';
-import useMobileStatus from '../../utils/isMobile';
-import { viewTitleID } from '../../utils/accessibility';
-import { getOrderedData } from '../../redux/selectors/results';
-import {
-  AddressSearchBar,
-  Container,
-  Loading,
-  SearchBar,
-  SettingsComponent,
-  TabLists,
-} from '../../components';
-import { changeCustomUserLocation } from '../../redux/actions/user';
 
 const focusClass = 'TabListFocusTarget';
 
 const SearchView = () => {
   const [analyticsSent, setAnalyticsSent] = useState(null);
-  const orderedData = useSelector(getOrderedData);
+  const orderedData = useSelector(getOrderedSearchResultData);
   const unorderedSearchResults = useSelector(state => state.searchResults.data);
   const searchFetchState = useSelector(state => state.searchResults);
   const isRedirectFetching = useSelector(state => state.redirectService.isFetching);

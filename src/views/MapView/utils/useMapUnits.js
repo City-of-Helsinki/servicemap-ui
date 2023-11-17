@@ -5,7 +5,7 @@ import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import {
   getDistrictPrimaryUnits, getFilteredSubDistrictUnits, selectParkingUnitUnits,
 } from '../../../redux/selectors/district';
-import { getOrderedData } from '../../../redux/selectors/results';
+import { getOrderedSearchResultData } from '../../../redux/selectors/results';
 import { getSelectedUnit } from '../../../redux/selectors/selectedUnit';
 import { getServiceUnits } from '../../../redux/selectors/service';
 import {
@@ -90,7 +90,7 @@ const handleServiceUnitsFromUrl = (mapUnits, serviceUnits, location) => {
 const useMapUnits = () => {
   const embedded = useEmbedStatus();
   const location = useLocation();
-  const searchResults = useSelector(state => getOrderedData(state));
+  const searchResults = useSelector(getOrderedSearchResultData);
   const currentPage = useSelector(state => state.user.page);
   const addressToRender = useSelector(state => state.address.toRender);
   const adminDistricts = useSelector(state => state.address.adminDistricts);

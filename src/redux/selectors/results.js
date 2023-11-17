@@ -11,11 +11,9 @@ import { selectSelectedCities, selectSelectedOrganizationIds } from './settings'
 const isFetching = state => state.searchResults.isFetching;
 const results = state => state.searchResults.data;
 
-export const getFilteredData = (data, cities, organizationIds) => {
-  return data
-    .filter(filterEmptyServices(cities, organizationIds))
-    .filter(filterResultTypes());
-};
+const getFilteredData = (data, cities, organizationIds) => data
+  .filter(filterEmptyServices(cities, organizationIds))
+  .filter(filterResultTypes());
 
 /**
  * Returns given data after filtering it
@@ -37,33 +35,33 @@ export const getCityFilteredData = (data, cities, organizationIds, options = nul
 };
 
 /**
- * Gets unordered processed result data for rendering search results
+ * Gets ordered result data for rendering search results
  */
-const getProcessedData = createSelector(
-  [results, isFetching, selectSelectedCities, selectSelectedOrganizationIds],
-  (data, isFetching, selectedCities, selectedOrganizationIds) => {
-    // Prevent processing data if fetch is in process
-    if (isFetching) return [];
+export const getOrderedSearchResultData = createSelector(
+  [results, isFetching, getSortingParameters],
+  (unitData, isFetching, sortingParameters) => {
+    if (isFetching) {
+      return [];
+    }
+    if (!unitData) {
+      throw new Error('Invalid data provided to getOrderedData selector');
+    }
+    return orderUnits(unitData, sortingParameters);
+  },
+);
 
+/**
+ * Gets ordered and filtered (by cities and orgs) result data for rendering search results
+ */
+export const getOrderedAndFilteredSearchResultData = createSelector(
+  [getOrderedSearchResultData, selectSelectedCities, selectSelectedOrganizationIds],
+  (unitData, selectedCities, selectedOrganizationIds) => {
     const options = {};
     const overrideMunicipality = isClient() && new URLSearchParams().get('municipality');
     if (overrideMunicipality) {
       options.municipality = overrideMunicipality;
     }
 
-    return getCityFilteredData(data, selectedCities, selectedOrganizationIds, options);
-  },
-);
-
-/**
- * Gets ordered processed result data for rendering search results
- */
-export const getOrderedData = createSelector(
-  [getProcessedData, getSortingParameters],
-  (unitData, sortingParameters) => {
-    if (!unitData) {
-      throw new Error('Invalid data provided to getOrderedData selector');
-    }
-    return orderUnits(unitData, sortingParameters);
+    return getCityFilteredData(unitData, selectedCities, selectedOrganizationIds, options);
   },
 );
