@@ -1,5 +1,4 @@
 import { createSelector } from 'reselect';
-import isClient from '../../utils';
 import {
   filterCitiesAndOrganizations, filterEmptyServices, filterResultTypes,
 } from '../../utils/filters';
@@ -20,18 +19,15 @@ const getFilteredData = (data, cities, organizationIds) => data
  * @param {*} data - search data to be filtered
  * @param {*} cities - selected cities
  * @param {*} organizationIds - selected organization ids
- * @param {*} options - options for filtering - municipality: to override city setting filtering
  */
-export const getCityFilteredData = (data, cities, organizationIds, options = null) => {
+export const getCityFilteredData = (data, cities, organizationIds) => {
   const filteredData = getFilteredData(data, cities, organizationIds);
   const embed = !!global.window && isEmbed({ url: window.location });
 
   if (embed) {
     return filteredData;
   }
-  const cities2 = options?.municipality?.split(',') || cities;
-  const orgIds2 = options?.organizations?.split(',') || organizationIds;
-  return filteredData.filter(filterCitiesAndOrganizations(cities2, orgIds2));
+  return filteredData.filter(filterCitiesAndOrganizations(cities, organizationIds));
 };
 
 /**
@@ -55,13 +51,5 @@ export const getOrderedSearchResultData = createSelector(
  */
 export const getOrderedAndFilteredSearchResultData = createSelector(
   [getOrderedSearchResultData, selectSelectedCities, selectSelectedOrganizationIds],
-  (unitData, selectedCities, selectedOrganizationIds) => {
-    const options = {};
-    const overrideMunicipality = isClient() && new URLSearchParams().get('municipality');
-    if (overrideMunicipality) {
-      options.municipality = overrideMunicipality;
-    }
-
-    return getCityFilteredData(unitData, selectedCities, selectedOrganizationIds, options);
-  },
+  (unitData, cities, orgIds) => getCityFilteredData(unitData, cities, orgIds),
 );
