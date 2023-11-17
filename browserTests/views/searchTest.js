@@ -5,7 +5,16 @@ import { ReactSelector, waitForReact } from 'testcafe-react-selectors';
 import config from '../config';
 import { getLocation } from '../utility';
 import {
-  cityDropdown, ESPOO_ORG, HELSINKI_ORG, organisationDropdown, searchBarInput, setLocalStorageItem,
+  cityDropdown,
+  ESPOO_ORG,
+  HELSINKI_ORG, mobilityDropdown,
+  organisationDropdown,
+  searchBarInput,
+  sensesDropdown,
+  setLocalStorageItem,
+  settingChip,
+  settingsMenuButton,
+  settingsMenuPanel,
 } from '../utility/pageObjects';
 import paginationTest from '../utility/paginationTest';
 import resultOrdererTest from '../utility/resultOrdererTest';
@@ -15,6 +24,7 @@ const { server } = config;
 const searchPage = `http://${server.address}:${server.port}/fi/search?q=kirjasto`;
 const bathUrl = `http://${server.address}:${server.port}/fi/search?q=maauimala`;
 const embedBathUrl = `http://${server.address}:${server.port}/fi/embed/search?q=maauimala&search_language=fi&show_list=side`;
+const homePage= `http://${server.address}:${server.port}/fi`
 const resultItemTitle = Selector('[data-sm="ResultItemTitle"]');
 const kumpulaBath = resultItemTitle.withText('Kumpulan maauimala');
 const leppavaaraBath = resultItemTitle.withText('Leppävaaran maauimala');
@@ -322,15 +332,15 @@ test.skip('Search suggestion arrow navigation does loop correctly', async(t) => 
     
 // });
 
-fixture`Search view custom url test`
-  .page`http://${server.address}:${server.port}/fi`
+fixture`Search view custom url with city and org param test`
+  .page`${homePage}`
   .beforeEach(async () => {
     await waitForReact();
   });
 
 
 test('Should override municipality settings by url', async(t) => {
-  const cityChips = Selector(`${cityDropdown} .MuiAutocomplete-tag`);
+  const cityChips = Selector(`${cityDropdown} ${settingChip}`);
   // the city in url should overwrite settings made by user (and save setting)
   await setLocalStorageItem('SM:espoo', true);
   await t
@@ -373,7 +383,7 @@ test('Should not mess up city settings between embedded and normal view', async(
 
 test('Should override organization settings by url', async(t) => {
   await setLocalStorageItem(`SM:${ESPOO_ORG}`, true);
-  const orgChips = Selector(`${organisationDropdown} .MuiAutocomplete-tag`)
+  const orgChips = Selector(`${organisationDropdown} ${settingChip}`)
   // the organization in url should overwrite settings made by user (and save setting)
   await t
     .navigateTo(`${bathUrl}`)
@@ -410,5 +420,31 @@ test('Should not mess up organization settings between embedded and normal view'
     .navigateTo(`${bathUrl}`)
     .expect(kumpulaBath.exists).notOk('Should not find bath of Helsinki org')
     .expect(leppavaaraBath.exists).ok('Should find bath of Espoo org')
+  ;
+});
+
+
+fixture`Search view custom url with accessibility param test`
+  .page`${homePage}`
+  .beforeEach(async () => {
+    await waitForReact();
+  });
+
+
+test('Should override accessibility settings', async(t) => {
+  await setLocalStorageItem(`SM:hearingAid`, true);
+  const senseChips = Selector(settingsMenuPanel).find(`${sensesDropdown} ${settingChip}`);
+  const mobilityInput = Selector(settingsMenuPanel).find(`${mobilityDropdown} input`);
+  await t
+    .navigateTo(`${bathUrl}&accessibility_setting=visual_impairment,reduced_mobility,colour_blind`)
+    .click(settingsMenuButton)
+    .expect(senseChips.count).eql(2)
+    .expect(senseChips.withText('Minun on vaikea erottaa värejä').exists).ok()
+    .expect(senseChips.withText('Olen näkövammainen').exists).ok()
+    .expect(mobilityInput.value).eql('Olen liikkumisesteinen')
+    .navigateTo(`${bathUrl}&accessibility_setting=`)
+    .click(settingsMenuButton)
+    .expect(senseChips.exists).notOk()
+    .expect(mobilityInput.value).eql('')
   ;
 });

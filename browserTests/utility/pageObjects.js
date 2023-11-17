@@ -17,6 +17,7 @@ export const mobilityDropdown = '[data-sm="mobility-setting-dropdown"]';
 export const cityDropdown = '[data-sm="cities-setting-dropdown"]';
 export const organisationDropdown = '[data-sm="organizations-setting-dropdown"]';
 export const settingsMenuButton = Selector('[data-sm="SettingsMenuButton"]');
+export const settingChip = '.MuiAutocomplete-tag';
 
 export const ESPOO_ORG = '520a4492-cb78-498b-9c82-86504de88dce';
 export const HELSINKI_ORG = '83e74666-0836-4c1d-948a-4b34a8b90301';
