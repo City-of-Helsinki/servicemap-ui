@@ -139,3 +139,13 @@ export const resolveCityAndOrganizationFilter = (cities, organizationIds, locati
   const orgIdArray = searchParam?.organization?.split(',') || [];
   return filterCitiesAndOrganizations(cityArray, orgIdArray);
 };
+/**
+ * Returns given data after filtering it
+ * @param {*} data - search data to be filtered
+ * @param {*} cities - selected cities
+ * @param {*} organizationIds - selected organization ids
+ */
+export const getCityAndOrgFilteredData = (data, cities, organizationIds) => data
+  .filter(filterResultTypes())
+  .filter(filterEmptyServices(cities, organizationIds))
+  .filter(filterCitiesAndOrganizations(cities, organizationIds));

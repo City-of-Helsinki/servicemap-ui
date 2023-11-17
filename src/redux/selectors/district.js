@@ -1,7 +1,6 @@
 import { createSelector } from 'reselect';
 import { arraysEqual } from '../../utils';
-import { filterByCitySettings } from '../../utils/filters';
-import { getCityFilteredData } from './results';
+import { filterByCitySettings, getCityAndOrgFilteredData } from '../../utils/filters';
 import { selectCities, selectSelectedCities, selectSelectedOrganizationIds } from './settings';
 
 export const getHighlightedDistrict = state => state.districts.highlitedDistrict;
@@ -99,7 +98,7 @@ export const getFilteredSubdistrictServices = createSelector(
   [
     getSubDistrictUnits, selectSelectedCities, selectSelectedOrganizationIds,
   ],
-  (subDistrictUnits, cities, orgIds) => getCityFilteredData(subDistrictUnits, cities, orgIds),
+  (subDistrictUnits, cities, orgIds) => getCityAndOrgFilteredData(subDistrictUnits, cities, orgIds),
   {
     memoizeOptions: {
       resultEqualityCheck: (a, b) => arraysEqual(a, b),
