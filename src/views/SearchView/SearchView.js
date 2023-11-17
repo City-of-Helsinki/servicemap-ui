@@ -11,7 +11,9 @@ import {
   AddressSearchBar, Container, Loading, SearchBar, SettingsComponent, TabLists,
 } from '../../components';
 import fetchSearchResults from '../../redux/actions/search';
-import { setCities, setOrganizations } from '../../redux/actions/settings';
+import {
+  activateSetting, resetAccessibilitySettings, setCities, setOrganizations,
+} from '../../redux/actions/settings';
 import { changeCustomUserLocation } from '../../redux/actions/user';
 import { selectMapRef, selectNavigator } from '../../redux/selectors/general';
 import { getOrderedSearchResultData } from '../../redux/selectors/results';
@@ -25,6 +27,7 @@ import { resolveCityAndOrganizationFilter } from '../../utils/filters';
 import useMobileStatus from '../../utils/isMobile';
 import { isEmbed } from '../../utils/path';
 import optionsToSearchQuery from '../../utils/search';
+import SettingsUtility from '../../utils/settings';
 import { fitUnitsToMap } from '../MapView/utils/mapActions';
 
 const focusClass = 'TabListFocusTarget';
@@ -152,25 +155,6 @@ const SearchView = () => {
     return options;
   };
 
-  const parseSettingsFromUrlParams = () => {
-    const searchParams = parseSearchParams(location.search);
-    const {
-      city,
-      organization,
-      municipality,
-    } = searchParams;
-    const options = {};
-    // Parse municipality
-    if (municipality || city) {
-      options.municipality = (municipality || city).split(',');
-    }
-    // Parse organization
-    if (organization) {
-      options.organization = organization.split(',');
-    }
-    return options;
-  };
-
   // Check if view will fetch data because sreach params has changed
   const shouldFetch = () => {
     const { isFetching, previousSearch } = searchFetchState;
@@ -239,12 +223,34 @@ const SearchView = () => {
       // Do not mess with settings when embedded
       return;
     }
-    const options = parseSettingsFromUrlParams();
-    if (options.municipality?.length) {
-      dispatch(setCities(options.municipality));
+    const searchParams = parseSearchParams(location.search);
+    const {
+      city,
+      organization,
+      municipality,
+      accessibility_setting,
+    } = searchParams;
+    const cityOptions = (municipality || city)?.split(',');
+    if (cityOptions?.length) {
+      dispatch(setCities(cityOptions));
     }
-    if (options.organization?.length) {
-      dispatch(setOrganizations(options.organization));
+    const orgOptions = organization?.split(',');
+    if (orgOptions?.length) {
+      dispatch(setOrganizations(orgOptions));
+    }
+    const accessibilityOptions = accessibility_setting?.split(',');
+    if (accessibilityOptions?.length) {
+      dispatch(resetAccessibilitySettings());
+      const mobility = accessibilityOptions.filter(x => SettingsUtility.isValidMobilitySetting(x));
+      if (mobility.length === 1) {
+        dispatch(activateSetting('mobility', mobility[0]));
+      }
+      accessibilityOptions
+        .map(x => SettingsUtility.mapValidAccessibilitySenseImpairmentValueToKey(x))
+        .filter(x => !!x)
+        .forEach(x => {
+          dispatch(activateSetting(x));
+        });
     }
   }, []);
 
