@@ -1,50 +1,52 @@
 /* eslint-disable global-require */
 import { css } from '@emotion/css';
 import styled from '@emotion/styled';
-import { useTheme } from '@mui/styles';
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { useIntl } from 'react-intl';
-import { withRouter } from 'react-router-dom';
+import { LocationDisabled, MyLocation } from '@mui/icons-material';
 import { ButtonBase } from '@mui/material';
-import { MyLocation, LocationDisabled } from '@mui/icons-material';
-import { useSelector } from 'react-redux';
+import { useTheme } from '@mui/styles';
+import PropTypes from 'prop-types';
+import React, { useEffect, useState } from 'react';
+import { useIntl } from 'react-intl';
 import { useMapEvents } from 'react-leaflet';
+import { useSelector } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+import { Loading } from '../../components';
 import { selectDistrictUnitFetch } from '../../redux/selectors/district';
 import { selectNavigator } from '../../redux/selectors/general';
-import { selectCities, selectMapType } from '../../redux/selectors/settings';
+import { getSelectedUnitEvents } from '../../redux/selectors/selectedUnit';
+import {
+  selectMapType, selectSelectedCities, selectSelectedOrganizationIds,
+} from '../../redux/selectors/settings';
+import { getStatisticalDistrictUnitsState } from '../../redux/selectors/statisticalDistrict';
 import { getLocale, getPage } from '../../redux/selectors/user';
-import { filterByCitySettings, resolveCitySettings } from '../../utils/filters';
-import { mapOptions } from './config/mapConfig';
-import CreateMap from './utils/createMap';
-import { focusToPosition, getBoundsFromBbox } from './utils/mapActions';
-import Districts from './components/Districts';
-import TransitStops from './components/TransitStops';
-import AddressPopup from './components/AddressPopup';
-import UserMarker from './components/UserMarker';
-import fetchAddress from './utils/fetchAddress';
+import { parseSearchParams } from '../../utils';
+import { useNavigationParams } from '../../utils/address';
+import { resolveCityAndOrganizationFilter } from '../../utils/filters';
+import Util from '../../utils/mapUtility';
 import { isEmbed } from '../../utils/path';
 import AddressMarker from './components/AddressMarker';
-import { parseSearchParams } from '../../utils';
-import DistanceMeasure from './components/DistanceMeasure';
-import MarkerCluster from './components/MarkerCluster';
-import UnitGeometry from './components/UnitGeometry';
-import MapUtility from './utils/mapUtility';
-import Util from '../../utils/mapUtility';
-import HideSidebarButton from './components/HideSidebarButton';
+import AddressPopup from './components/AddressPopup';
 import CoordinateMarker from './components/CoordinateMarker';
-import { useNavigationParams } from '../../utils/address';
-import PanControl from './components/PanControl';
-import adjustControlElements from './utils';
+import CustomControls from './components/CustomControls';
+import DistanceMeasure from './components/DistanceMeasure';
+import Districts from './components/Districts';
 import EntranceMarker from './components/EntranceMarker';
 import EventMarkers from './components/EventMarkers';
-import CustomControls from './components/CustomControls';
-import { getSelectedUnitEvents } from '../../redux/selectors/selectedUnit';
-import useMapUnits from './utils/useMapUnits';
-import { Loading } from '../../components';
-import StatisticalDistricts from './components/StatisticalDistricts';
-import { getStatisticalDistrictUnitsState } from '../../redux/selectors/statisticalDistrict';
+import HideSidebarButton from './components/HideSidebarButton';
+import MarkerCluster from './components/MarkerCluster';
+import PanControl from './components/PanControl';
 import SimpleStatisticalComponent from './components/StatisticalDataMapInfo';
+import StatisticalDistricts from './components/StatisticalDistricts';
+import TransitStops from './components/TransitStops';
+import UnitGeometry from './components/UnitGeometry';
+import UserMarker from './components/UserMarker';
+import { mapOptions } from './config/mapConfig';
+import adjustControlElements from './utils';
+import CreateMap from './utils/createMap';
+import fetchAddress from './utils/fetchAddress';
+import { focusToPosition, getBoundsFromBbox } from './utils/mapActions';
+import MapUtility from './utils/mapUtility';
+import useMapUnits from './utils/useMapUnits';
 
 if (global.window) {
   require('leaflet');
@@ -100,12 +102,13 @@ const MapView = (props) => {
   const getAddressNavigatorParams = useNavigationParams();
   const districtUnitsFetch = useSelector(selectDistrictUnitFetch);
   const statisticalDistrictFetch = useSelector(getStatisticalDistrictUnitsState);
-  const citySettings = useSelector(selectCities);
   const districtsFetching = useSelector(state => !!state.districts.districtsFetching?.length);
+  const cities = useSelector(selectSelectedCities);
+  const orgIds = useSelector(selectSelectedOrganizationIds);
   const districtViewFetching = districtUnitsFetch.isFetching || districtsFetching;
-  const mapUnits = useMapUnits();
-  const cityFilter = filterByCitySettings(resolveCitySettings(citySettings, location, embedded));
-  const unitData = mapUnits.filter(cityFilter);
+  const cityAndOrgFilter = resolveCityAndOrganizationFilter(cities, orgIds, location, embedded);
+  const unitData = useMapUnits()
+    .filter(cityAndOrgFilter);
   const intl = useIntl();
 
   // This unassigned selector is used to trigger re-render after events are fetched

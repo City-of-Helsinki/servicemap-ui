@@ -4,6 +4,7 @@ import config from '../config';
 import { getLocation } from '../utility';
 import appConfig from '../../config';
 import finnish from '../../src/i18n/fi';
+import { mobilityDropdown, sensesDropdown } from '../utility/pageObjects';
 
 const { server } = config;
 
@@ -15,12 +16,12 @@ const testUrl = `http://${server.address}:${server.port}/fi/unit/51342`
 const selectSettingsAndClose = async (t) => {
   if (t) {
     await t
-      .click(Selector('#senses-setting-dropdown'))
-      .click(Selector('#senses-hearingAid'))
-      .click(Selector('#senses-visuallyImpaired'))
-      .click(Selector('#senses-setting-dropdown'))
-      .click(Selector('#mobility-setting-dropdown'))
-      .click(Selector('#mobility-wheelchair'))
+      .click(Selector(sensesDropdown))
+      .click(Selector('[data-sm="senses-hearingAid"]'))
+      .click(Selector('[data-sm="senses-visuallyImpaired"]'))
+      .click(Selector(sensesDropdown))
+      .click(Selector(mobilityDropdown))
+      .click(Selector('[data-sm="mobility-wheelchair"]'))
     ;
   }
 }

@@ -1,44 +1,46 @@
 /* eslint-disable camelcase */
 
 import styled from '@emotion/styled';
+import { Divider, Link, NoSsr, Paper, Typography } from '@mui/material';
+import { visuallyHidden } from '@mui/utils';
 import React, { useEffect, useState } from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useRouteMatch } from 'react-router-dom';
 import {
-  Paper, Typography, Link, NoSsr, Divider,
-} from '@mui/material';
-import { visuallyHidden } from '@mui/utils';
-import { FormattedMessage, useIntl } from 'react-intl';
-import fetchSearchResults from '../../redux/actions/search';
-import { selectMapRef, selectNavigator } from '../../redux/selectors/general';
-import { parseSearchParams, getSearchParam, keyboardHandler } from '../../utils';
-import optionsToSearchQuery from '../../utils/search';
-import { fitUnitsToMap } from '../MapView/utils/mapActions';
-import { isEmbed } from '../../utils/path';
-import { useNavigationParams } from '../../utils/address';
-import useMobileStatus from '../../utils/isMobile';
-import { viewTitleID } from '../../utils/accessibility';
-import { getOrderedData } from '../../redux/selectors/results';
-import {
-  AddressSearchBar,
-  Container,
-  Loading,
-  SearchBar,
-  SettingsComponent,
-  TabLists,
+  AddressSearchBar, Container, Loading, SearchBar, SettingsComponent, TabLists,
 } from '../../components';
+import fetchSearchResults from '../../redux/actions/search';
+import {
+  activateSetting, resetAccessibilitySettings, setCities, setOrganizations,
+} from '../../redux/actions/settings';
 import { changeCustomUserLocation } from '../../redux/actions/user';
+import { selectMapRef, selectNavigator } from '../../redux/selectors/general';
+import { getOrderedSearchResultData } from '../../redux/selectors/results';
+import {
+  selectSelectedAccessibilitySettings, selectSelectedCities, selectSelectedOrganizationIds,
+} from '../../redux/selectors/settings';
+import { getSearchParam, keyboardHandler, parseSearchParams } from '../../utils';
+import { viewTitleID } from '../../utils/accessibility';
+import { useNavigationParams } from '../../utils/address';
+import { resolveCityAndOrganizationFilter } from '../../utils/filters';
+import useMobileStatus from '../../utils/isMobile';
+import { isEmbed } from '../../utils/path';
+import optionsToSearchQuery from '../../utils/search';
+import SettingsUtility from '../../utils/settings';
+import { fitUnitsToMap } from '../MapView/utils/mapActions';
 
 const focusClass = 'TabListFocusTarget';
 
 const SearchView = () => {
-  const [serviceRedirect, setServiceRedirect] = useState(null);
   const [analyticsSent, setAnalyticsSent] = useState(null);
-
-  const searchResults = useSelector(state => getOrderedData(state));
+  const orderedData = useSelector(getOrderedSearchResultData);
   const unorderedSearchResults = useSelector(state => state.searchResults.data);
   const searchFetchState = useSelector(state => state.searchResults);
   const isRedirectFetching = useSelector(state => state.redirectService.isFetching);
+  const selectedCities = useSelector(selectSelectedCities);
+  const selectedOrganizationIds = useSelector(selectSelectedOrganizationIds);
+  const selectedAccessibilitySettings = useSelector(selectSelectedAccessibilitySettings);
   const map = useSelector(selectMapRef);
   const navigator = useSelector(selectNavigator);
 
@@ -49,6 +51,10 @@ const SearchView = () => {
   const location = useLocation();
   const match = useRouteMatch();
   const intl = useIntl();
+  const searchResults = orderedData
+    .filter(
+      resolveCityAndOrganizationFilter(selectedCities, selectedOrganizationIds, location, embed),
+    );
 
   const getResultsByType = type => searchResults.filter(item => item.object_type === type);
 
@@ -68,18 +74,13 @@ const SearchView = () => {
     }
   };
 
-  const getSearchParamData = (includeService = false) => {
-    const redirectNode = serviceRedirect;
+  const getSearchParamData = () => {
     const searchParams = parseSearchParams(location.search);
 
     const {
       q,
       category,
-      city,
-      organization,
-      municipality,
       address,
-      service,
       service_id,
       service_node,
       mobility_node,
@@ -92,11 +93,6 @@ const SearchView = () => {
     if (q) {
       options.q = q;
     } else {
-      // Parse service
-      if (includeService && service) {
-        options.service = service;
-      }
-
       // Parse address search parameter
       if (address) {
         options.address = address;
@@ -113,9 +109,6 @@ const SearchView = () => {
       }
       if (service_node) {
         options.service_node = service_node;
-      }
-      if (!includeService && redirectNode) {
-        options.service_node = redirectNode;
       }
 
       if (events) {
@@ -155,17 +148,6 @@ const SearchView = () => {
         }
       }
     }
-
-    // Parse municipality
-    if (municipality || city) {
-      options.municipality = municipality || city;
-    }
-
-    // Parse organization
-    if (organization) {
-      options.organization = organization;
-    }
-
     // Parse search language
     if (search_language) {
       options.search_language = search_language;
@@ -193,15 +175,6 @@ const SearchView = () => {
       return !!(searchQuery);
     }
     return false;
-  };
-
-  const focusMap = (units) => {
-    if (getSearchParam(location, 'bbox')) {
-      return;
-    }
-    if (map && map.options.maxZoom) {
-      fitUnitsToMap(units, map);
-    }
   };
 
   // Handles redirect if only single result is found
@@ -238,6 +211,42 @@ const SearchView = () => {
   };
 
   useEffect(() => {
+    if (embed) {
+      // Do not mess with settings when embedded
+      return;
+    }
+    const searchParams = parseSearchParams(location.search);
+    const {
+      city,
+      organization,
+      municipality,
+      accessibility_setting,
+    } = searchParams;
+    const cityOptions = (municipality || city)?.split(',');
+    if (cityOptions?.length) {
+      dispatch(setCities(cityOptions));
+    }
+    const orgOptions = organization?.split(',');
+    if (orgOptions?.length) {
+      dispatch(setOrganizations(orgOptions));
+    }
+    const accessibilityOptions = accessibility_setting?.split(',');
+    if (accessibilityOptions?.length) {
+      dispatch(resetAccessibilitySettings());
+      const mobility = accessibilityOptions.filter(x => SettingsUtility.isValidMobilitySetting(x));
+      if (mobility.length === 1) {
+        dispatch(activateSetting('mobility', mobility[0]));
+      }
+      accessibilityOptions
+        .map(x => SettingsUtility.mapValidAccessibilitySenseImpairmentValueToKey(x))
+        .filter(x => !!x)
+        .forEach(x => {
+          dispatch(activateSetting(x));
+        });
+    }
+  }, []);
+
+  useEffect(() => {
     const options = getSearchParamData();
     if (shouldFetch() && Object.keys(options).length) {
       dispatch(fetchSearchResults(options));
@@ -246,12 +255,18 @@ const SearchView = () => {
 
   useEffect(() => {
     if (searchResults.length) {
+      if (getSearchParam(location, 'bbox')) {
+        // MapView component will handle focus.
+        return;
+      }
       if (searchResults.length === 1) {
         handleSingleResultRedirect();
-      } else {
         // Focus map to new search results units
-        const units = getResultsByType('unit');
-        if (units.length) focusMap(units);
+        return;
+      }
+      const units = getResultsByType('unit');
+      if (units.length && map?.options.maxZoom) {
+        fitUnitsToMap(units, map);
       }
     } else {
       // Send analytics report if search query did not return results
@@ -267,6 +282,15 @@ const SearchView = () => {
       }
     }
   }, [JSON.stringify(unorderedSearchResults)]);
+
+  useEffect(() => {
+    if (embed || !navigator) {
+      return;
+    }
+    navigator.setParameter('city', selectedCities);
+    navigator.setParameter('organization', selectedOrganizationIds);
+    navigator.setParameter('accessibility_setting', selectedAccessibilitySettings);
+  }, [navigator, selectedCities, selectedOrganizationIds, selectedAccessibilitySettings]);
 
   const renderSearchBar = () => (
     <StyledSearchBar expand />
