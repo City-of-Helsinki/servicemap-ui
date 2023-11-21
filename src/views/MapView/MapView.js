@@ -8,9 +8,10 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useMapEvents } from 'react-leaflet';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Loading } from '../../components';
+import { setBounds } from '../../redux/actions/map';
 import { selectDistrictUnitFetch } from '../../redux/selectors/district';
 import { selectNavigator } from '../../redux/selectors/general';
 import { getSelectedUnitEvents } from '../../redux/selectors/selectedUnit';
@@ -55,12 +56,16 @@ if (global.window) {
 }
 
 const EmbeddedActions = () => {
+  const dispatch = useDispatch();
   const embedded = isEmbed();
   const map = useMapEvents({
     moveend() {
+      const bounds = map.getBounds();
+      const message = { bbox: Util.getBboxFromBounds(bounds) };
       if (embedded) {
-        const bounds = map.getBounds();
-        window.parent.postMessage({ bbox: `${bounds.getSouth()},${bounds.getWest()},${bounds.getNorth()},${bounds.getEast()}` });
+        document.parent.postMessage(message);
+      } else {
+        dispatch(setBounds(bounds));
       }
     },
   });

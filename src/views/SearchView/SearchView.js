@@ -25,6 +25,7 @@ import { viewTitleID } from '../../utils/accessibility';
 import { useNavigationParams } from '../../utils/address';
 import { resolveCityAndOrganizationFilter } from '../../utils/filters';
 import useMobileStatus from '../../utils/isMobile';
+import MapUtility from '../../utils/mapUtility';
 import { isEmbed } from '../../utils/path';
 import optionsToSearchQuery from '../../utils/search';
 import SettingsUtility from '../../utils/settings';
@@ -41,6 +42,7 @@ const SearchView = () => {
   const selectedCities = useSelector(selectSelectedCities);
   const selectedOrganizationIds = useSelector(selectSelectedOrganizationIds);
   const selectedAccessibilitySettings = useSelector(selectSelectedAccessibilitySettings);
+  const bounds = useSelector(state => state.bounds);
   const map = useSelector(selectMapRef);
   const navigator = useSelector(selectNavigator);
 
@@ -290,7 +292,10 @@ const SearchView = () => {
     navigator.setParameter('city', selectedCities);
     navigator.setParameter('organization', selectedOrganizationIds);
     navigator.setParameter('accessibility_setting', selectedAccessibilitySettings);
-  }, [navigator, selectedCities, selectedOrganizationIds, selectedAccessibilitySettings]);
+    if (bounds) {
+      navigator.setParameter('bbox', MapUtility.getBboxFromBounds(bounds));
+    }
+  }, [navigator, selectedCities, selectedOrganizationIds, selectedAccessibilitySettings, bounds]);
 
   const renderSearchBar = () => (
     <StyledSearchBar expand />
