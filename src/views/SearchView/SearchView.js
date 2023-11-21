@@ -18,7 +18,7 @@ import { changeCustomUserLocation } from '../../redux/actions/user';
 import { selectMapRef, selectNavigator } from '../../redux/selectors/general';
 import { getOrderedSearchResultData } from '../../redux/selectors/results';
 import {
-  selectSelectedCities, selectSelectedOrganizationIds,
+  selectSelectedAccessibilitySettings, selectSelectedCities, selectSelectedOrganizationIds,
 } from '../../redux/selectors/settings';
 import { getSearchParam, keyboardHandler, parseSearchParams } from '../../utils';
 import { viewTitleID } from '../../utils/accessibility';
@@ -40,6 +40,7 @@ const SearchView = () => {
   const isRedirectFetching = useSelector(state => state.redirectService.isFetching);
   const selectedCities = useSelector(selectSelectedCities);
   const selectedOrganizationIds = useSelector(selectSelectedOrganizationIds);
+  const selectedAccessibilitySettings = useSelector(selectSelectedAccessibilitySettings);
   const map = useSelector(selectMapRef);
   const navigator = useSelector(selectNavigator);
 
@@ -281,6 +282,15 @@ const SearchView = () => {
       }
     }
   }, [JSON.stringify(unorderedSearchResults)]);
+
+  useEffect(() => {
+    if (embed || !navigator) {
+      return;
+    }
+    navigator.setParameter('city', selectedCities);
+    navigator.setParameter('organization', selectedOrganizationIds);
+    navigator.setParameter('accessibility_setting', selectedAccessibilitySettings);
+  }, [navigator, selectedCities, selectedOrganizationIds, selectedAccessibilitySettings]);
 
   const renderSearchBar = () => (
     <StyledSearchBar expand />

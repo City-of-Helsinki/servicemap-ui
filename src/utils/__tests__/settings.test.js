@@ -1,3 +1,4 @@
+import { alphabeticCompare } from '../index';
 import SettingsUtility from '../settings';
 
 describe('SettingsUtility.isValidAccessibilitySenseImpairment', () => {
@@ -49,20 +50,13 @@ describe('SettingsUtility.parseShortcomingSettings', () => {
     expect(SettingsUtility.parseShortcomingSettings({
       mobility: 'none', colorblind: true, visuallyImpaired: false,
     })).toEqual(['colour_blind']);
-    const compareFn = (a, b) => {
-      if (a !== b) {
-        return a < b ? -1 : 1;
-      }
-      return 0;
-    };
-
     let result = SettingsUtility.parseShortcomingSettings({
       mobility: 'wheelchair', colorblind: true, visuallyImpaired: true, hearing_aid: true,
-    }).sort(compareFn);
+    }).sort(alphabeticCompare);
     expect(result).toEqual(['colour_blind', 'visual_impairment', 'wheelchair']);
     result = SettingsUtility.parseShortcomingSettings({
       mobility: 'hearingAid', colorblind: false, visuallyImpaired: true, hearing_aid: true,
-    }).sort(compareFn);
+    }).sort(alphabeticCompare);
     expect(result).toEqual(['visual_impairment']);
   });
 });

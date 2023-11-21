@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 import config from '../../../config';
-import { arraysEqual } from '../../utils';
+import { alphabeticCompare, arraysEqual } from '../../utils';
 import SettingsUtility from '../../utils/settings';
 
 export const selectSettings = state => state.settings;
@@ -50,7 +50,7 @@ export const selectSelectedAccessibilitySettings = createSelector(
   [selectSettings],
   (settings) => {
     const selected = SettingsUtility.parseShortcomingSettings(settings);
-    selected.sort((a, b) => +(a > b));
+    selected.sort(alphabeticCompare);
     return selected;
   },
   {

@@ -331,6 +331,8 @@ test.skip('Search suggestion arrow navigation does loop correctly', async(t) => 
 //     .expect(getLocation()).contains(`http://${server.address}:${server.port}/fi/search?q=${text}`)
     
 // });
+const orgChips = Selector(`${organisationDropdown} ${settingChip}`)
+const cityChips = Selector(`${cityDropdown} ${settingChip}`);
 
 fixture`Search view custom url with city and org param test`
   .page`${homePage}`
@@ -340,7 +342,6 @@ fixture`Search view custom url with city and org param test`
 
 
 test('Should override municipality settings by url', async(t) => {
-  const cityChips = Selector(`${cityDropdown} ${settingChip}`);
   // the city in url should overwrite settings made by user (and save setting)
   await setLocalStorageItem('SM:espoo', true);
   await t
@@ -383,7 +384,6 @@ test('Should not mess up city settings between embedded and normal view', async(
 
 test('Should override organization settings by url', async(t) => {
   await setLocalStorageItem(`SM:${ESPOO_ORG}`, true);
-  const orgChips = Selector(`${organisationDropdown} ${settingChip}`)
   // the organization in url should overwrite settings made by user (and save setting)
   await t
     .navigateTo(`${bathUrl}`)
@@ -448,3 +448,38 @@ test('Should override accessibility settings', async(t) => {
     .expect(mobilityInput.value).eql('')
   ;
 });
+
+fixture`Search view should set settings to url test`
+  .page`${homePage}`
+  .beforeEach(async () => {
+    await waitForReact();
+  });
+
+
+test('Should set user settings to url', async(t) => {
+  // Use local storage as dropdowns are flaky
+  await setLocalStorageItem(`SM:hearingAid`, true);
+  await setLocalStorageItem(`SM:mobility`, 'rollator');
+  await setLocalStorageItem(`SM:${ESPOO_ORG}`, true);
+  await setLocalStorageItem('SM:helsinki', true);
+  await setLocalStorageItem('SM:kauniainen', true);
+  const senseChips = Selector(`${sensesDropdown} ${settingChip}`);
+  const mobilityInput = Selector(`${mobilityDropdown} input`);
+  await t
+    .navigateTo(`${bathUrl}`)
+    // Check settings
+    .expect(senseChips.count).eql(1)
+    .expect(senseChips.withText('Käytän kuulolaitetta').exists).ok()
+    .expect(mobilityInput.value).eql('Käytän rollaattoria')
+    .expect(cityChips.count).eql(2)
+    .expect(cityChips.withText('Helsinki').exists).ok()
+    .expect(cityChips.withText('Kauniainen').exists).ok()
+    .expect(orgChips.count).eql(1)
+    .expect(orgChips.withText('Espoon kaupunki').exists).ok()
+    // Check url
+    .expect(getLocation()).contains('city=helsinki%2Ckauniainen')
+    .expect(getLocation()).contains('organization=520a4492-cb78-498b-9c82-86504de88dce')
+    .expect(getLocation()).contains('accessibility_setting=hearing_aid%2Crollator')
+  ;
+});
+
