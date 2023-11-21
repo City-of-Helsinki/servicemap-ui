@@ -63,9 +63,8 @@ const EmbeddedActions = () => {
   const map = useMapEvents({
     moveend() {
       const bounds = map.getBounds();
-      const message = { bbox: getBboxFromBounds(bounds) };
       if (embedded) {
-        document.parent.postMessage(message);
+        window.parent.postMessage({ bbox: getBboxFromBounds(bounds) });
       } else {
         dispatch(setBounds(bounds));
       }
