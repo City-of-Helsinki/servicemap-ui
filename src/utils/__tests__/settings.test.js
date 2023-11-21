@@ -49,14 +49,15 @@ describe('SettingsUtility.parseShortcomingSettings', () => {
     expect(SettingsUtility.parseShortcomingSettings({
       mobility: 'none', colorblind: true, visuallyImpaired: false,
     })).toEqual(['colour_blind']);
+    const compareFn = (a, b) => +(a > b);
 
     let result = SettingsUtility.parseShortcomingSettings({
       mobility: 'wheelchair', colorblind: true, visuallyImpaired: true, hearing_aid: true,
-    }).sort();
+    }).sort(compareFn);
     expect(result).toEqual(['colour_blind', 'visual_impairment', 'wheelchair']);
     result = SettingsUtility.parseShortcomingSettings({
       mobility: 'hearingAid', colorblind: false, visuallyImpaired: true, hearing_aid: true,
-    }).sort();
+    }).sort(compareFn);
     expect(result).toEqual(['visual_impairment']);
   });
 });
