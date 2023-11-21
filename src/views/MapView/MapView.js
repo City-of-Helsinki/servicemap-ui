@@ -23,7 +23,7 @@ import { getLocale, getPage } from '../../redux/selectors/user';
 import { parseSearchParams } from '../../utils';
 import { useNavigationParams } from '../../utils/address';
 import { resolveCityAndOrganizationFilter } from '../../utils/filters';
-import Util from '../../utils/mapUtility';
+import { getBboxFromBounds, mapHasMapPane } from '../../utils/mapUtility';
 import { isEmbed } from '../../utils/path';
 import AddressMarker from './components/AddressMarker';
 import AddressPopup from './components/AddressPopup';
@@ -61,7 +61,7 @@ const EmbeddedActions = () => {
   const map = useMapEvents({
     moveend() {
       const bounds = map.getBounds();
-      const message = { bbox: Util.getBboxFromBounds(bounds) };
+      const message = { bbox: getBboxFromBounds(bounds) };
       if (embedded) {
         document.parent.postMessage(message);
       } else {
@@ -246,7 +246,7 @@ const MapView = (props) => {
     let center = mapOptions.initialPosition;
     let zoom = isMobile ? mapObject.options.mobileZoom : mapObject.options.zoom;
     // If changing map type, use viewport values of previous map
-    if (prevMap && Util.mapHasMapPane(prevMap)) {
+    if (prevMap && mapHasMapPane(prevMap)) {
       center = prevMap.getCenter() || prevMap.options.center;
       /* Different map types have different zoom levels
       Use the zoom difference to calculate the new zoom level */

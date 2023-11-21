@@ -25,7 +25,7 @@ import { viewTitleID } from '../../utils/accessibility';
 import { useNavigationParams } from '../../utils/address';
 import { resolveCityAndOrganizationFilter } from '../../utils/filters';
 import useMobileStatus from '../../utils/isMobile';
-import MapUtility from '../../utils/mapUtility';
+import { getBboxFromBounds } from '../../utils/mapUtility';
 import { isEmbed } from '../../utils/path';
 import optionsToSearchQuery from '../../utils/search';
 import SettingsUtility from '../../utils/settings';
@@ -293,7 +293,7 @@ const SearchView = () => {
     navigator.setParameter('organization', selectedOrganizationIds);
     navigator.setParameter('accessibility_setting', selectedAccessibilitySettings);
     if (bounds) {
-      navigator.setParameter('bbox', MapUtility.getBboxFromBounds(bounds));
+      navigator.setParameter('bbox', getBboxFromBounds(bounds));
     }
   }, [navigator, selectedCities, selectedOrganizationIds, selectedAccessibilitySettings, bounds]);
 
