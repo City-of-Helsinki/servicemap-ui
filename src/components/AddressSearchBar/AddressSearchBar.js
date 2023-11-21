@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import {
   InputBase, IconButton, Paper, List, ListItem, Typography, ButtonBase,
 } from '@mui/material';
@@ -18,7 +18,8 @@ import ServiceMapAPI from '../../utils/newFetch/ServiceMapAPI';
 import { getAddressText } from '../../utils/address';
 import { focusToPosition } from '../../views/MapView/utils/mapActions';
 
-const AddressSearchBar = ({ title, intl, handleAddressChange }) => {
+const AddressSearchBar = ({ title, handleAddressChange }) => {
+  const intl = useIntl();
   const getLocaleText = useLocaleText();
   const dispatch = useDispatch();
   const isMobile = useMobileStatus();
@@ -290,7 +291,6 @@ const StyledIconButton = styled(IconButton)(({ theme }) => ({
 }));
 
 AddressSearchBar.propTypes = {
-  intl: PropTypes.objectOf(PropTypes.any).isRequired,
   handleAddressChange: PropTypes.func.isRequired,
   title: PropTypes.objectOf(PropTypes.any),
 };
