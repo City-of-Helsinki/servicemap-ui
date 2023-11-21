@@ -176,15 +176,6 @@ const SearchView = () => {
     return false;
   };
 
-  const focusMap = (units) => {
-    if (getSearchParam(location, 'bbox')) {
-      return;
-    }
-    if (map && map.options.maxZoom) {
-      fitUnitsToMap(units, map);
-    }
-  };
-
   // Handles redirect if only single result is found
   const handleSingleResultRedirect = () => {
     // If not currently searching and view should not fetch new search
@@ -263,12 +254,18 @@ const SearchView = () => {
 
   useEffect(() => {
     if (searchResults.length) {
+      if (getSearchParam(location, 'bbox')) {
+        // MapView component will handle focus.
+        return;
+      }
       if (searchResults.length === 1) {
         handleSingleResultRedirect();
-      } else {
         // Focus map to new search results units
-        const units = getResultsByType('unit');
-        if (units.length) focusMap(units);
+        return;
+      }
+      const units = getResultsByType('unit');
+      if (units.length && map?.options.maxZoom) {
+        fitUnitsToMap(units, map);
       }
     } else {
       // Send analytics report if search query did not return results
