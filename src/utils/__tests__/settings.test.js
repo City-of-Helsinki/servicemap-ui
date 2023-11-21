@@ -49,7 +49,12 @@ describe('SettingsUtility.parseShortcomingSettings', () => {
     expect(SettingsUtility.parseShortcomingSettings({
       mobility: 'none', colorblind: true, visuallyImpaired: false,
     })).toEqual(['colour_blind']);
-    const compareFn = (a, b) => +(a > b);
+    const compareFn = (a, b) => {
+      if (a !== b) {
+        return a < b ? -1 : 1;
+      }
+      return 0;
+    };
 
     let result = SettingsUtility.parseShortcomingSettings({
       mobility: 'wheelchair', colorblind: true, visuallyImpaired: true, hearing_aid: true,
