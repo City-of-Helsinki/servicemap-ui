@@ -20,6 +20,7 @@ import { getOrderedSearchResultData } from '../../redux/selectors/results';
 import {
   selectSelectedAccessibilitySettings, selectSelectedCities, selectSelectedOrganizationIds,
 } from '../../redux/selectors/settings';
+import { selectCustomPositionCoordinates } from '../../redux/selectors/user';
 import { getSearchParam, keyboardHandler, parseSearchParams } from '../../utils';
 import { viewTitleID } from '../../utils/accessibility';
 import { useNavigationParams } from '../../utils/address';
@@ -43,6 +44,7 @@ const SearchView = () => {
   const selectedOrganizationIds = useSelector(selectSelectedOrganizationIds);
   const selectedAccessibilitySettings = useSelector(selectSelectedAccessibilitySettings);
   const bounds = useSelector(state => state.bounds);
+  const customPositionCoordinates = useSelector(selectCustomPositionCoordinates);
   const map = useSelector(selectMapRef);
   const navigator = useSelector(selectNavigator);
 
@@ -295,7 +297,16 @@ const SearchView = () => {
     if (bounds) {
       navigator.setParameter('bbox', getBboxFromBounds(bounds));
     }
-  }, [navigator, selectedCities, selectedOrganizationIds, selectedAccessibilitySettings, bounds]);
+    if (customPositionCoordinates) {
+      navigator.setParameter('lat', customPositionCoordinates.latitude);
+      navigator.setParameter('lon', customPositionCoordinates.longitude);
+    }
+  },
+  [
+    navigator, selectedCities, selectedOrganizationIds, selectedAccessibilitySettings,
+    bounds, customPositionCoordinates,
+  ],
+  );
 
   const renderSearchBar = () => (
     <StyledSearchBar expand />

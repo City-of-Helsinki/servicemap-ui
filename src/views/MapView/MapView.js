@@ -23,7 +23,9 @@ import { getLocale, getPage } from '../../redux/selectors/user';
 import { parseSearchParams } from '../../utils';
 import { useNavigationParams } from '../../utils/address';
 import { resolveCityAndOrganizationFilter } from '../../utils/filters';
-import { getBboxFromBounds, mapHasMapPane } from '../../utils/mapUtility';
+import {
+  coordinateIsActive, getBboxFromBounds, getCoordinatesFromUrl, mapHasMapPane, swapCoordinates,
+} from '../../utils/mapUtility';
 import { isEmbed } from '../../utils/path';
 import AddressMarker from './components/AddressMarker';
 import AddressPopup from './components/AddressPopup';
@@ -152,17 +154,6 @@ const MapView = (props) => {
       });
   };
 
-  const getCoordinatesFromUrl = () => {
-    // Attempt to get coordinates from URL
-    const usp = new URLSearchParams(location.search);
-    const lat = usp.get('lat');
-    const lng = usp.get('lon');
-    if (!lat || !lng) {
-      return null;
-    }
-    return [lat, lng];
-  };
-
   useEffect(() => { // On map mount
     initializeMap();
     if (!embedded) {
@@ -201,16 +192,14 @@ const MapView = (props) => {
     if (mapElement) {
       setMapUtility(new MapUtility({ leaflet: mapElement }));
 
-      const usp = new URLSearchParams(location.search);
-      const lat = usp.get('lat');
-      const lng = usp.get('lon');
-      try {
-        if (lat && lng) {
-          const position = [usp.get('lon'), usp.get('lat')];
+      const hasLocation = coordinateIsActive(location);
+      if (hasLocation) {
+        try {
+          const position = swapCoordinates(getCoordinatesFromUrl(location));
           focusToPosition(mapElement, position);
+        } catch (e) {
+          console.warn('Error while attempting to focus on coordinate:', e);
         }
-      } catch (e) {
-        console.warn('Error while attemptin to focus on coordinate:', e);
       }
     }
   }, [mapElement]);
@@ -428,7 +417,7 @@ const MapView = (props) => {
               </CustomControls>
             )
             : null}
-          <CoordinateMarker position={getCoordinatesFromUrl()} />
+          <CoordinateMarker position={getCoordinatesFromUrl(location)} />
           <EmbeddedActions />
         </MapContainer>
       </>
