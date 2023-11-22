@@ -9,11 +9,13 @@ import {
   ServiceItem,
   TitledList,
 } from '../../../../components';
+import { selectNavigator } from '../../../../redux/selectors/general';
 
 const UnitDataList = ({
-  data, listLength, type, period, disableTitle, navigator,
+  data, listLength, type, period, disableTitle,
 }) => {
   const location = useLocation();
+  const navigator = useSelector(selectNavigator);
   const unit = useSelector(state => state.selectedUnit.unit.data);
 
   const dataItems = data.data;
