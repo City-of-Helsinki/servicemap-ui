@@ -1,3 +1,4 @@
+import styled from '@emotion/styled';
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
@@ -15,14 +16,10 @@ import SettingsUtility from '../../../../utils/settings';
 import useLocaleText from '../../../../utils/useLocaleText';
 import { Container, Loading } from '../../../../components';
 
-const AccessibilityInfo = (props) => {
-  const {
-    classes, titleAlways, headingLevel,
-  } = props;
+const AccessibilityInfo = ({ titleAlways, headingLevel }) => {
   const settings = useSelector(selectSettings);
   const unit = useSelector(getSelectedUnit);
   const accessibilitySentences = useSelector(selectSelectedUnitAccessibilitySentences);
-
   const getLocaleText = useLocaleText();
 
   if (!unit) {
@@ -115,27 +112,27 @@ const AccessibilityInfo = (props) => {
                 }
               });
               return (
-                <ListItem key={title} className={classes.adjustLeft}>
-                  <ListItemIcon className={classes.listIcon}>
+                <StyledListItemAdjustLeft key={title}>
+                  <StyledListItemIcon>
                     <Warning />
-                  </ListItemIcon>
+                  </StyledListItemIcon>
                   <ListItemText>
-                    <Typography className={`AccessibilityInfoShortcomingTitle ${classes.listTitle}`} component={heading} variant="body2" align="left">
+                    <StyledListTitle className="AccessibilityInfoShortcomingTitle" component={heading} variant="body2" align="left">
                       {title}
-                    </Typography>
-                    <ul className={classes.list}>
+                    </StyledListTitle>
+                    <StyledList>
                       {
                         shortcomings.map(shortcoming => (
-                          <li key={shortcoming} className={`AccessibilityInfoShortcoming ${classes.listItem}`}>
+                          <StyledListItem key={shortcoming} className="AccessibilityInfoShortcoming">
                             <Typography component="p" variant="body2">
                               {shortcoming}
                             </Typography>
-                          </li>
+                          </StyledListItem>
                         ))
                       }
-                    </ul>
+                    </StyledList>
                   </ListItemText>
-                </ListItem>
+                </StyledListItemAdjustLeft>
               );
             })
           }
@@ -175,27 +172,27 @@ const AccessibilityInfo = (props) => {
 
                 if (groupSentences && groupSentences.length > 0) {
                   return (
-                    <ListItem className={classes.descriptionItem} key={title}>
+                    <StyledDescriptionItem key={title}>
                       <ListItemText>
-                        <Typography className={classes.listTitle} component={heading} variant="body2" align="left">
+                        <StyledListTitle component={heading} variant="body2" align="left">
                           {title}
-                        </Typography>
-                        <ul className={classes.list}>
+                        </StyledListTitle>
+                        <StyledList>
                           {
                             groupSentences.map((sentence) => {
                               const text = getLocaleText(sentence);
                               return (
-                                <li key={text} className={classes.listItem}>
+                                <StyledListItem key={text}>
                                   <Typography component="p" variant="body2" align="left">
                                     {text}
                                   </Typography>
-                                </li>
+                                </StyledListItem>
                               );
                             })
                             }
-                        </ul>
+                        </StyledList>
                       </ListItemText>
-                    </ListItem>
+                    </StyledDescriptionItem>
                   );
                 }
               }
@@ -210,10 +207,10 @@ const AccessibilityInfo = (props) => {
   const renderInfoText = (noInfo, noShortcomings) => {
     if (!noInfo && !noShortcomings) return null;
     return (
-      <div className={classes.infoContainer}>
+      <InfoContainer>
         {noInfo && (
           <>
-            <Warning className={classes.infoIcon} />
+            <StyledWarningInfoIcon />
             <Typography component="p" variant="body2" align="left">
               <FormattedMessage id="unit.accessibility.unitNoInfo" />
             </Typography>
@@ -221,13 +218,13 @@ const AccessibilityInfo = (props) => {
         )}
         {noShortcomings && (
           <>
-            <VerifiedUser className={classes.infoIcon} />
+            <StyledVerifiedUserInfoIcon />
             <Typography component="p" variant="body2" align="left">
               <FormattedMessage id="unit.accessibility.noShortcomings" />
             </Typography>
           </>
         )}
-      </div>
+      </InfoContainer>
     );
   };
 
@@ -253,12 +250,12 @@ const AccessibilityInfo = (props) => {
       {
           (titleAlways)
           && (
-            <Typography className={classes.title} variant="subtitle1" component={heading} align="left">
+            <StyledTitle variant="subtitle1" component={heading} align="left">
               <FormattedMessage id="accessibility.info" />
-            </Typography>
+            </StyledTitle>
           )
         }
-      <Divider className={classes.divider} aria-hidden="true" />
+      <StyledDivider aria-hidden="true" />
       <NoSsr>
         {
             infoText
@@ -271,15 +268,15 @@ const AccessibilityInfo = (props) => {
           shouldRenderExtraTitle
             ? (
               <>
-                <Typography className={classes.descriptionsTitle} component={heading} variant="subtitle1" align="left">
+                <StyledDescriptionsTitle component={heading} variant="subtitle1" align="left">
                   <FormattedMessage id="accessibility.details" />
                   {unit.accessibility_www ? (
                     <Link target="_blank" href={unit.accessibility_www}>
                       <FormattedMessage id="accessibility.details.summary" />
                     </Link>
                   ) : null}
-                </Typography>
-                <Divider className={classes.divider} aria-hidden="true" />
+                </StyledDescriptionsTitle>
+                <StyledDivider aria-hidden="true" />
               </>
             ) : null
         }
@@ -290,8 +287,68 @@ const AccessibilityInfo = (props) => {
   );
 };
 
+const infoIconClass = ({ theme }) => ({
+  paddingRight: theme.spacing(2),
+  color: theme.palette.primary.main,
+});
+
+const StyledWarningInfoIcon = styled(Warning)(infoIconClass);
+const StyledVerifiedUserInfoIcon = styled(VerifiedUser)(infoIconClass);
+const StyledTitle = styled(Typography)(({ theme }) => ({
+  marginBottom: theme.spacing(1),
+}));
+
+const InfoContainer = styled.div(({ theme }) => ({
+  display: 'flex',
+  padding: theme.spacing(2),
+  paddingLeft: 0,
+  paddingRight: 0,
+  alignItems: 'center',
+}));
+
+const StyledListItemIcon = styled(ListItemIcon)(({ theme }) => ({
+  alignSelf: 'flex-start',
+  margin: 0,
+  color: theme.palette.primary.main,
+  marginTop: '-3px',
+  marginRight: theme.spacing(2),
+  minWidth: 0,
+}));
+
+const StyledListTitle = styled(Typography)(() => ({
+  fontWeight: 'bold',
+}));
+
+const StyledDescriptionItem = styled(ListItem)(({ theme }) => ({
+  marginLeft: theme.spacing(3),
+}));
+
+const StyledListItemAdjustLeft = styled(ListItem)(({ theme }) => ({
+  marginLeft: theme.spacing(-2),
+}));
+
+const StyledList = styled.ul(({ theme }) => ({
+  paddingLeft: theme.spacing(3),
+  listStyleType: 'disc',
+}));
+
+const StyledListItem = styled.li(({ theme }) => ({
+  paddingLeft: theme.spacing(1),
+}));
+
+const StyledDivider = styled(Divider)(() => ({
+  marginLeft: -32,
+  marginRight: -32,
+}));
+
+const StyledDescriptionsTitle = styled(Typography)(({ theme }) => ({
+  marginTop: theme.spacing(2),
+  marginBottom: theme.spacing(1),
+  display: 'flex',
+  flexDirection: 'column',
+}));
+
 AccessibilityInfo.propTypes = {
-  classes: PropTypes.objectOf(PropTypes.any).isRequired,
   headingLevel: PropTypes.oneOf([2, 3, 4, 5]).isRequired,
   titleAlways: PropTypes.bool,
 };
@@ -299,6 +356,5 @@ AccessibilityInfo.propTypes = {
 AccessibilityInfo.defaultProps = {
   titleAlways: false,
 };
-
 
 export default AccessibilityInfo;
