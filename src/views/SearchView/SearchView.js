@@ -315,6 +315,9 @@ const SearchView = () => {
     if (customPositionCoordinates) {
       navigator.setParameter('hlat', customPositionCoordinates.latitude);
       navigator.setParameter('hlon', customPositionCoordinates.longitude);
+    } else {
+      navigator.removeParameter('hlat');
+      navigator.removeParameter('hlon');
     }
   },
   [
