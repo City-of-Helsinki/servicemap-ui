@@ -1,7 +1,9 @@
 /* eslint-disable camelcase */
 
 import styled from '@emotion/styled';
-import { Divider, Link, NoSsr, Paper, Typography } from '@mui/material';
+import {
+  Divider, Link, NoSsr, Paper, Typography,
+} from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
 import React, { useEffect, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
@@ -27,6 +29,7 @@ import { useNavigationParams } from '../../utils/address';
 import { resolveCityAndOrganizationFilter } from '../../utils/filters';
 import useMobileStatus from '../../utils/isMobile';
 import { getBboxFromBounds } from '../../utils/mapUtility';
+import ServiceMapAPI from '../../utils/newFetch/ServiceMapAPI';
 import { isEmbed } from '../../utils/path';
 import optionsToSearchQuery from '../../utils/search';
 import SettingsUtility from '../../utils/settings';
@@ -225,6 +228,8 @@ const SearchView = () => {
       organization,
       municipality,
       accessibility_setting,
+      hlon,
+      hlat,
     } = searchParams;
     const cityOptions = (municipality || city)?.split(',');
     if (cityOptions?.length) {
@@ -247,6 +252,16 @@ const SearchView = () => {
         .forEach(x => {
           dispatch(activateSetting(x));
         });
+    }
+
+    async function handleGivenCoordinates() {
+      const api = new ServiceMapAPI();
+      const address = await api.addressByCoordinates(hlat, hlon);
+      handleUserAddressChange(address);
+    }
+
+    if (hlon && hlat) {
+      handleGivenCoordinates();
     }
   }, []);
 
@@ -298,8 +313,11 @@ const SearchView = () => {
       navigator.setParameter('bbox', getBboxFromBounds(bounds));
     }
     if (customPositionCoordinates) {
-      navigator.setParameter('lat', customPositionCoordinates.latitude);
-      navigator.setParameter('lon', customPositionCoordinates.longitude);
+      navigator.setParameter('hlat', customPositionCoordinates.latitude);
+      navigator.setParameter('hlon', customPositionCoordinates.longitude);
+    } else {
+      navigator.removeParameter('hlat');
+      navigator.removeParameter('hlon');
     }
   },
   [
