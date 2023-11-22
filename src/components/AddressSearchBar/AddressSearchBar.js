@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import {
   InputBase, IconButton, Paper, List, ListItem, Typography, ButtonBase,
 } from '@mui/material';
@@ -10,6 +10,7 @@ import { visuallyHidden } from '@mui/utils';
 import styled from '@emotion/styled';
 import { setOrder, setDirection } from '../../redux/actions/sort';
 import { selectMapRef } from '../../redux/selectors/general';
+import { selectCustomPosition } from '../../redux/selectors/user';
 import { keyboardHandler } from '../../utils';
 import useMobileStatus from '../../utils/isMobile';
 import useLocaleText from '../../utils/useLocaleText';
@@ -17,13 +18,14 @@ import ServiceMapAPI from '../../utils/newFetch/ServiceMapAPI';
 import { getAddressText } from '../../utils/address';
 import { focusToPosition } from '../../views/MapView/utils/mapActions';
 
-const AddressSearchBar = ({ title, intl, handleAddressChange }) => {
+const AddressSearchBar = ({ title, handleAddressChange }) => {
+  const intl = useIntl();
   const getLocaleText = useLocaleText();
   const dispatch = useDispatch();
   const isMobile = useMobileStatus();
   const locale = useSelector(state => state.user.locale);
   const map = useSelector(selectMapRef);
-  const customPosition = useSelector(state => state.user.customPosition);
+  const customPosition = useSelector(selectCustomPosition);
   const position = useSelector(state => state.user.position);
 
   const defaultAddress = position.addressData || customPosition.addressData;
@@ -289,7 +291,6 @@ const StyledIconButton = styled(IconButton)(({ theme }) => ({
 }));
 
 AddressSearchBar.propTypes = {
-  intl: PropTypes.objectOf(PropTypes.any).isRequired,
   handleAddressChange: PropTypes.func.isRequired,
   title: PropTypes.objectOf(PropTypes.any),
 };

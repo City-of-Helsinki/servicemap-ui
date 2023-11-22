@@ -1,10 +1,5 @@
 import styled from '@emotion/styled';
-import {
-  BusinessCenter,
-  EscalatorWarning,
-  LocationCity,
-  Map,
-} from '@mui/icons-material';
+import { BusinessCenter, EscalatorWarning, LocationCity, Map } from '@mui/icons-material';
 import { List, Typography } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
 import PropTypes from 'prop-types';
@@ -23,14 +18,12 @@ import {
   setSelectedSubdistricts,
 } from '../../../../redux/actions/district';
 import {
-  selectDistrictData,
-  selectDistrictsFetching,
-  selectSelectedDistrictType,
+  selectDistrictData, selectDistrictsFetching, selectSelectedDistrictType,
 } from '../../../../redux/selectors/district';
 import { selectMapRef, selectNavigator } from '../../../../redux/selectors/general';
 import { parseSearchParams, stringifySearchParams } from '../../../../utils';
 import useMobileStatus from '../../../../utils/isMobile';
-import MapUtility from '../../../../utils/mapUtility';
+import { mapHasMapPane } from '../../../../utils/mapUtility';
 import { dataStructure } from '../../utils/districtDataHelper';
 import GeographicalTab from '../GeographicalTab';
 import ServiceTab from '../ServiceTab';
@@ -81,7 +74,7 @@ function SideBar({ selectedAddress, setSelectedAddress }) {
       }
     }
     return () => {
-      if (map && MapUtility.mapHasMapPane(map)) {
+      if (map && mapHasMapPane(map)) {
         // On unmount, save map position
         dispatch(setMapState(getViewState(map)));
       }

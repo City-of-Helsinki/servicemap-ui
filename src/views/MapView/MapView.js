@@ -8,9 +8,10 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useMapEvents } from 'react-leaflet';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Loading } from '../../components';
+import { setBounds } from '../../redux/actions/map';
 import { selectDistrictUnitFetch } from '../../redux/selectors/district';
 import { selectNavigator } from '../../redux/selectors/general';
 import { getSelectedUnitEvents } from '../../redux/selectors/selectedUnit';
@@ -22,7 +23,9 @@ import { getLocale, getPage } from '../../redux/selectors/user';
 import { parseSearchParams } from '../../utils';
 import { useNavigationParams } from '../../utils/address';
 import { resolveCityAndOrganizationFilter } from '../../utils/filters';
-import Util from '../../utils/mapUtility';
+import {
+  coordinateIsActive, getBboxFromBounds, getCoordinatesFromUrl, mapHasMapPane, swapCoordinates,
+} from '../../utils/mapUtility';
 import { isEmbed } from '../../utils/path';
 import AddressMarker from './components/AddressMarker';
 import AddressPopup from './components/AddressPopup';
@@ -55,12 +58,15 @@ if (global.window) {
 }
 
 const EmbeddedActions = () => {
+  const dispatch = useDispatch();
   const embedded = isEmbed();
   const map = useMapEvents({
     moveend() {
+      const bounds = map.getBounds();
       if (embedded) {
-        const bounds = map.getBounds();
-        window.parent.postMessage({ bbox: `${bounds.getSouth()},${bounds.getWest()},${bounds.getNorth()},${bounds.getEast()}` });
+        window.parent.postMessage({ bbox: getBboxFromBounds(bounds) });
+      } else {
+        dispatch(setBounds(bounds));
       }
     },
   });
@@ -147,17 +153,6 @@ const MapView = (props) => {
       });
   };
 
-  const getCoordinatesFromUrl = () => {
-    // Attempt to get coordinates from URL
-    const usp = new URLSearchParams(location.search);
-    const lat = usp.get('lat');
-    const lng = usp.get('lon');
-    if (!lat || !lng) {
-      return null;
-    }
-    return [lat, lng];
-  };
-
   useEffect(() => { // On map mount
     initializeMap();
     if (!embedded) {
@@ -196,16 +191,14 @@ const MapView = (props) => {
     if (mapElement) {
       setMapUtility(new MapUtility({ leaflet: mapElement }));
 
-      const usp = new URLSearchParams(location.search);
-      const lat = usp.get('lat');
-      const lng = usp.get('lon');
-      try {
-        if (lat && lng) {
-          const position = [usp.get('lon'), usp.get('lat')];
+      const hasLocation = coordinateIsActive(location);
+      if (hasLocation) {
+        try {
+          const position = swapCoordinates(getCoordinatesFromUrl(location));
           focusToPosition(mapElement, position);
+        } catch (e) {
+          console.warn('Error while attempting to focus on coordinate:', e);
         }
-      } catch (e) {
-        console.warn('Error while attemptin to focus on coordinate:', e);
       }
     }
   }, [mapElement]);
@@ -241,7 +234,7 @@ const MapView = (props) => {
     let center = mapOptions.initialPosition;
     let zoom = isMobile ? mapObject.options.mobileZoom : mapObject.options.zoom;
     // If changing map type, use viewport values of previous map
-    if (prevMap && Util.mapHasMapPane(prevMap)) {
+    if (prevMap && mapHasMapPane(prevMap)) {
       center = prevMap.getCenter() || prevMap.options.center;
       /* Different map types have different zoom levels
       Use the zoom difference to calculate the new zoom level */
@@ -423,7 +416,7 @@ const MapView = (props) => {
               </CustomControls>
             )
             : null}
-          <CoordinateMarker position={getCoordinatesFromUrl()} />
+          <CoordinateMarker position={getCoordinatesFromUrl(location)} />
           <EmbeddedActions />
         </MapContainer>
       </>

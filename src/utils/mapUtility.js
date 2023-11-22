@@ -1,44 +1,58 @@
 /**
  * MapUtility class is a helper object for handling map
  * related functionality. You can use static functions directly
- * to handle certain functionality or pass object with leaflet map
- * object as map property to get information related to current map
+ * to handle certain functionality.
  */
-class MapUtility {
-  constructor(props) {
-    if (typeof props.map === 'undefined' || typeof props.map.getBounds !== 'function') {
-      throw Error('Invalid map object provided to MapUtility');
-    }
-    this.map = props.map;
-  }
 
-  /**
-   * Get bbox from given bounds. By default this uses
-   * latLng format you can revese by setting reverse true
-   * @param {*} bounds - Leaflet bounds object
-   * @param {boolean} reverse - Set true to reverse to LngLat format
-   */
-  static getBboxFromBounds(bounds, reverse = false) {
-    let bbox;
-    if (reverse) {
-      bbox = `${bounds.getWest()},${bounds.getSouth()},${bounds.getEast()},${bounds.getNorth()}`;
-    } else {
-      bbox = `${bounds.getSouth()},${bounds.getWest()},${bounds.getNorth()},${bounds.getEast()}`;
-    }
-    return bbox;
+/**
+ * Get bbox from given bounds. By default, this uses
+ * latLng format you can reverse by setting reverse true
+ * @param {*} bounds - Leaflet bounds object
+ * @param {boolean} reverse - Set true to reverse to LngLat format
+ */
+const getBboxFromBounds = (bounds, reverse = false) => {
+  let bbox;
+  if (reverse) {
+    bbox = `${bounds.getWest()},${bounds.getSouth()},${bounds.getEast()},${bounds.getNorth()}`;
+  } else {
+    bbox = `${bounds.getSouth()},${bounds.getWest()},${bounds.getNorth()},${bounds.getEast()}`;
   }
+  return bbox;
+};
 
-  static mapHasMapPane(leafLetMap) {
-    // `getCenter()` call requires existence of mapPane (what ever that means). So check for that
-    // before calling it. Just another null check.
-    const panes = leafLetMap.getPanes();
-    return !!panes && !!panes.mapPane;
+const mapHasMapPane = (leafLetMap) => {
+  // `getCenter()` call requires existence of mapPane (what ever that means). So check for that
+  // before calling it. Just another null check.
+  const panes = leafLetMap.getPanes();
+  return !!panes && !!panes.mapPane;
+};
+
+const getCoordinatesFromUrl = location => {
+  // Attempt to get coordinates from URL
+  const usp = new URLSearchParams(location.search);
+  const lat = usp.get('lat');
+  const lng = usp.get('lon');
+  if (!lat || !lng) {
+    return null;
   }
+  return [lat, lng];
+};
 
-  getBbox() {
-    const bounds = this.map.getBounds();
-    return MapUtility.getBboxFromBounds(bounds);
+const swapCoordinates = coordinates => [coordinates[1], coordinates[0]];
+
+const coordinateIsActive = location => {
+  try {
+    return !!getCoordinatesFromUrl(location);
+  } catch (e) {
+    console.warn('Unable to get coordinate from URL.');
   }
-}
+  return false;
+};
 
-export default MapUtility;
+export {
+  coordinateIsActive,
+  getCoordinatesFromUrl,
+  getBboxFromBounds,
+  mapHasMapPane,
+  swapCoordinates,
+};

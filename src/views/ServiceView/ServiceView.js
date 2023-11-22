@@ -20,8 +20,8 @@ import {
 import { selectMapRef } from '../../redux/selectors/general';
 import { getServiceUnits } from '../../redux/selectors/service';
 import { selectCustomPositionCoordinates } from '../../redux/selectors/user';
+import { coordinateIsActive } from '../../utils/mapUtility';
 import { fitUnitsToMap, focusToPosition } from '../MapView/utils/mapActions';
-import coordinateIsActive from '../../utils/coordinate';
 import useLocaleText from '../../utils/useLocaleText';
 
 const StyledTitleBar = styled(TitleBar)(({ theme }) => ({

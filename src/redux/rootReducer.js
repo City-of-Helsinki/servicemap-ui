@@ -30,6 +30,7 @@ import {
 } from './reducers/settings';
 import {
   direction,
+  bounds,
   mapRef,
   measuringMode,
   order,
@@ -45,6 +46,7 @@ export default combineReducers({
     news: alertNews,
   }),
   breadcrumb,
+  bounds,
   districts,
   event,
   mapRef,

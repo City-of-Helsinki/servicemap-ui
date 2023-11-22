@@ -44,7 +44,7 @@ import PriceInfo from './components/PriceInfo';
 import { parseSearchParams } from '../../utils';
 import { fetchServiceUnits } from '../../redux/actions/services';
 import MapView from '../MapView';
-import Util from '../../utils/mapUtility';
+import { mapHasMapPane } from '../../utils/mapUtility';
 
 const UnitView = (props) => {
   const {
@@ -162,7 +162,7 @@ const UnitView = (props) => {
 
   const saveMapPosition = () => {
     // Remember user's map postition to return to on unmount
-    if (map && Util.mapHasMapPane(map)) {
+    if (map && mapHasMapPane(map)) {
       viewPosition.current = {
         center: map.getCenter(),
         zoom: map.getZoom(),

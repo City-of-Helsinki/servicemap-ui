@@ -20,11 +20,13 @@ import { getOrderedSearchResultData } from '../../redux/selectors/results';
 import {
   selectSelectedAccessibilitySettings, selectSelectedCities, selectSelectedOrganizationIds,
 } from '../../redux/selectors/settings';
+import { selectCustomPositionCoordinates } from '../../redux/selectors/user';
 import { getSearchParam, keyboardHandler, parseSearchParams } from '../../utils';
 import { viewTitleID } from '../../utils/accessibility';
 import { useNavigationParams } from '../../utils/address';
 import { resolveCityAndOrganizationFilter } from '../../utils/filters';
 import useMobileStatus from '../../utils/isMobile';
+import { getBboxFromBounds } from '../../utils/mapUtility';
 import { isEmbed } from '../../utils/path';
 import optionsToSearchQuery from '../../utils/search';
 import SettingsUtility from '../../utils/settings';
@@ -41,6 +43,8 @@ const SearchView = () => {
   const selectedCities = useSelector(selectSelectedCities);
   const selectedOrganizationIds = useSelector(selectSelectedOrganizationIds);
   const selectedAccessibilitySettings = useSelector(selectSelectedAccessibilitySettings);
+  const bounds = useSelector(state => state.bounds);
+  const customPositionCoordinates = useSelector(selectCustomPositionCoordinates);
   const map = useSelector(selectMapRef);
   const navigator = useSelector(selectNavigator);
 
@@ -290,7 +294,19 @@ const SearchView = () => {
     navigator.setParameter('city', selectedCities);
     navigator.setParameter('organization', selectedOrganizationIds);
     navigator.setParameter('accessibility_setting', selectedAccessibilitySettings);
-  }, [navigator, selectedCities, selectedOrganizationIds, selectedAccessibilitySettings]);
+    if (bounds) {
+      navigator.setParameter('bbox', getBboxFromBounds(bounds));
+    }
+    if (customPositionCoordinates) {
+      navigator.setParameter('lat', customPositionCoordinates.latitude);
+      navigator.setParameter('lon', customPositionCoordinates.longitude);
+    }
+  },
+  [
+    navigator, selectedCities, selectedOrganizationIds, selectedAccessibilitySettings,
+    bounds, customPositionCoordinates,
+  ],
+  );
 
   const renderSearchBar = () => (
     <StyledSearchBar expand />
