@@ -128,14 +128,6 @@ export default theme => ({
     marginTop: theme.spacing(2),
     marginLeft: theme.spacing(2),
   },
-  accordionItem: {
-    padding: 0,
-    paddingLeft: theme.spacing(7),
-  },
-  accordionRoot: {
-    height: 32,
-    marginBottom: theme.spacing(1),
-  },
   accordionSummaryRoot: {
     height: 32,
     minHeight: 32,

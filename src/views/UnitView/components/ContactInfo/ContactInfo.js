@@ -1,6 +1,7 @@
+import styled from '@emotion/styled';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import {
   ButtonBase, Divider, ListItem, Typography,
 } from '@mui/material';
@@ -13,9 +14,8 @@ import useLocaleText from '../../../../utils/useLocaleText';
 import { parseSearchParams, stringifySearchParams } from '../../../../utils';
 import { SMAccordion } from '../../../../components';
 
-const ContactInfo = ({
-  unit, userLocation, intl, classes, headingLevel,
-}) => {
+const ContactInfo = ({ unit, userLocation, headingLevel }) => {
+  const intl = useIntl();
   const history = useHistory();
   const location = useLocation();
   const getLocaleText = useLocaleText();
@@ -53,22 +53,21 @@ const ContactInfo = ({
     component: showCallInfo // TODO: fix this hard coded value when unit data returns call charge boolean
       && (
         <React.Fragment key="callInformation">
-          <ListItem className={classes.accordionItem}>
-            <SMAccordion
-              className={classes.accordionRoot}
+          <StyledAccordionItem>
+            <StyledSMAccordion
               disableUnmount
               titleContent={<Typography><FormattedMessage id="unit.phone.charge" /></Typography>}
               collapseContent={(
-                <div className={classes.accordionContainer}>
-                  <Typography className={classes.callInfoText}>
+                <StyledAccordionContainer>
+                  <StyledCallInfoText>
                     {typeof unit.call_charge_info === 'string' ? unit.call_charge_info : getLocaleText(unit.call_charge_info)}
-                  </Typography>
-                </div>
+                  </StyledCallInfoText>
+                </StyledAccordionContainer>
               )}
             />
-          </ListItem>
+          </StyledAccordionItem>
           <li aria-hidden>
-            <Divider className={classes.dividerShort} />
+            <StyledShortDivider />
           </li>
         </React.Fragment>
       ),
@@ -79,13 +78,12 @@ const ContactInfo = ({
     component: additionalEntrances?.length
     && (
       <React.Fragment key="entrances">
-        <ListItem className={classes.accordionItem}>
-          <SMAccordion
-            className={classes.accordionRoot}
+        <StyledAccordionItem>
+          <StyledSMAccordion
             disableUnmount
             titleContent={<Typography id="additional-entrances"><FormattedMessage id="unit.entrances.show" /></Typography>}
             collapseContent={(
-              <div className={classes.accordionContainer}>
+              <StyledAccordionContainer data-sm="AdditionalEntranceContent">
                 {additionalEntrances.map(entrance => (
                   entrance.name ? (
                     <Typography key={getLocaleText(entrance.name)}>
@@ -93,9 +91,8 @@ const ContactInfo = ({
                     </Typography>
                   ) : null
                 ))}
-                <ButtonBase
+                <StyledAccessibilityLink
                   role="link"
-                  className={classes.accessibilityLink}
                   onClick={() => {
                     // Navigate to accessibility tab by changing url tab parameter
                     const searchParams = parseSearchParams(location.search);
@@ -107,13 +104,13 @@ const ContactInfo = ({
                   <Typography>
                     {addNewTabSuffix(intl.formatMessage({ id: 'unit.entrances.accessibility' }))}
                   </Typography>
-                </ButtonBase>
-              </div>
+                </StyledAccessibilityLink>
+              </StyledAccordionContainer>
               )}
           />
-        </ListItem>
+        </StyledAccordionItem>
         <li aria-hidden>
-          <Divider className={classes.dividerShort} />
+          <StyledShortDivider />
         </li>
       </React.Fragment>
     ),
@@ -123,13 +120,12 @@ const ContactInfo = ({
     component: otherAddressData
       && (
         <React.Fragment key="otherAddress">
-          <ListItem className={classes.accordionItem}>
-            <SMAccordion
-              className={classes.accordionRoot}
+          <StyledAccordionItem>
+            <StyledSMAccordion
               disableUnmount
               titleContent={<Typography data-sm="other-address"><FormattedMessage id="unit.otherAddress.show" /></Typography>}
               collapseContent={(
-                <div className={classes.accordionContainer}>
+                <StyledAccordionContainer>
                   {
                     otherAddressData.name
                       ? (<Typography>{getLocaleText(otherAddressData.name)}</Typography>)
@@ -138,24 +134,23 @@ const ContactInfo = ({
                   {
                     otherAddressData.www
                       ? (
-                        <ButtonBase
+                        <StyledAccessibilityLink
                           role="link"
-                          className={classes.accessibilityLink}
                           onClick={() => window.open(getLocaleText(otherAddressData.www))}
                         >
                           <Typography>
                             <FormattedMessage id="unit.otherAddress.link" />
                           </Typography>
-                        </ButtonBase>
+                        </StyledAccessibilityLink>
                       )
                       : null
                   }
-                </div>
+                </StyledAccordionContainer>
               )}
             />
-          </ListItem>
+          </StyledAccordionItem>
           <li aria-hidden>
-            <Divider className={classes.dividerShort} />
+            <StyledShortDivider />
           </li>
         </React.Fragment>
       ),
@@ -164,29 +159,28 @@ const ContactInfo = ({
   const subgroups = {
     component: subgroupContacts?.length > 0 && (
       <React.Fragment key="entrances">
-        <ListItem className={classes.accordionItem}>
-          <SMAccordion
-            className={classes.accordionRoot}
+        <StyledAccordionItem>
+          <StyledSMAccordion
             disableUnmount
             titleContent={<Typography><FormattedMessage id="unit.subgroup.title" /></Typography>}
             collapseContent={(
-              <div className={classes.accordionContainer}>
+              <StyledAccordionContainer>
                 {subgroupContacts.map(subgroup => (
                   subgroup.contact_person ? (
-                    <div key={subgroup.contact_person} className={classes.subgroupItem}>
+                    <StyledSubGroupItem key={subgroup.contact_person}>
                       <Typography key={subgroup.contact_person}>
                         {`${subgroup.contact_person}, ${getLocaleText(subgroup.name)}, `}
                       </Typography>
                       <a href={`tel:${subgroup.phone}`}>{subgroup.phone}</a>
-                    </div>
+                    </StyledSubGroupItem>
                   ) : null
                 ))}
-              </div>
+              </StyledAccordionContainer>
               )}
           />
-        </ListItem>
+        </StyledAccordionItem>
         <li aria-hidden>
-          <Divider className={classes.dividerShort} />
+          <StyledShortDivider />
         </li>
       </React.Fragment>
     ),
@@ -265,10 +259,42 @@ const ContactInfo = ({
   );
 };
 
+const StyledShortDivider = styled(Divider)(({ theme }) => ({
+  marginLeft: theme.spacing(9),
+  marginRight: theme.spacing(-2),
+}));
+
+const StyledAccordionItem = styled(ListItem)(({ theme }) => ({
+  padding: 0,
+  paddingLeft: theme.spacing(7),
+}));
+
+const StyledSMAccordion = styled(SMAccordion)(({ theme }) => ({
+  height: 32,
+  marginBottom: theme.spacing(1),
+}));
+
+const StyledAccordionContainer = styled.div(({ theme }) => ({
+  padding: theme.spacing(2),
+  paddingBottom: theme.spacing(1),
+  paddingTop: 0,
+}));
+
+const StyledAccessibilityLink = styled(ButtonBase)(({ theme }) => ({
+  paddingTop: theme.spacing(1),
+  color: theme.palette.link.main,
+}));
+
+const StyledCallInfoText = styled(Typography)(() => ({
+  whiteSpace: 'pre-line',
+}));
+
+const StyledSubGroupItem = styled.div(({ theme }) => ({
+  marginBottom: theme.spacing(2),
+}));
+
 ContactInfo.propTypes = {
   unit: PropTypes.objectOf(PropTypes.any).isRequired,
-  intl: PropTypes.objectOf(PropTypes.any).isRequired,
-  classes: PropTypes.objectOf(PropTypes.any).isRequired,
   userLocation: PropTypes.objectOf(PropTypes.any),
   headingLevel: PropTypes.string,
 };

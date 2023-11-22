@@ -22,7 +22,7 @@ const mapStateToProps = (state, props) => {
   const {
     accessibilitySentences, events, reservations, hearingMaps,
   } = state.selectedUnit;
-  const { navigator, user } = state;
+  const { user } = state;
 
   return {
     accessibilitySentences: accessibilitySentences.data,
@@ -30,7 +30,6 @@ const mapStateToProps = (state, props) => {
     stateUnit,
     unitFetching,
     eventsData: events,
-    navigator,
     reservationsData: reservations,
     userLocation: user.position,
     hearingMaps: hearingMaps.data,

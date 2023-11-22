@@ -1,12 +1,14 @@
+import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import config from '../../../../../config';
 import useLocaleText from '../../../../utils/useLocaleText';
 import unitSectionFilter from '../../utils/unitSectionFilter';
 import { StyledAlignLeftParagraph, StyledLink } from '../styled/styled';
 
-const Highlights = ({ unit, classes, intl }) => {
+const Highlights = ({ unit }) => {
+  const intl = useIntl();
   const getLocaleText = useLocaleText();
   const connections = unitSectionFilter(unit.connections, 'HIGHLIGHT');
 
@@ -39,7 +41,7 @@ const Highlights = ({ unit, classes, intl }) => {
   }
 
   return (
-    <div className={classes.marginVertical}>
+    <StyledVerticalMarginContainer>
       {connections.map(item => (
         <StyledAlignLeftParagraph
           key={item.id}
@@ -58,14 +60,17 @@ const Highlights = ({ unit, classes, intl }) => {
             }
         </StyledAlignLeftParagraph>
       ))}
-    </div>
+    </StyledVerticalMarginContainer>
   );
 };
 
+const StyledVerticalMarginContainer = styled.div(({ theme }) => ({
+  marginTop: theme.spacing(2),
+  marginBottom: theme.spacing(2),
+}));
+
 Highlights.propTypes = {
   unit: PropTypes.objectOf(PropTypes.any).isRequired,
-  classes: PropTypes.objectOf(PropTypes.any).isRequired,
-  intl: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 export default Highlights;

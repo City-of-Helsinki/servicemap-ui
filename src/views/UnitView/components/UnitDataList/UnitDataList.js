@@ -9,11 +9,13 @@ import {
   ServiceItem,
   TitledList,
 } from '../../../../components';
+import { selectNavigator } from '../../../../redux/selectors/general';
 
 const UnitDataList = ({
-  data, listLength, type, period, disableTitle, navigator,
+  data, listLength, type, period, disableTitle,
 }) => {
   const location = useLocation();
+  const navigator = useSelector(selectNavigator);
   const unit = useSelector(state => state.selectedUnit.unit.data);
 
   const dataItems = data.data;
@@ -100,7 +102,6 @@ UnitDataList.propTypes = {
   data: PropTypes.objectOf(PropTypes.any),
   listLength: PropTypes.number,
   type: PropTypes.string.isRequired,
-  navigator: PropTypes.objectOf(PropTypes.any),
   period: PropTypes.string,
   disableTitle: PropTypes.bool,
 };
@@ -108,7 +109,6 @@ UnitDataList.propTypes = {
 UnitDataList.defaultProps = {
   data: null,
   listLength: 5,
-  navigator: null,
   period: null,
   disableTitle: false,
 };
