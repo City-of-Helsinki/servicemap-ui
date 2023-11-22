@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import {
   ButtonBase, Divider, ListItem, Typography,
 } from '@mui/material';
@@ -14,8 +14,9 @@ import { parseSearchParams, stringifySearchParams } from '../../../../utils';
 import { SMAccordion } from '../../../../components';
 
 const ContactInfo = ({
-  unit, userLocation, intl, classes, headingLevel,
+  unit, userLocation, classes, headingLevel,
 }) => {
+  const intl = useIntl();
   const history = useHistory();
   const location = useLocation();
   const getLocaleText = useLocaleText();
@@ -267,7 +268,6 @@ const ContactInfo = ({
 
 ContactInfo.propTypes = {
   unit: PropTypes.objectOf(PropTypes.any).isRequired,
-  intl: PropTypes.objectOf(PropTypes.any).isRequired,
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
   userLocation: PropTypes.objectOf(PropTypes.any),
   headingLevel: PropTypes.string,

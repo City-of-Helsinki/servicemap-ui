@@ -5,14 +5,23 @@ import {
 } from '@mui/material';
 import { Warning, VerifiedUser } from '@mui/icons-material';
 import { FormattedMessage } from 'react-intl';
+import { useSelector } from 'react-redux';
+import {
+  getSelectedUnit,
+  selectSelectedUnitAccessibilitySentences,
+} from '../../../../redux/selectors/selectedUnit';
+import { selectSettings } from '../../../../redux/selectors/settings';
 import SettingsUtility from '../../../../utils/settings';
 import useLocaleText from '../../../../utils/useLocaleText';
 import { Container, Loading } from '../../../../components';
 
 const AccessibilityInfo = (props) => {
   const {
-    settings, unit, accessibilitySentences, classes, titleAlways, headingLevel,
+    classes, titleAlways, headingLevel,
   } = props;
+  const settings = useSelector(selectSettings);
+  const unit = useSelector(getSelectedUnit);
+  const accessibilitySentences = useSelector(selectSelectedUnitAccessibilitySentences);
 
   const getLocaleText = useLocaleText();
 
@@ -283,17 +292,8 @@ const AccessibilityInfo = (props) => {
 
 AccessibilityInfo.propTypes = {
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
-  accessibilitySentences: PropTypes.shape({
-    isFetching: PropTypes.bool,
-    data: PropTypes.objectOf(PropTypes.shape({
-      sentences: PropTypes.objectOf(PropTypes.any),
-      groups: PropTypes.objectOf(PropTypes.any),
-    })),
-  }).isRequired,
   headingLevel: PropTypes.oneOf([2, 3, 4, 5]).isRequired,
-  settings: PropTypes.objectOf(PropTypes.any).isRequired,
   titleAlways: PropTypes.bool,
-  unit: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 AccessibilityInfo.defaultProps = {
