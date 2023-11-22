@@ -298,8 +298,8 @@ const SearchView = () => {
       navigator.setParameter('bbox', getBboxFromBounds(bounds));
     }
     if (customPositionCoordinates) {
-      navigator.setParameter('lat', customPositionCoordinates.latitude);
-      navigator.setParameter('lon', customPositionCoordinates.longitude);
+      navigator.setParameter('hlat', customPositionCoordinates.latitude);
+      navigator.setParameter('hlon', customPositionCoordinates.longitude);
     }
   },
   [
