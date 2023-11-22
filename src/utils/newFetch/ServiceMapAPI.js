@@ -21,6 +21,18 @@ export default class ServiceMapAPI extends HttpClient {
     super(`${config.serviceMapAPI.root}${config.serviceMapAPI.version}`, serviceMapAPIName);
   }
 
+  /**
+   * Searches by coordinates and returns the closest by distance.
+   * @param lat
+   * @param lon
+   * @returns {Promise<void>}
+   */
+  addressByCoordinates = async (lat, lon) => {
+    const results = await this.getSinglePage('address', { lat, lon, page: 1, page_size: 5 });
+    const ordered = results.map(x => x).sort((x, y) => x.distance - y.distance);
+    return ordered.find(x => x); // first
+  }
+
   search = async (query, additionalOptions) => {
     if (typeof query !== 'string') {
       throw new APIFetchError('Invalid query string provided to ServiceMapAPI search method');
