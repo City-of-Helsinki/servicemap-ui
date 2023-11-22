@@ -117,13 +117,13 @@ const AccessibilityInfo = ({ titleAlways, headingLevel }) => {
                     <Warning />
                   </StyledListItemIcon>
                   <ListItemText>
-                    <StyledListTitle className="AccessibilityInfoShortcomingTitle" component={heading} variant="body2" align="left">
+                    <StyledListTitle data-sm="AccessibilityInfoShortcomingTitle" component={heading} variant="body2" align="left">
                       {title}
                     </StyledListTitle>
                     <StyledList>
                       {
                         shortcomings.map(shortcoming => (
-                          <StyledListItem key={shortcoming} className="AccessibilityInfoShortcoming">
+                          <StyledListItem key={shortcoming} data-sm="AccessibilityInfoShortcoming">
                             <Typography component="p" variant="body2">
                               {shortcoming}
                             </Typography>
@@ -207,7 +207,7 @@ const AccessibilityInfo = ({ titleAlways, headingLevel }) => {
   const renderInfoText = (noInfo, noShortcomings) => {
     if (!noInfo && !noShortcomings) return null;
     return (
-      <InfoContainer>
+      <InfoContainer data-sm="InfoContainer">
         {noInfo && (
           <>
             <StyledWarningInfoIcon />

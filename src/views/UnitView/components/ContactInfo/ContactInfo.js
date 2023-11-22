@@ -83,7 +83,7 @@ const ContactInfo = ({ unit, userLocation, headingLevel }) => {
             disableUnmount
             titleContent={<Typography id="additional-entrances"><FormattedMessage id="unit.entrances.show" /></Typography>}
             collapseContent={(
-              <StyledAccordionContainer>
+              <StyledAccordionContainer data-sm="AdditionalEntranceContent">
                 {additionalEntrances.map(entrance => (
                   entrance.name ? (
                     <Typography key={getLocaleText(entrance.name)}>

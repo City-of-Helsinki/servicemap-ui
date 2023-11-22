@@ -102,7 +102,6 @@ UnitDataList.propTypes = {
   data: PropTypes.objectOf(PropTypes.any),
   listLength: PropTypes.number,
   type: PropTypes.string.isRequired,
-  navigator: PropTypes.objectOf(PropTypes.any),
   period: PropTypes.string,
   disableTitle: PropTypes.bool,
 };
@@ -110,7 +109,6 @@ UnitDataList.propTypes = {
 UnitDataList.defaultProps = {
   data: null,
   listLength: 5,
-  navigator: null,
   period: null,
   disableTitle: false,
 };

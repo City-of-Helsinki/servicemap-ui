@@ -117,7 +117,7 @@ test('Unit feedback page does work correctly', async (t) => {
 
 test('Unit page additional entrances does show correctly', async (t) => {
   const accordion = Selector('#additional-entrances');
-  const showAccessibilityInfo = Selector('div[class^="ContactInfo-accordionContainer"] button')
+  const showAccessibilityInfo = Selector('[data-sm="AdditionalEntranceContent"] button')
   const tabListButtons = Selector('div[role="tablist"] button');
 
   await t
@@ -186,9 +186,9 @@ test.skip('Unit view hearing map link opens correctly', async (t) => {
 
 test('Unit view accessibility tab changes according to accessibility settings', async (t) => {
   const accessibilityTab = Selector('div[role="tablist"] button').nth(1);
-  const accessibilityInfoContainer = Selector('div[class*="Connect(AccessibilityInfo)-infoContainer"]');
-  const accessibilityShortcomingTitle = Selector('h5[class*="AccessibilityInfoShortcomingTitle"]');
-  const accessibilityShortcoming = Selector('li[class*="AccessibilityInfoShortcoming"]')
+  const accessibilityInfoContainer = Selector('[data-sm="InfoContainer"]');
+  const accessibilityShortcomingTitle = Selector('[data-sm="AccessibilityInfoShortcomingTitle"]');
+  const accessibilityShortcoming = Selector('[data-sm="AccessibilityInfoShortcoming"]')
 
 
   await t
