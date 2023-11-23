@@ -5,7 +5,10 @@ import { Selector } from 'testcafe';
 import config from '../config';
 import { getLocation } from '../utility';
 import {
-  accordionSelector, embedderToolButton, embedderToolCloseButton, mapToolsButton,
+  accordionSelector, addressSearchBarInput,
+  embedderToolButton,
+  embedderToolCloseButton,
+  mapToolsButton,
 } from '../utility/pageObjects';
 
 const { server } = config;
@@ -105,7 +108,7 @@ test('Unit list functions correctly' , async (t) => {
 
 // TODO Flaky test, suggestion list loses focus
 test.skip('Address search bar field updates and gets results', async (t, inputText = 'mann') => {
-  const addressBar = Selector('#addressSearchbar')
+  const addressBar = Selector(addressSearchBarInput)
   const suggestions = Selector('#address-results div[role="option"]');
 
   await t

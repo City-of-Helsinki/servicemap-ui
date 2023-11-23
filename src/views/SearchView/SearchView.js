@@ -22,17 +22,17 @@ import { getOrderedSearchResultData } from '../../redux/selectors/results';
 import {
   selectSelectedAccessibilitySettings, selectSelectedCities, selectSelectedOrganizationIds,
 } from '../../redux/selectors/settings';
-import { selectCustomPositionCoordinates } from '../../redux/selectors/user';
+import { selectCustomPositionAddress } from '../../redux/selectors/user';
 import { getSearchParam, keyboardHandler, parseSearchParams } from '../../utils';
 import { viewTitleID } from '../../utils/accessibility';
-import { useNavigationParams } from '../../utils/address';
+import { getAddressNavigatorParamsConnector, useNavigationParams } from '../../utils/address';
 import { resolveCityAndOrganizationFilter } from '../../utils/filters';
 import useMobileStatus from '../../utils/isMobile';
 import { getBboxFromBounds } from '../../utils/mapUtility';
-import ServiceMapAPI from '../../utils/newFetch/ServiceMapAPI';
 import { isEmbed } from '../../utils/path';
 import optionsToSearchQuery from '../../utils/search';
 import SettingsUtility from '../../utils/settings';
+import fetchAddressData from '../AddressView/utils/fetchAddressData';
 import { fitUnitsToMap } from '../MapView/utils/mapActions';
 
 const focusClass = 'TabListFocusTarget';
@@ -47,7 +47,7 @@ const SearchView = () => {
   const selectedOrganizationIds = useSelector(selectSelectedOrganizationIds);
   const selectedAccessibilitySettings = useSelector(selectSelectedAccessibilitySettings);
   const bounds = useSelector(state => state.bounds);
-  const customPositionCoordinates = useSelector(selectCustomPositionCoordinates);
+  const customPositionAddress = useSelector(selectCustomPositionAddress);
   const map = useSelector(selectMapRef);
   const navigator = useSelector(selectNavigator);
 
@@ -228,8 +228,8 @@ const SearchView = () => {
       organization,
       municipality,
       accessibility_setting,
-      hlon,
-      hlat,
+      hcity,
+      hstreet,
     } = searchParams;
     const cityOptions = (municipality || city)?.split(',');
     if (cityOptions?.length) {
@@ -254,14 +254,17 @@ const SearchView = () => {
         });
     }
 
-    async function handleGivenCoordinates() {
-      const api = new ServiceMapAPI();
-      const address = await api.addressByCoordinates(hlat, hlon);
-      handleUserAddressChange(address);
+    async function handleAddress() {
+      fetchAddressData(hcity, hstreet.replace('+', ' '))
+        .then(address => {
+          if (address?.length) {
+            handleUserAddressChange(address[0]);
+          }
+        });
     }
 
-    if (hlon && hlat) {
-      handleGivenCoordinates();
+    if (hcity && hstreet) {
+      handleAddress();
     }
   }, []);
 
@@ -312,17 +315,18 @@ const SearchView = () => {
     if (bounds) {
       navigator.setParameter('bbox', getBboxFromBounds(bounds));
     }
-    if (customPositionCoordinates) {
-      navigator.setParameter('hlat', customPositionCoordinates.latitude);
-      navigator.setParameter('hlon', customPositionCoordinates.longitude);
+    if (customPositionAddress) {
+      const { municipality, name } = getAddressNavigatorParamsConnector(customPositionAddress);
+      navigator.setParameter('hcity', municipality);
+      navigator.setParameter('hstreet', name);
     } else {
-      navigator.removeParameter('hlat');
-      navigator.removeParameter('hlon');
+      navigator.removeParameter('hcity');
+      navigator.removeParameter('hstreet');
     }
   },
   [
     navigator, selectedCities, selectedOrganizationIds, selectedAccessibilitySettings,
-    bounds, customPositionCoordinates,
+    bounds, customPositionAddress,
   ],
   );
 
