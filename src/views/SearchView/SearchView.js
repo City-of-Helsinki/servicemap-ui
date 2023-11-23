@@ -22,10 +22,10 @@ import { getOrderedSearchResultData } from '../../redux/selectors/results';
 import {
   selectSelectedAccessibilitySettings, selectSelectedCities, selectSelectedOrganizationIds,
 } from '../../redux/selectors/settings';
-import { selectCustomPositionCoordinates } from '../../redux/selectors/user';
+import { selectCustomPositionAddress } from '../../redux/selectors/user';
 import { getSearchParam, keyboardHandler, parseSearchParams } from '../../utils';
 import { viewTitleID } from '../../utils/accessibility';
-import { useNavigationParams } from '../../utils/address';
+import { getAddressNavigatorParamsConnector, useNavigationParams } from '../../utils/address';
 import { resolveCityAndOrganizationFilter } from '../../utils/filters';
 import useMobileStatus from '../../utils/isMobile';
 import { getBboxFromBounds } from '../../utils/mapUtility';
@@ -47,7 +47,7 @@ const SearchView = () => {
   const selectedOrganizationIds = useSelector(selectSelectedOrganizationIds);
   const selectedAccessibilitySettings = useSelector(selectSelectedAccessibilitySettings);
   const bounds = useSelector(state => state.bounds);
-  const customPositionCoordinates = useSelector(selectCustomPositionCoordinates);
+  const customPositionAddress = useSelector(selectCustomPositionAddress);
   const map = useSelector(selectMapRef);
   const navigator = useSelector(selectNavigator);
 
@@ -312,17 +312,18 @@ const SearchView = () => {
     if (bounds) {
       navigator.setParameter('bbox', getBboxFromBounds(bounds));
     }
-    if (customPositionCoordinates) {
-      navigator.setParameter('hlat', customPositionCoordinates.latitude);
-      navigator.setParameter('hlon', customPositionCoordinates.longitude);
+    if (customPositionAddress) {
+      const { municipality, name } = getAddressNavigatorParamsConnector(customPositionAddress);
+      navigator.setParameter('hcity', municipality);
+      navigator.setParameter('hstreet', name);
     } else {
-      navigator.removeParameter('hlat');
-      navigator.removeParameter('hlon');
+      navigator.removeParameter('hcity');
+      navigator.removeParameter('hstreet');
     }
   },
   [
     navigator, selectedCities, selectedOrganizationIds, selectedAccessibilitySettings,
-    bounds, customPositionCoordinates,
+    bounds, customPositionAddress,
   ],
   );
 
