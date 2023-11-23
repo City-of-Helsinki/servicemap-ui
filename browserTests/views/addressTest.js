@@ -70,7 +70,7 @@ test('AddressView map renders correctly', async (t) => {
 // TODO: update this test
 // test('AddressView\'s area view link does take correct address to AreaView', async (t) => {
 //   const areaViewLink = Selector('#areaViewLink');
-//   const addressBar = Selector('#addressSearchbar')
+//   const addressBar = Selector(addressSearchBarInput)
 //   const addressMarker = Selector('div[class*="leaflet-marker-icon"][class*="addressIcon"]')
 
 //   await t

@@ -166,7 +166,7 @@ const AddressSearchBar = ({ title, handleAddressChange }) => {
       <form action="" onSubmit={e => handleSubmit(e)}>
         <StyledFlexContainer>
           <StyledInputBase
-            id="addressSearchbar"
+            data-sm="AddressSearchBar"
             autoComplete="off"
             inputRef={inputRef}
             inputProps={{

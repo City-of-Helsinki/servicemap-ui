@@ -29,10 +29,10 @@ import { getAddressNavigatorParamsConnector, useNavigationParams } from '../../u
 import { resolveCityAndOrganizationFilter } from '../../utils/filters';
 import useMobileStatus from '../../utils/isMobile';
 import { getBboxFromBounds } from '../../utils/mapUtility';
-import ServiceMapAPI from '../../utils/newFetch/ServiceMapAPI';
 import { isEmbed } from '../../utils/path';
 import optionsToSearchQuery from '../../utils/search';
 import SettingsUtility from '../../utils/settings';
+import fetchAddressData from '../AddressView/utils/fetchAddressData';
 import { fitUnitsToMap } from '../MapView/utils/mapActions';
 
 const focusClass = 'TabListFocusTarget';
@@ -228,8 +228,8 @@ const SearchView = () => {
       organization,
       municipality,
       accessibility_setting,
-      hlon,
-      hlat,
+      hcity,
+      hstreet,
     } = searchParams;
     const cityOptions = (municipality || city)?.split(',');
     if (cityOptions?.length) {
@@ -254,14 +254,17 @@ const SearchView = () => {
         });
     }
 
-    async function handleGivenCoordinates() {
-      const api = new ServiceMapAPI();
-      const address = await api.addressByCoordinates(hlat, hlon);
-      handleUserAddressChange(address);
+    async function handleAddress() {
+      fetchAddressData(hcity, hstreet.replace('+', ' '))
+        .then(address => {
+          if (address?.length) {
+            handleUserAddressChange(address[0]);
+          }
+        });
     }
 
-    if (hlon && hlat) {
-      handleGivenCoordinates();
+    if (hcity && hstreet) {
+      handleAddress();
     }
   }, []);
 

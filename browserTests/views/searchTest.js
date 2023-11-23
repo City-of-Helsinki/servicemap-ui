@@ -5,9 +5,11 @@ import { ReactSelector, waitForReact } from 'testcafe-react-selectors';
 import config from '../config';
 import { getLocation } from '../utility';
 import {
+  addressSearchBarInput,
   cityDropdown,
   ESPOO_ORG,
-  HELSINKI_ORG, mobilityDropdown,
+  HELSINKI_ORG,
+  mobilityDropdown,
   organisationDropdown,
   searchBarInput,
   sensesDropdown,
@@ -28,6 +30,7 @@ const homePage= `http://${server.address}:${server.port}/fi`
 const resultItemTitle = Selector('[data-sm="ResultItemTitle"]');
 const kumpulaBath = resultItemTitle.withText('Kumpulan maauimala');
 const leppavaaraBath = resultItemTitle.withText('Leppävaaran maauimala');
+const addressInput = Selector(addressSearchBarInput);
 
 fixture`Search view test`
   .page`${searchPage}`
@@ -149,7 +152,6 @@ test('Search does list results', async (t) => {
 // Check that address search works and draws marker on map
 test('Address search does work', async (t) => {
   await searchUnits(t, 'kirjasto');
-  const addressInput = Selector('#addressSearchbar');
   const suggestions = Selector('#address-results div[role="option"]');
   const marker = Selector('div[class*="MarkerIcon"]');
   const distanceText = Selector('div[data-sm="ResultItemRightColumn"]');
@@ -483,3 +485,15 @@ test('Should set user settings to url', async(t) => {
   ;
 });
 
+fixture`Search view should set home address with url test`
+  .page`${homePage}/search?q=maauimala&hcity=helsinki&hstreet=Annankatu+12`
+  .beforeEach(async () => {
+    await waitForReact();
+  });
+
+test('Should set home address from url', async(t) => {
+  await t
+    .expect(addressInput.value).contains('Annankatu 12')
+    .expect(addressInput.value).contains('Helsinki')
+  ;
+});

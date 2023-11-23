@@ -10,6 +10,7 @@ export const infoButton = Selector('#PageInfoLink');
 export const accordionSelector = '[data-sm="AccordionComponent"]';
 
 export const searchBarInput = Selector('#SearchBar input');
+export const addressSearchBarInput = '[data-sm="AddressSearchBar"] input';
 
 export const settingsMenuPanel = '#SettingsMenuPanel';
 export const sensesDropdown = '[data-sm="senses-setting-dropdown"]';
