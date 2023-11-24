@@ -8,12 +8,17 @@ import {
   List,
   Typography,
 } from '@mui/material';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { Map } from '@mui/icons-material';
 import Helmet from 'react-helmet';
 import { useSelector } from 'react-redux';
 import { useLocation, useRouteMatch } from 'react-router-dom';
 import styled from '@emotion/styled';
+import {
+  selectAddressAdminDistricts, selectAddressData,
+  selectAddressUnits,
+} from '../../redux/selectors/address';
+import { selectMapRef, selectNavigator } from '../../redux/selectors/general';
 import { focusToPosition, useMapFocusDisabled } from '../MapView/utils/mapActions';
 import fetchAdministrativeDistricts from './utils/fetchAdministrativeDistricts';
 import fetchAddressUnits from './utils/fetchAddressUnits';
@@ -61,28 +66,28 @@ const getEmergencyCareUnit = (division) => {
 };
 
 const AddressView = (props) => {
+  const intl = useIntl();
   const [error, setError] = useState(null);
   const [isFetching, setIsFetching] = useState(false);
   const getLocaleText = useLocaleText();
   const match = useRouteMatch();
   const location = useLocation();
   const searchResults = useSelector(state => state.searchResults.data);
+  const navigator = useSelector(selectNavigator);
+  const map = useSelector(selectMapRef);
+  const units = useSelector(selectAddressUnits);
+  const adminDistricts = useSelector(selectAddressAdminDistricts);
+  const addressData = useSelector(selectAddressData);
 
   const {
-    addressData,
-    adminDistricts,
     embed,
-    intl,
     getDistance,
-    map,
     setAddressData,
     setAddressLocation,
     setAddressUnits,
     setDistrictAddressData,
     setAdminDistricts,
     setToRender,
-    navigator,
-    units,
   } = props;
 
   let title = '';
@@ -413,13 +418,6 @@ const StyledTopArea = styled('div')(() => ({
 export default AddressView;
 
 AddressView.propTypes = {
-  addressData: PropTypes.objectOf(PropTypes.any),
-  adminDistricts: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number,
-  })),
-  map: PropTypes.objectOf(PropTypes.any),
-  intl: PropTypes.objectOf(PropTypes.any).isRequired,
-  navigator: PropTypes.objectOf(PropTypes.any),
   getDistance: PropTypes.func.isRequired,
   setAddressData: PropTypes.func.isRequired,
   setAddressLocation: PropTypes.func.isRequired,
@@ -427,18 +425,9 @@ AddressView.propTypes = {
   setAdminDistricts: PropTypes.func.isRequired,
   setDistrictAddressData: PropTypes.func.isRequired,
   setToRender: PropTypes.func.isRequired,
-  location: PropTypes.objectOf(PropTypes.any).isRequired,
   embed: PropTypes.bool,
-  units: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number,
-  })),
 };
 
 AddressView.defaultProps = {
-  addressData: null,
-  adminDistricts: null,
-  map: null,
-  navigator: null,
   embed: false,
-  units: [],
 };

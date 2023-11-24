@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect';
-import { selectAddress } from './general';
+import { selectAddress } from './address';
 import { getPage, selectCustomPositionCoordinates, selectUserPositionCoordinates } from './user';
 
 export const getCurrentlyUsedPosition = createSelector(
