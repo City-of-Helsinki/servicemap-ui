@@ -10,7 +10,7 @@ import { visuallyHidden } from '@mui/utils';
 import styled from '@emotion/styled';
 import { setOrder, setDirection } from '../../redux/actions/sort';
 import { selectMapRef } from '../../redux/selectors/general';
-import { selectCustomPosition } from '../../redux/selectors/user';
+import { getLocale, selectCustomPosition, selectUserPosition } from '../../redux/selectors/user';
 import { keyboardHandler } from '../../utils';
 import useMobileStatus from '../../utils/isMobile';
 import useLocaleText from '../../utils/useLocaleText';
@@ -23,10 +23,10 @@ const AddressSearchBar = ({ title, handleAddressChange }) => {
   const getLocaleText = useLocaleText();
   const dispatch = useDispatch();
   const isMobile = useMobileStatus();
-  const locale = useSelector(state => state.user.locale);
+  const locale = useSelector(getLocale);
   const map = useSelector(selectMapRef);
   const customPosition = useSelector(selectCustomPosition);
-  const position = useSelector(state => state.user.position);
+  const position = useSelector(selectUserPosition);
 
   const defaultAddress = position.addressData || customPosition.addressData;
 

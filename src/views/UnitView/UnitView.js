@@ -1,15 +1,18 @@
 /* eslint-disable no-underscore-dangle */
-import React, { useEffect, useRef, useState } from 'react';
-import PropTypes from 'prop-types';
-import { Button, Typography } from '@mui/material';
-import { FormattedMessage, useIntl } from 'react-intl';
-import {
-  Mail, Hearing, Share, OpenInFull,
-} from '@mui/icons-material';
-import { visuallyHidden } from '@mui/utils';
-import { Helmet } from 'react-helmet';
-import { useDispatch, useSelector } from 'react-redux';
 import styled from '@emotion/styled';
+import {
+  Hearing, Mail, OpenInFull, Share,
+} from '@mui/icons-material';
+import { Button, Typography } from '@mui/material';
+import { visuallyHidden } from '@mui/utils';
+import PropTypes from 'prop-types';
+import React, { useEffect, useRef, useState } from 'react';
+import { Helmet } from 'react-helmet';
+import { FormattedMessage, useIntl } from 'react-intl';
+import { useDispatch, useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
+import config from '../../../config';
+import paths from '../../../config/paths';
 import {
   AcceptSettingsDialog,
   BackButton,
@@ -24,32 +27,37 @@ import {
   TitleBar,
   TitledList,
 } from '../../components';
+import { fetchServiceUnits } from '../../redux/actions/services';
 import { selectMapRef, selectNavigator } from '../../redux/selectors/general';
-import AccessibilityInfo from './components/AccessibilityInfo';
-import ContactInfo from './components/ContactInfo';
-import Highlights from './components/Highlights';
-import ElectronicServices from './components/ElectronicServices';
-import Description from './components/Description';
-import SocialMediaLinks from './components/SocialMediaLinks';
-import UnitLinks from './components/UnitLinks';
-import config from '../../../config';
+import {
+  getSelectedUnit,
+  selectEvents,
+  selectHearingMaps,
+  selectReservations,
+  selectSelectedUnitAccessibilitySentences,
+  selectSelectedUnitIsFetching,
+} from '../../redux/selectors/selectedUnit';
+import { selectUserPosition } from '../../redux/selectors/user';
+import { parseSearchParams } from '../../utils';
 import useMobileStatus from '../../utils/isMobile';
+import { mapHasMapPane } from '../../utils/mapUtility';
+import SettingsUtility from '../../utils/settings';
 import UnitHelper from '../../utils/unitHelper';
 import useLocaleText from '../../utils/useLocaleText';
-import paths from '../../../config/paths';
-import SettingsUtility from '../../utils/settings';
-import UnitDataList from './components/UnitDataList';
-import UnitsServicesList from './components/UnitsServicesList';
-import PriceInfo from './components/PriceInfo';
-import { parseSearchParams } from '../../utils';
-import { fetchServiceUnits } from '../../redux/actions/services';
 import MapView from '../MapView';
-import { mapHasMapPane } from '../../utils/mapUtility';
+import AccessibilityInfo from './components/AccessibilityInfo';
+import ContactInfo from './components/ContactInfo';
+import Description from './components/Description';
+import ElectronicServices from './components/ElectronicServices';
+import Highlights from './components/Highlights';
+import PriceInfo from './components/PriceInfo';
+import SocialMediaLinks from './components/SocialMediaLinks';
+import UnitDataList from './components/UnitDataList';
+import UnitLinks from './components/UnitLinks';
+import UnitsServicesList from './components/UnitsServicesList';
 
 const UnitView = (props) => {
   const {
-    distance,
-    stateUnit,
     classes,
     embed,
     match,
@@ -58,16 +66,17 @@ const UnitView = (props) => {
     fetchReservations,
     fetchAccessibilitySentences,
     fetchHearingMaps,
-    accessibilitySentences,
-    eventsData,
-    reservationsData,
-    hearingMaps,
-    unitFetching,
-    userLocation,
-    location,
   } = props;
   const intl = useIntl();
   const navigator = useSelector(selectNavigator);
+  const userLocation = useSelector(selectUserPosition);
+  const hearingMaps = useSelector(state => selectHearingMaps(state).data);
+  const reservationsData = useSelector(selectReservations);
+  const eventsData = useSelector(selectEvents);
+  const accessibilitySentences = useSelector(state => selectSelectedUnitAccessibilitySentences(state).data);
+  const unitFetching = useSelector(selectSelectedUnitIsFetching);
+  const stateUnit = useSelector(getSelectedUnit);
+  const location = useLocation();
   const checkCorrectUnit = unit => unit && unit.id === parseInt(match.params.unit, 10);
 
   const [unit, setUnit] = useState(checkCorrectUnit(stateUnit) ? stateUnit : null);
@@ -550,36 +559,17 @@ const StyledMapIcon = styled(OpenInFull)(({ theme }) => ({
 
 // Typechecking
 UnitView.propTypes = {
-  accessibilitySentences: PropTypes.objectOf(PropTypes.any),
-  distance: PropTypes.shape({
-    distance: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-    type: PropTypes.oneOf(['m', 'km']),
-    text: PropTypes.string,
-  }),
-  unit: PropTypes.objectOf(PropTypes.any),
   embed: PropTypes.bool,
-  eventsData: PropTypes.objectOf(PropTypes.any),
-  map: PropTypes.objectOf(PropTypes.any),
   fetchAccessibilitySentences: PropTypes.func.isRequired,
   fetchReservations: PropTypes.func.isRequired,
   fetchSelectedUnit: PropTypes.func.isRequired,
-  unitFetching: PropTypes.bool.isRequired,
   fetchUnitEvents: PropTypes.func.isRequired,
+  fetchHearingMaps: PropTypes.func.isRequired,
   match: PropTypes.objectOf(PropTypes.any),
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
-  reservations: PropTypes.arrayOf(PropTypes.any),
-  userLocation: PropTypes.objectOf(PropTypes.any),
-  location: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 UnitView.defaultProps = {
-  accessibilitySentences: null,
-  distance: null,
   embed: false,
-  eventsData: { events: null, unit: null },
-  unit: null,
   match: {},
-  map: null,
-  reservations: null,
-  userLocation: null,
 };
