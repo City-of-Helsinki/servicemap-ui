@@ -58,7 +58,6 @@ import UnitsServicesList from './components/UnitsServicesList';
 
 const UnitView = (props) => {
   const {
-    classes,
     embed,
     match,
     fetchSelectedUnit,
@@ -229,19 +228,18 @@ const UnitView = (props) => {
   };
 
   const renderPicture = () => (
-    <div className={classes.imageContainer}>
-      <img
-        className={classes.image}
+    <StyledImageContainer>
+      <StyledImage
         alt={getImageAlt()}
         src={unit.picture_url}
       />
       {
           unit.picture_caption
           && (
-            <Typography variant="body2" className={classes.imageCaption}>{getLocaleText(unit.picture_caption)}</Typography>
+            <StyledImageCaption variant="body2">{getLocaleText(unit.picture_caption)}</StyledImageCaption>
           )
         }
-    </div>
+    </StyledImageContainer>
   );
 
   const renderDetailTab = () => {
@@ -254,15 +252,14 @@ const UnitView = (props) => {
 
     if (config.showReadSpeakerButton) {
       detailReadSpeakerButton = (
-        <ReadSpeakerButton
-          className={classes.rsButton}
+        <StyledReadSpeakerButton
           readID="rscontent-unitdetail"
         />
       );
     }
 
     return (
-      <div className={classes.content}>
+      <StyledContentContainer>
         {detailReadSpeakerButton}
         <div id="rscontent-unitdetail">
           {
@@ -298,7 +295,7 @@ const UnitView = (props) => {
           {!isMobile && feedbackButton()}
           {isMobile && renderPicture()}
         </div>
-      </div>
+      </StyledContentContainer>
     );
   };
 
@@ -307,8 +304,7 @@ const UnitView = (props) => {
 
     if (config.showReadSpeakerButton) {
       accessibilityReadSpeakerButton = (
-        <ReadSpeakerButton
-          className={classes.rsButton}
+        <StyledReadSpeakerButton
           readID="rscontent"
           encodedURL={encodeURI(`palvelukartta.test.hel.ninja${location.pathname}${location.search}`)}
         />
@@ -316,9 +312,9 @@ const UnitView = (props) => {
     }
 
     return (
-      <div className={classes.content}>
+      <StyledContentContainer>
         {accessibilityReadSpeakerButton}
-        <div id="rscontent" className={classes.aTabAdjuster}>
+        <StyledTabAdjuster id="rscontent">
           {
             renderTitleForRS()
           }
@@ -338,8 +334,8 @@ const UnitView = (props) => {
             </TitledList>
           )}
           <AccessibilityInfo titleAlways headingLevel={4} />
-        </div>
-      </div>
+        </StyledTabAdjuster>
+      </StyledContentContainer>
     );
   };
 
@@ -349,7 +345,7 @@ const UnitView = (props) => {
     }
 
     return (
-      <div className={classes.content}>
+      <StyledContentContainer>
         <UnitsServicesList
           listLength={5}
           unit={unit}
@@ -359,7 +355,7 @@ const UnitView = (props) => {
           data={reservationsData}
           type="reservations"
         />
-      </div>
+      </StyledContentContainer>
     );
   };
 
@@ -393,11 +389,10 @@ const UnitView = (props) => {
   };
 
   const renderUnitLocation = () => (
-    <div className={classes.unitLocationContainer}>
-      <SMButton
+    <StyledUnitLocationContainer>
+      <StyledMapButton
         role="link"
         color="primary"
-        className={classes.mapButton}
         aria-label={intl.formatMessage({ id: 'map.button.expand.aria' })}
         icon={<StyledMapIcon />}
         onClick={(e) => {
@@ -410,11 +405,11 @@ const UnitView = (props) => {
         <Typography sx={{ fontSize: '0.875rem', fontWeight: '500' }}>
           <FormattedMessage id="map.button.expand" />
         </Typography>
-      </SMButton>
-      <div className={classes.mapContainer}>
+      </StyledMapButton>
+      <StyledMapContainer>
         <MapView disableInteraction />
-      </div>
-    </div>
+      </StyledMapContainer>
+    </StyledUnitLocationContainer>
   );
 
 
@@ -424,15 +419,14 @@ const UnitView = (props) => {
       setOpenLinkDialog(true);
     };
     const elem = (
-      <Button
-        className={classes.linkButton}
+      <StyledLinkButton
         onClick={onLinkOpenClick}
       >
         <Typography fontSize="0.773rem" color="inherit" variant="body2">
           <FormattedMessage id="general.share.link" />
         </Typography>
-        <Share className={classes.linkButtonIcon} />
-      </Button>
+        <StyledLinkButtonIcon />
+      </StyledLinkButton>
     );
 
     const backButtonText = intl.formatMessage({ id: 'general.backTo' });
@@ -457,14 +451,14 @@ const UnitView = (props) => {
 
     if (unitFetching) {
       return (
-        <div className={classes.root}>
+        <StyledRootContainer>
           <div className="Content">
             {TopArea}
             <p>
               <FormattedMessage id="general.loading" />
             </p>
           </div>
-        </div>
+        </StyledRootContainer>
       );
     }
 
@@ -533,7 +527,7 @@ const UnitView = (props) => {
     }
 
     return (
-      <div className={classes.root}>
+      <StyledRootContainer>
         <div className="Content">
           {TopArea}
           <Typography color="primary" variant="body1">
@@ -541,7 +535,7 @@ const UnitView = (props) => {
           </Typography>
           <SettingsComponent />
         </div>
-      </div>
+      </StyledRootContainer>
     );
   };
 
@@ -557,6 +551,92 @@ const StyledMapIcon = styled(OpenInFull)(({ theme }) => ({
   fontSize: '18px',
 }));
 
+const StyledRootContainer = styled.div(() => ({
+  height: '100%',
+  display: 'flex',
+  flexFlow: 'column',
+  overflowY: 'auto',
+}));
+
+const StyledContentContainer = styled.div(({ theme }) => ({
+  paddingLeft: theme.spacing(2),
+  paddingRight: theme.spacing(2),
+  paddingBottom: theme.spacing(2),
+}));
+
+const StyledTabAdjuster = styled.div(({ theme }) => ({
+  marginLeft: theme.spacing(1),
+}));
+
+const StyledReadSpeakerButton = styled(ReadSpeakerButton)(({ theme }) => ({
+  marginTop: theme.spacing(2),
+  marginLeft: theme.spacing(2),
+}));
+
+const StyledImageContainer = styled.div(() => ({
+  width: '100%',
+  height: 200,
+  position: 'relative',
+}));
+
+const StyledImage = styled.img(() => ({
+  objectFit: 'cover',
+  height: '100%',
+  width: '100%',
+}));
+
+const StyledImageCaption = styled(Typography)(({ theme }) => ({
+  width: '100%',
+  minHeight: 31,
+  fontSize: '0.75rem',
+  lineHeight: '15px',
+  position: 'absolute',
+  display: 'flex',
+  alignItems: 'center',
+  padding: theme.spacing(1),
+  paddingLeft: theme.spacing(2),
+  paddingRight: theme.spacing(2),
+  bottom: 0,
+  left: 0,
+  color: '#000',
+  backgroundColor: '#F0F0F0',
+  boxSizing: 'border-box',
+  textAlign: 'left',
+}));
+
+const StyledUnitLocationContainer = styled.div(() => ({
+  height: 225,
+  position: 'relative',
+}));
+
+const StyledMapButton = styled(SMButton)(({ theme }) => ({
+  position: 'absolute',
+  right: 16,
+  margin: 0,
+  top: 16,
+  zIndex: 51,
+  minHeight: 36,
+  borderRadius: '8px',
+  paddingLeft: theme.spacing(1.5),
+  paddingRight: theme.spacing(1.75),
+}));
+
+const StyledMapContainer = styled.div(() => ({
+  height: '100%',
+  pointerEvents: 'none',
+}));
+
+const StyledLinkButton = styled(Button)(() => ({
+  color: 'white',
+  textTransform: 'none',
+  marginLeft: 'auto',
+}));
+
+const StyledLinkButtonIcon = styled(Share)(({ theme }) => ({
+  fontSize: 24,
+  marginLeft: theme.spacing(1.5),
+}));
+
 // Typechecking
 UnitView.propTypes = {
   embed: PropTypes.bool,
@@ -566,7 +646,6 @@ UnitView.propTypes = {
   fetchUnitEvents: PropTypes.func.isRequired,
   fetchHearingMaps: PropTypes.func.isRequired,
   match: PropTypes.objectOf(PropTypes.any),
-  classes: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 UnitView.defaultProps = {

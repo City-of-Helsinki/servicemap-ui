@@ -1,5 +1,6 @@
+import styled from '@emotion/styled';
 import { Warning } from '@mui/icons-material';
-import { ServerStyleSheets, withStyles } from '@mui/styles';
+import { ServerStyleSheets } from '@mui/styles';
 import StyleContext from 'isomorphic-style-loader/StyleContext';
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
@@ -44,80 +45,53 @@ const IEHTML = (req, reactDom, css, cssString) => `
 </html>
 `;
 
-// Styles for IETemplate
-const styles = () => ({
-  container: {
-    margin: '5%',
-    fontFamily: 'Lato',
-    fontSize: 18,
-    lineHeight: '18px',
-  },
-  row: {
-    display: 'flex',
-    flexDirection: 'row',
-    '& a': {
-      display: 'inline-block',
-    },
-    padding: `8px 16px`,
-    margin: `24px 0`,
-  },
-  errorIcon: {
-    alignSelf: 'center',
-    color: 'rgb(25, 100, 230)',
-    fontSize: 32,
-    marginRight: 24,
-  }
-})
-
 // IE Template
-const IETemplate = withStyles(styles)(({
-  classes
-}) => {
+const IETemplate = () => {
   return (
-      <div className={classes.container}>
-        <div className={classes.row}>
-          <Warning className={classes.errorIcon} />
-          <div>
-            <p>Palvelukartta-palvelu ei toimi Internet Explorer-selaimella</p>
-            <p>Käytä toista selainta, kuten&nbsp;
-              <a href="https://www.google.com/intl/fi_fi/chrome/" target="_blank" rel="noopener noreferer">Chrome</a>
-              ,&nbsp;
-              <a href="https://www.mozilla.org/fi/firefox/new/" target="_blank" rel="noopener noreferer">Firefox</a>
-              &nbsp;tai&nbsp;
-              <a href="https://www.microsoft/fi-fi/edge/" target="_blank" rel="noopener noreferer">Edge</a>
-              &nbsp;ole hyvä
-            </p>
-          </div>
+    <StyledContainer>
+      <StyledRow>
+        <StyledErrorIcon />
+        <div>
+          <p>Palvelukartta-palvelu ei toimi Internet Explorer-selaimella</p>
+          <p>Käytä toista selainta, kuten&nbsp;
+            <a href="https://www.google.com/intl/fi_fi/chrome/" target="_blank" rel="noopener noreferer">Chrome</a>
+            ,&nbsp;
+            <a href="https://www.mozilla.org/fi/firefox/new/" target="_blank" rel="noopener noreferer">Firefox</a>
+            &nbsp;tai&nbsp;
+            <a href="https://www.microsoft/fi-fi/edge/" target="_blank" rel="noopener noreferer">Edge</a>
+            &nbsp;ole hyvä
+          </p>
         </div>
-        <div className={classes.row}>
-          <Warning className={classes.errorIcon} />
-          <div>
-            <p>Servicekarta tjänsten fungerar inte med Internet Explorer</p>
-            <p>Vänligen använd någon annan webbläsare t.ex.&nbsp;
-              <a href="https://www.google.com/intl/sv/chrome/" target="_blank" rel="noopener noreferer">Chrome</a>
-              ,&nbsp;
-              <a href="https://www.mozilla.org/sv-SE/firefox/new/" target="_blank" rel="noopener noreferer">Firefox</a>
-              &nbsp;eller&nbsp;
-              <a href="https://www.microsoft/sv-se/edge/" target="_blank" rel="noopener noreferer">Edge</a>
-            </p>
-          </div>
+      </StyledRow>
+      <StyledRow>
+        <StyledErrorIcon />
+        <div>
+          <p>Servicekarta tjänsten fungerar inte med Internet Explorer</p>
+          <p>Vänligen använd någon annan webbläsare t.ex.&nbsp;
+            <a href="https://www.google.com/intl/sv/chrome/" target="_blank" rel="noopener noreferer">Chrome</a>
+            ,&nbsp;
+            <a href="https://www.mozilla.org/sv-SE/firefox/new/" target="_blank" rel="noopener noreferer">Firefox</a>
+            &nbsp;eller&nbsp;
+            <a href="https://www.microsoft/sv-se/edge/" target="_blank" rel="noopener noreferer">Edge</a>
+          </p>
         </div>
-        <div className={classes.row}>
-          <Warning className={classes.errorIcon} />
-          <div>
-            <p>Servicemap service does not work with Internet Explorer.</p>
-            <p>Please use another browser such as&nbsp;
-              <a href="https://www.google.com/intl/en_us/chrome/" target="_blank" rel="noopener noreferer">Chrome</a>
-              ,&nbsp;
-              <a href="https://www.mozilla.org/en-US/firefox/new/" target="_blank" rel="noopener noreferer">Firefox</a>
-              &nbsp;or&nbsp;
-              <a href="https://www.microsoft/en-us/edge/" target="_blank" rel="noopener noreferer">Edge</a>
-            </p>
-          </div>
+      </StyledRow>
+      <StyledRow>
+        <StyledErrorIcon />
+        <div>
+          <p>Servicemap service does not work with Internet Explorer.</p>
+          <p>Please use another browser such as&nbsp;
+            <a href="https://www.google.com/intl/en_us/chrome/" target="_blank" rel="noopener noreferer">Chrome</a>
+            ,&nbsp;
+            <a href="https://www.mozilla.org/en-US/firefox/new/" target="_blank" rel="noopener noreferer">Firefox</a>
+            &nbsp;or&nbsp;
+            <a href="https://www.microsoft/en-us/edge/" target="_blank" rel="noopener noreferer">Edge</a>
+          </p>
         </div>
-      </div>
+      </StyledRow>
+    </StyledContainer>
   )
-});
+};
 
 // Template wrapper
 class WrappedTemplate extends React.Component {
@@ -174,3 +148,26 @@ const ieHandler = (req, res, next) => {
 }
 
 export default ieHandler;
+
+const StyledRow = styled.div(() => ({
+  display: 'flex',
+  flexDirection: 'row',
+  '& a': {
+    display: 'inline-block',
+  },
+  padding: '8px 16px',
+  margin: '24px 0',
+}));
+
+const StyledContainer = styled.div(() => ({
+  margin: '5%',
+  fontFamily: 'Lato',
+  fontSize: 18,
+  lineHeight: '18px',
+}));
+const StyledErrorIcon = styled(Warning)(() => ({
+  alignSelf: 'center',
+  color: 'rgb(25, 100, 230)',
+  fontSize: 32,
+  marginRight: 24,
+}));
