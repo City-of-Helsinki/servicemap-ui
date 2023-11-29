@@ -45,7 +45,7 @@ const hiddenDivisions = {
 };
 
 const getEmergencyCareUnit = (division) => {
-  if (division && division.type === 'emergency_care_district') {
+  if (division?.type === 'emergency_care_district') {
     switch (division.ocd_id) {
       case 'ocd-division/country:fi/kunta:helsinki/päivystysalue:haartmanin_päivystysalue': {
         return 26104; // Haartman
@@ -156,7 +156,6 @@ const AddressView = (props) => {
     ));
   };
 
-
   const renderHead = () => {
     if (addressData) {
       return (
@@ -235,6 +234,8 @@ const AddressView = (props) => {
     });
 
     const getCustomRescueAreaTitle = area => `${area.origin_id} - ${getLocaleText(area.name)}`;
+    const majorDistricts = adminDistricts.filter(x => x.type === 'major_district');
+    const unitlessDistricts = [...rescueAreas, ...majorDistricts];
 
     const units = divisionsWithUnits.map((x) => {
       const { unit } = x;
@@ -283,14 +284,13 @@ const AddressView = (props) => {
               );
             })
           }
-          {rescueAreas.map(area => (
+          {unitlessDistricts.map(area => (
             <DistrictItem key={area.id} area={area} />
           ))}
         </List>
       </>
     );
   };
-
 
   // Render component
   const tabs = [
@@ -322,7 +322,6 @@ const AddressView = (props) => {
     tabs.unshift(nearbyServicesTab);
   }
 
-
   useEffect(() => {
     const searchParams = parseSearchParams(location.search);
     const selectedTab = parseInt(searchParams.t, 10) || 0;
@@ -343,7 +342,6 @@ const AddressView = (props) => {
       }
     }
   }, [match.url, map]);
-
 
   if (embed) {
     return null;
