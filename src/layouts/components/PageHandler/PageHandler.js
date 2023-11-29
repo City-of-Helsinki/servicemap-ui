@@ -4,7 +4,7 @@ import Helmet from 'react-helmet';
 import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCurrentPage } from '../../../redux/actions/user';
-import { selectAddress } from '../../../redux/selectors/address';
+import { selectAddressAdminDistricts } from '../../../redux/selectors/address';
 import { selectEvent } from '../../../redux/selectors/general';
 import { getSelectedUnit } from '../../../redux/selectors/selectedUnit';
 import { selectServiceCurrent } from '../../../redux/selectors/service';
@@ -19,7 +19,7 @@ const PageHandler = (props) => {
   } = props;
 
   const intl = useIntl();
-  const address = useSelector(selectAddress);
+  const addressAdminDistricts = useSelector(selectAddressAdminDistricts);
   const event = useSelector(selectEvent);
   const service = useSelector(selectServiceCurrent);
   const unit = useSelector(getSelectedUnit);
@@ -35,7 +35,7 @@ const PageHandler = (props) => {
   // Modify html head
   const message = messageId ? intl.formatMessage({ id: messageId }) : '';
   let pageMessage = '';
-  const pageDescription = getPageDescriptions(page, unit, address, getLocaleText, intl);
+  const pageDescription = getPageDescriptions(page, unit, addressAdminDistricts, getLocaleText, intl);
 
   // Add unit or service name to title if needed
   if ((page === 'unit' || page === 'eventList') && unit && unit.name) {
