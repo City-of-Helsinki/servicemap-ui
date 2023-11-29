@@ -1,4 +1,5 @@
 import { useSelector } from 'react-redux';
+import { selectAddressUnits } from '../redux/selectors/address';
 import { getOrderedAndFilteredSearchResultData } from '../redux/selectors/results';
 import { getServiceUnits } from '../redux/selectors/service';
 
@@ -20,7 +21,7 @@ const useDownloadData = () => {
       selector = getServiceUnits;
       break;
     case 'address':
-      selector = state => state.address.units;
+      selector = selectAddressUnits;
       break;
     default:
       selector = () => emptyArray;
