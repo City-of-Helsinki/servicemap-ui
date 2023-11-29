@@ -96,7 +96,7 @@ const useMapUnits = () => {
   const addressToRender = useSelector(state => state.address.toRender);
   const adminDistricts = useSelector(selectAddressAdminDistricts);
   const addressUnits = useSelector(selectAddressUnits);
-  const serviceUnits = useSelector(state => getServiceUnits(state));
+  const serviceUnits = useSelector(getServiceUnits);
   const districtPrimaryUnits = useSelector(state => getDistrictPrimaryUnits(state));
   const districtServiceUnits = useSelector(getFilteredSubDistrictUnits);
   const statisticalDistrictUnits = useSelector(getServiceFilteredStatisticalDistrictUnits);

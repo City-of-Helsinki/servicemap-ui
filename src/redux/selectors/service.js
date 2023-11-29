@@ -6,6 +6,7 @@ import orderUnits from '../../utils/orderUnits';
 import { selectSelectedCities, selectSelectedOrganizations } from './settings';
 
 const getUnits = state => state.service.data;
+export const selectServiceCurrent = state => state.service.current;
 
 export const getServiceUnits = createSelector(
   [getUnits, selectSelectedCities, selectSelectedOrganizations, getSortingParameters],
@@ -21,5 +22,3 @@ export const getServiceUnits = createSelector(
     },
   },
 );
-
-export default { getServiceUnits };

@@ -14,7 +14,7 @@ import { StyledUnitTooltipTitle, StyledUnitTooltipWrapper } from '../styled/styl
 
 const EntranceMarker = () => {
   const getLocaleText = useLocaleText();
-  const unit = useSelector(state => getSelectedUnit(state));
+  const unit = useSelector(getSelectedUnit);
   const useContrast = useSelector(selectThemeMode) === 'dark';
   const map = useMap();
 

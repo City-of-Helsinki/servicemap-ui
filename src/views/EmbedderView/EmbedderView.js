@@ -11,6 +11,7 @@ import URI from 'urijs';
 import { Helmet } from 'react-helmet';
 import { useSelector } from 'react-redux';
 import { selectNavigator } from '../../redux/selectors/general';
+import { selectServiceCurrent } from '../../redux/selectors/service';
 import {
   selectMapType,
   selectSelectedCities,
@@ -86,7 +87,7 @@ const EmbedderView = () => {
   const defaultService = 'none';
   const page = useSelector(state => state.user.page);
   const selectedUnit = useSelector(state => state.selectedUnit.unit.data);
-  const currentService = useSelector(state => state.service.current);
+  const currentService = useSelector(selectServiceCurrent);
   const organizationSettings = useSelector(selectSelectedOrganizations);
 
   const getLocaleText = useLocaleText();

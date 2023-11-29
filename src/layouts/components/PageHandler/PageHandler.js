@@ -1,22 +1,35 @@
-import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import React, { useEffect } from 'react';
 import Helmet from 'react-helmet';
+import { useIntl } from 'react-intl';
+import { useDispatch, useSelector } from 'react-redux';
+import { setCurrentPage } from '../../../redux/actions/user';
+import { selectAddress } from '../../../redux/selectors/address';
+import { selectEvent } from '../../../redux/selectors/general';
+import { getSelectedUnit } from '../../../redux/selectors/selectedUnit';
+import { selectServiceCurrent } from '../../../redux/selectors/service';
 import { uppercaseFirst } from '../../../utils';
+import { isEmbed } from '../../../utils/path';
 import useLocaleText from '../../../utils/useLocaleText';
 import getPageDescriptions from './pageDescriptions';
-import { isEmbed } from '../../../utils/path';
 
 const PageHandler = (props) => {
   const {
-    page, setCurrentPage, intl, messageId, unit, service, event, address,
+    page, messageId,
   } = props;
 
+  const intl = useIntl();
+  const address = useSelector(selectAddress);
+  const event = useSelector(selectEvent);
+  const service = useSelector(selectServiceCurrent);
+  const unit = useSelector(getSelectedUnit);
+  const dispatch = useDispatch();
   const getLocaleText = useLocaleText();
   const embed = isEmbed();
 
   useEffect(() => {
     // Save current page to redux
-    setCurrentPage(page);
+    dispatch(setCurrentPage(page));
   }, [page]);
 
   // Modify html head
@@ -54,23 +67,13 @@ const PageHandler = (props) => {
 };
 
 PageHandler.propTypes = {
-  intl: PropTypes.objectOf(PropTypes.any).isRequired,
   messageId: PropTypes.string,
   page: PropTypes.string,
-  unit: PropTypes.objectOf(PropTypes.any),
-  event: PropTypes.objectOf(PropTypes.any),
-  service: PropTypes.objectOf(PropTypes.any),
-  address: PropTypes.objectOf(PropTypes.any),
-  setCurrentPage: PropTypes.func.isRequired,
 };
 
 PageHandler.defaultProps = {
   messageId: 'app.title',
   page: null,
-  unit: null,
-  service: null,
-  event: null,
-  address: null,
 };
 
 export default PageHandler;
