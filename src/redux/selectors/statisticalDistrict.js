@@ -1,10 +1,11 @@
-import { createSelector } from 'reselect';
 import booleanPointInPolygon from '@turf/boolean-point-in-polygon';
 import flip from '@turf/flip';
+import { createSelector } from 'reselect';
 import dataVisualization from '../../utils/dataVisualization';
-import { getCitySettings } from './settings';
-import { getLocale } from './user';
+import { filterByCitySettings } from '../../utils/filters';
 import { getUnitCount, unitsSortAlphabetically } from '../../utils/units';
+import { selectCities, selectSelectedCities } from './settings';
+import { getLocale } from './user';
 
 export const getStatisticalDistrictSelection = state => (
   state.statisticalDistrict.districts.selection
@@ -52,10 +53,8 @@ const calculateScaleAdjustedProportion = (proportion, scales) => {
 };
 
 export const getSelectedStatisticalDistricts = createSelector(
-  [getStatisticalDistrictSelection, getData, getCitySettings],
+  [getStatisticalDistrictSelection, getData, selectCities],
   (selection, data, citySettings) => {
-    // Create array of selected cities
-    const selectedCities = Object.keys(citySettings).filter(city => citySettings[city]);
     let selectedDivisions = [];
     const { forecast, proportionScales, section } = selection;
 
@@ -80,11 +79,7 @@ export const getSelectedStatisticalDistricts = createSelector(
         });
 
       // Filter out district based on city settings
-      if (selectedCities.length > 0) {
-        selectedDivisions = selectedDivisions.filter(
-          district => selectedCities.includes(district.municipality),
-        );
-      }
+      selectedDivisions = selectedDivisions.filter(filterByCitySettings(citySettings));
     }
 
     return selectedDivisions.sort((a, b) => {
@@ -97,7 +92,7 @@ export const getSelectedStatisticalDistricts = createSelector(
 
 // Get city filtered district data
 export const getCityGroupedData = createSelector(
-  [getSelectedStatisticalDistricts, getCitySettings],
+  [getSelectedStatisticalDistricts, selectCities],
   (data, citySettings) => {
     const groupedData = data.reduce((acc, cur) => {
       const duplicate = acc.find(list => list[0].municipality === cur.municipality);
@@ -157,14 +152,13 @@ export const getServiceFilteredStatisticalDistrictUnits = createSelector(
 );
 
 export const getOrderedStatisticalDistrictServices = createSelector(
-  [getStatisticalDistrictServices, getLocale, getCitySettings],
-  (services, locale, citySettings) => {
+  [getStatisticalDistrictServices, getLocale, selectSelectedCities],
+  (services, locale, selectedCities) => {
     if (services.length) {
       if (typeof locale !== 'string') {
         return services;
       }
 
-      const selectedCities = Object.keys(citySettings).filter(city => citySettings[city]);
       return services
         .filter((s) => {
           // Filter services that have any units or with city

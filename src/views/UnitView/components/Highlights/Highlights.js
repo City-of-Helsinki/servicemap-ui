@@ -1,12 +1,14 @@
-import React from 'react';
+import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
-import { Typography, Link } from '@mui/material';
-import { FormattedMessage } from 'react-intl';
+import React from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 import config from '../../../../../config';
-import unitSectionFilter from '../../utils/unitSectionFilter';
 import useLocaleText from '../../../../utils/useLocaleText';
+import unitSectionFilter from '../../utils/unitSectionFilter';
+import { StyledAlignLeftParagraph, StyledLink } from '../styled/styled';
 
-const Highlights = ({ unit, classes, intl }) => {
+const Highlights = ({ unit }) => {
+  const intl = useIntl();
   const getLocaleText = useLocaleText();
   const connections = unitSectionFilter(unit.connections, 'HIGHLIGHT');
 
@@ -39,34 +41,36 @@ const Highlights = ({ unit, classes, intl }) => {
   }
 
   return (
-    <div className={classes.marginVertical}>
+    <StyledVerticalMarginContainer>
       {connections.map(item => (
-        <Typography
+        <StyledAlignLeftParagraph
           key={item.id}
-          className={`${classes.left} ${classes.paragraph}`}
           variant="body1"
         >
           {
               item.value.www
                 ? (
-                  <Link className={classes.link} href={getLocaleText(item.value.www)} target="_blank">
+                  <StyledLink href={getLocaleText(item.value.www)} target="_blank">
                     {getLocaleText(item.value.name)}
                     {' '}
                     <FormattedMessage id="opens.new.tab" />
-                  </Link>
+                  </StyledLink>
                 )
                 : getLocaleText(item.value.name)
             }
-        </Typography>
+        </StyledAlignLeftParagraph>
       ))}
-    </div>
+    </StyledVerticalMarginContainer>
   );
 };
 
+const StyledVerticalMarginContainer = styled.div(({ theme }) => ({
+  marginTop: theme.spacing(2),
+  marginBottom: theme.spacing(2),
+}));
+
 Highlights.propTypes = {
   unit: PropTypes.objectOf(PropTypes.any).isRequired,
-  classes: PropTypes.objectOf(PropTypes.any).isRequired,
-  intl: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 export default Highlights;

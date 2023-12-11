@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Button, Typography } from '@mui/material';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import {
   Mail, Hearing, Share, OpenInFull,
 } from '@mui/icons-material';
@@ -24,7 +24,7 @@ import {
   TitleBar,
   TitledList,
 } from '../../components';
-import { selectMapRef } from '../../redux/selectors/general';
+import { selectMapRef, selectNavigator } from '../../redux/selectors/general';
 import AccessibilityInfo from './components/AccessibilityInfo';
 import ContactInfo from './components/ContactInfo';
 import Highlights from './components/Highlights';
@@ -44,16 +44,14 @@ import PriceInfo from './components/PriceInfo';
 import { parseSearchParams } from '../../utils';
 import { fetchServiceUnits } from '../../redux/actions/services';
 import MapView from '../MapView';
-import Util from '../../utils/mapUtility';
+import { mapHasMapPane } from '../../utils/mapUtility';
 
 const UnitView = (props) => {
   const {
     distance,
     stateUnit,
-    intl,
     classes,
     embed,
-    navigator,
     match,
     fetchSelectedUnit,
     fetchUnitEvents,
@@ -68,6 +66,8 @@ const UnitView = (props) => {
     userLocation,
     location,
   } = props;
+  const intl = useIntl();
+  const navigator = useSelector(selectNavigator);
   const checkCorrectUnit = unit => unit && unit.id === parseInt(match.params.unit, 10);
 
   const [unit, setUnit] = useState(checkCorrectUnit(stateUnit) ? stateUnit : null);
@@ -162,7 +162,7 @@ const UnitView = (props) => {
 
   const saveMapPosition = () => {
     // Remember user's map postition to return to on unmount
-    if (map && Util.mapHasMapPane(map)) {
+    if (map && mapHasMapPane(map)) {
       viewPosition.current = {
         center: map.getCenter(),
         zoom: map.getZoom(),
@@ -280,7 +280,6 @@ const UnitView = (props) => {
             listLength={3}
             data={eventsData}
             type="events"
-            navigator={navigator}
           />
           <Highlights unit={unit} />
           <Description unit={unit} />
@@ -345,13 +344,11 @@ const UnitView = (props) => {
         <UnitsServicesList
           listLength={5}
           unit={unit}
-          navigator={navigator}
         />
         <UnitDataList
           listLength={5}
           data={reservationsData}
           type="reservations"
-          navigator={navigator}
         />
       </div>
     );
@@ -570,8 +567,6 @@ UnitView.propTypes = {
   fetchUnitEvents: PropTypes.func.isRequired,
   match: PropTypes.objectOf(PropTypes.any),
   classes: PropTypes.objectOf(PropTypes.any).isRequired,
-  intl: PropTypes.objectOf(PropTypes.any).isRequired,
-  navigator: PropTypes.objectOf(PropTypes.any),
   reservations: PropTypes.arrayOf(PropTypes.any),
   userLocation: PropTypes.objectOf(PropTypes.any),
   location: PropTypes.objectOf(PropTypes.any).isRequired,
@@ -585,7 +580,6 @@ UnitView.defaultProps = {
   unit: null,
   match: {},
   map: null,
-  navigator: null,
   reservations: null,
   userLocation: null,
 };

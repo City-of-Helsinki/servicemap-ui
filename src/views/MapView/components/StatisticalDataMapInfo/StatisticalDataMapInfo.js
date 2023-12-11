@@ -3,7 +3,7 @@ import { FormattedMessage } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { styled } from '@mui/material/styles';
 import { Typography } from '@mui/material';
-import { getTheme } from '../../../../redux/selectors/user';
+import { selectThemeMode } from '../../../../redux/selectors/user';
 import dataVisualization from '../../../../utils/dataVisualization';
 import ColorIndicator from './ColorIndicator';
 import { getStatisticalDistrictSelectedCategory, getStatisticalDistrictSelection } from '../../../../redux/selectors/statisticalDistrict';
@@ -14,8 +14,7 @@ const StatisticalDataMapInfoComponent = () => {
     section,
   } = useSelector(getStatisticalDistrictSelection);
   const category = useSelector(getStatisticalDistrictSelectedCategory);
-  const theme = useSelector(getTheme);
-  const useContrast = theme === 'dark';
+  const useContrast = useSelector(selectThemeMode) === 'dark';
 
   const proportionsExist = proportionScales.min >= 0
     && proportionScales.max

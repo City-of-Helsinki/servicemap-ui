@@ -136,6 +136,13 @@ export const valuesHaveChanged = (obj1, obj2, keys = []) => {
   return hasChanged;
 };
 
+export const alphabeticCompare = (a, b) => {
+  if (a !== b) {
+    return a < b ? -1 : 1;
+  }
+  return 0;
+};
+
 export const arraysEqual = (a, b) => {
   if (a === b) return true;
   if (a == null || b == null) return false;
@@ -149,8 +156,7 @@ export const arraysEqual = (a, b) => {
 
 export const getSearchParam = (location, key) => {
   const searchParams = parseSearchParams(location.search);
-  const param = searchParams[key];
-  return param;
+  return searchParams[key];
 };
 
 /**

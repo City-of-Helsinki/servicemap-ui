@@ -7,11 +7,19 @@ import React, { useRef, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import config from '../../../config';
+import { selectSettings } from '../../redux/selectors/settings';
+import { selectThemeMode } from '../../redux/selectors/user';
 import { keyboardHandler } from '../../utils';
 import SMAutocomplete from '../SMAutocomplete';
 import constants from '../SettingsComponent/constants';
 import {
-  setMapType, setMobility, toggleCity, toggleColorblind, toggleHearingAid, toggleOrganization, toggleVisuallyImpaired,
+  setMapType,
+  setMobility,
+  toggleCity,
+  toggleColorblind,
+  toggleHearingAid,
+  toggleOrganization,
+  toggleVisuallyImpaired,
 } from '../../redux/actions/settings';
 import useLocaleText from '../../utils/useLocaleText';
 
@@ -19,12 +27,12 @@ const SettingsDropdowns = ({ variant }) => {
   const intl = useIntl();
   const dispatch = useDispatch();
   const getLocaleText = useLocaleText();
-  const settings = useSelector(state => state.settings);
+  const settings = useSelector(selectSettings);
   // Format settings from redux to easier structure
   const settingsValues = constants.convertToSettingsValues(settings);
   const [openSettings, setOpenSettings] = useState(null);
   const highlightedOption = useRef(null);
-  const theme = useSelector(state => state.user.theme);
+  const themeMode = useSelector(selectThemeMode);
 
   // Configure rendered settings items
   const senseSettingList = [
@@ -119,12 +127,12 @@ const SettingsDropdowns = ({ variant }) => {
     return (
       <StyledAutocomplete
         open={openSettings === label}
-        id={`${category}-setting-dropdown`}
+        data-sm={`${category}-setting-dropdown`}
         size="small"
         disablePortal
         disableClearable
         ownsettings={+ownSettingsVariant}
-        colormode={theme}
+        colormode={themeMode}
         multiple={!isSingleOption}
         openText={intl.formatMessage({ id: 'settings.open' })}
         closeText={intl.formatMessage({ id: 'settings.close' })}
@@ -150,12 +158,12 @@ const SettingsDropdowns = ({ variant }) => {
         }}
         renderOption={(props, option) => (isSingleOption
           ? ( // Single option options box
-            <ListItem {...props} onClick={() => handleOptionSelecting(option.id, category)} id={`${category}-${option.id}`}>
+            <ListItem {...props} onClick={() => handleOptionSelecting(option.id, category)} data-sm={`${category}-${option.id}`}>
               <Typography>{option.title}</Typography>
             </ListItem>
           )
           : ( // Checkbox options box
-            <ListItem {...props} onClick={() => handleOptionSelecting(option.id, category)} id={`${category}-${option.id}`}>
+            <ListItem {...props} onClick={() => handleOptionSelecting(option.id, category)} data-sm={`${category}-${option.id}`}>
               <Checkbox
                 sx={{ mr: 1 }}
                 checked={settingsValues[category].includes(option.id)}

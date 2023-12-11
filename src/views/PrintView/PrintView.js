@@ -1,45 +1,67 @@
 /* eslint-disable no-underscore-dangle */
-import React, { useEffect, useState, useRef } from 'react';
-import { withStyles } from '@mui/styles';
-import { useIntl } from 'react-intl';
+import styled from '@emotion/styled';
 import {
-  TableContainer,
-  Paper,
-  Table,
-  TableHead,
-  TableRow,
-  TableCell,
-  TableBody,
-  Typography,
+  Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography,
 } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
-import { useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { NumberCircleMaker } from '../MapView/utils/drawIcon';
-import CreateMap from '../MapView/utils/createMap';
+import React, { useEffect, useRef, useState } from 'react';
+import { useIntl } from 'react-intl';
+import { useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 import paths from '../../../config/paths';
-import useLocaleText from '../../utils/useLocaleText';
 import { SMButton } from '../../components';
+import { selectMapRef } from '../../redux/selectors/general';
+import useLocaleText from '../../utils/useLocaleText';
+import CreateMap from '../MapView/utils/createMap';
+import { NumberCircleMaker } from '../MapView/utils/drawIcon';
 
-const StyledTableRow = withStyles(theme => ({
-  root: {
-    '&:nth-of-type(odd)': {
-      backgroundColor: theme.palette.action.hover,
-    },
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+  padding: `${theme.spacing(1)} ${theme.spacing(2)}`,
+}));
+
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+  '&:nth-of-type(odd)': {
+    backgroundColor: theme.palette.action.hover,
   },
-}))(TableRow);
+}));
 
-const StyledTableCell = withStyles(theme => ({
-  root: {
-    padding: `${theme.spacing(1)} ${theme.spacing(2)}`,
+const StyledWrapper = styled.div(() => ({
+  position: 'relative',
+  background: 'white',
+  color: 'black',
+  top: 0,
+  left: 0,
+  right: 0,
+  padding: 24,
+  minHeight: '100%',
+  zIndex: 10000,
+}));
+
+const StyledContainer = styled.div(() => ({
+  maxWidth: 900,
+  margin: 'auto',
+}));
+
+const StyledButtonContainer = styled.div(({ theme }) => ({
+  padding: theme.spacing(1),
+}));
+
+const StyledMap = styled.div(() => ({
+  position: 'relative',
+  height: 500,
+  width: '100%',
+  display: 'block',
+}));
+const StyledTableContainer = styled(TableContainer)(() => ({
+  pageBreakAfter: 'always',
+  '& thead': {
+    fontWeight: 'bold',
   },
-}))(TableCell);
+}));
 
-const PrintView = ({
-  classes,
-  map,
-  togglePrintView,
-}) => {
+const PrintView = ({ togglePrintView }) => {
+  const map = useSelector(selectMapRef);
   const intl = useIntl();
   const getLocaleText = useLocaleText();
   const [descriptions, setDescriptions] = useState([]);
@@ -86,7 +108,7 @@ const PrintView = ({
       const cl = current?._icon?.classList; // Class list for icon
 
       if (
-        ( 
+        (
           current instanceof global.L.MarkerCluster
           || current instanceof global.L.Marker
         )
@@ -103,7 +125,6 @@ const PrintView = ({
 
     return markers;
   };
-
 
   const getClusteredUnits = markerCluster => (
     markerCluster.getAllChildMarkers().map(mm => mm.options.customUnitData)
@@ -190,7 +211,6 @@ const PrintView = ({
     const mapBounds = map.getBounds();
     mymap.fitBounds(mapBounds);
 
-
     let vid = 0;
     const descriptions = [];
     Object.keys(markers).forEach((key) => {
@@ -228,7 +248,6 @@ const PrintView = ({
         );
         layer.addLayer(customMarker);
 
-
         description.number = vid;
 
         descriptions.push(description);
@@ -259,11 +278,11 @@ const PrintView = ({
   }, []);
 
   return (
-    <div ref={dialogRef} role="dialog" className={classes.wrapper}>
+    <StyledWrapper ref={dialogRef} role="dialog">
       {/* Empty element that makes keyboard focus loop in dialog */}
       <Typography style={visuallyHidden} aria-hidden tabIndex={0} onFocus={focusToLastElement} />
-      <div className={classes.container}>
-        <div className={classes.buttonContainer}>
+      <StyledContainer>
+        <StyledButtonContainer>
           <SMButton
             className="no-print"
             messageID="print.button.close"
@@ -280,15 +299,14 @@ const PrintView = ({
             }}
             role="button"
           />
-        </div>
-        <div
+        </StyledButtonContainer>
+        <StyledMap
           aria-label={intl.formatMessage({ id: 'map.ariaLabel' })}
           id="print-map"
-          className={classes.map}
           tabIndex={-1}
         />
         <div>
-          <TableContainer component={Paper} className={classes.table}>
+          <StyledTableContainer component={Paper}>
             <Table>
               <TableHead>
                 <TableRow>
@@ -310,7 +328,9 @@ const PrintView = ({
                     return (
                       <React.Fragment key={description.number}>
                         <StyledTableRow key={description.number}>
-                          <StyledTableCell>{description.number}</StyledTableCell>
+                          <StyledTableCell>
+                            {description.number}
+                          </StyledTableCell>
                           <StyledTableCell>
                             {
                               name
@@ -362,28 +382,16 @@ const PrintView = ({
               </TableBody>
             </Table>
 
-          </TableContainer>
+          </StyledTableContainer>
         </div>
-      </div>
+      </StyledContainer>
       {/* Empty element that makes keyboard focus loop in dialog */}
       <Typography style={visuallyHidden} aria-hidden tabIndex="0" onFocus={focusToFirstElement} />
-    </div>
+    </StyledWrapper>
   );
 };
 
 PrintView.propTypes = {
-  classes: PropTypes.shape({
-    buttonContainer: PropTypes.string,
-    container: PropTypes.string,
-    map: PropTypes.string,
-    table: PropTypes.string,
-    wrapper: PropTypes.string,
-  }).isRequired,
-  map: PropTypes.shape({
-    getBounds: PropTypes.func,
-    getCenter: PropTypes.func,
-    getZoom: PropTypes.func,
-  }).isRequired,
   togglePrintView: PropTypes.func.isRequired,
 };
 

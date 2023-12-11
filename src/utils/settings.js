@@ -26,9 +26,9 @@ class SettingsUtility {
 
   static settingsCollapsed = ALLOWED.settingsCollapsed;
 
-  static accessibilityImpairmentKeys = Object.keys(ACCESSIBILITY_MAPPING).map(
-    key => (key),
-  );
+  static accessibilityImpairmentKeys = Object.keys(ACCESSIBILITY_MAPPING);
+
+  static accessibilityImpairmentValues = Object.values(ACCESSIBILITY_MAPPING);
 
   // AccessibilityRelatedSettings
   // Filter mobility and accessibility settings from null values
@@ -38,10 +38,7 @@ class SettingsUtility {
   ];
 
   static isValidAccessibilitySenseImpairment(key) {
-    if (SettingsUtility.accessibilityImpairmentKeys.indexOf(key) < 0) {
-      return false;
-    }
-    return true;
+    return SettingsUtility.accessibilityImpairmentKeys.includes(key);
   }
 
   static mapValidAccessibilitySenseImpairmentValueToKey(value) {
@@ -50,10 +47,7 @@ class SettingsUtility {
   }
 
   static isValidMobilitySetting(value) {
-    if (SettingsUtility.mobilitySettings.indexOf(value) < 0) {
-      return false;
-    }
-    return true;
+    return SettingsUtility.mobilitySettings.includes(value);
   }
 
   static isValidCitySetting(values) {
@@ -75,24 +69,17 @@ class SettingsUtility {
   }
 
   static isValidMapSetting(value) {
-    if (SettingsUtility.mapSettings.indexOf(value) < 0) {
+    if (!SettingsUtility.mapSettings.includes(value)) {
       throw new Error(`Invalid value for map setting: ${value}`);
     }
     return true;
   }
 
   static isValidValueForSettingsCollapsed(value) {
-    if (SettingsUtility.settingsCollapsed.indexOf(value) < 0) {
+    if (!SettingsUtility.settingsCollapsed.includes(value)) {
       throw new Error(`Invalid value for settings open: ${value}`);
     }
     return true;
-  }
-
-  static getAccessibilityShortcomingKey(key) {
-    if (Object.prototype.hasOwnProperty.call(ACCESSIBILITY_MAPPING, key)) {
-      return ACCESSIBILITY_MAPPING[key];
-    }
-    return key;
   }
 
   /**
@@ -104,24 +91,6 @@ class SettingsUtility {
       throw new Error(`Invalid key for accessibility mapping: ${key}`);
     }
     return ACCESSIBILITY_MAPPING[key];
-  }
-
-  /**
-   * Return active city settings from redux state
-   * @param {*} citySettings - City settings from state
-   * @returns {array} - Array of city settings which are active
-   */
-  static getActiveCitySettings(citySettings) {
-    const result = [];
-    SettingsUtility.citySettings.forEach((city) => {
-      if (
-        Object.prototype.hasOwnProperty.call(citySettings, (city))
-        && citySettings[city]
-      ) {
-        result.push(city);
-      }
-    });
-    return result;
   }
 
   /**
@@ -155,11 +124,11 @@ class SettingsUtility {
   // Parse current accessibility settings to single shortcoming array
   static parseShortcomingSettings(settings) {
     if (!settings) {
-      return null;
+      return [];
     }
     const data = [];
     const { mobility } = settings;
-    if (typeof mobility === 'string' && mobility !== 'none') {
+    if (typeof mobility === 'string' && SettingsUtility.isValidMobilitySetting(mobility) && mobility !== 'none') {
       data.push(mobility);
     }
 
@@ -170,12 +139,6 @@ class SettingsUtility {
     });
 
     return data;
-  }
-
-  // Check accessibility settings have been activated
-  static hasActiveAccessibilitySettings(settings) {
-    const activeSettings = SettingsUtility.parseShortcomingSettings(settings);
-    return activeSettings && activeSettings.length;
   }
 }
 

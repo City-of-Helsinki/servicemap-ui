@@ -1,51 +1,57 @@
 import { createSelector } from 'reselect';
-import { getFilteredData } from './results';
-import { selectCities, selectOrganizations } from './settings';
+import { arraysEqual } from '../../utils';
+import { filterByCitySettings, getCityAndOrgFilteredData } from '../../utils/filters';
+import { selectCities, selectSelectedCities, selectSelectedOrganizationIds } from './settings';
 
 export const getHighlightedDistrict = state => state.districts.highlitedDistrict;
 
-const getSelectedDistrict = state => state.districts.selectedDistrictType;
-const getDistrictData = state => state.districts.districtData;
+export const selectSelectedDistrictType = state => state.districts.selectedDistrictType;
+export const selectDistrictData = state => state.districts.districtData;
 const getAddressDistrictData = state => state.districts.districtAddressData.districts;
-export const getSubdistrictUnits = state => state.districts.subdistrictUnits;
-const getSubdistrictSelection = state => state.districts.selectedSubdistricts;
+export const selectSubdistrictUnits = state => state.districts.subdistrictUnits;
+export const selectSelectedSubdistricts = state => state.districts.selectedSubdistricts;
 const getSelectedDistrictServices = state => state.districts.selectedDistrictServices;
 const selectParkingUnits = state => state.districts.parkingUnits;
+export const selectDistrictsFetching = state => state.districts.districtsFetching;
+export const selectDistrictAddressData = state => state.districts.districtAddressData;
+export const selectDistrictUnitFetch = state => state.districts.unitFetch;
 
 export const selectParkingUnitUnits = createSelector(
   [selectParkingUnits],
   parkingUnits => parkingUnits.filter(unit => unit.object_type === 'unit'),
 );
 
-export const getDistrictsByType = createSelector(
-  [getSelectedDistrict, getDistrictData, selectCities],
-  (selectedDistrictType, districtData, citySettings) => {
-    if (selectedDistrictType && districtData.length) {
-      const districtType = districtData.find(obj => obj.id === selectedDistrictType);
-      const selectedCities = Object.values(citySettings).filter(city => city);
-      // Filter distircts by user city settings
-      if (districtType && selectedCities.length) {
-        return districtType.data.filter(district => citySettings[district.municipality]);
-      }
-      return districtType ? districtType.data : [];
+export const selectDistrictDataBySelectedType = createSelector(
+  [selectSelectedDistrictType, selectDistrictData],
+  (selectedDistrictType, districtData) => {
+    if (!selectedDistrictType || !districtData?.length) {
+      return [];
     }
-    return [];
+    return districtData.find(obj => obj.id === selectedDistrictType)?.data || [];
+  },
+  {
+    memoizeOptions: {
+      // Check for equal array content, assume non-nil and sorted arrays
+      resultEqualityCheck: (a, b) => arraysEqual(a, b),
+    },
   },
 );
 
 export const getAddressDistrict = createSelector(
-  [getDistrictsByType, getAddressDistrictData],
-  (districts, addressDistricts) => {
-    if (districts && addressDistricts) {
-      return districts.find(obj => addressDistricts.some(i => i.id === obj.id));
+  [selectDistrictDataBySelectedType, selectCities, getAddressDistrictData],
+  (districtData, citySettings, addressDistricts) => {
+    if (!addressDistricts) {
+      return null;
     }
-    return null;
+    return districtData
+      .filter(filterByCitySettings(citySettings))
+      .find(obj => addressDistricts.some(i => i.id === obj.id));
   },
 );
 
 // Get units that are tied to each area object
 export const getDistrictPrimaryUnits = createSelector(
-  [getDistrictsByType],
+  [selectDistrictDataBySelectedType],
   (districts) => {
     const primaryUnits = [];
 
@@ -70,28 +76,49 @@ export const getDistrictPrimaryUnits = createSelector(
   },
 );
 
-// Get selected geographical district units
-export const getFilteredSubdistrictServices = createSelector(
-  [getSubdistrictSelection, getSubdistrictUnits, selectCities, selectOrganizations],
-  (selectedSubdistricts, unitData, cities, organizations) => {
-    const cityFilteredUnits = getFilteredData(unitData, { cities, organizations });
-    if (selectedSubdistricts?.length && unitData) {
-      return cityFilteredUnits.filter(
-        unit => selectedSubdistricts.some(district => district === unit.division_id),
+const getSubDistrictUnits = createSelector(
+  [selectSelectedSubdistricts, selectSubdistrictUnits],
+  (selectedSubDistricts, unitData) => {
+    if (selectedSubDistricts?.length && unitData) {
+      return unitData.filter(
+        unit => selectedSubDistricts.some(district => district === unit.division_id),
       );
     }
     return [];
   },
+  {
+    memoizeOptions: {
+      resultEqualityCheck: (a, b) => arraysEqual(a, b),
+    },
+  },
+);
+
+// Get selected geographical district units, used only in non-embed mode
+export const getFilteredSubdistrictServices = createSelector(
+  [
+    getSubDistrictUnits, selectSelectedCities, selectSelectedOrganizationIds,
+  ],
+  (subDistrictUnits, cities, orgIds) => getCityAndOrgFilteredData(subDistrictUnits, cities, orgIds),
+  {
+    memoizeOptions: {
+      resultEqualityCheck: (a, b) => arraysEqual(a, b),
+    },
+  },
 );
 
 // Get area view units filtered by area view unit tab checkbox selection
-export const getFilteredSubdistrictUnits = createSelector(
-  [getFilteredSubdistrictServices, getSelectedDistrictServices],
-  (districtUnits, serviceFilters) => {
+export const getFilteredSubDistrictUnits = createSelector(
+  [getSubDistrictUnits, getSelectedDistrictServices],
+  (subDistrictUnits, serviceFilters) => {
     if (serviceFilters.length) {
-      return districtUnits.filter(unit => (
+      return subDistrictUnits.filter(unit => (
         unit.services.some(service => serviceFilters.includes(service.id))));
     }
-    return districtUnits;
+    return subDistrictUnits;
+  },
+  {
+    memoizeOptions: {
+      resultEqualityCheck: (a, b) => arraysEqual(a, b),
+    },
   },
 );

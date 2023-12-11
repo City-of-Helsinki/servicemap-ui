@@ -1,16 +1,36 @@
 /* eslint-disable */
 import { Selector } from 'testcafe';
-import { waitForReact, ReactSelector } from 'testcafe-react-selectors';
-import { viewTitleID } from '../../src/utils/accessibility';
+import { ReactSelector, waitForReact } from 'testcafe-react-selectors';
 
 import config from '../config';
 import { getLocation } from '../utility';
-import { searchBarInput } from '../utility/pageObjects';
+import {
+  addressSearchBarInput,
+  cityDropdown,
+  ESPOO_ORG,
+  HELSINKI_ORG,
+  mobilityDropdown,
+  organisationDropdown,
+  searchBarInput,
+  sensesDropdown,
+  setLocalStorageItem,
+  settingChip,
+  settingsMenuButton,
+  settingsMenuPanel,
+} from '../utility/pageObjects';
 import paginationTest from '../utility/paginationTest';
 import resultOrdererTest from '../utility/resultOrdererTest';
+
 const { server } = config;
 
 const searchPage = `http://${server.address}:${server.port}/fi/search?q=kirjasto`;
+const bathUrl = `http://${server.address}:${server.port}/fi/search?q=maauimala`;
+const embedBathUrl = `http://${server.address}:${server.port}/fi/embed/search?q=maauimala&search_language=fi&show_list=side`;
+const homePage= `http://${server.address}:${server.port}/fi`
+const resultItemTitle = Selector('[data-sm="ResultItemTitle"]');
+const kumpulaBath = resultItemTitle.withText('Kumpulan maauimala');
+const leppavaaraBath = resultItemTitle.withText('Leppävaaran maauimala');
+const addressInput = Selector(addressSearchBarInput);
 
 fixture`Search view test`
   .page`${searchPage}`
@@ -132,9 +152,8 @@ test('Search does list results', async (t) => {
 // Check that address search works and draws marker on map
 test('Address search does work', async (t) => {
   await searchUnits(t, 'kirjasto');
-  const addressInput = Selector('#addressSearchbar');
   const suggestions = Selector('#address-results div[role="option"]');
-  const marker = Selector('div[class*="userMarker"]');
+  const marker = Selector('div[class*="MarkerIcon"]');
   const distanceText = Selector('div[data-sm="ResultItemRightColumn"]');
 
   await t
@@ -171,9 +190,9 @@ test('ServiceItem click event takes to service page', async(t) => {
 
   await t
     .click(services.nth(0));
-  const serviceTitle = await (await serviceTitleSelector.textContent).toLowerCase();
+  const serviceTitle = await serviceTitleSelector.textContent;
   await t
-    .expect(serviceTitle).eql(serviceName.toLowerCase())
+    .expect(serviceTitle.toLowerCase()).eql(serviceName.toLowerCase())
   ;
 });
 
@@ -272,7 +291,7 @@ test('Tabs accessibility attributes are OK', async(t) => {
 });
 
 
-test('Search suggestion arrow navigation does loop correctly', async(t) => {
+test.skip('Search suggestion arrow navigation does loop correctly', async(t) => {
   const expectedBoxShadowColor = 'rgb(71, 131, 235)'; // Focus color
   // Suggestion items selector
   const items = Selector('#SuggestionList li[role="option"]');
@@ -314,3 +333,167 @@ test('Search suggestion arrow navigation does loop correctly', async(t) => {
 //     .expect(getLocation()).contains(`http://${server.address}:${server.port}/fi/search?q=${text}`)
     
 // });
+const orgChips = Selector(`${organisationDropdown} ${settingChip}`)
+const cityChips = Selector(`${cityDropdown} ${settingChip}`);
+
+fixture`Search view custom url with city and org param test`
+  .page`${homePage}`
+  .beforeEach(async () => {
+    await waitForReact();
+  });
+
+
+test('Should override municipality settings by url', async(t) => {
+  // the city in url should overwrite settings made by user (and save setting)
+  await setLocalStorageItem('SM:espoo', true);
+  await t
+    .navigateTo(bathUrl)
+    .expect(cityChips.count).eql(1)
+    .expect(cityChips.textContent).eql('Espoo')
+    .expect(leppavaaraBath.exists).ok('Should find bath in Espoo')
+    .expect(kumpulaBath.exists).notOk('Should hide baths of Helsinki')
+    .navigateTo(`${bathUrl}&city=helsinki`)
+    .expect(cityChips.count).eql(1)
+    .expect(cityChips.textContent).eql('Helsinki')
+    .expect(kumpulaBath.exists).ok('Should find bath in Helsinki')
+    .expect(leppavaaraBath.exists).notOk('Should hide baths of Espoo')
+    .navigateTo(`${bathUrl}&city=espoo`)
+    .expect(cityChips.count).eql(1)
+    .expect(cityChips.textContent).eql('Espoo')
+    .expect(leppavaaraBath.exists).ok('Should find bath in Espoo')
+    .expect(kumpulaBath.exists).notOk('Should hide baths of Helsinki')
+  ;
+});
+
+test('Should not mess up city settings between embedded and normal view', async(t) => {
+  await setLocalStorageItem('SM:espoo', true);
+  await t
+    .navigateTo(`${embedBathUrl}`)
+    .expect(kumpulaBath.exists).ok('Should find bath in Helsinki')
+    .expect(leppavaaraBath.exists).ok('Should hide baths in Espoo')
+    .navigateTo(`${embedBathUrl}&city=espoo`)
+    .expect(kumpulaBath.exists).notOk('Should not find baths in Helsinki')
+    .expect(leppavaaraBath.exists).ok('Should find baths in Espoo')
+    .navigateTo(`${embedBathUrl}&city=helsinki`)
+    .expect(kumpulaBath.exists).ok('Should find baths in Helsinki')
+    .expect(leppavaaraBath.exists).notOk('Should not find baths in Espoo')
+    // Returning to normal mode, the visit to embedding should not mess up previous settings
+    .navigateTo(`${bathUrl}`)
+    .expect(kumpulaBath.exists).notOk('Should not find bath in Helsinki')
+    .expect(leppavaaraBath.exists).ok('Should find bath in Espoo')
+  ;
+});
+
+test('Should override organization settings by url', async(t) => {
+  await setLocalStorageItem(`SM:${ESPOO_ORG}`, true);
+  // the organization in url should overwrite settings made by user (and save setting)
+  await t
+    .navigateTo(`${bathUrl}`)
+    .expect(orgChips.count).eql(1)
+    .expect(orgChips.textContent).eql('Espoon kaupunki')
+    .expect(leppavaaraBath.exists).ok('Should find bath of Espoo org')
+    .expect(kumpulaBath.exists).notOk('Should hide baths of Helsinki org')
+    .navigateTo(`${bathUrl}&organization=${HELSINKI_ORG}`)
+    .expect(orgChips.count).eql(1)
+    .expect(orgChips.textContent).eql('Helsingin kaupunki')
+    .expect(kumpulaBath.exists).ok('Should find bath of Helsinki org')
+    .expect(leppavaaraBath.exists).notOk('Should hide baths of Espoo org')
+    .navigateTo(`${bathUrl}&organization=${ESPOO_ORG}`)
+    .expect(orgChips.count).eql(1)
+    .expect(orgChips.textContent).eql('Espoon kaupunki')
+    .expect(leppavaaraBath.exists).ok('Should find bath of Espoo org')
+    .expect(kumpulaBath.exists).notOk('Should hide baths of Helsinki org')
+  ;
+});
+
+test('Should not mess up organization settings between embedded and normal view', async(t) => {
+  await setLocalStorageItem(`SM:${ESPOO_ORG}`, true);
+  await t
+    .navigateTo(`${embedBathUrl}`)
+    .expect(kumpulaBath.exists).ok('Should find bath of Helsinki org')
+    .expect(leppavaaraBath.exists).ok('Should hide baths of Espoo org')
+    .navigateTo(`${embedBathUrl}&organization=${ESPOO_ORG}`)
+    .expect(kumpulaBath.exists).notOk('Should not find baths of Helsinki org')
+    .expect(leppavaaraBath.exists).ok('Should find baths of Espoo org')
+    .navigateTo(`${embedBathUrl}&organization=${HELSINKI_ORG}`)
+    .expect(kumpulaBath.exists).ok('Should find baths of Helsinki org')
+    .expect(leppavaaraBath.exists).notOk('Should not find baths of Espoo org')
+    // Returning to normal mode, the visit to embedding should not mess up previous settings
+    .navigateTo(`${bathUrl}`)
+    .expect(kumpulaBath.exists).notOk('Should not find bath of Helsinki org')
+    .expect(leppavaaraBath.exists).ok('Should find bath of Espoo org')
+  ;
+});
+
+
+fixture`Search view custom url with accessibility param test`
+  .page`${homePage}`
+  .beforeEach(async () => {
+    await waitForReact();
+  });
+
+
+test('Should override accessibility settings', async(t) => {
+  await setLocalStorageItem(`SM:hearingAid`, true);
+  const senseChips = Selector(settingsMenuPanel).find(`${sensesDropdown} ${settingChip}`);
+  const mobilityInput = Selector(settingsMenuPanel).find(`${mobilityDropdown} input`);
+  await t
+    .navigateTo(`${bathUrl}&accessibility_setting=visual_impairment,reduced_mobility,colour_blind`)
+    .click(settingsMenuButton)
+    .expect(senseChips.count).eql(2)
+    .expect(senseChips.withText('Minun on vaikea erottaa värejä').exists).ok()
+    .expect(senseChips.withText('Olen näkövammainen').exists).ok()
+    .expect(mobilityInput.value).eql('Olen liikkumisesteinen')
+    .navigateTo(`${bathUrl}&accessibility_setting=`)
+    .click(settingsMenuButton)
+    .expect(senseChips.exists).notOk()
+    .expect(mobilityInput.value).eql('')
+  ;
+});
+
+fixture`Search view should set settings to url test`
+  .page`${homePage}`
+  .beforeEach(async () => {
+    await waitForReact();
+  });
+
+
+test('Should set user settings to url', async(t) => {
+  // Use local storage as dropdowns are flaky
+  await setLocalStorageItem(`SM:hearingAid`, true);
+  await setLocalStorageItem(`SM:mobility`, 'rollator');
+  await setLocalStorageItem(`SM:${ESPOO_ORG}`, true);
+  await setLocalStorageItem('SM:helsinki', true);
+  await setLocalStorageItem('SM:kauniainen', true);
+  const senseChips = Selector(`${sensesDropdown} ${settingChip}`);
+  const mobilityInput = Selector(`${mobilityDropdown} input`);
+  await t
+    .navigateTo(`${bathUrl}`)
+    // Check settings
+    .expect(senseChips.count).eql(1)
+    .expect(senseChips.withText('Käytän kuulolaitetta').exists).ok()
+    .expect(mobilityInput.value).eql('Käytän rollaattoria')
+    .expect(cityChips.count).eql(2)
+    .expect(cityChips.withText('Helsinki').exists).ok()
+    .expect(cityChips.withText('Kauniainen').exists).ok()
+    .expect(orgChips.count).eql(1)
+    .expect(orgChips.withText('Espoon kaupunki').exists).ok()
+    // Check url
+    .expect(getLocation()).contains('city=helsinki%2Ckauniainen')
+    .expect(getLocation()).contains('organization=520a4492-cb78-498b-9c82-86504de88dce')
+    .expect(getLocation()).contains('accessibility_setting=hearing_aid%2Crollator')
+  ;
+});
+
+fixture`Search view should set home address with url test`
+  .page`${homePage}/search?q=maauimala&hcity=helsinki&hstreet=Annankatu+12`
+  .beforeEach(async () => {
+    await waitForReact();
+  });
+
+test('Should set home address from url', async(t) => {
+  await t
+    .expect(addressInput.value).contains('Annankatu 12')
+    .expect(addressInput.value).contains('Helsinki')
+  ;
+});

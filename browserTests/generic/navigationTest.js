@@ -2,7 +2,12 @@ import { waitForReact } from 'testcafe-react-selectors';
 import { Selector } from 'testcafe';
 import config from '../config';
 import {
-  embedderToolButton, feedbackButton, infoButton, mapToolsButton, searchBarInput,
+  embedderToolButton,
+  embedderToolCloseButton,
+  feedbackButton,
+  infoButton,
+  mapToolsButton,
+  searchBarInput,
 } from '../utility/pageObjects';
 
 /* eslint-disable */
@@ -25,7 +30,7 @@ test('Should navigate back to home from embedder tool', async (t) => {
   await t
     .click(mapToolsButton)
     .click(embedderToolButton)
-    .click(Selector('[data-sm="EmbedderToolCloseButton"]'))
+    .click(embedderToolCloseButton)
     .expect(searchBarInput.exists).ok();
 });
 
@@ -37,7 +42,7 @@ fixture`Navigation embedder`
 
 test('Should navigate to home page from embedder tool', async (t) => {
   await t
-    .click(Selector('[data-sm="EmbedderToolCloseButton"]'))
+    .click(embedderToolCloseButton)
     .expect(searchBarInput.exists).ok();
 });
 

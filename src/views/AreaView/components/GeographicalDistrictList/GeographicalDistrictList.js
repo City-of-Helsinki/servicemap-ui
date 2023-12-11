@@ -1,7 +1,5 @@
 import styled from '@emotion/styled';
-import {
-  Checkbox, FormControlLabel, List, ListItem, Typography,
-} from '@mui/material';
+import { Checkbox, FormControlLabel, List, ListItem, Typography } from '@mui/material';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
@@ -10,9 +8,13 @@ import { SMAccordion } from '../../../../components';
 import {
   setSelectedDistrictServices, setSelectedSubdistricts,
 } from '../../../../redux/actions/district';
-import { getDistrictsByType } from '../../../../redux/selectors/district';
+import {
+  selectDistrictDataBySelectedType, selectSelectedSubdistricts,
+} from '../../../../redux/selectors/district';
 import { selectMapRef } from '../../../../redux/selectors/general';
+import { selectCities } from '../../../../redux/selectors/settings';
 import { getLocale } from '../../../../redux/selectors/user';
+import { filterByCitySettings } from '../../../../utils/filters';
 import orderUnits from '../../../../utils/orderUnits';
 import useLocaleText from '../../../../utils/useLocaleText';
 import { panViewToBounds } from '../../../MapView/utils/mapActions';
@@ -22,9 +24,11 @@ const GeographicalDistrictList = ({ district }) => {
   const dispatch = useDispatch();
   const getLocaleText = useLocaleText();
   const map = useSelector(selectMapRef);
-  const citySettings = useSelector(state => state.settings.cities);
-  const selectedSubdistricts = useSelector(state => state.districts.selectedSubdistricts);
-  const selectedDistrictData = useSelector(state => getDistrictsByType(state));
+  const citySettings = useSelector(selectCities);
+  const selectedSubdistricts = useSelector(selectSelectedSubdistricts);
+  const districts = useSelector(selectDistrictDataBySelectedType);
+  const cityFilter = filterByCitySettings(filterByCitySettings(citySettings));
+  const selectedDistrictData = districts.filter(cityFilter);
   const locale = useSelector(getLocale);
 
   const handleCheckboxChange = (event, district) => {
@@ -62,14 +66,8 @@ const GeographicalDistrictList = ({ district }) => {
     return acc;
   }, []);
 
-  // Filter data with city settings
-  const selectedCities = Object.values(citySettings).filter(city => city);
-  let cityFilteredData = [];
-  if (!selectedCities.length) {
-    cityFilteredData = groupedData;
-  } else {
-    cityFilteredData = groupedData.filter(data => citySettings[data[0].municipality]);
-  }
+  const getter = data => data[0].municipality;
+  const cityFilteredData = groupedData.filter(filterByCitySettings(citySettings, getter));
 
   // Reorder data order by municipality
   const citiesInOrder = Object.keys(citySettings);

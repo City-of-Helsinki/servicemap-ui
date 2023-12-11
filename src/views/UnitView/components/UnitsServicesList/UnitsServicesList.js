@@ -6,7 +6,7 @@ import UnitDataList from '../UnitDataList';
 // Teaching and education service node. Could be changed to exclude daycare centers etc.
 const educationNode = 1087;
 
-const UnitsServicesList = ({ unit, listLength, navigator }) => {
+const UnitsServicesList = ({ unit, listLength }) => {
   const getLocaleText = useLocaleText();
 
   const [serviceList, setServiceList] = useState([]);
@@ -66,7 +66,6 @@ const UnitsServicesList = ({ unit, listLength, navigator }) => {
       listLength={listLength}
       data={{ data: serviceList, max: serviceList.length }}
       type="services"
-      navigator={navigator}
     />
   );
 
@@ -79,7 +78,6 @@ const UnitsServicesList = ({ unit, listLength, navigator }) => {
         type="educationServices"
         period={period}
         disableTitle={i !== 0}
-        navigator={navigator}
       />
     ))
   );
@@ -100,12 +98,10 @@ const UnitsServicesList = ({ unit, listLength, navigator }) => {
 UnitsServicesList.propTypes = {
   unit: PropTypes.objectOf(PropTypes.any).isRequired,
   listLength: PropTypes.number,
-  navigator: PropTypes.objectOf(PropTypes.any),
 };
 
 UnitsServicesList.defaultProps = {
   listLength: 5,
-  navigator: null,
 };
 
 export default UnitsServicesList;

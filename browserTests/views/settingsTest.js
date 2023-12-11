@@ -2,10 +2,16 @@
 import { Selector } from 'testcafe';
 import { waitForReact } from 'testcafe-react-selectors';
 import config from '../config';
-import { mapToolsButton } from '../utility/pageObjects';
+import {
+  cityDropdown, mapToolsButton, mobilityDropdown, organisationDropdown, sensesDropdown,
+} from '../utility/pageObjects';
 
 const { server } = config;
 
+const sensesDropdownSelector = Selector(sensesDropdown)
+const mobilityDropdownSelector = Selector(mobilityDropdown)
+const cityDropdownSelector = Selector(cityDropdown)
+const organisationDropdownSelector = Selector(organisationDropdown)
 
 fixture`Settings view tests`
   .page`http://${server.address}:${server.port}/fi/`
@@ -15,10 +21,10 @@ fixture`Settings view tests`
 
 test('Settings does opens and closes correctly', async (t) => {
   await t
-    .expect(Selector('#senses-setting-dropdown').visible).ok()
-    .expect(Selector('#mobility-setting-dropdown').visible).ok()
-    .expect(Selector('#cities-setting-dropdown').visible).ok()
-    .expect(Selector('#organizations-setting-dropdown').visible).ok()
+    .expect(sensesDropdownSelector.visible).ok()
+    .expect(mobilityDropdownSelector.visible).ok()
+    .expect(cityDropdownSelector.visible).ok()
+    .expect(organisationDropdownSelector.visible).ok()
   ;
 
   await t
@@ -26,10 +32,10 @@ test('Settings does opens and closes correctly', async (t) => {
   ;
 
   await t
-    .expect(Selector('#senses-setting-dropdown').visible).notOk()
-    .expect(Selector('#mobility-setting-dropdown').visible).notOk()
-    .expect(Selector('#cities-setting-dropdown').visible).notOk()
-    .expect(Selector('#organizations-setting-dropdown').visible).notOk()
+    .expect(sensesDropdownSelector.visible).notOk()
+    .expect(mobilityDropdownSelector.visible).notOk()
+    .expect(cityDropdownSelector.visible).notOk()
+    .expect(organisationDropdownSelector.visible).notOk()
   ;
 
   await t
@@ -37,10 +43,10 @@ test('Settings does opens and closes correctly', async (t) => {
   ;
 
   await t
-    .expect(Selector('#senses-setting-dropdown').visible).ok()
-    .expect(Selector('#mobility-setting-dropdown').visible).ok()
-    .expect(Selector('#cities-setting-dropdown').visible).ok()
-    .expect(Selector('#organizations-setting-dropdown').visible).ok()
+    .expect(sensesDropdownSelector.visible).ok()
+    .expect(mobilityDropdownSelector.visible).ok()
+    .expect(cityDropdownSelector.visible).ok()
+    .expect(organisationDropdownSelector.visible).ok()
   ;
 });
 

@@ -1,28 +1,34 @@
-import React, { useContext } from 'react';
+import styled from '@emotion/styled';
+import { Code, GetApp, Print } from '@mui/icons-material';
 import PropTypes from 'prop-types';
+import React, { useContext } from 'react';
+import { useIntl } from 'react-intl';
+import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import URI from 'urijs';
-import {
-  Code, GetApp, Print,
-} from '@mui/icons-material';
-import { useSelector } from 'react-redux';
-import styled from '@emotion/styled';
+import PrintContext from '../../context/PrintContext';
+import { selectMapRef, selectMeasuringMode, selectNavigator } from '../../redux/selectors/general';
+import { getPage } from '../../redux/selectors/user';
+import DownloadDialog from '../Dialog/DownloadDialog';
 import { DropDownMenuButton, OwnSettingsMenuButton } from '../MenuButton';
 import SMIcon from '../SMIcon/SMIcon';
-import PrintContext from '../../context/PrintContext';
-import DownloadDialog from '../Dialog/DownloadDialog';
 import MeasuringStopButton from './MeasuringStopButton';
 
 const ToolMenuButtonID = 'ToolMenuButton';
 
 const ToolMenu = ({
-  intl, mapUtility, navigator, setMeasuringMode, measuringMode, currentPage,
+  setMeasuringMode,
 }) => {
   const togglePrintView = useContext(PrintContext);
   const location = useLocation();
   const [openDownload, setOpenDownload] = React.useState(false);
   const toolMenuButton = React.useRef();
   const districtState = useSelector(state => state.districts);
+  const map = useSelector(selectMapRef);
+  const navigator = useSelector(selectNavigator);
+  const currentPage = useSelector(getPage);
+  const measuringMode = useSelector(selectMeasuringMode);
+  const intl = useIntl();
 
   const getAreaViewParams = () => {
     // Form url with parameters when user clicks embedder from tool menu
@@ -63,7 +69,7 @@ const ToolMenu = ({
 
   // Open embedderView
   const openEmbedder = () => {
-    if (!navigator || !mapUtility) {
+    if (!navigator || !map) {
       return;
     }
     const pathname = location.pathname.split('/');
@@ -162,20 +168,6 @@ const StyledSMIcon = styled(SMIcon)(() => iconClass);
 
 ToolMenu.propTypes = {
   setMeasuringMode: PropTypes.func.isRequired,
-  measuringMode: PropTypes.bool.isRequired,
-  currentPage: PropTypes.string.isRequired,
-  intl: PropTypes.objectOf(PropTypes.any).isRequired,
-  mapUtility: PropTypes.shape({
-    getBbox: PropTypes.func,
-  }),
-  navigator: PropTypes.shape({
-    push: PropTypes.func,
-  }),
-};
-
-ToolMenu.defaultProps = {
-  mapUtility: null,
-  navigator: null,
 };
 
 export default ToolMenu;

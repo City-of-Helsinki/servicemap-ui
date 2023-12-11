@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
+import { selectNavigator } from '../../../../redux/selectors/general';
+import { getPage } from '../../../../redux/selectors/user';
 import swapCoordinates from '../../utils/swapCoordinates';
 import UnitHelper from '../../../../utils/unitHelper';
 
-
-const UnitGeometry = ({
-  data,
-  currentPage,
-  navigator,
-}) => {
+const UnitGeometry = ({ data }) => {
   const { Polyline, Polygon } = global.rL;
+  const currentPage = useSelector(getPage);
+  const navigator = useSelector(selectNavigator);
 
   const [geometryData, setGeometryData] = useState(null);
 
@@ -103,8 +103,6 @@ UnitGeometry.propTypes = {
   data: PropTypes.shape({
     geometry: PropTypes.objectOf(PropTypes.any),
   }).isRequired,
-  currentPage: PropTypes.string.isRequired,
-  navigator: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 

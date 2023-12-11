@@ -8,12 +8,17 @@ import {
   List,
   Typography,
 } from '@mui/material';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { Map } from '@mui/icons-material';
 import Helmet from 'react-helmet';
 import { useSelector } from 'react-redux';
 import { useLocation, useRouteMatch } from 'react-router-dom';
 import styled from '@emotion/styled';
+import {
+  selectAddressAdminDistricts, selectAddressData,
+  selectAddressUnits,
+} from '../../redux/selectors/address';
+import { selectMapRef, selectNavigator } from '../../redux/selectors/general';
 import { focusToPosition, useMapFocusDisabled } from '../MapView/utils/mapActions';
 import fetchAdministrativeDistricts from './utils/fetchAdministrativeDistricts';
 import fetchAddressUnits from './utils/fetchAddressUnits';
@@ -40,7 +45,7 @@ const hiddenDivisions = {
 };
 
 const getEmergencyCareUnit = (division) => {
-  if (division && division.type === 'emergency_care_district') {
+  if (division?.type === 'emergency_care_district') {
     switch (division.ocd_id) {
       case 'ocd-division/country:fi/kunta:helsinki/päivystysalue:haartmanin_päivystysalue': {
         return 26104; // Haartman
@@ -61,28 +66,28 @@ const getEmergencyCareUnit = (division) => {
 };
 
 const AddressView = (props) => {
+  const intl = useIntl();
   const [error, setError] = useState(null);
   const [isFetching, setIsFetching] = useState(false);
   const getLocaleText = useLocaleText();
   const match = useRouteMatch();
   const location = useLocation();
   const searchResults = useSelector(state => state.searchResults.data);
+  const navigator = useSelector(selectNavigator);
+  const map = useSelector(selectMapRef);
+  const units = useSelector(selectAddressUnits);
+  const adminDistricts = useSelector(selectAddressAdminDistricts);
+  const addressData = useSelector(selectAddressData);
 
   const {
-    addressData,
-    adminDistricts,
     embed,
-    intl,
     getDistance,
-    map,
     setAddressData,
     setAddressLocation,
     setAddressUnits,
     setDistrictAddressData,
     setAdminDistricts,
     setToRender,
-    navigator,
-    units,
   } = props;
 
   let title = '';
@@ -102,12 +107,12 @@ const AddressView = (props) => {
 
   const fetchUnits = (lnglat) => {
     fetchAddressUnits(lnglat)
-      .then((data) => {
-        const units = data.results;
+      .then(data => {
+        const units = data?.results || [];
         units.forEach((unit) => {
           unit.object_type = 'unit';
         });
-        setAddressUnits(data.results);
+        setAddressUnits(units);
       });
   };
 
@@ -150,7 +155,6 @@ const AddressView = (props) => {
       && municipalityFromParams === item.municipality.id
     ));
   };
-
 
   const renderHead = () => {
     if (addressData) {
@@ -230,6 +234,8 @@ const AddressView = (props) => {
     });
 
     const getCustomRescueAreaTitle = area => `${area.origin_id} - ${getLocaleText(area.name)}`;
+    const majorDistricts = adminDistricts.filter(x => x.type === 'major_district');
+    const unitlessDistricts = [...rescueAreas, ...majorDistricts];
 
     const units = divisionsWithUnits.map((x) => {
       const { unit } = x;
@@ -278,14 +284,13 @@ const AddressView = (props) => {
               );
             })
           }
-          {rescueAreas.map(area => (
+          {unitlessDistricts.map(area => (
             <DistrictItem key={area.id} area={area} />
           ))}
         </List>
       </>
     );
   };
-
 
   // Render component
   const tabs = [
@@ -317,7 +322,6 @@ const AddressView = (props) => {
     tabs.unshift(nearbyServicesTab);
   }
 
-
   useEffect(() => {
     const searchParams = parseSearchParams(location.search);
     const selectedTab = parseInt(searchParams.t, 10) || 0;
@@ -338,7 +342,6 @@ const AddressView = (props) => {
       }
     }
   }, [match.url, map]);
-
 
   if (embed) {
     return null;
@@ -413,13 +416,6 @@ const StyledTopArea = styled('div')(() => ({
 export default AddressView;
 
 AddressView.propTypes = {
-  addressData: PropTypes.objectOf(PropTypes.any),
-  adminDistricts: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number,
-  })),
-  map: PropTypes.objectOf(PropTypes.any),
-  intl: PropTypes.objectOf(PropTypes.any).isRequired,
-  navigator: PropTypes.objectOf(PropTypes.any),
   getDistance: PropTypes.func.isRequired,
   setAddressData: PropTypes.func.isRequired,
   setAddressLocation: PropTypes.func.isRequired,
@@ -427,18 +423,9 @@ AddressView.propTypes = {
   setAdminDistricts: PropTypes.func.isRequired,
   setDistrictAddressData: PropTypes.func.isRequired,
   setToRender: PropTypes.func.isRequired,
-  location: PropTypes.objectOf(PropTypes.any).isRequired,
   embed: PropTypes.bool,
-  units: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number,
-  })),
 };
 
 AddressView.defaultProps = {
-  addressData: null,
-  adminDistricts: null,
-  map: null,
-  navigator: null,
   embed: false,
-  units: [],
 };

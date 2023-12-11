@@ -1,4 +1,7 @@
 /* eslint-disable global-require, no-use-before-define */
+import { css } from '@emotion/css';
+import styled from '@emotion/styled';
+import { useTheme } from '@mui/styles';
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { renderToStaticMarkup } from 'react-dom/server';
@@ -8,15 +11,35 @@ import { fetchBikeStations, fetchStops } from '../../utils/transitFetch';
 import { transitIconSize } from '../../config/mapConfig';
 import { isEmbed } from '../../../../utils/path';
 import useMobileStatus from '../../../../utils/isMobile';
+import getTypeAndClass from './util/util';
 
-const TransitStops = ({ mapObject, classes }) => {
+const StyledTransitIconMap = styled.span(({ color }) => ({
+  fontSize: transitIconSize,
+  height: transitIconSize,
+  margin: 0,
+  lineHeight: 1,
+  textShadow: '-1px 0 #fff, 0 1px #fff, 1px 0 #fff, 0 -1px #fff',
+  color,
+}));
+
+const TransitStops = ({ mapObject }) => {
   const isMobile = useMobileStatus();
   const { Marker, Popup } = global.rL;
+  const theme = useTheme();
 
   const [transitStops, setTransitStops] = useState([]);
   const [rentalBikeStations, setRentalBikeStations] = useState([]);
   const [visibleBikeStations, setVisibleBikeStations] = useState([]);
   const [bikeStationsLoaded, setBikeStationsLoaded] = useState(false);
+  // Theme was undefined inside styled component for some reason
+  const transitBackgroundClass = css({
+    fontFamily: 'hsl-piktoframe',
+    position: 'absolute',
+    lineHeight: 0,
+    zIndex: theme.zIndex.behind,
+    color: 'white',
+    fontSize: transitIconSize,
+  });
 
   const map = useMapEvents({
     moveend() {
@@ -78,37 +101,12 @@ const TransitStops = ({ mapObject, classes }) => {
 
   const getTransitIcon = (type) => {
     const { divIcon } = require('leaflet');
-    let icon;
-
-    switch (type) {
-      case 3: // Bus stops
-        icon = <span aria-hidden className={`${classes.transitIconMap} ${classes.busIconColor} icon-icon-hsl-bus`} />;
-        break;
-      case 0: // Tram stops
-        icon = <span aria-hidden className={`${classes.transitIconMap} ${classes.tramIconColor} icon-icon-hsl-tram`} />;
-        break;
-      case 109: // Train stops
-        icon = <span aria-hidden className={`${classes.transitIconMap} ${classes.trainIconColor} icon-icon-hsl-train`} />;
-        break;
-      case 1: // Subway stops
-        icon = <span aria-hidden className={`${classes.transitIconMap} ${classes.metroIconColor} icon-icon-hsl-metro`} />;
-        break;
-      case 7: // Bike stations
-        icon = <span aria-hidden className={`${classes.transitIconMap} ${classes.bikeIconColor} icon-icon-hsl-bike`} />;
-        break;
-      case -999: case 4: // Ferry stops
-        icon = <span aria-hidden className={`${classes.transitIconMap} ${classes.ferryIconColor} icon-icon-hsl-ferry`} />;
-        break;
-      default:
-        icon = <span aria-hidden className={`${classes.transitIconMap} ${classes.busIconColor} icon-icon-hsl-bus`} />;
-        break;
-    }
-
+    const { color, className } = getTypeAndClass(type);
     return divIcon({
       html: renderToStaticMarkup(
         <>
-          <span aria-hidden className={`${classes.transitBackground} icon-icon-hsl-background`} />
-          {icon}
+          <span aria-hidden className={`${transitBackgroundClass} icon-icon-hsl-background`} />
+          <StyledTransitIconMap aria-hidden color={color} className={className} />
         </>,
       ),
       iconSize: [transitIconSize, transitIconSize],
@@ -171,7 +169,6 @@ const TransitStops = ({ mapObject, classes }) => {
 
 TransitStops.propTypes = {
   mapObject: PropTypes.objectOf(PropTypes.any).isRequired,
-  classes: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 TransitStops.defaultProps = {

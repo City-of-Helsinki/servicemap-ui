@@ -1,15 +1,23 @@
 /* eslint-disable global-require */
+import { css } from '@emotion/css';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { getIcon } from '../../../../components';
 
-const UserMarker = ({ position, classes, onClick }) => {
+const UserMarker = ({ position, onClick }) => {
   const { Marker } = require('react-leaflet');
   const { divIcon } = require('leaflet');
+  const userMarkerClass = css({
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  });
 
   const icon = divIcon({
-    className: classes.userMarker,
+    // MarkerIcon for browser tests
+    className: `${userMarkerClass} MarkerIcon`,
+    'data-sm': 'MarkerIcon',
     html: renderToStaticMarkup(
       getIcon('locationMarker'),
     ),
@@ -28,7 +36,6 @@ const UserMarker = ({ position, classes, onClick }) => {
 
 UserMarker.propTypes = {
   position: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])).isRequired,
-  classes: PropTypes.objectOf(PropTypes.any).isRequired,
   onClick: PropTypes.func.isRequired,
 };
 

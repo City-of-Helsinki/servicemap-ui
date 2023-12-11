@@ -21,6 +21,18 @@ export default class ServiceMapAPI extends HttpClient {
     super(`${config.serviceMapAPI.root}${config.serviceMapAPI.version}`, serviceMapAPIName);
   }
 
+  /**
+   * Searches by coordinates and returns the closest by distance.
+   * @param lat
+   * @param lon
+   * @returns {Promise<void>}
+   */
+  addressByCoordinates = async (lat, lon) => {
+    const results = await this.getSinglePage('address', { lat, lon, page: 1, page_size: 5 });
+    const ordered = results.map(x => x).sort((x, y) => x.distance - y.distance);
+    return ordered.find(x => x); // first
+  }
+
   search = async (query, additionalOptions) => {
     if (typeof query !== 'string') {
       throw new APIFetchError('Invalid query string provided to ServiceMapAPI search method');
@@ -181,8 +193,10 @@ export default class ServiceMapAPI extends HttpClient {
       throw new APIFetchError('Invalid nodeID string provided to ServiceMapAPI area unit fetch method');
     }
 
-    let onlyValues = ['street_address', 'location', 'name', 'municipality', 'accessibility_shortcoming_count', 'service_nodes', 'contract_type'];
-    if (isEmbed()) onlyValues = [...onlyValues, 'connections', 'phone', 'call_charge_info', 'email', 'www', 'address_zip'];
+    const onlyValues = ['street_address', 'location', 'name', 'municipality', 'accessibility_shortcoming_count', 'service_nodes', 'contract_type', 'department', 'root_department'];
+    if (isEmbed()) {
+      onlyValues.push(...['connections', 'phone', 'call_charge_info', 'email', 'www', 'address_zip']);
+    }
 
     const options = {
       page: 1,

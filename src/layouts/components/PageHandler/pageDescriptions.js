@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-const getPageDescriptions = (page, unit, address, getLocaleText, intl) => {
+const getPageDescriptions = (page, unit, addressAdminDistricts, getLocaleText, intl) => {
   switch (page) {
     case 'home': {
       return intl.formatMessage({ id: 'app.description' });
@@ -16,9 +16,9 @@ const getPageDescriptions = (page, unit, address, getLocaleText, intl) => {
     case 'address': {
       let description = '';
       // Add neighborhood and postcode to address description
-      if (address?.adminDistricts?.length) {
-        const neighborhood = address.adminDistricts.find(obj => obj.type === 'neighborhood');
-        const postcode = address.adminDistricts.find(obj => obj.type === 'postcode_area');
+      if (addressAdminDistricts?.length) {
+        const neighborhood = addressAdminDistricts.find(obj => obj.type === 'neighborhood');
+        const postcode = addressAdminDistricts.find(obj => obj.type === 'postcode_area');
         if (neighborhood) {
           description += `${intl.formatMessage({ id: 'area.list.neighborhood' })}: ${getLocaleText(neighborhood.name)}. `;
         }

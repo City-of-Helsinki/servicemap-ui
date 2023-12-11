@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import {
   InputBase, IconButton, Paper, List, ListItem, Typography, ButtonBase,
 } from '@mui/material';
@@ -10,6 +10,7 @@ import { visuallyHidden } from '@mui/utils';
 import styled from '@emotion/styled';
 import { setOrder, setDirection } from '../../redux/actions/sort';
 import { selectMapRef } from '../../redux/selectors/general';
+import { selectCustomPosition } from '../../redux/selectors/user';
 import { keyboardHandler } from '../../utils';
 import useMobileStatus from '../../utils/isMobile';
 import useLocaleText from '../../utils/useLocaleText';
@@ -17,13 +18,14 @@ import ServiceMapAPI from '../../utils/newFetch/ServiceMapAPI';
 import { getAddressText } from '../../utils/address';
 import { focusToPosition } from '../../views/MapView/utils/mapActions';
 
-const AddressSearchBar = ({ title, intl, handleAddressChange }) => {
+const AddressSearchBar = ({ title, handleAddressChange }) => {
+  const intl = useIntl();
   const getLocaleText = useLocaleText();
   const dispatch = useDispatch();
   const isMobile = useMobileStatus();
   const locale = useSelector(state => state.user.locale);
   const map = useSelector(selectMapRef);
-  const customPosition = useSelector(state => state.user.customPosition);
+  const customPosition = useSelector(selectCustomPosition);
   const position = useSelector(state => state.user.position);
 
   const defaultAddress = position.addressData || customPosition.addressData;
@@ -33,6 +35,8 @@ const AddressSearchBar = ({ title, intl, handleAddressChange }) => {
   const [currentLocation, setCurrentLocation] = useState(null);
   const [cleared, setCleared] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
+  const [inputValue, setInputValue] = useState('');
+  const [debouncedInputValue, setDebouncedInputValue] = useState('');
 
   const suggestionCount = 5;
   const inputRef = useRef();
@@ -99,22 +103,38 @@ const AddressSearchBar = ({ title, intl, handleAddressChange }) => {
     clearSuggestions(e);
   };
 
-  const handleInputChange = (text) => {
+  useEffect(() => {
     // Reset cleared text
     if (cleared) {
       setCleared(false);
     }
+    if (isFetching) {
+      return;
+    }
     // Fetch address suggestions
-    if (text.length && text.length > 1) {
+    if (debouncedInputValue.length && debouncedInputValue.length > 1) {
       if (currentLocation) {
         setCurrentLocation(null);
       }
-      fetchAddressResults(text)
-        .then((data) => {
-          if (!isFetching) setAddressResults(data);
+      fetchAddressResults(debouncedInputValue)
+        .then(data => {
+          setAddressResults(data);
         });
-    } else if (addressResults.length) setAddressResults([]);
+    } else if (addressResults.length) {
+      setAddressResults([]);
+    }
+  }, [debouncedInputValue, isFetching]);
+
+  const handleInputChange = (text) => {
+    setInputValue(text);
   };
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      setDebouncedInputValue(inputValue);
+    }, 400);
+    return () => clearTimeout(timeoutId);
+  }, [inputValue]);
 
   useEffect(() => {
     if (defaultAddress) {
@@ -146,7 +166,7 @@ const AddressSearchBar = ({ title, intl, handleAddressChange }) => {
       <form action="" onSubmit={e => handleSubmit(e)}>
         <StyledFlexContainer>
           <StyledInputBase
-            id="addressSearchbar"
+            data-sm="AddressSearchBar"
             autoComplete="off"
             inputRef={inputRef}
             inputProps={{
@@ -194,6 +214,7 @@ const AddressSearchBar = ({ title, intl, handleAddressChange }) => {
                 <ListItem
                   tabIndex={-1}
                   id={`address-suggestion${i}`}
+                  data-sm="AddressSuggestion"
                   role="option"
                   selected={i === resultIndex}
                   key={getAddressText(address, getLocaleText)}
@@ -270,7 +291,6 @@ const StyledIconButton = styled(IconButton)(({ theme }) => ({
 }));
 
 AddressSearchBar.propTypes = {
-  intl: PropTypes.objectOf(PropTypes.any).isRequired,
   handleAddressChange: PropTypes.func.isRequired,
   title: PropTypes.objectOf(PropTypes.any),
 };

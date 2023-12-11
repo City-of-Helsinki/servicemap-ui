@@ -1,33 +1,28 @@
-
-import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-import {
-  Switch, Route, useLocation,
-} from 'react-router-dom';
-import { injectIntl } from 'react-intl';
-import { Tooltip as MUITooltip, ButtonBase, Typography } from '@mui/material';
+import { Map, OpenInNew } from '@mui/icons-material';
+import { ButtonBase, Tooltip as MUITooltip, Typography } from '@mui/material';
 import { useTheme } from '@mui/styles';
-import { useSelector } from 'react-redux';
-import { OpenInNew, Map } from '@mui/icons-material';
 import { visuallyHidden } from '@mui/utils';
+import React, { useEffect, useState } from 'react';
+import { useIntl } from 'react-intl';
+import { useSelector } from 'react-redux';
+import { Route, Switch, useLocation } from 'react-router-dom';
+import { Dialog, HomeLogo, PaginatedList, SMButton } from '../components';
 import { selectMapRef, selectNavigator } from '../redux/selectors/general';
-import MapView from '../views/MapView';
-import PageHandler from './components/PageHandler';
-import AddressView from '../views/AddressView';
-import EventDetailView from '../views/EventDetailView';
-import SearchView from '../views/SearchView';
-import UnitView from '../views/UnitView';
-import ServiceView from '../views/ServiceView';
-import DivisionView from '../views/DivisionView';
-import AreaView from '../views/AreaView';
 import { parseSearchParams } from '../utils';
-import useMapUnits from '../views/MapView/utils/useMapUnits';
-import {
-  HomeLogo, PaginatedList, Dialog, SMButton,
-} from '../components';
+import { resolveCityAndOrganizationFilter } from '../utils/filters';
 import useLocaleText from '../utils/useLocaleText';
-import ContactInfo from '../views/UnitView/components/ContactInfo';
+import AddressView from '../views/AddressView';
+import AreaView from '../views/AreaView';
+import DivisionView from '../views/DivisionView';
+import EventDetailView from '../views/EventDetailView';
+import MapView from '../views/MapView';
 import { focusToPosition } from '../views/MapView/utils/mapActions';
+import useMapUnits from '../views/MapView/utils/useMapUnits';
+import SearchView from '../views/SearchView';
+import ServiceView from '../views/ServiceView';
+import UnitView from '../views/UnitView';
+import ContactInfo from '../views/UnitView/components/ContactInfo';
+import PageHandler from './components/PageHandler';
 
 const createContentStyles = (theme, unitListPosition) => {
   const bottomList = unitListPosition === 'bottom';
@@ -93,12 +88,15 @@ const createContentStyles = (theme, unitListPosition) => {
   };
 };
 
-const EmbedLayout = ({ intl }) => {
+const EmbedLayout = () => {
+  const intl = useIntl();
   const theme = useTheme();
   const location = useLocation();
   const navigator = useSelector(selectNavigator);
   const getLocaleText = useLocaleText();
-  const units = useMapUnits();
+  const mapUnits = useMapUnits();
+  const cityAndOrgFilter = resolveCityAndOrganizationFilter([], [], location, true);
+  const units = mapUnits.filter(cityAndOrgFilter);
   const searchParams = parseSearchParams(location.search);
   const map = useSelector(selectMapRef);
 
@@ -272,8 +270,4 @@ const EmbedLayout = ({ intl }) => {
   );
 };
 
-EmbedLayout.propTypes = {
-  intl: PropTypes.objectOf(PropTypes.any).isRequired,
-};
-
-export default injectIntl(EmbedLayout);
+export default EmbedLayout;

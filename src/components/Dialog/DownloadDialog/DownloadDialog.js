@@ -13,6 +13,7 @@ import { OpenInNew } from '@mui/icons-material';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import styled from '@emotion/styled';
+import { selectServiceCurrent } from '../../../redux/selectors/service';
 import Dialog from '../index';
 import SMButton from '../../ServiceMapButton';
 import useDownloadData from '../../../utils/downloadData';
@@ -28,7 +29,7 @@ const DownloadDialog = ({
   const downloadData = useDownloadData();
   const page = useSelector(state => state.user.page);
   const selectedUnit = useSelector(state => state.selectedUnit.unit.data);
-  const service = useSelector(state => state.service.current);
+  const service = useSelector(selectServiceCurrent);
   const searchQuery = useSelector(state => state.searchResults.previousSearch);
   const intl = useIntl();
   const icon = getIcon('serviceDark');

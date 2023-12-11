@@ -12,7 +12,7 @@ import styled from '@emotion/styled';
 import { css } from '@emotion/css';
 import { useTheme } from '@mui/styles';
 import { useDispatch, useSelector } from 'react-redux';
-import { getTheme as getThemeMode, getPage } from '../../../redux/selectors/user';
+import { selectThemeMode, getPage } from '../../../redux/selectors/user';
 import { changeTheme } from '../../../redux/actions/user';
 import openA11yLink from '../util';
 import { getLocale } from '../../../redux/selectors/locale';
@@ -30,9 +30,8 @@ const DrawerMenu = (props) => {
   const dispatch = useDispatch();
   const currentPage = useSelector(getPage);
   const locale = useSelector(getLocale);
-  const themeMode = useSelector(getThemeMode);
+  const themeMode = useSelector(selectThemeMode);
   const theme = useTheme();
-
 
   const menuMainButton = (headerId, textId, pageId) => (
     <StyledButtonBase

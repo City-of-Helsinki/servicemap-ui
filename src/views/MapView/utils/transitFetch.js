@@ -1,6 +1,6 @@
 import { unitsFetch } from '../../../utils/fetch';
 import config from '../../../../config';
-import MapUtility from '../../../utils/mapUtility';
+import { getBboxFromBounds } from '../../../utils/mapUtility';
 
 const digitransitApiHeaders = () => ({
   'Content-Type': 'application/graphql',
@@ -30,7 +30,7 @@ const fetchStops = async (map) => {
   const wideBounds = L.latLngBounds(cornerTop, cornerBottom);
 
   // Bounds used in subway entrance fetch
-  const fetchBox = MapUtility.getBboxFromBounds(wideBounds, true);
+  const fetchBox = getBboxFromBounds(wideBounds, true);
 
   let stopData = null;
 

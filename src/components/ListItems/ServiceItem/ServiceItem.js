@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { css } from '@emotion/css';
+import { selectServiceCurrent } from '../../../redux/selectors/service';
 import { getIcon } from '../../SMIcon';
 import { uppercaseFirst } from '../../../utils';
 import SimpleListItem from '../SimpleListItem';
@@ -15,7 +16,7 @@ const ServiceItem = (props) => {
   const [icon, setIcon] = useState(<img alt="" src={null} style={{ height: 24 }} aria-hidden="true" />);
   const getLocaleText = useLocaleText();
   const dispatch = useDispatch();
-  const currentService = useSelector(state => state.service.current);
+  const currentService = useSelector(selectServiceCurrent);
   const iconClass = css({
     height: 24,
   });

@@ -2,10 +2,11 @@ import distance from '@turf/distance';
 import flip from '@turf/flip';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
+import { selectAddressAdminDistricts, selectAddressUnits } from '../../../redux/selectors/address';
 import {
-  getDistrictPrimaryUnits, getFilteredSubdistrictUnits, selectParkingUnitUnits,
+  getDistrictPrimaryUnits, getFilteredSubDistrictUnits, selectParkingUnitUnits,
 } from '../../../redux/selectors/district';
-import { getOrderedData } from '../../../redux/selectors/results';
+import { getOrderedSearchResultData } from '../../../redux/selectors/results';
 import { getSelectedUnit } from '../../../redux/selectors/selectedUnit';
 import { getServiceUnits } from '../../../redux/selectors/service';
 import {
@@ -90,14 +91,14 @@ const handleServiceUnitsFromUrl = (mapUnits, serviceUnits, location) => {
 const useMapUnits = () => {
   const embedded = useEmbedStatus();
   const location = useLocation();
-  const searchResults = useSelector(state => getOrderedData(state));
+  const searchResults = useSelector(getOrderedSearchResultData);
   const currentPage = useSelector(state => state.user.page);
   const addressToRender = useSelector(state => state.address.toRender);
-  const adminDistricts = useSelector(state => state.address.adminDistricts);
-  const addressUnits = useSelector(state => state.address.units);
-  const serviceUnits = useSelector(state => getServiceUnits(state));
+  const adminDistricts = useSelector(selectAddressAdminDistricts);
+  const addressUnits = useSelector(selectAddressUnits);
+  const serviceUnits = useSelector(getServiceUnits);
   const districtPrimaryUnits = useSelector(state => getDistrictPrimaryUnits(state));
-  const districtServiceUnits = useSelector(state => getFilteredSubdistrictUnits(state));
+  const districtServiceUnits = useSelector(getFilteredSubDistrictUnits);
   const statisticalDistrictUnits = useSelector(getServiceFilteredStatisticalDistrictUnits);
   const parkingAreaUnits = useSelector(selectParkingUnitUnits);
   const highlightedUnit = useSelector(state => getSelectedUnit(state));
@@ -143,13 +144,10 @@ const useMapUnits = () => {
 
       case 'area': {
         const results = [
-          ...(districtPrimaryUnits.length ? districtPrimaryUnits : []),
-          ...(districtServiceUnits.length ? districtServiceUnits : []),
-          ...(parkingAreaUnits.length ? parkingAreaUnits : []),
-          ...((statisticalDistrictUnits.length && statisticalTabOpen)
-            ? statisticalDistrictUnits
-            : []
-          ),
+          ...districtPrimaryUnits,
+          ...districtServiceUnits,
+          ...parkingAreaUnits,
+          ...(statisticalTabOpen ? statisticalDistrictUnits : []),
         ];
 
         return orderUnits(results, { locale, direction: 'desc', order: 'alphabetical' });

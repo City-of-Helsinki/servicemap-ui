@@ -3,16 +3,17 @@ import PropTypes from 'prop-types';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { useSelector } from 'react-redux';
 import { getIcon } from '../../../../components';
+import { selectThemeMode } from '../../../../redux/selectors/user';
 
 
 const CoordinateMarker = ({ position }) => {
   const { Marker } = global.rL;
   const { divIcon } = global.L;
-  const theme = useSelector(state => state.user.theme);
+  const useContrast = useSelector(selectThemeMode) === 'dark';
 
   if (!position) return null;
 
-  const icon = getIcon(theme === 'dark' ? 'coordinateMarkerContrast' : 'coordinateMarker', {});
+  const icon = getIcon(useContrast ? 'coordinateMarkerContrast' : 'coordinateMarker', {});
   const coordIcon = divIcon({
     html: renderToStaticMarkup(icon),
     iconSize: [24, 24],

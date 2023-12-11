@@ -1,46 +1,59 @@
+import { Link, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Typography, Link } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import { FormattedMessage } from 'react-intl';
+import config from '../../../../../config';
+import {
+  getAddressDistrict,
+  getHighlightedDistrict,
+  selectDistrictAddressData,
+  selectDistrictDataBySelectedType,
+  selectDistrictUnitFetch,
+  selectSelectedDistrictType,
+  selectSelectedSubdistricts,
+} from '../../../../redux/selectors/district';
+import { selectMeasuringMode, selectNavigator } from '../../../../redux/selectors/general';
+import { selectCities } from '../../../../redux/selectors/settings';
+import { getPage, selectThemeMode } from '../../../../redux/selectors/user';
+import { parseSearchParams } from '../../../../utils';
+import { filterByCitySettings, resolveCitySettings } from '../../../../utils/filters';
+import UnitHelper from '../../../../utils/unitHelper';
+import useLocaleText from '../../../../utils/useLocaleText';
+import {
+  geographicalDistricts, getCategoryDistricts,
+} from '../../../AreaView/utils/districtDataHelper';
 import { drawMarkerIcon } from '../../utils/drawIcon';
 import swapCoordinates from '../../utils/swapCoordinates';
 import AddressMarker from '../AddressMarker';
-import { parseSearchParams } from '../../../../utils';
-import config from '../../../../../config';
-import useLocaleText from '../../../../utils/useLocaleText';
-import { geographicalDistricts, getCategoryDistricts } from '../../../AreaView/utils/districtDataHelper';
-import UnitHelper from '../../../../utils/unitHelper';
 import ParkingAreas from './ParkingAreas';
 
-
 const Districts = ({
-  highlightedDistrict,
-  districtData,
-  unitsFetching,
-  addressDistrict,
-  theme,
   mapOptions,
-  currentPage,
-  measuringMode,
-  selectedAddress,
-  selectedSubdistricts,
   setSelectedSubdistricts,
   setSelectedDistrictServices,
   embedded,
-  navigator,
-  intl,
 }) => {
   const {
     Polygon, Marker, Tooltip, Popup,
   } = global.rL;
-  const useContrast = theme === 'dark';
+  const intl = useIntl();
+  const useContrast = useSelector(selectThemeMode) === 'dark';
+  const navigator = useSelector(selectNavigator);
+  const currentPage = useSelector(getPage);
+  const measuringMode = useSelector(selectMeasuringMode);
+  const highlightedDistrict = useSelector(getHighlightedDistrict);
+  const addressDistrict = useSelector(getAddressDistrict);
+  const districtData = useSelector(selectDistrictDataBySelectedType);
+  const selectedSubdistricts = useSelector(selectSelectedSubdistricts);
+  const selectedAddress = useSelector(selectDistrictAddressData).address;
+  const unitsFetching = useSelector(state => selectDistrictUnitFetch(state).isFetching);
   const location = useLocation();
   const getLocaleText = useLocaleText();
-  const citySettings = useSelector(state => state.settings.cities);
-  const selectedDistrictType = useSelector(state => state.districts.selectedDistrictType);
+  const citySettings = useSelector(selectCities);
+  const selectedDistrictType = useSelector(selectSelectedDistrictType);
   const selectedParkingAreas = useSelector(state => state.districts.selectedParkingAreas);
   const [areaPopup, setAreaPopup] = useState(null);
 
@@ -148,19 +161,21 @@ const Districts = ({
     if (!areasWithBoundary.length) {
       return null;
     }
+    const cityFilter = filterByCitySettings(resolveCitySettings(citySettings, location, embedded));
+    const filteredData = areasWithBoundary
+      .filter(cityFilter)
+      .filter(district => {
+        // In embed view, limit the rendered districts only to the selected ones
+        if (!embedded || !geographicalDistricts.includes(district.type)) {
+          return true;
+        }
+        if (!selectedSubdistricts.length) {
+          return true;
+        }
+        return selectedSubdistricts.some(item => item === district.ocd_id);
+      });
 
-    const selectedCities = Object.values(citySettings).filter(city => city);
-    let filteredData = [];
-    if (selectedCities.length) {
-      const searchParams = parseSearchParams(location.search);
-      filteredData = areasWithBoundary.filter(district => (searchParams.city
-        ? embedded && district.municipality === searchParams.city
-        : citySettings[district.municipality]));
-    } else {
-      filteredData = areasWithBoundary;
-    }
-
-    return filteredData.map((district) => {
+    return filteredData.map(district => {
       let dimmed;
       if (geographicalDistricts.includes(district.type)) {
         if (selectedSubdistricts.length) {
@@ -169,7 +184,6 @@ const Districts = ({
       } else {
         dimmed = addressDistrict && district.id !== addressDistrict.id;
       }
-
       const area = district.boundary.coordinates.map(
         coords => swapCoordinates(coords),
       );
@@ -315,29 +329,10 @@ const StyledAreaPopup = styled('div')(({ theme }) => ({
 }));
 
 Districts.propTypes = {
-  highlightedDistrict: PropTypes.objectOf(PropTypes.any),
   mapOptions: PropTypes.objectOf(PropTypes.any).isRequired,
-  currentPage: PropTypes.string.isRequired,
-  measuringMode: PropTypes.bool.isRequired,
-  selectedAddress: PropTypes.objectOf(PropTypes.any),
-  districtData: PropTypes.arrayOf(PropTypes.object),
-  unitsFetching: PropTypes.bool.isRequired,
-  addressDistrict: PropTypes.objectOf(PropTypes.any),
-  selectedSubdistricts: PropTypes.arrayOf(PropTypes.string),
   setSelectedSubdistricts: PropTypes.func.isRequired,
   setSelectedDistrictServices: PropTypes.func.isRequired,
   embedded: PropTypes.bool.isRequired,
-  navigator: PropTypes.objectOf(PropTypes.any).isRequired,
-  intl: PropTypes.objectOf(PropTypes.any).isRequired,
-  theme: PropTypes.oneOf(['default', 'dark']).isRequired,
-};
-
-Districts.defaultProps = {
-  highlightedDistrict: null,
-  selectedAddress: null,
-  districtData: null,
-  addressDistrict: null,
-  selectedSubdistricts: [],
 };
 
 export default Districts;
