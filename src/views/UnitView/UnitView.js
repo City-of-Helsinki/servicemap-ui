@@ -227,20 +227,35 @@ const UnitView = (props) => {
     );
   };
 
-  const renderPicture = () => (
-    <StyledImageContainer>
-      <StyledImage
-        alt={getImageAlt()}
-        src={unit.picture_url}
-      />
-      {
-          unit.picture_caption
-          && (
-            <StyledImageCaption variant="body2">{getLocaleText(unit.picture_caption)}</StyledImageCaption>
-          )
-        }
-    </StyledImageContainer>
-  );
+  const getPictureUrlAndCaption = () => {
+    if (unit.picture_url) {
+      return { pictureUrl: unit.picture_url, pictureCaption: unit.picture_caption };
+    }
+    const pictureUrl = unit.extra?.['kaupunkialusta.photoUrl']?.split('\n')?.[0];
+    const pictureCaption = {
+      fi: unit.extra?.['kaupunkialusta.photoFi'],
+      en: unit.extra?.['kaupunkialusta.photoEn'],
+      sv: unit.extra?.['kaupunkialusta.photoSv'],
+    };
+    if (pictureUrl) {
+      return { pictureUrl, pictureCaption };
+    }
+    return {};
+  };
+
+  const renderPicture = () => {
+    const { pictureUrl, pictureCaption } = getPictureUrlAndCaption();
+    return (
+      <StyledImageContainer>
+        <StyledImage
+          alt={getImageAlt()}
+          src={pictureUrl}
+        />
+        {pictureCaption && (
+          <StyledImageCaption variant="body2">{getLocaleText(pictureCaption)}</StyledImageCaption>)}
+      </StyledImageContainer>
+    );
+  };
 
   const renderDetailTab = () => {
     if (!unit || !unit.complete) {
@@ -367,6 +382,7 @@ const UnitView = (props) => {
     const imageAlt = getImageAlt();
     const description = unit.description ? getLocaleText(unit.description) : null;
 
+    const { pictureUrl } = getPictureUrlAndCaption();
     return (
       <Helmet>
         <meta property="og:title" content={title} />
@@ -377,9 +393,9 @@ const UnitView = (props) => {
           )
         }
         {
-          unit.picture_url
+          pictureUrl
           && (
-            <meta property="og:image" content={unit.picture_url} />
+            <meta property="og:image" content={pictureUrl} />
           )
         }
         <meta name="twitter:card" content="summary" />
