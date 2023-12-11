@@ -4,6 +4,8 @@
  * to handle certain functionality.
  */
 
+import { getSearchParam } from './index';
+
 /**
  * Get bbox from given bounds. By default, this uses
  * latLng format you can reverse by setting reverse true
@@ -18,6 +20,34 @@ const getBboxFromBounds = (bounds, reverse = false) => {
     bbox = `${bounds.getSouth()},${bounds.getWest()},${bounds.getNorth()},${bounds.getEast()}`;
   }
   return bbox;
+};
+
+const isFloat = val => {
+  const floatRegex = /^-?\d+(?:[.,]\d*?)?$/;
+  if (!floatRegex.test(val)) {
+    return false;
+  }
+
+  const parsed = parseFloat(val);
+  return !Number.isNaN(parsed);
+};
+
+/**
+ * Parse bbox array from location if it is valid
+ * @param location
+ * @returns bbox array if valid bbox
+ */
+const parseBboxFromLocation = location => {
+  const isValidBboxString = bb => {
+    const parts = bb?.split(',');
+    if (parts?.length !== 4) {
+      return false;
+    }
+    return parts.every(part => isFloat(part));
+  };
+
+  const bbox = getSearchParam(location, 'bbox');
+  return isValidBboxString(bbox) ? bbox.split(',') : undefined;
 };
 
 const mapHasMapPane = (leafLetMap) => {
@@ -54,5 +84,6 @@ export {
   getCoordinatesFromUrl,
   getBboxFromBounds,
   mapHasMapPane,
+  parseBboxFromLocation,
   swapCoordinates,
 };

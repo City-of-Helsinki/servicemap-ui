@@ -3,9 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import fetchSearchResults from '../../redux/actions/search';
 import { selectMapRef } from '../../redux/selectors/general';
+import { parseBboxFromLocation } from '../../utils/mapUtility';
 import { fitBbox } from '../../views/MapView/utils/mapActions';
 import { searchParamFetchOptions } from './helpers';
-import { getSearchParam } from '../../utils';
 
 const DataFetcher = ({ location }) => {
   const currentPage = useSelector(state => state.user.page);
@@ -20,9 +20,9 @@ const DataFetcher = ({ location }) => {
       return false;
     }
 
-    const bbox = getSearchParam(location, 'bbox');
+    const bbox = parseBboxFromLocation(location);
     if (bbox) {
-      fitBbox(map, bbox.split(','));
+      fitBbox(map, bbox);
     }
 
     const options = searchParamFetchOptions(location, null, true);
