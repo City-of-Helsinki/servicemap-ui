@@ -2,15 +2,17 @@
 import { css } from '@emotion/css';
 import styled from '@emotion/styled';
 import { useTheme } from '@mui/styles';
-import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import React, { useEffect, useState } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { useMapEvents } from 'react-leaflet';
-import TransitStopInfo from './TransitStopInfo';
-import { fetchBikeStations, fetchStops } from '../../utils/transitFetch';
-import { transitIconSize } from '../../config/mapConfig';
-import { isEmbed } from '../../../../utils/path';
+import { useSelector } from 'react-redux';
+import { selectMapType } from '../../../../redux/selectors/settings';
 import useMobileStatus from '../../../../utils/isMobile';
+import { isEmbed } from '../../../../utils/path';
+import { transitIconSize } from '../../config/mapConfig';
+import { fetchBikeStations, fetchStops } from '../../utils/transitFetch';
+import TransitStopInfo from './TransitStopInfo';
 import getTypeAndClass from './util/util';
 
 const StyledTransitIconMap = styled.span(({ color }) => ({
@@ -24,6 +26,7 @@ const StyledTransitIconMap = styled.span(({ color }) => ({
 
 const TransitStops = ({ mapObject }) => {
   const isMobile = useMobileStatus();
+  const useContrast = useSelector(selectMapType) === 'accessible_map';
   const { Marker, Popup } = global.rL;
   const theme = useTheme();
 
@@ -106,7 +109,7 @@ const TransitStops = ({ mapObject }) => {
       html: renderToStaticMarkup(
         <>
           <span aria-hidden className={`${transitBackgroundClass} icon-icon-hsl-background`} />
-          <StyledTransitIconMap aria-hidden color={color} className={className} />
+          <StyledTransitIconMap aria-hidden color={useContrast ? '#000000' : color} className={className} />
         </>,
       ),
       iconSize: [transitIconSize, transitIconSize],
