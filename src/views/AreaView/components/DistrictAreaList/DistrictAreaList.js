@@ -58,18 +58,12 @@ export const DistrictAreaList = ({ selectedAddress, district }) => {
     const localDistrict = filteredData.filter(obj => obj.id === addressDistrict.id);
     const otherDistricts = filteredData.filter(obj => obj.id !== addressDistrict.id);
 
-    const localAreaDistricts = [];
-    localDistrict.forEach((district) => {
-      const newValue = district;
-      localAreaDistricts.push(newValue);
-    });
-    const otherAreaDistricts = [];
-    otherDistricts.forEach((district) => {
-      if (district.municipality === selectedAddress.municipality.id) {
-        const newValue = district;
-        otherAreaDistricts.push(newValue);
-      }
-    });
+    const localAreaDistricts = [...localDistrict];
+
+    const otherAreaDistricts = [
+      ...otherDistricts
+        .filter(district => district.municipality === selectedAddress.municipality.id),
+    ];
 
     if (!localAreaDistricts.length && !otherAreaDistricts.length) {
       return null;
