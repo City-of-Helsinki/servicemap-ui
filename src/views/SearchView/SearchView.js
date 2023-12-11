@@ -1,9 +1,7 @@
 /* eslint-disable camelcase */
 
 import styled from '@emotion/styled';
-import {
-  Divider, Link, NoSsr, Paper, Typography,
-} from '@mui/material';
+import { Divider, Link, NoSsr, Paper, Typography } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
 import React, { useEffect, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
@@ -23,12 +21,12 @@ import {
   selectSelectedAccessibilitySettings, selectSelectedCities, selectSelectedOrganizationIds,
 } from '../../redux/selectors/settings';
 import { selectCustomPositionAddress } from '../../redux/selectors/user';
-import { getSearchParam, keyboardHandler, parseSearchParams } from '../../utils';
+import { keyboardHandler, parseSearchParams } from '../../utils';
 import { viewTitleID } from '../../utils/accessibility';
 import { getAddressNavigatorParamsConnector, useNavigationParams } from '../../utils/address';
 import { resolveCityAndOrganizationFilter } from '../../utils/filters';
 import useMobileStatus from '../../utils/isMobile';
-import { getBboxFromBounds } from '../../utils/mapUtility';
+import { getBboxFromBounds, parseBboxFromLocation } from '../../utils/mapUtility';
 import { isEmbed } from '../../utils/path';
 import optionsToSearchQuery from '../../utils/search';
 import SettingsUtility from '../../utils/settings';
@@ -277,7 +275,7 @@ const SearchView = () => {
 
   useEffect(() => {
     if (searchResults.length) {
-      if (getSearchParam(location, 'bbox')) {
+      if (parseBboxFromLocation(location)) {
         // MapView component will handle focus.
         return;
       }

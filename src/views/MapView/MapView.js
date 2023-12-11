@@ -24,7 +24,11 @@ import { parseSearchParams } from '../../utils';
 import { useNavigationParams } from '../../utils/address';
 import { resolveCityAndOrganizationFilter } from '../../utils/filters';
 import {
-  coordinateIsActive, getBboxFromBounds, getCoordinatesFromUrl, mapHasMapPane, swapCoordinates,
+  coordinateIsActive,
+  getBboxFromBounds,
+  getCoordinatesFromUrl,
+  mapHasMapPane, parseBboxFromLocation,
+  swapCoordinates,
 } from '../../utils/mapUtility';
 import { isEmbed } from '../../utils/path';
 import AddressMarker from './components/AddressMarker';
@@ -260,7 +264,7 @@ const MapView = (props) => {
     }
     const userLocationAriaLabel = intl.formatMessage({ id: !userLocation ? 'location.notAllowed' : 'location.center' });
     const eventSearch = parseSearchParams(location.search).events;
-    const defaultBounds = parseSearchParams(location.search).bbox;
+    const defaultBounds = parseBboxFromLocation(location);
 
     const mapClass = css({
       height: '100%',
@@ -298,7 +302,7 @@ const MapView = (props) => {
           className={`${mapClass} ${embedded ? mapNoSidebarClass : ''} `}
           key={mapObject.options.name}
           zoomControl={false}
-          bounds={getBoundsFromBbox(defaultBounds?.split(','))}
+          bounds={getBoundsFromBbox(defaultBounds)}
           doubleClickZoom={false}
           crs={mapObject.crs}
           center={!defaultBounds ? center : null}
