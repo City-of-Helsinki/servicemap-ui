@@ -21,7 +21,6 @@ import { fetchEventData, fetchSelectedUnitData } from './dataFetcher';
 import IntlPolyfill from 'intl';
 import paths from '../config/paths';
 import legacyRedirector from './legacyRedirector';
-import { appDynamicsTrackingCode } from './externalScripts';
 import ieHandler from './ieMiddleware';
 import schedule from 'node-schedule';
 import ogImage from '../src/assets/images/servicemap-meta-img.png';
@@ -187,7 +186,6 @@ const htmlTemplate = (req, reactDom, preloadedState, css, cssString, emotionCss,
     </style>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#141823" />
-    ${appDynamicsTrackingCode(process.env.APP_DYNAMICS_APP_KEY)}
     ${
       process.env.READ_SPEAKER_URL
       && process.env.READ_SPEAKER_URL !== 'false' ? `
