@@ -7,12 +7,15 @@ import '@formatjs/intl-pluralrules/polyfill';
 import '@formatjs/intl-relativetimeformat/dist/locale-data/en';
 import '@formatjs/intl-relativetimeformat/dist/locale-data/fi';
 import '@formatjs/intl-relativetimeformat/dist/locale-data/sv';
+// To add css variables for hds components
+import hdsStyle from 'hds-design-tokens';
 
 import '@formatjs/intl-relativetimeformat/polyfill';
 import { StyledEngineProvider } from '@mui/material';
+import { CookieModal } from 'hds-react';
 import withStyles from 'isomorphic-style-loader/withStyles';
 import PropTypes from 'prop-types';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { IntlProvider, useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
@@ -49,6 +52,37 @@ const MetaTags = () => {
   );
 };
 
+function CookieWrapper() {
+  const intl = useIntl();
+  const locale = useSelector(getLocale);
+  const [language, setLanguage] = useState(locale);
+  const onLanguageChange = newLang => setLanguage(newLang);
+  const contentSource = {
+    siteName: intl.formatMessage({ id: 'app.title' }),
+    currentLanguage: language,
+    optionalCookies: {
+      cookies: [
+        {
+          commonGroup: 'statistics',
+          commonCookie: 'matomo',
+        },
+      ],
+    },
+    language: {
+      onLanguageChange,
+    },
+    focusTargetSelector: '[href="#view-title"]',
+    onAllConsentsGiven: (consents) => {
+      // called when consents are saved
+      // handle changes like:
+      if (!consents.matomo) {
+        // stop matomo tracking
+      }
+    },
+  };
+  return <CookieModal contentSource={contentSource} />;
+}
+
 function App() {
   const locale = useSelector(getLocale);
   const intlData = LocaleUtility.intlData(locale);
@@ -67,6 +101,7 @@ function App() {
         <IntlProvider {...intlData}>
           <MetaTags />
           {/* <StylesProvider generateClassName={generateClassName}> */}
+          <CookieWrapper />
           <div className="App">
             <Switch>
               <Route path="*/embedder" component={EmbedderView} />
@@ -102,7 +137,7 @@ const LanguageWrapper = () => {
   );
 };
 
-export default withStyles(styles, appStyles, SMFonts, HSLFonts, printCSS)(LanguageWrapper);
+export default withStyles(styles, appStyles, SMFonts, HSLFonts, printCSS, hdsStyle)(LanguageWrapper);
 
 // Typechecking
 App.propTypes = {
