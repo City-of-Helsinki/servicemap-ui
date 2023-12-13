@@ -6,7 +6,7 @@ import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { Provider } from 'react-redux';
 import ThemeWrapper from '../src/themes/ThemeWrapper';
-import { appDynamicsTrackingCode, cookieHubCode } from './externalScripts';
+import { appDynamicsTrackingCode } from './externalScripts';
 
 // Check if user agent is Internet Explorer
 function isIE(userAgent) {
@@ -35,7 +35,6 @@ const IEHTML = (req, reactDom, css, cssString) => `
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#141823" />
   ${appDynamicsTrackingCode(process.env.APP_DYNAMICS_APP_KEY)}
-  ${cookieHubCode(req)}
 </head>
 
 <body>
