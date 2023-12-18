@@ -11,7 +11,7 @@ import config from '../config';
 import rootReducer from '../src/redux/rootReducer';
 import App from '../src/App';
 import { makeLanguageHandler, languageSubdomainRedirect, unitRedirect, parseInitialMapPositionFromHostname, getRequestFullUrl, sitemapActive } from './utils';
-import { setLocale } from '../src/redux/actions/user';
+import { setInitialLayout, setLocale } from '../src/redux/actions/user';
 import { Helmet } from 'react-helmet';
 import { ServerStyleSheets } from '@mui/styles';
 import { CacheProvider } from '@emotion/react';
@@ -26,6 +26,7 @@ import schedule from 'node-schedule';
 import ogImage from '../src/assets/images/servicemap-meta-img.png';
 import { generateSitemap, getRobotsFile, getSitemap } from './sitemapMiddlewares';
 import createEmotionCache from './createEmotionCache';
+import { isMobileDevice } from '../src/utils';
 
 // Get sentry dsn from environtment variables
 const sentryDSN = process.env.SENTRY_DSN_SERVER;
@@ -113,10 +114,12 @@ app.get('/*', (req, res, next) => {
   // Locale for page
   const localeParam = req.params[0].slice(0, 2)
   const locale = supportedLanguages.indexOf(localeParam > -1) ? localeParam : 'fi';
+  const isMobile = isMobileDevice(req.headers['user-agent'])
 
   let store = req._context;
-  if (store && store.dispatch) {
+  if (store?.dispatch) {
     store.dispatch(setLocale(locale))
+    store.dispatch(setInitialLayout(isMobile))
   }
 
   // Create server style sheets

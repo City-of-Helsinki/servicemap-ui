@@ -5,6 +5,11 @@ export const setLocale = locale => ({
   locale,
 });
 
+export const setInitialLayout = isMobile => ({
+  type: 'SET_INITIAL_LAYOUT',
+  isMobile,
+});
+
 export const setInitialLoad = () => ({
   type: 'SET_INITIAL_LOAD',
 });

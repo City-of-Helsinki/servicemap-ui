@@ -1,6 +1,6 @@
-
 export const initialState = {
   initialLoad: false,
+  initialLayoutMobile: false,
   locale: 'fi',
   page: 'home',
   theme: 'default',
@@ -26,6 +26,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         initialLoad: true,
+      };
+    case 'SET_INITIAL_LAYOUT':
+      return {
+        ...state,
+        initialLayoutMobile: action.isMobile,
       };
     case 'SET_CURRENT_PAGE':
       return {

@@ -201,11 +201,7 @@ export const addSearchParametersToObject = (obj, params) => {
   return newObject;
 };
 
-
-export const isMobileDevice = () => {
-  if (!window) {
-    return false;
-  }
+const checkMobileDevice = (userAgent) => {
   const toMatch = [
     /Android/i,
     /webOS/i,
@@ -216,9 +212,16 @@ export const isMobileDevice = () => {
     /Windows Phone/i,
   ];
 
-  const { userAgent } = navigator;
-  return toMatch.some(toMatchItem => userAgent.match(toMatchItem));
+  return toMatch.some((toMatchItem) => userAgent.match(toMatchItem));
 };
 
+export const isMobileDevice = (userAgent) => {
+  if (!userAgent) {
+    if (!window) return false;
+    const { userAgent } = navigator;
+    return checkMobileDevice(userAgent);
+  }
+  return checkMobileDevice(userAgent);
+};
 
 export default isClient;
