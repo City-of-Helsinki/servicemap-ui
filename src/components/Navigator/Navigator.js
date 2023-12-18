@@ -72,22 +72,6 @@ class Navigator extends React.Component {
     }
   }
 
-  trackNoResultsPage = (noResultsQuery) => {
-    if (typeof window !== 'undefined' && window?.cookiehub?.hasConsented('analytics')) {
-      if (matomoTracker) {
-        this.unlisten = null;
-        setTimeout(() => {
-          matomoTracker.trackPageView({
-            documentTitle: document.title,
-            customDimensions: [
-              { id: config.matomoNoResultsDimensionID, value: noResultsQuery },
-            ],
-          });
-        }, 400);
-      }
-    }
-  }
-
   /**
    * Generate url based on path string and data
    * @param target - Key string for path config
