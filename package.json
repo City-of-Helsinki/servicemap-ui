@@ -13,6 +13,7 @@
     "@mui/material": "^5.7.0",
     "@mui/styles": "^5.7.0",
     "@mui/utils": "^5.10.6",
+    "@raruto/leaflet-elevation": "2.5.1",
     "@sentry/node": "^5.27.5",
     "@sentry/react": "^5.25.0",
     "@turf/area": "^6.5.0",
