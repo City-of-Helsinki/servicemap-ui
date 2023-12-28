@@ -1,4 +1,5 @@
 /* eslint-disable react/forbid-prop-types */
+import { css, Global } from '@emotion/react';
 import '@formatjs/intl-pluralrules/dist/locale-data/en';
 import '@formatjs/intl-pluralrules/dist/locale-data/fi';
 import '@formatjs/intl-pluralrules/dist/locale-data/sv';
@@ -66,6 +67,14 @@ function App() {
 
   return (
     <StyledEngineProvider>
+      <Global
+        styles={css({
+          // hide language selector in hds cookie modal
+          '#cookie-consent-language-selector-button': {
+            display: 'none',
+          },
+        })}
+      />
       <ThemeWrapper>
         <IntlProvider {...intlData}>
           <MetaTags />
