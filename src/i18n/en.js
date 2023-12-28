@@ -150,6 +150,8 @@ const translations = {
   'area.list.statistic.30-49': 'Age 30-49 years',
   'area.list.statistic.50-64': 'Age 50-64 years',
   'area.list.statistic.65+': 'Age over 64 years',
+  'cookies.matomo.description': 'A cookie of the Matomo statistics system.',
+  'cookies.matomo.expiration': '{days} days',
 
   'parkingArea.popup.residentName': 'Zone {letter}',
   'parkingArea.popup.payment1': 'Free parking',

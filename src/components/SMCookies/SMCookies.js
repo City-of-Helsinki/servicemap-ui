@@ -13,10 +13,18 @@ function SMCookies() {
     siteName: intl.formatMessage({ id: 'app.title' }),
     currentLanguage: language,
     optionalCookies: {
-      cookies: [
+      groups: [
         {
           commonGroup: 'statistics',
-          commonCookie: 'matomo',
+          cookies: [
+            {
+              id: 'matomo',
+              name: '_pk*',
+              hostName: 'digia.fi',
+              description: intl.formatMessage({ id: 'cookies.matomo.description' }),
+              expiration: intl.formatMessage({ id: 'cookies.matomo.expiration' }, { days: 393 }),
+            },
+          ],
         },
       ],
     },

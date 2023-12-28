@@ -150,6 +150,8 @@ const translations = {
   'area.list.statistic.30-49': 'Ikä 30-49 vuotta',
   'area.list.statistic.50-64': 'Ikä 50-64 vuotta',
   'area.list.statistic.65+': 'Ikä yli 65 vuotta',
+  'cookies.matomo.description': 'Matomo-tilastointijärjestelmän eväste.',
+  'cookies.matomo.expiration': '{days} päivää',
 
   'parkingArea.popup.residentName': 'Alue {letter}',
   'parkingArea.popup.payment1': 'Ilmainen pysäköinti',
