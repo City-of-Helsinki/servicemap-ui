@@ -4,6 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import { visuallyHidden } from '@mui/utils';
 import { Typography } from '@mui/material';
 import { viewTitleID } from '../../../../utils/accessibility';
+import { COOKIE_MODAL_ROOT_ID } from '../../../../utils/constants';
 
 class ViewTitle extends React.Component {
   constructor(props) {
@@ -31,7 +32,7 @@ class ViewTitle extends React.Component {
         // If cookie modal is visible prevent focusing
         let shouldFocus = true;
         try {
-          shouldFocus = !document.getElementById('HdsCookieConsentContainer');
+          shouldFocus = !document.getElementById(COOKIE_MODAL_ROOT_ID);
         } catch (e) {
           console.warn('Error while attempting to figure out if cookie modal exists');
         }

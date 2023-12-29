@@ -3,6 +3,7 @@ import React from 'react';
 import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { getLocale } from '../../redux/selectors/locale';
+import { COOKIE_MODAL_ROOT_ID } from '../../utils/constants';
 
 function SMCookies() {
   const intl = useIntl();
@@ -35,7 +36,7 @@ function SMCookies() {
       }
     },
   };
-  return <CookieModal contentSource={contentSource} />;
+  return <CookieModal contentSource={contentSource} rootId={COOKIE_MODAL_ROOT_ID} />;
 }
 
 export default SMCookies;
