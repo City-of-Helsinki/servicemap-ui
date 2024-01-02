@@ -1,20 +1,17 @@
 /* eslint-disable */
-import { waitForReact } from 'testcafe-react-selectors';
 import { Selector } from 'testcafe';
-
-import config from '../config';
-import { getLocation } from '../utility';
+import { waitForReact } from 'testcafe-react-selectors';
+import { getBaseUrl, getLocation } from '../utility';
 import {
-  accordionSelector, addressSearchBarInput,
+  accordionSelector,
+  addressSearchBarInput,
   embedderToolButton,
   embedderToolCloseButton,
   mapToolsButton,
 } from '../utility/pageObjects';
 
-const { server } = config;
-
 fixture`Area view test`
-  .page`http://${server.address}:${server.port}/fi/area`
+  .page`${getBaseUrl()}/fi/area`
   .beforeEach(async () => {
     await waitForReact();
   });
@@ -103,7 +100,7 @@ test('Unit list functions correctly' , async (t) => {
     .click(radioButtons.nth(0).child())
     .expect(unitList.childElementCount).gt(0, 'No units listed for selected district')
     .click(unitList.child())
-    .expect(getLocation()).contains(`${server.address}:${server.port}/fi/unit`);
+    .expect(getLocation()).contains(`${getBaseUrl()}/fi/unit`);
 })
 
 // TODO Flaky test, suggestion list loses focus

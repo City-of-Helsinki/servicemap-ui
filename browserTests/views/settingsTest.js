@@ -1,12 +1,14 @@
 /* eslint-disable */
 import { Selector } from 'testcafe';
 import { waitForReact } from 'testcafe-react-selectors';
-import config from '../config';
+import { getBaseUrl } from '../utility';
 import {
-  cityDropdown, mapToolsButton, mobilityDropdown, organisationDropdown, sensesDropdown,
+  cityDropdown,
+  mapToolsButton,
+  mobilityDropdown,
+  organisationDropdown,
+  sensesDropdown,
 } from '../utility/pageObjects';
-
-const { server } = config;
 
 const sensesDropdownSelector = Selector(sensesDropdown)
 const mobilityDropdownSelector = Selector(mobilityDropdown)
@@ -14,7 +16,7 @@ const cityDropdownSelector = Selector(cityDropdown)
 const organisationDropdownSelector = Selector(organisationDropdown)
 
 fixture`Settings view tests`
-  .page`http://${server.address}:${server.port}/fi/`
+  .page`${getBaseUrl()}/fi/`
   .beforeEach(async () => {
     await waitForReact();
   });

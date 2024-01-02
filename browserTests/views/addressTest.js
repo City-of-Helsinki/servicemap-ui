@@ -1,13 +1,10 @@
 /* eslint-disable */
 import { Selector } from 'testcafe';
-import { waitForReact, ReactSelector } from 'testcafe-react-selectors';
-
-import config from '../config';
-import { getLocation } from '../utility';
+import { ReactSelector, waitForReact } from 'testcafe-react-selectors';
+import { getBaseUrl, getLocation } from '../utility';
 import { addressSearchBarInput } from '../utility/pageObjects';
 
-const { server } = config;
-const testLocation = `http://${server.address}:${server.port}/fi/address/helsinki/Topeliuksenkatu 27`;
+const testLocation = `${getBaseUrl()}/fi/address/helsinki/Topeliuksenkatu 27`;
 
 fixture`Address view test`
   .page`${testLocation}`

@@ -1,10 +1,8 @@
 /* eslint-disable */
 import axeCheck from 'axe-testcafe';
-import config from '../config';
+import { getBaseUrl } from '../utility';
 import focusIndicatorTest from '../utility/focusIndicatorTest';
 import componentContrastTest from '../utility/componentContrastTest';
-
-const { server } = config;
 
 const axeOptions = { rules: { 'label': { enabled: false } } };
 
@@ -13,7 +11,7 @@ const axeCheckHandler = (t) => {
 }
 
 fixture`TestCafe Axe test: frontpage`
-  .page`http://${server.address}:${server.port}/fi/`;
+  .page`${getBaseUrl()}/fi/`;
 
   test('Automated accessibility testing', async (t) => {
     await axeCheckHandler(t);
@@ -25,7 +23,7 @@ fixture`TestCafe Axe test: frontpage`
 
 
 fixture`TestCafe Axe test: search page`
-  .page`http://${server.address}:${server.port}/fi/search?q=kirjasto`;
+  .page`${getBaseUrl()}/fi/search?q=kirjasto`;
 
   test('Automated accessibility testing', async (t) => {
     await axeCheckHandler(t);
@@ -37,7 +35,7 @@ fixture`TestCafe Axe test: search page`
 
 
 fixture`TestCafe Axe test: unit page`
-  .page`http://${server.address}:${server.port}/fi/unit/8215`;
+  .page`${getBaseUrl()}/fi/unit/8215`;
 
   test('Automated accessibility testing', async (t) => {
     await axeCheckHandler(t);
@@ -49,7 +47,7 @@ fixture`TestCafe Axe test: unit page`
 
 
 fixture`TestCafe Axe test: service page`
-  .page`http://${server.address}:${server.port}/fi/service/813`;
+  .page`${getBaseUrl()}/fi/service/813`;
 
   test('Automated accessibility testing', async (t) => {
     await axeCheckHandler(t);
@@ -61,7 +59,7 @@ fixture`TestCafe Axe test: service page`
 
 
 fixture`TestCafe Axe test: address page`
-  .page`http://${server.address}:${config.server.port}/fi/address/helsinki/Fleminginkatu 1`;
+  .page`${getBaseUrl()}/fi/address/helsinki/Fleminginkatu 1`;
 
   test('Automated accessibility testing', async (t) => {
     await axeCheckHandler(t);
@@ -73,7 +71,7 @@ fixture`TestCafe Axe test: address page`
 
 
 fixture`TestCafe Axe test: area page`
-  .page`http://${server.address}:${config.server.port}/fi/area`;
+  .page`${getBaseUrl()}/fi/area`;
 
   test('Automated accessibility testing', async (t) => {
     await axeCheckHandler(t);
@@ -85,7 +83,7 @@ fixture`TestCafe Axe test: area page`
 
 
 fixture`TestCafe Axe test: service tree page`
-  .page`http://${server.address}:${server.port}/fi/services`;
+  .page`${getBaseUrl()}/fi/services`;
 
   test('Automated accessibility testing', async (t) => {
     await axeCheckHandler(t);
@@ -98,7 +96,7 @@ fixture`TestCafe Axe test: service tree page`
 
 // This page expires when the event is done
 fixture`TestCafe Axe test: event page`
-  .page`http://${server.address}:${server.port}/fi/event/helmet:190724`;
+  .page`${getBaseUrl()}/fi/event/helmet:190724`;
 
   test('Automated accessibility testing', async (t) => {
     await axeCheckHandler(t);

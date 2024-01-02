@@ -1,13 +1,10 @@
 /* eslint-disable */
 import { Selector } from 'testcafe';
 import { waitForReact } from 'testcafe-react-selectors';
-
-import config from '../config';
-import { getLocation } from '../utility';
+import { getBaseUrl, getLocation } from '../utility';
 import { feedbackButton, infoButton } from '../utility/pageObjects';
-const { server } = config;
 
-const viewUrl = `http://${server.address}:${server.port}/fi/`;
+const viewUrl = `${getBaseUrl()}/fi/`;
 
 fixture`Home view test`
   .page`${viewUrl}`

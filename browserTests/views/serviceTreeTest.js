@@ -1,18 +1,15 @@
 import { Selector } from 'testcafe';
 import { waitForReact } from 'testcafe-react-selectors';
 
-import config from '../config';
-import { getLocation } from '../utility';
+import { getBaseUrl, getLocation } from '../utility';
 import finnish from '../../src/i18n/fi';
 import { treeSearchTest, treeViewAccordionTest } from '../utility/TreeViewTest';
-
-const { server } = config;
 
 const searchBackButton = Selector('#SearchBar .SMBackButton');
 
 /* eslint-disable */
 fixture`Service tree page tests`
-  .page`http://${server.address}:${server.port}/fi/services`
+  .page`${getBaseUrl()}/fi/services`
   .beforeEach(async () => {
     await waitForReact();
   });

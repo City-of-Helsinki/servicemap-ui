@@ -1,12 +1,10 @@
 import { waitForReact } from 'testcafe-react-selectors';
 import { Selector } from 'testcafe';
-import config from '../config';
+import { getBaseUrl } from '../utility';
 
 /* eslint-disable */
-const { server } = config;
-
 fixture`Map tests`
-  .page`http://${server.address}:${server.port}/fi`
+  .page`${getBaseUrl()}/fi`
   .beforeEach(async () => {
     await waitForReact();
   });
@@ -30,7 +28,7 @@ test.skip('Transit marker visible after zoom', async (t) => {
 });
 
 fixture`Search unit geometry test`
-  .page`http://${server.address}:${server.port}/fi/search?q=latu`
+  .page`${getBaseUrl()}/fi/search?q=latu`
   .beforeEach(async () => {
     await waitForReact();
   });
@@ -44,7 +42,7 @@ test('Unit geometry is drawn on map', async (t) => {
 });
 
 fixture`Unit page geometry test`
-  .page`http://${server.address}:${server.port}/fi/unit/56544`
+  .page`${getBaseUrl()}/fi/unit/56544`
   .beforeEach(async () => {
     await waitForReact();
   });

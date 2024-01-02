@@ -1,9 +1,7 @@
 /* eslint-disable */
 import { Selector } from 'testcafe';
 import { ReactSelector, waitForReact } from 'testcafe-react-selectors';
-
-import config from '../config';
-import { getLocation } from '../utility';
+import { getBaseUrl, getLocation } from '../utility';
 import {
   addressSearchBarInput,
   cityDropdown,
@@ -21,12 +19,10 @@ import {
 import paginationTest from '../utility/paginationTest';
 import resultOrdererTest from '../utility/resultOrdererTest';
 
-const { server } = config;
-
-const searchPage = `http://${server.address}:${server.port}/fi/search?q=kirjasto`;
-const bathUrl = `http://${server.address}:${server.port}/fi/search?q=maauimala`;
-const embedBathUrl = `http://${server.address}:${server.port}/fi/embed/search?q=maauimala&search_language=fi&show_list=side`;
-const homePage= `http://${server.address}:${server.port}/fi`
+const searchPage = `${getBaseUrl()}/fi/search?q=kirjasto`;
+const bathUrl = `${getBaseUrl()}/fi/search?q=maauimala`;
+const embedBathUrl = `${getBaseUrl()}/fi/embed/search?q=maauimala&search_language=fi&show_list=side`;
+const homePage= `${getBaseUrl()}/fi`
 const resultItemTitle = Selector('[data-sm="ResultItemTitle"]');
 const kumpulaBath = resultItemTitle.withText('Kumpulan maauimala');
 const leppavaaraBath = resultItemTitle.withText('Leppävaaran maauimala');
@@ -41,7 +37,7 @@ fixture`Search view test`
 const searchUnits = async (t, search = 'uimastadion') => {
   // Make new search
   await t
-    .expect(getLocation()).contains(`http://${server.address}:${server.port}/fi/search`)
+    .expect(getLocation()).contains(`${getBaseUrl()}/fi/search`)
     .click(searchBarInput)
     .pressKey('ctrl+a delete')
     .typeText(searchBarInput, search, { replace: true })
@@ -320,7 +316,7 @@ test.skip('Search suggestion arrow navigation does loop correctly', async(t) => 
 
 //   // Make new search
 //   await t
-//     .expect(getLocation()).contains(`http://${server.address}:${server.port}/fi/search`)
+//     .expect(getLocation()).contains(`${getBaseUrl()}/fi/search`)
 //     .click(searchBarInput)
 //     .pressKey('ctrl+a delete')
 //     .typeText(input, 'kirjastoa');
@@ -330,7 +326,7 @@ test.skip('Search suggestion arrow navigation does loop correctly', async(t) => 
 //   const text = await clickedItem.getReact(({props}) => props.fullQuery);
 //   await t
 //     .click(clickedItem)
-//     .expect(getLocation()).contains(`http://${server.address}:${server.port}/fi/search?q=${text}`)
+//     .expect(getLocation()).contains(`${getBaseUrl()}/fi/search?q=${text}`)
     
 // });
 const orgChips = Selector(`${organisationDropdown} ${settingChip}`)

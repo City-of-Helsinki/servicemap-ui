@@ -1,6 +1,6 @@
 import { waitForReact } from 'testcafe-react-selectors';
 import { Selector } from 'testcafe';
-import config from '../config';
+import { getBaseUrl } from '../utility';
 import {
   embedderToolButton,
   embedderToolCloseButton,
@@ -11,10 +11,9 @@ import {
 } from '../utility/pageObjects';
 
 /* eslint-disable */
-const { server } = config;
 
 fixture`Navigation home page`
-  .page`http://${server.address}:${server.port}/fi`
+  .page`${getBaseUrl()}/fi`
   .beforeEach(async () => {
     await waitForReact();
   });
@@ -35,7 +34,7 @@ test('Should navigate back to home from embedder tool', async (t) => {
 });
 
 fixture`Navigation embedder`
-  .page`http://${server.address}:${server.port}/fi/embedder`
+  .page`${getBaseUrl()}/fi/embedder`
   .beforeEach(async () => {
     await waitForReact();
   });
