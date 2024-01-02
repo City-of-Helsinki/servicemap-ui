@@ -133,7 +133,8 @@ test('Embeder tool does not crash area view', async (t) => {
     .expect(accordions.count).eql(3, 'Expect 3 accordions to exist for each section in AreaView')
 });
 
-test('Statistical areas accordions open correctly', async (t) => {
+// TODO turn of the year
+test.skip('Statistical areas accordions open correctly', async (t) => {
   const totalAccordion = await openStatisticalTotals(t);
 
   const innerAccordions = totalAccordion.child().find(accordionSelector);
@@ -161,7 +162,8 @@ test('Statistical areas accordions open correctly', async (t) => {
   ;
 })
 
-test('Statistical area district selection works correctly', async (t) => {
+// TODO turn of the year
+test.skip('Statistical area district selection works correctly', async (t) => {
   const totalAccordion = await openStatisticalTotals(t);
 
   const serviceButton = await totalAccordion.child().find(accordionSelector).nth(0).find('button');
