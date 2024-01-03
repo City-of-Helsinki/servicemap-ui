@@ -10,6 +10,8 @@ import matomoTracker, { servicemapTrackPageView } from '../../utils/tracking';
 class Navigator extends React.Component {
   unlisten = null;
 
+  matomoTracker = matomoTracker;
+
   componentDidMount() {
     const {
       history,
@@ -52,15 +54,30 @@ class Navigator extends React.Component {
   }
 
   trackPageView = (settings) => {
+    const getHelsinkiCookie = () => {
+      const pairs = document.cookie.split(';');
+      const cookies = {};
+      pairs.forEach(item => {
+        const pair = item.split('=');
+        const key = (`${pair[0]}`).trim();
+        const string = pair.slice(1).join('=');
+        cookies[key] = decodeURIComponent(string);
+      });
+      const helsinkiCookie = cookies?.['city-of-helsinki-cookie-consents'];
+      return helsinkiCookie ? JSON.parse(helsinkiCookie) : null;
+    };
+    const helsinkiCookie = getHelsinkiCookie();
+
     // Simple custom servicemap page view tracking
     servicemapTrackPageView();
     const embed = isEmbed();
-    if (typeof window !== 'undefined' && !embed && window?.cookiehub?.hasConsented('analytics')) {
-      if (matomoTracker) {
+    if (typeof window !== 'undefined' && !embed && helsinkiCookie?.matomo) {
+      const tracker = this.matomoTracker;
+      if (tracker) {
         const mobility = settings?.mobility;
         const senses = settings?.senses;
         setTimeout(() => {
-          matomoTracker.trackPageView({
+          tracker.trackPageView({
             documentTitle: document.title,
             customDimensions: [
               { id: config.matomoMobilityDimensionID, value: mobility || '' },
