@@ -1,16 +1,15 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 import { connect } from 'react-redux';
-import { breadcrumbPush, breadcrumbPop, breadcrumbReplace } from '../../redux/actions/breadcrumb';
-import { generatePath, isEmbed } from '../../utils/path';
 import config from '../../../config';
+import { breadcrumbPop, breadcrumbPush, breadcrumbReplace } from '../../redux/actions/breadcrumb';
+import { selectTracker } from '../../redux/selectors/general';
+import { generatePath, isEmbed } from '../../utils/path';
 import SettingsUtility from '../../utils/settings';
-import matomoTracker, { servicemapTrackPageView } from '../../utils/tracking';
+import { servicemapTrackPageView } from '../../utils/tracking';
 
 class Navigator extends React.Component {
   unlisten = null;
-
-  matomoTracker = matomoTracker;
 
   componentDidMount() {
     const {
@@ -54,6 +53,7 @@ class Navigator extends React.Component {
   }
 
   trackPageView = (settings) => {
+    const { tracker } = this.props;
     const getHelsinkiCookie = () => {
       const pairs = document.cookie.split(';');
       const cookies = {};
@@ -72,7 +72,6 @@ class Navigator extends React.Component {
     servicemapTrackPageView();
     const embed = isEmbed();
     if (typeof window !== 'undefined' && !embed && helsinkiCookie?.matomo) {
-      const tracker = this.matomoTracker;
       if (tracker) {
         const mobility = settings?.mobility;
         const senses = settings?.senses;
@@ -244,11 +243,13 @@ Navigator.propTypes = {
   match: PropTypes.objectOf(PropTypes.any).isRequired,
   senses: PropTypes.arrayOf(PropTypes.string),
   mobility: PropTypes.string,
+  tracker: PropTypes.objectOf(PropTypes.any),
 };
 
 Navigator.defaultProps = {
   senses: null,
   mobility: null,
+  tracker: null,
 };
 
 // Listen to redux state
@@ -260,11 +261,13 @@ const mapStateToProps = (state) => {
   } = state;
 
   const { previousSearch } = searchResults;
+  const tracker = selectTracker(state);
   return {
     breadcrumb,
     previousSearch,
     mobility: settings.mobility,
     senses: SettingsUtility.accessibilityImpairmentKeys.filter(key => settings[key]),
+    tracker,
   };
 };
 
