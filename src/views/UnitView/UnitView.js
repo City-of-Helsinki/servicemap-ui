@@ -8,6 +8,7 @@ import { visuallyHidden } from '@mui/utils';
 import PropTypes from 'prop-types';
 import React, { useEffect, useRef, useState } from 'react';
 import { Helmet } from 'react-helmet';
+import Watermark from '@uiw/react-watermark';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
@@ -231,26 +232,62 @@ const UnitView = (props) => {
     if (unit.picture_url) {
       return { pictureUrl: unit.picture_url, pictureCaption: unit.picture_caption };
     }
-    const pictureUrl = unit.extra?.['kaupunkialusta.photoUrl']?.split('\n')?.[0];
-    const pictureCaption = {
-      fi: unit.extra?.['kaupunkialusta.photoFi'],
-      en: unit.extra?.['kaupunkialusta.photoEn'],
-      sv: unit.extra?.['kaupunkialusta.photoSv'],
-    };
-    if (pictureUrl) {
-      return { pictureUrl, pictureCaption };
+    const { extra } = unit;
+    function splitLineBreakGetFirstItem(extraElement) {
+      return extraElement?.split('\n')?.[0];
+    }
+
+    if (extra) {
+      const pictureUrl = splitLineBreakGetFirstItem(extra?.['kaupunkialusta.photoUrl']);
+      const pictureCaption = {
+        fi: extra?.['kaupunkialusta.photoFi'],
+        en: extra?.['kaupunkialusta.photoEn'],
+        sv: extra?.['kaupunkialusta.photoSv'],
+      };
+
+      if (pictureUrl) {
+        const photoSource = splitLineBreakGetFirstItem(extra?.['kaupunkialusta.photoSource']);
+        const photoPermission = splitLineBreakGetFirstItem(extra?.['kaupunkialusta.photoPermission']);
+        return {
+          pictureUrl,
+          pictureCaption,
+          photoSource,
+          photoPermission,
+        };
+      }
     }
     return {};
   };
 
   const renderPicture = () => {
-    const { pictureUrl, pictureCaption } = getPictureUrlAndCaption();
+    const {
+      pictureUrl, pictureCaption, photoSource, photoPermission,
+    } = getPictureUrlAndCaption();
+    const styledImage = <StyledImage alt={getImageAlt()} src={pictureUrl} />;
     return (
       <StyledImageContainer>
-        <StyledImage
-          alt={getImageAlt()}
-          src={pictureUrl}
-        />
+        {
+          !photoSource
+          && styledImage
+        }
+        {
+          photoSource
+          && (
+            <Watermark
+              content={`${photoSource} @ ${photoPermission}`}
+              fontWeight="1000"
+              fontColor="white"
+              rotate="0"
+              width="50"
+              offsetLeft="0"
+              offsetTop="20"
+              fontSize="8"
+              style={{ background: '#fff', height: '100%' }}
+            >
+              {styledImage}
+            </Watermark>
+          )
+        }
         {pictureCaption && (
           <StyledImageCaption variant="body2">{getLocaleText(pictureCaption)}</StyledImageCaption>)}
       </StyledImageContainer>
@@ -532,7 +569,7 @@ const UnitView = (props) => {
                 {
                   isMobile
                     ? renderUnitLocation()
-                    : unit.picture_url && renderPicture()
+                    : renderPicture()
                 }
                 <SettingsComponent variant="paddingTopSettings" />
               </>
