@@ -263,6 +263,9 @@ const UnitView = (props) => {
     const {
       pictureUrl, pictureCaption, photoSource, photoPermission,
     } = getPictureUrlAndCaption();
+    if (!pictureUrl) {
+      return null;
+    }
     const styledImage = <StyledImage alt={getImageAlt()} src={pictureUrl} />;
     return (
       <StyledImageContainer>
