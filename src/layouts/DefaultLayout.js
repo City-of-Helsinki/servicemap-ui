@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { Typography } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
+import { useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
+import { getPage } from '../redux/selectors/user';
 import MapView from '../views/MapView';
 import config from '../../config';
 import ViewRouter from './components/ViewRouter';
@@ -87,23 +90,18 @@ const createContentStyles = (
 // (showAlert did not use updated showPrintView value)
 const valueStore = {};
 
-const DefaultLayout = (props) => {
+const DefaultLayout = ({ fetchErrors, fetchNews }) => {
+  const currentPage = useSelector(getPage);
   const [showPrintView, togglePrintView] = useState(false);
   const [sidebarHidden, toggleSidebarHidden] = useState(false);
   const [error, setError] = useState(false);
 
-  const {
-    currentPage,
-    fetchErrors,
-    fetchNews,
-    intl,
-    location,
-  } = props;
+  const intl = useIntl();
   const isMobile = useMobileStatus();
+  const location = useLocation();
   const isSmallScreen = useMediaQuery(`(max-width:${smallScreenBreakpoint}px)`);
   const fullMobileMap = new URLSearchParams(location.search).get('showMap'); // If mobile map view
   const landscape = useMediaQuery('(min-device-aspect-ratio: 1/1)');
-  const portrait = useMediaQuery('(max-device-aspect-ratio: 1/1)');
 
   useEffect(() => {
     fetchErrors();
@@ -213,15 +211,8 @@ const DefaultLayout = (props) => {
 
 // Typechecking
 DefaultLayout.propTypes = {
-  currentPage: PropTypes.string,
   fetchErrors: PropTypes.func.isRequired,
   fetchNews: PropTypes.func.isRequired,
-  intl: PropTypes.objectOf(PropTypes.any).isRequired,
-  location: PropTypes.objectOf(PropTypes.any).isRequired,
-};
-
-DefaultLayout.defaultProps = {
-  currentPage: null,
 };
 
 export default DefaultLayout;

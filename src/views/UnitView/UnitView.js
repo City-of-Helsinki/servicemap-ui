@@ -1,15 +1,18 @@
 /* eslint-disable no-underscore-dangle */
-import React, { useEffect, useRef, useState } from 'react';
-import PropTypes from 'prop-types';
-import { Button, Typography } from '@mui/material';
-import { FormattedMessage, useIntl } from 'react-intl';
-import {
-  Mail, Hearing, Share, OpenInFull,
-} from '@mui/icons-material';
-import { visuallyHidden } from '@mui/utils';
-import { Helmet } from 'react-helmet';
-import { useDispatch, useSelector } from 'react-redux';
 import styled from '@emotion/styled';
+import {
+  Hearing, Mail, OpenInFull, Share,
+} from '@mui/icons-material';
+import { Button, Typography } from '@mui/material';
+import { visuallyHidden } from '@mui/utils';
+import PropTypes from 'prop-types';
+import React, { useEffect, useRef, useState } from 'react';
+import { Helmet } from 'react-helmet';
+import { FormattedMessage, useIntl } from 'react-intl';
+import { useDispatch, useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
+import config from '../../../config';
+import paths from '../../../config/paths';
 import {
   AcceptSettingsDialog,
   BackButton,
@@ -24,33 +27,37 @@ import {
   TitleBar,
   TitledList,
 } from '../../components';
+import { fetchServiceUnits } from '../../redux/actions/services';
 import { selectMapRef, selectNavigator } from '../../redux/selectors/general';
-import AccessibilityInfo from './components/AccessibilityInfo';
-import ContactInfo from './components/ContactInfo';
-import Highlights from './components/Highlights';
-import ElectronicServices from './components/ElectronicServices';
-import Description from './components/Description';
-import SocialMediaLinks from './components/SocialMediaLinks';
-import UnitLinks from './components/UnitLinks';
-import config from '../../../config';
+import {
+  getSelectedUnit,
+  selectEvents,
+  selectHearingMaps,
+  selectReservations,
+  selectSelectedUnitAccessibilitySentences,
+  selectSelectedUnitIsFetching,
+} from '../../redux/selectors/selectedUnit';
+import { selectUserPosition } from '../../redux/selectors/user';
+import { parseSearchParams } from '../../utils';
 import useMobileStatus from '../../utils/isMobile';
+import { mapHasMapPane } from '../../utils/mapUtility';
+import SettingsUtility from '../../utils/settings';
 import UnitHelper from '../../utils/unitHelper';
 import useLocaleText from '../../utils/useLocaleText';
-import paths from '../../../config/paths';
-import SettingsUtility from '../../utils/settings';
-import UnitDataList from './components/UnitDataList';
-import UnitsServicesList from './components/UnitsServicesList';
-import PriceInfo from './components/PriceInfo';
-import { parseSearchParams } from '../../utils';
-import { fetchServiceUnits } from '../../redux/actions/services';
 import MapView from '../MapView';
-import { mapHasMapPane } from '../../utils/mapUtility';
+import AccessibilityInfo from './components/AccessibilityInfo';
+import ContactInfo from './components/ContactInfo';
+import Description from './components/Description';
+import ElectronicServices from './components/ElectronicServices';
+import Highlights from './components/Highlights';
+import PriceInfo from './components/PriceInfo';
+import SocialMediaLinks from './components/SocialMediaLinks';
+import UnitDataList from './components/UnitDataList';
+import UnitLinks from './components/UnitLinks';
+import UnitsServicesList from './components/UnitsServicesList';
 
 const UnitView = (props) => {
   const {
-    distance,
-    stateUnit,
-    classes,
     embed,
     match,
     fetchSelectedUnit,
@@ -58,16 +65,17 @@ const UnitView = (props) => {
     fetchReservations,
     fetchAccessibilitySentences,
     fetchHearingMaps,
-    accessibilitySentences,
-    eventsData,
-    reservationsData,
-    hearingMaps,
-    unitFetching,
-    userLocation,
-    location,
   } = props;
   const intl = useIntl();
   const navigator = useSelector(selectNavigator);
+  const userLocation = useSelector(selectUserPosition);
+  const hearingMaps = useSelector(state => selectHearingMaps(state).data);
+  const reservationsData = useSelector(selectReservations);
+  const eventsData = useSelector(selectEvents);
+  const accessibilitySentences = useSelector(state => selectSelectedUnitAccessibilitySentences(state).data);
+  const unitFetching = useSelector(selectSelectedUnitIsFetching);
+  const stateUnit = useSelector(getSelectedUnit);
+  const location = useLocation();
   const checkCorrectUnit = unit => unit && unit.id === parseInt(match.params.unit, 10);
 
   const [unit, setUnit] = useState(checkCorrectUnit(stateUnit) ? stateUnit : null);
@@ -220,19 +228,18 @@ const UnitView = (props) => {
   };
 
   const renderPicture = () => (
-    <div className={classes.imageContainer}>
-      <img
-        className={classes.image}
+    <StyledImageContainer>
+      <StyledImage
         alt={getImageAlt()}
         src={unit.picture_url}
       />
       {
           unit.picture_caption
           && (
-            <Typography variant="body2" className={classes.imageCaption}>{getLocaleText(unit.picture_caption)}</Typography>
+            <StyledImageCaption variant="body2">{getLocaleText(unit.picture_caption)}</StyledImageCaption>
           )
         }
-    </div>
+    </StyledImageContainer>
   );
 
   const renderDetailTab = () => {
@@ -245,15 +252,14 @@ const UnitView = (props) => {
 
     if (config.showReadSpeakerButton) {
       detailReadSpeakerButton = (
-        <ReadSpeakerButton
-          className={classes.rsButton}
+        <StyledReadSpeakerButton
           readID="rscontent-unitdetail"
         />
       );
     }
 
     return (
-      <div className={classes.content}>
+      <StyledContentContainer>
         {detailReadSpeakerButton}
         <div id="rscontent-unitdetail">
           {
@@ -289,7 +295,7 @@ const UnitView = (props) => {
           {!isMobile && feedbackButton()}
           {isMobile && renderPicture()}
         </div>
-      </div>
+      </StyledContentContainer>
     );
   };
 
@@ -298,8 +304,7 @@ const UnitView = (props) => {
 
     if (config.showReadSpeakerButton) {
       accessibilityReadSpeakerButton = (
-        <ReadSpeakerButton
-          className={classes.rsButton}
+        <StyledReadSpeakerButton
           readID="rscontent"
           encodedURL={encodeURI(`palvelukartta.test.hel.ninja${location.pathname}${location.search}`)}
         />
@@ -307,9 +312,9 @@ const UnitView = (props) => {
     }
 
     return (
-      <div className={classes.content}>
+      <StyledContentContainer>
         {accessibilityReadSpeakerButton}
-        <div id="rscontent" className={classes.aTabAdjuster}>
+        <StyledTabAdjuster id="rscontent">
           {
             renderTitleForRS()
           }
@@ -329,8 +334,8 @@ const UnitView = (props) => {
             </TitledList>
           )}
           <AccessibilityInfo titleAlways headingLevel={4} />
-        </div>
-      </div>
+        </StyledTabAdjuster>
+      </StyledContentContainer>
     );
   };
 
@@ -340,7 +345,7 @@ const UnitView = (props) => {
     }
 
     return (
-      <div className={classes.content}>
+      <StyledContentContainer>
         <UnitsServicesList
           listLength={5}
           unit={unit}
@@ -350,7 +355,7 @@ const UnitView = (props) => {
           data={reservationsData}
           type="reservations"
         />
-      </div>
+      </StyledContentContainer>
     );
   };
 
@@ -384,11 +389,10 @@ const UnitView = (props) => {
   };
 
   const renderUnitLocation = () => (
-    <div className={classes.unitLocationContainer}>
-      <SMButton
+    <StyledUnitLocationContainer>
+      <StyledMapButton
         role="link"
         color="primary"
-        className={classes.mapButton}
         aria-label={intl.formatMessage({ id: 'map.button.expand.aria' })}
         icon={<StyledMapIcon />}
         onClick={(e) => {
@@ -401,11 +405,11 @@ const UnitView = (props) => {
         <Typography sx={{ fontSize: '0.875rem', fontWeight: '500' }}>
           <FormattedMessage id="map.button.expand" />
         </Typography>
-      </SMButton>
-      <div className={classes.mapContainer}>
+      </StyledMapButton>
+      <StyledMapContainer>
         <MapView disableInteraction />
-      </div>
-    </div>
+      </StyledMapContainer>
+    </StyledUnitLocationContainer>
   );
 
 
@@ -415,15 +419,14 @@ const UnitView = (props) => {
       setOpenLinkDialog(true);
     };
     const elem = (
-      <Button
-        className={classes.linkButton}
+      <StyledLinkButton
         onClick={onLinkOpenClick}
       >
         <Typography fontSize="0.773rem" color="inherit" variant="body2">
           <FormattedMessage id="general.share.link" />
         </Typography>
-        <Share className={classes.linkButtonIcon} />
-      </Button>
+        <StyledLinkButtonIcon />
+      </StyledLinkButton>
     );
 
     const backButtonText = intl.formatMessage({ id: 'general.backTo' });
@@ -448,14 +451,14 @@ const UnitView = (props) => {
 
     if (unitFetching) {
       return (
-        <div className={classes.root}>
+        <StyledRootContainer>
           <div className="Content">
             {TopArea}
             <p>
               <FormattedMessage id="general.loading" />
             </p>
           </div>
-        </div>
+        </StyledRootContainer>
       );
     }
 
@@ -524,7 +527,7 @@ const UnitView = (props) => {
     }
 
     return (
-      <div className={classes.root}>
+      <StyledRootContainer>
         <div className="Content">
           {TopArea}
           <Typography color="primary" variant="body1">
@@ -532,7 +535,7 @@ const UnitView = (props) => {
           </Typography>
           <SettingsComponent />
         </div>
-      </div>
+      </StyledRootContainer>
     );
   };
 
@@ -548,38 +551,104 @@ const StyledMapIcon = styled(OpenInFull)(({ theme }) => ({
   fontSize: '18px',
 }));
 
+const StyledRootContainer = styled.div(() => ({
+  height: '100%',
+  display: 'flex',
+  flexFlow: 'column',
+  overflowY: 'auto',
+}));
+
+const StyledContentContainer = styled.div(({ theme }) => ({
+  paddingLeft: theme.spacing(2),
+  paddingRight: theme.spacing(2),
+  paddingBottom: theme.spacing(2),
+}));
+
+const StyledTabAdjuster = styled.div(({ theme }) => ({
+  marginLeft: theme.spacing(1),
+}));
+
+const StyledReadSpeakerButton = styled(ReadSpeakerButton)(({ theme }) => ({
+  marginTop: theme.spacing(2),
+  marginLeft: theme.spacing(2),
+}));
+
+const StyledImageContainer = styled.div(() => ({
+  width: '100%',
+  height: 200,
+  position: 'relative',
+}));
+
+const StyledImage = styled.img(() => ({
+  objectFit: 'cover',
+  height: '100%',
+  width: '100%',
+}));
+
+const StyledImageCaption = styled(Typography)(({ theme }) => ({
+  width: '100%',
+  minHeight: 31,
+  fontSize: '0.75rem',
+  lineHeight: '15px',
+  position: 'absolute',
+  display: 'flex',
+  alignItems: 'center',
+  padding: theme.spacing(1),
+  paddingLeft: theme.spacing(2),
+  paddingRight: theme.spacing(2),
+  bottom: 0,
+  left: 0,
+  color: '#000',
+  backgroundColor: '#F0F0F0',
+  boxSizing: 'border-box',
+  textAlign: 'left',
+}));
+
+const StyledUnitLocationContainer = styled.div(() => ({
+  height: 225,
+  position: 'relative',
+}));
+
+const StyledMapButton = styled(SMButton)(({ theme }) => ({
+  position: 'absolute',
+  right: 16,
+  margin: 0,
+  top: 16,
+  zIndex: 51,
+  minHeight: 36,
+  borderRadius: '8px',
+  paddingLeft: theme.spacing(1.5),
+  paddingRight: theme.spacing(1.75),
+}));
+
+const StyledMapContainer = styled.div(() => ({
+  height: '100%',
+  pointerEvents: 'none',
+}));
+
+const StyledLinkButton = styled(Button)(() => ({
+  color: 'white',
+  textTransform: 'none',
+  marginLeft: 'auto',
+}));
+
+const StyledLinkButtonIcon = styled(Share)(({ theme }) => ({
+  fontSize: 24,
+  marginLeft: theme.spacing(1.5),
+}));
+
 // Typechecking
 UnitView.propTypes = {
-  accessibilitySentences: PropTypes.objectOf(PropTypes.any),
-  distance: PropTypes.shape({
-    distance: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-    type: PropTypes.oneOf(['m', 'km']),
-    text: PropTypes.string,
-  }),
-  unit: PropTypes.objectOf(PropTypes.any),
   embed: PropTypes.bool,
-  eventsData: PropTypes.objectOf(PropTypes.any),
-  map: PropTypes.objectOf(PropTypes.any),
   fetchAccessibilitySentences: PropTypes.func.isRequired,
   fetchReservations: PropTypes.func.isRequired,
   fetchSelectedUnit: PropTypes.func.isRequired,
-  unitFetching: PropTypes.bool.isRequired,
   fetchUnitEvents: PropTypes.func.isRequired,
+  fetchHearingMaps: PropTypes.func.isRequired,
   match: PropTypes.objectOf(PropTypes.any),
-  classes: PropTypes.objectOf(PropTypes.any).isRequired,
-  reservations: PropTypes.arrayOf(PropTypes.any),
-  userLocation: PropTypes.objectOf(PropTypes.any),
-  location: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 UnitView.defaultProps = {
-  accessibilitySentences: null,
-  distance: null,
   embed: false,
-  eventsData: { events: null, unit: null },
-  unit: null,
   match: {},
-  map: null,
-  reservations: null,
-  userLocation: null,
 };

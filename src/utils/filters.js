@@ -133,10 +133,11 @@ export const resolveCityAndOrganizationFilter = (cities, organizationIds, locati
   if (!embed) {
     return filterCitiesAndOrganizations(cities, organizationIds);
   }
+  const splitByComma = text => ((text?.length || 0) === 0 ? [] : text?.split(',')) || [];
   const searchParam = parseSearchParams(location.search);
   const cityParam = searchParam?.city || searchParam?.municipality;
-  const cityArray = cityParam?.split(',') || [];
-  const orgIdArray = searchParam?.organization?.split(',') || [];
+  const cityArray = splitByComma(cityParam);
+  const orgIdArray = splitByComma(searchParam?.organization);
   return filterCitiesAndOrganizations(cityArray, orgIdArray);
 };
 /**

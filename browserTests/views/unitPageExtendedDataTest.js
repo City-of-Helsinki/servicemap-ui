@@ -1,15 +1,12 @@
 /* eslint-disable */
 import { ReactSelector } from 'testcafe-react-selectors';
-import config from '../config';
 import { TitleBarTitleSelector } from '../constants';
-
-const { server } = config;
-
+import { getBaseUrl } from '../utility';
 
 const pages = [
-  `http://${server.address}:${server.port}/fi/unit/51342/events`,
-  `http://${server.address}:${server.port}/fi/unit/51342/services`,
-  `http://${server.address}:${server.port}/fi/unit/51342/reservations`
+  `${getBaseUrl()}/fi/unit/51342/events`,
+  `${getBaseUrl()}/fi/unit/51342/services`,
+  `${getBaseUrl()}/fi/unit/51342/reservations`
 ];
 
 const unitName = 'Keskustakirjasto Oodi';

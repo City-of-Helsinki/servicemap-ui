@@ -1,17 +1,14 @@
-import { waitForReact } from 'testcafe-react-selectors';
 import { Selector } from 'testcafe';
-import config from '../config';
-import { getLocation } from '../utility';
+import { waitForReact } from 'testcafe-react-selectors';
 import appConfig from '../../config';
 import finnish from '../../src/i18n/fi';
+import { getBaseUrl, getLocation } from '../utility';
 import { mobilityDropdown, sensesDropdown } from '../utility/pageObjects';
-
-const { server } = config;
 
 /* eslint-disable */
 
 const unitName = 'Keskustakirjasto Oodi';
-const testUrl = `http://${server.address}:${server.port}/fi/unit/51342`
+const testUrl = `${getBaseUrl()}/fi/unit/51342`
 
 const selectSettingsAndClose = async (t) => {
   if (t) {

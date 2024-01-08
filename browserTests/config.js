@@ -1,6 +1,6 @@
-export default {
+module.exports = {
   server: {
     address: 'localhost',
-    port: 2048
-  }
-}
+    port: 2048,
+  },
+};

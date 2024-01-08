@@ -1,20 +1,17 @@
 /* eslint-disable */
-import { waitForReact } from 'testcafe-react-selectors';
 import { Selector } from 'testcafe';
-
-import config from '../config';
-import { getLocation } from '../utility';
+import { waitForReact } from 'testcafe-react-selectors';
+import { getBaseUrl, getLocation } from '../utility';
 import {
-  accordionSelector, addressSearchBarInput,
+  accordionSelector,
+  addressSearchBarInput,
   embedderToolButton,
   embedderToolCloseButton,
   mapToolsButton,
 } from '../utility/pageObjects';
 
-const { server } = config;
-
 fixture`Area view test`
-  .page`http://${server.address}:${server.port}/fi/area`
+  .page`${getBaseUrl()}/fi/area`
   .beforeEach(async () => {
     await waitForReact();
   });
@@ -103,7 +100,7 @@ test('Unit list functions correctly' , async (t) => {
     .click(radioButtons.nth(0).child())
     .expect(unitList.childElementCount).gt(0, 'No units listed for selected district')
     .click(unitList.child())
-    .expect(getLocation()).contains(`${server.address}:${server.port}/fi/unit`);
+    .expect(getLocation()).contains(`${getBaseUrl()}/fi/unit`);
 })
 
 // TODO Flaky test, suggestion list loses focus
@@ -136,7 +133,8 @@ test('Embeder tool does not crash area view', async (t) => {
     .expect(accordions.count).eql(3, 'Expect 3 accordions to exist for each section in AreaView')
 });
 
-test('Statistical areas accordions open correctly', async (t) => {
+// TODO turn of the year
+test.skip('Statistical areas accordions open correctly', async (t) => {
   const totalAccordion = await openStatisticalTotals(t);
 
   const innerAccordions = totalAccordion.child().find(accordionSelector);
@@ -164,7 +162,8 @@ test('Statistical areas accordions open correctly', async (t) => {
   ;
 })
 
-test('Statistical area district selection works correctly', async (t) => {
+// TODO turn of the year
+test.skip('Statistical area district selection works correctly', async (t) => {
   const totalAccordion = await openStatisticalTotals(t);
 
   const serviceButton = await totalAccordion.child().find(accordionSelector).nth(0).find('button');

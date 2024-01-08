@@ -1,16 +1,15 @@
-import { waitForReact, ReactSelector } from 'testcafe-react-selectors';
 import { Selector } from 'testcafe';
-import config from '../config';
+import { ReactSelector, waitForReact } from 'testcafe-react-selectors';
+import { getBaseUrl } from '../utility';
+
 import paginationTest from '../utility/paginationTest';
 import resultOrdererTest from '../utility/resultOrdererTest';
-
-const { server } = config;
 
 const coordinates = ['60.281936', '24.949933'];
 
 /* eslint-disable */
 fixture`Service page coordinate tests`
-  .page`http://${server.address}:${server.port}/fi/service/813?lat=${coordinates[0]}&lon=${coordinates[1]}`
+  .page`${getBaseUrl()}/fi/service/813?lat=${coordinates[0]}&lon=${coordinates[1]}`
   .beforeEach(async () => {
     await waitForReact();
   });
@@ -24,9 +23,9 @@ test('User marker is drawn on map based on coordinates', async (t) => {
     .expect(coords).eql(coordinates, 'user marker coordinates do not match parameter coordinates');
 });
 
-const servicePage = `http://${server.address}:${server.port}/fi/service/813`;
+const servicePage = `${getBaseUrl()}/fi/service/813`;
 
-fixture `Service page tests`
+fixture`Service page tests`
   .page`${servicePage}`
   .beforeEach(async () => {
     await waitForReact();

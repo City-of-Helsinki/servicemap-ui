@@ -7,7 +7,9 @@ import { ButtonBase, Typography } from '@mui/material';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
+import { useSelector } from 'react-redux';
 import { getIcon } from '../../../../../components';
+import { selectMapType } from '../../../../../redux/selectors/settings';
 import useLocaleText from '../../../../../utils/useLocaleText';
 import { fetchStopData } from '../../../utils/transitFetch';
 import { StyledCloseText } from '../../styled/styled';
@@ -81,6 +83,7 @@ const StyledBoldText = styled(Typography)(() => ({
 const TransitStopInfo = ({
   stop, onCloseClick, type,
 }) => {
+  const useContrast = useSelector(selectMapType) === 'accessible_map';
   const getLocaleText = useLocaleText();
   const [stopData, setStopData] = useState({ departureTimes: null, wheelchair: null });
   const infoIconCssClass = css(infoIconClass);
@@ -114,7 +117,7 @@ const TransitStopInfo = ({
 
   const renderDepartureTimes = () => {
     const { color, className } = getTypeAndClass(stop.vehicleType);
-    const icon = <TransitStopIcon color={color} className={className} />;
+    const icon = <TransitStopIcon color={useContrast ? '#000000' : color} className={className} />;
 
     if (stopData.departureTimes?.length) {
       return stopData.departureTimes.map((departure, index) => {
