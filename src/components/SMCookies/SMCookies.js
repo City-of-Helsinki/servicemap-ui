@@ -13,6 +13,16 @@ function SMCookies() {
   const locale = useSelector(getLocale);
   const tracker = useSelector(selectTracker);
   const dispatch = useDispatch();
+
+  function parseConsentsAndActOnThem(consents) {
+    if (!tracker && consents.matomo) {
+      const matomoTracker = getMatomoTracker();
+      if (matomoTracker) {
+        dispatch(setTracker(matomoTracker));
+      }
+    }
+  }
+
   const contentSource = {
     siteName: intl.formatMessage({ id: 'app.title' }),
     currentLanguage: locale,
@@ -33,16 +43,8 @@ function SMCookies() {
       ],
     },
     focusTargetSelector: '[href="#view-title"]',
-    onAllConsentsGiven: consents => {
-      if (!tracker && consents.matomo) {
-        dispatch(setTracker(getMatomoTracker()));
-      }
-    },
-    onConsentsParsed: consents => {
-      if (!tracker && consents.matomo) {
-        dispatch(setTracker(getMatomoTracker()));
-      }
-    },
+    onAllConsentsGiven: consents => parseConsentsAndActOnThem(consents),
+    onConsentsParsed: consents => parseConsentsAndActOnThem(consents),
   };
   return <CookieModal contentSource={contentSource} rootId={COOKIE_MODAL_ROOT_ID} />;
 }
