@@ -36,6 +36,7 @@ import {
   order,
 } from './reducers/simpleReducers';
 import statisticalDistrict from './reducers/statisticalDistrict';
+import tracker from './reducers/tracker';
 import user from './reducers/user';
 
 // Export all redux reducers here
@@ -79,5 +80,6 @@ export default combineReducers({
     order,
   }),
   statisticalDistrict,
+  tracker,
   user,
 });

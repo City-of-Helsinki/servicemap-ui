@@ -1,11 +1,12 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 import { connect } from 'react-redux';
-import { breadcrumbPush, breadcrumbPop, breadcrumbReplace } from '../../redux/actions/breadcrumb';
-import { generatePath, isEmbed } from '../../utils/path';
 import config from '../../../config';
+import { breadcrumbPop, breadcrumbPush, breadcrumbReplace } from '../../redux/actions/breadcrumb';
+import { selectTracker } from '../../redux/selectors/general';
+import { generatePath, isEmbed } from '../../utils/path';
 import SettingsUtility from '../../utils/settings';
-import matomoTracker, { servicemapTrackPageView } from '../../utils/tracking';
+import { servicemapTrackPageView } from '../../utils/tracking';
 
 class Navigator extends React.Component {
   unlisten = null;
@@ -52,35 +53,34 @@ class Navigator extends React.Component {
   }
 
   trackPageView = (settings) => {
+    const { tracker } = this.props;
+    const getHelsinkiCookie = () => {
+      const pairs = document.cookie.split(';');
+      const cookies = {};
+      pairs.forEach(item => {
+        const pair = item.split('=');
+        const key = (`${pair[0]}`).trim();
+        const string = pair.slice(1).join('=');
+        cookies[key] = decodeURIComponent(string);
+      });
+      const helsinkiCookie = cookies?.['city-of-helsinki-cookie-consents'];
+      return helsinkiCookie ? JSON.parse(helsinkiCookie) : null;
+    };
+    const helsinkiCookie = getHelsinkiCookie();
+
     // Simple custom servicemap page view tracking
     servicemapTrackPageView();
     const embed = isEmbed();
-    if (typeof window !== 'undefined' && !embed && window?.cookiehub?.hasConsented('analytics')) {
-      if (matomoTracker) {
+    if (typeof window !== 'undefined' && !embed && helsinkiCookie?.matomo) {
+      if (tracker) {
         const mobility = settings?.mobility;
         const senses = settings?.senses;
         setTimeout(() => {
-          matomoTracker.trackPageView({
+          tracker.trackPageView({
             documentTitle: document.title,
             customDimensions: [
               { id: config.matomoMobilityDimensionID, value: mobility || '' },
               { id: config.matomoSensesDimensionID, value: senses?.join(',') },
-            ],
-          });
-        }, 400);
-      }
-    }
-  }
-
-  trackNoResultsPage = (noResultsQuery) => {
-    if (typeof window !== 'undefined' && window?.cookiehub?.hasConsented('analytics')) {
-      if (matomoTracker) {
-        this.unlisten = null;
-        setTimeout(() => {
-          matomoTracker.trackPageView({
-            documentTitle: document.title,
-            customDimensions: [
-              { id: config.matomoNoResultsDimensionID, value: noResultsQuery },
             ],
           });
         }, 400);
@@ -243,11 +243,13 @@ Navigator.propTypes = {
   match: PropTypes.objectOf(PropTypes.any).isRequired,
   senses: PropTypes.arrayOf(PropTypes.string),
   mobility: PropTypes.string,
+  tracker: PropTypes.objectOf(PropTypes.any),
 };
 
 Navigator.defaultProps = {
   senses: null,
   mobility: null,
+  tracker: null,
 };
 
 // Listen to redux state
@@ -259,11 +261,13 @@ const mapStateToProps = (state) => {
   } = state;
 
   const { previousSearch } = searchResults;
+  const tracker = selectTracker(state);
   return {
     breadcrumb,
     previousSearch,
     mobility: settings.mobility,
     senses: SettingsUtility.accessibilityImpairmentKeys.filter(key => settings[key]),
+    tracker,
   };
 };
 

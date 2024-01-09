@@ -4,6 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import { visuallyHidden } from '@mui/utils';
 import { Typography } from '@mui/material';
 import { viewTitleID } from '../../../../utils/accessibility';
+import { COOKIE_MODAL_ROOT_ID } from '../../../../utils/constants';
 
 class ViewTitle extends React.Component {
   constructor(props) {
@@ -28,15 +29,12 @@ class ViewTitle extends React.Component {
       actionSetInitialLoad();
 
       setTimeout(() => {
-        // If cookiehub banner is visible prevent focusing
+        // If cookie modal is visible prevent focusing
         let shouldFocus = true;
         try {
-          const chDialog = document.querySelectorAll('section.ch2 div[role="dialog"]');
-          if (chDialog?.length > 0) {
-            chDialog.forEach((v) => { shouldFocus = shouldFocus && v.style.display === 'none'; });
-          }
+          shouldFocus = !document.getElementById(COOKIE_MODAL_ROOT_ID);
         } catch (e) {
-          console.warn('Error while attempting to figure out if cookiehub banner exists');
+          console.warn('Error while attempting to figure out if cookie modal exists');
         }
 
         // Focus to site title on first load if cookihub banner is hidden

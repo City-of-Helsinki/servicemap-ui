@@ -97,16 +97,12 @@ const normalizeItem = (item) => {
 
 // Normalize statistical districts
 const normalizeData = (data) => {
-  const normalizedData = [];
-  if (data.length > 0) {
-    data
-      .filter((item) => {
-        const hasData = !!item?.extra?.statistical_data;
-        return hasData && item.type === 'statistical_district';
-      })
-      .map(item => normalizedData.push(normalizeItem(item)));
-  }
-  return normalizedData;
+  return data
+    .filter((item) => {
+      const hasData = !!item?.extra?.statistical_data;
+      return hasData && item.type === 'statistical_district';
+    })
+    .map(item => normalizeItem(item));
 };
 
 // Fetch statistical districts with geometry
