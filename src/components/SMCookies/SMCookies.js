@@ -6,6 +6,7 @@ import setTracker from '../../redux/actions/tracker';
 import { selectTracker } from '../../redux/selectors/general';
 import { getLocale } from '../../redux/selectors/locale';
 import { COOKIE_MODAL_ROOT_ID } from '../../utils/constants';
+import { isEmbed } from '../../utils/path';
 import { getMatomoTracker } from '../../utils/tracking';
 
 function SMCookies() {
@@ -13,6 +14,12 @@ function SMCookies() {
   const locale = useSelector(getLocale);
   const tracker = useSelector(selectTracker);
   const dispatch = useDispatch();
+  const embed = isEmbed();
+
+  if (embed) {
+    // No cookie modal or tracking in embed mode
+    return null;
+  }
 
   function parseConsentsAndActOnThem(consents) {
     if (!tracker && consents.matomo) {
