@@ -51,8 +51,9 @@ const icons = (isClient = true) => ({
 const css = {
   test: /\.css$/,
   include: [
-    path.resolve(__dirname, "src"),
-    /node_modules\/leaflet.markercluster/
+    path.resolve(__dirname, 'src'),
+    /node_modules\/leaflet.markercluster/,
+    /node_modules\/hds-design-tokens/,
   ],
   use: [
     'isomorphic-style-loader',
@@ -121,7 +122,9 @@ const clientConfig = {
       // where dotenv *is* used.
       fs: false,
       "path": false,
-    }
+      crypto: false,
+      stream: false,
+    },
   },
   module: {
     rules: [

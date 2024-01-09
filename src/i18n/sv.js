@@ -150,6 +150,8 @@ const translations = {
   'area.list.statistic.30-49': 'Ålder 30-49 år',
   'area.list.statistic.50-64': 'Ålder 50-64 år',
   'area.list.statistic.65+': 'Ålder över 65 år',
+  'cookies.matomo.description': 'Kaka för statistiksystemet Matomo.',
+  'cookies.matomo.expiration': '{days} dagar',
 
   // TODO: translate all
   'parkingArea.popup.residentName': 'Zon {letter}',
