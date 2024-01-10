@@ -240,9 +240,9 @@ const UnitView = (props) => {
     if (extra) {
       const pictureUrl = splitLineBreakGetFirstItem(extra?.['kaupunkialusta.photoUrl']);
       const pictureCaption = {
-        fi: extra?.['kaupunkialusta.photoFi'],
-        en: extra?.['kaupunkialusta.photoEn'],
-        sv: extra?.['kaupunkialusta.photoSv'],
+        fi: splitLineBreakGetFirstItem(extra?.['kaupunkialusta.photoFi']),
+        en: splitLineBreakGetFirstItem(extra?.['kaupunkialusta.photoEn']),
+        sv: splitLineBreakGetFirstItem(extra?.['kaupunkialusta.photoSv']),
       };
 
       if (pictureUrl) {
