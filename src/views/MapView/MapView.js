@@ -210,7 +210,7 @@ const MapView = (props) => {
     }
   }, [measuringMode]);
 
-  const unitHasLocationAndGeometry = (un) => un?.location && un?.geometry;
+  const unitHasLocationAndGeometry = un => un?.location && (un?.geometry || un?.geometry_3d);
 
   // Render
 
