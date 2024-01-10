@@ -375,8 +375,7 @@ const FeedbackView = ({
           <StyledLink
             id="FeedbackInfoLink"
             role="link"
-            href={config.feedbackAdditionalInfoLink}
-            onClick={() => window.open(config.feedbackAdditionalInfoLink)}
+            onClick={() => window.open(getLocaleText(config.feedbackAdditionalInfoLink))}
           >
             <Typography><FormattedMessage id="feedback.additionalInfo.link" /></Typography>
           </StyledLink>
