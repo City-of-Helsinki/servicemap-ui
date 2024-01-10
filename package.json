@@ -22,6 +22,7 @@
     "@turf/distance": "^6.5.0",
     "@turf/flip": "^6.5.0",
     "@turf/point-on-feature": "^6.5.0",
+    "@uiw/react-watermark": "1.0.0",
     "abort-controller": "^3.0.0",
     "abortcontroller-polyfill": "^1.5.0",
     "core-js": "^3.25.1",
