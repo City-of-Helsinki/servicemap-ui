@@ -5,6 +5,8 @@ import { selectNavigator } from '../../../../redux/selectors/general';
 import { getPage } from '../../../../redux/selectors/user';
 import swapCoordinates from '../../utils/swapCoordinates';
 import UnitHelper from '../../../../utils/unitHelper';
+import ElevationProfile from '../ElevationProfile/ElevationProfile';
+import ElevationProfile2 from '../ElevationProfile2/ElevationProfile2';
 
 const UnitGeometry = ({ data }) => {
   const { Polyline, Polygon } = global.rL;
@@ -12,6 +14,7 @@ const UnitGeometry = ({ data }) => {
   const navigator = useSelector(selectNavigator);
 
   const [geometryData, setGeometryData] = useState(null);
+  const [geometry3DData, setGeometry3DData] = useState(null);
 
   useEffect(() => {
     const getUnitGeometry = (unit) => {
@@ -44,6 +47,20 @@ const UnitGeometry = ({ data }) => {
     setGeometryData(getUnitGeometry(data));
   }, [data]);
 
+  useEffect(() => {
+    const getUnitGeometry = unit => {
+      if (currentPage === 'unit' && unit?.geometry_3d?.type === 'MultiLineString') {
+        const { geometry_3d } = unit;
+        return {
+          ...geometry_3d,
+        };
+      }
+      return null;
+    };
+
+    setGeometry3DData(getUnitGeometry(data));
+  }, [data]);
+
   const geometryOnClick = (e) => {
     try {
       e.originalEvent.preventDefault();
@@ -70,6 +87,29 @@ const UnitGeometry = ({ data }) => {
     );
   };
 
+  const renderPolylineAndElevation = () => {
+    if (geometry3DData?.type !== 'MultiLineString' || !geometry3DData?.coordinates) {
+      return null;
+    }
+    // const center = [25.110242620744813, 60.31393682886327];
+    const center = [60.31393682886327, 25.110242620744813];
+    const size = 1000;
+    return (
+      <>
+        <ElevationProfile
+          track={geometry3DData}
+          center={center}
+          size={size}
+        />
+        {/*<ElevationProfile2*/}
+        {/*  track={geometry3DData}*/}
+        {/*  center={center}*/}
+        {/*  size={size}*/}
+        {/*/>*/}
+      </>
+    );
+  };
+
   const renderPolygon = () => {
     if (geometryData?.type !== 'MultiPolygon' || !geometryData?.coordinates) {
       return null;
@@ -86,11 +126,15 @@ const UnitGeometry = ({ data }) => {
       />
     );
   };
-
+  console.log('geom data', geometryData);
+  console.log('geom 3d data', geometry3DData);
   return (
     <>
       {
         renderPolyline()
+      }
+      {
+        renderPolylineAndElevation()
       }
       {
         renderPolygon()
