@@ -18,6 +18,7 @@ import {
   selectParkingAreas,
   selectParkingUnits,
   selectSelectedDistrictType,
+  selectSelectedParkingAreas,
 } from '../../../../redux/selectors/district';
 import ServiceMapAPI from '../../../../utils/newFetch/ServiceMapAPI';
 import useLocaleText from '../../../../utils/useLocaleText';
@@ -28,7 +29,7 @@ const ParkingAreaList = ({ areas, variant }) => {
   const dispatch = useDispatch();
   const getLocaleText = useLocaleText();
   const selectedDistrictType = useSelector(selectSelectedDistrictType);
-  const selectedParkingAreas = useSelector(state => state.districts.selectedParkingAreas);
+  const selectedParkingAreas = useSelector(selectSelectedParkingAreas);
   const parkingAreas = useSelector(selectParkingAreas);
   const parkingUnits = useSelector(selectParkingUnits);
 
