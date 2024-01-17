@@ -14,7 +14,7 @@ import { getServiceUnits } from '../../../redux/selectors/service';
 import {
   getServiceFilteredStatisticalDistrictUnits,
 } from '../../../redux/selectors/statisticalDistrict';
-import { getPage } from '../../../redux/selectors/user';
+import { getLocale, getPage } from '../../../redux/selectors/user';
 import orderUnits from '../../../utils/orderUnits';
 import { useEmbedStatus } from '../../../utils/path';
 
@@ -105,7 +105,7 @@ const useMapUnits = () => {
   const statisticalDistrictUnits = useSelector(getServiceFilteredStatisticalDistrictUnits);
   const parkingAreaUnits = useSelector(selectParkingUnitUnits);
   const highlightedUnit = useSelector(state => getSelectedUnit(state));
-  const locale = useSelector(state => state.user.locale);
+  const locale = useSelector(getLocale);
 
   const searchUnitsLoading = useSelector(state => state.searchResults.isFetching);
   const serviceUnitsLoading = useSelector(state => state.service.isFetching);

@@ -29,7 +29,7 @@ import styles from './index.css';
 import DefaultLayout from './layouts';
 import EmbedLayout from './layouts/EmbedLayout';
 import printCSS from './print.css';
-import { getLocale } from './redux/selectors/locale';
+import { getLocale } from './redux/selectors/user';
 import SMFonts from './service-map-icons.css';
 import ThemeWrapper from './themes/ThemeWrapper';
 import isClient from './utils';
