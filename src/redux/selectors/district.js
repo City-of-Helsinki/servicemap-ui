@@ -4,6 +4,7 @@ import { filterByCitySettings, getCityAndOrgFilteredData } from '../../utils/fil
 import { selectCities, selectSelectedCities, selectSelectedOrganizationIds } from './settings';
 
 export const getHighlightedDistrict = state => state.districts.highlitedDistrict;
+export const getDistrictOpenItems = state => state.districts.openItems;
 
 export const selectSelectedDistrictType = state => state.districts.selectedDistrictType;
 export const selectDistrictData = state => state.districts.districtData;
