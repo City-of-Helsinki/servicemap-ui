@@ -122,7 +122,7 @@ const MapView = (props) => {
   const intl = useIntl();
 
   // This unassigned selector is used to trigger re-render after events are fetched
-  useSelector(state => getSelectedUnitEvents(state));
+  useSelector(getSelectedUnitEvents);
 
   const initializeMap = () => {
     if (mapElement) {

@@ -100,11 +100,11 @@ const useMapUnits = () => {
   const adminDistricts = useSelector(selectAddressAdminDistricts);
   const addressUnits = useSelector(selectAddressUnits);
   const serviceUnits = useSelector(getServiceUnits);
-  const districtPrimaryUnits = useSelector(state => getDistrictPrimaryUnits(state));
+  const districtPrimaryUnits = useSelector(getDistrictPrimaryUnits);
   const districtServiceUnits = useSelector(getFilteredSubDistrictUnits);
   const statisticalDistrictUnits = useSelector(getServiceFilteredStatisticalDistrictUnits);
   const parkingAreaUnits = useSelector(selectParkingUnitUnits);
-  const highlightedUnit = useSelector(state => getSelectedUnit(state));
+  const highlightedUnit = useSelector(getSelectedUnit);
   const locale = useSelector(getLocale);
 
   const searchUnitsLoading = useSelector(state => state.searchResults.isFetching);
