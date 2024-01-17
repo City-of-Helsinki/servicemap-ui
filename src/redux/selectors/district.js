@@ -11,13 +11,14 @@ export const selectDistrictData = state => state.districts.districtData;
 const getAddressDistrictData = state => state.districts.districtAddressData.districts;
 export const selectSubdistrictUnits = state => state.districts.subdistrictUnits;
 export const selectSelectedSubdistricts = state => state.districts.selectedSubdistricts;
-const getSelectedDistrictServices = state => state.districts.selectedDistrictServices;
+export const selectSelectedDistrictServices = state => state.districts.selectedDistrictServices;
 export const selectParkingUnits = state => state.districts.parkingUnits;
 export const selectParkingAreas = state => state.districts.parkingAreas;
 export const selectSelectedParkingAreas = state => state.districts.selectedParkingAreas;
 export const selectDistrictsFetching = state => state.districts.districtsFetching;
 export const selectDistrictAddressData = state => state.districts.districtAddressData;
 export const selectDistrictUnitFetch = state => state.districts.unitFetch;
+export const selectDistrictMapState = state => state.districts.mapState;
 
 export const selectParkingUnitUnits = createSelector(
   [selectParkingUnits],
@@ -111,7 +112,7 @@ export const getFilteredSubdistrictServices = createSelector(
 
 // Get area view units filtered by area view unit tab checkbox selection
 export const getFilteredSubDistrictUnits = createSelector(
-  [getSubDistrictUnits, getSelectedDistrictServices],
+  [getSubDistrictUnits, selectSelectedDistrictServices],
   (subDistrictUnits, serviceFilters) => {
     if (serviceFilters.length) {
       return subDistrictUnits.filter(unit => (

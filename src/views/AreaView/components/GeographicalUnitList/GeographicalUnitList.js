@@ -8,7 +8,10 @@ import {
   handleOpenItems,
   removeSelectedDistrictService,
 } from '../../../../redux/actions/district';
-import { getFilteredSubdistrictServices } from '../../../../redux/selectors/district';
+import {
+  getFilteredSubdistrictServices,
+  selectSelectedDistrictServices,
+} from '../../../../redux/selectors/district';
 import { getLocale } from '../../../../redux/selectors/user';
 import { uppercaseFirst } from '../../../../utils';
 import orderUnits from '../../../../utils/orderUnits';
@@ -48,8 +51,8 @@ const UnitCheckbox = ({
 const GeographicalUnitList = ({ initialOpenItems }) => {
   const dispatch = useDispatch();
   const getLocaleText = useLocaleText();
-  const filteredSubdistrictUnits = useSelector(state => getFilteredSubdistrictServices(state));
-  const selectedServices = useSelector(state => state.districts.selectedDistrictServices);
+  const filteredSubdistrictUnits = useSelector(getFilteredSubdistrictServices);
+  const selectedServices = useSelector(selectSelectedDistrictServices);
   const locale = useSelector(getLocale);
   const [serviceList, setServiceList] = useState([]);
   const [initialCheckedItems] = useState(selectedServices);
