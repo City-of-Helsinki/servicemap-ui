@@ -1,19 +1,18 @@
-import {
-  ButtonBase, Menu, MenuItem, Typography,
-} from '@mui/material';
-import React, { useState } from 'react';
+import { css } from '@emotion/css';
+import styled from '@emotion/styled';
+import { Language } from '@mui/icons-material';
+import { ButtonBase, Menu, MenuItem, Typography } from '@mui/material';
 import PropTypes from 'prop-types';
+import React, { useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import { Language } from '@mui/icons-material';
-import { css } from '@emotion/css';
-import styled from '@emotion/styled';
+import { getLocale } from '../../../redux/selectors/user';
 import LocaleUtility from '../../../utils/locale';
 import MobileNavButton from '../MobileNavButton/MobileNavButton';
 
 const LanguageMenuComponent = ({ mobile }) => {
-  const locale = useSelector(state => state.user.locale);
+  const locale = useSelector(getLocale);
   const location = useLocation();
   const [langAnchorEl, setLangAnchorEl] = useState(null);
 

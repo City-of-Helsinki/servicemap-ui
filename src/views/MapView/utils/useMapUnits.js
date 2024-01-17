@@ -4,7 +4,9 @@ import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import { selectAddressAdminDistricts, selectAddressUnits } from '../../../redux/selectors/address';
 import {
-  getDistrictPrimaryUnits, getFilteredSubDistrictUnits, selectParkingUnitUnits,
+  getDistrictPrimaryUnits,
+  getFilteredSubDistrictUnits,
+  selectParkingUnitUnits,
 } from '../../../redux/selectors/district';
 import { getOrderedSearchResultData } from '../../../redux/selectors/results';
 import { getSelectedUnit } from '../../../redux/selectors/selectedUnit';
@@ -12,6 +14,7 @@ import { getServiceUnits } from '../../../redux/selectors/service';
 import {
   getServiceFilteredStatisticalDistrictUnits,
 } from '../../../redux/selectors/statisticalDistrict';
+import { getLocale, getPage } from '../../../redux/selectors/user';
 import orderUnits from '../../../utils/orderUnits';
 import { useEmbedStatus } from '../../../utils/path';
 
@@ -92,17 +95,17 @@ const useMapUnits = () => {
   const embedded = useEmbedStatus();
   const location = useLocation();
   const searchResults = useSelector(getOrderedSearchResultData);
-  const currentPage = useSelector(state => state.user.page);
+  const currentPage = useSelector(getPage);
   const addressToRender = useSelector(state => state.address.toRender);
   const adminDistricts = useSelector(selectAddressAdminDistricts);
   const addressUnits = useSelector(selectAddressUnits);
   const serviceUnits = useSelector(getServiceUnits);
-  const districtPrimaryUnits = useSelector(state => getDistrictPrimaryUnits(state));
+  const districtPrimaryUnits = useSelector(getDistrictPrimaryUnits);
   const districtServiceUnits = useSelector(getFilteredSubDistrictUnits);
   const statisticalDistrictUnits = useSelector(getServiceFilteredStatisticalDistrictUnits);
   const parkingAreaUnits = useSelector(selectParkingUnitUnits);
-  const highlightedUnit = useSelector(state => getSelectedUnit(state));
-  const locale = useSelector(state => state.user.locale);
+  const highlightedUnit = useSelector(getSelectedUnit);
+  const locale = useSelector(getLocale);
 
   const searchUnitsLoading = useSelector(state => state.searchResults.isFetching);
   const serviceUnitsLoading = useSelector(state => state.service.isFetching);

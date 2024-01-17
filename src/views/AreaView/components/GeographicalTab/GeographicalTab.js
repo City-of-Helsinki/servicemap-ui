@@ -15,6 +15,7 @@ import {
   setSelectedSubdistricts,
 } from '../../../../redux/actions/district';
 import {
+  getDistrictOpenItems,
   getFilteredSubdistrictServices, selectDistrictAddressData,
   selectDistrictData,
   selectDistrictsFetching,
@@ -52,7 +53,7 @@ const GeographicalTab = ({
   const getLocaleText = useLocaleText();
 
   const [openCategory, setOpenCategory] = useState(
-    useSelector(state => state.districts.openItems).find(item => geographicalDistricts.includes(item)) || [],
+    useSelector(getDistrictOpenItems).find(item => geographicalDistricts.includes(item)) || [],
   );
 
   const setRadioButtonValue = (district) => {

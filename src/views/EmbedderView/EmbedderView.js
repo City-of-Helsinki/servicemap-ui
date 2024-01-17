@@ -1,35 +1,32 @@
 import styled from '@emotion/styled';
-import React, {
-  useState, useRef, useEffect, useCallback,
-} from 'react';
+import { Checkbox, Divider, FormControlLabel, Link, Typography } from '@mui/material';
 import PropTypes from 'prop-types';
-import { FormattedMessage, useIntl } from 'react-intl';
-import {
-  Checkbox, Divider, FormControlLabel, Typography, Link,
-} from '@mui/material';
-import URI from 'urijs';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Helmet } from 'react-helmet';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
+import URI from 'urijs';
+import config from '../../../config';
+import paths from '../../../config/paths';
+import { CloseButton, SMButton } from '../../components';
+import TopBar from '../../components/TopBar';
 import { selectNavigator } from '../../redux/selectors/general';
+import { getSelectedUnit } from '../../redux/selectors/selectedUnit';
 import { selectServiceCurrent } from '../../redux/selectors/service';
 import {
   selectMapType,
   selectSelectedCities,
   selectSelectedOrganizations,
 } from '../../redux/selectors/settings';
-import { getLocale } from '../../redux/selectors/user';
-import * as smurl from './utils/url';
+import { getLocale, getPage } from '../../redux/selectors/user';
 import isClient, { uppercaseFirst } from '../../utils';
-import { getEmbedURL, getLanguage } from './utils/utils';
-import EmbedController from './components/EmbedController';
-import IFramePreview from './components/IFramePreview';
-import paths from '../../../config/paths';
-import embedderConfig from './embedderConfig';
 import useLocaleText from '../../utils/useLocaleText';
+import EmbedController from './components/EmbedController';
 import EmbedHTML from './components/EmbedHTML';
-import TopBar from '../../components/TopBar';
-import config from '../../../config';
-import { CloseButton, SMButton } from '../../components';
+import IFramePreview from './components/IFramePreview';
+import embedderConfig from './embedderConfig';
+import * as smurl from './utils/url';
+import { getEmbedURL, getLanguage } from './utils/utils';
 
 const hideCitiesIn = [
   paths.unit.regex,
@@ -85,8 +82,8 @@ const EmbedderView = () => {
   const defaultFixedHeight = embedderConfig.DEFAULT_CUSTOM_WIDTH;
   const iframeConfig = embedderConfig.DEFAULT_IFRAME_PROPERTIES || {};
   const defaultService = 'none';
-  const page = useSelector(state => state.user.page);
-  const selectedUnit = useSelector(state => state.selectedUnit.unit.data);
+  const page = useSelector(getPage);
+  const selectedUnit = useSelector(getSelectedUnit);
   const currentService = useSelector(selectServiceCurrent);
   const organizationSettings = useSelector(selectSelectedOrganizations);
 

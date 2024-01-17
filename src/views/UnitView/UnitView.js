@@ -1,14 +1,12 @@
 /* eslint-disable no-underscore-dangle */
 import styled from '@emotion/styled';
-import {
-  Hearing, Mail, OpenInFull, Share,
-} from '@mui/icons-material';
+import { Hearing, Mail, OpenInFull, Share } from '@mui/icons-material';
 import { Button, Typography } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
+import Watermark from '@uiw/react-watermark';
 import PropTypes from 'prop-types';
 import React, { useEffect, useRef, useState } from 'react';
 import { Helmet } from 'react-helmet';
-import Watermark from '@uiw/react-watermark';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
@@ -33,9 +31,9 @@ import { selectMapRef, selectNavigator } from '../../redux/selectors/general';
 import {
   getSelectedUnit,
   selectEvents,
-  selectHearingMaps,
+  selectHearingMapsData,
   selectReservations,
-  selectSelectedUnitAccessibilitySentences,
+  selectSelectedUnitAccessibilitySentencesData,
   selectSelectedUnitIsFetching,
 } from '../../redux/selectors/selectedUnit';
 import { selectUserPosition } from '../../redux/selectors/user';
@@ -70,10 +68,10 @@ const UnitView = (props) => {
   const intl = useIntl();
   const navigator = useSelector(selectNavigator);
   const userLocation = useSelector(selectUserPosition);
-  const hearingMaps = useSelector(state => selectHearingMaps(state).data);
+  const hearingMaps = useSelector(selectHearingMapsData);
   const reservationsData = useSelector(selectReservations);
   const eventsData = useSelector(selectEvents);
-  const accessibilitySentences = useSelector(state => selectSelectedUnitAccessibilitySentences(state).data);
+  const accessibilitySentences = useSelector(selectSelectedUnitAccessibilitySentencesData);
   const unitFetching = useSelector(selectSelectedUnitIsFetching);
   const stateUnit = useSelector(getSelectedUnit);
   const location = useLocation();

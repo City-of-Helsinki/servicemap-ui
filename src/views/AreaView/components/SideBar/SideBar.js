@@ -18,7 +18,8 @@ import {
   setSelectedSubdistricts,
 } from '../../../../redux/actions/district';
 import {
-  selectDistrictData, selectDistrictsFetching, selectSelectedDistrictType,
+  getDistrictOpenItems,
+  selectDistrictData, selectDistrictMapState, selectDistrictsFetching, selectSelectedDistrictType,
 } from '../../../../redux/selectors/district';
 import { selectMapRef, selectNavigator } from '../../../../redux/selectors/general';
 import { parseSearchParams, stringifySearchParams } from '../../../../utils';
@@ -44,8 +45,8 @@ function SideBar({ selectedAddress, setSelectedAddress }) {
   const navigator = useSelector(selectNavigator);
   const selectedDistrictType = useSelector(selectSelectedDistrictType);
   const districtsFetching = useSelector(selectDistrictsFetching);
-  const openItems = useSelector(state => state.districts.openItems);
-  const mapState = useSelector(state => state.districts.mapState);
+  const openItems = useSelector(getDistrictOpenItems);
+  const mapState = useSelector(selectDistrictMapState);
   const map = useSelector(selectMapRef);
   const searchParams = parseSearchParams(location.search);
   const selectedArea = searchParams.selected;

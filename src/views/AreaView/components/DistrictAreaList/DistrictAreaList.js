@@ -18,7 +18,7 @@ import {
 export const DistrictAreaList = ({ selectedAddress, district }) => {
   const intl = useIntl();
   const citySettings = useSelector(selectCities);
-  const addressDistrict = useSelector(state => getAddressDistrict(state));
+  const addressDistrict = useSelector(getAddressDistrict);
   let sectionText = intl.formatMessage({ id: `area.services.all.${district.id}` });
 
   const districtsWithoutUnits = district.data.filter(d => (

@@ -1,8 +1,11 @@
-export const getSelectedUnit = store => store.selectedUnit.unit.data;
-export const selectSelectedUnitIsFetching = store => store.selectedUnit.unit.isFetching;
-export const getSelectedUnitEvents = store => store.selectedUnit.events;
-export const selectHearingMaps = store => store.selectedUnit.hearingMaps;
-export const selectReservations = store => store.selectedUnit.reservations;
-export const selectEvents = store => store.selectedUnit.events;
+export const getSelectedUnit = state => state.selectedUnit.unit.data;
+export const selectSelectedUnitIsFetching = state => state.selectedUnit.unit.isFetching;
+export const getSelectedUnitEvents = state => state.selectedUnit.events;
+export const selectHearingMaps = state => state.selectedUnit.hearingMaps;
+export const selectHearingMapsData = state => state.selectedUnit.hearingMaps.data;
+export const selectReservations = state => state.selectedUnit.reservations;
+export const selectEvents = state => state.selectedUnit.events;
 export const selectSelectedUnitAccessibilitySentences =
-    store => store.selectedUnit.accessibilitySentences;
+  state => state.selectedUnit.accessibilitySentences;
+export const selectSelectedUnitAccessibilitySentencesData =
+  state => state.selectedUnit.accessibilitySentences.data;

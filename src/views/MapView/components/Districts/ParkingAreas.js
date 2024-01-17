@@ -4,6 +4,10 @@ import { useTheme } from '@mui/styles';
 import React, { useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
+import {
+  selectParkingAreas,
+  selectSelectedParkingAreas,
+} from '../../../../redux/selectors/district';
 import useLocaleText from '../../../../utils/useLocaleText';
 import swapCoordinates from '../../utils/swapCoordinates';
 import { StyledAreaPopup } from '../styled/styled';
@@ -15,8 +19,8 @@ const ParkingAreas = () => {
   const getLocaleText = useLocaleText();
   const intl = useIntl();
   const theme = useTheme();
-  const parkingAreas = useSelector(state => state.districts.parkingAreas);
-  const selectedParkingAreas = useSelector(state => state.districts.selectedParkingAreas);
+  const parkingAreas = useSelector(selectParkingAreas);
+  const selectedParkingAreas = useSelector(selectSelectedParkingAreas);
 
   const [areaPopup, setAreaPopup] = useState(null);
 

@@ -15,7 +15,7 @@ import {
   activateSetting, resetAccessibilitySettings, setCities, setOrganizations,
 } from '../../redux/actions/settings';
 import { changeCustomUserLocation } from '../../redux/actions/user';
-import { selectMapRef, selectNavigator } from '../../redux/selectors/general';
+import { selectBounds, selectMapRef, selectNavigator } from '../../redux/selectors/general';
 import { getOrderedSearchResultData } from '../../redux/selectors/results';
 import {
   selectSelectedAccessibilitySettings, selectSelectedCities, selectSelectedOrganizationIds,
@@ -44,7 +44,7 @@ const SearchView = () => {
   const selectedCities = useSelector(selectSelectedCities);
   const selectedOrganizationIds = useSelector(selectSelectedOrganizationIds);
   const selectedAccessibilitySettings = useSelector(selectSelectedAccessibilitySettings);
-  const bounds = useSelector(state => state.bounds);
+  const bounds = useSelector(selectBounds);
   const customPositionAddress = useSelector(selectCustomPositionAddress);
   const map = useSelector(selectMapRef);
   const navigator = useSelector(selectNavigator);

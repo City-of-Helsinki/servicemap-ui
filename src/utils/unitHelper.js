@@ -1,5 +1,4 @@
 /* eslint-disable camelcase */
-import { useSelector } from 'react-redux';
 import isClient, { uppercaseFirst } from '.';
 import config from '../../config';
 import paths from '../../config/paths';
@@ -149,7 +148,5 @@ class UnitHelper {
     return uppercaseFirst(getLocaleText(contract_type.description));
   }
 }
-
-export const useSelectedUnit = () => useSelector(state => state.selectedUnit.unit.data);
 
 export default UnitHelper;

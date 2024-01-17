@@ -12,9 +12,17 @@ import setMobilityTree from '../../redux/actions/mobilityTree';
 import setServiceTree from '../../redux/actions/serviceTree';
 import { selectNavigator } from '../../redux/selectors/general';
 import { selectSelectedCities, selectSelectedOrganizations } from '../../redux/selectors/settings';
+import {
+  selectMobilityTreeOpened,
+  selectMobilityTreeSelected,
+  selectMobilityTreeServices,
+  selectServiceTreeOpened,
+  selectServiceTreeSelected,
+  selectServiceTreeServices,
+} from '../../redux/selectors/tree';
 import useMobileStatus from '../../utils/isMobile';
-import useLocaleText from '../../utils/useLocaleText';
 import ServiceMapAPI from '../../utils/newFetch/ServiceMapAPI';
+import useLocaleText from '../../utils/useLocaleText';
 
 const SERVICE_TREE = 'ServiceTree';
 const MOBILITY_TREE = 'MobilityTree';
@@ -41,14 +49,14 @@ const ServiceTreeView = ({ intl, variant }) => {
   const citySettings = useSelector(selectSelectedCities);
   const organizationSettings = useSelector(selectSelectedOrganizations);
   const serviceTreeServices = {
-    prevServices: useSelector(state => state.serviceTree.services),
-    prevSelected: useSelector(state => state.serviceTree.selected),
-    prevOpened: useSelector(state => state.serviceTree.opened),
+    prevServices: useSelector(selectServiceTreeServices),
+    prevSelected: useSelector(selectServiceTreeSelected),
+    prevOpened: useSelector(selectServiceTreeOpened),
   };
   const mobilityTreeServices = {
-    prevServices: useSelector(state => state.mobilityTree.services),
-    prevSelected: useSelector(state => state.mobilityTree.selected),
-    prevOpened: useSelector(state => state.mobilityTree.opened),
+    prevServices: useSelector(selectMobilityTreeServices),
+    prevSelected: useSelector(selectMobilityTreeSelected),
+    prevOpened: useSelector(selectMobilityTreeOpened),
   };
   const dispatch = useDispatch();
   const getLocaleText = useLocaleText();
