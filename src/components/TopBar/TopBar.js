@@ -8,7 +8,7 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import styled from '@emotion/styled';
-import { selectNavigator } from '../../redux/selectors/general';
+import { selectBreadcrumb, selectNavigator } from '../../redux/selectors/general';
 import { getLocale, getPage, selectThemeMode } from '../../redux/selectors/user';
 import DrawerMenu from './DrawerMenu';
 import DesktopComponent from '../DesktopComponent';
@@ -34,7 +34,7 @@ const TopBar = (props) => {
   const locale = useSelector(getLocale);
   const themeMode = useSelector(selectThemeMode);
   const currentPage = useSelector(getPage);
-  const breadcrumb = useSelector(state => state.breadcrumb);
+  const breadcrumb = useSelector(selectBreadcrumb);
   const navigator = useSelector(selectNavigator);
   const getAddressNavigatorParams = useNavigationParams();
   const isOnHomePage = isHomePage(location?.pathname);

@@ -10,7 +10,7 @@ import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import config from '../../../config';
-import { selectNavigator } from '../../redux/selectors/general';
+import { selectBreadcrumb, selectNavigator } from '../../redux/selectors/general';
 import MapSettings from '../MapSettings/MapSettings';
 import SettingsDropdowns from '../SettingsDropdowns';
 import MobileSettingsHeader from '../MobileSettingsHeader/MobileSettingsHeader';
@@ -23,7 +23,7 @@ const BottomNav = () => {
   const small = useMediaQuery('(max-width:477px)');
 
   const navigator = useSelector(selectNavigator);
-  const breadcrumb = useSelector(state => state.breadcrumb);
+  const breadcrumb = useSelector(selectBreadcrumb);
 
   const [ownSettingsOpen, setOwnSettingsOpen] = useState(false);
   const [mapSettingsOpen, setMapSettingsOpen] = useState(false);
