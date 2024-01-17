@@ -8,6 +8,7 @@ import { visuallyHidden } from '@mui/utils';
 import PropTypes from 'prop-types';
 import React, { useEffect, useRef, useState } from 'react';
 import { Helmet } from 'react-helmet';
+import Watermark from '@uiw/react-watermark';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
@@ -227,20 +228,74 @@ const UnitView = (props) => {
     );
   };
 
-  const renderPicture = () => (
-    <StyledImageContainer>
-      <StyledImage
-        alt={getImageAlt()}
-        src={unit.picture_url}
-      />
-      {
-          unit.picture_caption
+  const getPictureUrlAndCaption = () => {
+    if (unit.picture_url) {
+      return { pictureUrl: unit.picture_url, pictureCaption: unit.picture_caption };
+    }
+    const { extra } = unit;
+    function splitLineBreakGetFirstItem(extraElement) {
+      return extraElement?.split('\n')?.[0];
+    }
+
+    if (extra) {
+      const pictureUrl = splitLineBreakGetFirstItem(extra?.['kaupunkialusta.photoUrl']);
+      const pictureCaption = {
+        fi: splitLineBreakGetFirstItem(extra?.['kaupunkialusta.photoFi']),
+        en: splitLineBreakGetFirstItem(extra?.['kaupunkialusta.photoEn']),
+        sv: splitLineBreakGetFirstItem(extra?.['kaupunkialusta.photoSv']),
+      };
+
+      if (pictureUrl) {
+        const photoSource = splitLineBreakGetFirstItem(extra?.['kaupunkialusta.photoSource']);
+        const photoPermission = splitLineBreakGetFirstItem(extra?.['kaupunkialusta.photoPermission']);
+        return {
+          pictureUrl,
+          pictureCaption,
+          photoSource,
+          photoPermission,
+        };
+      }
+    }
+    return {};
+  };
+
+  const renderPicture = () => {
+    const {
+      pictureUrl, pictureCaption, photoSource, photoPermission,
+    } = getPictureUrlAndCaption();
+    if (!pictureUrl) {
+      return null;
+    }
+    const styledImage = <StyledImage alt={getImageAlt()} src={pictureUrl} />;
+    return (
+      <StyledImageContainer>
+        {
+          !photoSource
+          && styledImage
+        }
+        {
+          photoSource
           && (
-            <StyledImageCaption variant="body2">{getLocaleText(unit.picture_caption)}</StyledImageCaption>
+            <Watermark
+              content={`${photoSource} @ ${photoPermission}`}
+              fontWeight="1000"
+              fontColor="white"
+              rotate="0"
+              width="50"
+              offsetLeft="0"
+              offsetTop="20"
+              fontSize="8"
+              style={{ background: '#fff', height: '100%' }}
+            >
+              {styledImage}
+            </Watermark>
           )
         }
-    </StyledImageContainer>
-  );
+        {pictureCaption && (
+          <StyledImageCaption variant="body2">{getLocaleText(pictureCaption)}</StyledImageCaption>)}
+      </StyledImageContainer>
+    );
+  };
 
   const renderDetailTab = () => {
     if (!unit || !unit.complete) {
@@ -367,6 +422,7 @@ const UnitView = (props) => {
     const imageAlt = getImageAlt();
     const description = unit.description ? getLocaleText(unit.description) : null;
 
+    const { pictureUrl } = getPictureUrlAndCaption();
     return (
       <Helmet>
         <meta property="og:title" content={title} />
@@ -377,9 +433,9 @@ const UnitView = (props) => {
           )
         }
         {
-          unit.picture_url
+          pictureUrl
           && (
-            <meta property="og:image" content={unit.picture_url} />
+            <meta property="og:image" content={pictureUrl} />
           )
         }
         <meta name="twitter:card" content="summary" />
@@ -516,7 +572,7 @@ const UnitView = (props) => {
                 {
                   isMobile
                     ? renderUnitLocation()
-                    : unit.picture_url && renderPicture()
+                    : renderPicture()
                 }
                 <SettingsComponent variant="paddingTopSettings" />
               </>
@@ -573,11 +629,26 @@ const StyledReadSpeakerButton = styled(ReadSpeakerButton)(({ theme }) => ({
   marginLeft: theme.spacing(2),
 }));
 
-const StyledImageContainer = styled.div(() => ({
-  width: '100%',
-  height: 200,
-  position: 'relative',
-}));
+const preventOpenImageInNewTabClass = () => ({
+  '&:after': {
+    content: '" "',
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
+    zIndex: 99,
+  },
+});
+
+const StyledImageContainer = styled.div(() => {
+  const styles = {
+    width: '100%',
+    height: 200,
+    position: 'relative',
+  };
+  return Object.assign(styles, preventOpenImageInNewTabClass());
+});
 
 const StyledImage = styled.img(() => ({
   objectFit: 'cover',

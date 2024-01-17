@@ -102,9 +102,14 @@ if (typeof settings.READ_SPEAKER_URL === 'undefined') {
   settings.READ_SPEAKER_URL = false;
 }
 
-if (typeof settings.FEEDBACK_ADDITIONAL_INFO_LINK === 'undefined') {
-  // If not set default to Helsinki
-  settings.FEEDBACK_ADDITIONAL_INFO_LINK = "https://www.hel.fi/helsinki/fi/kaupunki-ja-hallinto/osallistu-ja-vaikuta/palaute/ohjeita-palautteesta";
+if (typeof settings.FEEDBACK_ADDITIONAL_INFO_LINK_FI === 'undefined') {
+  settings.FEEDBACK_ADDITIONAL_INFO_LINK_FI = 'https://palautteet.hel.fi/fi/tietoa-palautepalvelusta';
+}
+if (typeof settings.FEEDBACK_ADDITIONAL_INFO_LINK_SV === 'undefined') {
+  settings.FEEDBACK_ADDITIONAL_INFO_LINK_SV = 'https://palautteet.hel.fi/sv/tietoa-palautepalvelusta';
+}
+if (typeof settings.FEEDBACK_ADDITIONAL_INFO_LINK_EN === 'undefined') {
+  settings.FEEDBACK_ADDITIONAL_INFO_LINK_EN = 'https://palautteet.hel.fi/en/tietoa-palautepalvelusta';
 }
 
 if (typeof settings.FEEDBACK_IS_PUBLISHED === 'undefined') {
@@ -276,7 +281,11 @@ export default {
   "sentryDSN": (settings.SENTRY_DSN_CLIENT !== 'false') ? settings.SENTRY_DSN_CLIENT : false,
   "showAreaSelection": (settings.SHOW_AREA_SELECTION === 'true'),
   "showReadSpeakerButton": (settings.READ_SPEAKER_URL !== 'false' && settings.READ_SPEAKER_URL !== false),
-  "feedbackAdditionalInfoLink": settings.FEEDBACK_ADDITIONAL_INFO_LINK,
+  "feedbackAdditionalInfoLink": {
+    fi: settings.FEEDBACK_ADDITIONAL_INFO_LINK_FI,
+    sv: settings.FEEDBACK_ADDITIONAL_INFO_LINK_SV,
+    en: settings.FEEDBACK_ADDITIONAL_INFO_LINK_EN,
+  },
   "feedbackIsPublished": (settings.FEEDBACK_IS_PUBLISHED === 'true'),
   "usePtvAccessibilityApi": (settings.USE_PTV_ACCESSIBILITY_API) === 'true',
   "matomoMobilityDimensionID": settings.MATOMO_MOBILITY_DIMENSION_ID,

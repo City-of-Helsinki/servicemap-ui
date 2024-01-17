@@ -1,6 +1,5 @@
 import { Selector } from 'testcafe';
 import { waitForReact } from 'testcafe-react-selectors';
-import appConfig from '../../config';
 import finnish from '../../src/i18n/fi';
 import { getBaseUrl, getLocation } from '../utility';
 import { mobilityDropdown, sensesDropdown } from '../utility/pageObjects';
@@ -98,7 +97,7 @@ test('Unit page feedback button should take unit feedback page', async (t) => {
 test('Unit feedback page does work correctly', async (t) => {
   const feedbackButton = await Selector('#UnitFeedbackButton');
   const title = Selector('h3[class*="TitleText"]');
-  const infoLink = Selector('#FeedbackInfoLink').withAttribute('href', appConfig.feedbackAdditionalInfoLink);
+  const infoLink = Selector('#FeedbackInfoLink');
 
   await t
     .click(feedbackButton)
