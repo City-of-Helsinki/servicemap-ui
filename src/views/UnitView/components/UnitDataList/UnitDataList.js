@@ -10,13 +10,14 @@ import {
   TitledList,
 } from '../../../../components';
 import { selectNavigator } from '../../../../redux/selectors/general';
+import { getSelectedUnit } from '../../../../redux/selectors/selectedUnit';
 
 const UnitDataList = ({
   data, listLength, type, period, disableTitle,
 }) => {
   const location = useLocation();
   const navigator = useSelector(selectNavigator);
-  const unit = useSelector(state => state.selectedUnit.unit.data);
+  const unit = useSelector(getSelectedUnit);
 
   const dataItems = data.data;
   let fullDataLength;

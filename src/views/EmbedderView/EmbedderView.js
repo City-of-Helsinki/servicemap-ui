@@ -11,6 +11,7 @@ import paths from '../../../config/paths';
 import { CloseButton, SMButton } from '../../components';
 import TopBar from '../../components/TopBar';
 import { selectNavigator } from '../../redux/selectors/general';
+import { getSelectedUnit } from '../../redux/selectors/selectedUnit';
 import { selectServiceCurrent } from '../../redux/selectors/service';
 import {
   selectMapType,
@@ -82,7 +83,7 @@ const EmbedderView = () => {
   const iframeConfig = embedderConfig.DEFAULT_IFRAME_PROPERTIES || {};
   const defaultService = 'none';
   const page = useSelector(getPage);
-  const selectedUnit = useSelector(state => state.selectedUnit.unit.data);
+  const selectedUnit = useSelector(getSelectedUnit);
   const currentService = useSelector(selectServiceCurrent);
   const organizationSettings = useSelector(selectSelectedOrganizations);
 

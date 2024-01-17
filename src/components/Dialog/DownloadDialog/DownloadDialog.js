@@ -13,6 +13,7 @@ import React, { useEffect, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
+import { getSelectedUnit } from '../../../redux/selectors/selectedUnit';
 import { selectServiceCurrent } from '../../../redux/selectors/service';
 import { getPage } from '../../../redux/selectors/user';
 import useDownloadData from '../../../utils/downloadData';
@@ -29,7 +30,7 @@ const DownloadDialog = ({
   const getLocaleText = useLocaleText();
   const downloadData = useDownloadData();
   const page = useSelector(getPage);
-  const selectedUnit = useSelector(state => state.selectedUnit.unit.data);
+  const selectedUnit = useSelector(getSelectedUnit);
   const service = useSelector(selectServiceCurrent);
   const searchQuery = useSelector(state => state.searchResults.previousSearch);
   const intl = useIntl();
