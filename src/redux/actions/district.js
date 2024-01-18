@@ -6,7 +6,7 @@ import {
   parseDistrictGeometry,
 } from '../../views/AreaView/utils/districtDataHelper';
 
-export const parkingSpaceIDs = ['1', '2', '3', '4', '5', '6'];
+export const parkingSpaceIDs = ['1', '2', '3', '4', '5', '6', '7'];
 export const parkingSpaceVantaaTypes = ['12h-24h', '2h-3h', '4h-11h', 'Ei rajoitusta', 'Lyhytaikainen', 'Maksullinen', 'Muu', 'Varattu päivisin'];
 
 
