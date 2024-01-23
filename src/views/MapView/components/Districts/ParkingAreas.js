@@ -46,14 +46,14 @@ const ParkingAreas = () => {
 
     function vantaaTexts() {
       return [
-        intl.formatMessage({ id: 'parkingArea.popup.vantaa.neighbourhood' }),
-        intl.formatMessage({ id: 'parkingArea.popup.vantaa.name' }),
-        intl.formatMessage({ id: 'parkingArea.popup.vantaa.places' }),
-        intl.formatMessage({ id: 'parkingArea.popup.vantaa.type' }),
-        intl.formatMessage({ id: 'parkingArea.popup.vantaa.timeRestriction' }),
-        intl.formatMessage({ id: 'parkingArea.popup.vantaa.validityPeriod' }),
-        intl.formatMessage({ id: 'parkingArea.popup.vantaa.moreInfo' }),
-        intl.formatMessage({ id: 'parkingArea.popup.vantaa.circlePlace' }),
+        intl.formatMessage({ id: 'parkingArea.popup.vantaa.neighbourhood' }, { value: extraData.kaupunginosa }),
+        intl.formatMessage({ id: 'parkingArea.popup.vantaa.name' }, { value: extraData.katu }),
+        intl.formatMessage({ id: 'parkingArea.popup.vantaa.places' }, { value: extraData['paikkamäärä'] }),
+        intl.formatMessage({ id: 'parkingArea.popup.vantaa.type' }, { value: extraData.tyyppi }),
+        intl.formatMessage({ id: 'parkingArea.popup.vantaa.timeRestriction' }, { value: extraData.aikarajoitus }),
+        intl.formatMessage({ id: 'parkingArea.popup.vantaa.validityPeriod' }, { value: extraData.voimassaoloaika }),
+        intl.formatMessage({ id: 'parkingArea.popup.vantaa.moreInfo' }, { value: extraData['lisätiedot'] }),
+        intl.formatMessage({ id: 'parkingArea.popup.vantaa.circlePlace' }, { value: extraData.kiekkopaikka }),
       ];
     }
 
