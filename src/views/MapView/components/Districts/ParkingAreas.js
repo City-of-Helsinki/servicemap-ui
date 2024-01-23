@@ -33,15 +33,31 @@ const ParkingAreas = () => {
       </List>
     );
 
-    const textContent = generateTextContent([
-      intl.formatMessage({ id: `parkingArea.popup.payment${extraData.class}` }),
-      ...(extraData.max_duration ? [intl.formatMessage({ id: `parkingArea.popup.duration${extraData.class}` }, { duration: extraData.max_duration })] : []),
-      ...(extraData.validity_period ? [intl.formatMessage({ id: `parkingArea.popup.validity${extraData.class}` }, { validity: extraData.validity_period })] : []),
-      ...(extraData.class === '5' ? [intl.formatMessage({ id: 'parkingArea.popup.duration5' })] : []),
-      intl.formatMessage({ id: 'parkingArea.popup.info' }),
-      intl.formatMessage({ id: `parkingArea.popup.info${extraData.class}` }),
-    ]);
+    function helsinkiTexts() {
+      return [
+        intl.formatMessage({ id: `parkingArea.popup.payment${extraData.class}` }),
+        ...(extraData.max_duration ? [intl.formatMessage({ id: `parkingArea.popup.duration${extraData.class}` }, { duration: extraData.max_duration })] : []),
+        ...(extraData.validity_period ? [intl.formatMessage({ id: `parkingArea.popup.validity${extraData.class}` }, { validity: extraData.validity_period })] : []),
+        ...(extraData.class === '5' ? [intl.formatMessage({ id: 'parkingArea.popup.duration5' })] : []),
+        intl.formatMessage({ id: 'parkingArea.popup.info' }),
+        intl.formatMessage({ id: `parkingArea.popup.info${extraData.class}` }),
+      ];
+    }
 
+    function vantaaTexts() {
+      return [
+        intl.formatMessage({ id: 'parkingArea.popup.vantaa.neighbourhood' }),
+        intl.formatMessage({ id: 'parkingArea.popup.vantaa.name' }),
+        intl.formatMessage({ id: 'parkingArea.popup.vantaa.places' }),
+        intl.formatMessage({ id: 'parkingArea.popup.vantaa.type' }),
+        intl.formatMessage({ id: 'parkingArea.popup.vantaa.timeRestriction' }),
+        intl.formatMessage({ id: 'parkingArea.popup.vantaa.validityPeriod' }),
+        intl.formatMessage({ id: 'parkingArea.popup.vantaa.moreInfo' }),
+        intl.formatMessage({ id: 'parkingArea.popup.vantaa.circlePlace' }),
+      ];
+    }
+
+    const textContent = generateTextContent(area.municipality === 'vantaa' ? vantaaTexts() : helsinkiTexts());
 
     setAreaPopup({
       position: e.latlng,

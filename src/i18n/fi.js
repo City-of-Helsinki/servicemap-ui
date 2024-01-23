@@ -180,6 +180,15 @@ const translations = {
   'parkingArea.popup.info5': 'Maksut ja rajoitukset eivät koske asukas- ja yrityspysäköintitunnusten omistajia, jos pysäköintipaikka on merkitty asukaspysäköintipaikaksi.',
   'parkingArea.popup.info6': 'Maksut ja rajoitukset eivät koske asukas- ja yrityspysäköintitunnusten omistajia, jos pysäköintipaikka on merkitty asukaspysäköintipaikaksi.',
 
+  'parkingArea.popup.vantaa.neighbourhood': 'Kaupunginosa',
+  'parkingArea.popup.vantaa.name': 'Nimi',
+  'parkingArea.popup.vantaa.places': 'Paikkoja',
+  'parkingArea.popup.vantaa.type': 'Tyyppi',
+  'parkingArea.popup.vantaa.timeRestriction': 'Aikarajoitus',
+  'parkingArea.popup.vantaa.validityPeriod': 'Voimassaoloaika',
+  'parkingArea.popup.vantaa.moreInfo': 'Muut huomiot',
+  'parkingArea.popup.vantaa.circlePlace': 'Kiekkopaikka',
+
   // Download dialog
   'download.cropping.title': 'Nykyinen rajaus',
   'download.cropText.unit': 'Yksittäinen toimipiste:',
