@@ -25,7 +25,7 @@ import LanguageMenuComponent from './LanguageMenu/LanguageMenuComponent';
 import openA11yLink from './util';
 import config from '../../../config';
 
-const { topBarHeight, topBarHeightMobile } = config;
+const { topBarHeight, topBarHeightMobile, smallWidthForTopBarBreakpoint } = config;
 
 const TopBar = (props) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -36,6 +36,8 @@ const TopBar = (props) => {
   const currentPage = useSelector(getPage);
   const breadcrumb = useSelector(selectBreadcrumb);
   const navigator = useSelector(selectNavigator);
+  // medium - because i can't name things
+  const isMediumScreen = useMediaQuery(`(max-width:${smallWidthForTopBarBreakpoint}px)`);
   const getAddressNavigatorParams = useNavigationParams();
   const isOnHomePage = isHomePage(location?.pathname);
 
@@ -157,7 +159,12 @@ const TopBar = (props) => {
     );
 
     const navigationButton = (textId, onClick, isCurrent, buttonId) => (
-      <StyledButton onClick={onClick} aria-current={isCurrent} id={buttonId}>
+      <StyledButton
+        onClick={onClick}
+        aria-current={isCurrent}
+        id={buttonId}
+        medium={+isMediumScreen}
+      >
         <Typography sx={{ color: '#000', fontSize: '1.125rem', fontWeight: 600 }}>
           <FormattedMessage id={textId} />
         </Typography>
@@ -208,7 +215,7 @@ const TopBar = (props) => {
                   <DesktopComponent>
                     <StyledNav>
                       {!smallScreen ? (
-                        <StyledNavigationButtonsContainer>
+                        <StyledNavigationButtonsContainer medium={+isMediumScreen}>
                           {navigationButton('general.frontPage', () => handleNavigation('home'), currentPage === 'home', 'HomePage')}
                           {navigationButton('general.pageLink.area', () => handleNavigation('area'), currentPage === 'area', 'AreaPage')}
                           {navigationButton('services', () => handleNavigation('services'), currentPage === 'services', 'ServicePage')}
@@ -259,8 +266,8 @@ const StyledNav = styled('nav')(() => ({
   flex: '1 1 auto',
   height: '100%',
 }));
-const StyledNavigationButtonsContainer = styled('div')(({ theme }) => ({
-  paddingLeft: 88 + parseInt(theme.spacing(2.5), 10),
+const StyledNavigationButtonsContainer = styled('div')(({ theme, medium }) => ({
+  paddingLeft: (medium ? 0 : 88) + parseInt(theme.spacing(2.5), 10),
   display: 'flex',
   flex: '1 1 auto',
 }));
@@ -271,9 +278,9 @@ const StyledMobileButtonContainer = styled('div')(() => ({
   justifyContent: 'flex-end',
 }));
 
-const StyledButton = styled(ButtonBase)(({ theme }) => ({
-  paddingLeft: theme.spacing(2.5),
-  paddingRight: theme.spacing(2.5),
+const StyledButton = styled(ButtonBase)(({ theme, medium }) => ({
+  paddingLeft: theme.spacing(1.5 + (medium ? 0 : 1)),
+  paddingRight: theme.spacing(1.5 + (medium ? 0 : 1)),
   '&:hover': {
     backgroundColor: 'rgba(0, 0, 0, 0.08)',
   },
