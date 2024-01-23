@@ -181,6 +181,15 @@ const translations = {
   'parkingArea.popup.info5': 'Avgifterna och begränsningarna gäller inte personer med boende- eller företagsparkeringstillstånd om parkeringsplatsen har markerats som boendeparkeringsplats.',
   'parkingArea.popup.info6': 'Avgifterna och begränsningarna gäller inte personer med boende- eller företagsparkeringstillstånd om parkeringsplatsen har markerats som boendeparkeringsplats.',
 
+  'parkingArea.popup.vantaa.neighbourhood': 'Stadsdelen: {value}',
+  'parkingArea.popup.vantaa.name': 'Namn: {value}',
+  'parkingArea.popup.vantaa.places': 'Platser: {value}',
+  'parkingArea.popup.vantaa.type': 'Typ: {value}',
+  'parkingArea.popup.vantaa.timeRestriction': 'Tidsbegränsning: {value}',
+  'parkingArea.popup.vantaa.validityPeriod': 'Giltighetstid: {value}',
+  'parkingArea.popup.vantaa.moreInfo': 'Mer information: {value}',
+  'parkingArea.popup.vantaa.circlePlace': 'Parkeringsskivaplats: {value}',
+
   // Download dialog
   'download.cropping.title': 'Nuvarande filterinställningar',
   'download.cropText.unit': 'Enskilt verksamhetsställe:',
