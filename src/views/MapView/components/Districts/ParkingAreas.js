@@ -33,15 +33,31 @@ const ParkingAreas = () => {
       </List>
     );
 
-    const textContent = generateTextContent([
-      intl.formatMessage({ id: `parkingArea.popup.payment${extraData.class}` }),
-      ...(extraData.max_duration ? [intl.formatMessage({ id: `parkingArea.popup.duration${extraData.class}` }, { duration: extraData.max_duration })] : []),
-      ...(extraData.validity_period ? [intl.formatMessage({ id: `parkingArea.popup.validity${extraData.class}` }, { validity: extraData.validity_period })] : []),
-      ...(extraData.class === '5' ? [intl.formatMessage({ id: 'parkingArea.popup.duration5' })] : []),
-      intl.formatMessage({ id: 'parkingArea.popup.info' }),
-      intl.formatMessage({ id: `parkingArea.popup.info${extraData.class}` }),
-    ]);
+    function helsinkiTexts() {
+      return [
+        intl.formatMessage({ id: `parkingArea.popup.payment${extraData.class}` }),
+        ...(extraData.max_duration ? [intl.formatMessage({ id: `parkingArea.popup.duration${extraData.class}` }, { duration: extraData.max_duration })] : []),
+        ...(extraData.validity_period ? [intl.formatMessage({ id: `parkingArea.popup.validity${extraData.class}` }, { validity: extraData.validity_period })] : []),
+        ...(extraData.class === '5' ? [intl.formatMessage({ id: 'parkingArea.popup.duration5' })] : []),
+        intl.formatMessage({ id: 'parkingArea.popup.info' }),
+        intl.formatMessage({ id: `parkingArea.popup.info${extraData.class}` }),
+      ];
+    }
 
+    function vantaaTexts() {
+      return [
+        intl.formatMessage({ id: 'parkingArea.popup.vantaa.neighbourhood' }, { value: extraData.kaupunginosa }),
+        intl.formatMessage({ id: 'parkingArea.popup.vantaa.name' }, { value: extraData.katu }),
+        intl.formatMessage({ id: 'parkingArea.popup.vantaa.places' }, { value: extraData['paikkamäärä'] }),
+        intl.formatMessage({ id: 'parkingArea.popup.vantaa.type' }, { value: extraData.tyyppi }),
+        intl.formatMessage({ id: 'parkingArea.popup.vantaa.timeRestriction' }, { value: extraData.aikarajoitus }),
+        intl.formatMessage({ id: 'parkingArea.popup.vantaa.validityPeriod' }, { value: extraData.voimassaoloaika }),
+        intl.formatMessage({ id: 'parkingArea.popup.vantaa.moreInfo' }, { value: extraData['lisätiedot'] }),
+        intl.formatMessage({ id: 'parkingArea.popup.vantaa.circlePlace' }, { value: extraData.kiekkopaikka }),
+      ];
+    }
+
+    const textContent = generateTextContent(area.municipality === 'vantaa' ? vantaaTexts() : helsinkiTexts());
 
     setAreaPopup({
       position: e.latlng,

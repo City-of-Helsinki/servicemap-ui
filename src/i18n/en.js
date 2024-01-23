@@ -180,6 +180,15 @@ const translations = {
   'parkingArea.popup.info5': 'The fees and restrictions do not apply to those who possess a resident or business parking permit if the parking area is a designated resident parking area.',
   'parkingArea.popup.info6': 'The fees and restrictions do not apply to those who possess a resident or business parking permit if the parking area is a designated resident parking area.',
 
+  'parkingArea.popup.vantaa.neighbourhood': 'City District: {value}',
+  'parkingArea.popup.vantaa.name': 'Name: {value}',
+  'parkingArea.popup.vantaa.places': 'Parking places: {value}',
+  'parkingArea.popup.vantaa.type': 'Type: {value}',
+  'parkingArea.popup.vantaa.timeRestriction': 'Time restriction: {value}',
+  'parkingArea.popup.vantaa.validityPeriod': 'Validity period: {value}',
+  'parkingArea.popup.vantaa.moreInfo': 'More Information: {value}',
+  'parkingArea.popup.vantaa.circlePlace': 'Parking disc place: {value}',
+
   // Download dialog
   'download.cropping.title': 'Current filter values',
   'download.cropText.unit': 'Single service point:',
