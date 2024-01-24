@@ -6,7 +6,7 @@ import {
   addressSearchBarInput,
   cityDropdown,
   ESPOO_ORG,
-  HELSINKI_ORG,
+  HELSINKI_ORG, mapToolsButton,
   mobilityDropdown,
   organisationDropdown,
   searchBarInput,
@@ -492,4 +492,25 @@ test('Should set home address from url', async(t) => {
     .expect(addressInput.value).contains('Annankatu 12')
     .expect(addressInput.value).contains('Helsinki')
   ;
+});
+
+fixture`Search view should set map type with url test`
+  .page`${homePage}/search?q=maauimala&hcity=helsinki&maptype=guidemap`
+  .beforeEach(async () => {
+    await waitForReact();
+  });
+
+test('Should set map type from url', async(t) => {
+  await t
+    .click(mapToolsButton)
+    .expect(Selector('#servicemap-map-type-radio').checked).eql(false)
+    .expect(Selector('#ortographic-map-type-radio').checked).eql(false)
+    .expect(Selector('#guidemap-map-type-radio').checked).eql(true)
+    .expect(Selector('#accessible_map-map-type-radio').checked).eql(false)
+    .navigateTo(`${homePage}/search?q=maauimala&hcity=helsinki&maptype=ortographic`)
+    .click(mapToolsButton)
+    .expect(Selector('#servicemap-map-type-radio').checked).eql(false)
+    .expect(Selector('#ortographic-map-type-radio').checked).eql(true)
+    .expect(Selector('#guidemap-map-type-radio').checked).eql(false)
+    .expect(Selector('#accessible_map-map-type-radio').checked).eql(false);
 });
