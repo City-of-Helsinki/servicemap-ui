@@ -57,7 +57,7 @@ describe('ExternalMapUrlCreator', () => {
       distances: distances1,
     },
     {
-      mapType: 'guideMap',
+      mapType: 'guidemap',
       distances: [
         { level: 8, distance: 53600 },
         { level: 9, distance: 26800 },

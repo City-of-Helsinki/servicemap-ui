@@ -691,7 +691,7 @@ const translations = {
   'settings.map.title': 'Kartunderlag',
   'settings.map.servicemap': 'Servicekarta',
   'settings.map.ortographic': 'Flygbild',
-  'settings.map.guideMap': 'Guidekarta',
+  'settings.map.guidemap': 'Guidekarta',
   'settings.map.accessible_map': 'Karta med stor kontrast',
   'settings.3dmap.title': '3D-stadsmodellen',
   'settings.3dmap.info': 'I stadsinformationsmodellen kan du förutom byggnader och uppgifter om dem även granska markytamodellen, dvs. terrängens former. Använd länken nedan för att titta på stadsmodellen.',

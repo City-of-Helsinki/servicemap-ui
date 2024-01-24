@@ -693,7 +693,7 @@ const translations = {
   'settings.map.title': 'Karttapohja',
   'settings.map.servicemap': 'Palvelukartta',
   'settings.map.ortographic': 'Ilmakuva',
-  'settings.map.guideMap': 'Opaskartta',
+  'settings.map.guidemap': 'Opaskartta',
   'settings.map.accessible_map': 'Korkeakontrastinen kartta',
   'settings.3dmap.title': '3D-kaupunkimalli',
   'settings.3dmap.info': 'Kaupunkitietomallissa voit katsella paitsi rakennuksia ja niiden tietoja, myös maanpintamallia eli maaston muotoja. Siirry alla olevan linkin avulla katselemaan kaupunkimallia.',

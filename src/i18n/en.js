@@ -690,7 +690,7 @@ const translations = {
   'settings.map.title': 'Background map',
   'settings.map.servicemap': 'Service map',
   'settings.map.ortographic': 'Aerial view',
-  'settings.map.guideMap': 'Guide map',
+  'settings.map.guidemap': 'Guide map',
   'settings.map.accessible_map': 'High contrast map',
   'settings.3dmap.title': '3D-uban data model',
   'settings.3dmap.info': 'The Urban data model is based on the city’s map and geographic data, registers, point clouds obtained by laser scanning, aerial photographs and building data models. Use the link below to go to view the city model.',
