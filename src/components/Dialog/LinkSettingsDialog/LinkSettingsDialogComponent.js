@@ -1,15 +1,6 @@
-import { css } from '@emotion/css';
 import styled from '@emotion/styled';
 import { FileCopy, Share } from '@mui/icons-material';
-import {
-  ButtonBase,
-  FormControlLabel,
-  Radio,
-  RadioGroup,
-  Tooltip,
-  Typography,
-} from '@mui/material';
-import { useTheme } from '@mui/styles';
+import { ButtonBase, RadioGroup, Tooltip, Typography } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
@@ -59,11 +50,9 @@ const LinkSettingsDialogComponent = ({
       const impairmentKey = SettingsUtility.mapValidAccessibilitySenseImpairmentValueToKey(setting);
       return impairmentKey || setting;
     });
-  const [selected, setSelected] = useState('none');
   const [copyTooltipOpen1, setCopyTooltipOpen1] = useState(false);
   const [copyTooltipOpen2, setCopyTooltipOpen2] = useState(false);
   const [showAriaAlert, setShowAriaAlert] = useState(false);
-  const theme = useTheme();
   let timeout = null;
   let timeoutAriaAlert = null;
 
@@ -93,12 +82,11 @@ const LinkSettingsDialogComponent = ({
   const title = intl.formatMessage({ id: 'link.settings.dialog.title' });
   const unitName = (unit && unit.name) ? getLocaleText(unit.name) : '';
   const tooltip = intl.formatMessage({ id: 'link.settings.dialog.tooltip' });
-  const tooltipAria = intl.formatMessage({ id: `link.settings.dialog.tooltip.aria${(selected !== 'none' && '.a11y') || ''}` });
-  const radioAria = intl.formatMessage({ id: 'link.settings.dialog.radio.label' });
+  const tooltipAria = intl.formatMessage({ id: 'link.settings.dialog.tooltip.aria.a11y' });
 
   const getLinkUrl = () => {
     const url = new URL(window.location.href);
-    if (a11ySettings.length && selected !== 'none') {
+    if (a11ySettings.length) {
       const mobility = a11ySettings.find(v => SettingsUtility.isValidMobilitySetting(v));
       const senses = a11ySettings
         .filter(v => SettingsUtility.isValidAccessibilitySenseImpairment(v));
@@ -114,38 +102,6 @@ const LinkSettingsDialogComponent = ({
     return url.toString();
   };
   const url = getLinkUrl();
-
-  const getSettingsLabel = () => {
-    let text = '';
-
-    try {
-      a11ySettings.forEach((v, i) => {
-        if (SettingsUtility.isValidMobilitySetting(v)) {
-          text += `${intl.formatMessage({ id: `settings.mobility.${v}` })}`;
-        } else if (SettingsUtility.isValidAccessibilitySenseImpairment(v)) {
-          text += `${intl.formatMessage({ id: `settings.sense.${v}` })}`;
-        }
-        text += (i + 1) < a11ySettings.length ? ', ' : '';
-      });
-    } catch (e) {
-      console.warn(`Unable to get settings label: ${e.message}`);
-    }
-
-    return text;
-  };
-
-  const items = [
-    {
-      value: 'use',
-      checked: false,
-      label: getSettingsLabel(),
-    },
-    {
-      value: 'none',
-      checked: false,
-      label: intl.formatMessage({ id: 'accept.settings.dialog.none' }),
-    },
-  ];
 
   const copyToClipboard = (stateSetter) => {
     if (!stateSetter) {
@@ -169,12 +125,6 @@ const LinkSettingsDialogComponent = ({
       setShowAriaAlert(false);
     }, 2000);
   };
-
-  const radioGroupItemClass = css({
-    [theme.breakpoints.down('sm')]: {
-      margin: `${theme.spacing(1)} 0`,
-    },
-  });
 
   return (
     <Dialog
@@ -205,36 +155,6 @@ const LinkSettingsDialogComponent = ({
               <StyledFileCopy />
             </StyledUrlContainer>
           </CopyTooltip>
-          <Typography variant="subtitle1"><FormattedMessage id="link.settings.dialog.subtitle" /></Typography>
-          <Typography variant="body2"><FormattedMessage id="link.settings.dialog.description" /></Typography>
-          <div>
-            <StyledRadioGroup
-              aria-label={radioAria}
-              name="setting"
-              value={selected}
-              onChange={(event, value) => {
-                setSelected(value);
-              }}
-            >
-              {
-                items.map(item => item.label !== '' && (
-                  <FormControlLabel
-                    key={item.label}
-                    control={(
-                      <Radio
-                        color="primary"
-                      />
-                      )}
-                    label={item.label}
-                    value={item.value}
-                    classes={{
-                      root: radioGroupItemClass,
-                    }}
-                  />
-                ))
-              }
-            </StyledRadioGroup>
-          </div>
           {
             showAriaAlert
             && (

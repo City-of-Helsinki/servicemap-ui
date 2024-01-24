@@ -407,11 +407,8 @@ const translations = {
 
   'link.settings.dialog.title': 'Share the link to the location',
   'link.settings.dialog.tooltip': 'Copied to the clipboard',
-  'link.settings.dialog.radio.label': 'Link contents',
   'link.settings.dialog.tooltip.aria': 'Copy the site link to the clipboard',
   'link.settings.dialog.tooltip.aria.a11y': 'Copy the site link with accessibility settings to the clipboard',
-  'link.settings.dialog.subtitle': 'Share the link with accessibility settings',
-  'link.settings.dialog.description': 'The accessibility settings affect the accessibility data of the location shown and the appearance of the map.',
   'link.settings.dialog.buttons.action': 'Copy to clipboard',
 
   // Map

@@ -408,11 +408,8 @@ const translations = {
 
   'link.settings.dialog.title': 'Dela länken till verksamhetsstället',
   'link.settings.dialog.tooltip': 'Kopierades till klippbordet',
-  'link.settings.dialog.radio.label': 'Länkens innehåll',
   'link.settings.dialog.tooltip.aria': 'Kopiera sidans länk till klippbordet',
   'link.settings.dialog.tooltip.aria.a11y': 'Kopiera sidans länk med tillgänglighetsinställningar till klippbordet',
-  'link.settings.dialog.subtitle': 'Dela länken med tillgänglighetsinställningar',
-  'link.settings.dialog.description': 'Tillgänglighetsinställningarna påverkar det visade verksamhetsställets tillgänglighetsuppgifter och kartans utseende.',
   'link.settings.dialog.buttons.action': 'Kopiera till klippbordet',
 
   // Map

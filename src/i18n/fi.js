@@ -407,11 +407,8 @@ const translations = {
 
   'link.settings.dialog.title': 'Jaa linkki toimipisteeseen',
   'link.settings.dialog.tooltip': 'Kopioitu leikepöydälle',
-  'link.settings.dialog.radio.label': 'Linkin sisältö',
   'link.settings.dialog.tooltip.aria': 'Kopioi sivun linkki leikepöydälle',
   'link.settings.dialog.tooltip.aria.a11y': 'Kopioi esteettömyyasetukset sisältävä sivun linkki leikepöydälle',
-  'link.settings.dialog.subtitle': 'Jaa linkki esteettömyysasetusten kanssa',
-  'link.settings.dialog.description': 'Esteettömyysasetukset vaikuttavat näytettäviin toimipisteen esteettömyystietoihin ja kartan ulkoasuun.',
   'link.settings.dialog.buttons.action': 'Kopioi leikepöydälle',
 
   // Map
