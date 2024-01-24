@@ -232,10 +232,10 @@ const SearchView = () => {
       accessibility_setting,
       hcity,
       hstreet,
-      maptype,
+      map,
     } = searchParams;
-    if (maptype?.length && maptype !== mapType) {
-      dispatch(setMapType(maptype));
+    if (map?.length && map !== mapType) {
+      dispatch(setMapType(map));
     }
     const cityOptions = (municipality || city)?.split(',');
     if (cityOptions?.length) {
@@ -329,7 +329,7 @@ const SearchView = () => {
       navigator.removeParameter('hcity');
       navigator.removeParameter('hstreet');
     }
-    navigator.setParameter('maptype', mapType);
+    navigator.setParameter('map', mapType);
   },
   [
     navigator, selectedCities, selectedOrganizationIds, selectedAccessibilitySettings,
