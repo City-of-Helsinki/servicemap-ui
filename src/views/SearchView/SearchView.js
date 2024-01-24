@@ -12,13 +12,16 @@ import {
 } from '../../components';
 import fetchSearchResults from '../../redux/actions/search';
 import {
-  activateSetting, resetAccessibilitySettings, setCities, setOrganizations,
+  activateSetting, resetAccessibilitySettings, setCities, setMapType, setOrganizations,
 } from '../../redux/actions/settings';
 import { changeCustomUserLocation } from '../../redux/actions/user';
 import { selectBounds, selectMapRef, selectNavigator } from '../../redux/selectors/general';
 import { getOrderedSearchResultData } from '../../redux/selectors/results';
 import {
-  selectSelectedAccessibilitySettings, selectSelectedCities, selectSelectedOrganizationIds,
+  selectMapType,
+  selectSelectedAccessibilitySettings,
+  selectSelectedCities,
+  selectSelectedOrganizationIds,
 } from '../../redux/selectors/settings';
 import { selectCustomPositionAddress } from '../../redux/selectors/user';
 import { keyboardHandler, parseSearchParams } from '../../utils';
@@ -48,6 +51,7 @@ const SearchView = () => {
   const customPositionAddress = useSelector(selectCustomPositionAddress);
   const map = useSelector(selectMapRef);
   const navigator = useSelector(selectNavigator);
+  const mapType = useSelector(selectMapType);
 
   const getAddressNavigatorParams = useNavigationParams();
   const dispatch = useDispatch();
@@ -228,7 +232,11 @@ const SearchView = () => {
       accessibility_setting,
       hcity,
       hstreet,
+      maptype,
     } = searchParams;
+    if (maptype?.length && maptype !== mapType) {
+      dispatch(setMapType(maptype));
+    }
     const cityOptions = (municipality || city)?.split(',');
     if (cityOptions?.length) {
       dispatch(setCities(cityOptions));
