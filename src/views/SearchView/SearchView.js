@@ -329,10 +329,11 @@ const SearchView = () => {
       navigator.removeParameter('hcity');
       navigator.removeParameter('hstreet');
     }
+    navigator.setParameter('maptype', mapType);
   },
   [
     navigator, selectedCities, selectedOrganizationIds, selectedAccessibilitySettings,
-    bounds, customPositionAddress,
+    bounds, customPositionAddress, mapType,
   ],
   );
 
