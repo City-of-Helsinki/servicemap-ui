@@ -125,12 +125,6 @@ const MapView = (props) => {
   useSelector(getSelectedUnitEvents);
 
   const initializeMap = () => {
-    if (mapElement) {
-      // If changing map type, save current map viewport values before changing map
-      const map = mapElement;
-      map.defaultZoom = mapObject.options.zoom;
-      setPrevMap(map);
-    }
     // Search param map value
     const spMap = parseSearchParams(location.search).map || false;
     const mapTypeUrlParam = spMap === 'guideMap' ? 'guidemap' : spMap; // old links might have "guideMap", this hopefully keeps them alive
@@ -138,6 +132,17 @@ const MapView = (props) => {
     const mapType1 = mapTypeUrlParam || fallBackMapType;
 
     const newMap = CreateMap(mapType1, locale);
+    setMapObject(newMap);
+  };
+
+  const mapTypeChanged = () => {
+    if (mapElement) {
+      // If changing map type, save current map viewport values before changing map
+      const map = mapElement;
+      map.defaultZoom = mapObject.options.zoom;
+      setPrevMap(map);
+    }
+    const newMap = CreateMap(mapType, locale);
     setMapObject(newMap);
   };
 
@@ -190,7 +195,7 @@ const MapView = (props) => {
 
   useEffect(() => { // On map type change
     // Init new map and set new ref to redux
-    initializeMap();
+    mapTypeChanged();
   }, [mapType]);
 
   useEffect(() => {
