@@ -128,8 +128,7 @@ const MapView = (props) => {
     // Search param map value
     const spMap = parseSearchParams(location.search).map || false;
     const mapTypeUrlParam = spMap === 'guideMap' ? 'guidemap' : spMap; // old links might have "guideMap", this hopefully keeps them alive
-    const fallBackMapType = embedded ? 'servicemap' : mapType;
-    const mapType1 = mapTypeUrlParam || fallBackMapType;
+    const mapType1 = mapTypeUrlParam || mapType || 'servicemap';
 
     const newMap = CreateMap(mapType1, locale);
     setMapObject(newMap);
@@ -195,7 +194,9 @@ const MapView = (props) => {
 
   useEffect(() => { // On map type change
     // Init new map and set new ref to redux
-    mapTypeChanged();
+    if (!embedded) {
+      mapTypeChanged();
+    }
   }, [mapType]);
 
   useEffect(() => {
