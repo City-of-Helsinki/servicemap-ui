@@ -133,7 +133,9 @@ const MapView = (props) => {
     }
     // Search param map value
     const spMap = parseSearchParams(location.search).map || false;
-    const mapType1 = spMap || (embedded ? 'servicemap' : mapType);
+    const mapTypeUrlParam = spMap === 'guideMap' ? 'guidemap' : spMap; // old links might have "guideMap", this hopefully keeps them alive
+    const fallBackMapType = embedded ? 'servicemap' : mapType;
+    const mapType1 = mapTypeUrlParam || fallBackMapType;
 
     const newMap = CreateMap(mapType1, locale);
     setMapObject(newMap);

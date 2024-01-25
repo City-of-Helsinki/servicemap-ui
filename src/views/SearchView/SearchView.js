@@ -235,7 +235,8 @@ const SearchView = () => {
       map,
     } = searchParams;
     if (map?.length && map !== mapType) {
-      dispatch(setMapType(map));
+      const mapTypeParam = map === 'guideMap' ? 'guidemap' : map; // keep alive old links with "guideMap"
+      dispatch(setMapType(mapTypeParam));
     }
     const cityOptions = (municipality || city)?.split(',');
     if (cityOptions?.length) {
