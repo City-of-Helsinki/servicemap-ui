@@ -213,15 +213,6 @@ const StyledFileCopy = styled(FileCopy)(({ theme }) => ({
   marginLeft: theme.spacing(1),
 }));
 
-const StyledRadioGroup = styled(RadioGroup)(({ theme }) => ({
-  flexWrap: 'nowrap',
-  flexDirection: 'row',
-  margin: `${theme.spacing(2)} 0`,
-  [theme.breakpoints.down('sm')]: {
-    flexDirection: 'column',
-  },
-}));
-
 const StyledShare = styled(Share)(({ theme }) => ({
   fontSize: '1rem',
   marginLeft: theme.spacing(1),
