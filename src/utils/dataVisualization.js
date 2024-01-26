@@ -35,8 +35,8 @@ class DataVisualization {
   FORECAST_YEAR = new Date().getFullYear() + 4;
 
   CATEGORIES = {
-    population_age: `${this.CURRENT_YEAR}_population_by_age`,
-    population_forecast: `${this.FORECAST_YEAR}_population_forecast`,
+    population_age: `${this.CURRENT_YEAR}${this.POPULATION_BY_AGE_STRING}`,
+    population_forecast: `${this.FORECAST_YEAR}${this.POPULATION_FORECAST_STRING}`,
   }
 
   COLOR = '#000';
