@@ -52,7 +52,7 @@ class DataVisualization {
     }
     const categories = Object.keys(data)
       .filter(category => (forecast ? this.isForecast(category) : this.isByAge(category)));
-    return categories.reduce(
+    const category = categories.reduce(
       (mostRecent, category) => {
         if (!mostRecent) {
           return category;
@@ -69,6 +69,7 @@ class DataVisualization {
       },
       undefined,
     );
+    return data[category];
   }
 
   getStatisticsLayer = name => this.STATISTICS_DATASETS[name];
