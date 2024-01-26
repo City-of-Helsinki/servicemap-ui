@@ -177,7 +177,7 @@ export const fetchStatisticalDistrictServiceUnits = serviceID => (
 );
 
 const getSelectedCategory = (item, forecast) => {
-  const category = item?.data[dataVisualization.getYearBasedCategory(forecast)]
+  const category = dataVisualization.getCategory(item?.data, forecast);
   if (typeof category === 'object') {
     return category;
   }
