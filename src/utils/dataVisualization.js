@@ -1,4 +1,4 @@
-
+import config from '../../config';
 
 class DataVisualization {
   STATISTICS_DATASETS = {
@@ -30,9 +30,9 @@ class DataVisualization {
 
   POPULATION_FORECAST_STRING = '_population_forecast';
 
-  CURRENT_YEAR = new Date().getFullYear() - 2;
+  CURRENT_YEAR = config.populationAgeDataYear;
 
-  FORECAST_YEAR = new Date().getFullYear() + 4;
+  FORECAST_YEAR = config.populationAgeForecastDataYear;
 
   CATEGORIES = {
     population_age: `${this.CURRENT_YEAR}${this.POPULATION_BY_AGE_STRING}`,
