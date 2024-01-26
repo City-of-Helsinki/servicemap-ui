@@ -30,20 +30,47 @@ class DataVisualization {
 
   POPULATION_FORECAST_STRING = '_population_forecast';
 
-  CURRENT_YEAR = config.populationAgeDataYear;
-
-  FORECAST_YEAR = config.populationAgeForecastDataYear;
-
-  CATEGORIES = {
-    population_age: `${this.CURRENT_YEAR}${this.POPULATION_BY_AGE_STRING}`,
-    population_forecast: `${this.FORECAST_YEAR}${this.POPULATION_FORECAST_STRING}`,
-  }
-
   COLOR = '#000';
 
   COLOR_CONTRAST = '#EB5C29';
 
-  getYearBasedCategory = forecast => `${forecast ? this.CATEGORIES.population_forecast : this.CATEGORIES.population_age}`
+  /**
+   * This return latest category in data. Usually there is only one category for each of current and
+   * forecast data.
+   * In practice if forecast=true then this will
+   * 1. collect the keys of data
+   * 2. select those keys that are of form x_population_forecast
+   * 3. select latest of the keys
+   * 4. return value of data by that key
+   * If forecast=false then it's the same but keys are of the form x_population_by_age
+   * @param data
+   * @param forecast
+   * @returns {string|undefined}
+   */
+  getCategory = (data, forecast) => {
+    if (!data) {
+      return undefined;
+    }
+    const categories = Object.keys(data)
+      .filter(category => (forecast ? this.isForecast(category) : this.isByAge(category)));
+    return categories.reduce(
+      (mostRecent, category) => {
+        if (!mostRecent) {
+          return category;
+        }
+        const mostResentYear = forecast
+          ? this.getYearForecast(mostRecent)
+          : this.getYearByAge(mostRecent);
+        const categoryYear = forecast
+          ? this.getYearForecast(category)
+          : this.getYearByAge(category);
+        return (
+          mostResentYear > categoryYear ? mostRecent : category
+        );
+      },
+      undefined,
+    );
+  }
 
   getStatisticsLayer = name => this.STATISTICS_DATASETS[name];
 
