@@ -57,14 +57,14 @@ class DataVisualization {
         if (!mostRecent) {
           return category;
         }
-        const mostResentYear = forecast
+        const mostRecentYear = forecast
           ? this.getYearForecast(mostRecent)
           : this.getYearByAge(mostRecent);
         const categoryYear = forecast
           ? this.getYearForecast(category)
           : this.getYearByAge(category);
         return (
-          mostResentYear > categoryYear ? mostRecent : category
+          mostRecentYear > categoryYear ? mostRecent : category
         );
       },
       undefined,
