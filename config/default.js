@@ -293,6 +293,4 @@ export default {
   "matomoNoResultsDimensionID": settings.MATOMO_NO_RESULTS_DIMENSION_ID,
   "matomoUrl": settings.MATOMO_URL,
   "matomoSiteId": settings.MATOMO_SITE_ID,
-  "populationAgeDataYear": settings.STATISTICS_POPULATION_AGE_DATA_YEAR,
-  "populationAgeForecastDataYear": settings.STATISTICS_POPULATION_AGE_FORECAST_DATA_YEAR,
 }

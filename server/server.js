@@ -248,9 +248,6 @@ const htmlTemplate = (req, reactDom, preloadedState, css, cssString, emotionCss,
         window.nodeEnvSettings.FEEDBACK_IS_PUBLISHED = "${process.env.FEEDBACK_IS_PUBLISHED}";
         window.nodeEnvSettings.USE_PTV_ACCESSIBILITY_API = "${process.env.USE_PTV_ACCESSIBILITY_API}";
         window.nodeEnvSettings.SENTRY_DSN_CLIENT = "${process.env.SENTRY_DSN_CLIENT}";
-        window.nodeEnvSettings.STATISTICS_POPULATION_AGE_DATA_YEAR = "${process.env.STATISTICS_POPULATION_AGE_DATA_YEAR}";
-        window.nodeEnvSettings.STATISTICS_POPULATION_AGE_FORECAST_DATA_YEAR = "${process.env.STATISTICS_POPULATION_AGE_FORECAST_DATA_YEAR}";
-
 
         window.nodeEnvSettings.FEATURE_SERVICEMAP_PAGE_TRACKING = "${process.env.FEATURE_SERVICEMAP_PAGE_TRACKING}";
 
