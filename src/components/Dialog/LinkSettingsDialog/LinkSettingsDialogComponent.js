@@ -1,13 +1,16 @@
 import styled from '@emotion/styled';
 import { FileCopy, Share } from '@mui/icons-material';
-import { ButtonBase, RadioGroup, Tooltip, Typography } from '@mui/material';
+import { ButtonBase, Tooltip, Typography } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { getSelectedUnit } from '../../../redux/selectors/selectedUnit';
-import { selectSelectedAccessibilitySettings } from '../../../redux/selectors/settings';
+import {
+  selectMapType,
+  selectSelectedAccessibilitySettings,
+} from '../../../redux/selectors/settings';
 import isClient from '../../../utils';
 import SettingsUtility from '../../../utils/settings';
 import useLocaleText from '../../../utils/useLocaleText';
@@ -45,6 +48,7 @@ const LinkSettingsDialogComponent = ({
   const intl = useIntl();
   const getLocaleText = useLocaleText();
   const unit = useSelector(getSelectedUnit);
+  const mapType = useSelector(selectMapType);
   const a11ySettings = useSelector(selectSelectedAccessibilitySettings)
     .map(setting => {
       const impairmentKey = SettingsUtility.mapValidAccessibilitySenseImpairmentValueToKey(setting);
@@ -99,6 +103,7 @@ const LinkSettingsDialogComponent = ({
         url.searchParams.append('senses', senses.join(','));
       }
     }
+    url.searchParams.append('map', mapType);
     return url.toString();
   };
   const url = getLinkUrl();
