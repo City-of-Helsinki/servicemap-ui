@@ -149,7 +149,6 @@ if (typeof settings.EMBEDDER_DOCUMENTATION_URL === 'undefined') {
   settings.EMBEDDER_DOCUMENTATION_URL = 'https://kaupunkialustana.hel.fi/palvelukartta/palvelukartan-upotusohjeet/';
 }
 
-
 let municipalities;
 try {
   municipalities = require('./municipalities.json');
@@ -249,7 +248,8 @@ export default {
   "smallContentAreaBreakpoint": 449,
   "mobileUiBreakpoint": 699,
   "municipality": municipalities,
-  "smallScreenBreakpoint": 899,
+  "smallScreenBreakpoint": 919,
+  "smallWidthForTopBarBreakpoint": 1079,
   "topBarHeight": 90,
   "topBarHeightMobile": 78,
   "bottomNavHeight": 78,

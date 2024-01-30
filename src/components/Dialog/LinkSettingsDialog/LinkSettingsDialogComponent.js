@@ -1,26 +1,26 @@
+import { css } from '@emotion/css';
+import styled from '@emotion/styled';
+import { FileCopy, Share } from '@mui/icons-material';
 import {
   ButtonBase,
   FormControlLabel,
   Radio,
   RadioGroup,
-  Typography,
   Tooltip,
+  Typography,
 } from '@mui/material';
-import { FileCopy, Share } from '@mui/icons-material';
+import { useTheme } from '@mui/styles';
 import { visuallyHidden } from '@mui/utils';
+import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
-import PropTypes from 'prop-types';
-import { css } from '@emotion/css';
-import styled from '@emotion/styled';
-import { useTheme } from '@mui/styles';
 import { useSelector } from 'react-redux';
+import { getSelectedUnit } from '../../../redux/selectors/selectedUnit';
 import { selectSelectedAccessibilitySettings } from '../../../redux/selectors/settings';
 import isClient from '../../../utils';
 import SettingsUtility from '../../../utils/settings';
-import Dialog from '../index';
-import { useSelectedUnit } from '../../../utils/unitHelper';
 import useLocaleText from '../../../utils/useLocaleText';
+import Dialog from '../index';
 
 const CopyTooltip = ({
   children,
@@ -53,7 +53,7 @@ const LinkSettingsDialogComponent = ({
 }) => {
   const intl = useIntl();
   const getLocaleText = useLocaleText();
-  const unit = useSelectedUnit();
+  const unit = useSelector(getSelectedUnit);
   const a11ySettings = useSelector(selectSelectedAccessibilitySettings)
     .map(setting => {
       const impairmentKey = SettingsUtility.mapValidAccessibilitySenseImpairmentValueToKey(setting);

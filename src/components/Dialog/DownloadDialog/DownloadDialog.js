@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-import { FormattedMessage, useIntl } from 'react-intl';
+import styled from '@emotion/styled';
+import { OpenInNew } from '@mui/icons-material';
 import {
   FormControl,
   FormControlLabel,
@@ -9,17 +8,20 @@ import {
   RadioGroup,
   Typography,
 } from '@mui/material';
-import { OpenInNew } from '@mui/icons-material';
+import PropTypes from 'prop-types';
+import React, { useEffect, useState } from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import styled from '@emotion/styled';
+import { getSelectedUnit } from '../../../redux/selectors/selectedUnit';
 import { selectServiceCurrent } from '../../../redux/selectors/service';
-import Dialog from '../index';
-import SMButton from '../../ServiceMapButton';
+import { getPage } from '../../../redux/selectors/user';
 import useDownloadData from '../../../utils/downloadData';
-import { getIcon } from '../../SMIcon';
-import { fetchServiceNames } from './utils';
 import useLocaleText from '../../../utils/useLocaleText';
+import SMButton from '../../ServiceMapButton';
+import { getIcon } from '../../SMIcon';
+import Dialog from '../index';
+import { fetchServiceNames } from './utils';
 
 const DownloadDialog = ({
   open,
@@ -27,8 +29,8 @@ const DownloadDialog = ({
 }) => {
   const getLocaleText = useLocaleText();
   const downloadData = useDownloadData();
-  const page = useSelector(state => state.user.page);
-  const selectedUnit = useSelector(state => state.selectedUnit.unit.data);
+  const page = useSelector(getPage);
+  const selectedUnit = useSelector(getSelectedUnit);
   const service = useSelector(selectServiceCurrent);
   const searchQuery = useSelector(state => state.searchResults.previousSearch);
   const intl = useIntl();

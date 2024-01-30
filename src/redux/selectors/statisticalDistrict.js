@@ -32,7 +32,8 @@ const getData = state => state.statisticalDistrict.districts.data;
 
 const getSelectedValue = (item, section, forecast) => {
   try {
-    return item?.data[dataVisualization.getYearBasedCategory(forecast)][section];
+    const category = dataVisualization.getCategory(item?.data, forecast);
+    return category?.[section];
   } catch (e) {
     return false;
   }

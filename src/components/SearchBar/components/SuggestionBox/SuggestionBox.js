@@ -11,6 +11,7 @@ import {
   selectSelectedCities,
   selectSelectedOrganizations,
 } from '../../../../redux/selectors/settings';
+import { getLocale } from '../../../../redux/selectors/user';
 import createSuggestions from '../../createSuggestions';
 import SuggestionItem from '../../../ListItems/SuggestionItem';
 import { keyboardHandler, uppercaseFirst } from '../../../../utils';
@@ -19,7 +20,6 @@ import useLocaleText from '../../../../utils/useLocaleText';
 import UnitIcon from '../../../SMIcon/UnitIcon';
 import { getPreviousSearches, removeSearchFromHistory, saveSearchToHistory } from '../../previousSearchData';
 import { useNavigationParams } from '../../../../utils/address';
-import { getLocale } from '../../../../redux/selectors/locale';
 import {
   StyledInfoText,
   StyledCloseSuggestionButton,

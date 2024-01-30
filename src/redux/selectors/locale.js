@@ -1,5 +1,4 @@
-
-const getLocale = store => store.user.locale;
+import { getLocale } from './user';
 
 // NOTE: this is used only on old class components. useLocaleText should be used instead
 // TODO: remove this once class components are replaced with function components
@@ -22,5 +21,4 @@ const getLocaleString = (state, obj) => {
 
 export {
   getLocaleString,
-  getLocale,
 };

@@ -1,14 +1,18 @@
 import { Checkbox, List, Typography } from '@mui/material';
 import PropTypes from 'prop-types';
-import React, {
-  useCallback, useEffect, useMemo, useState,
-} from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { UnitItem } from '../../../../components';
 import {
-  addSelectedDistrictService, handleOpenItems, removeSelectedDistrictService,
+  addSelectedDistrictService,
+  handleOpenItems,
+  removeSelectedDistrictService,
 } from '../../../../redux/actions/district';
-import { getFilteredSubdistrictServices } from '../../../../redux/selectors/district';
+import {
+  getFilteredSubdistrictServices,
+  selectSelectedDistrictServices,
+} from '../../../../redux/selectors/district';
+import { getLocale } from '../../../../redux/selectors/user';
 import { uppercaseFirst } from '../../../../utils';
 import orderUnits from '../../../../utils/orderUnits';
 import useLocaleText from '../../../../utils/useLocaleText';
@@ -47,9 +51,9 @@ const UnitCheckbox = ({
 const GeographicalUnitList = ({ initialOpenItems }) => {
   const dispatch = useDispatch();
   const getLocaleText = useLocaleText();
-  const filteredSubdistrictUnits = useSelector(state => getFilteredSubdistrictServices(state));
-  const selectedServices = useSelector(state => state.districts.selectedDistrictServices);
-  const locale = useSelector(state => state.user.locale);
+  const filteredSubdistrictUnits = useSelector(getFilteredSubdistrictServices);
+  const selectedServices = useSelector(selectSelectedDistrictServices);
+  const locale = useSelector(getLocale);
   const [serviceList, setServiceList] = useState([]);
   const [initialCheckedItems] = useState(selectedServices);
 

@@ -1,17 +1,12 @@
 import styled from '@emotion/styled';
-import {
-  FormControl,
-  FormControlLabel,
-  Radio,
-  RadioGroup,
-  Typography,
-} from '@mui/material';
+import { FormControl, FormControlLabel, Radio, RadioGroup, Typography } from '@mui/material';
 import React from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { setMapType } from '../../redux/actions/settings';
 import { selectMapRef } from '../../redux/selectors/general';
 import { selectMapType } from '../../redux/selectors/settings';
+import { getLocale } from '../../redux/selectors/user';
 import SettingsUtility from '../../utils/settings';
 import MobileSettingsHeader from '../MobileSettingsHeader/MobileSettingsHeader';
 import SMButton from '../ServiceMapButton';
@@ -23,7 +18,7 @@ const MapSettings = () => {
 
   const mapType = useSelector(selectMapType);
   const map = useSelector(selectMapRef);
-  const locale = useSelector(state => state.user.locale);
+  const locale = useSelector(getLocale);
 
   const mapSettings = {};
   SettingsUtility.mapSettings.forEach((setting) => {

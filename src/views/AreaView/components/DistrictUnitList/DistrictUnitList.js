@@ -28,7 +28,7 @@ const DistrictUnitList = (props) => {
   } = props;
 
   const citySettings = useSelector(selectCities);
-  const addressDistrict = useSelector(state => getAddressDistrict(state));
+  const addressDistrict = useSelector(getAddressDistrict);
   const districtsFetching = useSelector(selectDistrictsFetching);
   const locale = useSelector(getLocale);
   const getLocaleText = useLocaleText();
