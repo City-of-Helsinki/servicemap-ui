@@ -13,7 +13,6 @@ import { useLocation } from 'react-router-dom';
 import config from '../../../config';
 import paths from '../../../config/paths';
 import {
-  AcceptSettingsDialog,
   BackButton,
   Container,
   LinkSettingsDialog,
@@ -74,6 +73,7 @@ const UnitView = (props) => {
   const accessibilitySentences = useSelector(selectSelectedUnitAccessibilitySentencesData);
   const unitFetching = useSelector(selectSelectedUnitIsFetching);
   const stateUnit = useSelector(getSelectedUnit);
+  const map = useSelector(selectMapRef);
   const location = useLocation();
   const checkCorrectUnit = unit => unit && unit.id === parseInt(match.params.unit, 10);
 
@@ -81,12 +81,10 @@ const UnitView = (props) => {
   const viewPosition = useRef(null);
 
   const isMobile = useMobileStatus();
-  const [openAcceptSettingsDialog, setOpenAcceptSettingsDialog] = useState(false);
   const [openLinkDialog, setOpenLinkDialog] = useState(false);
   const getLocaleText = useLocaleText();
   const dispatch = useDispatch();
 
-  const map = useSelector(selectMapRef);
 
   const getImageAlt = () => `${intl.formatMessage({ id: 'unit.picture' })}${getLocaleText(unit.name)}`;
 
@@ -102,7 +100,7 @@ const UnitView = (props) => {
   };
 
   useEffect(() => {
-    setOpenAcceptSettingsDialog(shouldShowAcceptSettingsDialog());
+    shouldShowAcceptSettingsDialog();
   }, []);
 
   const initializePTVAccessibilitySentences = () => {
@@ -546,14 +544,7 @@ const UnitView = (props) => {
       return (
         <div>
           {
-            openAcceptSettingsDialog
-            && (
-              <AcceptSettingsDialog setOpen={setOpenAcceptSettingsDialog} />
-            )
-          }
-          {
-            !openAcceptSettingsDialog
-            && openLinkDialog
+            openLinkDialog
             && (
               <LinkSettingsDialog setOpen={setOpenLinkDialog} />
             )
