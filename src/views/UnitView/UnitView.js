@@ -93,6 +93,7 @@ const UnitView = (props) => {
     const search = new URLSearchParams(location.search);
     search.delete('mobility');
     search.delete('senses');
+    search.delete('map');
     history.replace({
       search: search.toString(),
     });
