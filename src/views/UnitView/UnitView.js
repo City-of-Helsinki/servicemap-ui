@@ -9,7 +9,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import config from '../../../config';
 import paths from '../../../config/paths';
 import {
@@ -85,9 +85,18 @@ const UnitView = (props) => {
   const [openLinkDialog, setOpenLinkDialog] = useState(false);
   const getLocaleText = useLocaleText();
   const dispatch = useDispatch();
-
+  const history = useHistory();
 
   const getImageAlt = () => `${intl.formatMessage({ id: 'unit.picture' })}${getLocaleText(unit.name)}`;
+
+  function resetUrlSearchParams() {
+    const search = new URLSearchParams(location.search);
+    search.delete('mobility');
+    search.delete('senses');
+    history.replace({
+      search: search.toString(),
+    });
+  }
 
   useEffect(() => {
     const actions = parseUnitViewUrlParams(location.search);
@@ -102,6 +111,7 @@ const UnitView = (props) => {
     senses.filter(({ value }) => !!value).forEach(({ value }) => {
       dispatch(activateSetting(value));
     });
+    resetUrlSearchParams();
   }, []);
 
   const initializePTVAccessibilitySentences = () => {

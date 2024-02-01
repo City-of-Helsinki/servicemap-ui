@@ -96,14 +96,14 @@ const LinkSettingsDialogComponent = ({
         .filter(v => SettingsUtility.isValidAccessibilitySenseImpairment(v));
 
       if (mobility) {
-        url.searchParams.append('mobility', mobility);
+        url.searchParams.set('mobility', mobility);
       }
 
       if (senses.length) {
-        url.searchParams.append('senses', senses.join(','));
+        url.searchParams.set('senses', senses.join(','));
       }
     }
-    url.searchParams.append('map', mapType);
+    url.searchParams.set('map', mapType);
     return url.toString();
   };
   const url = getLinkUrl();
