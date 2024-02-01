@@ -8,10 +8,6 @@ const translations = {
   'app.navigation.home': 'Hem',
   'app.navigation.settings': 'Inställningar',
 
-  'accept.settings.dialog.description': 'Du kan öppna uppgifterna antigen med tillgänglighetsinställningar eller utan begränsningar.',
-  'accept.settings.dialog.title': 'Se verksamhetsstället med tillgänglighetsinställningar',
-  'accept.settings.dialog.none': 'Inga särskilda tillgänglighetsinställningar',
-
   // Accessibility
   'accessibility': 'Tillgänglighet',
   'accessibility.info': 'Tillgänglighetsuppgifter',

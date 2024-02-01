@@ -8,10 +8,6 @@ const translations = {
   'app.navigation.home': 'Home',
   'app.navigation.settings': 'Settings',
 
-  'accept.settings.dialog.description': 'You can open the data either with accessibility settings or without restrictions.',
-  'accept.settings.dialog.title': 'See the location with accessibility settings',
-  'accept.settings.dialog.none': 'No particular accessibility settings',
-
   // Accessibility
   'accessibility': 'Accessibility',
   'accessibility.info': 'Accessibility details',

@@ -8,10 +8,6 @@ const translations = {
   'app.navigation.home': 'Koti',
   'app.navigation.settings': 'Asetukset',
 
-  'accept.settings.dialog.description': 'Voit avata tiedot joko esteettömyysasetusten kanssa tai ilman rajauksia.',
-  'accept.settings.dialog.title': 'Katso toimipistettä esteettömyysasetusten kanssa',
-  'accept.settings.dialog.none': 'Ei erityisiä esteettömyysasetuksia',
-
   // Accessibility
   'accessibility': 'Esteettömyys',
   'accessibility.info': 'Esteettömyystiedot',

@@ -48,7 +48,6 @@ import UnitItem from './ListItems/UnitItem';
 export * from './ErrorBoundary/ErrorComponent';
 export * from './ErrorBoundary/ErrorTrigger';
 
-export * from './Dialog/AcceptSettingsDialog';
 export * from './Dialog/LinkSettingsDialog';
 export * from './SearchBar';
 export * from './SMIcon';
