@@ -102,6 +102,12 @@ export const setMobility = value => setMobilitySetting(value);
 
 export const setMapType = value => setMapTypeSetting(value);
 
+export const resetSenseSettings = () => async (dispatch) => {
+  dispatch(toggleHearingAid(false));
+  dispatch(toggleColorblind(false));
+  dispatch(toggleVisuallyImpaired(false));
+};
+
 export const resetAccessibilitySettings = () => async (dispatch) => {
   dispatch(setMobility(null));
   dispatch(toggleHearingAid(false));

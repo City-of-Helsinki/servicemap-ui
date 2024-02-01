@@ -26,6 +26,7 @@ import {
   TitledList,
 } from '../../components';
 import { fetchServiceUnits } from '../../redux/actions/services';
+import { activateSetting, resetSenseSettings } from '../../redux/actions/settings';
 import { selectMapRef, selectNavigator } from '../../redux/selectors/general';
 import {
   getSelectedUnit,
@@ -39,7 +40,6 @@ import { selectUserPosition } from '../../redux/selectors/user';
 import { parseSearchParams } from '../../utils';
 import useMobileStatus from '../../utils/isMobile';
 import { mapHasMapPane } from '../../utils/mapUtility';
-import SettingsUtility from '../../utils/settings';
 import UnitHelper from '../../utils/unitHelper';
 import useLocaleText from '../../utils/useLocaleText';
 import MapView from '../MapView';
@@ -53,6 +53,7 @@ import SocialMediaLinks from './components/SocialMediaLinks';
 import UnitDataList from './components/UnitDataList';
 import UnitLinks from './components/UnitLinks';
 import UnitsServicesList from './components/UnitsServicesList';
+import { parseUnitViewUrlParams } from './utils/unitViewUrlParamAndSettingsHandler';
 
 const UnitView = (props) => {
   const {
@@ -88,19 +89,19 @@ const UnitView = (props) => {
 
   const getImageAlt = () => `${intl.formatMessage({ id: 'unit.picture' })}${getLocaleText(unit.name)}`;
 
-  const shouldShowAcceptSettingsDialog = () => {
-    const search = new URLSearchParams(location.search);
-    const mobility = search.get('mobility');
-    const senses = search.get('senses')?.split(',') || [];
-    const mobilityValid = !!(mobility && SettingsUtility.isValidMobilitySetting(mobility));
-    const sensesValid = senses.filter(
-      s => SettingsUtility.isValidAccessibilitySenseImpairment(s),
-    ).length > 0;
-    return !!(mobilityValid || sensesValid);
-  };
-
   useEffect(() => {
-    shouldShowAcceptSettingsDialog();
+    const actions = parseUnitViewUrlParams(location.search);
+    actions.filter(action => action.setting === 'mobility').forEach(({ setting, value }) => {
+      dispatch(activateSetting(setting, value));
+    });
+    const senses = actions.filter(action => action.setting === 'senses');
+    // if a { setting: 'senses', value: null} is returned then this will reset
+    if (senses.length) {
+      dispatch(resetSenseSettings());
+    }
+    senses.filter(({ value }) => !!value).forEach(({ value }) => {
+      dispatch(activateSetting(value));
+    });
   }, []);
 
   const initializePTVAccessibilitySentences = () => {
