@@ -26,7 +26,7 @@ import {
   TitledList,
 } from '../../components';
 import { fetchServiceUnits } from '../../redux/actions/services';
-import { activateSetting, resetSenseSettings } from '../../redux/actions/settings';
+import { activateSetting, resetSenseSettings, setMapType } from '../../redux/actions/settings';
 import { selectMapRef, selectNavigator } from '../../redux/selectors/general';
 import {
   getSelectedUnit,
@@ -101,16 +101,19 @@ const UnitView = (props) => {
 
   useEffect(() => {
     const actions = parseUnitViewUrlParams(location.search);
-    actions.filter(action => action.setting === 'mobility').forEach(({ setting, value }) => {
+    actions.filter(({ setting }) => setting === 'mobility').forEach(({ setting, value }) => {
       dispatch(activateSetting(setting, value));
     });
-    const senses = actions.filter(action => action.setting === 'senses');
+    const senses = actions.filter(({ setting }) => setting === 'senses');
     // if a { setting: 'senses', value: null} is returned then this will reset
     if (senses.length) {
       dispatch(resetSenseSettings());
     }
     senses.filter(({ value }) => !!value).forEach(({ value }) => {
       dispatch(activateSetting(value));
+    });
+    actions.filter(({ setting }) => setting === 'mapType').forEach(({ value }) => {
+      dispatch(setMapType(value));
     });
     resetUrlSearchParams();
   }, []);

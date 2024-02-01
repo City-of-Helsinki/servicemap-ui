@@ -42,6 +42,11 @@ export const parseUnitViewUrlParams = urlSearch => {
     // do nothing
   }
 
+  const mapType = search.get('map');
+  if (SettingsUtility.mapSettings.includes(mapType)) {
+    actions.push({ setting: 'mapType', value: mapType });
+  }
+
   // sort to make tests predictable
   actions.sort((a, b) => {
     const settingCompare = alphabeticCompare(a.setting, b.setting);
