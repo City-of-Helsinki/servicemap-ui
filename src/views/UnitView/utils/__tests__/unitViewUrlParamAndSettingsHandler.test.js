@@ -1,45 +1,43 @@
 import { parseUnitViewUrlParams } from '../unitViewUrlParamAndSettingsHandler';
 
 describe('parseUnitViewUrlParams', () => {
+  // Attempt to shut sonar for code duplication
+  function baseTest(url, expected) {
+    const actions = parseUnitViewUrlParams(url);
+    expect(actions).toEqual(expected);
+  }
 
   it('Should not act on undefined url params', () => {
-    const actions = parseUnitViewUrlParams('?search=aaa&city=helsinki');
-    expect(actions).toEqual([]);
+    baseTest('?search=aaa&city=helsinki', []);
   });
 
   it('Should reset mobility setting on empty param', () => {
-    const actions = parseUnitViewUrlParams('?search=aaa&city=helsinki&mobility=');
-    expect(actions).toEqual([{ setting: 'mobility', value: null }]);
+    baseTest('?search=aaa&city=helsinki&mobility=', [{ setting: 'mobility', value: null }]);
   });
 
   it('Should reset senses setting on empty param', () => {
-    const actions = parseUnitViewUrlParams('?senses=&fooz=accessible_map');
-    expect(actions).toEqual([{ setting: 'senses', value: null }]);
+    baseTest('?senses=&fooz=accessible_map', [{ setting: 'senses', value: null }]);
   });
 
   it('Should act on mobility param', () => {
-    const actions = parseUnitViewUrlParams('?search=aaa&city=helsinki&mobility=rollator');
-    expect(actions).toEqual([{ setting: 'mobility', value: 'rollator' }]);
+    baseTest('?search=aaa&city=helsinki&mobility=rollator', [{ setting: 'mobility', value: 'rollator' }]);
   });
 
   it('Should act on senses param', () => {
-    const actions = parseUnitViewUrlParams('?senses=colorblind&fooz=accessible_map');
-    expect(actions).toEqual([
+    baseTest('?senses=colorblind&fooz=accessible_map', [
       { setting: 'senses', value: 'colorblind' },
     ]);
   });
 
   it('Should act on multiple senses params', () => {
-    const actions = parseUnitViewUrlParams('?senses=colorblind%2ChearingAid&fooz=accessible_map');
-    expect(actions).toEqual([
+    baseTest('?senses=colorblind%2ChearingAid&fooz=accessible_map', [
       { setting: 'senses', value: 'colorblind' },
       { setting: 'senses', value: 'hearingAid' },
     ]);
   });
 
   it('Should act on mobility and senses params 1', () => {
-    const actions = parseUnitViewUrlParams('?senses=colorblind%2ChearingAid&fooz=accessible_map&mobility=stroller');
-    expect(actions).toEqual([
+    baseTest('?senses=colorblind%2ChearingAid&fooz=accessible_map&mobility=stroller', [
       { setting: 'mobility', value: 'stroller' },
       { setting: 'senses', value: 'colorblind' },
       { setting: 'senses', value: 'hearingAid' },
@@ -47,16 +45,14 @@ describe('parseUnitViewUrlParams', () => {
   });
 
   it('Should act on mobility and senses params 2', () => {
-    const actions = parseUnitViewUrlParams('?senses=&fooz=accessible_map&mobility=stroller');
-    expect(actions).toEqual([
+    baseTest('?senses=&fooz=accessible_map&mobility=stroller', [
       { setting: 'mobility', value: 'stroller' },
       { setting: 'senses', value: null },
     ]);
   });
 
   it('Should act on mobility and senses params 3', () => {
-    const actions = parseUnitViewUrlParams('?senses=colorblind%2ChearingAid&fooz=accessible_map&mobility=');
-    expect(actions).toEqual([
+    baseTest('?senses=colorblind%2ChearingAid&fooz=accessible_map&mobility=', [
       { setting: 'mobility', value: null },
       { setting: 'senses', value: 'colorblind' },
       { setting: 'senses', value: 'hearingAid' },
@@ -64,20 +60,17 @@ describe('parseUnitViewUrlParams', () => {
   });
 
   it('Should act on mobility and senses params 4', () => {
-    const actions = parseUnitViewUrlParams('?senses=&fooz=accessible_map&mobility=');
-    expect(actions).toEqual([
+    baseTest('?senses=&fooz=accessible_map&mobility=', [
       { setting: 'mobility', value: null },
       { setting: 'senses', value: null },
     ]);
   });
 
   it('Should not act on empty map param', () => {
-    const actions = parseUnitViewUrlParams('?map=&search=safdf');
-    expect(actions).toEqual([]);
+    baseTest('?map=&search=safdf', []);
   });
 
   it('Should act on map param', () => {
-    const actions = parseUnitViewUrlParams('?map=guidemap&search=safdf');
-    expect(actions).toEqual([{ setting: 'mapType', value: 'guidemap' }]);
+    baseTest('?map=guidemap&search=safdf', [{ setting: 'mapType', value: 'guidemap' }]);
   });
 });
