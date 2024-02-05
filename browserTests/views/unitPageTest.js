@@ -1,6 +1,5 @@
 import { Selector } from 'testcafe';
 import { waitForReact } from 'testcafe-react-selectors';
-import finnish from '../../src/i18n/fi';
 import { getBaseUrl, getLocation } from '../utility';
 import { mobilityDropdown, sensesDropdown } from '../utility/pageObjects';
 

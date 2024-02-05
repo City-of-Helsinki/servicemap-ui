@@ -219,6 +219,45 @@ const SearchView = () => {
     }
   };
 
+  function handleAccessibilityParams(accessibility_setting) {
+    const accessibilityOptions = accessibility_setting?.split(',');
+    if (accessibilityOptions?.length) {
+      dispatch(resetAccessibilitySettings());
+      const mobility = accessibilityOptions.filter(x => SettingsUtility.isValidMobilitySetting(x));
+      if (mobility.length === 1) {
+        dispatch(activateSetting('mobility', mobility[0]));
+      }
+      accessibilityOptions
+        .map(x => SettingsUtility.mapValidAccessibilitySenseImpairmentValueToKey(x))
+        .filter(x => !!x)
+        .forEach(x => {
+          dispatch(activateSetting(x));
+        });
+    }
+  }
+
+  function handleCityAndOrganisationSettings(municipality, city, organization) {
+    const cityOptions = (municipality || city)?.split(',');
+    if (cityOptions?.length) {
+      dispatch(setCities(cityOptions));
+    }
+    const orgOptions = organization?.split(',');
+    if (orgOptions?.length) {
+      dispatch(setOrganizations(orgOptions));
+    }
+  }
+
+  async function handleAddressParam(hcity, hstreet) {
+    if (hcity && hstreet) {
+      fetchAddressData(hcity, hstreet.replace('+', ' '))
+        .then(address => {
+          if (address?.length) {
+            handleUserAddressChange(address[0]);
+          }
+        });
+    }
+  }
+
   useEffect(() => {
     if (embed) {
       // Do not mess with settings when embedded
@@ -238,41 +277,9 @@ const SearchView = () => {
       const mapTypeParam = map === 'guideMap' ? 'guidemap' : map; // keep alive old links with "guideMap"
       dispatch(setMapType(mapTypeParam));
     }
-    const cityOptions = (municipality || city)?.split(',');
-    if (cityOptions?.length) {
-      dispatch(setCities(cityOptions));
-    }
-    const orgOptions = organization?.split(',');
-    if (orgOptions?.length) {
-      dispatch(setOrganizations(orgOptions));
-    }
-    const accessibilityOptions = accessibility_setting?.split(',');
-    if (accessibilityOptions?.length) {
-      dispatch(resetAccessibilitySettings());
-      const mobility = accessibilityOptions.filter(x => SettingsUtility.isValidMobilitySetting(x));
-      if (mobility.length === 1) {
-        dispatch(activateSetting('mobility', mobility[0]));
-      }
-      accessibilityOptions
-        .map(x => SettingsUtility.mapValidAccessibilitySenseImpairmentValueToKey(x))
-        .filter(x => !!x)
-        .forEach(x => {
-          dispatch(activateSetting(x));
-        });
-    }
-
-    async function handleAddress() {
-      fetchAddressData(hcity, hstreet.replace('+', ' '))
-        .then(address => {
-          if (address?.length) {
-            handleUserAddressChange(address[0]);
-          }
-        });
-    }
-
-    if (hcity && hstreet) {
-      handleAddress();
-    }
+    handleCityAndOrganisationSettings(municipality, city, organization);
+    handleAccessibilityParams(accessibility_setting);
+    handleAddressParam(hcity, hstreet);
   }, []);
 
   useEffect(() => {
