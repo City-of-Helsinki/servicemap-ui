@@ -10,9 +10,11 @@ import config from '../../../config';
 import { selectSettings } from '../../redux/selectors/settings';
 import { selectThemeMode } from '../../redux/selectors/user';
 import { keyboardHandler } from '../../utils';
+import SMButton from '../ServiceMapButton';
 import SMAutocomplete from '../SMAutocomplete';
 import constants from '../SettingsComponent/constants';
 import {
+  resetAccessibilitySettings,
   setMapType,
   setMobility,
   toggleCity,
@@ -33,6 +35,7 @@ const SettingsDropdowns = ({ variant }) => {
   const [openSettings, setOpenSettings] = useState(null);
   const highlightedOption = useRef(null);
   const themeMode = useSelector(selectThemeMode);
+  const ownSettingsVariant = variant === 'ownSettings';
 
   // Configure rendered settings items
   const senseSettingList = [
@@ -105,6 +108,22 @@ const SettingsDropdowns = ({ variant }) => {
     }
   };
 
+  const resetSettings = () => {
+    dispatch(resetAccessibilitySettings());
+
+    const citySettings = settings.cities;
+    Object.keys(citySettings).forEach(key => {
+      citySettings[key] = false;
+    });
+    dispatch(toggleCity(citySettings));
+
+    const orgSettings = settings.organizations;
+    Object.keys(orgSettings).forEach(key => {
+      orgSettings[key] = false;
+    });
+    dispatch(toggleOrganization(orgSettings));
+  };
+
   const handleKeyboardSelect = (id, category, event) => {
     if (openSettings !== id) setOpenSettings(id);
     else if (event?.which === 13 || event?.which === 32) {
@@ -123,7 +142,6 @@ const SettingsDropdowns = ({ variant }) => {
       return list.map(item => item.title);
     };
 
-    const ownSettingsVariant = variant === 'ownSettings';
     return (
       <StyledAutocomplete
         open={openSettings === label}
@@ -203,10 +221,22 @@ const SettingsDropdowns = ({ variant }) => {
       {renderSettingsElement(mobilitySettingList, intl.formatMessage({ id: 'settings.choose.mobility' }), 'mobility', true)}
       {renderSettingsElement(citySettingsList, intl.formatMessage({ id: 'settings.choose.cities' }), 'cities')}
       {renderSettingsElement(organizationSettingsList, intl.formatMessage({ id: 'settings.choose.organization' }), 'organizations')}
+      <div>
+        <StyledButton
+          data-sm="reset-settings-button"
+          ownsettings={+ownSettingsVariant}
+          color={ownSettingsVariant ? 'secondary' : 'primary'}
+          role="button"
+          aria-label={intl.formatMessage({ id: 'settings.reset_button.title' })}
+          messageID="settings.reset_button.title"
+          onClick={resetSettings}
+        />
+      </div>
     </>
   );
 };
 
+const StyledButton = styled(SMButton)(() => ({ marginRight: 0 }));
 
 const StyledAutocomplete = styled(SMAutocomplete)(({ theme, ownsettings, colormode }) => {
   const whiteChip = {
