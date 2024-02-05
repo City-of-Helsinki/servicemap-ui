@@ -12,13 +12,16 @@ import {
 } from '../../components';
 import fetchSearchResults from '../../redux/actions/search';
 import {
-  activateSetting, resetAccessibilitySettings, setCities, setOrganizations,
+  activateSetting, resetAccessibilitySettings, setCities, setMapType, setOrganizations,
 } from '../../redux/actions/settings';
 import { changeCustomUserLocation } from '../../redux/actions/user';
 import { selectBounds, selectMapRef, selectNavigator } from '../../redux/selectors/general';
 import { getOrderedSearchResultData } from '../../redux/selectors/results';
 import {
-  selectSelectedAccessibilitySettings, selectSelectedCities, selectSelectedOrganizationIds,
+  selectMapType,
+  selectSelectedAccessibilitySettings,
+  selectSelectedCities,
+  selectSelectedOrganizationIds,
 } from '../../redux/selectors/settings';
 import { selectCustomPositionAddress } from '../../redux/selectors/user';
 import { keyboardHandler, parseSearchParams } from '../../utils';
@@ -48,6 +51,7 @@ const SearchView = () => {
   const customPositionAddress = useSelector(selectCustomPositionAddress);
   const map = useSelector(selectMapRef);
   const navigator = useSelector(selectNavigator);
+  const mapType = useSelector(selectMapType);
 
   const getAddressNavigatorParams = useNavigationParams();
   const dispatch = useDispatch();
@@ -215,28 +219,7 @@ const SearchView = () => {
     }
   };
 
-  useEffect(() => {
-    if (embed) {
-      // Do not mess with settings when embedded
-      return;
-    }
-    const searchParams = parseSearchParams(location.search);
-    const {
-      city,
-      organization,
-      municipality,
-      accessibility_setting,
-      hcity,
-      hstreet,
-    } = searchParams;
-    const cityOptions = (municipality || city)?.split(',');
-    if (cityOptions?.length) {
-      dispatch(setCities(cityOptions));
-    }
-    const orgOptions = organization?.split(',');
-    if (orgOptions?.length) {
-      dispatch(setOrganizations(orgOptions));
-    }
+  function handleAccessibilityParams(accessibility_setting) {
     const accessibilityOptions = accessibility_setting?.split(',');
     if (accessibilityOptions?.length) {
       dispatch(resetAccessibilitySettings());
@@ -251,8 +234,21 @@ const SearchView = () => {
           dispatch(activateSetting(x));
         });
     }
+  }
 
-    async function handleAddress() {
+  function handleCityAndOrganisationSettings(municipality, city, organization) {
+    const cityOptions = (municipality || city)?.split(',');
+    if (cityOptions?.length) {
+      dispatch(setCities(cityOptions));
+    }
+    const orgOptions = organization?.split(',');
+    if (orgOptions?.length) {
+      dispatch(setOrganizations(orgOptions));
+    }
+  }
+
+  async function handleAddressParam(hcity, hstreet) {
+    if (hcity && hstreet) {
       fetchAddressData(hcity, hstreet.replace('+', ' '))
         .then(address => {
           if (address?.length) {
@@ -260,10 +256,30 @@ const SearchView = () => {
           }
         });
     }
+  }
 
-    if (hcity && hstreet) {
-      handleAddress();
+  useEffect(() => {
+    if (embed) {
+      // Do not mess with settings when embedded
+      return;
     }
+    const searchParams = parseSearchParams(location.search);
+    const {
+      city,
+      organization,
+      municipality,
+      accessibility_setting,
+      hcity,
+      hstreet,
+      map,
+    } = searchParams;
+    if (map?.length && map !== mapType) {
+      const mapTypeParam = map === 'guideMap' ? 'guidemap' : map; // keep alive old links with "guideMap"
+      dispatch(setMapType(mapTypeParam));
+    }
+    handleCityAndOrganisationSettings(municipality, city, organization);
+    handleAccessibilityParams(accessibility_setting);
+    handleAddressParam(hcity, hstreet);
   }, []);
 
   useEffect(() => {
@@ -321,10 +337,11 @@ const SearchView = () => {
       navigator.removeParameter('hcity');
       navigator.removeParameter('hstreet');
     }
+    navigator.setParameter('map', mapType);
   },
   [
     navigator, selectedCities, selectedOrganizationIds, selectedAccessibilitySettings,
-    bounds, customPositionAddress,
+    bounds, customPositionAddress, mapType,
   ],
   );
 

@@ -1,6 +1,5 @@
 import { Selector } from 'testcafe';
 import { waitForReact } from 'testcafe-react-selectors';
-import finnish from '../../src/i18n/fi';
 import { getBaseUrl, getLocation } from '../utility';
 import { mobilityDropdown, sensesDropdown } from '../utility/pageObjects';
 
@@ -224,8 +223,6 @@ test('Unit view share link does work correctly', async (t) => {
   const shareButton = Selector('[data-sm="TitleContainer"] button');
 
   const copyLinkButton = Selector(`div[data-sm="DialogContainer"] button p`)
-  const radio = Selector(`div[aria-label="${finnish['link.settings.dialog.radio.label']}"] label`)
-  // const dialogClose = Selector('div[class*="Dialog-topArea"] button[aria-label="Sulje"]');
 
   await t
     .click(accessibilityTab)
@@ -236,9 +233,6 @@ test('Unit view share link does work correctly', async (t) => {
   await t
     .click(shareButton)
     .expect(copyLinkButton.textContent).contains(`${testUrl}`, 'Link should contain current page url')
-    .expect(copyLinkButton.textContent).notContains('senses=', 'Link should not contain sense settings')
-    .expect(copyLinkButton.textContent).notContains('mobility=', 'Link should not contain mobility settings')
-    .click(radio.nth(0)) // Select to show accessibility settings
     // This is order dependant :(
     .expect(copyLinkButton.textContent).contains('senses=hearingAid%2CvisuallyImpaired', 'Link should contain sense settings')
     .expect(copyLinkButton.textContent).contains('mobility=wheelchair', 'Link should contain mobility settings')

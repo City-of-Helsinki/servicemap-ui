@@ -101,7 +101,7 @@ class SettingsUtility {
     const mapType = LocalStorageUtility.getItem('mapType');
     const settings = {
       mobility: mobility === 'null' ? null : mobility,
-      mapType: !mapType ? 'servicemap' : mapType,
+      mapType: config.maps.includes(mapType) ? mapType : 'servicemap',
       colorblind: LocalStorageUtility.getItem('colorblind') === 'true',
       visuallyImpaired: LocalStorageUtility.getItem('visuallyImpaired') === 'true',
       hearingAid: LocalStorageUtility.getItem('hearingAid') === 'true',

@@ -7,7 +7,7 @@ const calculateDistance = (mapType, zoom) => {
     const exponent = 16 - zoom;
     return 2000 * (2 ** exponent);
   }
-  if (mapType === 'guideMap') {
+  if (mapType === 'guidemap') {
     const exponent = 12 - zoom;
     return 3350 * (2 ** exponent);
   }

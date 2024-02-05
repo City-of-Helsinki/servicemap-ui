@@ -41,7 +41,7 @@ if (typeof settings.INITIAL_MAP_POSITION === 'undefined') {
 
 if (typeof settings.MAPS === 'undefined') {
     // If not set default to Helsinki
-    settings.MAPS = 'servicemap,ortographic,guideMap,accessible_map';
+    settings.MAPS = 'servicemap,ortographic,guidemap,accessible_map';
 }
 
 if (typeof settings.OLD_MAP_LINK_EN === 'undefined'

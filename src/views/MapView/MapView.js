@@ -125,17 +125,25 @@ const MapView = (props) => {
   useSelector(getSelectedUnitEvents);
 
   const initializeMap = () => {
+    // Search param map value
+    const spMap = parseSearchParams(location.search).map || false;
+    const mapTypeUrlParam = spMap === 'guideMap' ? 'guidemap' : spMap; // old links might have "guideMap", this hopefully keeps them alive
+    // If embedded, then 1. url param, 2. default 'servicemap'
+    // If normal mode, then 1. url param, 2. map type (local storage) 3. default 'servicemap'
+    const mapType1 = mapTypeUrlParam || (!embedded && mapType) || 'servicemap';
+
+    const newMap = CreateMap(mapType1, locale);
+    setMapObject(newMap);
+  };
+
+  const mapTypeChanged = () => {
     if (mapElement) {
       // If changing map type, save current map viewport values before changing map
       const map = mapElement;
       map.defaultZoom = mapObject.options.zoom;
       setPrevMap(map);
     }
-    // Search param map value
-    const spMap = parseSearchParams(location.search).map || false;
-    const mapType1 = spMap || (embedded ? 'servicemap' : mapType);
-
-    const newMap = CreateMap(mapType1, locale);
+    const newMap = CreateMap(mapType, locale);
     setMapObject(newMap);
   };
 
@@ -188,7 +196,10 @@ const MapView = (props) => {
 
   useEffect(() => { // On map type change
     // Init new map and set new ref to redux
-    initializeMap();
+    if (!embedded) {
+      // In embed mode, map type is read from url.
+      mapTypeChanged();
+    }
   }, [mapType]);
 
   useEffect(() => {
