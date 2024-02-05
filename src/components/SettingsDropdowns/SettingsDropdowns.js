@@ -10,6 +10,7 @@ import config from '../../../config';
 import { selectSettings } from '../../redux/selectors/settings';
 import { selectThemeMode } from '../../redux/selectors/user';
 import { keyboardHandler } from '../../utils';
+import SMButton from '../ServiceMapButton';
 import SMAutocomplete from '../SMAutocomplete';
 import constants from '../SettingsComponent/constants';
 import {
@@ -33,6 +34,7 @@ const SettingsDropdowns = ({ variant }) => {
   const [openSettings, setOpenSettings] = useState(null);
   const highlightedOption = useRef(null);
   const themeMode = useSelector(selectThemeMode);
+  const ownSettingsVariant = variant === 'ownSettings';
 
   // Configure rendered settings items
   const senseSettingList = [
@@ -123,7 +125,6 @@ const SettingsDropdowns = ({ variant }) => {
       return list.map(item => item.title);
     };
 
-    const ownSettingsVariant = variant === 'ownSettings';
     return (
       <StyledAutocomplete
         open={openSettings === label}
@@ -203,10 +204,22 @@ const SettingsDropdowns = ({ variant }) => {
       {renderSettingsElement(mobilitySettingList, intl.formatMessage({ id: 'settings.choose.mobility' }), 'mobility', true)}
       {renderSettingsElement(citySettingsList, intl.formatMessage({ id: 'settings.choose.cities' }), 'cities')}
       {renderSettingsElement(organizationSettingsList, intl.formatMessage({ id: 'settings.choose.organization' }), 'organizations')}
+      <div>
+        <StyledButton
+          data-sm="reset-settings-button"
+          ownsettings={+ownSettingsVariant}
+          color={ownSettingsVariant ? 'secondary' : 'primary'}
+          role="button"
+          aria-label={intl.formatMessage({ id: 'settings.reset_button.title' })}
+          messageID="settings.reset_button.title"
+          onClick={() => {}}
+        />
+      </div>
     </>
   );
 };
 
+const StyledButton = styled(SMButton)(() => ({ marginRight: 0 }));
 
 const StyledAutocomplete = styled(SMAutocomplete)(({ theme, ownsettings, colormode }) => {
   const whiteChip = {
