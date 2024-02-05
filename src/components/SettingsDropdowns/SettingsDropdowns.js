@@ -14,6 +14,7 @@ import SMButton from '../ServiceMapButton';
 import SMAutocomplete from '../SMAutocomplete';
 import constants from '../SettingsComponent/constants';
 import {
+  resetAccessibilitySettings,
   setMapType,
   setMobility,
   toggleCity,
@@ -105,6 +106,22 @@ const SettingsDropdowns = ({ variant }) => {
         }
       }
     }
+  };
+
+  const resetSettings = () => {
+    dispatch(resetAccessibilitySettings());
+
+    const citySettings = settings.cities;
+    Object.keys(citySettings).forEach(key => {
+      citySettings[key] = false;
+    });
+    dispatch(toggleCity(citySettings));
+
+    const orgSettings = settings.organizations;
+    Object.keys(orgSettings).forEach(key => {
+      orgSettings[key] = false;
+    });
+    dispatch(toggleOrganization(orgSettings));
   };
 
   const handleKeyboardSelect = (id, category, event) => {
@@ -212,7 +229,7 @@ const SettingsDropdowns = ({ variant }) => {
           role="button"
           aria-label={intl.formatMessage({ id: 'settings.reset_button.title' })}
           messageID="settings.reset_button.title"
-          onClick={() => {}}
+          onClick={resetSettings}
         />
       </div>
     </>
