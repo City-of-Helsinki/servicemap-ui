@@ -2,18 +2,7 @@
 import URI from 'urijs';
 import embedderConfig from '../embedderConfig';
 
-const joinQueries = (query) => {
-  const data = query;
-  Object.keys(query).forEach((key) => {
-    const val = query[key];
-    if (val instanceof Array) {
-      data[key] = val.join(',');
-    }
-  });
-  return data;
-};
-
-export const explode = (url) => {
+const explode = (url) => {
   const uri = URI(url);
   const path = uri.segment();
   const language = path[0];
@@ -37,38 +26,6 @@ export const explode = (url) => {
     resource,
     query,
   };
-};
-
-export const transform = (url, {
-  language: lang,
-  query,
-}) => {
-  const uri = URI(url);
-  if (lang != null) {
-    if (embedderConfig.SUBDOMAINS_REST !== null) {
-      uri.subdomain(`${embedderConfig.SUBDOMAINS[lang]}.${embedderConfig.SUBDOMAINS_REST}`);
-    } else {
-      uri.subdomain(embedderConfig.SUBDOMAINS[lang]);
-    }
-  }
-  if (query != null) {
-    delete query.ratio;
-    if (query.bbox == null) {
-      delete query.bbox;
-    }
-    if (query.map != null) {
-      if (query.map === 'servicemap') {
-        delete query.map;
-      }
-    }
-    if (query.city != null) {
-      if (query.city === 'all') {
-        delete query.city;
-      }
-    }
-    uri.search(joinQueries(query));
-  }
-  return uri.toString();
 };
 
 // Removes query params p and bbox
