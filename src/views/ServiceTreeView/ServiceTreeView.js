@@ -8,8 +8,8 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import config from '../../../config';
 import { SMAccordion, SMButton, TitleBar } from '../../components';
-import setMobilityTree from '../../redux/actions/mobilityTree';
-import setServiceTree from '../../redux/actions/serviceTree';
+import { setMobilityTree } from '../../redux/actions/mobilityTree';
+import { setServiceTree } from '../../redux/actions/serviceTree';
 import { selectNavigator } from '../../redux/selectors/general';
 import { selectSelectedCities, selectSelectedOrganizations } from '../../redux/selectors/settings';
 import {

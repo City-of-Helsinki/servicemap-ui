@@ -5,6 +5,8 @@ import React, { useRef, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import config from '../../../config';
+import { resetMobilityTree } from '../../redux/actions/mobilityTree';
+import { resetServiceTree } from '../../redux/actions/serviceTree';
 import {
   resetAccessibilitySettings,
   resetCitySettings,
@@ -114,6 +116,8 @@ const SettingsDropdowns = ({ variant }) => {
     dispatch(resetCitySettings());
     dispatch(resetOrganizationSettings());
     dispatch(setMapType(SettingsUtility.defaultMapType));
+    dispatch(resetServiceTree());
+    dispatch(resetMobilityTree());
   };
 
   const handleKeyboardSelect = (id, category, event) => {
