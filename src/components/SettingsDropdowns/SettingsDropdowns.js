@@ -116,6 +116,7 @@ const SettingsDropdowns = ({ variant }) => {
     dispatch(resetCitySettings());
     dispatch(resetOrganizationSettings());
     dispatch(setMapType(SettingsUtility.defaultMapType));
+    // TODO this does not clear the checkboxes if we are in the view
     dispatch(resetServiceTree());
     dispatch(resetMobilityTree());
   };
