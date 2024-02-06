@@ -225,7 +225,7 @@ const SettingsDropdowns = ({ variant }) => {
         <StyledButton
           data-sm="reset-settings-button"
           ownsettings={+ownSettingsVariant}
-          color={ownSettingsVariant ? 'secondary' : 'primary'}
+          color={ownSettingsVariant ? 'primary' : 'default'}
           role="button"
           aria-label={intl.formatMessage({ id: 'settings.reset_button.title' })}
           messageID="settings.reset_button.title"
