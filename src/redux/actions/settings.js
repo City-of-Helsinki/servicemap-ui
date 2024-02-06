@@ -1,6 +1,6 @@
-import SettingsUtility from '../../utils/settings';
-import LocalStorageUtility from '../../utils/localStorage';
 import config from '../../../config';
+import LocalStorageUtility from '../../utils/localStorage';
+import SettingsUtility from '../../utils/settings';
 
 const setAccessibilitySelection = (prefix, key, value) => async (dispatch, getState) => {
   const { settings } = getState();
@@ -113,6 +113,22 @@ export const resetAccessibilitySettings = () => async (dispatch) => {
   dispatch(toggleHearingAid(false));
   dispatch(toggleColorblind(false));
   dispatch(toggleVisuallyImpaired(false));
+};
+
+export const resetCitySettings = () => async (dispatch) => {
+  const citySettings = { };
+  config.cities.forEach(city => {
+    citySettings[city] = false;
+  });
+  dispatch(toggleCity(citySettings));
+};
+
+export const resetOrganizationSettings = () => async (dispatch) => {
+  const orgSettings = { };
+  config.organizations.forEach(org => {
+    orgSettings[org.id] = false;
+  });
+  dispatch(toggleOrganization(orgSettings));
 };
 
 export const activateSetting = (setting, value) => async (dispatch) => {

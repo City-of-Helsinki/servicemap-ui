@@ -1,20 +1,14 @@
-import PropTypes from 'prop-types';
-import {
-  Checkbox, ListItem, TextField, Typography,
-} from '@mui/material';
 import styled from '@emotion/styled';
+import { Checkbox, ListItem, TextField, Typography } from '@mui/material';
+import PropTypes from 'prop-types';
 import React, { useRef, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import config from '../../../config';
-import { selectSettings } from '../../redux/selectors/settings';
-import { selectThemeMode } from '../../redux/selectors/user';
-import { keyboardHandler } from '../../utils';
-import SMButton from '../ServiceMapButton';
-import SMAutocomplete from '../SMAutocomplete';
-import constants from '../SettingsComponent/constants';
 import {
   resetAccessibilitySettings,
+  resetCitySettings,
+  resetOrganizationSettings,
   setMapType,
   setMobility,
   toggleCity,
@@ -23,7 +17,13 @@ import {
   toggleOrganization,
   toggleVisuallyImpaired,
 } from '../../redux/actions/settings';
+import { selectSettings } from '../../redux/selectors/settings';
+import { selectThemeMode } from '../../redux/selectors/user';
+import { keyboardHandler } from '../../utils';
 import useLocaleText from '../../utils/useLocaleText';
+import SMButton from '../ServiceMapButton';
+import constants from '../SettingsComponent/constants';
+import SMAutocomplete from '../SMAutocomplete';
 
 const SettingsDropdowns = ({ variant }) => {
   const intl = useIntl();
@@ -110,18 +110,8 @@ const SettingsDropdowns = ({ variant }) => {
 
   const resetSettings = () => {
     dispatch(resetAccessibilitySettings());
-
-    const citySettings = settings.cities;
-    Object.keys(citySettings).forEach(key => {
-      citySettings[key] = false;
-    });
-    dispatch(toggleCity(citySettings));
-
-    const orgSettings = settings.organizations;
-    Object.keys(orgSettings).forEach(key => {
-      orgSettings[key] = false;
-    });
-    dispatch(toggleOrganization(orgSettings));
+    dispatch(resetCitySettings());
+    dispatch(resetOrganizationSettings());
   };
 
   const handleKeyboardSelect = (id, category, event) => {
