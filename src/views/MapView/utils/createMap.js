@@ -1,4 +1,5 @@
 /* eslint-disable global-require */
+import SettingsUtility from '../../../utils/settings';
 import { getMapOptions } from '../config/mapConfig';
 import config from '../../../../config';
 
@@ -12,7 +13,7 @@ if (typeof window !== 'undefined') {
 const CreateMap = (mapType, locale) => {
   let type = mapType;
   if (!config.maps.includes(type)) {
-    type = 'servicemap';
+    type = SettingsUtility.defaultMapType;
   }
   // const options = mapTypes[mapType];
   const options = getMapOptions(type, locale);

@@ -31,6 +31,7 @@ import {
   swapCoordinates,
 } from '../../utils/mapUtility';
 import { isEmbed } from '../../utils/path';
+import SettingsUtility from '../../utils/settings';
 import AddressMarker from './components/AddressMarker';
 import AddressPopup from './components/AddressPopup';
 import CoordinateMarker from './components/CoordinateMarker';
@@ -130,7 +131,7 @@ const MapView = (props) => {
     const mapTypeUrlParam = spMap === 'guideMap' ? 'guidemap' : spMap; // old links might have "guideMap", this hopefully keeps them alive
     // If embedded, then 1. url param, 2. default 'servicemap'
     // If normal mode, then 1. url param, 2. map type (local storage) 3. default 'servicemap'
-    const mapType1 = mapTypeUrlParam || (!embedded && mapType) || 'servicemap';
+    const mapType1 = mapTypeUrlParam || (!embedded && mapType) || SettingsUtility.defaultMapType;
 
     const newMap = CreateMap(mapType1, locale);
     setMapObject(newMap);

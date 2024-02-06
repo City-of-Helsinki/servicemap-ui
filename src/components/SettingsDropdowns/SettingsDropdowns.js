@@ -20,6 +20,7 @@ import {
 import { selectSettings } from '../../redux/selectors/settings';
 import { selectThemeMode } from '../../redux/selectors/user';
 import { keyboardHandler } from '../../utils';
+import SettingsUtility from '../../utils/settings';
 import useLocaleText from '../../utils/useLocaleText';
 import SMButton from '../ServiceMapButton';
 import constants from '../SettingsComponent/constants';
@@ -94,7 +95,7 @@ const SettingsDropdowns = ({ variant }) => {
         if (settingTurnedOn) {
           dispatch(setMapType('accessible_map'));
         } else if (!settingsValues.senses.includes('visuallyImpaired')) {
-          dispatch(setMapType('servicemap'));
+          dispatch(setMapType(SettingsUtility.defaultMapType));
         }
       }
       if (id === 'visuallyImpaired') {
@@ -102,7 +103,7 @@ const SettingsDropdowns = ({ variant }) => {
         if (settingTurnedOn) {
           dispatch(setMapType('accessible_map'));
         } else if (!settingsValues.senses.includes('colorblind')) {
-          dispatch(setMapType('servicemap'));
+          dispatch(setMapType(SettingsUtility.defaultMapType));
         }
       }
     }
@@ -112,6 +113,7 @@ const SettingsDropdowns = ({ variant }) => {
     dispatch(resetAccessibilitySettings());
     dispatch(resetCitySettings());
     dispatch(resetOrganizationSettings());
+    dispatch(setMapType(SettingsUtility.defaultMapType));
   };
 
   const handleKeyboardSelect = (id, category, event) => {

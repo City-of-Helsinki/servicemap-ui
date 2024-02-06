@@ -22,6 +22,8 @@ class SettingsUtility {
 
   static mapSettings = ALLOWED.map;
 
+  static defaultMapType = 'servicemap';
+
   static organizationSettings = ALLOWED.organizations;
 
   static settingsCollapsed = ALLOWED.settingsCollapsed;
@@ -101,7 +103,7 @@ class SettingsUtility {
     const mapType = LocalStorageUtility.getItem('mapType');
     const settings = {
       mobility: mobility === 'null' ? null : mobility,
-      mapType: config.maps.includes(mapType) ? mapType : 'servicemap',
+      mapType: config.maps.includes(mapType) ? mapType : SettingsUtility.defaultMapType,
       colorblind: LocalStorageUtility.getItem('colorblind') === 'true',
       visuallyImpaired: LocalStorageUtility.getItem('visuallyImpaired') === 'true',
       hearingAid: LocalStorageUtility.getItem('hearingAid') === 'true',
