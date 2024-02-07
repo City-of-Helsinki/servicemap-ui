@@ -89,6 +89,14 @@ export const resetCustomPosition = () => async dispatch => {
   }));
 };
 
+export const resetUserPosition = () => async dispatch => {
+  dispatch(setUserPosition({
+    coordinates: null,
+    allowed: false,
+    addressData: null,
+  }));
+};
+
 export const changeCustomUserLocation = (
   customPosition,
   addressData,

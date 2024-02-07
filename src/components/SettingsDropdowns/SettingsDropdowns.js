@@ -19,7 +19,7 @@ import {
   toggleOrganization,
   toggleVisuallyImpaired,
 } from '../../redux/actions/settings';
-import { changeTheme, resetCustomPosition } from '../../redux/actions/user';
+import { changeTheme, resetCustomPosition, resetUserPosition } from '../../redux/actions/user';
 import { selectSettings } from '../../redux/selectors/settings';
 import { selectThemeMode } from '../../redux/selectors/user';
 import { keyboardHandler } from '../../utils';
@@ -122,6 +122,7 @@ const SettingsDropdowns = ({ variant }) => {
     dispatch(resetMobilityTreeSelections());
     dispatch(resetCustomPosition());
     dispatch(changeTheme('default'));
+    dispatch(resetUserPosition());
   };
 
   const handleKeyboardSelect = (id, category, event) => {
