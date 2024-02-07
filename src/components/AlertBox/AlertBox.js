@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Button, Typography } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import styled from '@emotion/styled';
 import { css } from '@emotion/css';
+import { useSelector } from 'react-redux';
+import { selectErrors } from '../../redux/selectors/alerts';
 import { getIcon } from '../SMIcon';
 import LocalStorageUtility from '../../utils/localStorage';
 import { focusToViewTitle } from '../../utils/accessibility';
@@ -13,16 +15,17 @@ import useLocaleText from '../../utils/useLocaleText';
 // LocalStorage key for alert message
 const lsKey = 'alertMessage';
 
-const AlertBox = ({ intl, errors }) => {
+const AlertBox = () => {
+  const intl = useIntl();
   const getLocaleText = useLocaleText();
 
   const [visible, setVisible] = useState(true);
-  const abData = errors;
+  const abData = useSelector(selectErrors)?.data;
   const savedMessage = LocalStorageUtility.getItem(lsKey);
 
   if (
     !visible
-    || !abData.length
+    || !abData?.length
     || JSON.stringify(abData[0].title) === savedMessage
   ) {
     return null;
@@ -130,22 +133,5 @@ const StyledMessageText = styled(Typography)(() => ({
 const StyledPadder = styled('div')(() => ({
   width: 100,
 }));
-
-/* TODO: Once the alert text is received properly,
-(not by inseting to code) these props should be changed to isRequired */
-
-AlertBox.propTypes = {
-  errors: PropTypes.arrayOf(
-    PropTypes.shape({
-      lead_paragraph: PropTypes.shape({
-        fi: PropTypes.string,
-      }),
-      title: PropTypes.shape({
-        fi: PropTypes.string,
-      }),
-    }),
-  ).isRequired,
-  intl: PropTypes.objectOf(PropTypes.any).isRequired,
-};
 
 export default AlertBox;

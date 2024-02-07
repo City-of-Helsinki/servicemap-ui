@@ -3,10 +3,12 @@ import React, {
   useEffect, useLayoutEffect, useRef, useState,
 } from 'react';
 import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { Typography } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
 import { useIntl } from 'react-intl';
+import { selectNavigator } from '../../../redux/selectors/general';
 import ResultList from '../ResultList';
 import PaginationComponent from '../../PaginationComponent';
 import { parseSearchParams, stringifySearchParams } from '../../../utils';
@@ -17,12 +19,12 @@ const PaginatedList = ({
   data,
   id,
   itemsPerPage,
-  navigator,
   srTitle,
   title,
   titleComponent,
   embeddedList,
 }) => {
+  const navigator = useSelector(selectNavigator);
   const location = useLocation();
   const searchPageNum = parseInt(new URLSearchParams(location.search).get('p'), 10); // Get query parameter
   const defaultPageNum = !Number.isNaN(searchPageNum) ? searchPageNum : 1;
@@ -156,7 +158,6 @@ PaginatedList.propTypes = {
   data: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)).isRequired,
   id: PropTypes.string.isRequired,
   itemsPerPage: PropTypes.number,
-  navigator: PropTypes.objectOf(PropTypes.any),
   srTitle: PropTypes.string,
   title: PropTypes.string,
   titleComponent: PropTypes.oneOf(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']).isRequired,
@@ -167,7 +168,6 @@ PaginatedList.defaultProps = {
   beforePagination: null,
   customComponent: null,
   itemsPerPage: 10,
-  navigator: null,
   srTitle: null,
   title: null,
   embeddedList: null,
