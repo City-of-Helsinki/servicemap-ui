@@ -703,7 +703,7 @@ const translations = {
   'settings.choose.cities': 'Valitse kaupunkiasetuksesi',
   'settings.choose.organization': 'Valitse palveluntarjoaja',
   'settings.map.info': 'Kartta-asetuksista voit valita sinulle parhaiten sopivan pohjakartan.',
-  'settings.reset_button.title': 'Tyhjennä kaikki asetukseni',
+  'settings.reset_button.title': 'Tyhjennä kaikki valintani',
 
   // Tools
   'tool.download': 'Lataa tiedot',

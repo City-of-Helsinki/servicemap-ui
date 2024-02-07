@@ -700,7 +700,7 @@ const translations = {
   'settings.choose.cities': 'Select your city setting',
   'settings.choose.organization': 'Valitse palveluntarjoaja', // TODO: translate
   'settings.map.info': 'You can select the background map that best suits you in the map settings.',
-  'settings.reset_button.title': 'Clear all my settings',
+  'settings.reset_button.title': 'Clear all my selections',
 
   // Tools
   'tool.download': 'Download data',
