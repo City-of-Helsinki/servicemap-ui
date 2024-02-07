@@ -5,8 +5,8 @@ import React, { useRef, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import config from '../../../config';
-import { resetMobilityTree } from '../../redux/actions/mobilityTree';
-import { resetServiceTree } from '../../redux/actions/serviceTree';
+import { resetMobilityTreeSelections } from '../../redux/actions/mobilityTree';
+import { resetServiceTreeSelections } from '../../redux/actions/serviceTree';
 import {
   resetAccessibilitySettings,
   resetCitySettings,
@@ -118,8 +118,8 @@ const SettingsDropdowns = ({ variant }) => {
     dispatch(resetOrganizationSettings());
     dispatch(setMapType(SettingsUtility.defaultMapType));
     // TODO this does not clear the checkboxes if we are in the view
-    dispatch(resetServiceTree());
-    dispatch(resetMobilityTree());
+    dispatch(resetServiceTreeSelections());
+    dispatch(resetMobilityTreeSelections());
     dispatch(resetCustomPosition());
   };
 

@@ -77,6 +77,11 @@ const ServiceTreeView = ({ intl, variant }) => {
   const [selected, setSelected] = useState(prevSelected);
   const [unitCounts, setUnitCounts] = useState([]);
 
+  useEffect(() => {
+    setOpened(prevOpened);
+    setSelected(prevSelected);
+  }, [prevSelected, prevOpened]);
+
   const checkChildNodes = (node, nodes = []) => {
     // Find all visible child nodes, so they can be selected when the parent checkbox is selected
     if (services.find(e => e.id === node.children[0])) {
@@ -319,7 +324,7 @@ const ServiceTreeView = ({ intl, variant }) => {
           level={level}
           onOpen={hasChildren ? () => handleExpand(item, isOpen) : () => null}
           simpleItem={!hasChildren}
-          defaultOpen={isOpen}
+          isOpen={isOpen}
           openButtonSrText={itemSrTitle}
           adornment={(
             <>

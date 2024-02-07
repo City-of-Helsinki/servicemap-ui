@@ -3,6 +3,6 @@ export const setMobilityTree = mobilityTree => ({
   mobilityTree,
 });
 
-export const resetMobilityTree = () => async dispatch => {
-  dispatch(setMobilityTree({ opened: [], services: [], selected: [] }));
+export const resetMobilityTreeSelections = () => async dispatch => {
+  dispatch(setMobilityTree({ opened: [], selected: [] }));
 };

@@ -3,6 +3,6 @@ export const setServiceTree = serviceTree => ({
   serviceTree,
 });
 
-export const resetServiceTree = () => async dispatch => {
-  dispatch(setServiceTree({ opened: [], services: [], selected: [] }));
+export const resetServiceTreeSelections = () => async dispatch => {
+  dispatch(setServiceTree({ opened: [], selected: [] }));
 };
