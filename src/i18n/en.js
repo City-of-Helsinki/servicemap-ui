@@ -583,6 +583,7 @@ const translations = {
   'search.tryAgainBody.keyword': 'write keywords, e.g. nature trail, Swedish day-care centre',
   'search.expand': 'Refine search',
   'search.closeExpand': 'Return to search',
+  'search.addText': 'Add',
 
   // Service
   'service': 'Service',

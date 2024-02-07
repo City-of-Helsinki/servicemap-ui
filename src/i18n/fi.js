@@ -586,6 +586,7 @@ const translations = {
   'search.tryAgainBody.keyword': 'kirjoita avainsanoja, esim. luontopolku, ruotsinkielinen päiväkoti',
   'search.expand': 'Hae tarkempia hakuehdotuksia',
   'search.closeExpand': 'Palaa hakuun',
+  'search.addText': 'Lisää',
 
   // Service
   'service': 'Palvelu',

@@ -584,6 +584,7 @@ const translations = {
   'search.tryAgainBody.keyword': 'skriv nyckelord, t.ex. naturstig, svenskt daghem',
   'search.expand': 'Precisera sökningen',
   'search.closeExpand': 'Gå tillbaka till sökningen',
+  'search.addText': 'Lägg till',
 
   // Service
   'service': 'Tjänst',

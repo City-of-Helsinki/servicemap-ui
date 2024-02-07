@@ -19,6 +19,7 @@ import {
   toggleOrganization,
   toggleVisuallyImpaired,
 } from '../../redux/actions/settings';
+import { resetCustomPosition } from '../../redux/actions/user';
 import { selectSettings } from '../../redux/selectors/settings';
 import { selectThemeMode } from '../../redux/selectors/user';
 import { keyboardHandler } from '../../utils';
@@ -119,6 +120,7 @@ const SettingsDropdowns = ({ variant }) => {
     // TODO this does not clear the checkboxes if we are in the view
     dispatch(resetServiceTree());
     dispatch(resetMobilityTree());
+    dispatch(resetCustomPosition());
   };
 
   const handleKeyboardSelect = (id, category, event) => {
