@@ -40,6 +40,7 @@ const SettingsDropdowns = ({ variant }) => {
   const highlightedOption = useRef(null);
   const themeMode = useSelector(selectThemeMode);
   const ownSettingsVariant = variant === 'ownSettings';
+  console.log(useSelector(state => state.user.position));
 
   // Configure rendered settings items
   const senseSettingList = [
@@ -117,7 +118,6 @@ const SettingsDropdowns = ({ variant }) => {
     dispatch(resetCitySettings());
     dispatch(resetOrganizationSettings());
     dispatch(setMapType(SettingsUtility.defaultMapType));
-    // TODO this does not clear the checkboxes if we are in the view
     dispatch(resetServiceTreeSelections());
     dispatch(resetMobilityTreeSelections());
     dispatch(resetCustomPosition());
