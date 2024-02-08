@@ -5,22 +5,26 @@ import {
 } from '@mui/material';
 import { ArrowBack } from '@mui/icons-material';
 import styled from '@emotion/styled';
+import { useIntl } from 'react-intl';
+import { useSelector } from 'react-redux';
+import { selectBreadcrumb, selectNavigator } from '../../redux/selectors/general';
 import { getPathName } from '../../utils/path';
 
 const BackButton = (props) => {
   const {
-    breadcrumb,
     className,
-    intl,
     onClick,
     style,
     variant,
-    navigator,
     srHidden,
     ariaLabel,
     text,
     focusVisibleClassName,
   } = props;
+  const breadcrumb = useSelector(selectBreadcrumb);
+  const navigator = useSelector(selectNavigator);
+  const intl = useIntl();
+
   // Generate dynamic text
   // Figure out correct translation id suffix
   let idSuffix = 'goToHome';
@@ -173,10 +177,7 @@ const StyledTopBackButton = styled(ButtonBase)(({ theme }) => ({
 }));
 
 BackButton.propTypes = {
-  breadcrumb: PropTypes.arrayOf(PropTypes.any).isRequired,
   className: PropTypes.string,
-  intl: PropTypes.objectOf(PropTypes.any).isRequired,
-  navigator: PropTypes.objectOf(PropTypes.any),
   style: PropTypes.objectOf(PropTypes.any),
   onClick: PropTypes.func,
   variant: PropTypes.oneOf(['container', 'icon', 'topBackButton', null]),
@@ -188,7 +189,6 @@ BackButton.propTypes = {
 
 BackButton.defaultProps = {
   className: '',
-  navigator: null,
   style: {},
   onClick: null,
   variant: null,
