@@ -40,7 +40,6 @@ const SettingsDropdowns = ({ variant }) => {
   const highlightedOption = useRef(null);
   const themeMode = useSelector(selectThemeMode);
   const ownSettingsVariant = variant === 'ownSettings';
-  console.log(useSelector(state => state.user.position));
 
   // Configure rendered settings items
   const senseSettingList = [
