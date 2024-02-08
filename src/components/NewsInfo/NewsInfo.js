@@ -2,10 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Typography } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
+import { useSelector } from 'react-redux';
+import { selectNews } from '../../redux/selectors/alerts';
 import NewsItem from './components/NewsItem/NewsItem';
 
-const NewsInfo = ({ showCount, news }) => {
-  if (!news.length) {
+const NewsInfo = ({ showCount }) => {
+  const news = useSelector(selectNews)?.data;
+  if (!news?.length) {
     return null;
   }
 
@@ -30,23 +33,6 @@ const NewsInfo = ({ showCount, news }) => {
 };
 
 NewsInfo.propTypes = {
-  news: PropTypes.arrayOf(
-    PropTypes.shape({
-      lead_paragraph: PropTypes.shape({
-        fi: PropTypes.string,
-      }),
-      title: PropTypes.shape({
-        fi: PropTypes.string,
-      }),
-      picture_url: PropTypes.string,
-      external_url_title: PropTypes.shape({
-        fi: PropTypes.string,
-      }),
-      external_url: PropTypes.shape({
-        fi: PropTypes.string,
-      }),
-    })
-  ).isRequired,
   showCount: PropTypes.number,
 };
 

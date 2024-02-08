@@ -583,6 +583,7 @@ const translations = {
   'search.tryAgainBody.keyword': 'write keywords, e.g. nature trail, Swedish day-care centre',
   'search.expand': 'Refine search',
   'search.closeExpand': 'Return to search',
+  'search.addText': 'Add',
 
   // Service
   'service': 'Service',
@@ -699,7 +700,7 @@ const translations = {
   'settings.choose.cities': 'Select your city setting',
   'settings.choose.organization': 'Valitse palveluntarjoaja', // TODO: translate
   'settings.map.info': 'You can select the background map that best suits you in the map settings.',
-  'settings.reset_button.title': 'Clear all my settings',
+  'settings.reset_button.title': 'Clear all my selections',
 
   // Tools
   'tool.download': 'Download data',

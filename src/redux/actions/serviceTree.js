@@ -1,6 +1,8 @@
-const setServiceTree = serviceTree => ({
+export const setServiceTree = serviceTree => ({
   type: 'SET_SERVICE_TREE',
   serviceTree,
 });
 
-export default setServiceTree;
+export const resetServiceTreeSelections = () => async dispatch => {
+  dispatch(setServiceTree({ opened: [], selected: [] }));
+};

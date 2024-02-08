@@ -10,6 +10,7 @@ import { useSelector } from 'react-redux';
 import styled from '@emotion/styled';
 import { selectBreadcrumb, selectNavigator } from '../../redux/selectors/general';
 import { getLocale, getPage, selectThemeMode } from '../../redux/selectors/user';
+import SettingsUtility from '../../utils/settings';
 import DrawerMenu from './DrawerMenu';
 import DesktopComponent from '../DesktopComponent';
 import MobileComponent from '../MobileComponent';
@@ -85,7 +86,7 @@ const TopBar = (props) => {
 
   const handleContrastChange = () => {
     changeTheme(themeMode === 'default' ? 'dark' : 'default');
-    setMapType(themeMode === 'default' ? 'accessible_map' : 'servicemap');
+    setMapType(themeMode === 'default' ? 'accessible_map' : SettingsUtility.defaultMapType);
   };
 
   const handleNavigation = (target, data) => {

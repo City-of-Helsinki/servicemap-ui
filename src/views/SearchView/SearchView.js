@@ -14,7 +14,7 @@ import fetchSearchResults from '../../redux/actions/search';
 import {
   activateSetting, resetAccessibilitySettings, setCities, setMapType, setOrganizations,
 } from '../../redux/actions/settings';
-import { changeCustomUserLocation } from '../../redux/actions/user';
+import { changeCustomUserLocation, resetCustomPosition } from '../../redux/actions/user';
 import { selectBounds, selectMapRef, selectNavigator } from '../../redux/selectors/general';
 import { getOrderedSearchResultData } from '../../redux/selectors/results';
 import {
@@ -215,7 +215,7 @@ const SearchView = () => {
         address,
       ));
     } else {
-      dispatch(changeCustomUserLocation(null));
+      dispatch(resetCustomPosition());
     }
   };
 

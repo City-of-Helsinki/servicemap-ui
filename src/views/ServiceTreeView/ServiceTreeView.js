@@ -8,8 +8,8 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import config from '../../../config';
 import { SMAccordion, SMButton, TitleBar } from '../../components';
-import setMobilityTree from '../../redux/actions/mobilityTree';
-import setServiceTree from '../../redux/actions/serviceTree';
+import { setMobilityTree } from '../../redux/actions/mobilityTree';
+import { setServiceTree } from '../../redux/actions/serviceTree';
 import { selectNavigator } from '../../redux/selectors/general';
 import { selectSelectedCities, selectSelectedOrganizations } from '../../redux/selectors/settings';
 import {
@@ -76,6 +76,11 @@ const ServiceTreeView = ({ intl, variant }) => {
   const [opened, setOpened] = useState(prevOpened);
   const [selected, setSelected] = useState(prevSelected);
   const [unitCounts, setUnitCounts] = useState([]);
+
+  useEffect(() => {
+    setOpened(prevOpened);
+    setSelected(prevSelected);
+  }, [prevSelected, prevOpened]);
 
   const checkChildNodes = (node, nodes = []) => {
     // Find all visible child nodes, so they can be selected when the parent checkbox is selected
@@ -319,7 +324,7 @@ const ServiceTreeView = ({ intl, variant }) => {
           level={level}
           onOpen={hasChildren ? () => handleExpand(item, isOpen) : () => null}
           simpleItem={!hasChildren}
-          defaultOpen={isOpen}
+          isOpen={isOpen}
           openButtonSrText={itemSrTitle}
           adornment={(
             <>

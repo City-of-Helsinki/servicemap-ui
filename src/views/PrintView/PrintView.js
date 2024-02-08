@@ -12,6 +12,7 @@ import { useLocation } from 'react-router-dom';
 import paths from '../../../config/paths';
 import { SMButton } from '../../components';
 import { selectMapRef } from '../../redux/selectors/general';
+import SettingsUtility from '../../utils/settings';
 import useLocaleText from '../../utils/useLocaleText';
 import CreateMap from '../MapView/utils/createMap';
 import { NumberCircleMaker } from '../MapView/utils/drawIcon';
@@ -184,7 +185,7 @@ const PrintView = ({ togglePrintView }) => {
   };
 
   const createMap = () => {
-    const mapOptions = CreateMap('servicemap', 'fi');
+    const mapOptions = CreateMap(SettingsUtility.defaultMapType, 'fi');
     const { crs, options } = mapOptions;
     const mapCenter = map.getCenter();
     const mapZoom = map.getZoom();

@@ -584,6 +584,7 @@ const translations = {
   'search.tryAgainBody.keyword': 'skriv nyckelord, t.ex. naturstig, svenskt daghem',
   'search.expand': 'Precisera sökningen',
   'search.closeExpand': 'Gå tillbaka till sökningen',
+  'search.addText': 'Lägg till',
 
   // Service
   'service': 'Tjänst',
@@ -700,7 +701,7 @@ const translations = {
   'settings.choose.cities': 'Välj stadsinställningar',
   'settings.choose.organization': 'Valitse palveluntarjoaja', // TODO: translate
   'settings.map.info': 'I kartinställningarna kan du välja det kartunderlag som passar dig bäst.',
-  'settings.reset_button.title': 'Rensa alla mina inställningar',
+  'settings.reset_button.title': 'Rensa alla mina val',
 
   // Tools
   'tool.download': 'Exportera',
