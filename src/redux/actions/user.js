@@ -1,4 +1,3 @@
-import LocalStorageUtility from '../../utils/localStorage';
 import fetchAddress from '../../views/MapView/utils/fetchAddress';
 
 export const setLocale = locale => ({
@@ -44,7 +43,8 @@ export const setCurrentPage = page => async (dispatch) => {
 };
 
 export const changeTheme = theme => async (dispatch) => {
-  LocalStorageUtility.saveItem('theme', theme);
+  // TODO dark mode is broken after refresh
+  // LocalStorageUtility.saveItem('theme', theme);
   dispatch(setTheme(theme));
 };
 

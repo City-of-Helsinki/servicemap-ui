@@ -14,7 +14,6 @@ import ac from 'abortcontroller-polyfill';
 import rootReducer from '../src/redux/rootReducer';
 import App from '../src/App';
 import SettingsUtility from '../src/utils/settings';
-import LocalStorageUtility from '../src/utils/localStorage';
 import favicon from '../src/assets/icons/favicon.ico';
 import config from '../config';
 import createEmotionCache from '../server/createEmotionCache';
@@ -48,7 +47,9 @@ const getPreloadedState = () => {
   state.settings = settings;
 
   // Set correct theme from localStorage
-  const theme = LocalStorageUtility.getItem('theme');
+  // TODO dark mode is broken after refresh
+  // const theme = LocalStorageUtility.getItem('theme');
+  const theme = 'default';
   if (theme) {
     state.user.theme = theme;
   }
