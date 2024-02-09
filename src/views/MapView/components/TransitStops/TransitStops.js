@@ -72,6 +72,19 @@ const TransitStops = ({ mapObject }) => {
       });
   };
 
+  const loadBikeStations = () => {
+    if (!bikeStationsLoaded && showTransitStops()) {
+      setBikeStationsLoaded(true);
+      // Load bike stations only once as all the bike stations are fetched.
+      fetchBikeStations()
+        .then(stations => {
+          const list = stations?.data?.bikeRentalStations || [];
+          setRentalBikeStations(list);
+          setVisibleBikeStations(showTransitStops() ? list : []);
+        });
+    }
+  };
+
   const clearTransitStops = () => {
     setTransitStops([]);
   };
@@ -79,6 +92,7 @@ const TransitStops = ({ mapObject }) => {
   const handleTransit = () => {
     if (showTransitStops()) {
       fetchTransitStops();
+      loadBikeStations();
       setVisibleBikeStations(rentalBikeStations);
     } else {
       if (transitStops.length) {
@@ -91,15 +105,7 @@ const TransitStops = ({ mapObject }) => {
   };
 
   useEffect(() => {
-    if (!bikeStationsLoaded) {
-      fetchBikeStations()
-        .then((stations) => {
-          const list = stations?.data?.bikeRentalStations || [];
-          if (list?.length) setRentalBikeStations(list);
-          setBikeStationsLoaded(true);
-          setVisibleBikeStations(showTransitStops() ? list : []);
-        });
-    }
+    loadBikeStations();
   }, []);
 
   const getTransitIcon = (type) => {
