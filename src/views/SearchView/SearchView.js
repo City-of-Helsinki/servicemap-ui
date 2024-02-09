@@ -340,7 +340,7 @@ const SearchView = () => {
     navigator.setParameter('map', mapType);
   },
   [
-    navigator, selectedCities, selectedOrganizationIds, selectedAccessibilitySettings,
+    navigator, embed, selectedCities, selectedOrganizationIds, selectedAccessibilitySettings,
     bounds, customPositionAddress, mapType,
   ],
   );
