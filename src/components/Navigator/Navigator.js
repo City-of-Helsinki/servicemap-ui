@@ -11,6 +11,12 @@ import { servicemapTrackPageView } from '../../utils/tracking';
 class Navigator extends React.Component {
   unlisten = null;
 
+  /**
+   * To prevent situation where setting an url param triggers history.listen callback resulting
+   * in multiple sent "stats" calls
+   */
+  prevPathName = null;
+
   componentDidMount() {
     const {
       history,
@@ -18,15 +24,14 @@ class Navigator extends React.Component {
       senses,
     } = this.props;
 
+    this.prevPathName = history.location.pathname;
     // Initial pageView tracking on first load
     this.trackPageView({ mobility, senses });
     if (this.unlisten) {
       this.unlisten();
     }
     // Add event listener to listen history changes and track new pages
-    this.unlisten = history.listen(() => {
-      this.trackPageView({ mobility, senses });
-    });
+    this.unlisten = history.listen(this.historyCallBack(mobility, senses));
   }
 
   // We need to update history tracking event when settings change
@@ -40,9 +45,7 @@ class Navigator extends React.Component {
     if (this.unlisten) {
       this.unlisten();
     }
-    this.unlisten = history.listen(() => {
-      this.trackPageView({ mobility, senses });
-    });
+    this.unlisten = history.listen(this.historyCallBack(mobility, senses));
   }
 
   componentWillUnmount() {
@@ -229,6 +232,16 @@ class Navigator extends React.Component {
 
     url.searchParams.delete(param);
     history.replace(url.pathname + url.search);
+  }
+
+  historyCallBack(mobility, senses) {
+    return (a) => {
+      if (this.prevPathName === a.pathname) {
+        return;
+      }
+      this.prevPathName = a.pathname;
+      this.trackPageView({ mobility, senses });
+    };
   }
 
   render = () => null;
