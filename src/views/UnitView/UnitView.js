@@ -347,7 +347,7 @@ const UnitView = (props) => {
           </Container>
 
           {/* View Components */}
-          <ContactInfo unit={unit} userLocation={userLocation} />
+          <ContactInfo unitId={unit.id} userLocation={userLocation} />
           <SocialMediaLinks unit={unit} />
           <UnitDataList
             listLength={3}

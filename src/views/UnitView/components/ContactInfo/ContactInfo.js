@@ -1,12 +1,15 @@
 import styled from '@emotion/styled';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, useIntl } from 'react-intl';
 import {
   ButtonBase, Divider, ListItem, Typography,
 } from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 import config from '../../../../../config';
+import { fetchSelectedUnit } from '../../../../redux/actions/selectedUnit';
+import { getSelectedUnit } from '../../../../redux/selectors/selectedUnit';
 import InfoList from '../InfoList';
 import unitSectionFilter from '../../utils/unitSectionFilter';
 import { getAddressFromUnit } from '../../../../utils/address';
@@ -14,11 +17,29 @@ import useLocaleText from '../../../../utils/useLocaleText';
 import { parseSearchParams, stringifySearchParams } from '../../../../utils';
 import { SMAccordion } from '../../../../components';
 
-const ContactInfo = ({ unit, userLocation, headingLevel }) => {
+const ContactInfo = ({ unitId, userLocation, headingLevel }) => {
+  const dispatch = useDispatch();
   const intl = useIntl();
   const history = useHistory();
   const location = useLocation();
   const getLocaleText = useLocaleText();
+  const stateUnit = useSelector(getSelectedUnit);
+  const [unit, setUnit] = useState(null);
+
+  useEffect(() => {
+    if (unitId && unitId === stateUnit?.id) {
+      setUnit(stateUnit);
+    } else if (unitId) {
+      setUnit(null);
+      // Load all necessary information here
+      dispatch(fetchSelectedUnit(unitId, unit => setUnit(unit)));
+    } else {
+      setUnit(null);
+    }
+  }, [unitId, stateUnit]);
+  if (!unit) {
+    return null;
+  }
   const additionalEntrances = unit?.entrances?.filter(entrance => !entrance.is_main_entrance);
   const subgroupContacts = unit?.connections?.filter(c => c.section_type === 'SUBGROUP');
 
@@ -294,7 +315,7 @@ const StyledSubGroupItem = styled.div(({ theme }) => ({
 }));
 
 ContactInfo.propTypes = {
-  unit: PropTypes.objectOf(PropTypes.any).isRequired,
+  unitId: PropTypes.number.isRequired,
   userLocation: PropTypes.objectOf(PropTypes.any),
   headingLevel: PropTypes.string,
 };

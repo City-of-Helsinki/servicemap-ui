@@ -129,7 +129,7 @@ const EmbedLayout = () => {
       onClose={closeDialog}
       open={!!selectedUnitData}
       title={getLocaleText(selectedUnitData.name)}
-      content={(<ContactInfo unit={selectedUnitData} headingLevel="h3" />)}
+      content={(<ContactInfo unitId={selectedUnitData.id} headingLevel="h3" />)}
       actions={(
         <>
           <SMButton // Show on map button
