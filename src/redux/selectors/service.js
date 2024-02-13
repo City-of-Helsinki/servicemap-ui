@@ -7,6 +7,7 @@ import { selectSelectedCities, selectSelectedOrganizations } from './settings';
 
 const getUnits = state => state.service.data;
 export const selectServiceCurrent = state => state.service.current;
+export const selectServiceIsFetching = state => state.service.isFetching;
 
 export const getServiceUnits = createSelector(
   [getUnits, selectSelectedCities, selectSelectedOrganizations, getSortingParameters],

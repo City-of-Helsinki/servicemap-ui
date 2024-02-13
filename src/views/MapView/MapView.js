@@ -14,7 +14,9 @@ import { Loading } from '../../components';
 import { setBounds } from '../../redux/actions/map';
 import { selectDistrictUnitFetch } from '../../redux/selectors/district';
 import { selectNavigator } from '../../redux/selectors/general';
+import { selectResultsIsFetching } from '../../redux/selectors/results';
 import { getSelectedUnitEvents } from '../../redux/selectors/selectedUnit';
+import { selectServiceIsFetching } from '../../redux/selectors/service';
 import {
   selectMapType, selectSelectedCities, selectSelectedOrganizationIds,
 } from '../../redux/selectors/settings';
@@ -82,7 +84,6 @@ const EmbeddedActions = () => {
 const MapView = (props) => {
   const {
     location,
-    unitsLoading,
     hideUserMarker,
     highlightedUnit,
     highlightedDistrict,
@@ -113,6 +114,8 @@ const MapView = (props) => {
   const getAddressNavigatorParams = useNavigationParams();
   const districtUnitsFetch = useSelector(selectDistrictUnitFetch);
   const statisticalDistrictFetch = useSelector(getStatisticalDistrictUnitsState);
+  const serviceUnitsIsFetching = useSelector(selectServiceIsFetching);
+  const searchUnitsIsFetching = useSelector(selectResultsIsFetching);
   const districtsFetching = useSelector(state => !!state.districts.districtsFetching?.length);
   const cities = useSelector(selectSelectedCities);
   const orgIds = useSelector(selectSelectedOrganizationIds);
@@ -262,7 +265,7 @@ const MapView = (props) => {
 
     const showLoadingScreen = statisticalDistrictFetch.isFetching
       || districtViewFetching
-      || (embedded && unitsLoading);
+      || (embedded && (serviceUnitsIsFetching || searchUnitsIsFetching));
     let showLoadingReducer = null;
     let hideLoadingNumbers = false;
     if (statisticalDistrictFetch.isFetching) {
@@ -493,7 +496,6 @@ MapView.propTypes = {
   location: PropTypes.objectOf(PropTypes.any).isRequired,
   findUserLocation: PropTypes.func.isRequired,
   setMapRef: PropTypes.func.isRequired,
-  unitsLoading: PropTypes.bool,
   userLocation: PropTypes.objectOf(PropTypes.any),
   measuringMode: PropTypes.bool.isRequired,
   toggleSidebar: PropTypes.func,
@@ -506,7 +508,6 @@ MapView.defaultProps = {
   highlightedDistrict: null,
   highlightedUnit: null,
   isMobile: false,
-  unitsLoading: false,
   toggleSidebar: null,
   sidebarHidden: false,
   userLocation: null,
