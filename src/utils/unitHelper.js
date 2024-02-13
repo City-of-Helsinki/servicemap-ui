@@ -134,7 +134,7 @@ class UnitHelper {
     const id = typeof unit === 'number' ? unit : unit.id;
     const embeded = isEmbed();
     if (embeded) {
-      navigator.setParameter('selectedUnit', unit.id);
+      navigator.setParameter('selectedUnit', id);
       return;
     }
     const action = paths.unit.regex.test(window.location.href)
