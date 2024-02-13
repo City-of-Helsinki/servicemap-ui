@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import config from '../../../config';
 import { breadcrumbPop, breadcrumbPush, breadcrumbReplace } from '../../redux/actions/breadcrumb';
 import { selectTracker } from '../../redux/selectors/general';
+import { selectResultsPreviousSearch } from '../../redux/selectors/results';
 import { generatePath, isEmbed } from '../../utils/path';
 import SettingsUtility from '../../utils/settings';
 import { servicemapTrackPageView } from '../../utils/tracking';
@@ -269,11 +270,10 @@ Navigator.defaultProps = {
 const mapStateToProps = (state) => {
   const {
     breadcrumb,
-    searchResults,
     settings,
   } = state;
 
-  const { previousSearch } = searchResults;
+  const previousSearch = selectResultsPreviousSearch(state);
   const tracker = selectTracker(state);
   return {
     breadcrumb,

@@ -3,6 +3,8 @@ import LinkedEventsAPI from '../../utils/newFetch/LinkedEventsAPI';
 import ServiceMapAPI from '../../utils/newFetch/ServiceMapAPI';
 import optionsToSearchQuery from '../../utils/search';
 import { getLocaleString } from '../selectors/locale';
+import { selectSearchResults } from '../selectors/results';
+import { getLocale } from '../selectors/user';
 import { searchResults } from './fetchDataActions';
 import { isEmbed } from '../../utils/path';
 
@@ -10,7 +12,6 @@ import { isEmbed } from '../../utils/path';
 const {
   isFetching, fetchSuccess, fetchProgressUpdateConcurrent,
 } = searchResults;
-
 
 const smFetch = (dispatch, options) => {
   let results = [];
@@ -60,8 +61,8 @@ const smFetch = (dispatch, options) => {
 
 
 const fetchSearchResults = (options = null) => async (dispatch, getState) => {
-  const searchFetchState = getState().searchResults;
-  const { locale } = getState().user;
+  const searchFetchState = selectSearchResults(getState());
+  const locale = getLocale(getState());
 
   const searchQuery = optionsToSearchQuery(options);
 

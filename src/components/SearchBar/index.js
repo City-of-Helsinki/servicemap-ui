@@ -1,3 +1,5 @@
-import SearchBarComponent from './SearchBarComponent';
+import SearchBar from './SearchBarComponent';
 
-export default SearchBarComponent;
+export {
+  SearchBar,
+};

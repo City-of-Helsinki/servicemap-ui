@@ -16,7 +16,11 @@ import {
 } from '../../redux/actions/settings';
 import { changeCustomUserLocation, resetCustomPosition } from '../../redux/actions/user';
 import { selectBounds, selectMapRef, selectNavigator } from '../../redux/selectors/general';
-import { getOrderedSearchResultData } from '../../redux/selectors/results';
+import {
+  getOrderedSearchResultData,
+  selectResultsData,
+  selectSearchResults,
+} from '../../redux/selectors/results';
 import {
   selectMapType,
   selectSelectedAccessibilitySettings,
@@ -41,8 +45,8 @@ const focusClass = 'TabListFocusTarget';
 const SearchView = () => {
   const [analyticsSent, setAnalyticsSent] = useState(null);
   const orderedData = useSelector(getOrderedSearchResultData);
-  const unorderedSearchResults = useSelector(state => state.searchResults.data);
-  const searchFetchState = useSelector(state => state.searchResults);
+  const unorderedSearchResults = useSelector(selectResultsData);
+  const searchFetchState = useSelector(selectSearchResults);
   const isRedirectFetching = useSelector(state => state.redirectService.isFetching);
   const selectedCities = useSelector(selectSelectedCities);
   const selectedOrganizationIds = useSelector(selectSelectedOrganizationIds);

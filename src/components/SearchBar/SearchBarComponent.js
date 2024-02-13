@@ -32,7 +32,7 @@ import { getFullHistory } from './previousSearchData';
 
 let blurTimeout = null;
 
-const SearchBarComponent = ({
+const SearchBar = ({
   background,
   className,
   hideBackButton,
@@ -631,7 +631,7 @@ const StyledMobileContainer = styled('div')(({
   return styles;
 });
 
-SearchBarComponent.propTypes = {
+SearchBar.propTypes = {
   background: PropTypes.oneOf(['default', 'none']),
   className: PropTypes.string,
   header: PropTypes.bool,
@@ -640,7 +640,7 @@ SearchBarComponent.propTypes = {
   margin: PropTypes.bool,
 };
 
-SearchBarComponent.defaultProps = {
+SearchBar.defaultProps = {
   background: 'default',
   className: '',
   header: false,
@@ -649,4 +649,4 @@ SearchBarComponent.defaultProps = {
   margin: false,
 };
 
-export default SearchBarComponent;
+export default SearchBar;

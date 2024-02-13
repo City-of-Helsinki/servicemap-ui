@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import { selectAddressUnits } from '../redux/selectors/address';
-import { getOrderedAndFilteredSearchResultData } from '../redux/selectors/results';
+import { getFilteredSearchResultData } from '../redux/selectors/results';
 import { getSelectedUnit } from '../redux/selectors/selectedUnit';
 import { getServiceUnits } from '../redux/selectors/service';
 import { getPage } from '../redux/selectors/user';
@@ -14,7 +14,7 @@ const useDownloadData = () => {
   const page = useSelector(getPage);
   switch (page) {
     case 'search':
-      selector = getOrderedAndFilteredSearchResultData;
+      selector = getFilteredSearchResultData;
       break;
     case 'unit':
       selector = getSelectedUnit;
