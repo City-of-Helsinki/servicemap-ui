@@ -115,3 +115,15 @@ const loadingIndicator = Selector('[data-sm="LoadingIndicator"]');
       .expect(district).ok('Division area should be rendered to map');
   });
 
+const testOodiContactInfo = async (t) => {
+  await t
+    .expect(Selector('[data-sm="address-info"]').textContent).contains('Töölönlahdenkatu')
+    .expect(Selector('[data-sm="phone-info"]').textContent).contains('310 85000')
+    .expect(Selector('[data-sm="email-info"]').textContent).contains('Oodi@hel.fi')
+    .expect(Selector('[data-sm="website-info"]').textContent).contains('Kotisivu (uusi välilehti)');
+};
+
+test.only.page`${getBaseUrl()}/fi/embed/search?service_node=345&city=helsinki&organization=83e74666-0836-4c1d-948a-4b34a8b90301&selectedUnit=51342`
+('Should show contact info with service node search', testOodiContactInfo);
+test.only.page`${getBaseUrl()}/fi/embed/search?q=oodi&city=helsinki&organization=83e74666-0836-4c1d-948a-4b34a8b90301&selectedUnit=51342`
+('Should show contact info with text search', testOodiContactInfo);

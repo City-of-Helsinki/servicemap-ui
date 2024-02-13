@@ -113,6 +113,7 @@ const InfoList = ({
                     srText={srText}
                     handleItemClick={() => handleItemClick(item.value)}
                     divider={!item.noDivider}
+                    dataSm={item.dataSm}
                   />
                 );
               }

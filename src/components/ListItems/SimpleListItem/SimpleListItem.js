@@ -24,6 +24,7 @@ const SimpleListItem = (props) => {
     srText,
     className,
     id,
+    dataSm,
   } = props;
   const isLinkOrButton = button || link;
   const theme = useTheme();
@@ -75,6 +76,7 @@ const SimpleListItem = (props) => {
         }}
         selected={selected}
         id={id}
+        data-sm={dataSm}
       >
         {
           icon
@@ -145,6 +147,7 @@ SimpleListItem.propTypes = {
   selected: PropTypes.bool,
   className: PropTypes.string,
   id: PropTypes.string,
+  dataSm: PropTypes.string,
 };
 
 SimpleListItem.defaultProps = {
@@ -159,4 +162,5 @@ SimpleListItem.defaultProps = {
   selected: false,
   className: null,
   id: null,
+  dataSm: null,
 };

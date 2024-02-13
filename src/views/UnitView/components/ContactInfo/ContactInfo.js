@@ -48,16 +48,19 @@ const ContactInfo = ({ unitId, userLocation, headingLevel }) => {
     type: 'ADDRESS',
     value: unit.street_address ? getAddressFromUnit(unit, getLocaleText, intl) : intl.formatMessage({ id: 'unit.address.missing' }),
     noDivider: additionalEntrances?.length,
+    dataSm: 'address-info',
   };
   const otherAddressData = unit.connections?.find(x => x.section_type === 'OTHER_ADDRESS');
   const phone = {
     type: 'PHONE',
     value: unit.phone ? { phone: unit.phone } : intl.formatMessage({ id: 'unit.phone.missing' }),
     noDivider: showCallInfo || (subgroupContacts && subgroupContacts.length > 0), // TODO: fix this hard coded value when unit data returns call charge boolean
+    dataSm: 'phone-info',
   };
   const email = {
     type: 'EMAIL',
     value: unit.email ? { email: unit.email } : intl.formatMessage({ id: 'unit.email.missing' }),
+    dataSm: 'email-info',
   };
   const website = {
     type: 'LINK',
@@ -65,6 +68,7 @@ const ContactInfo = ({ unitId, userLocation, headingLevel }) => {
       www: unit.www,
       name: intl.formatMessage({ id: 'unit.homepage' }),
     } : intl.formatMessage({ id: 'unit.homepage.missing' }),
+    dataSm: 'website-info',
   };
 
   const addNewTabSuffix = (text) => `${text} ${intl.formatMessage({ id: 'opens.new.tab' })}`;
