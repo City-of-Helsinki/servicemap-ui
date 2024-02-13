@@ -1,17 +1,18 @@
 import { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
+import { getHighlightedDistrict } from '../../redux/selectors/district';
+import { selectMapRef } from '../../redux/selectors/general';
 import fetchDivisionDistrict from './fetchDivisionDistrict';
 import { focusDistrict } from '../MapView/utils/mapActions';
 import { parseSearchParams } from '../../utils';
+import fetchSearchResults from '../../redux/actions/search';
+import { setHighlightedDistrict } from '../../redux/actions/district';
 
-const DivisionView = ({
-  fetchSearchResults,
-  highlightedDistrict,
-  location,
-  map,
-  match,
-  setHighlightedDistrict,
-}) => {
+const DivisionView = ({ location, match }) => {
+  const dispatch = useDispatch();
+  const highlightedDistrict = useSelector(getHighlightedDistrict);
+  const map = useSelector(selectMapRef);
   useEffect(() => {
     const { area, city } = match.params;
 
@@ -36,10 +37,10 @@ const DivisionView = ({
     }
 
     if (options) {
-      fetchSearchResults(options);
+      dispatch(fetchSearchResults(options));
       fetchDivisionDistrict(options.division)
         .then((data) => {
-          setHighlightedDistrict(data[0]);
+          dispatch(setHighlightedDistrict(data[0]));
         });
     }
   }, []);
@@ -57,20 +58,10 @@ const DivisionView = ({
   return null;
 };
 
-
 export default DivisionView;
 
 // Typechecking
 DivisionView.propTypes = {
-  fetchSearchResults: PropTypes.func.isRequired,
-  highlightedDistrict: PropTypes.objectOf(PropTypes.any),
   location: PropTypes.objectOf(PropTypes.any).isRequired,
-  map: PropTypes.objectOf(PropTypes.any),
   match: PropTypes.objectOf(PropTypes.any).isRequired,
-  setHighlightedDistrict: PropTypes.func.isRequired,
-};
-
-DivisionView.defaultProps = {
-  highlightedDistrict: null,
-  map: null,
 };

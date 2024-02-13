@@ -3,6 +3,7 @@ import { withRouter } from 'react-router-dom';
 import { setMapRef } from '../../redux/actions/map';
 import { findUserLocation } from '../../redux/actions/user';
 import { getHighlightedDistrict } from '../../redux/selectors/district';
+import { selectResultsIsFetching } from '../../redux/selectors/results';
 import { getSelectedUnit } from '../../redux/selectors/selectedUnit';
 import MapView from './MapView';
 
@@ -12,7 +13,7 @@ const mapStateToProps = (state) => {
     user, measuringMode,
   } = state;
   const serviceUnitsLoading = state.service.isFetching;
-  const searchUnitsLoading = state.searchResults.isFetching;
+  const searchUnitsLoading = selectResultsIsFetching(state);
   const highlightedDistrict = getHighlightedDistrict(state);
   const highlightedUnit = getSelectedUnit(state);
   const {

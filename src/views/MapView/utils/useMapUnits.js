@@ -8,7 +8,10 @@ import {
   getFilteredSubDistrictUnits,
   selectParkingUnitUnits,
 } from '../../../redux/selectors/district';
-import { getOrderedSearchResultData } from '../../../redux/selectors/results';
+import {
+  getOrderedSearchResultData,
+  selectResultsIsFetching,
+} from '../../../redux/selectors/results';
 import { getSelectedUnit } from '../../../redux/selectors/selectedUnit';
 import { getServiceUnits } from '../../../redux/selectors/service';
 import {
@@ -107,7 +110,7 @@ const useMapUnits = () => {
   const highlightedUnit = useSelector(getSelectedUnit);
   const locale = useSelector(getLocale);
 
-  const searchUnitsLoading = useSelector(state => state.searchResults.isFetching);
+  const searchUnitsLoading = useSelector(selectResultsIsFetching);
   const serviceUnitsLoading = useSelector(state => state.service.isFetching);
   const unitsLoading = searchUnitsLoading || serviceUnitsLoading;
 

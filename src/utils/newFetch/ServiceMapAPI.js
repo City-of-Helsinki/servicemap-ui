@@ -80,10 +80,14 @@ export default class ServiceMapAPI extends HttpClient {
       page_size: 200,
       only: onlyValues,
       geometry: true,
-      include: 'service_nodes,services,accessibility_properties,department,root_department',
       ...idOptions,
       ...additionalOptions,
+      include: 'service_nodes,services,accessibility_properties,department,root_department'.split(','),
     };
+
+    if (additionalOptions.include) {
+      options.include.push(...additionalOptions.include);
+    }
 
     if (onlyCount) {
       return this.getCount('unit', options);
