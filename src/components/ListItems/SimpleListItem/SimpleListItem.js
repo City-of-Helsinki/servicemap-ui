@@ -30,7 +30,6 @@ const SimpleListItem = (props) => {
 
   const listItemRootClass = css({
     minHeight: '3.5rem',
-    padding: theme.spacing(1),
     color: '#000',
     '&.dark': {
       paddingLeft: 26,
