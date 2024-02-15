@@ -13,6 +13,7 @@ import React, { useEffect, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
+import { selectResultsPreviousSearch } from '../../../redux/selectors/results';
 import { getSelectedUnit } from '../../../redux/selectors/selectedUnit';
 import { selectServiceCurrent } from '../../../redux/selectors/service';
 import { getPage } from '../../../redux/selectors/user';
@@ -32,7 +33,7 @@ const DownloadDialog = ({
   const page = useSelector(getPage);
   const selectedUnit = useSelector(getSelectedUnit);
   const service = useSelector(selectServiceCurrent);
-  const searchQuery = useSelector(state => state.searchResults.previousSearch);
+  const searchQuery = useSelector(selectResultsPreviousSearch);
   const intl = useIntl();
   const icon = getIcon('serviceDark');
   const location = useLocation();

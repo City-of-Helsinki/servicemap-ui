@@ -8,10 +8,6 @@ const translations = {
   'app.navigation.home': 'Hem',
   'app.navigation.settings': 'Inställningar',
 
-  'accept.settings.dialog.description': 'Du kan öppna uppgifterna antigen med tillgänglighetsinställningar eller utan begränsningar.',
-  'accept.settings.dialog.title': 'Se verksamhetsstället med tillgänglighetsinställningar',
-  'accept.settings.dialog.none': 'Inga särskilda tillgänglighetsinställningar',
-
   // Accessibility
   'accessibility': 'Tillgänglighet',
   'accessibility.info': 'Tillgänglighetsuppgifter',
@@ -119,8 +115,8 @@ const translations = {
   'area.list.lower_comprehensive_school_district_sv': 'Svenskt grundskoleområde, lågklasserna',
   'area.list.upper_comprehensive_school_district_fi': 'Finskt grundskoleområde, högklasserna',
   'area.list.upper_comprehensive_school_district_sv': 'Svenskt grundskoleområde, högklasserna',
-  'area.list.preschool_education_fi': 'Finskt småbarnspedagogikområde',
-  'area.list.preschool_education_sv': 'Svenskt småbarnspedagogikområde',
+  'area.list.preschool_education_fi': 'Finskt förskoleundervisningsområde',
+  'area.list.preschool_education_sv': 'Svenskt förskoleundervisningsområde',
   'area.list.nature_reserve': 'Naturskyddsområden',
   'area.list.resident_parking_zone': 'Invånarparkeringsområden',
   'area.list.neighborhood.plural': 'Stadsdelar',
@@ -135,8 +131,8 @@ const translations = {
   'area.list.lower_comprehensive_school_district_sv.plural': 'Svenskt grundskoleområden, lågklasserna',
   'area.list.upper_comprehensive_school_district_fi.plural': 'Finskt grundskoleområden, högklasserna',
   'area.list.upper_comprehensive_school_district_sv.plural': 'Svenskt grundskoleområden, högklasserna',
-  'area.list.preschool_education_fi.plural': 'Finskt småbarnspedagogikområden',
-  'area.list.preschool_education_sv.plural': 'Svenskt småbarnspedagogikområden',
+  'area.list.preschool_education_fi.plural': 'Finskt förskoleundervisningsområden',
+  'area.list.preschool_education_sv.plural': 'Svenskt förskoleundervisningsområden',
   'area.list.nature_reserve.plural': 'Naturskyddsområden',
   'area.list.resident_parking_zone.plural': 'Invånarparkeringsområden',
   'area.list.parkingSpaces': 'Parkeringsplatser',
@@ -408,11 +404,8 @@ const translations = {
 
   'link.settings.dialog.title': 'Dela länken till verksamhetsstället',
   'link.settings.dialog.tooltip': 'Kopierades till klippbordet',
-  'link.settings.dialog.radio.label': 'Länkens innehåll',
   'link.settings.dialog.tooltip.aria': 'Kopiera sidans länk till klippbordet',
   'link.settings.dialog.tooltip.aria.a11y': 'Kopiera sidans länk med tillgänglighetsinställningar till klippbordet',
-  'link.settings.dialog.subtitle': 'Dela länken med tillgänglighetsinställningar',
-  'link.settings.dialog.description': 'Tillgänglighetsinställningarna påverkar det visade verksamhetsställets tillgänglighetsuppgifter och kartans utseende.',
   'link.settings.dialog.buttons.action': 'Kopiera till klippbordet',
 
   // Map
@@ -591,6 +584,7 @@ const translations = {
   'search.tryAgainBody.keyword': 'skriv nyckelord, t.ex. naturstig, svenskt daghem',
   'search.expand': 'Precisera sökningen',
   'search.closeExpand': 'Gå tillbaka till sökningen',
+  'search.addText': 'Lägg till',
 
   // Service
   'service': 'Tjänst',
@@ -691,7 +685,7 @@ const translations = {
   'settings.map.title': 'Kartunderlag',
   'settings.map.servicemap': 'Servicekarta',
   'settings.map.ortographic': 'Flygbild',
-  'settings.map.guideMap': 'Guidekarta',
+  'settings.map.guidemap': 'Guidekarta',
   'settings.map.accessible_map': 'Karta med stor kontrast',
   'settings.3dmap.title': '3D-stadsmodellen',
   'settings.3dmap.info': 'I stadsinformationsmodellen kan du förutom byggnader och uppgifter om dem även granska markytamodellen, dvs. terrängens former. Använd länken nedan för att titta på stadsmodellen.',
@@ -707,6 +701,7 @@ const translations = {
   'settings.choose.cities': 'Välj stadsinställningar',
   'settings.choose.organization': 'Valitse palveluntarjoaja', // TODO: translate
   'settings.map.info': 'I kartinställningarna kan du välja det kartunderlag som passar dig bäst.',
+  'settings.reset_button.title': 'Rensa alla mina val',
 
   // Tools
   'tool.download': 'Exportera',

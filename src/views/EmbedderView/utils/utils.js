@@ -19,7 +19,7 @@ export const getEmbedURL = (url, params = {}) => {
       return acc;
     }, []) : [];
 
-  if (params.map && params.map !== 'servicemap') {
+  if (params.map) {
     data.map = params.map;
   }
   if (cities.length > 0) {

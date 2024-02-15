@@ -1,4 +1,3 @@
-import LocalStorageUtility from '../../utils/localStorage';
 import fetchAddress from '../../views/MapView/utils/fetchAddress';
 
 export const setLocale = locale => ({
@@ -44,7 +43,8 @@ export const setCurrentPage = page => async (dispatch) => {
 };
 
 export const changeTheme = theme => async (dispatch) => {
-  LocalStorageUtility.saveItem('theme', theme);
+  // TODO dark mode is broken after refresh
+  // LocalStorageUtility.saveItem('theme', theme);
   dispatch(setTheme(theme));
 };
 
@@ -81,6 +81,22 @@ export const findUserLocation = () => async (dispatch) => {
   navigator.geolocation.getCurrentPosition(success, error, { enableHighAccuracy: true });
 };
 
+export const resetCustomPosition = () => async dispatch => {
+  dispatch(setCustomPosition({
+    coordinates: null,
+    hideMarker: false,
+    addressData: null,
+  }));
+};
+
+export const resetUserPosition = () => async dispatch => {
+  dispatch(setUserPosition({
+    coordinates: null,
+    allowed: false,
+    addressData: null,
+  }));
+};
+
 export const changeCustomUserLocation = (
   customPosition,
   addressData,
@@ -97,12 +113,7 @@ export const changeCustomUserLocation = (
     }));
     return;
   }
-  dispatch(setCustomPosition({
-    coordinates: null,
-    hideMarker: false,
-    addressData: null,
-  }));
+  dispatch(resetCustomPosition());
 };
-
 
 export default { setLocale, changeLocaleAction };

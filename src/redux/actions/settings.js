@@ -1,6 +1,6 @@
-import SettingsUtility from '../../utils/settings';
-import LocalStorageUtility from '../../utils/localStorage';
 import config from '../../../config';
+import LocalStorageUtility from '../../utils/localStorage';
+import SettingsUtility from '../../utils/settings';
 
 const setAccessibilitySelection = (prefix, key, value) => async (dispatch, getState) => {
   const { settings } = getState();
@@ -43,37 +43,36 @@ export const setSettingsAccordionCollapsed = collapsed => async (dispatch) => {
 };
 
 export const toggleCity = values => async (dispatch) => {
-  const keyIsValid = SettingsUtility.isValidCitySetting(values);
+  if (!SettingsUtility.isValidCitySetting(values)) {
+    return;
+  }
   const citySettings = {};
   config.cities.forEach((city) => { citySettings[city] = !!values[city]; });
 
-  if (keyIsValid) {
-    dispatch({
-      type: 'CITY_SET_SELECTION',
-      selection: citySettings,
-    });
-    config.cities.forEach((city) => {
-      LocalStorageUtility.saveItem(city, values[city]); // Save values to localStorage
-    });
-  }
+  dispatch({
+    type: 'CITY_SET_SELECTION',
+    selection: citySettings,
+  });
+  config.cities.forEach((city) => {
+    LocalStorageUtility.saveItem(city, values[city]); // Save values to localStorage
+  });
 };
 
 export const toggleOrganization = values => async (dispatch) => {
-  const keyIsValid = SettingsUtility.isValidOrganizationSetting(values);
+  if (!SettingsUtility.isValidOrganizationSetting(values)) {
+    return;
+  }
   const organizationSettings = {};
   config.organizations.forEach((organization) => {
     organizationSettings[organization.id] = !!values[organization.id];
   });
-
-  if (keyIsValid) {
-    dispatch({
-      type: 'ORGANIZATION_SET_SELECTION',
-      selection: organizationSettings,
-    });
-    config.organizations.forEach((organization) => {
-      LocalStorageUtility.saveItem(organization.id, values[organization.id]);
-    });
-  }
+  dispatch({
+    type: 'ORGANIZATION_SET_SELECTION',
+    selection: organizationSettings,
+  });
+  config.organizations.forEach((organization) => {
+    LocalStorageUtility.saveItem(organization.id, values[organization.id]);
+  });
 };
 
 export const setCities = cities => {
@@ -102,11 +101,33 @@ export const setMobility = value => setMobilitySetting(value);
 
 export const setMapType = value => setMapTypeSetting(value);
 
+export const resetSenseSettings = () => async (dispatch) => {
+  dispatch(toggleHearingAid(false));
+  dispatch(toggleColorblind(false));
+  dispatch(toggleVisuallyImpaired(false));
+};
+
 export const resetAccessibilitySettings = () => async (dispatch) => {
   dispatch(setMobility(null));
   dispatch(toggleHearingAid(false));
   dispatch(toggleColorblind(false));
   dispatch(toggleVisuallyImpaired(false));
+};
+
+export const resetCitySettings = () => async (dispatch) => {
+  const citySettings = { };
+  config.cities.forEach(city => {
+    citySettings[city] = false;
+  });
+  dispatch(toggleCity(citySettings));
+};
+
+export const resetOrganizationSettings = () => async (dispatch) => {
+  const orgSettings = { };
+  config.organizations.forEach(org => {
+    orgSettings[org.id] = false;
+  });
+  dispatch(toggleOrganization(orgSettings));
 };
 
 export const activateSetting = (setting, value) => async (dispatch) => {

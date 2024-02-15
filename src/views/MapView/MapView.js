@@ -14,7 +14,9 @@ import { Loading } from '../../components';
 import { setBounds } from '../../redux/actions/map';
 import { selectDistrictUnitFetch } from '../../redux/selectors/district';
 import { selectNavigator } from '../../redux/selectors/general';
+import { selectResultsIsFetching } from '../../redux/selectors/results';
 import { getSelectedUnitEvents } from '../../redux/selectors/selectedUnit';
+import { selectServiceIsFetching } from '../../redux/selectors/service';
 import {
   selectMapType, selectSelectedCities, selectSelectedOrganizationIds,
 } from '../../redux/selectors/settings';
@@ -31,6 +33,7 @@ import {
   swapCoordinates,
 } from '../../utils/mapUtility';
 import { isEmbed } from '../../utils/path';
+import SettingsUtility from '../../utils/settings';
 import AddressMarker from './components/AddressMarker';
 import AddressPopup from './components/AddressPopup';
 import CoordinateMarker from './components/CoordinateMarker';
@@ -81,7 +84,6 @@ const EmbeddedActions = () => {
 const MapView = (props) => {
   const {
     location,
-    unitsLoading,
     hideUserMarker,
     highlightedUnit,
     highlightedDistrict,
@@ -112,6 +114,8 @@ const MapView = (props) => {
   const getAddressNavigatorParams = useNavigationParams();
   const districtUnitsFetch = useSelector(selectDistrictUnitFetch);
   const statisticalDistrictFetch = useSelector(getStatisticalDistrictUnitsState);
+  const serviceUnitsIsFetching = useSelector(selectServiceIsFetching);
+  const searchUnitsIsFetching = useSelector(selectResultsIsFetching);
   const districtsFetching = useSelector(state => !!state.districts.districtsFetching?.length);
   const cities = useSelector(selectSelectedCities);
   const orgIds = useSelector(selectSelectedOrganizationIds);
@@ -125,17 +129,25 @@ const MapView = (props) => {
   useSelector(getSelectedUnitEvents);
 
   const initializeMap = () => {
+    // Search param map value
+    const spMap = parseSearchParams(location.search).map || false;
+    const mapTypeUrlParam = spMap === 'guideMap' ? 'guidemap' : spMap; // old links might have "guideMap", this hopefully keeps them alive
+    // If embedded, then 1. url param, 2. default 'servicemap'
+    // If normal mode, then 1. url param, 2. map type (local storage) 3. default 'servicemap'
+    const mapType1 = mapTypeUrlParam || (!embedded && mapType) || SettingsUtility.defaultMapType;
+
+    const newMap = CreateMap(mapType1, locale);
+    setMapObject(newMap);
+  };
+
+  const mapTypeChanged = () => {
     if (mapElement) {
       // If changing map type, save current map viewport values before changing map
       const map = mapElement;
       map.defaultZoom = mapObject.options.zoom;
       setPrevMap(map);
     }
-    // Search param map value
-    const spMap = parseSearchParams(location.search).map || false;
-    const mapType1 = spMap || (embedded ? 'servicemap' : mapType);
-
-    const newMap = CreateMap(mapType1, locale);
+    const newMap = CreateMap(mapType, locale);
     setMapObject(newMap);
   };
 
@@ -188,7 +200,10 @@ const MapView = (props) => {
 
   useEffect(() => { // On map type change
     // Init new map and set new ref to redux
-    initializeMap();
+    if (!embedded) {
+      // In embed mode, map type is read from url.
+      mapTypeChanged();
+    }
   }, [mapType]);
 
   useEffect(() => {
@@ -250,7 +265,7 @@ const MapView = (props) => {
 
     const showLoadingScreen = statisticalDistrictFetch.isFetching
       || districtViewFetching
-      || (embedded && unitsLoading);
+      || (embedded && (serviceUnitsIsFetching || searchUnitsIsFetching));
     let showLoadingReducer = null;
     let hideLoadingNumbers = false;
     if (statisticalDistrictFetch.isFetching) {
@@ -481,7 +496,6 @@ MapView.propTypes = {
   location: PropTypes.objectOf(PropTypes.any).isRequired,
   findUserLocation: PropTypes.func.isRequired,
   setMapRef: PropTypes.func.isRequired,
-  unitsLoading: PropTypes.bool,
   userLocation: PropTypes.objectOf(PropTypes.any),
   measuringMode: PropTypes.bool.isRequired,
   toggleSidebar: PropTypes.func,
@@ -494,7 +508,6 @@ MapView.defaultProps = {
   highlightedDistrict: null,
   highlightedUnit: null,
   isMobile: false,
-  unitsLoading: false,
   toggleSidebar: null,
   sidebarHidden: false,
   userLocation: null,

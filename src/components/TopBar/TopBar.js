@@ -1,34 +1,36 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import {
-  AppBar, ButtonBase, Container, Toolbar, Typography, useMediaQuery,
-} from '@mui/material';
-import { Map } from '@mui/icons-material';
-import { FormattedMessage, useIntl } from 'react-intl';
-import { useLocation } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import styled from '@emotion/styled';
+import { Map } from '@mui/icons-material';
+import { AppBar, ButtonBase, Container, Toolbar, Typography, useMediaQuery } from '@mui/material';
+import PropTypes from 'prop-types';
+import React, { useState } from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
+import { useDispatch, useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
+import config from '../../../config';
+import { setMapType } from '../../redux/actions/settings';
+import { changeTheme } from '../../redux/actions/user';
 import { selectBreadcrumb, selectNavigator } from '../../redux/selectors/general';
 import { getLocale, getPage, selectThemeMode } from '../../redux/selectors/user';
-import DrawerMenu from './DrawerMenu';
+import { focusToViewTitle } from '../../utils/accessibility';
+import { useNavigationParams } from '../../utils/address';
+import { isHomePage } from '../../utils/path';
+import SettingsUtility from '../../utils/settings';
 import DesktopComponent from '../DesktopComponent';
 import MobileComponent from '../MobileComponent';
 import ToolMenu from '../ToolMenu';
-import { focusToViewTitle } from '../../utils/accessibility';
-import { useNavigationParams } from '../../utils/address';
-import MenuButton from './MenuButton';
-import SMLogo from './SMLogo';
-import { isHomePage } from '../../utils/path';
+import DrawerMenu from './DrawerMenu';
 import LanguageMenu from './LanguageMenu';
-import MobileNavButton from './MobileNavButton/MobileNavButton';
 import LanguageMenuComponent from './LanguageMenu/LanguageMenuComponent';
+import MenuButton from './MenuButton';
+import MobileNavButton from './MobileNavButton/MobileNavButton';
+import SMLogo from './SMLogo';
 import openA11yLink from './util';
-import config from '../../../config';
 
 const { topBarHeight, topBarHeightMobile, smallWidthForTopBarBreakpoint } = config;
 
 const TopBar = (props) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const dispatch = useDispatch();
   const location = useLocation();
   const intl = useIntl();
   const locale = useSelector(getLocale);
@@ -43,8 +45,6 @@ const TopBar = (props) => {
 
   const {
     hideButtons,
-    changeTheme,
-    setMapType,
     smallScreen,
   } = props;
 
@@ -84,8 +84,9 @@ const TopBar = (props) => {
   );
 
   const handleContrastChange = () => {
-    changeTheme(themeMode === 'default' ? 'dark' : 'default');
-    setMapType(themeMode === 'default' ? 'accessible_map' : 'servicemap');
+    const defaultTheme = themeMode === 'default';
+    dispatch(changeTheme(defaultTheme ? 'dark' : 'default'));
+    dispatch(setMapType(defaultTheme ? 'accessible_map' : SettingsUtility.defaultMapType));
   };
 
   const handleNavigation = (target, data) => {
@@ -336,8 +337,6 @@ const StyledToolbarWhite = styled(Toolbar)(({ theme, mobile }) => (
 ));
 
 TopBar.propTypes = {
-  changeTheme: PropTypes.func.isRequired,
-  setMapType: PropTypes.func.isRequired,
   smallScreen: PropTypes.bool.isRequired,
   hideButtons: PropTypes.bool,
 };

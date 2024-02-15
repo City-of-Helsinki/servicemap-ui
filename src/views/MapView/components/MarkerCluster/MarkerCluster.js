@@ -19,6 +19,7 @@ import formatEventDate from '../../../../utils/events';
 import useMobileStatus from '../../../../utils/isMobile';
 import orderUnits from '../../../../utils/orderUnits';
 import { isEmbed } from '../../../../utils/path';
+import SettingsUtility from '../../../../utils/settings';
 import UnitHelper from '../../../../utils/unitHelper';
 import useLocaleText from '../../../../utils/useLocaleText';
 import { mapTypes } from '../../config/mapConfig';
@@ -63,7 +64,7 @@ const MarkerCluster = ({
   const intl = useIntl();
   const distanceCoordinates = useSelector(getCurrentlyUsedPosition);
   const navigator = useSelector(selectNavigator);
-  const mapType = useSelector(selectMapType) || 'servicemap';
+  const mapType = useSelector(selectMapType) || SettingsUtility.defaultMapType;
   const currentPage = useSelector(getPage);
   const useContrast = useSelector(selectThemeMode) === 'dark';
   const map = useMap();

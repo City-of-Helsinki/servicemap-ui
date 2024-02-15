@@ -11,8 +11,6 @@ const mapStateToProps = (state) => {
   const {
     user, measuringMode,
   } = state;
-  const serviceUnitsLoading = state.service.isFetching;
-  const searchUnitsLoading = state.searchResults.isFetching;
   const highlightedDistrict = getHighlightedDistrict(state);
   const highlightedUnit = getSelectedUnit(state);
   const {
@@ -23,7 +21,6 @@ const mapStateToProps = (state) => {
   return {
     highlightedDistrict,
     highlightedUnit,
-    unitsLoading: serviceUnitsLoading || searchUnitsLoading,
     userLocation,
     hideUserMarker: customPosition.hideMarker,
     measuringMode,

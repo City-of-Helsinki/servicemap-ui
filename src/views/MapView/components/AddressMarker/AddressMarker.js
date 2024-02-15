@@ -4,17 +4,19 @@ import { useTheme } from '@mui/styles';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
+import { useSelector } from 'react-redux';
+import { selectAddress } from '../../../../redux/selectors/address';
 import { getAddressText } from '../../../../utils/address';
 import useLocaleText from '../../../../utils/useLocaleText';
 import { StyledHslIcon } from '../styled/styled';
 
 const AddressMarker = ({
-  address,
   embeded,
   position,
 }) => {
   const getLocaleText = useLocaleText();
   const theme = useTheme();
+  const address = useSelector(selectAddress);
   if (!position && (!address || !address.addressCoordinates)) {
     return null;
   }
@@ -75,7 +77,6 @@ const AddressMarker = ({
 };
 
 AddressMarker.propTypes = {
-  address: PropTypes.objectOf(PropTypes.any).isRequired,
   position: PropTypes.arrayOf(PropTypes.number),
   embeded: PropTypes.bool,
 };

@@ -100,8 +100,8 @@ const mapTypes = {
       [59.8994284703215, 25.390521218333532],
     ],
   },
-  guideMap: {
-    name: 'guideMap',
+  guidemap: {
+    name: 'guidemap',
     attribution: 'map.attribution.helsinki',
     layer: tileLayers.guideMapLayer,
     // TODO: maybe have map names and formats as variables from the URL, like in the old version

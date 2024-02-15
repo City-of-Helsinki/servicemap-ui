@@ -138,7 +138,12 @@ const AddressSearchBar = ({ title, handleAddressChange }) => {
 
   useEffect(() => {
     if (defaultAddress) {
-      inputRef.current.value = getAddressText(defaultAddress, getLocaleText);
+      const addressText = getAddressText(defaultAddress, getLocaleText);
+      inputRef.current.value = addressText;
+      setCurrentLocation(addressText);
+    } else {
+      inputRef.current.value = '';
+      setCurrentLocation(null);
     }
   }, [defaultAddress]);
 
@@ -201,7 +206,7 @@ const AddressSearchBar = ({ title, handleAddressChange }) => {
             onClick={e => handleSubmit(e)}
             variant="contained"
           >
-            <Typography>Lisää</Typography>
+            <Typography>{intl.formatMessage({ id: 'search.addText' })}</Typography>
             <Home />
           </StyledSearchButton>
 

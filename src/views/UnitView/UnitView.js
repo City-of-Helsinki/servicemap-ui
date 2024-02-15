@@ -9,11 +9,10 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import config from '../../../config';
 import paths from '../../../config/paths';
 import {
-  AcceptSettingsDialog,
   BackButton,
   Container,
   LinkSettingsDialog,
@@ -27,6 +26,7 @@ import {
   TitledList,
 } from '../../components';
 import { fetchServiceUnits } from '../../redux/actions/services';
+import { activateSetting, resetSenseSettings, setMapType } from '../../redux/actions/settings';
 import { selectMapRef, selectNavigator } from '../../redux/selectors/general';
 import {
   getSelectedUnit,
@@ -40,7 +40,6 @@ import { selectUserPosition } from '../../redux/selectors/user';
 import { parseSearchParams } from '../../utils';
 import useMobileStatus from '../../utils/isMobile';
 import { mapHasMapPane } from '../../utils/mapUtility';
-import SettingsUtility from '../../utils/settings';
 import UnitHelper from '../../utils/unitHelper';
 import useLocaleText from '../../utils/useLocaleText';
 import MapView from '../MapView';
@@ -54,6 +53,7 @@ import SocialMediaLinks from './components/SocialMediaLinks';
 import UnitDataList from './components/UnitDataList';
 import UnitLinks from './components/UnitLinks';
 import UnitsServicesList from './components/UnitsServicesList';
+import { parseUnitViewUrlParams } from './utils/unitViewUrlParamAndSettingsHandler';
 
 const UnitView = (props) => {
   const {
@@ -74,6 +74,7 @@ const UnitView = (props) => {
   const accessibilitySentences = useSelector(selectSelectedUnitAccessibilitySentencesData);
   const unitFetching = useSelector(selectSelectedUnitIsFetching);
   const stateUnit = useSelector(getSelectedUnit);
+  const map = useSelector(selectMapRef);
   const location = useLocation();
   const checkCorrectUnit = unit => unit && unit.id === parseInt(match.params.unit, 10);
 
@@ -81,28 +82,40 @@ const UnitView = (props) => {
   const viewPosition = useRef(null);
 
   const isMobile = useMobileStatus();
-  const [openAcceptSettingsDialog, setOpenAcceptSettingsDialog] = useState(false);
   const [openLinkDialog, setOpenLinkDialog] = useState(false);
   const getLocaleText = useLocaleText();
   const dispatch = useDispatch();
-
-  const map = useSelector(selectMapRef);
+  const history = useHistory();
 
   const getImageAlt = () => `${intl.formatMessage({ id: 'unit.picture' })}${getLocaleText(unit.name)}`;
 
-  const shouldShowAcceptSettingsDialog = () => {
+  function resetUrlSearchParams() {
     const search = new URLSearchParams(location.search);
-    const mobility = search.get('mobility');
-    const senses = search.get('senses')?.split(',') || [];
-    const mobilityValid = !!(mobility && SettingsUtility.isValidMobilitySetting(mobility));
-    const sensesValid = senses.filter(
-      s => SettingsUtility.isValidAccessibilitySenseImpairment(s),
-    ).length > 0;
-    return !!(mobilityValid || sensesValid);
-  };
+    search.delete('mobility');
+    search.delete('senses');
+    search.delete('map');
+    history.replace({
+      search: search.toString(),
+    });
+  }
 
   useEffect(() => {
-    setOpenAcceptSettingsDialog(shouldShowAcceptSettingsDialog());
+    const actions = parseUnitViewUrlParams(location.search);
+    actions.filter(({ setting }) => setting === 'mobility').forEach(({ setting, value }) => {
+      dispatch(activateSetting(setting, value));
+    });
+    const senses = actions.filter(({ setting }) => setting === 'senses');
+    // if a { setting: 'senses', value: null} is returned then this will reset
+    if (senses.length) {
+      dispatch(resetSenseSettings());
+    }
+    senses.filter(({ value }) => !!value).forEach(({ value }) => {
+      dispatch(activateSetting(value));
+    });
+    actions.filter(({ setting }) => setting === 'mapType').forEach(({ value }) => {
+      dispatch(setMapType(value));
+    });
+    resetUrlSearchParams();
   }, []);
 
   const initializePTVAccessibilitySentences = () => {
@@ -546,14 +559,7 @@ const UnitView = (props) => {
       return (
         <div>
           {
-            openAcceptSettingsDialog
-            && (
-              <AcceptSettingsDialog setOpen={setOpenAcceptSettingsDialog} />
-            )
-          }
-          {
-            !openAcceptSettingsDialog
-            && openLinkDialog
+            openLinkDialog
             && (
               <LinkSettingsDialog setOpen={setOpenLinkDialog} />
             )

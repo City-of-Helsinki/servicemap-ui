@@ -8,10 +8,6 @@ const translations = {
   'app.navigation.home': 'Home',
   'app.navigation.settings': 'Settings',
 
-  'accept.settings.dialog.description': 'You can open the data either with accessibility settings or without restrictions.',
-  'accept.settings.dialog.title': 'See the location with accessibility settings',
-  'accept.settings.dialog.none': 'No particular accessibility settings',
-
   // Accessibility
   'accessibility': 'Accessibility',
   'accessibility.info': 'Accessibility details',
@@ -407,11 +403,8 @@ const translations = {
 
   'link.settings.dialog.title': 'Share the link to the location',
   'link.settings.dialog.tooltip': 'Copied to the clipboard',
-  'link.settings.dialog.radio.label': 'Link contents',
   'link.settings.dialog.tooltip.aria': 'Copy the site link to the clipboard',
   'link.settings.dialog.tooltip.aria.a11y': 'Copy the site link with accessibility settings to the clipboard',
-  'link.settings.dialog.subtitle': 'Share the link with accessibility settings',
-  'link.settings.dialog.description': 'The accessibility settings affect the accessibility data of the location shown and the appearance of the map.',
   'link.settings.dialog.buttons.action': 'Copy to clipboard',
 
   // Map
@@ -590,6 +583,7 @@ const translations = {
   'search.tryAgainBody.keyword': 'write keywords, e.g. nature trail, Swedish day-care centre',
   'search.expand': 'Refine search',
   'search.closeExpand': 'Return to search',
+  'search.addText': 'Add',
 
   // Service
   'service': 'Service',
@@ -690,7 +684,7 @@ const translations = {
   'settings.map.title': 'Background map',
   'settings.map.servicemap': 'Service map',
   'settings.map.ortographic': 'Aerial view',
-  'settings.map.guideMap': 'Guide map',
+  'settings.map.guidemap': 'Guide map',
   'settings.map.accessible_map': 'High contrast map',
   'settings.3dmap.title': '3D-uban data model',
   'settings.3dmap.info': 'The Urban data model is based on the city’s map and geographic data, registers, point clouds obtained by laser scanning, aerial photographs and building data models. Use the link below to go to view the city model.',
@@ -706,6 +700,7 @@ const translations = {
   'settings.choose.cities': 'Select your city setting',
   'settings.choose.organization': 'Valitse palveluntarjoaja', // TODO: translate
   'settings.map.info': 'You can select the background map that best suits you in the map settings.',
+  'settings.reset_button.title': 'Clear all my selections',
 
   // Tools
   'tool.download': 'Download data',

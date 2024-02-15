@@ -8,10 +8,18 @@ import {
   Search, Cancel,
 } from '@mui/icons-material';
 import { FormattedMessage, useIntl } from 'react-intl';
+import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import styled from '@emotion/styled';
 import { css } from '@emotion/css';
 import { useTheme } from '@mui/styles';
+import fetchSearchResults from '../../redux/actions/search';
+import { changeSelectedUnit } from '../../redux/actions/selectedUnit';
+import { selectNavigator } from '../../redux/selectors/general';
+import {
+  selectResultsIsFetching,
+  selectResultsPreviousSearch,
+} from '../../redux/selectors/results';
 import BackButton from '../BackButton';
 import { keyboardHandler, uppercaseFirst, useQuery } from '../../utils';
 import SuggestionBox from './components/SuggestionBox';
@@ -24,18 +32,13 @@ import { getFullHistory } from './previousSearchData';
 
 let blurTimeout = null;
 
-const SearchBarComponent = ({
+const SearchBar = ({
   background,
-  changeSelectedUnit,
   className,
-  fetchSearchResults,
   hideBackButton,
-  navigator,
-  isFetching,
   isSticky,
   header,
   margin,
-  previousSearch,
 }) => {
   const blurDelay = 150;
   const rootClass = 'SearchBar';
@@ -50,6 +53,10 @@ const SearchBarComponent = ({
   const queryParams = useQuery();
   const searchRef = useRef();
   const theme = useTheme();
+  const dispatch = useDispatch();
+  const navigator = useSelector(selectNavigator);
+  const isFetching = useSelector(selectResultsIsFetching);
+  const previousSearch = useSelector(selectResultsPreviousSearch);
 
   const setSearchbarValue = (value) => {
     searchRef.current.value = value;
@@ -161,8 +168,8 @@ const SearchBarComponent = ({
 
       if (searchQuery !== previousSearch) {
         setSearchbarValue(searchQuery); // Change current search text to new one
-        fetchSearchResults({ q: searchQuery });
-        changeSelectedUnit(null);
+        dispatch(fetchSearchResults({ q: searchQuery }));
+        dispatch(changeSelectedUnit(null));
       }
 
       if (navigator) {
@@ -624,29 +631,22 @@ const StyledMobileContainer = styled('div')(({
   return styles;
 });
 
-SearchBarComponent.propTypes = {
+SearchBar.propTypes = {
   background: PropTypes.oneOf(['default', 'none']),
-  changeSelectedUnit: PropTypes.func.isRequired,
   className: PropTypes.string,
-  fetchSearchResults: PropTypes.func.isRequired,
   header: PropTypes.bool,
   hideBackButton: PropTypes.bool,
-  navigator: PropTypes.objectOf(PropTypes.any),
   isSticky: PropTypes.number,
-  isFetching: PropTypes.bool.isRequired,
-  previousSearch: PropTypes.oneOfType([PropTypes.string, PropTypes.objectOf(PropTypes.any)]),
   margin: PropTypes.bool,
 };
 
-SearchBarComponent.defaultProps = {
+SearchBar.defaultProps = {
   background: 'default',
-  previousSearch: null,
   className: '',
   header: false,
   hideBackButton: false,
   isSticky: null,
-  navigator: null,
   margin: false,
 };
 
-export default SearchBarComponent;
+export default SearchBar;

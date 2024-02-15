@@ -20,7 +20,7 @@ const Loading = (props) => {
         const progress = count ? percentage : 0;
         const text = intl?.formatMessage({ id: 'search.loading.units' }, { percentage });
         return (
-          <StyledDivRoot>
+          <StyledDivRoot data-sm="LoadingIndicator">
             <Typography variant="body2" aria-hidden="true">{(!hideNumbers && text) || <FormattedMessage id="general.fetching" />}</Typography>
             <LinearProgress variant="determinate" value={Math.min(progress, 100)} />
           </StyledDivRoot>
@@ -36,7 +36,7 @@ const Loading = (props) => {
   }
 
   return (
-    <StyledDivRoot>
+    <StyledDivRoot data-sm="LoadingIndicator">
       <Typography variant="body2" aria-hidden="true">{text || <FormattedMessage id="general.fetching" />}</Typography>
       <LinearProgress variant="determinate" value={Math.min(progress, 100)} />
     </StyledDivRoot>

@@ -19,6 +19,7 @@ import {
   selectAddressUnits,
 } from '../../redux/selectors/address';
 import { selectMapRef, selectNavigator } from '../../redux/selectors/general';
+import { selectResultsData } from '../../redux/selectors/results';
 import { focusToPosition, useMapFocusDisabled } from '../MapView/utils/mapActions';
 import fetchAdministrativeDistricts from './utils/fetchAdministrativeDistricts';
 import fetchAddressUnits from './utils/fetchAddressUnits';
@@ -72,7 +73,7 @@ const AddressView = (props) => {
   const getLocaleText = useLocaleText();
   const match = useRouteMatch();
   const location = useLocation();
-  const searchResults = useSelector(state => state.searchResults.data);
+  const searchResults = useSelector(selectResultsData);
   const navigator = useSelector(selectNavigator);
   const map = useSelector(selectMapRef);
   const units = useSelector(selectAddressUnits);

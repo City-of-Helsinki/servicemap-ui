@@ -8,10 +8,6 @@ const translations = {
   'app.navigation.home': 'Koti',
   'app.navigation.settings': 'Asetukset',
 
-  'accept.settings.dialog.description': 'Voit avata tiedot joko esteettömyysasetusten kanssa tai ilman rajauksia.',
-  'accept.settings.dialog.title': 'Katso toimipistettä esteettömyysasetusten kanssa',
-  'accept.settings.dialog.none': 'Ei erityisiä esteettömyysasetuksia',
-
   // Accessibility
   'accessibility': 'Esteettömyys',
   'accessibility.info': 'Esteettömyystiedot',
@@ -407,11 +403,8 @@ const translations = {
 
   'link.settings.dialog.title': 'Jaa linkki toimipisteeseen',
   'link.settings.dialog.tooltip': 'Kopioitu leikepöydälle',
-  'link.settings.dialog.radio.label': 'Linkin sisältö',
   'link.settings.dialog.tooltip.aria': 'Kopioi sivun linkki leikepöydälle',
   'link.settings.dialog.tooltip.aria.a11y': 'Kopioi esteettömyyasetukset sisältävä sivun linkki leikepöydälle',
-  'link.settings.dialog.subtitle': 'Jaa linkki esteettömyysasetusten kanssa',
-  'link.settings.dialog.description': 'Esteettömyysasetukset vaikuttavat näytettäviin toimipisteen esteettömyystietoihin ja kartan ulkoasuun.',
   'link.settings.dialog.buttons.action': 'Kopioi leikepöydälle',
 
   // Map
@@ -593,6 +586,7 @@ const translations = {
   'search.tryAgainBody.keyword': 'kirjoita avainsanoja, esim. luontopolku, ruotsinkielinen päiväkoti',
   'search.expand': 'Hae tarkempia hakuehdotuksia',
   'search.closeExpand': 'Palaa hakuun',
+  'search.addText': 'Lisää',
 
   // Service
   'service': 'Palvelu',
@@ -693,7 +687,7 @@ const translations = {
   'settings.map.title': 'Karttapohja',
   'settings.map.servicemap': 'Palvelukartta',
   'settings.map.ortographic': 'Ilmakuva',
-  'settings.map.guideMap': 'Opaskartta',
+  'settings.map.guidemap': 'Opaskartta',
   'settings.map.accessible_map': 'Korkeakontrastinen kartta',
   'settings.3dmap.title': '3D-kaupunkimalli',
   'settings.3dmap.info': 'Kaupunkitietomallissa voit katsella paitsi rakennuksia ja niiden tietoja, myös maanpintamallia eli maaston muotoja. Siirry alla olevan linkin avulla katselemaan kaupunkimallia.',
@@ -709,6 +703,7 @@ const translations = {
   'settings.choose.cities': 'Valitse kaupunkiasetuksesi',
   'settings.choose.organization': 'Valitse palveluntarjoaja',
   'settings.map.info': 'Kartta-asetuksista voit valita sinulle parhaiten sopivan pohjakartan.',
+  'settings.reset_button.title': 'Tyhjennä kaikki valintani',
 
   // Tools
   'tool.download': 'Lataa tiedot',
