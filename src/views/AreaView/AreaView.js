@@ -225,11 +225,7 @@ const AreaView = ({ embed }) => {
     }
   }, []);
 
-  if (!map) {
-    return null;
-  }
-
-  if (embed) {
+  if (!map || embed) {
     return null;
   }
   return <SideBar setSelectedAddress={setSelectedAddress} selectedAddress={selectedAddress} />;
