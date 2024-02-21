@@ -1,12 +1,13 @@
 import styled from '@emotion/styled';
-import { FormatListBulleted, LocationOn } from '@mui/icons-material';
+import { FormatListBulleted } from '@mui/icons-material';
 import { Typography } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
 import PropTypes from 'prop-types';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { SMAccordion } from '../../../../components';
+import AddressInfo from '../../../../components/AddressInfo/AddressInfo';
 import {
   fetchDistrictGeometry,
   handleOpenGeographicalCategory,
@@ -16,14 +17,13 @@ import {
 } from '../../../../redux/actions/district';
 import {
   getDistrictOpenItems,
-  getFilteredSubdistrictServices, selectDistrictAddressData,
+  getFilteredSubdistrictServices,
+  selectDistrictAddressData,
   selectDistrictData,
   selectDistrictsFetching,
   selectSelectedDistrictType,
 } from '../../../../redux/selectors/district';
 import { selectMapRef } from '../../../../redux/selectors/general';
-import { getAddressText } from '../../../../utils/address';
-import useLocaleText from '../../../../utils/useLocaleText';
 import { geographicalDistricts } from '../../utils/districtDataHelper';
 import DistrictToggleButton from '../DistrictToggleButton';
 import GeographicalDistrictList from '../GeographicalDistrictList';
@@ -50,7 +50,6 @@ const GeographicalTab = ({
   const selectedDistrictType = useSelector(selectSelectedDistrictType);
   const districtData = useSelector(selectDistrictData);
   const map = useSelector(selectMapRef);
-  const getLocaleText = useLocaleText();
 
   const [openCategory, setOpenCategory] = useState(
     useSelector(getDistrictOpenItems).find(item => geographicalDistricts.includes(item)) || [],
@@ -105,37 +104,12 @@ const GeographicalTab = ({
     }
   }, [selectedDistrictType]);
 
-  const renderAddressInfo = useCallback(() => {
-    const localPostArea = localAddressData.districts.find(obj => obj.type === 'postcode_area');
-    const localNeighborhood = localAddressData.districts.find(obj => obj.type === 'neighborhood');
-    return (
-      <StyledAddressInfoContainer>
-        <StyledAddressInfoText component="h3"><FormattedMessage id="area.localAddress.title" /></StyledAddressInfoText>
-        <StyledAddressInfoIconArea>
-          <StyledAddressInfoIcon color="primary" />
-          <Typography component="p" variant="subtitle1">{getAddressText(localAddressData.address, getLocaleText)}</Typography>
-        </StyledAddressInfoIconArea>
-        {localPostArea ? (
-          <StyledAddressInfoText>
-            <FormattedMessage id="area.localAddress.postCode" values={{ area: getLocaleText(localPostArea.name) }} />
-          </StyledAddressInfoText>
-        ) : null}
-        {localNeighborhood ? (
-          <StyledAddressInfoText>
-            <FormattedMessage id="area.localAddress.neighborhood" values={{ area: getLocaleText(localNeighborhood.name) }} />
-          </StyledAddressInfoText>
-        ) : null}
-      </StyledAddressInfoContainer>
-    );
-  }, [localAddressData]);
-
-
   const render = () => {
     const districtItems = districtData.filter(obj => geographicalDistricts.includes(obj.id));
     return (
       <>
         {localAddressData?.address && localAddressData.districts?.length && (
-          renderAddressInfo()
+          <AddressInfo addressData={localAddressData} />
         )}
         <Typography style={visuallyHidden} component="h3">
           <FormattedMessage id="area.list" />
@@ -221,27 +195,6 @@ const StyledCategoryListAccordion = styled(SMAccordion)(({ theme }) => ({
   paddingLeft: theme.spacing(7),
 }));
 
-const StyledAddressInfoContainer = styled('div')(({ theme }) => ({
-  backgroundColor: '#E3F3FF',
-  textAlign: 'left',
-  padding: theme.spacing(2),
-  paddingBottom: theme.spacing(4),
-}));
-
-const StyledAddressInfoText = styled(Typography)(() => ({
-  paddingLeft: 62,
-}));
-
-const StyledAddressInfoIconArea = styled('div')(({ theme }) => ({
-  display: 'flex',
-  paddingTop: theme.spacing(2),
-  paddingBottom: theme.spacing(1),
-}));
-
-const StyledAddressInfoIcon = styled(LocationOn)(({ theme }) => ({
-  width: 50,
-  paddingRight: theme.spacing(1.5),
-}));
 const StyledFormatListBulleted = styled(FormatListBulleted)(({ theme }) => ({
   padding: theme.spacing(2.5),
   paddingLeft: theme.spacing(7),
