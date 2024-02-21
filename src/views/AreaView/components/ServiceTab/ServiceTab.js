@@ -90,12 +90,12 @@ const ServiceTab = (props) => {
   );
 
 
-  const renderDistrictList = (districList) => {
+  const renderDistrictList = (districtList) => {
     const listDistrictAreas = ['rescue_area', 'rescue_district', 'rescue_sub_district'].includes(selectedDistrictType);
     const DistrictList = listDistrictAreas ? DistrictAreaList : DistrictUnitList;
     return (
       <StyledListLevelThree data-sm="DistrictList" disablePadding>
-        {districList.map(district => (
+        {districtList.map(district => (
           <Fragment key={district.id}>
             <StyledAreaListItem
               key={district.id}
@@ -123,8 +123,9 @@ const ServiceTab = (props) => {
     const districList = districtData.filter(obj => item.districts.some(
       district => obj.id.includes(district.id),
     ));
-    const parkingAreasHelsinki = districList.filter(obj => !obj.id.includes('parking_area'));
-    const parkingAreasVantaa = parkingAreasHelsinki.filter(obj => obj.id !== 'resident_parking_zone');
+    const parkingAreas = districList.filter(obj => !obj.id.includes('parking_area'));
+    const parkingAreasHelsinki = parkingAreas.filter(parkingArea => parkingArea.data.some(x => x.ocd_id.includes('kunta:helsinki')));
+    const parkingAreasVantaa = parkingAreas.filter(parkingArea => parkingArea.data.some(x => x.ocd_id.includes('kunta:vantaa')));
     const parkingSpaces = districList.filter(obj => obj.id.includes('parking_area') && obj.id !== 'parking_area0');
     function getElements(variant, titleId, parkingAreas) {
       return (
