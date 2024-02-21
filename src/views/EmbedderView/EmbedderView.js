@@ -64,6 +64,10 @@ const EmbedderView = () => {
   const mapType = useSelector(selectMapType);
   const navigator = useSelector(selectNavigator);
   const selectedCities = useSelector(selectSelectedCities);
+  const page = useSelector(getPage);
+  const selectedUnit = useSelector(getSelectedUnit);
+  const currentService = useSelector(selectServiceCurrent);
+  const organizationSettings = useSelector(selectSelectedOrganizations);
   // Verify url
   const data = isClient() ? smurl.verify(window.location.href) : {};
   let { url } = data;
@@ -77,35 +81,29 @@ const EmbedderView = () => {
     search = uri.search(true);
   }
 
-  const cityOption = (search?.city !== '' && search?.city?.split(',')) || selectedCities;
-  const citiesToReduce = cityOption.length > 0
-    ? cityOption
-    : embedderConfig.CITIES.filter(v => v);
-
   // Defaults
   const initialRatio = ratio || 52;
   const defaultMap = search.map || mapType || embedderConfig.BACKGROUND_MAPS[0];
   const defaultLanguage = getLanguage(url);
-  const defaultCities = citiesToReduce.reduce((acc, current) => {
-    acc[current] = true;
-    return acc;
-  }, {});
   const defaultFixedHeight = embedderConfig.DEFAULT_CUSTOM_WIDTH;
   const iframeConfig = embedderConfig.DEFAULT_IFRAME_PROPERTIES || {};
   const defaultService = 'none';
-  const page = useSelector(getPage);
-  const selectedUnit = useSelector(getSelectedUnit);
-  const currentService = useSelector(selectServiceCurrent);
-  const organizationSettings = useSelector(selectSelectedOrganizations);
 
   const getLocaleText = useLocaleText();
   const userLocale = useSelector(getLocale);
 
+  const citiesToReduce = (search?.city !== '' && search?.city?.split(',')) || selectedCities || [];
+  const defaultCities = citiesToReduce.reduce((acc, current) => {
+    acc[current] = true;
+    return acc;
+  }, {});
+  const initialCities = showCitiesAndOrganisations(url) ? defaultCities : [];
+  const initialOrgs = showCitiesAndOrganisations(url) ? organizationSettings : [];
   // States
   const [language, setLanguage] = useState(defaultLanguage);
   const [map, setMap] = useState(defaultMap);
-  const [city, setCity] = useState(showCitiesAndOrganisations(url) ? defaultCities : []);
-  const [organization, setOrganization] = useState(showCitiesAndOrganisations(url) ? organizationSettings : []);
+  const [city, setCity] = useState(initialCities);
+  const [organization, setOrganization] = useState(initialOrgs);
   const [service, setService] = useState(defaultService);
   const [customWidth, setCustomWidth] = useState(embedderConfig.DEFAULT_CUSTOM_WIDTH || 100);
   const [widthMode, setWidthMode] = useState('auto');

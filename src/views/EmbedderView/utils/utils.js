@@ -2,7 +2,7 @@ import URI from 'urijs';
 
 export const getEmbedURL = (url, params = {}) => {
   if (!url) {
-    return false;
+    return undefined;
   }
   const uri = URI(url);
 
