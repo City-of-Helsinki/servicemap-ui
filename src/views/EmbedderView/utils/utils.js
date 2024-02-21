@@ -8,22 +8,11 @@ export const getEmbedURL = (url, params = {}) => {
 
   const segment = uri.segment();
   const data = uri.search(true); // Get data object of search parameters
-  const cityObj = params.city;
-  const cities = cityObj
-    ? Object.keys(cityObj).reduce((acc, current) => {
-      if (Object.prototype.hasOwnProperty.call(cityObj, current)) {
-        if (cityObj[current]) {
-          acc.push(current);
-        }
-      }
-      return acc;
-    }, []) : [];
-
   if (params.map) {
     data.map = params.map;
   }
-  if (cities.length > 0) {
-    data.city = cities.join(',');
+  if (params.city?.length > 0) {
+    data.city = params.city.join(',');
   }
   if (params.organization?.length > 0) {
     data.organization = params.organization.map(org => org.id).join(',');

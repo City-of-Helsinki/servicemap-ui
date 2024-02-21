@@ -67,7 +67,7 @@ const EmbedderView = () => {
   const page = useSelector(getPage);
   const selectedUnit = useSelector(getSelectedUnit);
   const currentService = useSelector(selectServiceCurrent);
-  const organizationSettings = useSelector(selectSelectedOrganizations);
+  const selectedOrgs = useSelector(selectSelectedOrganizations);
   // Verify url
   const data = isClient() ? smurl.verify(window.location.href) : {};
   let { url } = data;
@@ -92,18 +92,30 @@ const EmbedderView = () => {
   const getLocaleText = useLocaleText();
   const userLocale = useSelector(getLocale);
 
-  const citiesToReduce = (search?.city !== '' && search?.city?.split(',')) || selectedCities || [];
-  const defaultCities = citiesToReduce.reduce((acc, current) => {
-    acc[current] = true;
-    return acc;
-  }, {});
-  const initialCities = showCitiesAndOrganisations(url) ? defaultCities : [];
-  const initialOrgs = showCitiesAndOrganisations(url) ? organizationSettings : [];
+  function getInitialCities() {
+    const city1 = search?.city;
+    if (!showCitiesAndOrganisations(url) || city1 === '') {
+      return [];
+    }
+    return city1?.split(',') || selectedCities || [];
+  }
+
+  function getInitialOrgs() {
+    const organization1 = search?.organization;
+    if (!showCitiesAndOrganisations(url) || organization1 === '') {
+      return [];
+    }
+    const urlParamOrgs = organization1?.split(',')
+      ?.map(orgId => config.organizations.find(org => org.id === orgId))
+      ?.filter(org => org);
+    return urlParamOrgs || selectedOrgs || [];
+  }
+
   // States
   const [language, setLanguage] = useState(defaultLanguage);
   const [map, setMap] = useState(defaultMap);
-  const [city, setCity] = useState(initialCities);
-  const [organization, setOrganization] = useState(initialOrgs);
+  const [city, setCity] = useState(getInitialCities());
+  const [organization, setOrganization] = useState(getInitialOrgs());
   const [service, setService] = useState(defaultService);
   const [customWidth, setCustomWidth] = useState(embedderConfig.DEFAULT_CUSTOM_WIDTH || 100);
   const [widthMode, setWidthMode] = useState('auto');
@@ -308,14 +320,15 @@ const EmbedderView = () => {
     const cities = city;
     const cityControls = embedderConfig.CITIES.filter(v => v).map(city => ({
       key: city,
-      value: !!cities[city],
+      value: !!cities.includes(city),
       label: uppercaseFirst(city),
       icon: null,
       onChange: (v) => {
-        const newCities = {};
-        Object.assign(newCities, cities);
-        newCities[city] = v;
-        setCity(newCities);
+        if (v) {
+          setCity([...cities, city]);
+        } else {
+          setCity(cities.filter(value => value !== city));
+        }
       },
     }));
 
@@ -339,12 +352,15 @@ const EmbedderView = () => {
     const organizations = organization;
     const organizationControls = embedderConfig.ORGANIZATIONS.map(org => ({
       key: org.id,
-      value:!!organizations.some(value => value.id === org.id),
+      value: !!organizations.some(value => value.id === org.id),
       label: uppercaseFirst(getLocaleText(org.name)),
       icon: null,
       onChange: (v) => {
-        if (v) setOrganization([...organizations, org]);
-        else setOrganization(organizations.filter(values => values.id !== org.id));
+        if (v) {
+          setOrganization([...organizations, org]);
+        } else {
+          setOrganization(organizations.filter(value => value.id !== org.id));
+        }
       },
     }));
 
