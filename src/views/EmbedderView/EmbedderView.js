@@ -28,7 +28,7 @@ import embedderConfig from './embedderConfig';
 import * as smurl from './utils/url';
 import { getEmbedURL, getLanguage } from './utils/utils';
 
-const hideCitiesIn = [
+const hideCitiesAndOrgsIn = [
   paths.unit.regex,
   paths.address.regex,
 ];
@@ -40,6 +40,17 @@ const hideServicesIn = [
   paths.address.regex,
   paths.area.regex,
 ];
+
+/**
+ * @param embedUrl (or normal url)
+ */
+const showCitiesAndOrganisations = embedUrl => {
+  if (typeof embedUrl !== 'string') {
+    return false;
+  }
+  const originalUrl = embedUrl.replace('/embed', '');
+  return hideCitiesAndOrgsIn.every(r => !r.test(originalUrl));
+};
 
 // Timeout for handling width and height input changes
 // only once user stops typing
@@ -53,6 +64,10 @@ const EmbedderView = () => {
   const mapType = useSelector(selectMapType);
   const navigator = useSelector(selectNavigator);
   const selectedCities = useSelector(selectSelectedCities);
+  const page = useSelector(getPage);
+  const selectedUnit = useSelector(getSelectedUnit);
+  const currentService = useSelector(selectServiceCurrent);
+  const selectedOrgs = useSelector(selectSelectedOrganizations);
   // Verify url
   const data = isClient() ? smurl.verify(window.location.href) : {};
   let { url } = data;
@@ -66,35 +81,41 @@ const EmbedderView = () => {
     search = uri.search(true);
   }
 
-  const cityOption = (search?.city !== '' && search?.city?.split(',')) || selectedCities;
-  const citiesToReduce = cityOption.length > 0
-    ? cityOption
-    : embedderConfig.CITIES.filter(v => v);
-
   // Defaults
   const initialRatio = ratio || 52;
   const defaultMap = search.map || mapType || embedderConfig.BACKGROUND_MAPS[0];
   const defaultLanguage = getLanguage(url);
-  const defaultCities = citiesToReduce.reduce((acc, current) => {
-    acc[current] = true;
-    return acc;
-  }, {});
   const defaultFixedHeight = embedderConfig.DEFAULT_CUSTOM_WIDTH;
   const iframeConfig = embedderConfig.DEFAULT_IFRAME_PROPERTIES || {};
   const defaultService = 'none';
-  const page = useSelector(getPage);
-  const selectedUnit = useSelector(getSelectedUnit);
-  const currentService = useSelector(selectServiceCurrent);
-  const organizationSettings = useSelector(selectSelectedOrganizations);
 
   const getLocaleText = useLocaleText();
   const userLocale = useSelector(getLocale);
 
+  function getInitialCities() {
+    const city1 = search?.city;
+    if (!showCitiesAndOrganisations(url) || city1 === '') {
+      return [];
+    }
+    return city1?.split(',') || selectedCities || [];
+  }
+
+  function getInitialOrgs() {
+    const organization1 = search?.organization;
+    if (!showCitiesAndOrganisations(url) || organization1 === '') {
+      return [];
+    }
+    const urlParamOrgs = organization1?.split(',')
+      ?.map(orgId => config.organizations.find(org => org.id === orgId))
+      ?.filter(org => org);
+    return urlParamOrgs || selectedOrgs || [];
+  }
+
   // States
   const [language, setLanguage] = useState(defaultLanguage);
   const [map, setMap] = useState(defaultMap);
-  const [city, setCity] = useState(defaultCities);
-  const [organization, setOrganization] = useState(organizationSettings);
+  const [city, setCity] = useState(getInitialCities());
+  const [organization, setOrganization] = useState(getInitialOrgs());
   const [service, setService] = useState(defaultService);
   const [customWidth, setCustomWidth] = useState(embedderConfig.DEFAULT_CUSTOM_WIDTH || 100);
   const [widthMode, setWidthMode] = useState('auto');
@@ -230,20 +251,6 @@ const EmbedderView = () => {
     showUnitList,
   ]);
 
-  const showCities = (embedUrl) => {
-    if (typeof embedUrl !== 'string') {
-      return false;
-    }
-    const originalUrl = embedUrl.replace('/embed', '');
-    let show = true;
-    hideCitiesIn.forEach((r) => {
-      if (show) {
-        show = !r.test(originalUrl);
-      }
-    });
-    return show;
-  };
-
   const showServices = (embedUrl) => {
     if (typeof embedUrl !== 'string') {
       return false;
@@ -307,20 +314,21 @@ const EmbedderView = () => {
    * Render city controls
    */
   const renderCityControl = () => {
-    if (!showCities(embedUrl)) {
+    if (!showCitiesAndOrganisations(embedUrl)) {
       return null;
     }
     const cities = city;
     const cityControls = embedderConfig.CITIES.filter(v => v).map(city => ({
       key: city,
-      value: !!cities[city],
+      value: !!cities.includes(city),
       label: uppercaseFirst(city),
       icon: null,
       onChange: (v) => {
-        const newCities = {};
-        Object.assign(newCities, cities);
-        newCities[city] = v;
-        setCity(newCities);
+        if (v) {
+          setCity([...cities, city]);
+        } else {
+          setCity(cities.filter(value => value !== city));
+        }
       },
     }));
 
@@ -338,15 +346,21 @@ const EmbedderView = () => {
    * Render organization controls
    */
   const renderOrganizationControl = () => {
+    if (!showCitiesAndOrganisations(embedUrl)) {
+      return null;
+    }
     const organizations = organization;
     const organizationControls = embedderConfig.ORGANIZATIONS.map(org => ({
       key: org.id,
-      value:!!organizations.some(value => value.id === org.id),
+      value: !!organizations.some(value => value.id === org.id),
       label: uppercaseFirst(getLocaleText(org.name)),
       icon: null,
       onChange: (v) => {
-        if (v) setOrganization([...organizations, org]);
-        else setOrganization(organizations.filter(values => values.id !== org.id));
+        if (v) {
+          setOrganization([...organizations, org]);
+        } else {
+          setOrganization(organizations.filter(value => value.id !== org.id));
+        }
       },
     }));
 
