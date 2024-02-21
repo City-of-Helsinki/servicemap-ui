@@ -28,7 +28,7 @@ import embedderConfig from './embedderConfig';
 import * as smurl from './utils/url';
 import { getEmbedURL, getLanguage } from './utils/utils';
 
-const hideCitiesIn = [
+const hideCitiesAndOrgsIn = [
   paths.unit.regex,
   paths.address.regex,
 ];
@@ -230,13 +230,13 @@ const EmbedderView = () => {
     showUnitList,
   ]);
 
-  const showCities = (embedUrl) => {
+  const showCitiesAndOrganisations = (embedUrl) => {
     if (typeof embedUrl !== 'string') {
       return false;
     }
     const originalUrl = embedUrl.replace('/embed', '');
     let show = true;
-    hideCitiesIn.forEach((r) => {
+    hideCitiesAndOrgsIn.forEach((r) => {
       if (show) {
         show = !r.test(originalUrl);
       }
@@ -307,7 +307,7 @@ const EmbedderView = () => {
    * Render city controls
    */
   const renderCityControl = () => {
-    if (!showCities(embedUrl)) {
+    if (!showCitiesAndOrganisations(embedUrl)) {
       return null;
     }
     const cities = city;
@@ -338,6 +338,9 @@ const EmbedderView = () => {
    * Render organization controls
    */
   const renderOrganizationControl = () => {
+    if (!showCitiesAndOrganisations(embedUrl)) {
+      return null;
+    }
     const organizations = organization;
     const organizationControls = embedderConfig.ORGANIZATIONS.map(org => ({
       key: org.id,
