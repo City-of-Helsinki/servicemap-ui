@@ -13,9 +13,13 @@ export const getEmbedURL = (url, params = {}) => {
   }
   if (params.city?.length > 0) {
     data.city = params.city.join(',');
+  } else {
+    delete data.city;
   }
   if (params.organization?.length > 0) {
     data.organization = params.organization.map(org => org.id).join(',');
+  } else {
+    delete data.organization;
   }
   if (params.service && params.service !== 'none') {
     data.level = params.service;
@@ -42,6 +46,22 @@ export const getEmbedURL = (url, params = {}) => {
     segment.splice(0, 1, params.language);
   }
   uri.segment(segment);
+  return URI.decode(uri);
+};
+
+export const setBboxToUrl = (url, bbox) => {
+  if (!url) {
+    return undefined;
+  }
+  const uri = URI(url);
+
+  const data = uri.search(true); // Get data object of search parameters
+  if (bbox) {
+    data.bbox = bbox;
+  } else {
+    delete data.bbox;
+  }
+  uri.search(data);
   return URI.decode(uri);
 };
 
