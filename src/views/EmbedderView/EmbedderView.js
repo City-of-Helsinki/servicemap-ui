@@ -41,6 +41,17 @@ const hideServicesIn = [
   paths.area.regex,
 ];
 
+/**
+ * @param embedUrl (or normal url)
+ */
+const showCitiesAndOrganisations = embedUrl => {
+  if (typeof embedUrl !== 'string') {
+    return false;
+  }
+  const originalUrl = embedUrl.replace('/embed', '');
+  return hideCitiesAndOrgsIn.every(r => !r.test(originalUrl));
+};
+
 // Timeout for handling width and height input changes
 // only once user stops typing
 let timeout;
@@ -93,8 +104,8 @@ const EmbedderView = () => {
   // States
   const [language, setLanguage] = useState(defaultLanguage);
   const [map, setMap] = useState(defaultMap);
-  const [city, setCity] = useState(defaultCities);
-  const [organization, setOrganization] = useState(organizationSettings);
+  const [city, setCity] = useState(showCitiesAndOrganisations(url) ? defaultCities : []);
+  const [organization, setOrganization] = useState(showCitiesAndOrganisations(url) ? organizationSettings : []);
   const [service, setService] = useState(defaultService);
   const [customWidth, setCustomWidth] = useState(embedderConfig.DEFAULT_CUSTOM_WIDTH || 100);
   const [widthMode, setWidthMode] = useState('auto');
@@ -229,20 +240,6 @@ const EmbedderView = () => {
     iframeConfig.style,
     showUnitList,
   ]);
-
-  const showCitiesAndOrganisations = (embedUrl) => {
-    if (typeof embedUrl !== 'string') {
-      return false;
-    }
-    const originalUrl = embedUrl.replace('/embed', '');
-    let show = true;
-    hideCitiesAndOrgsIn.forEach((r) => {
-      if (show) {
-        show = !r.test(originalUrl);
-      }
-    });
-    return show;
-  };
 
   const showServices = (embedUrl) => {
     if (typeof embedUrl !== 'string') {
