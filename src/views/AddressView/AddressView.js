@@ -19,7 +19,6 @@ import {
   SearchBar,
   SMButton,
   TabLists,
-  TitleBar,
 } from '../../components';
 import AddressInfo from '../../components/AddressInfo/AddressInfo';
 import {
@@ -179,13 +178,7 @@ const AddressView = (props) => {
           <AddressInfo address={addressData} districts={adminDistricts} />
         </DesktopComponent>
         <MobileComponent>
-          <TitleBar
-            sticky
-            icon={<AddressIcon />}
-            title={title}
-            titleComponent="h3"
-            primary
-          />
+          <AddressInfo address={addressData} districts={adminDistricts} />
         </MobileComponent>
       </>
     );
