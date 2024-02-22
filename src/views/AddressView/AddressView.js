@@ -21,6 +21,7 @@ import {
   TabLists,
   TitleBar,
 } from '../../components';
+import AddressInfo from '../../components/AddressInfo/AddressInfo';
 import {
   selectAddressAdminDistricts,
   selectAddressData,
@@ -175,13 +176,7 @@ const AddressView = (props) => {
       <>
         <DesktopComponent>
           <SearchBar margin />
-          <TitleBar
-            sticky
-            icon={<StyledAddressIcon />}
-            title={error || title}
-            titleComponent="h3"
-            primary
-          />
+          <AddressInfo address={addressData} districts={adminDistricts} />
         </DesktopComponent>
         <MobileComponent>
           <TitleBar
