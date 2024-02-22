@@ -65,7 +65,6 @@ const getEmergencyCareUnit = (division) => {
 
 const AddressView = (props) => {
   const intl = useIntl();
-  const [error, setError] = useState(null);
   const [isFetching, setIsFetching] = useState(false);
   const getLocaleText = useLocaleText();
   const match = useRouteMatch();
@@ -88,12 +87,6 @@ const AddressView = (props) => {
     setAdminDistricts,
     setToRender,
   } = props;
-
-  let title = '';
-
-  if (!isFetching) {
-    title = getAddressText(addressData, getLocaleText);
-  }
 
   const mapFocusDisabled = useMapFocusDisabled();
 
@@ -138,8 +131,6 @@ const AddressView = (props) => {
         setIsFetching(false);
         if (address?.length) {
           handleAddressData(address[0]);
-        } else {
-          setError(intl.formatMessage({ id: 'address.error' }));
         }
       });
   };
@@ -156,15 +147,17 @@ const AddressView = (props) => {
   };
 
   const renderHead = () => {
-    if (addressData) {
-      return (
-        <Helmet>
-          <title>
-            {`${title} | ${intl.formatMessage({ id: 'app.title' })}`}
-          </title>
-        </Helmet>
-      );
-    } return null;
+    if (!addressData) {
+      return null;
+    }
+    const title = getAddressText(addressData, getLocaleText);
+    return (
+      <Helmet>
+        <title>
+          {`${title} | ${intl.formatMessage({ id: 'app.title' })}`}
+        </title>
+      </Helmet>
+    );
   };
 
   const renderTopBar = () => {
