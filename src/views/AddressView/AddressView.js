@@ -100,7 +100,7 @@ const AddressView = (props) => {
   const mapFocusDisabled = useMapFocusDisabled();
 
   const fetchAddressDistricts = (lnglat) => {
-    setAdminDistricts(null);
+    setAdminDistricts([]);
     // Fetch administrative districts data
     fetchAdministrativeDistricts(lnglat)
       .then(response => setAdminDistricts(response));

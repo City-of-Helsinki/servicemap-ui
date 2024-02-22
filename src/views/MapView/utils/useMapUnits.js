@@ -21,13 +21,11 @@ import { getLocale, getPage } from '../../../redux/selectors/user';
 import orderUnits from '../../../utils/orderUnits';
 import { useEmbedStatus } from '../../../utils/path';
 
-
 // Helper function to handle address view units
 const handleAdrressUnits = (addressToRender, adminDistricts, addressUnits) => {
-  let mapUnits = [];
   switch (addressToRender) {
     case 'adminDistricts':
-      mapUnits = adminDistricts ? adminDistricts
+      return adminDistricts
         .filter(d => d.unit)
         .reduce((unique, o) => {
           // Ignore districts without unit
@@ -39,17 +37,12 @@ const handleAdrressUnits = (addressToRender, adminDistricts, addressUnits) => {
             unique.push(o.unit);
           }
           return unique;
-        }, [])
-        : [];
-      break;
+        }, []);
     case 'units':
-      mapUnits = addressUnits;
-      break;
+      return addressUnits;
     default:
-      mapUnits = [];
+      return [];
   }
-
-  return mapUnits;
 };
 
 

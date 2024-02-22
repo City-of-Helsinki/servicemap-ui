@@ -2,7 +2,7 @@ const initialState = {
   units: [],
   addressCoordinates: null,
   addressData: null,
-  adminDistricts: null,
+  adminDistricts: [],
   toRender: 'adminDistricts',
 };
 
