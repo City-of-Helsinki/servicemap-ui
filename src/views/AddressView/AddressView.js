@@ -1,34 +1,15 @@
 /* eslint-disable global-require */
+import styled from '@emotion/styled';
+import { Map } from '@mui/icons-material';
+import { ButtonBase, Divider, List, Typography } from '@mui/material';
+import PropTypes from 'prop-types';
 /* eslint-disable camelcase */
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-import {
-  ButtonBase,
-  Divider,
-  List,
-  Typography,
-} from '@mui/material';
-import { FormattedMessage, useIntl } from 'react-intl';
-import { Map } from '@mui/icons-material';
 import Helmet from 'react-helmet';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { useLocation, useRouteMatch } from 'react-router-dom';
-import styled from '@emotion/styled';
-import {
-  selectAddressAdminDistricts, selectAddressData,
-  selectAddressUnits,
-} from '../../redux/selectors/address';
-import { selectMapRef, selectNavigator } from '../../redux/selectors/general';
-import { selectResultsData } from '../../redux/selectors/results';
-import { focusToPosition, useMapFocusDisabled } from '../MapView/utils/mapActions';
-import fetchAdministrativeDistricts from './utils/fetchAdministrativeDistricts';
-import fetchAddressUnits from './utils/fetchAddressUnits';
-import fetchAddressData from './utils/fetchAddressData';
-import { getAddressText } from '../../utils/address';
 import config from '../../../config';
-import useLocaleText from '../../utils/useLocaleText';
-import { parseSearchParams } from '../../utils';
-import { getCategoryDistricts } from '../AreaView/utils/districtDataHelper';
 import {
   AddressIcon,
   DesktopComponent,
@@ -40,6 +21,22 @@ import {
   TabLists,
   TitleBar,
 } from '../../components';
+import {
+  selectAddressAdminDistricts,
+  selectAddressData,
+  selectAddressUnits,
+} from '../../redux/selectors/address';
+import { selectMapRef, selectNavigator } from '../../redux/selectors/general';
+import { selectResultsData } from '../../redux/selectors/results';
+import { calculateDistance, getCurrentlyUsedPosition } from '../../redux/selectors/unit';
+import { formatDistanceObject, parseSearchParams } from '../../utils';
+import { getAddressText } from '../../utils/address';
+import useLocaleText from '../../utils/useLocaleText';
+import { getCategoryDistricts } from '../AreaView/utils/districtDataHelper';
+import { focusToPosition, useMapFocusDisabled } from '../MapView/utils/mapActions';
+import fetchAddressData from './utils/fetchAddressData';
+import fetchAddressUnits from './utils/fetchAddressUnits';
+import fetchAdministrativeDistricts from './utils/fetchAdministrativeDistricts';
 
 const hiddenDivisions = {
   emergency_care_district: true,
@@ -79,10 +76,11 @@ const AddressView = (props) => {
   const units = useSelector(selectAddressUnits);
   const adminDistricts = useSelector(selectAddressAdminDistricts);
   const addressData = useSelector(selectAddressData);
+  const currentPosition = useSelector(getCurrentlyUsedPosition);
+  const getDistance = unit => formatDistanceObject(intl, calculateDistance(unit, currentPosition));
 
   const {
     embed,
-    getDistance,
     setAddressData,
     setAddressLocation,
     setAddressUnits,
@@ -417,7 +415,6 @@ const StyledTopArea = styled('div')(() => ({
 export default AddressView;
 
 AddressView.propTypes = {
-  getDistance: PropTypes.func.isRequired,
   setAddressData: PropTypes.func.isRequired,
   setAddressLocation: PropTypes.func.isRequired,
   setAddressUnits: PropTypes.func.isRequired,
