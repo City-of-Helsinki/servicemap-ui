@@ -11,7 +11,6 @@ import { useSelector } from 'react-redux';
 import { useLocation, useRouteMatch } from 'react-router-dom';
 import config from '../../../config';
 import {
-  AddressIcon,
   DesktopComponent,
   DistrictItem,
   DivisionItem,
@@ -357,14 +356,6 @@ const AddressView = (props) => {
     </div>
   );
 };
-
-const StyledAddressIcon = styled(AddressIcon)(() => ({
-  fontSize: 28,
-  height: 24,
-  width: 24,
-  marginLeft: 0,
-  marginRight: 0,
-}));
 
 const StyledButtonBase = styled(ButtonBase)(({ theme }) => ({
   color: theme.palette.link.main,
