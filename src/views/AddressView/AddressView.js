@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import Helmet from 'react-helmet';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useRouteMatch } from 'react-router-dom';
 import config from '../../../config';
 import {
@@ -20,6 +20,14 @@ import {
   TabLists,
 } from '../../components';
 import AddressInfo from '../../components/AddressInfo/AddressInfo';
+import {
+  setAddressData,
+  setAddressLocation,
+  setAddressUnits,
+  setAdminDistricts,
+  setToRender,
+} from '../../redux/actions/address';
+import { setDistrictAddressData } from '../../redux/actions/district';
 import {
   selectAddressAdminDistricts,
   selectAddressData,
@@ -61,7 +69,7 @@ const getEmergencyCareUnit = (division) => {
   }
   return null;
 };
-const AddressView = (props) => {
+const AddressView = ({ embed }) => {
   const intl = useIntl();
   // This is not nice that we have 3 isFetching variables
   const [isFetchingAddress, setIsFetchingAddress] = useState(false);
@@ -70,6 +78,7 @@ const AddressView = (props) => {
   const getLocaleText = useLocaleText();
   const match = useRouteMatch();
   const location = useLocation();
+  const dispatch = useDispatch();
   const searchResults = useSelector(selectResultsData);
   const navigator = useSelector(selectNavigator);
   const map = useSelector(selectMapRef);
@@ -79,16 +88,6 @@ const AddressView = (props) => {
   const currentPosition = useSelector(getCurrentlyUsedPosition);
   const getDistance = unit => formatDistanceObject(intl, calculateDistance(unit, currentPosition));
 
-  const {
-    embed,
-    setAddressData,
-    setAddressLocation,
-    setAddressUnits,
-    setDistrictAddressData,
-    setAdminDistricts,
-    setToRender,
-  } = props;
-
   const mapFocusDisabled = useMapFocusDisabled();
 
   const fetchAddressDistricts = (lnglat) => {
@@ -96,7 +95,7 @@ const AddressView = (props) => {
     setIsFetchingDistricts(true);
     fetchAdministrativeDistricts(lnglat)
       .then(response => {
-        setAdminDistricts(response);
+        dispatch(setAdminDistricts(response));
         setIsFetchingDistricts(false);
       });
   };
@@ -109,14 +108,14 @@ const AddressView = (props) => {
         units.forEach((unit) => {
           unit.object_type = 'unit';
         });
-        setAddressUnits(units);
+        dispatch(setAddressUnits(units));
         setIsFetchingUnits(false);
       });
   };
 
   const handleAddressData = (address) => {
-    setAddressData(address);
-    setAddressLocation({ addressCoordinates: address.location.coordinates });
+    dispatch(setAddressData(address));
+    dispatch(setAddressLocation({ addressCoordinates: address.location.coordinates }));
     const { coordinates } = address.location;
 
     if (!mapFocusDisabled) {
@@ -129,7 +128,7 @@ const AddressView = (props) => {
   const fetchData = () => {
     const { municipality, street } = match.params;
 
-    setAddressUnits([]);
+    dispatch(setAddressUnits([]));
 
     setIsFetchingAddress(true);
     fetchAddressData(municipality, street)
@@ -236,7 +235,7 @@ const AddressView = (props) => {
           <StyledButtonBase
             role="link"
             onClick={() => {
-              setDistrictAddressData({ address: addressData });
+              dispatch(setDistrictAddressData({ address: addressData }));
               navigator.push('area');
             }}
             id="areaViewLink"
@@ -284,7 +283,7 @@ const AddressView = (props) => {
       title: intl.formatMessage({ id: 'address.nearby' }),
       noOrderer: true, // Remove this when we want result orderer for address unit list
       onClick: () => {
-        setToRender('units');
+        dispatch(setToRender('units'));
       },
     },
   ];
@@ -298,7 +297,7 @@ const AddressView = (props) => {
       itemsPerPage: null,
       title: intl.formatMessage({ id: 'address.services.header' }),
       onClick: () => {
-        setToRender('adminDistricts');
+        dispatch(setToRender('adminDistricts'));
       },
     };
     tabs.unshift(nearbyServicesTab);
@@ -390,12 +389,6 @@ const StyledTopArea = styled('div')(() => ({
 export default AddressView;
 
 AddressView.propTypes = {
-  setAddressData: PropTypes.func.isRequired,
-  setAddressLocation: PropTypes.func.isRequired,
-  setAddressUnits: PropTypes.func.isRequired,
-  setAdminDistricts: PropTypes.func.isRequired,
-  setDistrictAddressData: PropTypes.func.isRequired,
-  setToRender: PropTypes.func.isRequired,
   embed: PropTypes.bool,
 };
 
