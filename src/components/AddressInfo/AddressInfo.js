@@ -7,10 +7,10 @@ import { FormattedMessage } from 'react-intl';
 import { getAddressText } from '../../utils/address';
 import useLocaleText from '../../utils/useLocaleText';
 
-const AddressInfo = memo(({ addressData }) => {
+const AddressInfo = memo(({ address, districts }) => {
   const getLocaleText = useLocaleText();
-  const localPostArea = addressData.districts.find(obj => obj.type === 'postcode_area');
-  const localNeighborhood = addressData.districts.find(obj => obj.type === 'neighborhood');
+  const localPostArea = districts.find(obj => obj.type === 'postcode_area');
+  const localNeighborhood = districts.find(obj => obj.type === 'neighborhood');
   return (
     <StyledAddressInfoContainer>
       <StyledAddressInfoText component="h3">
@@ -19,7 +19,7 @@ const AddressInfo = memo(({ addressData }) => {
       <StyledAddressInfoIconArea>
         <StyledAddressInfoIcon color="primary" />
         <Typography component="p" variant="subtitle1">
-          {getAddressText(addressData.address, getLocaleText)}
+          {getAddressText(address, getLocaleText)}
         </Typography>
       </StyledAddressInfoIconArea>
       {localPostArea ? (
@@ -59,7 +59,8 @@ const StyledAddressInfoIcon = styled(LocationOn)(({ theme }) => ({
 }));
 
 AddressInfo.propTypes = {
-  addressData: PropTypes.objectOf(PropTypes.any).isRequired,
+  address: PropTypes.objectOf(PropTypes.any).isRequired,
+  districts: PropTypes.arrayOf(PropTypes.any).isRequired,
 };
 
 export default AddressInfo;

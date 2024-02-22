@@ -109,7 +109,7 @@ const GeographicalTab = ({
     return (
       <>
         {localAddressData?.address && localAddressData.districts?.length && (
-          <AddressInfo addressData={localAddressData} />
+          <AddressInfo address={localAddressData.address} districts={localAddressData.districts} />
         )}
         <Typography style={visuallyHidden} component="h3">
           <FormattedMessage id="area.list" />
