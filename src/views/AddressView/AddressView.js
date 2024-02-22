@@ -61,10 +61,12 @@ const getEmergencyCareUnit = (division) => {
   }
   return null;
 };
-
 const AddressView = (props) => {
   const intl = useIntl();
-  const [isFetching, setIsFetching] = useState(false);
+  // This is not nice that we have 3 isFetching variables
+  const [isFetchingAddress, setIsFetchingAddress] = useState(false);
+  const [isFetchingUnits, setIsFetchingUnits] = useState(false);
+  const [isFetchingDistricts, setIsFetchingDistricts] = useState(false);
   const getLocaleText = useLocaleText();
   const match = useRouteMatch();
   const location = useLocation();
@@ -90,13 +92,17 @@ const AddressView = (props) => {
   const mapFocusDisabled = useMapFocusDisabled();
 
   const fetchAddressDistricts = (lnglat) => {
-    setAdminDistricts([]);
     // Fetch administrative districts data
+    setIsFetchingDistricts(true);
     fetchAdministrativeDistricts(lnglat)
-      .then(response => setAdminDistricts(response));
+      .then(response => {
+        setAdminDistricts(response);
+        setIsFetchingDistricts(false);
+      });
   };
 
   const fetchUnits = (lnglat) => {
+    setIsFetchingUnits(true);
     fetchAddressUnits(lnglat)
       .then(data => {
         const units = data?.results || [];
@@ -104,6 +110,7 @@ const AddressView = (props) => {
           unit.object_type = 'unit';
         });
         setAddressUnits(units);
+        setIsFetchingUnits(false);
       });
   };
 
@@ -124,13 +131,13 @@ const AddressView = (props) => {
 
     setAddressUnits([]);
 
-    setIsFetching(true);
+    setIsFetchingAddress(true);
     fetchAddressData(municipality, street)
-      .then((address) => {
-        setIsFetching(false);
+      .then(address => {
         if (address?.length) {
           handleAddressData(address[0]);
         }
+        setIsFetchingAddress(false);
       });
   };
 
@@ -146,9 +153,6 @@ const AddressView = (props) => {
   };
 
   const renderHead = () => {
-    if (!addressData) {
-      return null;
-    }
     const title = getAddressText(addressData, getLocaleText);
     return (
       <Helmet>
@@ -160,7 +164,7 @@ const AddressView = (props) => {
   };
 
   const renderTopBar = () => {
-    if (!addressData) {
+    if (isFetchingDistricts) {
       return null;
     }
     return (
@@ -177,18 +181,17 @@ const AddressView = (props) => {
   };
 
   const renderNearbyList = () => {
-    if (isFetching || !units) {
+    if (isFetchingAddress || isFetchingUnits || !units) {
       return <Typography id="LoadingMessage"><FormattedMessage id="general.loading" /></Typography>;
     }
-    if (units && !units.length) {
+    if (!units.length) {
       return <Typography id="NoDataMessage"><FormattedMessage id="general.noData" /></Typography>;
     }
     return null;
   };
 
-
   const renderClosebyServices = () => {
-    if (isFetching || !adminDistricts) {
+    if (!addressData || isFetchingAddress || isFetchingDistricts || !adminDistricts) {
       return <Typography><FormattedMessage id="general.loading" /></Typography>;
     }
     // Get divisions with units
@@ -216,7 +219,7 @@ const AddressView = (props) => {
     const majorDistricts = adminDistricts.filter(x => x.type === 'major_district');
     const unitlessDistricts = [...rescueAreas, ...majorDistricts];
 
-    const units = divisionsWithUnits.map((x) => {
+    const districtUnits = divisionsWithUnits.map((x) => {
       const { unit } = x;
       const unitData = unit;
       unitData.area = x;
@@ -246,7 +249,7 @@ const AddressView = (props) => {
         <Divider aria-hidden />
         <List>
           {
-            units.map((data) => {
+            districtUnits.map((data) => {
               const key = `${data.area.id}`;
               const distance = getDistance(data);
               const customTitle = rescueAreaIDs.includes(data.area.type)
@@ -322,7 +325,7 @@ const AddressView = (props) => {
     }
   }, [match.url, map]);
 
-  if (embed) {
+  if (embed || isFetchingAddress || !addressData) {
     return null;
   }
 
