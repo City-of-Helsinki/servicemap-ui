@@ -12,7 +12,7 @@ const AddressInfo = memo(({ address, districts }) => {
   const localPostArea = districts.find(obj => obj.type === 'postcode_area');
   const localNeighborhood = districts.find(obj => obj.type === 'neighborhood');
   return (
-    <StyledAddressInfoContainer>
+    <StyledAddressInfoContainer data-sm="AddressInfo">
       <StyledAddressInfoText component="h3">
         <FormattedMessage id="area.localAddress.title" />
       </StyledAddressInfoText>

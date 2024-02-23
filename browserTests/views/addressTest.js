@@ -13,15 +13,17 @@ fixture`Address view test`
   });
 
 test('AddressView does render correct view', async (t) => {
-  const title = await Selector('[data-sm="TitleBar"]');
+  const addressInfo = await Selector('[data-sm="AddressInfo"]');
   const tab1 = await Selector('div[role="tablist"] button').nth(0).textContent;
   const tab2 = Selector('div[role="tablist"] button').nth(1);
   const divisions = ReactSelector('DivisionItem').count;
   const tab2Text = await tab2.textContent;
 
   await t
-    .expect(title.textContent).contains('Topeliuksenkatu 27')
-    .expect(title.textContent).contains('Helsinki')
+    .expect(addressInfo.textContent).contains('Topeliuksenkatu 27')
+    .expect(addressInfo.textContent).contains('Helsinki')
+    .expect(addressInfo.textContent).contains('00250')
+    .expect(addressInfo.textContent).contains('Taka-Töölö')
     .expect(tab1).eql('Palvelualueet')
     .expect(tab2Text.indexOf('Lähellä')).eql(0, 'Tab text should include text "Lähellä"')
     .expect(divisions).gt(1, 'First tab should show divisions')
