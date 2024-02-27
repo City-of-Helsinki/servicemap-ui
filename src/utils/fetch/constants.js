@@ -57,7 +57,7 @@ export const APIHandlers = {
     url: id => `${config.serviceMapAPI.root}${config.serviceMapAPI.version}/unit/${id}/`,
     options: {
       accessibility_description: true,
-      include: 'service_nodes,services,keywords,department,entrances',
+      include: 'services,keywords,department,entrances',
       geometry: true,
     },
     envName: config.serviceMapAPI.id,
@@ -67,9 +67,9 @@ export const APIHandlers = {
     options: {
       page: 1,
       page_size: 200,
-      only: 'street_address,location,name,municipality,accessibility_shortcoming_count,service_nodes,contract_type',
+      only: 'street_address,location,name,municipality,accessibility_shortcoming_count,contract_type',
       geometry: true,
-      include: 'service_nodes,services,accessibility_properties,department',
+      include: 'services,accessibility_properties,department',
     },
     envName: config.serviceMapAPI.id,
   },

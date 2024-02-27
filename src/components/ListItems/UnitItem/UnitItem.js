@@ -76,6 +76,7 @@ const UnitItem = ({
   if (!simpleItem) {
     return (
       <ResultItem
+        data-sm="UnitItem"
         title={getLocaleText(name)}
         subtitle={contractText}
         bottomText={accessText}
@@ -102,6 +103,7 @@ const UnitItem = ({
   }
   return (
     <ResultItem
+      data-sm="UnitItem"
       title={getLocaleText(name)}
       simpleItem={simpleItem}
       extendedClasses={{

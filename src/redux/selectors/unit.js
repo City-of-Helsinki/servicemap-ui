@@ -5,16 +5,21 @@ import { getPage, selectCustomPositionCoordinates, selectUserPositionCoordinates
 export const getCurrentlyUsedPosition = createSelector(
   [selectCustomPositionCoordinates, selectUserPositionCoordinates, selectAddress, getPage],
   (customPositionCoordinates, userPositionCoordinates, address, currentPage) => {
-    const addressPosition = currentPage === 'address' && address && address.addressCoordinates ? {
+    const addressPosition = currentPage === 'address' && address?.addressCoordinates ? {
       latitude: address.addressCoordinates[1],
       longitude: address.addressCoordinates[0],
     } : null;
 
     const usedPosition = customPositionCoordinates || addressPosition || userPositionCoordinates;
-    if (usedPosition && usedPosition.latitude && usedPosition.longitude) {
+    if (usedPosition?.latitude && usedPosition?.longitude) {
       return usedPosition;
     }
     return null;
+  },
+  {
+    memoizeOptions: {
+      resultEqualityCheck: (a, b) => a?.latitude === b?.latitude && a?.longitude === b?.longitude,
+    },
   },
 );
 
