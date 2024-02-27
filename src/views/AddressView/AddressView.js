@@ -181,10 +181,10 @@ const AddressView = ({ embed }) => {
 
   const renderNearbyList = () => {
     if (isFetchingAddress || isFetchingUnits || !units) {
-      return <Typography id="LoadingMessage"><FormattedMessage id="general.loading" /></Typography>;
+      return <Typography data-sm="LoadingMessage"><FormattedMessage id="general.loading" /></Typography>;
     }
     if (!units.length) {
-      return <Typography id="NoDataMessage"><FormattedMessage id="general.noData" /></Typography>;
+      return <Typography data-sm="NoDataMessage"><FormattedMessage id="general.noData" /></Typography>;
     }
     return null;
   };

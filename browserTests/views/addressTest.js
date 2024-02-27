@@ -29,9 +29,11 @@ test('AddressView does render correct view', async (t) => {
     .expect(divisions).gt(1, 'First tab should show divisions')
     .click(tab2)
   ;
-  const noData = await Selector('#NoDataMessage');
+  const loading = await Selector('[data-sm="LoadingMessage"]');
+  const noData = await Selector('[data-sm="NoDataMessage"]');
 
   await t
+    .expect(loading.exists).notOk()
     .expect(noData.exists).notOk();
   const units = await Selector('[data-sm="UnitItem"]').count;
   await t
