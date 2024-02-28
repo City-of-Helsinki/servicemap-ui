@@ -120,20 +120,17 @@ const ServiceTab = (props) => {
   };
 
   const renderParkingAreaSelection = (item) => { // Custom implementation for parking areas
-    const districList = districtData.filter(obj => item.districts.some(
+    const districtList = districtData.filter(obj => item.districts.some(
       district => obj.id.includes(district.id),
     ));
-    const parkingAreas = districList.filter(obj => !obj.id.includes('parking_area'));
-    const parkingAreasHelsinki = parkingAreas.filter(parkingArea => parkingArea.data.some(x => x.ocd_id.includes('kunta:helsinki')));
-    const parkingAreasVantaa = parkingAreas.filter(parkingArea => parkingArea.data.some(x => x.ocd_id.includes('kunta:vantaa')));
-    const parkingSpaces = districList.filter(obj => obj.id.includes('parking_area') && obj.id !== 'parking_area0');
-    function getElements(variant, titleId, parkingAreas) {
+    const parkingAreas = districtList.filter(obj => !obj.id.includes('parking_area'));
+    const parkingSpaces = districtList.filter(obj => obj.id.includes('parking_area') && obj.id !== 'parking_area0');
+    function getElements(variant, titleId) {
       return (
         <>
           <StyledServiceTabSubtitle>
             <StyledBoldText component="h4"><FormattedMessage id={titleId} /></StyledBoldText>
           </StyledServiceTabSubtitle>
-          {renderDistrictList(parkingAreas)}
           <StyledServiceTabSubtitle>
             <Typography component="h6"><FormattedMessage id="area.list.parkingSpaces" /></Typography>
           </StyledServiceTabSubtitle>
@@ -141,13 +138,14 @@ const ServiceTab = (props) => {
         </>
       );
     }
-    const elementsHelsinki = getElements('helsinki', 'settings.city.helsinki', parkingAreasHelsinki);
-    const elementsVantaa = getElements('vantaa', 'settings.city.vantaa', parkingAreasVantaa);
+    const elementsHelsinki = getElements('helsinki', 'settings.city.helsinki');
+    const elementsVantaa = getElements('vantaa', 'settings.city.vantaa');
 
     const showHelsinki = citySettings.helsinki || config.cities.every(city => !citySettings[city]);
     const showVantaa = citySettings.vantaa || config.cities.every(city => !citySettings[city]);
     return (
       <>
+        {renderDistrictList(parkingAreas)}
         {showHelsinki ? elementsHelsinki : null}
         {showVantaa ? elementsVantaa : null}
       </>
