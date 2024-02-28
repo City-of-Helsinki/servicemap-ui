@@ -2,19 +2,20 @@ import styled from '@emotion/styled';
 import { Divider, List, Typography } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
 import PropTypes from 'prop-types';
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import config from '../../../../../config';
 import { SMAccordion } from '../../../../components';
 import {
-  fetchDistrictGeometry,
+  fetchDistrictGeometry, fetchDistricts,
   handleOpenItems,
   setParkingUnits,
   setSelectedDistrictType,
   setSelectedParkingAreas,
 } from '../../../../redux/actions/district';
 import {
+  selectDistrictData,
   selectDistrictsFetching, selectParkingUnits,
   selectSelectedDistrictType, selectSelectedParkingAreas,
 } from '../../../../redux/selectors/district';
@@ -35,10 +36,10 @@ import {
 const ServiceTab = (props) => {
   const {
     selectedAddress,
-    districtData,
     initialOpenItems,
   } = props;
   const dispatch = useDispatch();
+  const districtData = useSelector(selectDistrictData);
   const districtsFetching = useSelector(selectDistrictsFetching);
   const selectedDistrictType = useSelector(selectSelectedDistrictType);
   const selectedParkingAreas = useSelector(selectSelectedParkingAreas);
@@ -67,6 +68,11 @@ const ServiceTab = (props) => {
     }
   };
 
+  useEffect(() => {
+    if (!districtData.length) { // Arriving to page first time
+      dispatch(fetchDistricts());
+    }
+  }, []);
 
   const renderDistrictItem = district => (
     <DistrictToggleButton
@@ -202,7 +208,7 @@ const ServiceTab = (props) => {
 
   const districtCategoryList = dataStructure.filter(obj => obj.id !== 'geographical');
 
-  if (!districtData.length && districtsFetching) {
+  if (!districtData.length && districtsFetching?.length) {
     return (
       <StyledLoadingText data-sm="ServiceTabComponent">
         <Typography aria-hidden>
@@ -249,14 +255,12 @@ const StyledListLevelTwo = styled(List)(() => ({
 }));
 
 ServiceTab.propTypes = {
-  districtData: PropTypes.arrayOf(PropTypes.object),
   initialOpenItems: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
   selectedAddress: PropTypes.objectOf(PropTypes.any),
 };
 
 ServiceTab.defaultProps = {
   initialOpenItems: [],
-  districtData: [],
   selectedAddress: null,
 };
 

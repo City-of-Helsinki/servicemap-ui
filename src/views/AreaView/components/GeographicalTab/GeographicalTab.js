@@ -10,6 +10,7 @@ import { SMAccordion } from '../../../../components';
 import AddressInfo from '../../../../components/AddressInfo/AddressInfo';
 import {
   fetchDistrictGeometry,
+  fetchDistricts,
   handleOpenGeographicalCategory,
   setSelectedDistrictServices,
   setSelectedDistrictType,
@@ -97,6 +98,12 @@ const GeographicalTab = ({
   };
 
   useEffect(() => {
+    if (!districtData.length) { // Arriving to page first time
+      dispatch(fetchDistricts());
+    }
+  }, []);
+
+  useEffect(() => {
     if (!selectedDistrictType || !geographicalDistricts.includes(selectedDistrictType)) {
       dispatch(setSelectedSubdistricts([]));
       dispatch(setSelectedDistrictServices([]));
@@ -179,7 +186,7 @@ const GeographicalTab = ({
     );
   };
 
-  if (!districtData.length && districtsFetching) {
+  if (!districtData.length && districtsFetching?.length) {
     return (
       <StyledLoadingText>
         <Typography aria-hidden>

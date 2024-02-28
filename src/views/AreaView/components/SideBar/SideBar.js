@@ -1,5 +1,7 @@
 import styled from '@emotion/styled';
-import { BusinessCenter, EscalatorWarning, LocationCity, Map } from '@mui/icons-material';
+import {
+  BusinessCenter, EscalatorWarning, LocationCity, Map,
+} from '@mui/icons-material';
 import { List, Typography } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
 import PropTypes from 'prop-types';
@@ -8,10 +10,13 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import {
-  AddressSearchBar, MobileComponent, SMAccordion, SMButton, TitleBar,
+  AddressSearchBar,
+  MobileComponent,
+  SMAccordion,
+  SMButton,
+  TitleBar,
 } from '../../../../components';
 import {
-  fetchDistricts,
   setMapState,
   setSelectedDistrictServices,
   setSelectedDistrictType,
@@ -19,7 +24,9 @@ import {
 } from '../../../../redux/actions/district';
 import {
   getDistrictOpenItems,
-  selectDistrictData, selectDistrictMapState, selectDistrictsFetching, selectSelectedDistrictType,
+  selectDistrictMapState,
+  selectDistrictsFetching,
+  selectSelectedDistrictType,
 } from '../../../../redux/selectors/district';
 import { selectMapRef, selectNavigator } from '../../../../redux/selectors/general';
 import { parseSearchParams, stringifySearchParams } from '../../../../utils';
@@ -41,7 +48,6 @@ function SideBar({ selectedAddress, setSelectedAddress }) {
   const intl = useIntl();
   const location = useLocation();
   const isMobile = useMobileStatus();
-  const districtData = useSelector(selectDistrictData);
   const navigator = useSelector(selectNavigator);
   const selectedDistrictType = useSelector(selectSelectedDistrictType);
   const districtsFetching = useSelector(selectDistrictsFetching);
@@ -82,12 +88,6 @@ function SideBar({ selectedAddress, setSelectedAddress }) {
     };
   }, [mapState, map]);
 
-  useEffect(() => {
-    if (!districtData.length) { // Arriving to page first time
-      dispatch(fetchDistricts());
-    }
-  }, []);
-
   const clearRadioButtonValue = useCallback(() => {
     setSelectedDistrictType(null);
     setSelectedDistrictServices([]);
@@ -97,7 +97,6 @@ function SideBar({ selectedAddress, setSelectedAddress }) {
   const renderServiceTab = () => (
     <ServiceTab
       selectedAddress={selectedAddress}
-      districtData={districtData}
       initialOpenItems={initialOpenItems}
     />
   );
