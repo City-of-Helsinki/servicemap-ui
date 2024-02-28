@@ -37,15 +37,9 @@ export default (state = initialState, action) => {
       };
 
     case 'SET_SELECTED_DISTRICT_TYPE':
-      if (!action.district) {
-        return {
-          ...state,
-          selectedDistrictType: null,
-        };
-      }
       return {
         ...state,
-        selectedDistrictType: action.district,
+        selectedDistrictType: action.district || null,
       };
 
     case 'SET_DISTRICT_DATA':
