@@ -146,6 +146,9 @@ const translations = {
   'area.list.statistic.30-49': 'Age 30-49 years',
   'area.list.statistic.50-64': 'Age 50-64 years',
   'area.list.statistic.65+': 'Age over 64 years',
+  'area.list.hgv_street_parking_area': 'Heavy traffic - Permitted street parking',
+  'area.list.hgv_parking_area': 'Heavy traffic - Parking lots',
+  'area.list.hgv_no_parking_area': 'Heavy traffic - Prohibited street parking',
   'cookies.matomo.description': 'A cookie of the Matomo statistics system.',
   'cookies.matomo.expiration': '{days} days',
 
