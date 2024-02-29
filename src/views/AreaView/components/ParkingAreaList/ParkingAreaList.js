@@ -20,7 +20,7 @@ import {
 } from '../../../../redux/selectors/district';
 import ServiceMapAPI from '../../../../utils/newFetch/ServiceMapAPI';
 import {
-  heavyVehicleParkingSpaceVantaaTypes, parkingSpaceIDs,
+  parkingSpaceVantaaOtherTypes, parkingSpaceIDs,
   parkingSpaceVantaaTypes, resolveParkingAreaId, resolveParkingAreaName,
 } from '../../../../utils/parking';
 import useLocaleText from '../../../../utils/useLocaleText';
@@ -78,7 +78,7 @@ const ParkingAreaList = ({ areas, variant }) => {
       promises.push(...parkingSpaceVantaaTypes.map(
         async id => smAPI.parkingAreaInfo({ extra__tyyppi: id, municipality: 'vantaa' }),
       ));
-      promises.push(...heavyVehicleParkingSpaceVantaaTypes.map(
+      promises.push(...parkingSpaceVantaaOtherTypes.map(
         async id => smAPI.parkingAreaInfo({ type: id, municipality: 'vantaa' }),
       ));
     }
