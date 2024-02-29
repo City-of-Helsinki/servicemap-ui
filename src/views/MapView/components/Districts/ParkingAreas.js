@@ -8,6 +8,7 @@ import {
   selectParkingAreas,
   selectSelectedParkingAreas,
 } from '../../../../redux/selectors/district';
+import { resolveParkingAreaId } from '../../../../utils/parking';
 import useLocaleText from '../../../../utils/useLocaleText';
 import swapCoordinates from '../../utils/swapCoordinates';
 import { StyledAreaPopup } from '../styled/styled';
@@ -96,8 +97,7 @@ const ParkingAreas = () => {
   };
 
   const selectedAreas = parkingAreas.filter(
-    obj => selectedParkingAreas.includes(obj.extra.class)
-      || selectedParkingAreas.includes(obj.extra.tyyppi),
+    obj => selectedParkingAreas.includes(resolveParkingAreaId(obj)),
   );
 
   const parkingLayerClass = css({

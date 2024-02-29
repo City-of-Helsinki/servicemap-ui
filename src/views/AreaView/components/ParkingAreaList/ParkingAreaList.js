@@ -8,8 +8,6 @@ import {
   addSelectedParkingArea,
   fetchParkingAreaGeometry,
   fetchParkingUnits,
-  parkingSpaceIDs,
-  parkingSpaceVantaaTypes,
   removeSelectedParkingArea,
   setParkingUnits,
   setSelectedDistrictType,
@@ -21,6 +19,10 @@ import {
   selectSelectedParkingAreas,
 } from '../../../../redux/selectors/district';
 import ServiceMapAPI from '../../../../utils/newFetch/ServiceMapAPI';
+import {
+  heavyVehicleParkingSpaceVantaaTypes, parkingSpaceIDs,
+  parkingSpaceVantaaTypes, resolveParkingAreaId,
+} from '../../../../utils/parking';
 import useLocaleText from '../../../../utils/useLocaleText';
 import { getDistrictCategory } from '../../utils/districtDataHelper';
 import { StyledAreaListItem, StyledCheckBoxIcon, StyledListLevelThree } from '../styled/styled';
@@ -58,7 +60,7 @@ const ParkingAreaList = ({ areas, variant }) => {
     } else {
       dispatch(addSelectedParkingArea(id));
     }
-    if (!parkingAreas.some(obj => obj.extra.class === id || obj.extra.tyyppi === id)) {
+    if (!parkingAreas.some(obj => resolveParkingAreaId(obj) === id)) {
       dispatch(fetchParkingAreaGeometry(id));
     }
   };
@@ -73,9 +75,12 @@ const ParkingAreaList = ({ areas, variant }) => {
       );
     }
     if (variant === 'vantaa') {
-      promises = parkingSpaceVantaaTypes.map(
+      promises.push(...parkingSpaceVantaaTypes.map(
         async id => smAPI.parkingAreaInfo({ extra__tyyppi: id, municipality: 'vantaa' }),
-      );
+      ));
+      promises.push(...heavyVehicleParkingSpaceVantaaTypes.map(
+        async id => smAPI.parkingAreaInfo({ type: id, municipality: 'vantaa' }),
+      ));
     }
     const parkingAreaObjects = await Promise.all(promises);
     setAreaDataInfo(parkingAreaObjects.flat());
@@ -92,10 +97,20 @@ const ParkingAreaList = ({ areas, variant }) => {
     if (parkingUnits.length) setUnitsSelected(true);
   }, [parkingUnits]);
 
+  function renderAreaName(area) {
+    if (heavyVehicleParkingSpaceVantaaTypes.includes(area.type)) {
+      return <FormattedMessage id={`area.list.${area.type}`} />;
+    }
+    if (typeof area.name === 'object') {
+      return getLocaleText(area.name);
+    }
+    return <FormattedMessage id={`area.list.${area.name}`} />;
+  }
+
   return (
     <StyledListLevelThree data-sm="ParkingList" disablePadding>
       {areaDataInfo.map((area, i) => {
-        const fullId = variant === 'helsinki' ? area.extra.class : area.extra.tyyppi;
+        const fullId = resolveParkingAreaId(area);
         return (
           <Fragment key={fullId}>
             <StyledAreaListItem
@@ -114,10 +129,7 @@ const ParkingAreaList = ({ areas, variant }) => {
                 )}
                 label={(
                   <Typography id={`${fullId}Name`} aria-hidden>
-                    {typeof area.name === 'object'
-                      ? getLocaleText(area.name)
-                      : <FormattedMessage id={`area.list.${area.name}`} />
-                    }
+                    {renderAreaName(area)}
                   </Typography>
                 )}
               />
