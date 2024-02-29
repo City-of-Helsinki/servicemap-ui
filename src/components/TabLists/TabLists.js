@@ -180,7 +180,7 @@ const TabLists = ({
       Object.assign(styles, {
         padding: theme.spacing(1),
         fontSize: 'clamp(0.8rem, 1.8vw, 0.9rem)',
-        overflowWrap: 'anywhere',
+        overflowWrap: 'normal',
       });
       if (filteredData.length === 3 && isMobile) {
         // Mobilefont
@@ -239,7 +239,7 @@ const TabLists = ({
           {
               filteredData.map((item, index) => {
                 if (item.data && item.data.length > 0) {
-                  const label = `${item.title} ${item.component ? '' : `(${item.data.length})`}`;
+                  const label = `${item.title} ${item.component ? '' : `(${item.data.length})`}`.trim();
                   const tabId = `${item.title}-${item.data.length}`;
                   return (
                     <StyledTab
