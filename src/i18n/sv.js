@@ -149,6 +149,7 @@ const translations = {
   'area.list.hgv_street_parking_area': 'Tung trafik - Tillåtna gatuparkeringsplatser',
   'area.list.hgv_parking_area': 'Tung trafik - Parkeringsområden',
   'area.list.hgv_no_parking_area': 'Tung trafik - Förbjudna gatuparkeringsplatser',
+  'area.list.park_and_ride_area': 'Pendelparkering',
   'cookies.matomo.description': 'Kaka för statistiksystemet Matomo.',
   'cookies.matomo.expiration': '{days} dagar',
 

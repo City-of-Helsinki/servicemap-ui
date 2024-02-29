@@ -149,6 +149,7 @@ const translations = {
   'area.list.hgv_street_parking_area': 'Heavy traffic - Permitted street parking',
   'area.list.hgv_parking_area': 'Heavy traffic - Parking lots',
   'area.list.hgv_no_parking_area': 'Heavy traffic - Prohibited street parking',
+  'area.list.park_and_ride_area': 'Park & Ride',
   'cookies.matomo.description': 'A cookie of the Matomo statistics system.',
   'cookies.matomo.expiration': '{days} days',
 
