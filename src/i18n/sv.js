@@ -146,6 +146,10 @@ const translations = {
   'area.list.statistic.30-49': 'Ålder 30-49 år',
   'area.list.statistic.50-64': 'Ålder 50-64 år',
   'area.list.statistic.65+': 'Ålder över 65 år',
+  'area.list.hgv_street_parking_area': 'Tung trafik - Tillåtna gatuparkeringsplatser',
+  'area.list.hgv_parking_area': 'Tung trafik - Parkeringsområden',
+  'area.list.hgv_no_parking_area': 'Tung trafik - Förbjudna gatuparkeringsplatser',
+  'area.list.park_and_ride_area': 'Pendelparkering',
   'cookies.matomo.description': 'Kaka för statistiksystemet Matomo.',
   'cookies.matomo.expiration': '{days} dagar',
 

@@ -147,8 +147,9 @@ const ServiceTab = (props) => {
     const elementsHelsinki = getElements('helsinki', 'settings.city.helsinki');
     const elementsVantaa = getElements('vantaa', 'settings.city.vantaa');
 
-    const showHelsinki = citySettings.helsinki || config.cities.every(city => !citySettings[city]);
-    const showVantaa = citySettings.vantaa || config.cities.every(city => !citySettings[city]);
+    const everyCity = config.cities.every(city => !citySettings[city]);
+    const showHelsinki = everyCity || citySettings.helsinki;
+    const showVantaa = everyCity || citySettings.vantaa;
     return (
       <>
         {renderDistrictList(parkingAreas)}
