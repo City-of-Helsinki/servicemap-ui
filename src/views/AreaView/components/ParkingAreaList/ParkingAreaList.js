@@ -21,7 +21,7 @@ import {
 import ServiceMapAPI from '../../../../utils/newFetch/ServiceMapAPI';
 import {
   heavyVehicleParkingSpaceVantaaTypes, parkingSpaceIDs,
-  parkingSpaceVantaaTypes, resolveParkingAreaId,
+  parkingSpaceVantaaTypes, resolveParkingAreaId, resolveParkingAreaName,
 } from '../../../../utils/parking';
 import useLocaleText from '../../../../utils/useLocaleText';
 import { getDistrictCategory } from '../../utils/districtDataHelper';
@@ -98,13 +98,14 @@ const ParkingAreaList = ({ areas, variant }) => {
   }, [parkingUnits]);
 
   function renderAreaName(area) {
-    if (heavyVehicleParkingSpaceVantaaTypes.includes(area.type)) {
-      return <FormattedMessage id={`area.list.${area.type}`} />;
+    const nameData = resolveParkingAreaName(area);
+    if (nameData.type === 'TranslationKey') {
+      return <FormattedMessage id={nameData.value} />;
     }
-    if (typeof area.name === 'object') {
-      return getLocaleText(area.name);
+    if (nameData.type === 'LocalizedObject') {
+      return getLocaleText(nameData.value);
     }
-    return <FormattedMessage id={`area.list.${area.name}`} />;
+    return null;
   }
 
   return (

@@ -30,3 +30,13 @@ export function resolveParamsForParkingGeometryFetch(areaId) {
     ? { extra__class: areaNumber }
     : { extra__tyyppi: areaId };
 }
+
+export function resolveParkingAreaName(area) {
+  if (heavyVehicleParkingSpaceVantaaTypes.includes(area.type)) {
+    return { type: 'TranslationKey', value: `area.list.${area.type}` };
+  }
+  if (typeof area.name === 'object') {
+    return { type: 'LocalizedObject', value: area.name };
+  }
+  return { type: 'TranslationKey', value: `area.list.${area.name}` };
+}
