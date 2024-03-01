@@ -7,11 +7,14 @@ export const parkingSpaceVantaaOtherTypes = [
   'hgv_street_parking_area', 'hgv_parking_area', 'hgv_no_parking_area', 'park_and_ride_area',
 ];
 
+const VNT = 'vantaa';
+const HKI = 'helsinki';
+
 export function resolveParkingAreaId(area) {
-  if (area.municipality === 'helsinki') {
+  if (area.municipality === HKI) {
     return area.extra.class;
   }
-  if (area.municipality !== 'vantaa') {
+  if (area.municipality !== VNT) {
     // Not implemented
     return null;
   }
@@ -23,12 +26,12 @@ export function resolveParkingAreaId(area) {
 
 export function resolveParamsForParkingGeometryFetch(areaId) {
   if (parkingSpaceVantaaOtherTypes.includes(areaId)) {
-    return { type: areaId };
+    return { type: areaId, municipality: VNT };
   }
   const areaNumber = areaId.match(/\d+/g);
   return parkingSpaceIDs.includes(areaId)
-    ? { extra__class: areaNumber }
-    : { extra__tyyppi: areaId };
+    ? { type: 'parking_area', extra__class: areaNumber, municipality: HKI }
+    : { type: 'parking_area', extra__tyyppi: areaId, municipality: VNT };
 }
 
 export function resolveParkingAreaName(area) {
