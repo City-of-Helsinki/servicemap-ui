@@ -20,12 +20,12 @@ import {
 } from '../../../../redux/selectors/district';
 import ServiceMapAPI from '../../../../utils/newFetch/ServiceMapAPI';
 import {
-  parkingSpaceVantaaOtherTypes,
-  parkingSpaceIDs,
-  parkingSpaceVantaaTypes,
+  parkingVantaaOtherTypes,
+  parkingHelsinkiTypes,
+  parkingVantaaTypes,
   resolveParkingAreaId,
   resolveParkingAreaName,
-  resolveParamsForParkingGeometryFetch,
+  resolveParamsForParkingFetch,
 } from '../../../../utils/parking';
 import useLocaleText from '../../../../utils/useLocaleText';
 import { getDistrictCategory } from '../../utils/districtDataHelper';
@@ -74,16 +74,16 @@ const ParkingAreaList = ({ areas, variant }) => {
     const smAPI = new ServiceMapAPI();
     let types = [];
     if (variant === 'helsinki') {
-      types = parkingSpaceIDs;
+      types = [...parkingHelsinkiTypes];
     }
     if (variant === 'vantaa') {
       types = [
-        ...parkingSpaceVantaaTypes,
-        ...parkingSpaceVantaaOtherTypes,
+        ...parkingVantaaTypes,
+        ...parkingVantaaOtherTypes,
       ];
     }
     const promises = types
-      .map(parkingType => resolveParamsForParkingGeometryFetch(parkingType))
+      .map(parkingType => resolveParamsForParkingFetch(parkingType))
       .map(async params => smAPI.parkingAreaInfo(params));
     const parkingAreaObjects = await Promise.all(promises);
     setAreaDataInfo(parkingAreaObjects.flat());
