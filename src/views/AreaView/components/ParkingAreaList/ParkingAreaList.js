@@ -20,8 +20,12 @@ import {
 } from '../../../../redux/selectors/district';
 import ServiceMapAPI from '../../../../utils/newFetch/ServiceMapAPI';
 import {
-  parkingSpaceVantaaOtherTypes, parkingSpaceIDs,
-  parkingSpaceVantaaTypes, resolveParkingAreaId, resolveParkingAreaName,
+  parkingVantaaOtherTypes,
+  parkingHelsinkiTypes,
+  parkingVantaaTypes,
+  resolveParkingAreaId,
+  resolveParkingAreaName,
+  resolveParamsForParkingFetch,
 } from '../../../../utils/parking';
 import useLocaleText from '../../../../utils/useLocaleText';
 import { getDistrictCategory } from '../../utils/districtDataHelper';
@@ -68,24 +72,22 @@ const ParkingAreaList = ({ areas, variant }) => {
   const fetchParkingData = async () => {
     // This fetches only 1 result from each parking space type to get category names for list
     const smAPI = new ServiceMapAPI();
-    let promises = [];
+    let types = [];
     if (variant === 'helsinki') {
-      promises = parkingSpaceIDs.map(
-        async id => smAPI.parkingAreaInfo({ extra__class: id, municipality: 'helsinki' }),
-      );
+      types = [...parkingHelsinkiTypes];
     }
     if (variant === 'vantaa') {
-      promises.push(...parkingSpaceVantaaTypes.map(
-        async id => smAPI.parkingAreaInfo({ extra__tyyppi: id, municipality: 'vantaa' }),
-      ));
-      promises.push(...parkingSpaceVantaaOtherTypes.map(
-        async id => smAPI.parkingAreaInfo({ type: id, municipality: 'vantaa' }),
-      ));
+      types = [
+        ...parkingVantaaTypes,
+        ...parkingVantaaOtherTypes,
+      ];
     }
+    const promises = types
+      .map(parkingType => resolveParamsForParkingFetch(parkingType))
+      .map(async params => smAPI.parkingAreaInfo(params));
     const parkingAreaObjects = await Promise.all(promises);
     setAreaDataInfo(parkingAreaObjects.flat());
   };
-
 
   useEffect(() => {
     if (!areaDataInfo.length) {

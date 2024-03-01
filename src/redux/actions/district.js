@@ -1,5 +1,5 @@
 import ServiceMapAPI from '../../utils/newFetch/ServiceMapAPI';
-import { resolveParamsForParkingGeometryFetch } from '../../utils/parking';
+import { resolveParamsForParkingFetch } from '../../utils/parking';
 import {
   dataStructure,
   geographicalDistricts,
@@ -203,7 +203,7 @@ export const fetchDistrictUnitList = nodeID => (
 export const fetchParkingAreaGeometry = areaId => (
   async (dispatch) => {
     const type = 'parking_area';
-    const options = resolveParamsForParkingGeometryFetch(areaId);
+    const options = resolveParamsForParkingFetch(areaId);
 
     dispatch(startDistrictFetch(areaId));
     const smAPI = new ServiceMapAPI();
