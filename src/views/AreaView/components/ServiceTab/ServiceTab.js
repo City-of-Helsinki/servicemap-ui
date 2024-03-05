@@ -130,21 +130,36 @@ const ServiceTab = (props) => {
       district => obj.id.includes(district.id),
     ));
     const parkingAreas = districtList.filter(obj => !obj.id.includes('parking_area'));
-    function getElements(variant, titleId) {
-      return (
-        <>
-          <StyledServiceTabSubtitle>
-            <StyledBoldText component="h4"><FormattedMessage id={titleId} /></StyledBoldText>
-          </StyledServiceTabSubtitle>
-          <StyledServiceTabSubtitle>
-            <Typography component="h6"><FormattedMessage id="area.list.parkingSpaces" /></Typography>
-          </StyledServiceTabSubtitle>
-          <ParkingAreaList variant={variant} />
-        </>
-      );
-    }
-    const elementsHelsinki = getElements('helsinki', 'settings.city.helsinki');
-    const elementsVantaa = getElements('vantaa', 'settings.city.vantaa');
+    const elementsHelsinki = (
+      <>
+        <StyledServiceTabSubtitle>
+          <StyledBoldText component="h4"><FormattedMessage id="settings.city.helsinki" /></StyledBoldText>
+        </StyledServiceTabSubtitle>
+        <StyledServiceTabSubtitle>
+          <Typography component="h6"><FormattedMessage id="area.list.parkingSpaces" /></Typography>
+        </StyledServiceTabSubtitle>
+        <ParkingAreaList variant="helsinki" />
+      </>
+    );
+    const elementsVantaa = (
+      <>
+        <StyledServiceTabSubtitle>
+          <StyledBoldText component="h4"><FormattedMessage id="settings.city.vantaa" /></StyledBoldText>
+        </StyledServiceTabSubtitle>
+        <StyledServiceTabSubtitle>
+          <Typography component="h6"><FormattedMessage id="area.list.passenger_car" /></Typography>
+        </StyledServiceTabSubtitle>
+        <ParkingAreaList variant="vantaa/passenger_car" />
+        <StyledServiceTabSubtitle>
+          <Typography component="h6"><FormattedMessage id="area.list.heavy_traffic" /></Typography>
+        </StyledServiceTabSubtitle>
+        <ParkingAreaList variant="vantaa/heavy_traffic" />
+        <StyledServiceTabSubtitle>
+          <Typography component="h6"><FormattedMessage id="area.list.other" /></Typography>
+        </StyledServiceTabSubtitle>
+        <ParkingAreaList variant="vantaa/other" />
+      </>
+    );
 
     const everyCity = config.cities.every(city => !citySettings[city]);
     const showHelsinki = everyCity || citySettings.helsinki;

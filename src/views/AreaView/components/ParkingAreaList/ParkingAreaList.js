@@ -70,21 +70,26 @@ const ParkingAreaList = ({ variant }) => {
     }
   };
 
+  function resolveTypesForVariant() {
+    if (variant === 'helsinki') {
+      return [...parkingHelsinkiTypes];
+    }
+    if (variant === 'vantaa/passenger_car') {
+      return [...parkingVantaaTypes];
+    }
+    if (variant === 'vantaa/heavy_traffic') {
+      return [...parkingVantaaHeavyTrafficTypes];
+    }
+    if (variant === 'vantaa/other') {
+      return [...parkingVantaaOtherTypes];
+    }
+    return [];
+  }
+
   const fetchParkingData = async () => {
     // This fetches only 1 result from each parking space type to get category names for list
     const smAPI = new ServiceMapAPI();
-    let types = [];
-    if (variant === 'helsinki') {
-      types = [...parkingHelsinkiTypes];
-    }
-    if (variant === 'vantaa') {
-      types = [
-        ...parkingVantaaTypes,
-        ...parkingVantaaHeavyTrafficTypes,
-        ...parkingVantaaOtherTypes,
-      ];
-    }
-    const promises = types
+    const promises = resolveTypesForVariant()
       .map(parkingType => resolveParamsForParkingFetch(parkingType))
       .map(async params => smAPI.parkingAreaInfo(params));
     const parkingAreaObjects = await Promise.all(promises);
@@ -161,7 +166,7 @@ const ParkingAreaList = ({ variant }) => {
               )}
               label={(
                 <Typography id="parkingSpacesName" aria-hidden>
-                  <FormattedMessage id="area.list.parkingUnits"/>
+                  <FormattedMessage id="area.list.parkingUnits" />
                 </Typography>
               )}
             />
@@ -177,7 +182,7 @@ const StyledFormControlLabel = styled(FormControlLabel)(({ theme }) => ({
 }));
 
 ParkingAreaList.propTypes = {
-  variant: PropTypes.string.isRequired,
+  variant: PropTypes.oneOf(['helsinki', 'vantaa/passenger_car', 'vantaa/heavy_traffic', 'vantaa/other']).isRequired,
 };
 
 export default ParkingAreaList;
