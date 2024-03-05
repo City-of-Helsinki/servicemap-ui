@@ -31,7 +31,7 @@ import useLocaleText from '../../../../utils/useLocaleText';
 import { getDistrictCategory } from '../../utils/districtDataHelper';
 import { StyledAreaListItem, StyledCheckBoxIcon, StyledListLevelThree } from '../styled/styled';
 
-const ParkingAreaList = ({ areas, variant }) => {
+const ParkingAreaList = ({ variant }) => {
   const dispatch = useDispatch();
   const getLocaleText = useLocaleText();
   const selectedDistrictType = useSelector(selectSelectedDistrictType);
@@ -112,14 +112,14 @@ const ParkingAreaList = ({ areas, variant }) => {
 
   return (
     <StyledListLevelThree data-sm="ParkingList" disablePadding>
-      {areaDataInfo.map((area, i) => {
+      {areaDataInfo.map((area) => {
         const fullId = resolveParkingAreaId(area);
         return (
           <Fragment key={fullId}>
             <StyledAreaListItem
               key={fullId}
-              divider={areas.length !== i + 1}
-              className={`${fullId}`}
+              divider
+              className={fullId}
             >
               <StyledFormControlLabel
                 control={(
@@ -175,7 +175,6 @@ const StyledFormControlLabel = styled(FormControlLabel)(({ theme }) => ({
 }));
 
 ParkingAreaList.propTypes = {
-  areas: PropTypes.arrayOf(PropTypes.object).isRequired,
   variant: PropTypes.string.isRequired,
 };
 

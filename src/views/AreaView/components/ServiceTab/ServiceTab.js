@@ -130,7 +130,6 @@ const ServiceTab = (props) => {
       district => obj.id.includes(district.id),
     ));
     const parkingAreas = districtList.filter(obj => !obj.id.includes('parking_area'));
-    const parkingSpaces = districtList.filter(obj => obj.id.includes('parking_area') && obj.id !== 'parking_area0');
     function getElements(variant, titleId) {
       return (
         <>
@@ -140,7 +139,7 @@ const ServiceTab = (props) => {
           <StyledServiceTabSubtitle>
             <Typography component="h6"><FormattedMessage id="area.list.parkingSpaces" /></Typography>
           </StyledServiceTabSubtitle>
-          <ParkingAreaList areas={parkingSpaces} variant={variant} />
+          <ParkingAreaList variant={variant} />
         </>
       );
     }
