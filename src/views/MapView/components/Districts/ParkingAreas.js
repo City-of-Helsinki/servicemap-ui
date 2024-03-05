@@ -67,30 +67,46 @@ const ParkingAreas = () => {
   };
 
   const getColor = (area) => {
+    if (area?.type === 'hgv_no_parking_area') {
+      return 'rgb(115, 76, 0)';
+    }
+    if (area?.type === 'park_and_ride_area') {
+      return 'rgb(0, 38, 115)';
+    }
     const type = area.extra?.class || area.extra?.tyyppi;
     switch (type) {
       case '1':
-      case '12h-24h':
         return 'rgb(25, 100, 230)';
       case '2':
-      case '2h-3h':
         return 'rgb(86, 24, 227)';
       case '3':
-      case '4h-11h':
         return 'rgb(232, 70, 61)';
       case '4':
-      case 'Ei rajoitusta':
         return 'rgb(17, 37, 140)';
       case '5':
-      case 'Lyhytaikainen':
         return 'rgb(65, 32, 8)';
       case '6':
-      case 'Maksullinen':
         return 'rgb(69, 138, 47)';
+      case '7':
+        return '#ff8400';
+
+      case '12h-24h':
+        return 'rgb(237, 81, 81)';
+      case '4h-11h':
+        return 'rgb(167, 198, 54)';
+      case '2h-3h':
+        return 'rgb(197, 0, 255)';
+      case 'Ei rajoitusta':
+        return 'rgb(252, 146, 31)';
+      case 'Lyhytaikainen':
+        return 'rgb(247, 137, 216)';
+      case 'Maksullinen':
+        return 'rgb(255, 0, 0)';
       case 'Muu':
-        return 'rgb(255,0,168)';
+        return 'rgb(60, 175, 153)';
       case 'Varattu päivisin':
-        return 'rgb(255,60,0)';
+        return 'rgb(107, 107, 214)';
+
       default:
         return '#ff8400';
     }
