@@ -26,12 +26,13 @@ import {
   resolveParkingAreaId,
   resolveParkingAreaName,
   resolveParamsForParkingFetch,
+  parkingVantaaHeavyTrafficTypes,
 } from '../../../../utils/parking';
 import useLocaleText from '../../../../utils/useLocaleText';
 import { getDistrictCategory } from '../../utils/districtDataHelper';
 import { StyledAreaListItem, StyledCheckBoxIcon, StyledListLevelThree } from '../styled/styled';
 
-const ParkingAreaList = ({ areas, variant }) => {
+const ParkingAreaList = ({ variant }) => {
   const dispatch = useDispatch();
   const getLocaleText = useLocaleText();
   const selectedDistrictType = useSelector(selectSelectedDistrictType);
@@ -69,20 +70,26 @@ const ParkingAreaList = ({ areas, variant }) => {
     }
   };
 
+  function resolveTypesForVariant() {
+    if (variant === 'helsinki') {
+      return [...parkingHelsinkiTypes];
+    }
+    if (variant === 'vantaa/passenger_car') {
+      return [...parkingVantaaTypes];
+    }
+    if (variant === 'vantaa/heavy_traffic') {
+      return [...parkingVantaaHeavyTrafficTypes];
+    }
+    if (variant === 'vantaa/other') {
+      return [...parkingVantaaOtherTypes];
+    }
+    return [];
+  }
+
   const fetchParkingData = async () => {
     // This fetches only 1 result from each parking space type to get category names for list
     const smAPI = new ServiceMapAPI();
-    let types = [];
-    if (variant === 'helsinki') {
-      types = [...parkingHelsinkiTypes];
-    }
-    if (variant === 'vantaa') {
-      types = [
-        ...parkingVantaaTypes,
-        ...parkingVantaaOtherTypes,
-      ];
-    }
-    const promises = types
+    const promises = resolveTypesForVariant()
       .map(parkingType => resolveParamsForParkingFetch(parkingType))
       .map(async params => smAPI.parkingAreaInfo(params));
     const parkingAreaObjects = await Promise.all(promises);
@@ -112,14 +119,14 @@ const ParkingAreaList = ({ areas, variant }) => {
 
   return (
     <StyledListLevelThree data-sm="ParkingList" disablePadding>
-      {areaDataInfo.map((area, i) => {
+      {areaDataInfo.map((area) => {
         const fullId = resolveParkingAreaId(area);
         return (
           <Fragment key={fullId}>
             <StyledAreaListItem
               key={fullId}
-              divider={areas.length !== i + 1}
-              className={`${fullId}`}
+              divider
+              className={fullId}
             >
               <StyledFormControlLabel
                 control={(
@@ -159,7 +166,7 @@ const ParkingAreaList = ({ areas, variant }) => {
               )}
               label={(
                 <Typography id="parkingSpacesName" aria-hidden>
-                  <FormattedMessage id="area.list.parkingUnits"/>
+                  <FormattedMessage id="area.list.parkingUnits" />
                 </Typography>
               )}
             />
@@ -175,8 +182,7 @@ const StyledFormControlLabel = styled(FormControlLabel)(({ theme }) => ({
 }));
 
 ParkingAreaList.propTypes = {
-  areas: PropTypes.arrayOf(PropTypes.object).isRequired,
-  variant: PropTypes.string.isRequired,
+  variant: PropTypes.oneOf(['helsinki', 'vantaa/passenger_car', 'vantaa/heavy_traffic', 'vantaa/other']).isRequired,
 };
 
 export default ParkingAreaList;
