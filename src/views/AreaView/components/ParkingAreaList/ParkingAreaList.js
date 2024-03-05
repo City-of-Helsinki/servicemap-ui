@@ -26,6 +26,7 @@ import {
   resolveParkingAreaId,
   resolveParkingAreaName,
   resolveParamsForParkingFetch,
+  parkingVantaaHeavyTrafficTypes,
 } from '../../../../utils/parking';
 import useLocaleText from '../../../../utils/useLocaleText';
 import { getDistrictCategory } from '../../utils/districtDataHelper';
@@ -79,6 +80,7 @@ const ParkingAreaList = ({ variant }) => {
     if (variant === 'vantaa') {
       types = [
         ...parkingVantaaTypes,
+        ...parkingVantaaHeavyTrafficTypes,
         ...parkingVantaaOtherTypes,
       ];
     }
