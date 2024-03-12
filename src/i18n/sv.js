@@ -137,6 +137,8 @@ const translations = {
   'area.list.resident_parking_zone.plural': 'Invånarparkeringsområden',
   'area.list.parkingSpaces': 'Parkeringsplatser',
   'area.list.parkingUnits': 'Parkeringshus',
+  'area.list.passenger_car': 'Personbil',
+  'area.list.heavy_traffic': 'Tung trafik',
   'area.list.statistic.byAge': 'Ålder',
   'area.list.statistic.forecast': 'Befolkningsprognos',
   'area.list.statistic.total': 'Alla invånare',

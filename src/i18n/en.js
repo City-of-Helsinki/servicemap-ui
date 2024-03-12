@@ -137,6 +137,8 @@ const translations = {
   'area.list.resident_parking_zone.plural': 'Residential parking areas',
   'area.list.parkingSpaces': 'Parking lots',
   'area.list.parkingUnits': 'Parking garages and car parks',
+  'area.list.passenger_car': 'Passenger car',
+  'area.list.heavy_traffic': 'Heavy Traffic',
   'area.list.statistic.byAge': 'Age',
   'area.list.statistic.forecast': 'Population forecast',
   'area.list.statistic.total': 'All population',
