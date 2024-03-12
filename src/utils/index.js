@@ -30,7 +30,7 @@ export const parseSearchParams = (searchParams) => {
     try {
       const key = decodeURIComponent(keyValuePair[0]);
       const value = decodeURIComponent(keyValuePair[1]);
-      searchParamsObject[key] = value;
+      searchParamsObject[key] = key === 'q' ? value.replace('+', ' ') : value;
     } catch (e) {
       console.warn('Failed to decode URI component');
     }
