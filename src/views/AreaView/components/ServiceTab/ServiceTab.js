@@ -154,10 +154,6 @@ const ServiceTab = (props) => {
           <Typography component="h6"><FormattedMessage id="area.list.heavy_traffic" /></Typography>
         </StyledServiceTabSubtitle>
         <ParkingAreaList variant="vantaa/heavy_traffic" />
-        <StyledServiceTabSubtitle>
-          <Typography component="h6"><FormattedMessage id="area.list.other" /></Typography>
-        </StyledServiceTabSubtitle>
-        <ParkingAreaList variant="vantaa/other" />
       </>
     );
 
