@@ -9,8 +9,11 @@ export const parkingVantaaHeavyTrafficTypes = [
   'Ei rajoitusta/heavy_traffic', 'Lyhytaikainen/heavy_traffic', 'Maksullinen/heavy_traffic',
   'Muu/heavy_traffic', 'Varattu päivisin/heavy_traffic',
 ];
+// These two types do not overlap between heavy traffic and passenger car.
+export const heavyTrafficNoParking = 'hgv_no_parking_area';
+export const passengerCarParkAndRide = 'park_and_ride_area';
 export const parkingVantaaOtherTypes = [
-  'hgv_no_parking_area', 'park_and_ride_area',
+  heavyTrafficNoParking, passengerCarParkAndRide,
 ];
 
 const parkingVNTHeavyTrafficTypes = [

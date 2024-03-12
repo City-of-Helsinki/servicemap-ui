@@ -20,13 +20,14 @@ import {
 } from '../../../../redux/selectors/district';
 import ServiceMapAPI from '../../../../utils/newFetch/ServiceMapAPI';
 import {
-  parkingVantaaOtherTypes,
+  heavyTrafficNoParking,
   parkingHelsinkiTypes,
+  parkingVantaaHeavyTrafficTypes,
   parkingVantaaTypes,
+  passengerCarParkAndRide,
+  resolveParamsForParkingFetch,
   resolveParkingAreaId,
   resolveParkingAreaName,
-  resolveParamsForParkingFetch,
-  parkingVantaaHeavyTrafficTypes,
 } from '../../../../utils/parking';
 import useLocaleText from '../../../../utils/useLocaleText';
 import { getDistrictCategory } from '../../utils/districtDataHelper';
@@ -75,13 +76,10 @@ const ParkingAreaList = ({ variant }) => {
       return [...parkingHelsinkiTypes];
     }
     if (variant === 'vantaa/passenger_car') {
-      return [...parkingVantaaTypes];
+      return [...parkingVantaaTypes, passengerCarParkAndRide];
     }
     if (variant === 'vantaa/heavy_traffic') {
-      return [...parkingVantaaHeavyTrafficTypes];
-    }
-    if (variant === 'vantaa/other') {
-      return [...parkingVantaaOtherTypes];
+      return [...parkingVantaaHeavyTrafficTypes, heavyTrafficNoParking];
     }
     return [];
   }
