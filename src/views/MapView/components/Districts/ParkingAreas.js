@@ -125,7 +125,8 @@ const ParkingAreas = () => {
       return `${area.extra?.area_key ?? ''}${getLocaleText(area.name)} - ${intl.formatMessage({ id: 'area.list.heavy_traffic' })}`;
     }
     if (area.name) {
-      return `${area.extra?.area_key ?? ''}${getLocaleText(area.name)} - ${intl.formatMessage({ id: `area.list.${type}` })}`;
+      const translationKey = `area.list.${type}`;
+      return `${area.extra?.area_key ?? ''}${getLocaleText(area.name)} - ${intl.formatMessage({ id: translationKey })}`;
     }
     return null;
   }
