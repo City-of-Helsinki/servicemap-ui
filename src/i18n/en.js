@@ -150,6 +150,8 @@ const translations = {
   'area.list.statistic.65+': 'Age over 64 years',
   'area.list.hgv_no_parking_area': 'Prohibited street parking',
   'area.list.park_and_ride_area': 'Park & Ride',
+  'area.parking.tooltip.park_and_ride_area': 'Park & Ride',
+  'area.parking.tooltip.hgv_no_parking_area': 'Heavy traffic - Prohibited street parking',
   'cookies.matomo.description': 'A cookie of the Matomo statistics system.',
   'cookies.matomo.expiration': '{days} days',
 

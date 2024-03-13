@@ -150,6 +150,8 @@ const translations = {
   'area.list.statistic.65+': 'Ikä yli 65 vuotta',
   'area.list.hgv_no_parking_area': 'Kielletyt kadunvarret',
   'area.list.park_and_ride_area': 'Liityntäpysäköinti',
+  'area.parking.tooltip.park_and_ride_area': 'Liityntäpysäköinti',
+  'area.parking.tooltip.hgv_no_parking_area': 'Raskas liikenne - kielletyt kadunvarret',
   'cookies.matomo.description': 'Matomo-tilastointijärjestelmän eväste.',
   'cookies.matomo.expiration': '{days} päivää',
 

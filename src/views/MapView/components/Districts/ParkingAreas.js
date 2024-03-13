@@ -113,6 +113,23 @@ const ParkingAreas = () => {
     zIndex: theme.zIndex.infront,
   });
 
+  function resolveTooltipText(area) {
+    const type = area?.type;
+    if (type === 'park_and_ride_area') {
+      return intl.formatMessage({ id: 'area.parking.tooltip.park_and_ride_area' });
+    }
+    if (type === 'hgv_no_parking_area') {
+      return intl.formatMessage({ id: 'area.parking.tooltip.hgv_no_parking_area' });
+    }
+    if (type === 'hgv_street_parking_area' || type === 'hgv_parking_area') {
+      return `${area.extra?.area_key ?? ''}${getLocaleText(area.name)} - ${intl.formatMessage({ id: 'area.list.heavy_traffic' })}`;
+    }
+    if (area.name) {
+      return `${area.extra?.area_key ?? ''}${getLocaleText(area.name)} - ${intl.formatMessage({ id: `area.list.${type}` })}`;
+    }
+    return null;
+  }
+
   return (
     <>
       {selectedAreas.map((area) => {
@@ -120,12 +137,13 @@ const ParkingAreas = () => {
         const boundary = area.boundary.coordinates.map(
           coords => swapCoordinates(coords),
         );
+        const tooltipText = resolveTooltipText(area);
         return (
           <Polygon
             key={area.id}
             positions={boundary}
             className={parkingLayerClass}
-            color={getColor(area)}
+            color={mainColor}
             pathOptions={{
               fillOpacity: '0',
               fillColor: mainColor,
@@ -143,16 +161,9 @@ const ParkingAreas = () => {
               },
             }}
           >
-            {area.name ? (
-              <Tooltip
-                sticky
-                direction="top"
-                autoPan={false}
-              >
-                {`${area.extra?.area_key ?? ''}${getLocaleText(area.name)} - ${intl.formatMessage({ id: `area.list.${area.type}` })}`}
-              </Tooltip>
-            ) : null}
-
+            {tooltipText && (
+              <Tooltip sticky direction="top" autoPan={false}>{tooltipText}</Tooltip>
+            )}
           </Polygon>
         );
       })}
