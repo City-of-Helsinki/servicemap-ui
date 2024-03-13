@@ -74,3 +74,7 @@ export function resolveParkingAreaName(area) {
   }
   return { type: 'TranslationKey', value: `area.list.${area.name}` };
 }
+
+export function visibleParkingAreas(areas, selectedTypes) {
+  return areas.filter(area => selectedTypes.includes(resolveParkingAreaId(area)));
+}

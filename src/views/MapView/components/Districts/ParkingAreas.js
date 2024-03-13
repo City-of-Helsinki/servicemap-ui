@@ -4,11 +4,8 @@ import { useTheme } from '@mui/styles';
 import React, { useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
-import {
-  selectParkingAreas,
-  selectSelectedParkingAreas,
-} from '../../../../redux/selectors/district';
-import { resolveParkingAreaId } from '../../../../utils/parking';
+import { selectParkingAreas, selectSelectedParkingAreas } from '../../../../redux/selectors/district';
+import { visibleParkingAreas } from '../../../../utils/parking';
 import useLocaleText from '../../../../utils/useLocaleText';
 import swapCoordinates from '../../utils/swapCoordinates';
 import { StyledAreaPopup } from '../styled/styled';
@@ -22,8 +19,8 @@ const ParkingAreas = () => {
   const theme = useTheme();
   const parkingAreas = useSelector(selectParkingAreas);
   const selectedParkingAreas = useSelector(selectSelectedParkingAreas);
-
   const [areaPopup, setAreaPopup] = useState(null);
+  const selectedAreas = visibleParkingAreas(parkingAreas, selectedParkingAreas);
 
   const createPopup = (area, e) => {
     e.originalEvent.view.L.DomEvent.stopPropagation(e);
@@ -111,10 +108,6 @@ const ParkingAreas = () => {
         return '#ff8400';
     }
   };
-
-  const selectedAreas = parkingAreas.filter(
-    obj => selectedParkingAreas.includes(resolveParkingAreaId(obj)),
-  );
 
   const parkingLayerClass = css({
     zIndex: theme.zIndex.infront,
