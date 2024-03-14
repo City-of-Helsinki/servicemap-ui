@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect';
 import { filterByCitySettings, getCityAndOrgFilteredData } from '../../utils/filters';
+import { resolveParkingAreaId } from '../../utils/parking';
 import { selectCities, selectSelectedCities, selectSelectedOrganizationIds } from './settings';
 import { createMemoizedArraySelector } from './util';
 
@@ -103,5 +104,19 @@ export const getFilteredSubDistrictUnits = createMemoizedArraySelector(
         unit.services.some(service => serviceFilters.includes(service.id))));
     }
     return subDistrictUnits;
+  },
+);
+
+/**
+ * Filter parking areas by selected parking area ids
+ */
+export const selectSelectedParkingAreas = createMemoizedArraySelector(
+  [selectParkingAreas, selectSelectedParkingAreaIds],
+  (parkingAreas, selectedParkingAreaIds) => {
+    const parkingIdsMap = {};
+    selectedParkingAreaIds.forEach(id => {
+      parkingIdsMap[id] = true;
+    });
+    return parkingAreas.filter(parkingArea => parkingIdsMap[resolveParkingAreaId(parkingArea)]);
   },
 );
