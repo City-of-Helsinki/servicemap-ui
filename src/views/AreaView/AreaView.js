@@ -21,7 +21,7 @@ import {
   selectDistrictDataBySelectedType,
   selectDistrictUnitFetch,
   selectParkingAreas,
-  selectSelectedParkingAreas,
+  selectSelectedParkingAreaIds,
   selectSelectedSubdistricts,
   selectSubdistrictUnits,
 } from '../../redux/selectors/district';
@@ -66,8 +66,8 @@ const AreaView = ({ embed }) => {
 
   const cityFilter = filterByCitySettings(resolveCitySettings(citySettings, location, embed));
   const selectedDistrictData = districtData.filter(cityFilter);
-  const selectedParkingAreas = useSelector(selectSelectedParkingAreas);
-  const parkingAreas = visibleParkingAreas(useSelector(selectParkingAreas), selectedParkingAreas);
+  const selectedParkingAreaIds = useSelector(selectSelectedParkingAreaIds);
+  const parkingAreas = visibleParkingAreas(useSelector(selectParkingAreas), selectedParkingAreaIds);
   const geometryLoaded = !!selectedDistrictData[0]?.boundary || !!parkingAreas[0]?.boundary;
 
   const searchParams = parseSearchParams(location.search);

@@ -4,7 +4,7 @@ import { useTheme } from '@mui/styles';
 import React, { useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
-import { selectParkingAreas, selectSelectedParkingAreas } from '../../../../redux/selectors/district';
+import { selectParkingAreas, selectSelectedParkingAreaIds } from '../../../../redux/selectors/district';
 import { visibleParkingAreas } from '../../../../utils/parking';
 import useLocaleText from '../../../../utils/useLocaleText';
 import swapCoordinates from '../../utils/swapCoordinates';
@@ -18,9 +18,9 @@ const ParkingAreas = () => {
   const intl = useIntl();
   const theme = useTheme();
   const parkingAreas = useSelector(selectParkingAreas);
-  const selectedParkingAreas = useSelector(selectSelectedParkingAreas);
+  const selectedParkingAreaIds = useSelector(selectSelectedParkingAreaIds);
   const [areaPopup, setAreaPopup] = useState(null);
-  const selectedAreas = visibleParkingAreas(parkingAreas, selectedParkingAreas);
+  const selectedAreas = visibleParkingAreas(parkingAreas, selectedParkingAreaIds);
 
   const createPopup = (area, e) => {
     e.originalEvent.view.L.DomEvent.stopPropagation(e);
