@@ -14,7 +14,7 @@ const initialState = {
   subdistrictUnits: [],
   selectedSubdistricts: [],
   selectedDistrictServices: [],
-  selectedParkingAreas: [],
+  selectedParkingAreaIds: [],
   openItems: [],
   mapState: null,
   districtAddressData: {
@@ -117,20 +117,20 @@ export default (state = initialState, action) => {
     case 'SET_SELECTED_PARKING_AREAS':
       return {
         ...state,
-        selectedParkingAreas: action.areas,
+        selectedParkingAreaIds: action.areas,
       };
 
     case 'ADD_SELECTED_PARKING_AREA':
       return {
         ...state,
-        selectedParkingAreas: [...state.selectedParkingAreas, action.areaID],
+        selectedParkingAreaIds: [...state.selectedParkingAreaIds, action.areaID],
       };
 
     case 'REMOVE_SELECTED_PARKING_AREA':
       return {
         ...state,
-        selectedParkingAreas: [
-          ...state.selectedParkingAreas.filter(item => item !== action.areaID),
+        selectedParkingAreaIds: [
+          ...state.selectedParkingAreaIds.filter(item => item !== action.areaID),
         ],
       };
 

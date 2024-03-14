@@ -14,7 +14,7 @@ export const selectSelectedSubdistricts = state => state.districts.selectedSubdi
 export const selectSelectedDistrictServices = state => state.districts.selectedDistrictServices;
 export const selectParkingUnits = state => state.districts.parkingUnits;
 export const selectParkingAreas = state => state.districts.parkingAreas;
-export const selectSelectedParkingAreaIds = state => state.districts.selectedParkingAreas;
+export const selectSelectedParkingAreaIds = state => state.districts.selectedParkingAreaIds;
 export const selectDistrictsFetching = state => state.districts.districtsFetching;
 export const selectDistrictAddressData = state => state.districts.districtAddressData;
 export const selectDistrictUnitFetch = state => state.districts.unitFetch;
