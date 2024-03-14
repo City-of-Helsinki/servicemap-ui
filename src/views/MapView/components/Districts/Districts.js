@@ -13,7 +13,7 @@ import {
   selectDistrictDataBySelectedType,
   selectDistrictUnitFetch,
   selectSelectedDistrictType,
-  selectSelectedParkingAreas,
+  selectSelectedParkingAreaIds,
   selectSelectedSubdistricts,
 } from '../../../../redux/selectors/district';
 import { selectMeasuringMode, selectNavigator } from '../../../../redux/selectors/general';
@@ -56,7 +56,7 @@ const Districts = ({
   const getLocaleText = useLocaleText();
   const citySettings = useSelector(selectCities);
   const selectedDistrictType = useSelector(selectSelectedDistrictType);
-  const selectedParkingAreas = useSelector(selectSelectedParkingAreas);
+  const selectedParkingAreaIds = useSelector(selectSelectedParkingAreaIds);
   const [areaPopup, setAreaPopup] = useState(null);
 
   const districtOnClick = (e, district) => {
@@ -305,7 +305,7 @@ const Districts = ({
             {areaPopup && renderAreaPopup()}
           </>
         ) : null}
-        {selectedParkingAreas.length ? (
+        {selectedParkingAreaIds.length ? (
           <ParkingAreas />
         ) : null}
       </>

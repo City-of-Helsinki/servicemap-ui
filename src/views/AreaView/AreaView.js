@@ -20,6 +20,7 @@ import {
   selectDistrictAddressData,
   selectDistrictDataBySelectedType,
   selectDistrictUnitFetch,
+  selectSelectedParkingAreas,
   selectSelectedSubdistricts,
   selectSubdistrictUnits,
 } from '../../redux/selectors/district';
@@ -63,7 +64,8 @@ const AreaView = ({ embed }) => {
 
   const cityFilter = filterByCitySettings(resolveCitySettings(citySettings, location, embed));
   const selectedDistrictData = districtData.filter(cityFilter);
-  const geometryLoaded = !!selectedDistrictData[0]?.boundary;
+  const parkingAreas = useSelector(selectSelectedParkingAreas);
+  const geometryLoaded = !!selectedDistrictData[0]?.boundary || !!parkingAreas[0]?.boundary;
 
   const searchParams = parseSearchParams(location.search);
   const selectedArea = searchParams.selected;
@@ -152,9 +154,9 @@ const AreaView = ({ embed }) => {
 
   useEffect(() => {
     if (isPossibleToFocus() && !focusTo && !addressDistrict && !focusInitiated) {
-      focusDistricts(map, selectedDistrictData);
+      focusDistricts(map, [...selectedDistrictData, ...parkingAreas]);
     }
-  }, [selectedDistrictData, addressDistrict]);
+  }, [selectedDistrictData, addressDistrict, parkingAreas]);
 
   useEffect(() => {
     if (searchParams.selected

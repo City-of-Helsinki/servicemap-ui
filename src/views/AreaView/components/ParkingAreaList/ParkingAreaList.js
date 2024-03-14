@@ -16,7 +16,7 @@ import {
   selectParkingAreas,
   selectParkingUnits,
   selectSelectedDistrictType,
-  selectSelectedParkingAreas,
+  selectSelectedParkingAreaIds,
 } from '../../../../redux/selectors/district';
 import ServiceMapAPI from '../../../../utils/newFetch/ServiceMapAPI';
 import {
@@ -37,7 +37,7 @@ const ParkingAreaList = ({ variant }) => {
   const dispatch = useDispatch();
   const getLocaleText = useLocaleText();
   const selectedDistrictType = useSelector(selectSelectedDistrictType);
-  const selectedParkingAreas = useSelector(selectSelectedParkingAreas);
+  const selectedParkingAreaIds = useSelector(selectSelectedParkingAreaIds);
   const parkingAreas = useSelector(selectParkingAreas);
   const parkingUnits = useSelector(selectParkingUnits);
 
@@ -58,10 +58,10 @@ const ParkingAreaList = ({ variant }) => {
   };
 
   const handleParkingCheckboxChange = (id) => {
-    if (!selectedParkingAreas.length && getDistrictCategory(selectedDistrictType) !== 'parking') {
+    if (!selectedParkingAreaIds.length && getDistrictCategory(selectedDistrictType) !== 'parking') {
       dispatch(setSelectedDistrictType(null));
     }
-    if (selectedParkingAreas.includes(id)) {
+    if (selectedParkingAreaIds.includes(id)) {
       dispatch(removeSelectedParkingArea(id));
     } else {
       dispatch(addSelectedParkingArea(id));
@@ -131,7 +131,7 @@ const ParkingAreaList = ({ variant }) => {
                   <Checkbox
                     color="primary"
                     icon={<StyledCheckBoxIcon />}
-                    checked={selectedParkingAreas.includes(fullId)}
+                    checked={selectedParkingAreaIds.includes(fullId)}
                     onChange={() => handleParkingCheckboxChange(fullId)}
                   />
                 )}

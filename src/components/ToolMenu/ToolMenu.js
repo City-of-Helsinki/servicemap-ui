@@ -7,6 +7,14 @@ import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import URI from 'urijs';
 import PrintContext from '../../context/PrintContext';
+import {
+  selectDistrictAddressData,
+  selectParkingUnits,
+  selectSelectedDistrictServices,
+  selectSelectedDistrictType,
+  selectSelectedParkingAreaIds,
+  selectSelectedSubdistricts,
+} from '../../redux/selectors/district';
 import { selectMapRef, selectMeasuringMode, selectNavigator } from '../../redux/selectors/general';
 import { getPage } from '../../redux/selectors/user';
 import DownloadDialog from '../Dialog/DownloadDialog';
@@ -23,7 +31,12 @@ const ToolMenu = ({
   const location = useLocation();
   const [openDownload, setOpenDownload] = React.useState(false);
   const toolMenuButton = React.useRef();
-  const districtState = useSelector(state => state.districts);
+  const selectedParkingAreaIds = useSelector(selectSelectedParkingAreaIds);
+  const parkingUnits = useSelector(selectParkingUnits);
+  const selectedDistrictServices = useSelector(selectSelectedDistrictServices);
+  const selectedSubdistricts = useSelector(selectSelectedSubdistricts);
+  const selectedDistrictType = useSelector(selectSelectedDistrictType);
+  const districtAddressData = useSelector(selectDistrictAddressData);
   const map = useSelector(selectMapRef);
   const navigator = useSelector(selectNavigator);
   const currentPage = useSelector(getPage);
@@ -32,22 +45,14 @@ const ToolMenu = ({
 
   const getAreaViewParams = () => {
     // Form url with parameters when user clicks embedder from tool menu
-    const {
-      districtAddressData,
-      selectedDistrictType,
-      selectedSubdistricts,
-      selectedDistrictServices,
-      selectedParkingAreas,
-      parkingUnits,
-    } = districtState;
     const selected = selectedDistrictType
       ? `selected=${selectedDistrictType}` : null;
     const districts = selectedSubdistricts.length
       ? `districts=${selectedSubdistricts.map(i => i).toString()}` : null;
     const services = selectedDistrictServices.length
       ? `services=${selectedDistrictServices}` : null;
-    const parkingSpaces = selectedParkingAreas.length
-      ? `parkingSpaces=${selectedParkingAreas.join(',')}` : null;
+    const parkingSpaces = selectedParkingAreaIds.length
+      ? `parkingSpaces=${selectedParkingAreaIds.join(',')}` : null;
     const units = parkingUnits.length
       ? 'parkingUnits=true' : null;
     const addressCoordinates = districtAddressData.address
