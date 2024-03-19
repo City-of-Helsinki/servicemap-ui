@@ -9,6 +9,8 @@ const dataSetInitialState = {
   next: null,
   previousSearch: null,
   activeFetches: 0,
+  // the start time of the fetch, used in loading indicator
+  fetchStartTime: null,
 };
 
 export const dataSetReducer = (state, action, prefix) => {
@@ -22,6 +24,7 @@ export const dataSetReducer = (state, action, prefix) => {
         count: 0,
         max: 0,
         next: null,
+        fetchStartTime: new Date().valueOf(),
       };
     case `${prefix}_FETCH_HAS_ERRORED`:
       return {
@@ -30,6 +33,7 @@ export const dataSetReducer = (state, action, prefix) => {
         errorMessage: action.errorMessage,
         count: 0,
         max: 0,
+        fetchStartTime: null,
       };
     case `${prefix}_FETCH_DATA_SUCCESS`:
       return {
@@ -37,7 +41,8 @@ export const dataSetReducer = (state, action, prefix) => {
         isFetching: false,
         errorMessage: null,
         data: action.data,
-        count: action.data ? action.data.length : 0,
+        count: action.data?.length || 0,
+        fetchStartTime: null,
       };
     case `${prefix}_FETCH_PROGRESS_UPDATE`:
       return {
@@ -64,6 +69,7 @@ export const dataSetReducer = (state, action, prefix) => {
         errorMessage: null,
         isFetching: false,
         data: [],
+        fetchStartTime: null,
       };
     case `${prefix}_ADDITIVE_IS_FETCHING`:
       return {
@@ -90,6 +96,7 @@ export const dataSetReducer = (state, action, prefix) => {
         count: 0,
         max: 0,
         activeFetches: state.activeFetches - 1,
+        fetchStartTime: (state.activeFetches - 1) ? state.fetchStartTime : null,
       };
     case `${prefix}_ADDITIVE_FETCH_DATA_SUCCESS`:
       return {
@@ -99,6 +106,7 @@ export const dataSetReducer = (state, action, prefix) => {
         data: [...state.data, ...action.data],
         count: state.activeFetches - 1 > 0 ? state.count : [...state.data, ...action.data].length,
         activeFetches: state.activeFetches - 1,
+        fetchStartTime: (state.activeFetches - 1 > 0) ? state.fetchStartTime : null,
       };
     default:
       return state;
@@ -110,6 +118,8 @@ const dataSingleInitialState = {
   errorMessage: null,
   data: null,
   count: 0,
+  // the start time of the fetch, used in loading indicator
+  fetchStartTime: null,
 };
 
 const dataSingle = (state, action, prefix) => {
@@ -120,12 +130,14 @@ const dataSingle = (state, action, prefix) => {
         isFetching: true,
         errorMessage: null,
         data: null,
+        fetchStartTime: new Date().valueOf(),
       };
     case `${prefix}_FETCH_HAS_ERRORED`:
       return {
         ...state,
         isFetching: false,
         errorMessage: action.errorMessage,
+        fetchStartTime: null,
       };
     case `${prefix}_FETCH_SUCCESS`:
       return {
@@ -135,6 +147,7 @@ const dataSingle = (state, action, prefix) => {
         data: action.data,
         count: action.count,
         next: action.next,
+        fetchStartTime: null,
       };
     case `${prefix}_FETCH_MORE_SUCCESS`:
       return {
@@ -143,6 +156,7 @@ const dataSingle = (state, action, prefix) => {
         errorMessage: null,
         data: [...state.data, ...action.data],
         next: action.next,
+        fetchStartTime: null,
       };
     case `${prefix}_SET_DATA`:
       return {

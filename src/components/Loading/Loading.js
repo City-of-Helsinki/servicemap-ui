@@ -1,13 +1,37 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { LinearProgress, Typography } from '@mui/material';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import styled from '@emotion/styled';
 
+const diff = 3000;
 const Loading = (props) => {
   const {
-    children, hideNumbers, text, intl, progress, reducer,
+    children, hideNumbers, text, progress, reducer,
   } = props;
+  const intl = useIntl();
+  const [showSlowMessage, setShowSlowMessage] = useState(false);
+
+  useEffect(() => {
+    const noOp = () => {};
+    if (!reducer?.fetchStartTime) {
+      return noOp;
+    }
+    if (!reducer?.isFetching) {
+      setShowSlowMessage(false);
+      return noOp;
+    }
+    const messageDisplayTimeStamp = reducer.fetchStartTime + diff;
+    const msUntilSorryWeAreSlowMessage = messageDisplayTimeStamp - new Date().valueOf();
+    if (msUntilSorryWeAreSlowMessage < 0) {
+      setShowSlowMessage(true);
+      return noOp;
+    }
+    const timeoutId = setTimeout(() => {
+      setShowSlowMessage(true);
+    }, msUntilSorryWeAreSlowMessage);
+    return () => clearTimeout(timeoutId);
+  }, [reducer?.fetchStartTime, reducer?.isFetching]);
 
   if (reducer) {
     const {
@@ -15,18 +39,20 @@ const Loading = (props) => {
     } = reducer;
     // Render loading text if currently loading information
     if (isFetching) {
+      const fetchingTextKey = showSlowMessage ? 'general.fetchingTakesTime' : 'general.fetching';
       if (max) {
         const percentage = Math.floor(((count / max) * 100));
         const progress = count ? percentage : 0;
-        const text = intl?.formatMessage({ id: 'search.loading.units' }, { percentage });
+        const loadingUnitsKey = showSlowMessage ? 'general.fetchingTakesTime' : 'search.loading.units';
+        const text = intl.formatMessage({ id: loadingUnitsKey }, { percentage });
         return (
           <StyledDivRoot data-sm="LoadingIndicator">
-            <Typography variant="body2" aria-hidden="true">{(!hideNumbers && text) || <FormattedMessage id="general.fetching" />}</Typography>
+            <Typography variant="body2" aria-hidden="true">{(!hideNumbers && text) || <FormattedMessage id={fetchingTextKey} />}</Typography>
             <LinearProgress variant="determinate" value={Math.min(progress, 100)} />
           </StyledDivRoot>
         );
       }
-      return <StyledTypographyRoot><FormattedMessage id="general.loading" /></StyledTypographyRoot>;
+      return <StyledTypographyRoot><FormattedMessage id={fetchingTextKey} /></StyledTypographyRoot>;
     }
     // Check if data exists or if data is an array that it has results
     if (!data || (Array.isArray(data) && !data.length)) {
@@ -62,6 +88,7 @@ Loading.propTypes = {
   progress: PropTypes.number,
   reducer: PropTypes.shape({
     isFetching: PropTypes.bool,
+    fetchStartTime: PropTypes.number,
     count: PropTypes.number,
     max: PropTypes.number,
     data: PropTypes.oneOfType([
@@ -69,7 +96,6 @@ Loading.propTypes = {
       PropTypes.array,
     ]),
   }),
-  intl: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 Loading.defaultProps = {
