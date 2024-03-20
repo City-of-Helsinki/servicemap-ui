@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { LinearProgress, Typography } from '@mui/material';
 import { FormattedMessage, useIntl } from 'react-intl';
 import styled from '@emotion/styled';
+import config from '../../../config';
 
-const diff = 3000;
 const Loading = (props) => {
   const {
     children, hideNumbers, text, progress, reducer,
@@ -21,7 +21,7 @@ const Loading = (props) => {
       setShowSlowMessage(false);
       return noOp;
     }
-    const messageDisplayTimeStamp = reducer.fetchStartTime + diff;
+    const messageDisplayTimeStamp = reducer.fetchStartTime + config.slowFetchMessageTimeout;
     const msUntilSorryWeAreSlowMessage = messageDisplayTimeStamp - new Date().valueOf();
     if (msUntilSorryWeAreSlowMessage < 0) {
       setShowSlowMessage(true);
