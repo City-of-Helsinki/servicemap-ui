@@ -14,24 +14,16 @@ import { Loading } from '../../components';
 import { setBounds } from '../../redux/actions/map';
 import { selectDistrictUnitFetch } from '../../redux/selectors/district';
 import { selectNavigator } from '../../redux/selectors/general';
-import { selectResultsIsFetching } from '../../redux/selectors/results';
+import { selectSearchResults } from '../../redux/selectors/results';
 import { getSelectedUnitEvents } from '../../redux/selectors/selectedUnit';
-import { selectServiceIsFetching } from '../../redux/selectors/service';
-import {
-  selectMapType, selectSelectedCities, selectSelectedOrganizationIds,
-} from '../../redux/selectors/settings';
+import { selectServiceDataSet } from '../../redux/selectors/service';
+import { selectMapType, selectSelectedCities, selectSelectedOrganizationIds } from '../../redux/selectors/settings';
 import { getStatisticalDistrictUnitsState } from '../../redux/selectors/statisticalDistrict';
 import { getLocale, getPage } from '../../redux/selectors/user';
 import { parseSearchParams } from '../../utils';
 import { useNavigationParams } from '../../utils/address';
 import { resolveCityAndOrganizationFilter } from '../../utils/filters';
-import {
-  coordinateIsActive,
-  getBboxFromBounds,
-  getCoordinatesFromUrl,
-  mapHasMapPane, parseBboxFromLocation,
-  swapCoordinates,
-} from '../../utils/mapUtility';
+import { coordinateIsActive, getBboxFromBounds, getCoordinatesFromUrl, mapHasMapPane, parseBboxFromLocation, swapCoordinates } from '../../utils/mapUtility';
 import { isEmbed } from '../../utils/path';
 import SettingsUtility from '../../utils/settings';
 import AddressMarker from './components/AddressMarker';
@@ -114,8 +106,8 @@ const MapView = (props) => {
   const getAddressNavigatorParams = useNavigationParams();
   const districtUnitsFetch = useSelector(selectDistrictUnitFetch);
   const statisticalDistrictFetch = useSelector(getStatisticalDistrictUnitsState);
-  const serviceUnitsIsFetching = useSelector(selectServiceIsFetching);
-  const searchUnitsIsFetching = useSelector(selectResultsIsFetching);
+  const serviceUnitsDataSet = useSelector(selectServiceDataSet);
+  const searchResultsDataSet = useSelector(selectSearchResults);
   const districtsFetching = useSelector(state => !!state.districts.districtsFetching?.length);
   const cities = useSelector(selectSelectedCities);
   const orgIds = useSelector(selectSelectedOrganizationIds);
@@ -265,7 +257,7 @@ const MapView = (props) => {
 
     const showLoadingScreen = statisticalDistrictFetch.isFetching
       || districtViewFetching
-      || (embedded && (serviceUnitsIsFetching || searchUnitsIsFetching));
+      || (embedded && (serviceUnitsDataSet.isFetching || searchResultsDataSet.isFetching));
     let showLoadingReducer = null;
     let hideLoadingNumbers = false;
     if (statisticalDistrictFetch.isFetching) {
@@ -276,6 +268,10 @@ const MapView = (props) => {
         ...districtUnitsFetch,
         isFetching: districtViewFetching,
       };
+    } else if (serviceUnitsDataSet.isFetching) {
+      showLoadingReducer = serviceUnitsDataSet;
+    } else if (searchResultsDataSet.isFetching) {
+      showLoadingReducer = searchResultsDataSet;
     }
     const userLocationAriaLabel = intl.formatMessage({ id: !userLocation ? 'location.notAllowed' : 'location.center' });
     const eventSearch = parseSearchParams(location.search).events;
