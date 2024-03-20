@@ -5,6 +5,10 @@ import { selectServiceDataSet } from '../../../redux/selectors/service';
 import { getStatisticalDistrictUnitsState } from '../../../redux/selectors/statisticalDistrict';
 import { arraysEqual } from '../../../utils';
 
+/*
+ * Helper file for quite complex logic of Loading component data.
+ */
+
 function reducerDataToEqualsComparableArray(a) {
   const values = a.loadingReducer
     ? Object.keys(a.loadingReducer).sort().map(key => a.loadingReducer[key])
