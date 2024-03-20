@@ -12,13 +12,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Loading } from '../../components';
 import { setBounds } from '../../redux/actions/map';
-import { selectDistrictUnitFetch } from '../../redux/selectors/district';
 import { selectNavigator } from '../../redux/selectors/general';
-import { selectSearchResults } from '../../redux/selectors/results';
 import { getSelectedUnitEvents } from '../../redux/selectors/selectedUnit';
-import { selectServiceDataSet } from '../../redux/selectors/service';
 import { selectMapType, selectSelectedCities, selectSelectedOrganizationIds } from '../../redux/selectors/settings';
-import { getStatisticalDistrictUnitsState } from '../../redux/selectors/statisticalDistrict';
 import { getLocale, getPage } from '../../redux/selectors/user';
 import { parseSearchParams } from '../../utils';
 import { useNavigationParams } from '../../utils/address';
@@ -46,6 +42,7 @@ import { mapOptions } from './config/mapConfig';
 import adjustControlElements from './utils';
 import CreateMap from './utils/createMap';
 import fetchAddress from './utils/fetchAddress';
+import { resolveCombinedReducerData, selectDistrictLoadingReducer, selectServiceUnitSearchResultLoadingReducer } from './utils/loadingReducerSelector';
 import { focusToPosition, getBoundsFromBbox } from './utils/mapActions';
 import MapUtility from './utils/mapUtility';
 import useMapUnits from './utils/useMapUnits';
@@ -104,19 +101,15 @@ const MapView = (props) => {
   const locale = useSelector(getLocale);
   const currentPage = useSelector(getPage);
   const getAddressNavigatorParams = useNavigationParams();
-  const districtUnitsFetch = useSelector(selectDistrictUnitFetch);
-  const statisticalDistrictFetch = useSelector(getStatisticalDistrictUnitsState);
-  const serviceUnitsDataSet = useSelector(selectServiceDataSet);
-  const searchResultsDataSet = useSelector(selectSearchResults);
-  const districtsFetching = useSelector(state => !!state.districts.districtsFetching?.length);
   const cities = useSelector(selectSelectedCities);
   const orgIds = useSelector(selectSelectedOrganizationIds);
-  const districtViewFetching = districtUnitsFetch.isFetching || districtsFetching;
   const cityAndOrgFilter = resolveCityAndOrganizationFilter(cities, orgIds, location, embedded);
   const unitData = useMapUnits()
     .filter(cityAndOrgFilter);
   const intl = useIntl();
-
+  const districtLoadingReducerData = useSelector(selectDistrictLoadingReducer);
+  const serviceUnitSearchResultReducerData = useSelector(selectServiceUnitSearchResultLoadingReducer);
+  const { showLoadingScreen, loadingReducer, hideLoadingNumbers } = resolveCombinedReducerData(districtLoadingReducerData, embedded, serviceUnitSearchResultReducerData);
   // This unassigned selector is used to trigger re-render after events are fetched
   useSelector(getSelectedUnitEvents);
 
@@ -255,24 +248,6 @@ const MapView = (props) => {
         : prevMap.options.zoom + zoomDifference;
     }
 
-    const showLoadingScreen = statisticalDistrictFetch.isFetching
-      || districtViewFetching
-      || (embedded && (serviceUnitsDataSet.isFetching || searchResultsDataSet.isFetching));
-    let showLoadingReducer = null;
-    let hideLoadingNumbers = false;
-    if (statisticalDistrictFetch.isFetching) {
-      showLoadingReducer = statisticalDistrictFetch;
-      hideLoadingNumbers = true;
-    } else if (districtViewFetching) {
-      showLoadingReducer = {
-        ...districtUnitsFetch,
-        isFetching: districtViewFetching,
-      };
-    } else if (serviceUnitsDataSet.isFetching) {
-      showLoadingReducer = serviceUnitsDataSet;
-    } else if (searchResultsDataSet.isFetching) {
-      showLoadingReducer = searchResultsDataSet;
-    }
     const userLocationAriaLabel = intl.formatMessage({ id: !userLocation ? 'location.notAllowed' : 'location.center' });
     const eventSearch = parseSearchParams(location.search).events;
     const defaultBounds = parseBboxFromLocation(location);
@@ -358,7 +333,7 @@ const MapView = (props) => {
             )}
           {showLoadingScreen ? (
             <StyledLoadingScreenContainer>
-              <Loading reducer={showLoadingReducer} hideNumbers={hideLoadingNumbers} />
+              <Loading reducer={loadingReducer} hideNumbers={hideLoadingNumbers} />
             </StyledLoadingScreenContainer>
           ) : null}
           <StatisticalDistricts />
