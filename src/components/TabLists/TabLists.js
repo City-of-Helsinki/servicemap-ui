@@ -8,6 +8,8 @@ import { visuallyHidden } from '@mui/utils';
 import { css } from '@emotion/css';
 import { useTheme } from '@mui/styles';
 import styled from '@emotion/styled';
+import { useSelector } from 'react-redux';
+import { selectNavigator } from '../../redux/selectors/general';
 import { parseSearchParams, stringifySearchParams } from '../../utils';
 import ResultOrderer from '../ResultOrderer';
 import config from '../../../config';
@@ -21,10 +23,10 @@ const TabLists = ({
   focusClass,
   focusText,
   headerComponents,
-  navigator,
 }) => {
   const isMobile = useMobileStatus();
   const theme = useTheme();
+  const navigator = useSelector(selectNavigator);
   const searchParams = parseSearchParams(location.search);
   const filteredData = data.filter(item => item.component || (item.data && item.data.length > 0));
   const getTabfromUrl = () => {
@@ -178,7 +180,7 @@ const TabLists = ({
       Object.assign(styles, {
         padding: theme.spacing(1),
         fontSize: 'clamp(0.8rem, 1.8vw, 0.9rem)',
-        overflowWrap: 'anywhere',
+        overflowWrap: 'normal',
       });
       if (filteredData.length === 3 && isMobile) {
         // Mobilefont
@@ -237,7 +239,7 @@ const TabLists = ({
           {
               filteredData.map((item, index) => {
                 if (item.data && item.data.length > 0) {
-                  const label = `${item.title} ${item.component ? '' : `(${item.data.length})`}`;
+                  const label = `${item.title} ${item.component ? '' : `(${item.data.length})`}`.trim();
                   const tabId = `${item.title}-${item.data.length}`;
                   return (
                     <StyledTab
@@ -395,20 +397,15 @@ TabLists.propTypes = {
     data: PropTypes.arrayOf(PropTypes.any),
     itemsPerPage: PropTypes.number,
   })).isRequired,
-  userAddress: PropTypes.objectOf(PropTypes.any),
   headerComponents: PropTypes.objectOf(PropTypes.any),
   onTabChange: PropTypes.func,
-  intl: PropTypes.objectOf(PropTypes.any).isRequired,
   location: PropTypes.objectOf(PropTypes.any).isRequired,
-  navigator: PropTypes.objectOf(PropTypes.any),
   focusClass: PropTypes.string,
   focusText: PropTypes.string,
 };
 
 TabLists.defaultProps = {
   headerComponents: null,
-  navigator: null,
-  userAddress: null,
   focusClass: null,
   focusText: null,
   onTabChange: null,

@@ -8,8 +8,6 @@ import {
   addSelectedParkingArea,
   fetchParkingAreaGeometry,
   fetchParkingUnits,
-  parkingSpaceIDs,
-  parkingSpaceVantaaTypes,
   removeSelectedParkingArea,
   setParkingUnits,
   setSelectedDistrictType,
@@ -18,18 +16,28 @@ import {
   selectParkingAreas,
   selectParkingUnits,
   selectSelectedDistrictType,
-  selectSelectedParkingAreas,
+  selectSelectedParkingAreaIds,
 } from '../../../../redux/selectors/district';
 import ServiceMapAPI from '../../../../utils/newFetch/ServiceMapAPI';
+import {
+  heavyTrafficNoParking,
+  parkingHelsinkiTypes,
+  parkingVantaaHeavyTrafficTypes,
+  parkingVantaaTypes,
+  passengerCarParkAndRide,
+  resolveParamsForParkingFetch,
+  resolveParkingAreaId,
+  resolveParkingAreaName,
+} from '../../../../utils/parking';
 import useLocaleText from '../../../../utils/useLocaleText';
 import { getDistrictCategory } from '../../utils/districtDataHelper';
 import { StyledAreaListItem, StyledCheckBoxIcon, StyledListLevelThree } from '../styled/styled';
 
-const ParkingAreaList = ({ areas, variant }) => {
+const ParkingAreaList = ({ variant }) => {
   const dispatch = useDispatch();
   const getLocaleText = useLocaleText();
   const selectedDistrictType = useSelector(selectSelectedDistrictType);
-  const selectedParkingAreas = useSelector(selectSelectedParkingAreas);
+  const selectedParkingAreaIds = useSelector(selectSelectedParkingAreaIds);
   const parkingAreas = useSelector(selectParkingAreas);
   const parkingUnits = useSelector(selectParkingUnits);
 
@@ -50,37 +58,41 @@ const ParkingAreaList = ({ areas, variant }) => {
   };
 
   const handleParkingCheckboxChange = (id) => {
-    if (!selectedParkingAreas.length && getDistrictCategory(selectedDistrictType) !== 'parking') {
+    if (!selectedParkingAreaIds.length && getDistrictCategory(selectedDistrictType) !== 'parking') {
       dispatch(setSelectedDistrictType(null));
     }
-    if (selectedParkingAreas.includes(id)) {
+    if (selectedParkingAreaIds.includes(id)) {
       dispatch(removeSelectedParkingArea(id));
     } else {
       dispatch(addSelectedParkingArea(id));
     }
-    if (!parkingAreas.some(obj => obj.extra.class === id || obj.extra.tyyppi === id)) {
+    if (!parkingAreas.some(obj => resolveParkingAreaId(obj) === id)) {
       dispatch(fetchParkingAreaGeometry(id));
     }
   };
 
+  function resolveTypesForVariant() {
+    if (variant === 'helsinki') {
+      return [...parkingHelsinkiTypes];
+    }
+    if (variant === 'vantaa/passenger_car') {
+      return [...parkingVantaaTypes, passengerCarParkAndRide];
+    }
+    if (variant === 'vantaa/heavy_traffic') {
+      return [...parkingVantaaHeavyTrafficTypes, heavyTrafficNoParking];
+    }
+    return [];
+  }
+
   const fetchParkingData = async () => {
     // This fetches only 1 result from each parking space type to get category names for list
     const smAPI = new ServiceMapAPI();
-    let promises = [];
-    if (variant === 'helsinki') {
-      promises = parkingSpaceIDs.map(
-        async id => smAPI.parkingAreaInfo({ extra__class: id, municipality: 'helsinki' }),
-      );
-    }
-    if (variant === 'vantaa') {
-      promises = parkingSpaceVantaaTypes.map(
-        async id => smAPI.parkingAreaInfo({ extra__tyyppi: id, municipality: 'vantaa' }),
-      );
-    }
+    const promises = resolveTypesForVariant()
+      .map(parkingType => resolveParamsForParkingFetch(parkingType))
+      .map(async params => smAPI.parkingAreaInfo(params));
     const parkingAreaObjects = await Promise.all(promises);
     setAreaDataInfo(parkingAreaObjects.flat());
   };
-
 
   useEffect(() => {
     if (!areaDataInfo.length) {
@@ -92,32 +104,40 @@ const ParkingAreaList = ({ areas, variant }) => {
     if (parkingUnits.length) setUnitsSelected(true);
   }, [parkingUnits]);
 
+  function renderAreaName(area) {
+    const nameData = resolveParkingAreaName(area);
+    if (nameData.type === 'TranslationKey') {
+      return <FormattedMessage id={nameData.value} />;
+    }
+    if (nameData.type === 'LocalizedObject') {
+      return getLocaleText(nameData.value);
+    }
+    return null;
+  }
+
   return (
-    <StyledListLevelThree data-sm="DistrictList" disablePadding>
-      {areaDataInfo.map((area, i) => {
-        const fullId = variant === 'helsinki' ? area.extra.class : area.extra.tyyppi;
+    <StyledListLevelThree data-sm="ParkingList" disablePadding>
+      {areaDataInfo.map((area) => {
+        const fullId = resolveParkingAreaId(area);
         return (
           <Fragment key={fullId}>
             <StyledAreaListItem
               key={fullId}
-              divider={areas.length !== i + 1}
-              className={`${fullId}`}
+              divider
+              className={fullId}
             >
               <StyledFormControlLabel
                 control={(
                   <Checkbox
                     color="primary"
                     icon={<StyledCheckBoxIcon />}
-                    checked={selectedParkingAreas.includes(fullId)}
+                    checked={selectedParkingAreaIds.includes(fullId)}
                     onChange={() => handleParkingCheckboxChange(fullId)}
                   />
                 )}
                 label={(
                   <Typography id={`${fullId}Name`} aria-hidden>
-                    {typeof area.name === 'object'
-                      ? getLocaleText(area.name)
-                      : <FormattedMessage id={`area.list.${area.name}`} />
-                    }
+                    {renderAreaName(area)}
                   </Typography>
                 )}
               />
@@ -144,7 +164,7 @@ const ParkingAreaList = ({ areas, variant }) => {
               )}
               label={(
                 <Typography id="parkingSpacesName" aria-hidden>
-                  <FormattedMessage id="area.list.parkingUnits"/>
+                  <FormattedMessage id="area.list.parkingUnits" />
                 </Typography>
               )}
             />
@@ -160,8 +180,7 @@ const StyledFormControlLabel = styled(FormControlLabel)(({ theme }) => ({
 }));
 
 ParkingAreaList.propTypes = {
-  areas: PropTypes.arrayOf(PropTypes.object).isRequired,
-  variant: PropTypes.string.isRequired,
+  variant: PropTypes.oneOf(['helsinki', 'vantaa/passenger_car', 'vantaa/heavy_traffic', 'vantaa/other']).isRequired,
 };
 
 export default ParkingAreaList;

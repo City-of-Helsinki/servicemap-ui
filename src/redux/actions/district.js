@@ -1,14 +1,11 @@
 import ServiceMapAPI from '../../utils/newFetch/ServiceMapAPI';
+import { resolveParamsForParkingFetch } from '../../utils/parking';
 import {
   dataStructure,
   geographicalDistricts,
   groupDistrictData,
   parseDistrictGeometry,
 } from '../../views/AreaView/utils/districtDataHelper';
-
-export const parkingSpaceIDs = ['1', '2', '3', '4', '5', '6', '7'];
-export const parkingSpaceVantaaTypes = ['12h-24h', '2h-3h', '4h-11h', 'Ei rajoitusta', 'Lyhytaikainen', 'Maksullinen', 'Muu', 'Varattu päivisin'];
-
 
 export const setHighlightedDistrict = district => ({
   type: 'SET_DISTRICT_HIGHLIGHT',
@@ -206,10 +203,7 @@ export const fetchDistrictUnitList = nodeID => (
 export const fetchParkingAreaGeometry = areaId => (
   async (dispatch) => {
     const type = 'parking_area';
-    const areaNumber = areaId.match(/\d+/g);
-    const options = parkingSpaceIDs.includes(areaId)
-      ? { extra__class: areaNumber }
-      : { extra__tyyppi: areaId };
+    const options = resolveParamsForParkingFetch(areaId);
 
     dispatch(startDistrictFetch(areaId));
     const smAPI = new ServiceMapAPI();

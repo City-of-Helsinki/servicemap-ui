@@ -71,7 +71,7 @@ export default class ServiceMapAPI extends HttpClient {
       throw new APIFetchError('Invalid query string provided to ServiceMapAPI serviceNodeSearch method');
     }
 
-    let onlyValues = ['street_address', 'location', 'name', 'municipality', 'accessibility_shortcoming_count', 'service_nodes', 'contract_type', 'organizer_type'];
+    let onlyValues = ['street_address', 'location', 'name', 'municipality', 'accessibility_shortcoming_count', 'contract_type', 'organizer_type'];
     if (isEmbed()) onlyValues = [...onlyValues, 'connections', 'phone', 'call_charge_info', 'email', 'www', 'address_zip'];
 
     const idOptions = variant === 'ServiceTree' ? { service_node: idList } : { mobility_node: idList };
@@ -82,7 +82,7 @@ export default class ServiceMapAPI extends HttpClient {
       geometry: true,
       ...idOptions,
       ...additionalOptions,
-      include: 'service_nodes,services,accessibility_properties,department,root_department'.split(','),
+      include: 'services,accessibility_properties,department,root_department'.split(','),
     };
 
     if (additionalOptions.include) {
@@ -100,7 +100,7 @@ export default class ServiceMapAPI extends HttpClient {
       throw new APIFetchError('Invalid id string provided to ServiceMapAPI serviceUnits method');
     }
 
-    let onlyValues = ['street_address', 'location', 'name', 'municipality', 'accessibility_shortcoming_count', 'service_nodes', 'contract_type', 'organizer_type', 'department', 'root_department'];
+    let onlyValues = ['street_address', 'location', 'name', 'municipality', 'accessibility_shortcoming_count', 'contract_type', 'organizer_type', 'department', 'root_department'];
     if (isEmbed()) onlyValues = [...onlyValues, 'connections', 'phone', 'call_charge_info', 'email', 'www', 'address_zip'];
 
     const options = {
@@ -197,7 +197,7 @@ export default class ServiceMapAPI extends HttpClient {
       throw new APIFetchError('Invalid nodeID string provided to ServiceMapAPI area unit fetch method');
     }
 
-    const onlyValues = ['street_address', 'location', 'name', 'municipality', 'accessibility_shortcoming_count', 'service_nodes', 'contract_type', 'department', 'root_department'];
+    const onlyValues = ['street_address', 'location', 'name', 'municipality', 'accessibility_shortcoming_count', 'contract_type', 'department', 'root_department'];
     if (isEmbed()) {
       onlyValues.push(...['connections', 'phone', 'call_charge_info', 'email', 'www', 'address_zip']);
     }
@@ -226,13 +226,13 @@ export default class ServiceMapAPI extends HttpClient {
   }
 
   units = async (additionalOptions) => {
-    let onlyValues = ['street_address', 'location', 'name', 'municipality', 'accessibility_shortcoming_count', 'service_nodes', 'contract_type', 'organizer_type'];
+    let onlyValues = ['street_address', 'location', 'name', 'municipality', 'accessibility_shortcoming_count', 'contract_type', 'organizer_type'];
     if (isEmbed()) onlyValues = [...onlyValues, 'connections', 'phone', 'call_charge_info', 'email', 'www', 'address_zip'];
 
     const options = {
       page_size: 200,
       only: onlyValues,
-      include: 'service_nodes,services,accessibility_properties,department',
+      include: 'services,accessibility_properties,department',
       geometry: true,
       ...additionalOptions,
     };

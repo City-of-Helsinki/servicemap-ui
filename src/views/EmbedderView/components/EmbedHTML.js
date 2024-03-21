@@ -1,13 +1,17 @@
 import styled from '@emotion/styled';
-import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-import {
-  ClickAwayListener, InputAdornment, OutlinedInput, Tooltip, Typography,
-} from '@mui/material';
-import { useIntl } from 'react-intl';
 import { FileCopy } from '@mui/icons-material';
-import { getEmbedURL } from '../utils/utils';
+import {
+  ClickAwayListener,
+  InputAdornment,
+  OutlinedInput,
+  Tooltip,
+  Typography,
+} from '@mui/material';
+import PropTypes from 'prop-types';
+import React, { useEffect, useState } from 'react';
+import { useIntl } from 'react-intl';
 import SMButton from '../../../components/ServiceMapButton';
+import { setBboxToUrl } from '../utils/utils';
 
 
 /**
@@ -20,7 +24,7 @@ const EmbedHTML = ({
   const [bbox, setBbox] = useState(null);
   const [tooltipOpen, setTooltipOpen] = useState(null);
 
-  const embedUrl = getEmbedURL(url, { bbox: restrictBounds ? bbox : null });
+  const embedUrl = setBboxToUrl(url, restrictBounds ? bbox : null);
 
   const handleEventMessage = (event) => {
     // Update bbox on map move

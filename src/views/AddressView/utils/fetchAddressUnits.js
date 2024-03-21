@@ -8,7 +8,7 @@ const fetchAddressUnits = async (lnglat) => {
     only: 'name,location,accessibility_shortcoming_count,',
     geometry: false,
     page: 1,
-    page_size: 500,
+    page_size: 200,
   };
 
   const unitData = await unitsFetch(options);

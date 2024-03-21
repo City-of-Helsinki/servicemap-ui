@@ -166,6 +166,9 @@ const DistrictUnitList = (props) => {
         </div>
       );
     }
+    if (!unitList.length) {
+      return null;
+    }
 
     return (
       renderServiceListAccordion(

@@ -1,36 +1,16 @@
 /* eslint-disable global-require */
+import styled from '@emotion/styled';
+import { Map } from '@mui/icons-material';
+import { ButtonBase, Divider, List, Typography } from '@mui/material';
+import PropTypes from 'prop-types';
 /* eslint-disable camelcase */
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-import {
-  ButtonBase,
-  Divider,
-  List,
-  Typography,
-} from '@mui/material';
-import { FormattedMessage, useIntl } from 'react-intl';
-import { Map } from '@mui/icons-material';
 import Helmet from 'react-helmet';
-import { useSelector } from 'react-redux';
+import { FormattedMessage, useIntl } from 'react-intl';
+import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useRouteMatch } from 'react-router-dom';
-import styled from '@emotion/styled';
-import {
-  selectAddressAdminDistricts, selectAddressData,
-  selectAddressUnits,
-} from '../../redux/selectors/address';
-import { selectMapRef, selectNavigator } from '../../redux/selectors/general';
-import { selectResultsData } from '../../redux/selectors/results';
-import { focusToPosition, useMapFocusDisabled } from '../MapView/utils/mapActions';
-import fetchAdministrativeDistricts from './utils/fetchAdministrativeDistricts';
-import fetchAddressUnits from './utils/fetchAddressUnits';
-import fetchAddressData from './utils/fetchAddressData';
-import { getAddressText } from '../../utils/address';
 import config from '../../../config';
-import useLocaleText from '../../utils/useLocaleText';
-import { parseSearchParams } from '../../utils';
-import { getCategoryDistricts } from '../AreaView/utils/districtDataHelper';
 import {
-  AddressIcon,
   DesktopComponent,
   DistrictItem,
   DivisionItem,
@@ -38,8 +18,32 @@ import {
   SearchBar,
   SMButton,
   TabLists,
-  TitleBar,
 } from '../../components';
+import AddressInfo from '../../components/AddressInfo/AddressInfo';
+import {
+  setAddressData,
+  setAddressLocation,
+  setAddressUnits,
+  setAdminDistricts,
+  setToRender,
+} from '../../redux/actions/address';
+import { setDistrictAddressData } from '../../redux/actions/district';
+import {
+  selectAddressAdminDistricts,
+  selectAddressData,
+  selectAddressUnits,
+} from '../../redux/selectors/address';
+import { selectMapRef, selectNavigator } from '../../redux/selectors/general';
+import { selectResultsData } from '../../redux/selectors/results';
+import { calculateDistance, getCurrentlyUsedPosition } from '../../redux/selectors/unit';
+import { formatDistanceObject, parseSearchParams } from '../../utils';
+import { getAddressText } from '../../utils/address';
+import useLocaleText from '../../utils/useLocaleText';
+import { getCategoryDistricts } from '../AreaView/utils/districtDataHelper';
+import { focusToPosition, useMapFocusDisabled } from '../MapView/utils/mapActions';
+import fetchAddressData from './utils/fetchAddressData';
+import fetchAddressUnits from './utils/fetchAddressUnits';
+import fetchAdministrativeDistricts from './utils/fetchAdministrativeDistricts';
 
 const hiddenDivisions = {
   emergency_care_district: true,
@@ -65,61 +69,53 @@ const getEmergencyCareUnit = (division) => {
   }
   return null;
 };
-
-const AddressView = (props) => {
+const AddressView = ({ embed }) => {
   const intl = useIntl();
-  const [error, setError] = useState(null);
-  const [isFetching, setIsFetching] = useState(false);
+  // This is not nice that we have 3 isFetching variables
+  const [isFetchingAddress, setIsFetchingAddress] = useState(false);
+  const [isFetchingUnits, setIsFetchingUnits] = useState(false);
+  const [isFetchingDistricts, setIsFetchingDistricts] = useState(false);
   const getLocaleText = useLocaleText();
   const match = useRouteMatch();
   const location = useLocation();
+  const dispatch = useDispatch();
   const searchResults = useSelector(selectResultsData);
   const navigator = useSelector(selectNavigator);
   const map = useSelector(selectMapRef);
   const units = useSelector(selectAddressUnits);
   const adminDistricts = useSelector(selectAddressAdminDistricts);
   const addressData = useSelector(selectAddressData);
-
-  const {
-    embed,
-    getDistance,
-    setAddressData,
-    setAddressLocation,
-    setAddressUnits,
-    setDistrictAddressData,
-    setAdminDistricts,
-    setToRender,
-  } = props;
-
-  let title = '';
-
-  if (!isFetching) {
-    title = getAddressText(addressData, getLocaleText);
-  }
+  const currentPosition = useSelector(getCurrentlyUsedPosition);
+  const getDistance = unit => formatDistanceObject(intl, calculateDistance(unit, currentPosition));
 
   const mapFocusDisabled = useMapFocusDisabled();
 
   const fetchAddressDistricts = (lnglat) => {
-    setAdminDistricts(null);
     // Fetch administrative districts data
+    setIsFetchingDistricts(true);
     fetchAdministrativeDistricts(lnglat)
-      .then(response => setAdminDistricts(response));
+      .then(response => {
+        dispatch(setAdminDistricts(response));
+        setIsFetchingDistricts(false);
+      });
   };
 
   const fetchUnits = (lnglat) => {
+    setIsFetchingUnits(true);
     fetchAddressUnits(lnglat)
       .then(data => {
         const units = data?.results || [];
         units.forEach((unit) => {
           unit.object_type = 'unit';
         });
-        setAddressUnits(units);
+        dispatch(setAddressUnits(units));
+        setIsFetchingUnits(false);
       });
   };
 
   const handleAddressData = (address) => {
-    setAddressData(address);
-    setAddressLocation({ addressCoordinates: address.location.coordinates });
+    dispatch(setAddressData(address));
+    dispatch(setAddressLocation({ addressCoordinates: address.location.coordinates }));
     const { coordinates } = address.location;
 
     if (!mapFocusDisabled) {
@@ -132,17 +128,15 @@ const AddressView = (props) => {
   const fetchData = () => {
     const { municipality, street } = match.params;
 
-    setAddressUnits([]);
+    dispatch(setAddressUnits([]));
 
-    setIsFetching(true);
+    setIsFetchingAddress(true);
     fetchAddressData(municipality, street)
-      .then((address) => {
-        setIsFetching(false);
+      .then(address => {
         if (address?.length) {
           handleAddressData(address[0]);
-        } else {
-          setError(intl.formatMessage({ id: 'address.error' }));
         }
+        setIsFetchingAddress(false);
       });
   };
 
@@ -158,59 +152,45 @@ const AddressView = (props) => {
   };
 
   const renderHead = () => {
-    if (addressData) {
-      return (
-        <Helmet>
-          <title>
-            {`${title} | ${intl.formatMessage({ id: 'app.title' })}`}
-          </title>
-        </Helmet>
-      );
-    } return null;
+    const title = getAddressText(addressData, getLocaleText);
+    return (
+      <Helmet>
+        <title>
+          {`${title} | ${intl.formatMessage({ id: 'app.title' })}`}
+        </title>
+      </Helmet>
+    );
   };
 
   const renderTopBar = () => {
-    if (!addressData) {
+    if (isFetchingDistricts) {
       return null;
     }
     return (
       <>
         <DesktopComponent>
           <SearchBar margin />
-          <TitleBar
-            sticky
-            icon={<StyledAddressIcon />}
-            title={error || title}
-            titleComponent="h3"
-            primary
-          />
+          <AddressInfo address={addressData} districts={adminDistricts} />
         </DesktopComponent>
         <MobileComponent>
-          <TitleBar
-            sticky
-            icon={<AddressIcon />}
-            title={title}
-            titleComponent="h3"
-            primary
-          />
+          <AddressInfo address={addressData} districts={adminDistricts} />
         </MobileComponent>
       </>
     );
   };
 
   const renderNearbyList = () => {
-    if (isFetching || !units) {
-      return <Typography id="LoadingMessage"><FormattedMessage id="general.loading" /></Typography>;
+    if (isFetchingAddress || isFetchingUnits || !units) {
+      return <Typography data-sm="LoadingMessage"><FormattedMessage id="general.loading" /></Typography>;
     }
-    if (units && !units.length) {
-      return <Typography id="NoDataMessage"><FormattedMessage id="general.noData" /></Typography>;
+    if (!units.length) {
+      return <Typography data-sm="NoDataMessage"><FormattedMessage id="general.noData" /></Typography>;
     }
     return null;
   };
 
-
   const renderClosebyServices = () => {
-    if (isFetching || !adminDistricts) {
+    if (!addressData || isFetchingAddress || isFetchingDistricts || !adminDistricts) {
       return <Typography><FormattedMessage id="general.loading" /></Typography>;
     }
     // Get divisions with units
@@ -238,7 +218,7 @@ const AddressView = (props) => {
     const majorDistricts = adminDistricts.filter(x => x.type === 'major_district');
     const unitlessDistricts = [...rescueAreas, ...majorDistricts];
 
-    const units = divisionsWithUnits.map((x) => {
+    const districtUnits = divisionsWithUnits.map((x) => {
       const { unit } = x;
       const unitData = unit;
       unitData.area = x;
@@ -255,7 +235,7 @@ const AddressView = (props) => {
           <StyledButtonBase
             role="link"
             onClick={() => {
-              setDistrictAddressData({ address: addressData });
+              dispatch(setDistrictAddressData({ address: addressData }));
               navigator.push('area');
             }}
             id="areaViewLink"
@@ -268,7 +248,7 @@ const AddressView = (props) => {
         <Divider aria-hidden />
         <List>
           {
-            units.map((data) => {
+            districtUnits.map((data) => {
               const key = `${data.area.id}`;
               const distance = getDistance(data);
               const customTitle = rescueAreaIDs.includes(data.area.type)
@@ -303,7 +283,7 @@ const AddressView = (props) => {
       title: intl.formatMessage({ id: 'address.nearby' }),
       noOrderer: true, // Remove this when we want result orderer for address unit list
       onClick: () => {
-        setToRender('units');
+        dispatch(setToRender('units'));
       },
     },
   ];
@@ -317,7 +297,7 @@ const AddressView = (props) => {
       itemsPerPage: null,
       title: intl.formatMessage({ id: 'address.services.header' }),
       onClick: () => {
-        setToRender('adminDistricts');
+        dispatch(setToRender('adminDistricts'));
       },
     };
     tabs.unshift(nearbyServicesTab);
@@ -344,7 +324,7 @@ const AddressView = (props) => {
     }
   }, [match.url, map]);
 
-  if (embed) {
+  if (embed || isFetchingAddress || !addressData) {
     return null;
   }
 
@@ -379,14 +359,6 @@ const AddressView = (props) => {
   );
 };
 
-const StyledAddressIcon = styled(AddressIcon)(() => ({
-  fontSize: 28,
-  height: 24,
-  width: 24,
-  marginLeft: 0,
-  marginRight: 0,
-}));
-
 const StyledButtonBase = styled(ButtonBase)(({ theme }) => ({
   color: theme.palette.link.main,
   textDecoration: 'underline',
@@ -417,13 +389,6 @@ const StyledTopArea = styled('div')(() => ({
 export default AddressView;
 
 AddressView.propTypes = {
-  getDistance: PropTypes.func.isRequired,
-  setAddressData: PropTypes.func.isRequired,
-  setAddressLocation: PropTypes.func.isRequired,
-  setAddressUnits: PropTypes.func.isRequired,
-  setAdminDistricts: PropTypes.func.isRequired,
-  setDistrictAddressData: PropTypes.func.isRequired,
-  setToRender: PropTypes.func.isRequired,
   embed: PropTypes.bool,
 };
 

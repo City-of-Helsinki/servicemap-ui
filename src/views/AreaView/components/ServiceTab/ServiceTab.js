@@ -2,21 +2,24 @@ import styled from '@emotion/styled';
 import { Divider, List, Typography } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
 import PropTypes from 'prop-types';
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import config from '../../../../../config';
 import { SMAccordion } from '../../../../components';
 import {
-  fetchDistrictGeometry,
+  fetchDistrictGeometry, fetchDistricts,
   handleOpenItems,
   setParkingUnits,
   setSelectedDistrictType,
   setSelectedParkingAreas,
 } from '../../../../redux/actions/district';
 import {
-  selectDistrictsFetching, selectParkingUnits,
-  selectSelectedDistrictType, selectSelectedParkingAreas,
+  selectDistrictData,
+  selectDistrictsFetching,
+  selectParkingUnits,
+  selectSelectedDistrictType,
+  selectSelectedParkingAreaIds,
 } from '../../../../redux/selectors/district';
 import { selectCities } from '../../../../redux/selectors/settings';
 import { dataStructure, getDistrictCategory } from '../../utils/districtDataHelper';
@@ -35,13 +38,13 @@ import {
 const ServiceTab = (props) => {
   const {
     selectedAddress,
-    districtData,
     initialOpenItems,
   } = props;
   const dispatch = useDispatch();
+  const districtData = useSelector(selectDistrictData);
   const districtsFetching = useSelector(selectDistrictsFetching);
   const selectedDistrictType = useSelector(selectSelectedDistrictType);
-  const selectedParkingAreas = useSelector(selectSelectedParkingAreas);
+  const selectedParkingAreaIds = useSelector(selectSelectedParkingAreaIds);
   const parkingUnits = useSelector(selectParkingUnits);
   const citySettings = useSelector(selectCities);
   const selectedCategory = dataStructure.find(
@@ -53,7 +56,7 @@ const ServiceTab = (props) => {
       dispatch(setSelectedDistrictType(null));
     } else {
       if (getDistrictCategory(district.name) !== 'parking') {
-        if (selectedParkingAreas.length) {
+        if (selectedParkingAreaIds.length) {
           dispatch(setSelectedParkingAreas([]));
         }
         if (parkingUnits.length) {
@@ -67,6 +70,11 @@ const ServiceTab = (props) => {
     }
   };
 
+  useEffect(() => {
+    if (!districtData.length) { // Arriving to page first time
+      dispatch(fetchDistricts());
+    }
+  }, []);
 
   const renderDistrictItem = district => (
     <DistrictToggleButton
@@ -90,12 +98,12 @@ const ServiceTab = (props) => {
   );
 
 
-  const renderDistrictList = (districList) => {
+  const renderDistrictList = (districtList) => {
     const listDistrictAreas = ['rescue_area', 'rescue_district', 'rescue_sub_district'].includes(selectedDistrictType);
     const DistrictList = listDistrictAreas ? DistrictAreaList : DistrictUnitList;
     return (
       <StyledListLevelThree data-sm="DistrictList" disablePadding>
-        {districList.map(district => (
+        {districtList.map(district => (
           <Fragment key={district.id}>
             <StyledAreaListItem
               key={district.id}
@@ -120,42 +128,45 @@ const ServiceTab = (props) => {
   };
 
   const renderParkingAreaSelection = (item) => { // Custom implementation for parking areas
-    const districList = districtData.filter(obj => item.districts.some(
+    const districtList = districtData.filter(obj => item.districts.some(
       district => obj.id.includes(district.id),
     ));
-    const parkingAreas = districList.filter(obj => !obj.id.includes('parking_area'));
-    const parkingSpaces = districList.filter(obj => obj.id.includes('parking_area') && obj.id !== 'parking_area0');
-    const elementsForHelsinki = (
+    const parkingAreas = districtList.filter(obj => !obj.id.includes('parking_area'));
+    const elementsHelsinki = (
       <>
         <StyledServiceTabSubtitle>
           <StyledBoldText component="h4"><FormattedMessage id="settings.city.helsinki" /></StyledBoldText>
         </StyledServiceTabSubtitle>
-        {renderDistrictList(parkingAreas)}
         <StyledServiceTabSubtitle>
           <Typography component="h6"><FormattedMessage id="area.list.parkingSpaces" /></Typography>
         </StyledServiceTabSubtitle>
-        <ParkingAreaList areas={parkingSpaces} variant="helsinki" />
+        <ParkingAreaList variant="helsinki" />
       </>
     );
-
-    const elementsForVantaa = (
+    const elementsVantaa = (
       <>
         <StyledServiceTabSubtitle>
           <StyledBoldText component="h4"><FormattedMessage id="settings.city.vantaa" /></StyledBoldText>
         </StyledServiceTabSubtitle>
         <StyledServiceTabSubtitle>
-          <Typography component="h6"><FormattedMessage id="area.list.parkingSpaces" /></Typography>
+          <Typography component="h6"><FormattedMessage id="area.list.passenger_car" /></Typography>
         </StyledServiceTabSubtitle>
-        <ParkingAreaList areas={parkingSpaces} variant="vantaa" />
+        <ParkingAreaList variant="vantaa/passenger_car" />
+        <StyledServiceTabSubtitle>
+          <Typography component="h6"><FormattedMessage id="area.list.heavy_traffic" /></Typography>
+        </StyledServiceTabSubtitle>
+        <ParkingAreaList variant="vantaa/heavy_traffic" />
       </>
     );
 
-    const showHelsinki = citySettings.helsinki || config.cities.every(city => !citySettings[city]);
-    const showVantaa = citySettings.vantaa || config.cities.every(city => !citySettings[city]);
+    const everyCity = config.cities.every(city => !citySettings[city]);
+    const showHelsinki = everyCity || citySettings.helsinki;
+    const showVantaa = everyCity || citySettings.vantaa;
     return (
       <>
-        {showHelsinki ? elementsForHelsinki : null}
-        {showVantaa ? elementsForVantaa : null}
+        {renderDistrictList(parkingAreas)}
+        {showHelsinki ? elementsHelsinki : null}
+        {showVantaa ? elementsVantaa : null}
       </>
     );
   };
@@ -210,7 +221,7 @@ const ServiceTab = (props) => {
 
   const districtCategoryList = dataStructure.filter(obj => obj.id !== 'geographical');
 
-  if (!districtData.length && districtsFetching) {
+  if (!districtData.length && districtsFetching?.length) {
     return (
       <StyledLoadingText data-sm="ServiceTabComponent">
         <Typography aria-hidden>
@@ -257,14 +268,12 @@ const StyledListLevelTwo = styled(List)(() => ({
 }));
 
 ServiceTab.propTypes = {
-  districtData: PropTypes.arrayOf(PropTypes.object),
   initialOpenItems: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
   selectedAddress: PropTypes.objectOf(PropTypes.any),
 };
 
 ServiceTab.defaultProps = {
   initialOpenItems: [],
-  districtData: [],
   selectedAddress: null,
 };
 

@@ -2,31 +2,24 @@ import URI from 'urijs';
 
 export const getEmbedURL = (url, params = {}) => {
   if (!url) {
-    return false;
+    return undefined;
   }
   const uri = URI(url);
 
   const segment = uri.segment();
   const data = uri.search(true); // Get data object of search parameters
-  const cityObj = params.city;
-  const cities = cityObj
-    ? Object.keys(cityObj).reduce((acc, current) => {
-      if (Object.prototype.hasOwnProperty.call(cityObj, current)) {
-        if (cityObj[current]) {
-          acc.push(current);
-        }
-      }
-      return acc;
-    }, []) : [];
-
   if (params.map) {
     data.map = params.map;
   }
-  if (cities.length > 0) {
-    data.city = cities.join(',');
+  if (params.city?.length > 0) {
+    data.city = params.city.join(',');
+  } else {
+    delete data.city;
   }
   if (params.organization?.length > 0) {
     data.organization = params.organization.map(org => org.id).join(',');
+  } else {
+    delete data.organization;
   }
   if (params.service && params.service !== 'none') {
     data.level = params.service;
@@ -53,6 +46,22 @@ export const getEmbedURL = (url, params = {}) => {
     segment.splice(0, 1, params.language);
   }
   uri.segment(segment);
+  return URI.decode(uri);
+};
+
+export const setBboxToUrl = (url, bbox) => {
+  if (!url) {
+    return undefined;
+  }
+  const uri = URI(url);
+
+  const data = uri.search(true); // Get data object of search parameters
+  if (bbox) {
+    data.bbox = bbox;
+  } else {
+    delete data.bbox;
+  }
+  uri.search(data);
   return URI.decode(uri);
 };
 
