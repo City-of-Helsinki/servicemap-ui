@@ -2,7 +2,6 @@ import { CookieModal } from 'hds-react';
 import React from 'react';
 import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
 import setTracker from '../../redux/actions/tracker';
 import { selectTracker } from '../../redux/selectors/general';
 import { getLocale } from '../../redux/selectors/user';
@@ -15,7 +14,7 @@ function SMCookies() {
   const locale = useSelector(getLocale);
   const tracker = useSelector(selectTracker);
   const dispatch = useDispatch();
-  const location = useLocation();
+  const cookieDomain = typeof window !== 'undefined' ? window.location.hostname : undefined;
   const embed = isEmbed();
 
   if (embed) {
@@ -35,7 +34,7 @@ function SMCookies() {
   const contentSource = {
     siteName: intl.formatMessage({ id: 'app.title' }),
     currentLanguage: locale,
-    cookieDomain: location.hostname,
+    cookieDomain,
     optionalCookies: {
       groups: [
         {
