@@ -34,7 +34,6 @@ function SMCookies() {
   const contentSource = {
     siteName: intl.formatMessage({ id: 'app.title' }),
     currentLanguage: locale,
-    cookieDomain,
     optionalCookies: {
       groups: [
         {
@@ -55,7 +54,13 @@ function SMCookies() {
     onAllConsentsGiven: consents => parseConsentsAndActOnThem(consents),
     onConsentsParsed: consents => parseConsentsAndActOnThem(consents),
   };
-  return <CookieModal contentSource={contentSource} rootId={COOKIE_MODAL_ROOT_ID} />;
+  return (
+    <CookieModal
+      cookieDomain={cookieDomain}
+      contentSource={contentSource}
+      rootId={COOKIE_MODAL_ROOT_ID}
+    />
+  );
 }
 
 export default SMCookies;
