@@ -1,13 +1,13 @@
 import { createSelector } from 'reselect';
 import { arraysEqual } from '../../utils';
 import { filterCitiesAndOrganizations } from '../../utils/filters';
-import getSortingParameters from './ordering';
 import orderUnits from '../../utils/orderUnits';
+import getSortingParameters from './ordering';
 import { selectSelectedCities, selectSelectedOrganizations } from './settings';
 
 const getUnits = state => state.service.data;
 export const selectServiceCurrent = state => state.service.current;
-export const selectServiceIsFetching = state => state.service.isFetching;
+export const selectServiceDataSet = state => state.service;
 
 export const getServiceUnits = createSelector(
   [getUnits, selectSelectedCities, selectSelectedOrganizations, getSortingParameters],

@@ -149,6 +149,10 @@ if (typeof settings.EMBEDDER_DOCUMENTATION_URL === 'undefined') {
   settings.EMBEDDER_DOCUMENTATION_URL = 'https://kaupunkialustana.hel.fi/palvelukartta/palvelukartan-upotusohjeet/';
 }
 
+if (typeof settings.SLOW_FETCH_MESSAGE_TIMEOUT === 'undefined') {
+  settings.SLOW_FETCH_MESSAGE_TIMEOUT = 3000;
+}
+
 let municipalities;
 try {
   municipalities = require('./municipalities.json');
@@ -293,4 +297,5 @@ export default {
   "matomoNoResultsDimensionID": settings.MATOMO_NO_RESULTS_DIMENSION_ID,
   "matomoUrl": settings.MATOMO_URL,
   "matomoSiteId": settings.MATOMO_SITE_ID,
+  "slowFetchMessageTimeout": Number(settings.SLOW_FETCH_MESSAGE_TIMEOUT)
 }
