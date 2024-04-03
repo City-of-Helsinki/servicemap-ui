@@ -168,13 +168,13 @@ const UnitView = (props) => {
   const handleFeedbackClick = () => {
     const URLs = config.additionalFeedbackURLs;
     if (unit.municipality === 'espoo') {
-      window.open(URLs.espoo);
+      window.open(getLocaleText(URLs.espoo));
     } else if (unit.municipality === 'vantaa') {
-      window.open(URLs.vantaa);
+      window.open(getLocaleText(URLs.vantaa));
     } else if (unit.municipality === 'kauniainen') {
-      window.open(URLs.kauniainen);
+      window.open(getLocaleText(URLs.kauniainen));
     } else if (unit.municipality === 'kirkkonummi') {
-      window.open(URLs.kirkkonummi);
+      window.open(getLocaleText(URLs.kirkkonummi));
     } else {
       navigator.push('unit', { id: unit.id, type: 'feedback' });
     }
