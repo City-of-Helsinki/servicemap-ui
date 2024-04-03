@@ -115,13 +115,13 @@ if (typeof settings.ADDITIONAL_FEEDBACK_URLS_VANTAA === 'undefined') {
   settings.ADDITIONAL_FEEDBACK_URLS_VANTAA = 'https://www.vantaa.fi/fi/palaute,https://www.vantaa.fi/sv/feedback,https://www.vantaa.fi/en/feedback';
 }
 if (typeof settings.ADDITIONAL_FEEDBACK_URLS_ESPOO === 'undefined') {
-  settings.ADDITIONAL_FEEDBACK_URLS_ESPOO = 'https://easiointi.espoo.fi/efeedback/,https://easiointi.espoo.fi/efeedback/,https://easiointi.espoo.fi/efeedback/';
+  settings.ADDITIONAL_FEEDBACK_URLS_ESPOO = 'https://easiointi.espoo.fi/eFeedback/fi,https://easiointi.espoo.fi/eFeedback/sv,https://easiointi.espoo.fi/eFeedback/en';
 }
 if (typeof settings.ADDITIONAL_FEEDBACK_URLS_KIRKKONUMMI === 'undefined') {
-  settings.ADDITIONAL_FEEDBACK_URLS_KIRKKONUMMI = 'https://www.kirkkonummi.fi/osallistu-ja-vaikuta,https://www.kirkkonummi.fi/osallistu-ja-vaikuta,https://www.kirkkonummi.fi/osallistu-ja-vaikuta';
+  settings.ADDITIONAL_FEEDBACK_URLS_KIRKKONUMMI = 'https://kirkkonummi.fi/anna-palautetta-ja-vaikuta/,https://kyrkslatt.fi/ge-respons-och-paverka/,https://kirkkonummi.fi/anna-palautetta-ja-vaikuta/';
 }
 if (typeof settings.ADDITIONAL_FEEDBACK_URLS_KAUNIAINEN === 'undefined') {
-  settings.ADDITIONAL_FEEDBACK_URLS_KAUNIAINEN = 'https://www.kauniainen.fi/kaupunki_ja_paatoksenteko/osallistu_ja_vaikuta,https://www.kauniainen.fi/kaupunki_ja_paatoksenteko/osallistu_ja_vaikuta,https://www.kauniainen.fi/kaupunki_ja_paatoksenteko/osallistu_ja_vaikuta';
+  settings.ADDITIONAL_FEEDBACK_URLS_KAUNIAINEN = 'https://www.kauniainen.fi/kaupunki-ja-paatoksenteko/osallistu-ja-vaikuta/,https://www.kauniainen.fi/sv/staden-och-beslutsfattande/delta-och-paverka/,https://www.kauniainen.fi/kaupunki-ja-paatoksenteko/osallistu-ja-vaikuta/';
 }
 
 if (typeof settings.FEEDBACK_IS_PUBLISHED === 'undefined') {
