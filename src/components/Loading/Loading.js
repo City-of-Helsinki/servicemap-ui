@@ -13,6 +13,8 @@ const Loading = (props) => {
   const [showSlowMessage, setShowSlowMessage] = useState(false);
 
   useEffect(() => {
+    // If necessary we create a timeout (a callback for timeout) that will switch flag to
+    // display "we are still loading" message.
     const noOp = () => {};
     if (!reducer?.fetchStartTime) {
       return noOp;
