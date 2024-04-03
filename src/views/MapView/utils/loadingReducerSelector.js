@@ -3,7 +3,7 @@ import { selectDistrictUnitFetch } from '../../../redux/selectors/district';
 import { selectSearchResults } from '../../../redux/selectors/results';
 import { selectServiceDataSet } from '../../../redux/selectors/service';
 import { getStatisticalDistrictUnitsState } from '../../../redux/selectors/statisticalDistrict';
-import { arraysEqual } from '../../../utils';
+import { alphabeticCompare, arraysEqual } from '../../../utils';
 
 /*
  * Helper file for quite complex logic of Loading component data.
@@ -11,7 +11,7 @@ import { arraysEqual } from '../../../utils';
 
 function reducerDataToEqualsComparableArray(a) {
   const values = a.loadingReducer
-    ? Object.keys(a.loadingReducer).sort().map(key => a.loadingReducer[key])
+    ? Object.keys(a.loadingReducer).sort(alphabeticCompare).map(key => a.loadingReducer[key])
     : [null];
   return [a.showLoadingScreen, a.hideLoadingNumbers, ...values];
 }

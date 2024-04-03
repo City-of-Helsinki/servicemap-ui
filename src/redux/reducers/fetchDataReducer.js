@@ -14,6 +14,8 @@ const dataSetInitialState = {
 };
 
 export const dataSetReducer = (state, action, prefix) => {
+  const atLeast1Fetch = state.activeFetches > 0;
+  const atLeast2Fetches = state.activeFetches > 1;
   switch (action.type) {
     case `${prefix}_IS_FETCHING`:
       return {
@@ -77,16 +79,16 @@ export const dataSetReducer = (state, action, prefix) => {
         isFetching: true,
         errorMessage: null,
         previousSearch: action.search,
-        count: state.activeFetches > 0 ? state.count : 0,
-        max: state.activeFetches > 0 ? state.max : 0,
+        count: atLeast1Fetch ? state.count : 0,
+        max: atLeast1Fetch ? state.max : 0,
         next: null,
         activeFetches: state.activeFetches + 1,
       };
     case `${prefix}_ADDITIVE_FETCH_PROGRESS_UPDATE`:
       return {
         ...state,
-        count: action.count ? state.count + action.count : state.count,
-        max: action.max ? state.max + action.max : state.max,
+        count: state.count + (action?.count || 0),
+        max: state.max + (action?.max || 0),
       };
     case `${prefix}_ADDITIVE_FETCH_HAS_ERRORED`:
       return {
@@ -96,17 +98,17 @@ export const dataSetReducer = (state, action, prefix) => {
         count: 0,
         max: 0,
         activeFetches: state.activeFetches - 1,
-        fetchStartTime: (state.activeFetches - 1) ? state.fetchStartTime : null,
+        fetchStartTime: atLeast2Fetches ? state.fetchStartTime : null,
       };
     case `${prefix}_ADDITIVE_FETCH_DATA_SUCCESS`:
       return {
         ...state,
-        isFetching: state.activeFetches - 1 > 0,
+        isFetching: atLeast2Fetches,
         errorMessage: null,
         data: [...state.data, ...action.data],
-        count: state.activeFetches - 1 > 0 ? state.count : [...state.data, ...action.data].length,
+        count: atLeast2Fetches ? state.count : [...state.data, ...action.data].length,
         activeFetches: state.activeFetches - 1,
-        fetchStartTime: (state.activeFetches - 1 > 0) ? state.fetchStartTime : null,
+        fetchStartTime: atLeast2Fetches ? state.fetchStartTime : null,
       };
     default:
       return state;
