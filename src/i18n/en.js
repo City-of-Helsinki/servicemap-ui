@@ -324,6 +324,7 @@ const translations = {
   'general.closeSettings': 'Close settings',
   'general.hideSettings': 'Close map settings',
   'general.fetching': 'Loading data...',
+  'general.fetchingTakesTime': 'There are a lot of search results, the download takes a little longer',
   'general.home': 'Home',
   'general.home.logo.ariaLabel': 'Servicemap - Go to home page',
   'general.noData': 'No data available',

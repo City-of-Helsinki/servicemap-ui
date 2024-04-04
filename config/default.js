@@ -111,6 +111,18 @@ if (typeof settings.FEEDBACK_ADDITIONAL_INFO_LINK_SV === 'undefined') {
 if (typeof settings.FEEDBACK_ADDITIONAL_INFO_LINK_EN === 'undefined') {
   settings.FEEDBACK_ADDITIONAL_INFO_LINK_EN = 'https://palautteet.hel.fi/en/tietoa-palautepalvelusta';
 }
+if (typeof settings.ADDITIONAL_FEEDBACK_URLS_VANTAA === 'undefined') {
+  settings.ADDITIONAL_FEEDBACK_URLS_VANTAA = 'https://www.vantaa.fi/fi/palaute,https://www.vantaa.fi/sv/feedback,https://www.vantaa.fi/en/feedback';
+}
+if (typeof settings.ADDITIONAL_FEEDBACK_URLS_ESPOO === 'undefined') {
+  settings.ADDITIONAL_FEEDBACK_URLS_ESPOO = 'https://easiointi.espoo.fi/eFeedback/fi,https://easiointi.espoo.fi/eFeedback/sv,https://easiointi.espoo.fi/eFeedback/en';
+}
+if (typeof settings.ADDITIONAL_FEEDBACK_URLS_KIRKKONUMMI === 'undefined') {
+  settings.ADDITIONAL_FEEDBACK_URLS_KIRKKONUMMI = 'https://kirkkonummi.fi/anna-palautetta-ja-vaikuta/,https://kyrkslatt.fi/ge-respons-och-paverka/,https://kirkkonummi.fi/anna-palautetta-ja-vaikuta/';
+}
+if (typeof settings.ADDITIONAL_FEEDBACK_URLS_KAUNIAINEN === 'undefined') {
+  settings.ADDITIONAL_FEEDBACK_URLS_KAUNIAINEN = 'https://www.kauniainen.fi/kaupunki-ja-paatoksenteko/osallistu-ja-vaikuta/,https://www.kauniainen.fi/sv/staden-och-beslutsfattande/delta-och-paverka/,https://www.kauniainen.fi/kaupunki-ja-paatoksenteko/osallistu-ja-vaikuta/';
+}
 
 if (typeof settings.FEEDBACK_IS_PUBLISHED === 'undefined') {
   // If not set default to Helsinki
@@ -147,6 +159,10 @@ if (settings.MATOMO_SITE_ID === 'undefined') {
 
 if (typeof settings.EMBEDDER_DOCUMENTATION_URL === 'undefined') {
   settings.EMBEDDER_DOCUMENTATION_URL = 'https://kaupunkialustana.hel.fi/palvelukartta/palvelukartan-upotusohjeet/';
+}
+
+if (typeof settings.SLOW_FETCH_MESSAGE_TIMEOUT === 'undefined') {
+  settings.SLOW_FETCH_MESSAGE_TIMEOUT = 3000;
 }
 
 let municipalities;
@@ -223,10 +239,26 @@ export default {
     "shortcomings": "#b00021",
   },
   "additionalFeedbackURLs" : {
-    espoo: 'https://easiointi.espoo.fi/efeedback/',
-    vantaa: 'https://asiointi.vantaa.fi/anna-palautetta',
-    kauniainen: 'https://www.kauniainen.fi/kaupunki_ja_paatoksenteko/osallistu_ja_vaikuta',
-    kirkkonummi: 'https://www.kirkkonummi.fi/osallistu-ja-vaikuta',
+    espoo: {
+      fi: settings.ADDITIONAL_FEEDBACK_URLS_ESPOO.split(',')[0],
+      sv: settings.ADDITIONAL_FEEDBACK_URLS_ESPOO.split(',')[1],
+      en: settings.ADDITIONAL_FEEDBACK_URLS_ESPOO.split(',')[2],
+    },
+    vantaa: {
+      fi: settings.ADDITIONAL_FEEDBACK_URLS_VANTAA.split(',')[0],
+      sv: settings.ADDITIONAL_FEEDBACK_URLS_VANTAA.split(',')[1],
+      en: settings.ADDITIONAL_FEEDBACK_URLS_VANTAA.split(',')[2],
+    },
+    kauniainen: {
+      fi: settings.ADDITIONAL_FEEDBACK_URLS_KAUNIAINEN.split(',')[0],
+      sv: settings.ADDITIONAL_FEEDBACK_URLS_KAUNIAINEN.split(',')[1],
+      en: settings.ADDITIONAL_FEEDBACK_URLS_KAUNIAINEN.split(',')[2],
+    },
+    kirkkonummi: {
+      fi: settings.ADDITIONAL_FEEDBACK_URLS_KIRKKONUMMI.split(',')[0],
+      sv: settings.ADDITIONAL_FEEDBACK_URLS_KIRKKONUMMI.split(',')[1],
+      en: settings.ADDITIONAL_FEEDBACK_URLS_KIRKKONUMMI.split(',')[2],
+    },
   },
   "production": settings.MODE === 'production',
   "initialMapPosition": settings.INITIAL_MAP_POSITION.split(','),
@@ -293,4 +325,5 @@ export default {
   "matomoNoResultsDimensionID": settings.MATOMO_NO_RESULTS_DIMENSION_ID,
   "matomoUrl": settings.MATOMO_URL,
   "matomoSiteId": settings.MATOMO_SITE_ID,
+  "slowFetchMessageTimeout": Number(settings.SLOW_FETCH_MESSAGE_TIMEOUT)
 }

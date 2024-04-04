@@ -325,6 +325,7 @@ const translations = {
   'general.closeSettings': 'Stäng inställningarna',
   'general.hideSettings': 'Stäng kartinställningar',
   'general.fetching': 'Laddar data...',
+  'general.fetchingTakesTime': 'Det finns många sökresultat, nedladdningen tar lite längre tid',
   'general.home': 'Hem',
   'general.home.logo.ariaLabel': 'Servicekarta - Gå till startsidan',
   'general.noData': 'Data finns inte',

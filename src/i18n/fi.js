@@ -324,6 +324,7 @@ const translations = {
   'general.closeSettings': 'Sulje asetukset',
   'general.hideSettings': 'Piilota omat asetukset',
   'general.fetching': 'Ladataan tietoja...',
+  'general.fetchingTakesTime': 'Hakutuloksia on paljon, lataus kestää hieman kauemmin',
   'general.home': 'Koti',
   'general.home.logo.ariaLabel': 'Palvelukartta - Siirry etusivulle',
   'general.noData': 'Tietoa ei saatavilla',
