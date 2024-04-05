@@ -13,7 +13,7 @@ import {
   selectResultsIsFetching,
 } from '../../../redux/selectors/results';
 import { getSelectedUnit } from '../../../redux/selectors/selectedUnit';
-import { getFilteredSortedServiceUnits, selectServiceIsFetching } from '../../../redux/selectors/service';
+import { getServiceUnits, selectServiceIsFetching } from '../../../redux/selectors/service';
 import {
   getServiceFilteredStatisticalDistrictUnits,
 } from '../../../redux/selectors/statisticalDistrict';
@@ -95,7 +95,7 @@ const useMapUnits = () => {
   const addressToRender = useSelector(state => state.address.toRender);
   const adminDistricts = useSelector(selectAddressAdminDistricts);
   const addressUnits = useSelector(selectAddressUnits);
-  const serviceUnits = useSelector(getFilteredSortedServiceUnits);
+  const serviceUnits = useSelector(getServiceUnits);
   const districtPrimaryUnits = useSelector(getDistrictPrimaryUnits);
   const districtServiceUnits = useSelector(getFilteredSubDistrictUnits);
   const statisticalDistrictUnits = useSelector(getServiceFilteredStatisticalDistrictUnits);
