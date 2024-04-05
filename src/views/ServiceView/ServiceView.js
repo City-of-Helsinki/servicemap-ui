@@ -18,7 +18,7 @@ import {
   TitleBar,
 } from '../../components';
 import { selectMapRef } from '../../redux/selectors/general';
-import { getServiceUnits, selectServiceDataSet } from '../../redux/selectors/service';
+import { getFilteredSortedServiceUnits, selectServiceDataSet } from '../../redux/selectors/service';
 import { selectCustomPositionCoordinates } from '../../redux/selectors/user';
 import { coordinateIsActive } from '../../utils/mapUtility';
 import { fitUnitsToMap, focusToPosition } from '../MapView/utils/mapActions';
@@ -38,7 +38,7 @@ const ServiceView = (props) => {
   const getLocaleText = useLocaleText();
   const map = useSelector(selectMapRef);
   const serviceReducer = useSelector(selectServiceDataSet);
-  const unitData = useSelector(getServiceUnits);
+  const unitData = useSelector(getFilteredSortedServiceUnits);
   const customPositionCoordinates = useSelector(selectCustomPositionCoordinates);
   const intl = useIntl();
   const [mapMoved, setMapMoved] = useState(false);
