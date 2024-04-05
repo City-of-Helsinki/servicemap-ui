@@ -18,8 +18,10 @@ import {
   TitleBar,
 } from '../../components';
 import { selectMapRef } from '../../redux/selectors/general';
-import { getFilteredSortedServiceUnits, selectServiceDataSet } from '../../redux/selectors/service';
+import { getServiceUnits, selectServiceDataSet } from '../../redux/selectors/service';
+import { selectSelectedCities, selectSelectedOrganizationIds } from '../../redux/selectors/settings';
 import { selectCustomPositionCoordinates } from '../../redux/selectors/user';
+import { resolveCityAndOrganizationFilter } from '../../utils/filters';
 import { coordinateIsActive } from '../../utils/mapUtility';
 import { fitUnitsToMap, focusToPosition } from '../MapView/utils/mapActions';
 import useLocaleText from '../../utils/useLocaleText';
@@ -38,7 +40,11 @@ const ServiceView = (props) => {
   const getLocaleText = useLocaleText();
   const map = useSelector(selectMapRef);
   const serviceReducer = useSelector(selectServiceDataSet);
-  const unitData = useSelector(getFilteredSortedServiceUnits);
+  const cities = useSelector(selectSelectedCities);
+  const orgIds = useSelector(selectSelectedOrganizationIds);
+  const cityAndOrgFilter = resolveCityAndOrganizationFilter(cities, orgIds, location, embed);
+  const unitData = useSelector(getServiceUnits)
+    .filter(cityAndOrgFilter);
   const customPositionCoordinates = useSelector(selectCustomPositionCoordinates);
   const intl = useIntl();
   const [mapMoved, setMapMoved] = useState(false);
