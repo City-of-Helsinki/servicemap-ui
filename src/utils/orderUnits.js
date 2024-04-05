@@ -1,8 +1,10 @@
-import UnitHelper from './unitHelper';
+import { useSelector } from 'react-redux';
 import { getLocaleString } from '../redux/selectors/locale';
+import getSortingParameters from '../redux/selectors/ordering';
 import { calculateDistance } from '../redux/selectors/unit';
+import UnitHelper from './unitHelper';
 
-const orderUnits = (unitData, sortingParameters) => {
+export const orderUnits = (unitData, sortingParameters) => {
   const {
     usedPosition, direction, order, locale, selectedAccessibilitySettings,
   } = sortingParameters;
@@ -87,4 +89,8 @@ const orderUnits = (unitData, sortingParameters) => {
   return results;
 };
 
-export default orderUnits;
+export const applySortingParams = (unitData) => {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const sortingParameters = useSelector(getSortingParameters);
+  return orderUnits(unitData, sortingParameters);
+};

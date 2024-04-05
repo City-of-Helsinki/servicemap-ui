@@ -11,7 +11,7 @@ import { getLocale } from '../../../../redux/selectors/user';
 import { formatDistanceObject } from '../../../../utils';
 import { getAddressFromUnit } from '../../../../utils/address';
 import { filterByCitySettings } from '../../../../utils/filters';
-import orderUnits from '../../../../utils/orderUnits';
+import { orderUnits } from '../../../../utils/orderUnits';
 import useLocaleText from '../../../../utils/useLocaleText';
 import { sortByOriginID } from '../../utils';
 import {

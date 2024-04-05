@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 import { getCityAndOrgFilteredData } from '../../utils/filters';
-import orderUnits from '../../utils/orderUnits';
+import { orderUnits } from '../../utils/orderUnits';
 import getSortingParameters from './ordering';
 import { selectSelectedCities, selectSelectedOrganizationIds } from './settings';
 

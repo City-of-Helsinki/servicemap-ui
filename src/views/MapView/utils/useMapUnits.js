@@ -13,12 +13,12 @@ import {
   selectResultsIsFetching,
 } from '../../../redux/selectors/results';
 import { getSelectedUnit } from '../../../redux/selectors/selectedUnit';
-import { getServiceUnits } from '../../../redux/selectors/service';
+import { getServiceUnits, selectServiceIsFetching } from '../../../redux/selectors/service';
 import {
   getServiceFilteredStatisticalDistrictUnits,
 } from '../../../redux/selectors/statisticalDistrict';
 import { getLocale, getPage } from '../../../redux/selectors/user';
-import orderUnits from '../../../utils/orderUnits';
+import { orderUnits } from '../../../utils/orderUnits';
 import { useEmbedStatus } from '../../../utils/path';
 
 // Helper function to handle address view units
@@ -104,7 +104,7 @@ const useMapUnits = () => {
   const locale = useSelector(getLocale);
 
   const searchUnitsLoading = useSelector(selectResultsIsFetching);
-  const serviceUnitsLoading = useSelector(state => state.service.isFetching);
+  const serviceUnitsLoading = useSelector(selectServiceIsFetching);
   const unitsLoading = searchUnitsLoading || serviceUnitsLoading;
 
   const searchParams = new URLSearchParams(location.search);
