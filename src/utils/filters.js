@@ -1,4 +1,8 @@
+/* eslint-disable react-hooks/rules-of-hooks */
+import { useSelector } from 'react-redux';
 import config from '../../config';
+import { getServiceUnits } from '../redux/selectors/service';
+import { selectSelectedCities, selectSelectedOrganizationIds } from '../redux/selectors/settings';
 import { parseSearchParams } from './index';
 import { getUnitCount } from './units';
 
@@ -140,6 +144,17 @@ export const resolveCityAndOrganizationFilter = (cities, organizationIds, locati
   const orgIdArray = splitByComma(searchParam?.organization);
   return filterCitiesAndOrganizations(cityArray, orgIdArray);
 };
+
+/**
+ * Helper to wrap city and org filtering logic.
+ */
+export const applyCityAndOrganizationFilter = (units, location, embed) => {
+  const cities = useSelector(selectSelectedCities);
+  const orgIds = useSelector(selectSelectedOrganizationIds);
+  const cityAndOrgFilter = resolveCityAndOrganizationFilter(cities, orgIds, location, embed);
+  return units.filter(cityAndOrgFilter);
+};
+
 /**
  * Returns given data after filtering it
  * @param {*} data - search data to be filtered

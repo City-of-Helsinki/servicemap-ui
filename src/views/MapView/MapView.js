@@ -14,11 +14,11 @@ import { Loading } from '../../components';
 import { setBounds } from '../../redux/actions/map';
 import { selectNavigator } from '../../redux/selectors/general';
 import { getSelectedUnitEvents } from '../../redux/selectors/selectedUnit';
-import { selectMapType, selectSelectedCities, selectSelectedOrganizationIds } from '../../redux/selectors/settings';
+import { selectMapType } from '../../redux/selectors/settings';
 import { getLocale, getPage } from '../../redux/selectors/user';
 import { parseSearchParams } from '../../utils';
 import { useNavigationParams } from '../../utils/address';
-import { resolveCityAndOrganizationFilter } from '../../utils/filters';
+import { applyCityAndOrganizationFilter } from '../../utils/filters';
 import { coordinateIsActive, getBboxFromBounds, getCoordinatesFromUrl, mapHasMapPane, parseBboxFromLocation, swapCoordinates } from '../../utils/mapUtility';
 import { isEmbed } from '../../utils/path';
 import SettingsUtility from '../../utils/settings';
@@ -101,11 +101,7 @@ const MapView = (props) => {
   const locale = useSelector(getLocale);
   const currentPage = useSelector(getPage);
   const getAddressNavigatorParams = useNavigationParams();
-  const cities = useSelector(selectSelectedCities);
-  const orgIds = useSelector(selectSelectedOrganizationIds);
-  const cityAndOrgFilter = resolveCityAndOrganizationFilter(cities, orgIds, location, embedded);
-  const unitData = useMapUnits()
-    .filter(cityAndOrgFilter);
+  const unitData = applyCityAndOrganizationFilter(useMapUnits(), location, embedded);
   const intl = useIntl();
   const districtLoadingReducerData = useSelector(selectDistrictLoadingReducer);
   const serviceUnitSearchResultReducerData = useSelector(selectServiceUnitSearchResultLoadingReducer);
