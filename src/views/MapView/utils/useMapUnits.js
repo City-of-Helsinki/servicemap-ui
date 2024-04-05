@@ -18,7 +18,7 @@ import {
   getServiceFilteredStatisticalDistrictUnits,
 } from '../../../redux/selectors/statisticalDistrict';
 import { getLocale, getPage } from '../../../redux/selectors/user';
-import orderUnits from '../../../utils/orderUnits';
+import { orderUnits } from '../../../utils/orderUnits';
 import { useEmbedStatus } from '../../../utils/path';
 
 // Helper function to handle address view units

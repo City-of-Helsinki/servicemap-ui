@@ -1,5 +1,5 @@
 import { filterCitiesAndOrganizations } from '../../utils/filters';
-import orderUnits from '../../utils/orderUnits';
+import { orderUnits } from '../../utils/orderUnits';
 import getSortingParameters from './ordering';
 import { selectSelectedCities, selectSelectedOrganizations } from './settings';
 import { createMemoizedArraySelector } from './util';

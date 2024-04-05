@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useSelector } from 'react-redux';
 import config from '../../config';
-import { getServiceUnits } from '../redux/selectors/service';
 import { selectSelectedCities, selectSelectedOrganizationIds } from '../redux/selectors/settings';
 import { parseSearchParams } from './index';
 import { getUnitCount } from './units';
