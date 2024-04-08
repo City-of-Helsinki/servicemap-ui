@@ -31,6 +31,8 @@ const createSuggestions = (
     organization: organizationIds.join(','),
     administrativedivision_limit: administrativeDivisionLimit,
     language: locale,
+    order_units_by_num_services: false,
+    order_units_by_provider_type: false,
   };
 
   const results = await smAPI.searchSuggestions(query, additionalOptions);
