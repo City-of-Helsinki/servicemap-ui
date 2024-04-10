@@ -524,6 +524,7 @@ const translations = {
   'unit.outdoorLink': 'Katso liikuntapaikan kunto ulkoliikunta.fi palvelusta',
   'unit.seo.description': 'Katso sijainti kartalla',
   'unit.seo.description.accessibility': 'Katso esteettömyystiedot ja sijainti kartalla',
+  'unit.readFeedbackLink': 'Katso annettuja palautteita',
 
   // Search
   'search': 'Hae',
