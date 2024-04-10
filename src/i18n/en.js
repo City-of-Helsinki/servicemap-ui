@@ -522,6 +522,7 @@ const translations = {
   'unit.outdoorLink': 'Check the condition of an exercise location in the ulkoliikunta.fi service',
   'unit.seo.description': 'View service point on the map',
   'unit.seo.description.accessibility': 'View accessibility info and service point on the map',
+  'unit.readFeedbackLink': 'See the feedback given',
 
   // Search
   'search': 'Search',
