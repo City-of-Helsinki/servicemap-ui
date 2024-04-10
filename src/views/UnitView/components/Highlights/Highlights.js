@@ -1,11 +1,10 @@
-import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import config from '../../../../../config';
 import useLocaleText from '../../../../utils/useLocaleText';
 import unitSectionFilter from '../../utils/unitSectionFilter';
-import { StyledAlignLeftParagraph, StyledLink } from '../styled/styled';
+import { StyledAlignLeftParagraph, StyledLink, StyledVerticalMarginContainer } from '../styled/styled';
 
 const Highlights = ({ unit }) => {
   const intl = useIntl();
@@ -63,11 +62,6 @@ const Highlights = ({ unit }) => {
     </StyledVerticalMarginContainer>
   );
 };
-
-const StyledVerticalMarginContainer = styled.div(({ theme }) => ({
-  marginTop: theme.spacing(2),
-  marginBottom: theme.spacing(2),
-}));
 
 Highlights.propTypes = {
   unit: PropTypes.objectOf(PropTypes.any).isRequired,

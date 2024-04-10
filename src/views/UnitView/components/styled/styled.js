@@ -15,7 +15,13 @@ const StyledLink = styled(Link)(({ theme }) => ({
   textDecoration: 'underline',
 }));
 
+const StyledVerticalMarginContainer = styled.div(({ theme }) => ({
+  marginTop: theme.spacing(2),
+  marginBottom: theme.spacing(2),
+}));
+
 export {
   StyledAlignLeftParagraph,
   StyledLink,
+  StyledVerticalMarginContainer,
 };
