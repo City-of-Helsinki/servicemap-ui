@@ -9,12 +9,10 @@ const ReadFeedbackLink = ({ unit }) => {
   const getLocaleText = useLocaleText();
   const resolveUrl = () => {
     const URLs = config.readFeedbackURLS;
-    switch (unit.municipality) {
-      case 'helsinki':
-        return getLocaleText(URLs.helsinki) + getLocaleText(unit.name);
-      default:
-        return null;
+    if (unit.municipality === 'helsinki') {
+      return getLocaleText(URLs.helsinki) + getLocaleText(unit.name);
     }
+    return null;
   };
   const url = resolveUrl();
   if (!url) {
