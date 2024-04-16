@@ -3,10 +3,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import config from '../../../config';
 import { breadcrumbPop, breadcrumbPush, breadcrumbReplace } from '../../redux/actions/breadcrumb';
-import { selectTracker } from '../../redux/selectors/general';
+import { selectBreadcrumb, selectTracker } from '../../redux/selectors/general';
 import { selectResultsPreviousSearch } from '../../redux/selectors/results';
+import { selectMobility, selectSenses } from '../../redux/selectors/settings';
 import { generatePath, isEmbed } from '../../utils/path';
-import SettingsUtility from '../../utils/settings';
 import { servicemapTrackPageView } from '../../utils/tracking';
 
 class Navigator extends React.Component {
@@ -267,22 +267,13 @@ Navigator.defaultProps = {
 };
 
 // Listen to redux state
-const mapStateToProps = (state) => {
-  const {
-    breadcrumb,
-    settings,
-  } = state;
-
-  const previousSearch = selectResultsPreviousSearch(state);
-  const tracker = selectTracker(state);
-  return {
-    breadcrumb,
-    previousSearch,
-    mobility: settings.mobility,
-    senses: SettingsUtility.accessibilityImpairmentKeys.filter(key => settings[key]),
-    tracker,
-  };
-};
+const mapStateToProps = state => ({
+  breadcrumb: selectBreadcrumb(state),
+  previousSearch: selectResultsPreviousSearch(state),
+  mobility: selectMobility(state),
+  senses: selectSenses(state),
+  tracker: selectTracker(state),
+});
 
 export default connect(
   mapStateToProps,
