@@ -18,14 +18,9 @@ export const selectSenses = createMemoizedArraySelector(
 /**
  * Returns an array of city ids.
  */
-export const selectSelectedCities = createSelector(
+export const selectSelectedCities = createMemoizedArraySelector(
   [selectCities],
   cities => config.cities.filter(c => cities[c]),
-  {
-    memoizeOptions: {
-      resultEqualityCheck: (a, b) => arraysEqual(a, b),
-    },
-  },
 );
 
 const toIds = a => a.map(x => x.id);
@@ -43,27 +38,16 @@ export const selectSelectedOrganizations = createSelector(
   },
 );
 
-export const selectSelectedOrganizationIds = createSelector(
+export const selectSelectedOrganizationIds = createMemoizedArraySelector(
   [selectSelectedOrganizations],
   organizations => toIds(organizations),
-  {
-    memoizeOptions: {
-      resultEqualityCheck: (a, b) => arraysEqual(a, b),
-    },
-  },
 );
 
-export const selectSelectedAccessibilitySettings = createSelector(
+export const selectSelectedAccessibilitySettings = createMemoizedArraySelector(
   [selectSettings],
   (settings) => {
     const selected = SettingsUtility.parseShortcomingSettings(settings);
     selected.sort(alphabeticCompare);
     return selected;
-  },
-  {
-    memoizeOptions: {
-      // Check for equal array content, assume non-nil and sorted arrays
-      resultEqualityCheck: (a, b) => arraysEqual(a, b),
-    },
   },
 );
