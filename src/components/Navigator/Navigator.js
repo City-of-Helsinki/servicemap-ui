@@ -9,6 +9,26 @@ import { selectMobility, selectSenses } from '../../redux/selectors/settings';
 import { generatePath, isEmbed } from '../../utils/path';
 import { servicemapTrackPageView } from '../../utils/tracking';
 
+const getHelsinkiCookie = () => {
+  const pairs = document.cookie.split(';');
+  const cookies = {};
+  pairs.forEach(item => {
+    const pair = item.split('=');
+    const key = (`${pair[0]}`).trim();
+    const string = pair.slice(1).join('=');
+    cookies[key] = decodeURIComponent(string);
+  });
+  const helsinkiCookie = cookies?.['city-of-helsinki-cookie-consents'];
+  return helsinkiCookie ? JSON.parse(helsinkiCookie) : null;
+};
+
+const shouldSentAnalytics = () => {
+  if (typeof window === 'undefined' || isEmbed()) {
+    return false;
+  }
+  return getHelsinkiCookie()?.matomo;
+};
+
 class Navigator extends React.Component {
   unlisten = null;
 
@@ -56,39 +76,21 @@ class Navigator extends React.Component {
     }
   }
 
-  trackPageView = (settings) => {
+  trackPageView = ({ mobility, senses }) => {
     const { tracker } = this.props;
-    const getHelsinkiCookie = () => {
-      const pairs = document.cookie.split(';');
-      const cookies = {};
-      pairs.forEach(item => {
-        const pair = item.split('=');
-        const key = (`${pair[0]}`).trim();
-        const string = pair.slice(1).join('=');
-        cookies[key] = decodeURIComponent(string);
-      });
-      const helsinkiCookie = cookies?.['city-of-helsinki-cookie-consents'];
-      return helsinkiCookie ? JSON.parse(helsinkiCookie) : null;
-    };
-    const helsinkiCookie = getHelsinkiCookie();
 
     // Simple custom servicemap page view tracking
     servicemapTrackPageView();
-    const embed = isEmbed();
-    if (typeof window !== 'undefined' && !embed && helsinkiCookie?.matomo) {
-      if (tracker) {
-        const mobility = settings?.mobility;
-        const senses = settings?.senses;
-        setTimeout(() => {
-          tracker.trackPageView({
-            documentTitle: document.title,
-            customDimensions: [
-              { id: config.matomoMobilityDimensionID, value: mobility || '' },
-              { id: config.matomoSensesDimensionID, value: senses?.join(',') },
-            ],
-          });
-        }, 400);
-      }
+    if (tracker && shouldSentAnalytics()) {
+      setTimeout(() => {
+        tracker.trackPageView({
+          documentTitle: document.title,
+          customDimensions: [
+            { id: config.matomoMobilityDimensionID, value: mobility || '' },
+            { id: config.matomoSensesDimensionID, value: senses?.join(',') },
+          ],
+        });
+      }, 400);
     }
   }
 
