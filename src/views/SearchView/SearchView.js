@@ -7,31 +7,18 @@ import React, { useEffect, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useRouteMatch } from 'react-router-dom';
-import {
-  AddressSearchBar, Container, Loading, SearchBar, SettingsComponent, TabLists,
-} from '../../components';
+import { AddressSearchBar, Container, Loading, SearchBar, SettingsComponent, TabLists } from '../../components';
 import fetchSearchResults from '../../redux/actions/search';
-import {
-  activateSetting, resetAccessibilitySettings, setCities, setMapType, setOrganizations,
-} from '../../redux/actions/settings';
+import { activateSetting, resetAccessibilitySettings, setCities, setMapType, setOrganizations } from '../../redux/actions/settings';
 import { changeCustomUserLocation, resetCustomPosition } from '../../redux/actions/user';
 import { selectBounds, selectMapRef, selectNavigator } from '../../redux/selectors/general';
-import {
-  getOrderedSearchResultData,
-  selectResultsData,
-  selectSearchResults,
-} from '../../redux/selectors/results';
-import {
-  selectMapType,
-  selectSelectedAccessibilitySettings,
-  selectSelectedCities,
-  selectSelectedOrganizationIds,
-} from '../../redux/selectors/settings';
+import { getOrderedSearchResultData, selectResultsData, selectSearchResults } from '../../redux/selectors/results';
+import { selectMapType, selectSelectedAccessibilitySettings, selectSelectedCities, selectSelectedOrganizationIds } from '../../redux/selectors/settings';
 import { selectCustomPositionAddress } from '../../redux/selectors/user';
 import { keyboardHandler, parseSearchParams } from '../../utils';
 import { viewTitleID } from '../../utils/accessibility';
 import { getAddressNavigatorParamsConnector, useNavigationParams } from '../../utils/address';
-import { resolveCityAndOrganizationFilter } from '../../utils/filters';
+import { applyCityAndOrganizationFilter } from '../../utils/filters';
 import useMobileStatus from '../../utils/isMobile';
 import { getBboxFromBounds, parseBboxFromLocation } from '../../utils/mapUtility';
 import { isEmbed } from '../../utils/path';
@@ -64,10 +51,7 @@ const SearchView = () => {
   const location = useLocation();
   const match = useRouteMatch();
   const intl = useIntl();
-  const searchResults = orderedData
-    .filter(
-      resolveCityAndOrganizationFilter(selectedCities, selectedOrganizationIds, location, embed),
-    );
+  const searchResults = applyCityAndOrganizationFilter(orderedData, location, embed);
 
   const getResultsByType = type => searchResults.filter(item => item.object_type === type);
 

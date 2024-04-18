@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux';
 import { selectAddressUnits } from '../redux/selectors/address';
 import { getFilteredSearchResultData } from '../redux/selectors/results';
 import { getSelectedUnit } from '../redux/selectors/selectedUnit';
-import { getServiceUnits } from '../redux/selectors/service';
+import { getFilteredSortedServiceUnits } from '../redux/selectors/service';
 import { getPage } from '../redux/selectors/user';
 
 // to get rid of https://redux.js.org/usage/deriving-data-selectors#optimizing-selectors-with-memoization
@@ -20,7 +20,7 @@ const useDownloadData = () => {
       selector = getSelectedUnit;
       break;
     case 'service':
-      selector = getServiceUnits;
+      selector = getFilteredSortedServiceUnits;
       break;
     case 'address':
       selector = selectAddressUnits;

@@ -248,6 +248,15 @@ const htmlTemplate = (req, reactDom, preloadedState, css, cssString, emotionCss,
         window.nodeEnvSettings.FEEDBACK_IS_PUBLISHED = "${process.env.FEEDBACK_IS_PUBLISHED}";
         window.nodeEnvSettings.USE_PTV_ACCESSIBILITY_API = "${process.env.USE_PTV_ACCESSIBILITY_API}";
         window.nodeEnvSettings.SENTRY_DSN_CLIENT = "${process.env.SENTRY_DSN_CLIENT}";
+        window.nodeEnvSettings.FEEDBACK_ADDITIONAL_INFO_LINK_FI = "${process.env.FEEDBACK_ADDITIONAL_INFO_LINK_FI}";
+        window.nodeEnvSettings.FEEDBACK_ADDITIONAL_INFO_LINK_SV = "${process.env.FEEDBACK_ADDITIONAL_INFO_LINK_SV}";
+        window.nodeEnvSettings.FEEDBACK_ADDITIONAL_INFO_LINK_EN = "${process.env.FEEDBACK_ADDITIONAL_INFO_LINK_EN}";
+        window.nodeEnvSettings.ADDITIONAL_FEEDBACK_URLS_VANTAA = "${process.env.ADDITIONAL_FEEDBACK_URLS_VANTAA}";
+        window.nodeEnvSettings.ADDITIONAL_FEEDBACK_URLS_ESPOO = "${process.env.ADDITIONAL_FEEDBACK_URLS_ESPOO}";
+        window.nodeEnvSettings.ADDITIONAL_FEEDBACK_URLS_KIRKKONUMMI = "${process.env.ADDITIONAL_FEEDBACK_URLS_KIRKKONUMMI}";
+        window.nodeEnvSettings.ADDITIONAL_FEEDBACK_URLS_KAUNIAINEN = "${process.env.ADDITIONAL_FEEDBACK_URLS_KAUNIAINEN}";
+        window.nodeEnvSettings.READ_FEEDBACK_URLS_HELSINKI = "${process.env.READ_FEEDBACK_URLS_HELSINKI}";
+        window.nodeEnvSettings.SLOW_FETCH_MESSAGE_TIMEOUT = "${process.env.SLOW_FETCH_MESSAGE_TIMEOUT}";
 
         window.nodeEnvSettings.FEATURE_SERVICEMAP_PAGE_TRACKING = "${process.env.FEATURE_SERVICEMAP_PAGE_TRACKING}";
 

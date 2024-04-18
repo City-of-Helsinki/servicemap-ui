@@ -14,7 +14,7 @@ import {
 } from '../../../../redux/selectors/district';
 import { getLocale } from '../../../../redux/selectors/user';
 import { uppercaseFirst } from '../../../../utils';
-import orderUnits from '../../../../utils/orderUnits';
+import { orderUnits } from '../../../../utils/orderUnits';
 import useLocaleText from '../../../../utils/useLocaleText';
 import {
   StyledAccordionServiceTitle,

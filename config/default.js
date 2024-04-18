@@ -123,7 +123,9 @@ if (typeof settings.ADDITIONAL_FEEDBACK_URLS_KIRKKONUMMI === 'undefined') {
 if (typeof settings.ADDITIONAL_FEEDBACK_URLS_KAUNIAINEN === 'undefined') {
   settings.ADDITIONAL_FEEDBACK_URLS_KAUNIAINEN = 'https://www.kauniainen.fi/kaupunki-ja-paatoksenteko/osallistu-ja-vaikuta/,https://www.kauniainen.fi/sv/staden-och-beslutsfattande/delta-och-paverka/,https://www.kauniainen.fi/kaupunki-ja-paatoksenteko/osallistu-ja-vaikuta/';
 }
-
+if (typeof settings.READ_FEEDBACK_URLS_HELSINKI === 'undefined') {
+  settings.READ_FEEDBACK_URLS_HELSINKI = 'https://palautteet.hel.fi/fi/hae-palautteita#/app/search?r=12&text=,https://palautteet.hel.fi/sv/hae-palautteita#/app/search?r=12&text=,https://palautteet.hel.fi/en/hae-palautteita#/app/search?r=12&text='
+}
 if (typeof settings.FEEDBACK_IS_PUBLISHED === 'undefined') {
   // If not set default to Helsinki
   settings.FEEDBACK_IS_PUBLISHED = true;
@@ -193,6 +195,10 @@ try {
     }
   }
 }
+/**
+ * Assumes comma separated and ordered triple of fi, sv, en
+ */
+const splitTripleIntoThreeLangs = (text) => ({ fi: text.split(',')[0], sv: text.split(',')[1], en: text.split(',')[2] })
 
 export default {
   "version": version.tag,
@@ -238,27 +244,14 @@ export default {
     "missingInfo": "#4A4A4A",
     "shortcomings": "#b00021",
   },
-  "additionalFeedbackURLs" : {
-    espoo: {
-      fi: settings.ADDITIONAL_FEEDBACK_URLS_ESPOO.split(',')[0],
-      sv: settings.ADDITIONAL_FEEDBACK_URLS_ESPOO.split(',')[1],
-      en: settings.ADDITIONAL_FEEDBACK_URLS_ESPOO.split(',')[2],
-    },
-    vantaa: {
-      fi: settings.ADDITIONAL_FEEDBACK_URLS_VANTAA.split(',')[0],
-      sv: settings.ADDITIONAL_FEEDBACK_URLS_VANTAA.split(',')[1],
-      en: settings.ADDITIONAL_FEEDBACK_URLS_VANTAA.split(',')[2],
-    },
-    kauniainen: {
-      fi: settings.ADDITIONAL_FEEDBACK_URLS_KAUNIAINEN.split(',')[0],
-      sv: settings.ADDITIONAL_FEEDBACK_URLS_KAUNIAINEN.split(',')[1],
-      en: settings.ADDITIONAL_FEEDBACK_URLS_KAUNIAINEN.split(',')[2],
-    },
-    kirkkonummi: {
-      fi: settings.ADDITIONAL_FEEDBACK_URLS_KIRKKONUMMI.split(',')[0],
-      sv: settings.ADDITIONAL_FEEDBACK_URLS_KIRKKONUMMI.split(',')[1],
-      en: settings.ADDITIONAL_FEEDBACK_URLS_KIRKKONUMMI.split(',')[2],
-    },
+  "additionalFeedbackURLs": {
+    espoo: splitTripleIntoThreeLangs(settings.ADDITIONAL_FEEDBACK_URLS_ESPOO),
+    vantaa: splitTripleIntoThreeLangs(settings.ADDITIONAL_FEEDBACK_URLS_VANTAA),
+    kauniainen: splitTripleIntoThreeLangs(settings.ADDITIONAL_FEEDBACK_URLS_KAUNIAINEN),
+    kirkkonummi: splitTripleIntoThreeLangs(settings.ADDITIONAL_FEEDBACK_URLS_KIRKKONUMMI),
+  },
+  "readFeedbackURLS": {
+    helsinki: splitTripleIntoThreeLangs(settings.READ_FEEDBACK_URLS_HELSINKI),
   },
   "production": settings.MODE === 'production',
   "initialMapPosition": settings.INITIAL_MAP_POSITION.split(','),

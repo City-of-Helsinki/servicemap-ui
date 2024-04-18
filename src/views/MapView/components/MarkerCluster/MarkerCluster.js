@@ -17,7 +17,7 @@ import isClient, { formatDistanceObject, keyboardHandler } from '../../../../uti
 import { getAddressFromUnit } from '../../../../utils/address';
 import formatEventDate from '../../../../utils/events';
 import useMobileStatus from '../../../../utils/isMobile';
-import orderUnits from '../../../../utils/orderUnits';
+import { orderUnits } from '../../../../utils/orderUnits';
 import { isEmbed } from '../../../../utils/path';
 import SettingsUtility from '../../../../utils/settings';
 import UnitHelper from '../../../../utils/unitHelper';

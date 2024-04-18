@@ -15,7 +15,7 @@ import { selectMapRef } from '../../../../redux/selectors/general';
 import { selectCities } from '../../../../redux/selectors/settings';
 import { getLocale } from '../../../../redux/selectors/user';
 import { filterByCitySettings } from '../../../../utils/filters';
-import orderUnits from '../../../../utils/orderUnits';
+import { orderUnits } from '../../../../utils/orderUnits';
 import useLocaleText from '../../../../utils/useLocaleText';
 import { panViewToBounds } from '../../../MapView/utils/mapActions';
 import { StyledBoldText, StyledCheckBoxIcon } from '../styled/styled';

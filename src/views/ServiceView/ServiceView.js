@@ -1,28 +1,20 @@
 /* eslint-disable no-underscore-dangle */
 import { css } from '@emotion/css';
 import styled from '@emotion/styled';
-import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-import { FormattedMessage, useIntl } from 'react-intl';
 import { Typography } from '@mui/material';
+import PropTypes from 'prop-types';
+import React, { useEffect, useState } from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
-import {
-  Container,
-  DesktopComponent,
-  getIcon,
-  Loading,
-  MobileComponent,
-  PaginatedList,
-  ResultOrderer,
-  SearchBar,
-  TitleBar,
-} from '../../components';
+import { Container, DesktopComponent, getIcon, Loading, MobileComponent, PaginatedList, ResultOrderer, SearchBar, TitleBar } from '../../components';
 import { selectMapRef } from '../../redux/selectors/general';
-import { getServiceUnits } from '../../redux/selectors/service';
+import { getServiceUnits, selectServiceDataSet } from '../../redux/selectors/service';
 import { selectCustomPositionCoordinates } from '../../redux/selectors/user';
+import { applyCityAndOrganizationFilter } from '../../utils/filters';
 import { coordinateIsActive } from '../../utils/mapUtility';
-import { fitUnitsToMap, focusToPosition } from '../MapView/utils/mapActions';
+import { applySortingParams } from '../../utils/orderUnits';
 import useLocaleText from '../../utils/useLocaleText';
+import { fitUnitsToMap, focusToPosition } from '../MapView/utils/mapActions';
 
 const StyledTitleBar = styled(TitleBar)(({ theme }) => ({
   background: theme.palette.primary.main,
@@ -37,8 +29,10 @@ const ServiceView = (props) => {
   } = props;
   const getLocaleText = useLocaleText();
   const map = useSelector(selectMapRef);
-  const serviceReducer = useSelector(state => state.service);
-  const unitData = useSelector(getServiceUnits);
+  const serviceReducer = useSelector(selectServiceDataSet);
+  const unitData = applySortingParams(
+    applyCityAndOrganizationFilter(useSelector(getServiceUnits), location, embed),
+  );
   const customPositionCoordinates = useSelector(selectCustomPositionCoordinates);
   const intl = useIntl();
   const [mapMoved, setMapMoved] = useState(false);
