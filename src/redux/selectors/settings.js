@@ -9,6 +9,9 @@ export const selectCities = state => state.settings.cities;
 export const selectOrganizations = state => state.settings.organizations;
 export const selectMapType = state => state.settings.mapType;
 export const selectMobility = state => state.settings.mobility;
+/**
+ * Return array of selected senses.
+ */
 export const selectSenses = createMemoizedArraySelector(
   [selectSettings],
   settings => SettingsUtility.accessibilityImpairmentKeys
