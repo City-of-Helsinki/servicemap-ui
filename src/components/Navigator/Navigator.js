@@ -92,7 +92,22 @@ class Navigator extends React.Component {
         });
       }, 400);
     }
-  }
+  };
+
+  trackNoResultsPage = (noResultsQuery) => {
+    const { tracker } = this.props;
+    if (tracker && shouldSentAnalytics()) {
+      this.unlisten = null;
+      setTimeout(() => {
+        tracker.trackPageView({
+          documentTitle: document.title,
+          customDimensions: [
+            { id: config.matomoNoResultsDimensionID, value: noResultsQuery },
+          ],
+        });
+      }, 400);
+    }
+  };
 
   /**
    * Generate url based on path string and data
