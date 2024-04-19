@@ -302,7 +302,7 @@ const SearchView = () => {
         && analyticsSent !== previousSearch
       ) {
         setAnalyticsSent(previousSearch);
-        navigator.trackPageView(null, previousSearch);
+        navigator.trackNoResultsPage(previousSearch);
       }
     }
   }, [JSON.stringify(unorderedSearchResults)]);

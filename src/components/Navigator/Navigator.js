@@ -3,11 +3,31 @@ import React from 'react';
 import { connect } from 'react-redux';
 import config from '../../../config';
 import { breadcrumbPop, breadcrumbPush, breadcrumbReplace } from '../../redux/actions/breadcrumb';
-import { selectTracker } from '../../redux/selectors/general';
+import { selectBreadcrumb, selectTracker } from '../../redux/selectors/general';
 import { selectResultsPreviousSearch } from '../../redux/selectors/results';
+import { selectMobility, selectSenses } from '../../redux/selectors/settings';
 import { generatePath, isEmbed } from '../../utils/path';
-import SettingsUtility from '../../utils/settings';
 import { servicemapTrackPageView } from '../../utils/tracking';
+
+const getHelsinkiCookie = () => {
+  const pairs = document.cookie.split(';');
+  const cookies = {};
+  pairs.forEach(item => {
+    const pair = item.split('=');
+    const key = (`${pair[0]}`).trim();
+    const string = pair.slice(1).join('=');
+    cookies[key] = decodeURIComponent(string);
+  });
+  const helsinkiCookie = cookies?.['city-of-helsinki-cookie-consents'];
+  return helsinkiCookie ? JSON.parse(helsinkiCookie) : null;
+};
+
+const shouldSentAnalytics = () => {
+  if (typeof window === 'undefined' || isEmbed()) {
+    return false;
+  }
+  return getHelsinkiCookie()?.matomo;
+};
 
 class Navigator extends React.Component {
   unlisten = null;
@@ -56,41 +76,38 @@ class Navigator extends React.Component {
     }
   }
 
-  trackPageView = (settings) => {
+  trackPageView = ({ mobility, senses }) => {
     const { tracker } = this.props;
-    const getHelsinkiCookie = () => {
-      const pairs = document.cookie.split(';');
-      const cookies = {};
-      pairs.forEach(item => {
-        const pair = item.split('=');
-        const key = (`${pair[0]}`).trim();
-        const string = pair.slice(1).join('=');
-        cookies[key] = decodeURIComponent(string);
-      });
-      const helsinkiCookie = cookies?.['city-of-helsinki-cookie-consents'];
-      return helsinkiCookie ? JSON.parse(helsinkiCookie) : null;
-    };
-    const helsinkiCookie = getHelsinkiCookie();
 
     // Simple custom servicemap page view tracking
     servicemapTrackPageView();
-    const embed = isEmbed();
-    if (typeof window !== 'undefined' && !embed && helsinkiCookie?.matomo) {
-      if (tracker) {
-        const mobility = settings?.mobility;
-        const senses = settings?.senses;
-        setTimeout(() => {
-          tracker.trackPageView({
-            documentTitle: document.title,
-            customDimensions: [
-              { id: config.matomoMobilityDimensionID, value: mobility || '' },
-              { id: config.matomoSensesDimensionID, value: senses?.join(',') },
-            ],
-          });
-        }, 400);
-      }
+    if (tracker && shouldSentAnalytics()) {
+      setTimeout(() => {
+        tracker.trackPageView({
+          documentTitle: document.title,
+          customDimensions: [
+            { id: config.matomoMobilityDimensionID, value: mobility || '' },
+            { id: config.matomoSensesDimensionID, value: senses?.join(',') },
+          ],
+        });
+      }, 400);
     }
-  }
+  };
+
+  trackNoResultsPage = (noResultsQuery) => {
+    const { tracker } = this.props;
+    if (tracker && shouldSentAnalytics()) {
+      this.unlisten = null;
+      setTimeout(() => {
+        tracker.trackPageView({
+          documentTitle: document.title,
+          customDimensions: [
+            { id: config.matomoNoResultsDimensionID, value: noResultsQuery },
+          ],
+        });
+      }, 400);
+    }
+  };
 
   /**
    * Generate url based on path string and data
@@ -267,22 +284,13 @@ Navigator.defaultProps = {
 };
 
 // Listen to redux state
-const mapStateToProps = (state) => {
-  const {
-    breadcrumb,
-    settings,
-  } = state;
-
-  const previousSearch = selectResultsPreviousSearch(state);
-  const tracker = selectTracker(state);
-  return {
-    breadcrumb,
-    previousSearch,
-    mobility: settings.mobility,
-    senses: SettingsUtility.accessibilityImpairmentKeys.filter(key => settings[key]),
-    tracker,
-  };
-};
+const mapStateToProps = state => ({
+  breadcrumb: selectBreadcrumb(state),
+  previousSearch: selectResultsPreviousSearch(state),
+  mobility: selectMobility(state),
+  senses: selectSenses(state),
+  tracker: selectTracker(state),
+});
 
 export default connect(
   mapStateToProps,
