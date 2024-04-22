@@ -52,6 +52,15 @@ const BackButton = (props) => {
   // Set button text as state, so that it does not change
   const [buttonTitle] = useState(buttonText);
 
+  const onClickAction = (e) => {
+    e.preventDefault();
+    if (onClick) {
+      onClick(e);
+    } else if (navigator) {
+      navigator.goBack();
+    }
+  };
+
   const renderContainerVariantButton = (CustomButton) => (
     <>
       <CustomButton
@@ -61,14 +70,7 @@ const BackButton = (props) => {
         style={style}
         aria-hidden={srHidden}
         aria-label={ariaLabel || buttonTitle}
-        onClick={(e) => {
-          e.preventDefault();
-          if (onClick) {
-            onClick(e);
-          } else if (navigator) {
-            navigator.goBack();
-          }
-        }}
+        onClick={e => onClickAction(e)}
       >
         <ArrowBack fontSize="inherit" />
         <StyledContainerText aria-hidden fontSize="inherit" color="inherit" variant="body2">
@@ -89,14 +91,7 @@ const BackButton = (props) => {
         aria-hidden={srHidden}
         aria-label={ariaLabel || buttonText}
         focusVisibleClassName={focusVisibleClassName}
-        onClick={(e) => {
-          e.preventDefault();
-          if (onClick) {
-            onClick(e);
-          } else if (navigator) {
-            navigator.goBack();
-          }
-        }}
+        onClick={e => onClickAction(e)}
       >
         <ArrowBack fontSize="inherit" />
       </IconButton>
@@ -124,14 +119,7 @@ const BackButton = (props) => {
       role="link"
       variant="contained"
       color="primary"
-      onClick={(e) => {
-        e.preventDefault();
-        if (onClick) {
-          onClick(e);
-        } else if (navigator) {
-          navigator.goBack();
-        }
-      }}
+      onClick={e => onClickAction(e)}
     >
       {buttonText}
 
