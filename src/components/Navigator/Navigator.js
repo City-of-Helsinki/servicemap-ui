@@ -135,15 +135,11 @@ class Navigator extends React.Component {
       breadcrumbPop,
       history,
       location,
-      mobility,
-      senses,
     } = this.props;
 
     // If breadcrumb has values go back else take user to home
     if (breadcrumb && breadcrumb.length > 0) {
       history.goBack();
-      // History listen doesn't detect goBack so we need to manually track page
-      this.trackPageView({ mobility, senses });
       breadcrumbPop();
     } else {
       history.push(this.generatePath('home', null, false));
