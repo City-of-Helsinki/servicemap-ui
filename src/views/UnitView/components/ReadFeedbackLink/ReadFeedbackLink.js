@@ -1,12 +1,15 @@
+import styled from '@emotion/styled';
+import { Link } from 'hds-react';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
+import { useIntl } from 'react-intl';
 import config from '../../../../../config';
 import useLocaleText from '../../../../utils/useLocaleText';
-import { StyledAlignLeftParagraph, StyledLink, StyledVerticalMarginContainer } from '../styled/styled';
+import { StyledAlignLeftParagraph, StyledVerticalMarginContainer } from '../styled/styled';
 
 const ReadFeedbackLink = ({ unit }) => {
   const getLocaleText = useLocaleText();
+  const intl = useIntl();
   const resolveUrl = () => {
     const URLs = config.readFeedbackURLS;
     if (unit.municipality === 'helsinki') {
@@ -18,16 +21,32 @@ const ReadFeedbackLink = ({ unit }) => {
   if (!url) {
     return null;
   }
+  const text = intl.formatMessage({ id: 'unit.readFeedbackLink' });
   return (
     <StyledVerticalMarginContainer>
       <StyledAlignLeftParagraph variant="body1">
-        <StyledLink href={url} target="_blank">
-          <FormattedMessage id="unit.readFeedbackLink" />
-        </StyledLink>
+        <StyledHdsLink
+          href={url}
+          size="M"
+          external
+          openInNewTab
+          openInExternalDomainAriaLabel={intl.formatMessage({ id: 'general.linkLeadsToOtherSite' })}
+          openInNewTabAriaLabel={intl.formatMessage({ id: 'general.new.tab' })}
+        >
+          {text}
+        </StyledHdsLink>
       </StyledAlignLeftParagraph>
     </StyledVerticalMarginContainer>
   );
 };
+
+const StyledHdsLink = styled(Link)(({ theme }) => ({
+  display: 'block',
+  width: 'fit-content',
+  fontSize: theme.typography.body2.fontSize,
+  letterSpacing: theme.typography.body2.letterSpacing,
+  lineHeight: theme.typography.body2.lineHeight,
+}));
 
 ReadFeedbackLink.propTypes = {
   unit: PropTypes.shape({
