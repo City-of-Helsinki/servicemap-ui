@@ -50,7 +50,7 @@ const DivisionItem = ({
 
   // Screen reader text
   const srText = `
-    ${title || ''}
+    ${(!disableTitle && title) || ''}
     ${name || ''} 
     ${address || ''}
     .
