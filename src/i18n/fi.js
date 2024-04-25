@@ -373,7 +373,8 @@ const translations = {
   'general.previousSearch': 'Aikaisemmat haut',
   'general.return.viewTitle': 'Siirry pääsisällön alkuun',
   'general.skipToContent': 'Siirry pääsisältöön',
-  'general.new.tab': 'Aukeaa uuteen välilehteen',
+  'general.linkLeadsToOtherSite': 'Linkki aukeaa ulkoiseen palveluun.', //TODO
+  'general.new.tab': 'Aukeaa uuteen välilehteen.',
   'general.save': 'Tallenna',
   'general.save.changes': 'Tallenna asetukset',
   'general.save.changes.done': 'Muutokset tallennettu!',
