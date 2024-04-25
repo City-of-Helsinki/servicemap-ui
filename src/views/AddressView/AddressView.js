@@ -214,16 +214,20 @@ const AddressView = ({ embed }) => {
     const majorDistricts = adminDistricts.filter(x => x.type === 'major_district');
     const unitlessDistricts = [...rescueAreas, ...majorDistricts];
 
+    function collectUnitsFromDistrict(district) {
+      return [district.unit, ...(district.units || [])]
+        .filter(x => !!x)
+        .filter(
+          (unit, index, self) => index
+            === self.findIndex(x => x.id === unit.id),
+        );// Distinct by id
+    }
+
     const setsOfUnitsFromDistricts = adminDistricts
       .filter(d => !hiddenDivisions[d.type])
       .map(district => ({
         district,
-        units: [district.unit, ...(district.units || [])]
-          .filter(x => !!x)
-          .filter(
-            (unit, index, self) => index
-              === self.findIndex(x => x.id === unit.id),
-          ), // Distinct by id
+        units: collectUnitsFromDistrict(district),
       }))
       .filter(({ units }) => units.length)
       .map(({ district, units }) => units
