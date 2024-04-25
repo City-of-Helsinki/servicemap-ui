@@ -23,6 +23,7 @@ const DivisionItem = ({
   disableTitle,
   customTitle,
   className,
+  hideTitle,
 }) => {
   const intl = useIntl();
   const navigator = useSelector(selectNavigator);
@@ -101,6 +102,7 @@ const DivisionItem = ({
           {
             area
             && !disableTitle
+            && !hideTitle
             && (
               <StyledDivisionTitle align="left" aria-hidden variant="subtitle1">
                 {title}
@@ -290,8 +292,15 @@ DivisionItem.propTypes = {
     text: PropTypes.string,
   }),
   divider: PropTypes.bool.isRequired,
+  /**
+   * If we want to hide title from view and screen reader.
+   */
   disableTitle: PropTypes.bool,
   customTitle: PropTypes.string,
+  /**
+   * If we want to hide title from view but not from screen reader.
+   */
+  hideTitle: PropTypes.bool,
 };
 
 DivisionItem.defaultProps = {
@@ -299,6 +308,7 @@ DivisionItem.defaultProps = {
   className: null,
   disableTitle: false,
   customTitle: null,
+  hideTitle: false,
 };
 
 export default DivisionItem;
