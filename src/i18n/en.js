@@ -374,7 +374,7 @@ const translations = {
   'general.previousSearch': 'Previous searches',
   'general.return.viewTitle': 'Return to beginning of main content',
   'general.skipToContent': 'Skip to content',
-  'general.linkLeadsToOtherSite': 'TODOen', //TODO
+  'general.linkLeadsToExternalSite': 'The link opens to an external service',
   'general.new.tab': 'Opens in a new tab.',
   'general.save': 'Save',
   'general.save.changes': 'Save settings',

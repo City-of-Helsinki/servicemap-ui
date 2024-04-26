@@ -30,7 +30,7 @@ const ReadFeedbackLink = ({ unit }) => {
           size="M"
           external
           openInNewTab
-          openInExternalDomainAriaLabel={intl.formatMessage({ id: 'general.linkLeadsToOtherSite' })}
+          openInExternalDomainAriaLabel={intl.formatMessage({ id: 'general.linkLeadsToExternalSite' })}
           openInNewTabAriaLabel={intl.formatMessage({ id: 'general.new.tab' })}
         >
           {text}
