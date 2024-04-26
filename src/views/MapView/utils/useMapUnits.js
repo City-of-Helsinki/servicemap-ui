@@ -26,18 +26,12 @@ const handleAdrressUnits = (addressToRender, adminDistricts, addressUnits) => {
   switch (addressToRender) {
     case 'adminDistricts':
       return adminDistricts
-        .filter(d => d.unit)
-        .reduce((unique, o) => {
-          // Ignore districts without unit
-          if (!o.unit) {
-            return unique;
-          }
-          // Add only unique units
-          if (!unique.some(obj => obj.id === o.unit.id)) {
-            unique.push(o.unit);
-          }
-          return unique;
-        }, []);
+        .flatMap(d => [d.unit, ...(d.units || [])])
+        .filter(x => !!x)
+        .filter(
+          (unit, index, self) => index
+            === self.findIndex(x => x.id === unit.id),
+        );
     case 'units':
       return addressUnits;
     default:
