@@ -371,7 +371,7 @@ const translations = {
   'general.previousSearch': 'Föregående sökningar',
   'general.return.viewTitle': 'Gå till början av huvudinnehållet',
   'general.skipToContent': 'Gå till huvudinnehållet',
-  'general.linkLeadsToOtherSite': 'TODOsv', //TODO
+  'general.linkLeadsToExternalSite': 'Länken öppnas till den externa tjänsten',
   'general.new.tab': 'Öppnas i en ny flik.',
   'general.save': 'Spara',
   'general.save.changes': 'Spara inställningar',
