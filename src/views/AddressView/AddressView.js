@@ -193,10 +193,6 @@ const AddressView = ({ embed }) => {
     if (!addressData || isFetchingAddress || isFetchingDistricts || !adminDistricts) {
       return <Typography><FormattedMessage id="general.loading" /></Typography>;
     }
-    // Get divisions with units
-    const divisionsWithUnits = adminDistricts
-      .filter(d => d.unit)
-      .filter(d => !hiddenDivisions[d.type]);
     // Get emergency division
     const emergencyDiv = adminDistricts.find(x => x.type === 'emergency_care_district');
 
@@ -218,15 +214,31 @@ const AddressView = ({ embed }) => {
     const majorDistricts = adminDistricts.filter(x => x.type === 'major_district');
     const unitlessDistricts = [...rescueAreas, ...majorDistricts];
 
-    const districtUnits = divisionsWithUnits.map((x) => {
-      const { unit } = x;
-      const unitData = unit;
-      unitData.area = x;
-      if (x.type === 'health_station_district') {
-        unitData.emergencyUnitId = getEmergencyCareUnit(emergencyDiv);
-      }
-      return unitData;
-    });
+    function collectUnitsFromDistrict(district) {
+      return [district.unit, ...(district.units || [])]
+        .filter(x => !!x)
+        .filter(
+          (unit, index, self) => index
+            === self.findIndex(x => x.id === unit.id),
+        );// Distinct by id
+    }
+
+    const setsOfUnitsFromDistricts = adminDistricts
+      .filter(d => !hiddenDivisions[d.type])
+      .map(district => ({
+        district,
+        units: collectUnitsFromDistrict(district),
+      }))
+      .filter(({ units }) => units.length)
+      .map(({ district, units }) => units
+        .map(unit => {
+          const newUnit = { ...unit, area: district };
+          if (district.type === 'health_station_district') {
+            newUnit.emergencyUnitId = getEmergencyCareUnit(emergencyDiv);
+          }
+          return newUnit;
+        }),
+      );
 
     return (
       <>
@@ -248,8 +260,8 @@ const AddressView = ({ embed }) => {
         <Divider aria-hidden />
         <List>
           {
-            districtUnits.map((data) => {
-              const key = `${data.area.id}`;
+            setsOfUnitsFromDistricts.flatMap(units => units.map((data, index) => {
+              const key = `${data.area.id}-${data.id}`;
               const distance = getDistance(data);
               const customTitle = rescueAreaIDs.includes(data.area.type)
                 ? `${intl.formatMessage({ id: `area.list.${data.area.type}` })} ${getCustomRescueAreaTitle(data.area)}`
@@ -258,12 +270,13 @@ const AddressView = ({ embed }) => {
                 <DivisionItem
                   data={data}
                   distance={distance}
-                  divider
+                  divider={index === units.length - 1}
+                  hideTitle={index !== 0}
                   key={key}
                   customTitle={customTitle}
                 />
               );
-            })
+            }))
           }
           {unitlessDistricts.map(area => (
             <DistrictItem key={area.id} area={area} />
