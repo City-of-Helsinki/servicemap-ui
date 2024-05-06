@@ -50,7 +50,7 @@ const ParkingAreaList = ({ variant }) => {
       if (selectedDistrictType && getDistrictCategory(selectedDistrictType !== 'parking')) {
         dispatch(setSelectedDistrictType(null));
       }
-      dispatch(fetchParkingUnits());
+      dispatch(fetchParkingUnits('531', 'helsinki'));
     } else {
       setUnitsSelected(false);
       dispatch(setParkingUnits([]));

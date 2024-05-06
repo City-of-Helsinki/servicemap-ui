@@ -213,15 +213,18 @@ export const fetchParkingAreaGeometry = areaId => (
   }
 );
 
-export const fetchParkingUnits = () => (
+export const fetchParkingUnits = (id, municipality) => (
   async (dispatch) => {
-    dispatch(startDistrictFetch('parkingUnits'));
+    const districtType = `parkingUnits-${id}`;
+    dispatch(startDistrictFetch(districtType));
     const smAPI = new ServiceMapAPI();
-    const units = await smAPI.search('pysäköintitalot ja -tilat');
+    const units = await smAPI.serviceNodeSearch('ServiceTree', id, { language: 'fi', municipality });
     dispatch(setParkingUnits(units));
-    dispatch(endDistrictFetch('parkingUnits'));
+    dispatch(endDistrictFetch(districtType));
   }
 );
+
+export const fetchParkingGarages = () => fetchParkingUnits('531', 'helsinki');
 
 export const handleOpenItems = id => (
   (dispatch, getState) => {
