@@ -3,13 +3,13 @@
 exports[`<ServiceItem /> should work 1`] = `
 <div>
   <li
-    class="MuiButtonBase-root MuiListItem-root css-1ls6ttt MuiListItem-gutters MuiListItem-padding MuiListItem-button null  css-18azhdn-MuiButtonBase-root-MuiListItem-root"
+    class="MuiButtonBase-root MuiListItem-root css-1ls6ttt MuiListItem-gutters MuiListItem-padding MuiListItem-button null  css-1sbwixc"
     role="link"
     tabindex="0"
   >
     <div
       aria-hidden="true"
-      class="MuiListItemIcon-root css-1wnb45k-MuiListItemIcon-root"
+      class="MuiListItemIcon-root css-arhvvl"
       link="0"
     >
       <img
@@ -21,18 +21,18 @@ exports[`<ServiceItem /> should work 1`] = `
       />
     </div>
     <div
-      class="MuiListItemText-root css-xzi2h1 css-vt7cuc-MuiListItemText-root"
+      class="MuiListItemText-root css-xzi2h1 css-xdiy5h"
     >
       <span
-        class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10wsksd-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-ccjdaq"
       >
         <p
-          class="MuiTypography-root null  MuiTypography-body2 css-q91igz-MuiTypography-root"
+          class="MuiTypography-root null  MuiTypography-body2 css-wy7jtz"
         >
           Yleiset kirjastot
         </p>
         <p
-          class="MuiTypography-root MuiTypography-body2 css-1ak20dk-MuiTypography-root"
+          class="MuiTypography-root MuiTypography-body2 css-unb6aa"
           style="border: 0px; height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 1px;"
         />
       </span>
@@ -42,7 +42,7 @@ exports[`<ServiceItem /> should work 1`] = `
     aria-hidden="true"
   >
     <hr
-      class="MuiDivider-root MuiDivider-fullWidth css-1tvkns7-MuiDivider-root"
+      class="MuiDivider-root MuiDivider-fullWidth css-rqgsqf"
     />
   </li>
 </div>

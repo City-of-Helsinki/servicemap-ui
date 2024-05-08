@@ -3,18 +3,18 @@
 exports[`<SMRadio /> should work 1`] = `
 <div>
   <fieldset
-    class="MuiFormControl-root css-1nrlq1o-MuiFormControl-root"
+    class="MuiFormControl-root css-13sljp9"
   >
     <div
       aria-label="Aria label text"
-      class="MuiFormGroup-root css-dmmspl-MuiFormGroup-root"
+      class="MuiFormGroup-root MuiRadioGroup-root css-1h7anqn"
       role="radiogroup"
     >
       <label
-        class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
+        class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-1jaw3da"
       >
         <span
-          class="MuiButtonBase-root MuiRadio-root MuiRadio-colorPrimary PrivateSwitchBase-root MuiRadio-root MuiRadio-colorPrimary Mui-checked MuiRadio-root MuiRadio-colorPrimary css-l627hy-MuiButtonBase-root-MuiRadio-root"
+          class="MuiButtonBase-root MuiRadio-root MuiRadio-colorPrimary PrivateSwitchBase-root MuiRadio-root MuiRadio-colorPrimary Mui-checked MuiRadio-root MuiRadio-colorPrimary css-2hgxcf"
         >
           <input
             checked=""
@@ -28,7 +28,7 @@ exports[`<SMRadio /> should work 1`] = `
           >
             <svg
               aria-hidden="true"
-              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-7iu7pi-MuiSvgIcon-root"
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-nyqtm0"
               data-testid="RadioButtonUncheckedIcon"
               focusable="false"
               viewBox="0 0 24 24"
@@ -39,7 +39,7 @@ exports[`<SMRadio /> should work 1`] = `
             </svg>
             <svg
               aria-hidden="true"
-              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1fjbjql-MuiSvgIcon-root"
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1ndyzi4"
               data-testid="RadioButtonCheckedIcon"
               focusable="false"
               viewBox="0 0 24 24"
@@ -51,16 +51,16 @@ exports[`<SMRadio /> should work 1`] = `
           </span>
         </span>
         <span
-          class="MuiTypography-root MuiTypography-body2 MuiFormControlLabel-label css-1ak20dk-MuiTypography-root"
+          class="MuiTypography-root MuiTypography-body2 MuiFormControlLabel-label css-unb6aa"
         >
           label none
         </span>
       </label>
       <label
-        class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
+        class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-1jaw3da"
       >
         <span
-          class="MuiButtonBase-root MuiRadio-root MuiRadio-colorPrimary PrivateSwitchBase-root MuiRadio-root MuiRadio-colorPrimary MuiRadio-root MuiRadio-colorPrimary css-l627hy-MuiButtonBase-root-MuiRadio-root"
+          class="MuiButtonBase-root MuiRadio-root MuiRadio-colorPrimary PrivateSwitchBase-root MuiRadio-root MuiRadio-colorPrimary MuiRadio-root MuiRadio-colorPrimary css-2hgxcf"
         >
           <input
             class="PrivateSwitchBase-input css-1m9pwf3"
@@ -73,7 +73,7 @@ exports[`<SMRadio /> should work 1`] = `
           >
             <svg
               aria-hidden="true"
-              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-7iu7pi-MuiSvgIcon-root"
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-nyqtm0"
               data-testid="RadioButtonUncheckedIcon"
               focusable="false"
               viewBox="0 0 24 24"
@@ -84,7 +84,7 @@ exports[`<SMRadio /> should work 1`] = `
             </svg>
             <svg
               aria-hidden="true"
-              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1dilyji-MuiSvgIcon-root"
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-17zjyeg"
               data-testid="RadioButtonCheckedIcon"
               focusable="false"
               viewBox="0 0 24 24"
@@ -96,16 +96,16 @@ exports[`<SMRadio /> should work 1`] = `
           </span>
         </span>
         <span
-          class="MuiTypography-root MuiTypography-body2 MuiFormControlLabel-label css-1ak20dk-MuiTypography-root"
+          class="MuiTypography-root MuiTypography-body2 MuiFormControlLabel-label css-unb6aa"
         >
           label common
         </span>
       </label>
       <label
-        class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
+        class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-1jaw3da"
       >
         <span
-          class="MuiButtonBase-root MuiRadio-root MuiRadio-colorPrimary PrivateSwitchBase-root MuiRadio-root MuiRadio-colorPrimary MuiRadio-root MuiRadio-colorPrimary css-l627hy-MuiButtonBase-root-MuiRadio-root"
+          class="MuiButtonBase-root MuiRadio-root MuiRadio-colorPrimary PrivateSwitchBase-root MuiRadio-root MuiRadio-colorPrimary MuiRadio-root MuiRadio-colorPrimary css-2hgxcf"
         >
           <input
             class="PrivateSwitchBase-input css-1m9pwf3"
@@ -118,7 +118,7 @@ exports[`<SMRadio /> should work 1`] = `
           >
             <svg
               aria-hidden="true"
-              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-7iu7pi-MuiSvgIcon-root"
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-nyqtm0"
               data-testid="RadioButtonUncheckedIcon"
               focusable="false"
               viewBox="0 0 24 24"
@@ -129,7 +129,7 @@ exports[`<SMRadio /> should work 1`] = `
             </svg>
             <svg
               aria-hidden="true"
-              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1dilyji-MuiSvgIcon-root"
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-17zjyeg"
               data-testid="RadioButtonCheckedIcon"
               focusable="false"
               viewBox="0 0 24 24"
@@ -141,7 +141,7 @@ exports[`<SMRadio /> should work 1`] = `
           </span>
         </span>
         <span
-          class="MuiTypography-root MuiTypography-body2 MuiFormControlLabel-label css-1ak20dk-MuiTypography-root"
+          class="MuiTypography-root MuiTypography-body2 MuiFormControlLabel-label css-unb6aa"
         >
           label all
         </span>

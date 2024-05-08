@@ -4,13 +4,13 @@ exports[`<PageElement /> should work 1`] = `
 <div>
   <li>
     <button
-      class="MuiButtonBase-root css-l9l1yv-MuiButtonBase-root"
+      class="MuiButtonBase-root css-it5d4y"
       role="link"
       tabindex="0"
       type="button"
     >
       <p
-        class="MuiTypography-root MuiTypography-subtitle1  css-1p7ah8z-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-subtitle1  css-acyxlg"
       >
         <span
           aria-hidden="true"
@@ -19,7 +19,7 @@ exports[`<PageElement /> should work 1`] = `
         </span>
       </p>
       <p
-        class="MuiTypography-root MuiTypography-body2 css-1ak20dk-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-body2 css-unb6aa"
         style="border: 0px; height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 1px;"
       >
         Open page 2

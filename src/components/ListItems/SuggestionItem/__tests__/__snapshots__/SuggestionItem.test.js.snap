@@ -4,7 +4,7 @@ exports[`<SuggestionItem /> should work 1`] = `
 <div>
   <li
     aria-label="Title text Subtitle text"
-    class="MuiButtonBase-root MuiListItem-root css-zkfegi MuiListItem-gutters MuiListItem-padding MuiListItem-button suggestion  css-18azhdn-MuiButtonBase-root-MuiListItem-root"
+    class="MuiButtonBase-root MuiListItem-root css-zkfegi MuiListItem-gutters MuiListItem-padding MuiListItem-button suggestion  css-1sbwixc"
     role="link"
     tabindex="0"
   >
@@ -13,35 +13,35 @@ exports[`<SuggestionItem /> should work 1`] = `
     >
       <div
         aria-hidden="true"
-        class="MuiListItemIcon-root css-1s4rx4l-MuiListItemIcon-root"
+        class="MuiListItemIcon-root css-19tuvt5"
       >
         <svg
           aria-hidden="true"
-          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-6yqi1c-MuiSvgIcon-root"
+          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-12b4udo"
           data-testid="SearchIcon"
           focusable="false"
           viewBox="0 0 24 24"
         >
           <path
-            d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"
+            d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"
           />
         </svg>
       </div>
       <div
-        class="MuiListItemText-root css-1rd6w3o css-1ars949-MuiListItemText-root"
+        class="MuiListItemText-root css-1rd6w3o css-i6ldcd"
       >
         <span
-          class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10wsksd-MuiTypography-root"
+          class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-ccjdaq"
         >
           <p
             aria-hidden="true"
-            class="MuiTypography-root MuiTypography-body2 css-1op8tun-MuiTypography-root"
+            class="MuiTypography-root MuiTypography-body2 css-15qpf6v"
           >
             Title text
           </p>
           <p
             aria-hidden="true"
-            class="MuiTypography-root MuiTypography-body2 css-1c037km-MuiTypography-root"
+            class="MuiTypography-root MuiTypography-body2 css-blmqvv"
           >
             Subtitle text
           </p>

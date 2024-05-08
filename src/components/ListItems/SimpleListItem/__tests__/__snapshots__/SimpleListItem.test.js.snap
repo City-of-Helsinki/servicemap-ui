@@ -3,22 +3,22 @@
 exports[`<SimpleListItem /> should work 1`] = `
 <div>
   <li
-    class="MuiListItem-root css-1ls6ttt MuiListItem-gutters MuiListItem-padding null  css-aaug5z-MuiListItem-root"
+    class="MuiListItem-root css-1ls6ttt MuiListItem-gutters MuiListItem-padding null  css-1qdf0jm"
     tabindex="-1"
   >
     <div
-      class="MuiListItemText-root css-xzi2h1 css-vt7cuc-MuiListItemText-root"
+      class="MuiListItemText-root css-xzi2h1 css-xdiy5h"
     >
       <span
-        class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10wsksd-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-ccjdaq"
       >
         <p
-          class="MuiTypography-root null  MuiTypography-body2 css-q91igz-MuiTypography-root"
+          class="MuiTypography-root null  MuiTypography-body2 css-wy7jtz"
         >
           Title text
         </p>
         <p
-          class="MuiTypography-root MuiTypography-body2 css-1ak20dk-MuiTypography-root"
+          class="MuiTypography-root MuiTypography-body2 css-unb6aa"
           style="border: 0px; height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 1px;"
         />
       </span>
