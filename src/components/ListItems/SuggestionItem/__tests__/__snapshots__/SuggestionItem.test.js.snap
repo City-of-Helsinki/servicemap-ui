@@ -4,7 +4,7 @@ exports[`<SuggestionItem /> should work 1`] = `
 <div>
   <li
     aria-label="Title text Subtitle text"
-    class="MuiButtonBase-root MuiListItem-root css-zkfegi MuiListItem-gutters MuiListItem-padding MuiListItem-button suggestion  css-1sbwixc"
+    class="MuiButtonBase-root MuiListItem-root css-zkfegi MuiListItem-gutters MuiListItem-padding MuiListItem-button suggestion  css-18azhdn-MuiButtonBase-root-MuiListItem-root"
     role="link"
     tabindex="0"
   >
@@ -13,11 +13,11 @@ exports[`<SuggestionItem /> should work 1`] = `
     >
       <div
         aria-hidden="true"
-        class="MuiListItemIcon-root css-19tuvt5"
+        class="MuiListItemIcon-root css-1s4rx4l-MuiListItemIcon-root"
       >
         <svg
           aria-hidden="true"
-          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-12b4udo"
+          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-6yqi1c-MuiSvgIcon-root"
           data-testid="SearchIcon"
           focusable="false"
           viewBox="0 0 24 24"
@@ -28,20 +28,20 @@ exports[`<SuggestionItem /> should work 1`] = `
         </svg>
       </div>
       <div
-        class="MuiListItemText-root css-1rd6w3o css-i6ldcd"
+        class="MuiListItemText-root css-1rd6w3o css-1ars949-MuiListItemText-root"
       >
         <span
-          class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-ccjdaq"
+          class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10wsksd-MuiTypography-root"
         >
           <p
             aria-hidden="true"
-            class="MuiTypography-root MuiTypography-body2 css-15qpf6v"
+            class="MuiTypography-root MuiTypography-body2 css-1op8tun-MuiTypography-root"
           >
             Title text
           </p>
           <p
             aria-hidden="true"
-            class="MuiTypography-root MuiTypography-body2 css-blmqvv"
+            class="MuiTypography-root MuiTypography-body2 css-1c037km-MuiTypography-root"
           >
             Subtitle text
           </p>

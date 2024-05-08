@@ -5,7 +5,7 @@ exports[`<SMLogo /> should work 1`] = `
   <button
     aria-current="page"
     aria-label="Servicemap - Go to home page"
-    class="MuiButtonBase-root css-it5d4y"
+    class="MuiButtonBase-root css-l9l1yv-MuiButtonBase-root"
     role="link"
     tabindex="0"
     type="button"
