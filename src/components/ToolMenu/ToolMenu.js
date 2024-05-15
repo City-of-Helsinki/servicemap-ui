@@ -9,7 +9,7 @@ import URI from 'urijs';
 import PrintContext from '../../context/PrintContext';
 import {
   selectDistrictAddressData,
-  selectParkingUnits,
+  selectParkingUnitsMap,
   selectSelectedDistrictServices,
   selectSelectedDistrictType,
   selectSelectedParkingAreaIds,
@@ -32,7 +32,7 @@ const ToolMenu = ({
   const [openDownload, setOpenDownload] = React.useState(false);
   const toolMenuButton = React.useRef();
   const selectedParkingAreaIds = useSelector(selectSelectedParkingAreaIds);
-  const parkingUnits = useSelector(selectParkingUnits);
+  const parkingUnits = useSelector(selectParkingUnitsMap);
   const selectedDistrictServices = useSelector(selectSelectedDistrictServices);
   const selectedSubdistricts = useSelector(selectSelectedSubdistricts);
   const selectedDistrictType = useSelector(selectSelectedDistrictType);

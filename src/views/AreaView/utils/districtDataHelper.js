@@ -95,6 +95,11 @@ export const getDistrictCategory = districtId => dataStructure.find(
   obj => obj.districts.some(area => area.id === districtId),
 )?.id;
 
+const parkingUnitCategories = [
+  { municipality: 'helsinki', serviceNode: '531' },
+];
+
+export const parkingUnitCategoryIds = parkingUnitCategories.map(x => `${x.municipality}${x.serviceNode}`);
 
 export const groupDistrictData = (data) => {
   const groupedData = data.reduce((acc, cur) => {
