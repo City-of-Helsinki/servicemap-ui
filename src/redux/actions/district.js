@@ -89,9 +89,10 @@ const updateParkingAreas = areas => ({
   areas,
 });
 
-export const setParkingUnits = units => ({
+export const setParkingUnits = (parkingUnitCategoryId, units) => ({
   type: 'SET_PARKING_UNITS',
   units,
+  parkingUnitCategoryId,
 });
 
 const startUnitFetch = node => ({
@@ -215,11 +216,15 @@ export const fetchParkingAreaGeometry = areaId => (
 
 export const fetchParkingUnits = (id, municipality) => (
   async (dispatch) => {
-    const districtType = `parkingUnits-${id}`;
+    const parkingCategoryId = `${municipality}${id}`;
+    const districtType = `parkingUnits-${parkingCategoryId}`;
     dispatch(startDistrictFetch(districtType));
     const smAPI = new ServiceMapAPI();
     const units = await smAPI.serviceNodeSearch('ServiceTree', id, { language: 'fi', municipality });
-    dispatch(setParkingUnits(units));
+    units.forEach((item) => {
+      item.object_type = 'unit';
+    });
+    dispatch(setParkingUnits(parkingCategoryId, units));
     dispatch(endDistrictFetch(districtType));
   }
 );
