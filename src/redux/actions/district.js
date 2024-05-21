@@ -4,6 +4,7 @@ import {
   dataStructure,
   geographicalDistricts,
   groupDistrictData,
+  parkingUnitCategoryIds,
   parseDistrictGeometry,
 } from '../../views/AreaView/utils/districtDataHelper';
 
@@ -214,9 +215,13 @@ export const fetchParkingAreaGeometry = areaId => (
   }
 );
 
-export const fetchParkingUnits = (id, municipality) => (
+export const fetchParkingUnits = (parkingCategoryId) => (
   async (dispatch) => {
-    const parkingCategoryId = `${municipality}${id}`;
+    if (!parkingUnitCategoryIds.find(id => id === parkingCategoryId)) {
+      throw new Error(`Parking category ${parkingCategoryId} is not supported.`);
+    }
+    const municipality = parkingCategoryId.split('-')[0];
+    const id = parkingCategoryId.split('-')[1];
     const districtType = `parkingUnits-${parkingCategoryId}`;
     dispatch(startDistrictFetch(districtType));
     const smAPI = new ServiceMapAPI();
@@ -229,7 +234,7 @@ export const fetchParkingUnits = (id, municipality) => (
   }
 );
 
-export const fetchParkingGarages = () => fetchParkingUnits('531', 'helsinki');
+export const fetchParkingGarages = () => fetchParkingUnits('helsinki-531');
 
 export const handleOpenItems = id => (
   (dispatch, getState) => {

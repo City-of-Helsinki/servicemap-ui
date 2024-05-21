@@ -61,7 +61,7 @@ const ParkingAreaList = ({ variant }) => {
       if (selectedDistrictType && getDistrictCategory(selectedDistrictType !== 'parking')) {
         dispatch(setSelectedDistrictType(null));
       }
-      dispatch(fetchParkingUnits('531', 'helsinki'));
+      dispatch(fetchParkingUnits(parkingUnitsId));
     } else {
       newValue[parkingUnitsId] = false;
       setParkingUnitsSelectedMap(newValue);
@@ -127,7 +127,7 @@ const ParkingAreaList = ({ variant }) => {
     return null;
   }
   const parkingUnitsSetting = {
-    helsinki531: { labelKey: 'area.list.parkingUnits' },
+    'helsinki-531': { labelKey: 'area.list.parkingUnits' },
   };
 
   function getStyledAreaListItem(parkingUnitsId) {
@@ -189,7 +189,7 @@ const ParkingAreaList = ({ variant }) => {
         );
       })}
 
-      { variant === 'helsinki' && getStyledAreaListItem('helsinki531')}
+      { variant === 'helsinki' && getStyledAreaListItem('helsinki-531')}
     </StyledListLevelThree>
   );
 };
