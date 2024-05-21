@@ -126,8 +126,11 @@ const ParkingAreaList = ({ variant }) => {
     }
     return null;
   }
+
   const parkingUnitsSetting = {
-    'helsinki-531': { labelKey: 'area.list.parkingUnits' },
+    'helsinki-531': { labelKey: 'area.list.parkingGarages' },
+    'vantaa-2204': { labelKey: 'area.list.sharedCarParking' },
+    'vantaa-2207': { labelKey: 'area.list.accessibleStreetParking' },
   };
 
   function getStyledAreaListItem(parkingUnitsId) {
@@ -158,6 +161,17 @@ const ParkingAreaList = ({ variant }) => {
     );
   }
 
+  const renderedParkingCategoryIds = (
+    () => {
+      if (variant === 'helsinki') {
+        return parkingUnitCategoryIds.filter(id => id.includes('helsinki'));
+      }
+      if (variant === 'vantaa/passenger_car') {
+        return parkingUnitCategoryIds.filter(id => id.includes('vantaa'));
+      }
+      return [];
+    }
+  )();
   return (
     <StyledListLevelThree data-sm="ParkingList" disablePadding>
       {areaDataInfo.map((area) => {
@@ -189,7 +203,11 @@ const ParkingAreaList = ({ variant }) => {
         );
       })}
 
-      { variant === 'helsinki' && getStyledAreaListItem('helsinki-531')}
+      {renderedParkingCategoryIds.map(parkingCategoryId => (
+        <Fragment key={parkingCategoryId}>
+          {getStyledAreaListItem(parkingCategoryId)}
+        </Fragment>
+      ))}
     </StyledListLevelThree>
   );
 };
@@ -199,7 +217,7 @@ const StyledFormControlLabel = styled(FormControlLabel)(({ theme }) => ({
 }));
 
 ParkingAreaList.propTypes = {
-  variant: PropTypes.oneOf(['helsinki', 'vantaa/passenger_car', 'vantaa/heavy_traffic', 'vantaa/other']).isRequired,
+  variant: PropTypes.oneOf(['helsinki', 'vantaa/passenger_car', 'vantaa/heavy_traffic']).isRequired,
 };
 
 export default ParkingAreaList;

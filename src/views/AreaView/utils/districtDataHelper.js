@@ -97,6 +97,8 @@ export const getDistrictCategory = districtId => dataStructure.find(
 
 const parkingUnitCategories = [
   { municipality: 'helsinki', serviceNode: '531' },
+  { municipality: 'vantaa', serviceNode: '2204' },
+  { municipality: 'vantaa', serviceNode: '2207' },
 ];
 
 export const parkingUnitCategoryIds = parkingUnitCategories.map(x => `${x.municipality}-${x.serviceNode}`);
