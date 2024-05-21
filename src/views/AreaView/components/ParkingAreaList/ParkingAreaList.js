@@ -112,10 +112,6 @@ const ParkingAreaList = ({ variant }) => {
     }
   }, []);
 
-  useEffect(() => {
-    if (parkingUnitsMap.length) setParkingUnitsSelectedMap(true);
-  }, [parkingUnitsMap]);
-
   function renderAreaName(area) {
     const nameData = resolveParkingAreaName(area);
     if (nameData.type === 'TranslationKey') {
