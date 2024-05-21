@@ -1,3 +1,9 @@
+import { parkingUnitCategoryIds } from '../../views/AreaView/utils/districtDataHelper';
+
+const parkingUnitsMap = { };
+parkingUnitCategoryIds.forEach(categoryId => {
+  parkingUnitsMap[categoryId] = [];
+});
 const initialState = {
   highlitedDistrict: null,
   selectedDistrictType: null,
@@ -10,7 +16,7 @@ const initialState = {
     nodesFetching: [],
   },
   parkingAreas: [],
-  parkingUnits: [],
+  parkingUnitsMap,
   subdistrictUnits: [],
   selectedSubdistricts: [],
   selectedDistrictServices: [],
@@ -210,7 +216,10 @@ export default (state = initialState, action) => {
     case 'SET_PARKING_UNITS':
       return {
         ...state,
-        parkingUnits: action.units,
+        parkingUnitsMap: {
+          ...state.parkingUnitsMap,
+          [action.parkingUnitCategoryId]: action.units,
+        },
       };
 
     default:

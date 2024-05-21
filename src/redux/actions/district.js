@@ -4,6 +4,7 @@ import {
   dataStructure,
   geographicalDistricts,
   groupDistrictData,
+  parkingUnitCategoryIds,
   parseDistrictGeometry,
 } from '../../views/AreaView/utils/districtDataHelper';
 
@@ -89,9 +90,10 @@ const updateParkingAreas = areas => ({
   areas,
 });
 
-export const setParkingUnits = units => ({
+export const setParkingUnits = (parkingUnitCategoryId, units) => ({
   type: 'SET_PARKING_UNITS',
   units,
+  parkingUnitCategoryId,
 });
 
 const startUnitFetch = node => ({
@@ -213,15 +215,26 @@ export const fetchParkingAreaGeometry = areaId => (
   }
 );
 
-export const fetchParkingUnits = () => (
+export const fetchParkingUnits = (parkingCategoryId) => (
   async (dispatch) => {
-    dispatch(startDistrictFetch('parkingUnits'));
+    if (!parkingUnitCategoryIds.find(id => id === parkingCategoryId)) {
+      throw new Error(`Parking category ${parkingCategoryId} is not supported.`);
+    }
+    const municipality = parkingCategoryId.split('-')[0];
+    const id = parkingCategoryId.split('-')[1];
+    const districtType = `parkingUnits-${parkingCategoryId}`;
+    dispatch(startDistrictFetch(districtType));
     const smAPI = new ServiceMapAPI();
-    const units = await smAPI.search('pysäköintitalot ja -tilat');
-    dispatch(setParkingUnits(units));
-    dispatch(endDistrictFetch('parkingUnits'));
+    const units = await smAPI.serviceNodeSearch('ServiceTree', id, { language: 'fi', municipality });
+    units.forEach((item) => {
+      item.object_type = 'unit';
+    });
+    dispatch(setParkingUnits(parkingCategoryId, units));
+    dispatch(endDistrictFetch(districtType));
   }
 );
+
+export const fetchParkingGarages = () => fetchParkingUnits('helsinki-531');
 
 export const handleOpenItems = id => (
   (dispatch, getState) => {

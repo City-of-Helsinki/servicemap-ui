@@ -17,12 +17,12 @@ import {
 import {
   selectDistrictData,
   selectDistrictsFetching,
-  selectParkingUnits,
+  selectParkingUnitsMap,
   selectSelectedDistrictType,
   selectSelectedParkingAreaIds,
 } from '../../../../redux/selectors/district';
 import { selectCities } from '../../../../redux/selectors/settings';
-import { dataStructure, getDistrictCategory } from '../../utils/districtDataHelper';
+import { dataStructure, getDistrictCategory, parkingUnitCategoryIds } from '../../utils/districtDataHelper';
 import DistrictAreaList from '../DistrictAreaList';
 import DistrictToggleButton from '../DistrictToggleButton';
 import DistrictUnitList from '../DistrictUnitList';
@@ -45,7 +45,7 @@ const ServiceTab = (props) => {
   const districtsFetching = useSelector(selectDistrictsFetching);
   const selectedDistrictType = useSelector(selectSelectedDistrictType);
   const selectedParkingAreaIds = useSelector(selectSelectedParkingAreaIds);
-  const parkingUnits = useSelector(selectParkingUnits);
+  const parkingUnits = useSelector(selectParkingUnitsMap);
   const citySettings = useSelector(selectCities);
   const selectedCategory = dataStructure.find(
     data => data.districts.some(obj => obj.id === selectedDistrictType),
@@ -60,7 +60,9 @@ const ServiceTab = (props) => {
           dispatch(setSelectedParkingAreas([]));
         }
         if (parkingUnits.length) {
-          dispatch(setParkingUnits([]));
+          parkingUnitCategoryIds.forEach(id => {
+            dispatch(setParkingUnits(id, []));
+          });
         }
       }
       if (!district.data.some(obj => obj.boundary)) {
