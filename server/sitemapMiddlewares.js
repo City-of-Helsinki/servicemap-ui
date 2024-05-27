@@ -1,10 +1,10 @@
 import config from '../config';
 import { SitemapStream, streamToPromise } from 'sitemap'
-import { createGzip } from 'zlib'
 import { fetchIDs } from './dataFetcher';
 import { sitemapActive } from './utils';
 
 const fs = require('fs');
+const { createGzip } = require('zlib');
 const supportedLanguages = config.supportedLanguages;
 
 // This returns sitemaps for different languages

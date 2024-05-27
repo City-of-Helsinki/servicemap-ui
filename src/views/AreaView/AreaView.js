@@ -7,7 +7,7 @@ import {
   fetchDistricts,
   fetchDistrictUnitList,
   fetchParkingAreaGeometry,
-  fetchParkingUnits,
+  fetchParkingGarages,
   handleOpenItems,
   setDistrictAddressData,
   setSelectedDistrictServices,
@@ -200,7 +200,7 @@ const AreaView = ({ embed }) => {
         });
       }
       if (searchParams.parkingUnits) {
-        dispatch(fetchParkingUnits());
+        dispatch(fetchParkingGarages());
       }
 
       // Set selected geographical districts from url parameters and handle map focus

@@ -13,7 +13,7 @@ const getAddressDistrictData = state => state.districts.districtAddressData.dist
 export const selectSubdistrictUnits = state => state.districts.subdistrictUnits;
 export const selectSelectedSubdistricts = state => state.districts.selectedSubdistricts;
 export const selectSelectedDistrictServices = state => state.districts.selectedDistrictServices;
-export const selectParkingUnits = state => state.districts.parkingUnits;
+export const selectParkingUnitsMap = state => state.districts.parkingUnitsMap;
 export const selectParkingAreas = state => state.districts.parkingAreas;
 export const selectSelectedParkingAreaIds = state => state.districts.selectedParkingAreaIds;
 export const selectDistrictsFetching = state => state.districts.districtsFetching;
@@ -21,9 +21,9 @@ export const selectDistrictAddressData = state => state.districts.districtAddres
 export const selectDistrictUnitFetch = state => state.districts.unitFetch;
 export const selectDistrictMapState = state => state.districts.mapState;
 
-export const selectParkingUnitUnits = createSelector(
-  [selectParkingUnits],
-  parkingUnits => parkingUnits.filter(unit => unit.object_type === 'unit'),
+export const selectParkingUnitUnits = createMemoizedArraySelector(
+  [selectParkingUnitsMap],
+  parkingUnitsMap => Object.values(parkingUnitsMap).flatMap(x => x).filter(unit => unit.object_type === 'unit'),
 );
 
 export const selectDistrictDataBySelectedType = createMemoizedArraySelector(
