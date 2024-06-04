@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 import { selectAddress } from '../../../../redux/selectors/address';
 import { getAddressText } from '../../../../utils/address';
 import useLocaleText from '../../../../utils/useLocaleText';
-import { StyledHslIcon } from '../styled/styled';
+import { getIcon } from '../../../../components';
 
 const AddressMarker = ({
   embeded,
@@ -36,15 +36,11 @@ const AddressMarker = ({
   // eslint-disable-next-line global-require
   const { divIcon } = require('leaflet');
   const addressIcon = divIcon({
-    className: addressIconClass,
+    className: `${addressIconClass} AddressMarkerIcon`,
+    'data-sm': 'AddressMarkerIcon',
     html: renderToStaticMarkup(
-      <>
-        <StyledHslIcon className="icon-icon-hsl-background" />
-        <span className="icon-icon-address" />
-      </>,
+      getIcon('addresslocationMarker'),
     ),
-    iconSize: [45, 45],
-    iconAnchor: [22, 42],
   });
 
   const { addressCoordinates, addressData } = address;
