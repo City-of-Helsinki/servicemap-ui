@@ -8,6 +8,8 @@ import {
   fetchDistrictUnitList,
   fetchParkingAreaGeometry,
   fetchParkingGarages,
+  fetchSharedCarParking,
+  fetchAccessibleStreetParking,
   handleOpenItems,
   setDistrictAddressData,
   setSelectedDistrictServices,
@@ -161,7 +163,9 @@ const AreaView = ({ embed }) => {
   useEffect(() => {
     if (searchParams.selected
       || searchParams.parkingSpaces
-      || searchParams.parkingUnits
+      || searchParams.parkingGarages
+      || searchParams.sharedCarParking
+      || searchParams.accessibleStreetParking
     ) { // Arriving to page, with url parameters
       if (!embed) {
         /* Remove selected area parameter from url, otherwise it will override
@@ -199,8 +203,16 @@ const AreaView = ({ embed }) => {
           dispatch(fetchParkingAreaGeometry(area));
         });
       }
-      if (searchParams.parkingUnits) {
+
+      // Fetch unit parking data from url parameters
+      if (searchParams.parkingGarages) {
         dispatch(fetchParkingGarages());
+      }
+      if (searchParams.sharedCarParking) {
+        dispatch(fetchSharedCarParking());
+        }
+      if (searchParams.accessibleStreetParking) {
+        dispatch(fetchAccessibleStreetParking());
       }
 
       // Set selected geographical districts from url parameters and handle map focus

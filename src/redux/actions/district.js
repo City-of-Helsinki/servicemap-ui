@@ -235,6 +235,8 @@ export const fetchParkingUnits = (parkingCategoryId) => (
 );
 
 export const fetchParkingGarages = () => fetchParkingUnits('helsinki-531');
+export const fetchSharedCarParking = () => fetchParkingUnits('vantaa-2204');
+export const fetchAccessibleStreetParking = () => fetchParkingUnits('vantaa-2207');
 
 export const handleOpenItems = id => (
   (dispatch, getState) => {
