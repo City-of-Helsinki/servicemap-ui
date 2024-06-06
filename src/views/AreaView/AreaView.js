@@ -25,6 +25,7 @@ import {
   selectSelectedParkingAreas,
   selectSelectedSubdistricts,
   selectSubdistrictUnits,
+  selectParkingUnitsMap
 } from '../../redux/selectors/district';
 import { selectMapRef } from '../../redux/selectors/general';
 import { selectCities } from '../../redux/selectors/settings';
@@ -34,7 +35,7 @@ import { districtFetch } from '../../utils/fetch';
 import { filterByCitySettings, resolveCitySettings } from '../../utils/filters';
 import useLocaleText from '../../utils/useLocaleText';
 import fetchAddress from '../MapView/utils/fetchAddress';
-import { focusDistrict, focusDistricts, useMapFocusDisabled } from '../MapView/utils/mapActions';
+import { fitUnitsToMap, focusDistrict, focusDistricts, useMapFocusDisabled } from '../MapView/utils/mapActions';
 import SideBar from './components/SideBar/SideBar';
 import { dataStructure, geographicalDistricts } from './utils/districtDataHelper';
 
@@ -62,6 +63,7 @@ const AreaView = ({ embed }) => {
   const districtData = useSelector(selectDistrictDataBySelectedType);
   const map = useSelector(selectMapRef);
   const addressDistrict = useSelector(getAddressDistrict);
+  const parkingUnitsMap = useSelector(selectParkingUnitsMap);
   const getLocaleText = useLocaleText();
 
   const cityFilter = filterByCitySettings(resolveCitySettings(citySettings, location, embed));
@@ -153,6 +155,21 @@ const AreaView = ({ embed }) => {
       }
     }
   }, [selectedDistrictData, focusTo]);
+
+  useEffect(() => {
+    // Fit parking units to map when data is loaded
+    if (parkingUnitsMap && map && !mapFocusDisabled) {
+      Object.values(parkingUnitsMap).forEach(value => {
+        if (Array.isArray(value) && value.length) {
+          try {
+            fitUnitsToMap(value, map);
+          } catch (error) {
+            console.error('Error fitting units to map:', error);
+          }
+        }
+      });
+    }
+  }, [parkingUnitsMap]);
 
   useEffect(() => {
     if (isPossibleToFocus() && !focusTo && !addressDistrict && !focusInitiated) {
