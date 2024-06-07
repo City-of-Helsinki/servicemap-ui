@@ -63,9 +63,17 @@ const Districts = ({
     if (measuringMode) return;
 
     if (district.type === 'nature_reserve' && config.natureAreaURL !== 'undefined') {
+      let link;
+      if (district.municipality === 'vantaa') {
+        let nameInURLFormat = district.name['fi'].toLowerCase().replace(/\s+/g, '-');
+        link = `${config.vantaaNatureAreaURL}${nameInURLFormat}`;
+      } else {
+        link = `${config.natureAreaURL}${district.origin_id}`;
+      }
+    
       setAreaPopup({
         district,
-        link: `${config.natureAreaURL}${district.origin_id}`,
+        link,
         name: district.name,
         position: e.latlng,
       });

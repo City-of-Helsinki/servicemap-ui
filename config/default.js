@@ -265,6 +265,7 @@ export default {
   "hslRouteGuideURL": settings.HSL_ROUTE_GUIDE_URL,
   "outdoorExerciseURL": settings.OUTDOOR_EXERCISE_URL,
   "natureAreaURL": settings.NATURE_AREA_URL,
+  "vantaaNatureAreaURL": settings.VANTAA_NATURE_AREA_URL,
   "embedderDocumentationUrl": settings.EMBEDDER_DOCUMENTATION_URL,
   "cities": settings.CITIES.split(','),
   "organizations": JSON.parse(settings.ORGANIZATIONS),
