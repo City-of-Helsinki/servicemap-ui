@@ -340,7 +340,7 @@ const UnitView = (props) => {
                 && `${contractText}. `
               }
               {
-                unit.data_source
+                unit.data_source && unit.contract_type.id !== 'PRIVATE_SERVICE'
                 && <FormattedMessage id="unit.data_source" defaultMessage="Source: {data_source}" values={{ data_source: unit.data_source }} />
               }
             </Typography>
