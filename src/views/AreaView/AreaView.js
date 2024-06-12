@@ -8,6 +8,8 @@ import {
   fetchDistrictUnitList,
   fetchParkingAreaGeometry,
   fetchParkingGarages,
+  fetchSharedCarParking,
+  fetchAccessibleStreetParking,
   handleOpenItems,
   setDistrictAddressData,
   setSelectedDistrictServices,
@@ -23,6 +25,7 @@ import {
   selectSelectedParkingAreas,
   selectSelectedSubdistricts,
   selectSubdistrictUnits,
+  selectParkingUnitsMap
 } from '../../redux/selectors/district';
 import { selectMapRef } from '../../redux/selectors/general';
 import { selectCities } from '../../redux/selectors/settings';
@@ -32,7 +35,7 @@ import { districtFetch } from '../../utils/fetch';
 import { filterByCitySettings, resolveCitySettings } from '../../utils/filters';
 import useLocaleText from '../../utils/useLocaleText';
 import fetchAddress from '../MapView/utils/fetchAddress';
-import { focusDistrict, focusDistricts, useMapFocusDisabled } from '../MapView/utils/mapActions';
+import { fitUnitsToMap, focusDistrict, focusDistricts, useMapFocusDisabled } from '../MapView/utils/mapActions';
 import SideBar from './components/SideBar/SideBar';
 import { dataStructure, geographicalDistricts } from './utils/districtDataHelper';
 
@@ -60,6 +63,7 @@ const AreaView = ({ embed }) => {
   const districtData = useSelector(selectDistrictDataBySelectedType);
   const map = useSelector(selectMapRef);
   const addressDistrict = useSelector(getAddressDistrict);
+  const parkingUnitsMap = useSelector(selectParkingUnitsMap);
   const getLocaleText = useLocaleText();
 
   const cityFilter = filterByCitySettings(resolveCitySettings(citySettings, location, embed));
@@ -153,6 +157,21 @@ const AreaView = ({ embed }) => {
   }, [selectedDistrictData, focusTo]);
 
   useEffect(() => {
+    // Fit parking units to map when data is loaded
+    if (parkingUnitsMap && map && !mapFocusDisabled) {
+      Object.values(parkingUnitsMap).forEach(value => {
+        if (Array.isArray(value) && value.length) {
+          try {
+            fitUnitsToMap(value, map);
+          } catch (error) {
+            console.error('Error fitting units to map:', error);
+          }
+        }
+      });
+    }
+  }, [parkingUnitsMap]);
+
+  useEffect(() => {
     if (isPossibleToFocus() && !focusTo && !addressDistrict && !focusInitiated) {
       focusDistricts(map, [...selectedDistrictData, ...parkingAreas]);
     }
@@ -161,7 +180,9 @@ const AreaView = ({ embed }) => {
   useEffect(() => {
     if (searchParams.selected
       || searchParams.parkingSpaces
-      || searchParams.parkingUnits
+      || searchParams.parkingGarages
+      || searchParams.sharedCarParking
+      || searchParams.accessibleStreetParking
     ) { // Arriving to page, with url parameters
       if (!embed) {
         /* Remove selected area parameter from url, otherwise it will override
@@ -199,8 +220,16 @@ const AreaView = ({ embed }) => {
           dispatch(fetchParkingAreaGeometry(area));
         });
       }
-      if (searchParams.parkingUnits) {
+
+      // Fetch unit parking data from url parameters
+      if (searchParams.parkingGarages) {
         dispatch(fetchParkingGarages());
+      }
+      if (searchParams.sharedCarParking) {
+        dispatch(fetchSharedCarParking());
+        }
+      if (searchParams.accessibleStreetParking) {
+        dispatch(fetchAccessibleStreetParking());
       }
 
       // Set selected geographical districts from url parameters and handle map focus

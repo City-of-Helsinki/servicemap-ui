@@ -24,6 +24,7 @@ import closeIcon from '../../assets/icons/closeIcon.svg';
 import coordinateMarker from '../../assets/icons/CoordinateMarker.svg';
 import coordinateMarkerContrast from '../../assets/icons/CoordinateMarkerContrast.svg';
 import kirkkonummiIcon from '../../assets/icons/kirkkonummiIcon.svg';
+import addressLocationIcon from '../../assets/icons/addressLocation.svg';
 
 /**
  * Senses
@@ -146,6 +147,8 @@ export const getIcon = (key, props) => {
       return <img aria-hidden alt="" src={serviceIconDark} {...props} />;
     case 'locationMarker':
       return <img aria-hidden alt="" src={userLocationIcon} {...props} />;
+    case 'addresslocationMarker':
+      return <img aria-hidden alt="" src={addressLocationIcon} {...props} />;
 
     case 'noWheelchair':
       return <img aria-hidden alt="" src={noWheelchairIcon} {...props} />;

@@ -50,7 +50,7 @@ function SMCookies() {
         },
       ],
     },
-    focusTargetSelector: '[href="#view-title"]',
+    focusTargetSelector: '#app',
     onAllConsentsGiven: consents => parseConsentsAndActOnThem(consents),
     onConsentsParsed: consents => parseConsentsAndActOnThem(consents),
   };

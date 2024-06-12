@@ -232,6 +232,7 @@ const htmlTemplate = (req, reactDom, preloadedState, css, cssString, emotionCss,
         window.nodeEnvSettings.REITTIOPAS_URL = "${process.env.REITTIOPAS_URL}";
         window.nodeEnvSettings.OUTDOOR_EXERCISE_URL = "${process.env.OUTDOOR_EXERCISE_URL}";
         window.nodeEnvSettings.NATURE_AREA_URL = "${process.env.NATURE_AREA_URL}";
+        window.nodeEnvSettings.VANTAA_NATURE_AREA_URL = "${process.env.VANTAA_NATURE_AREA_URL}";
         window.nodeEnvSettings.EMBEDDER_DOCUMENTATION_URL = "${process.env.EMBEDDER_DOCUMENTATION_URL}";
         window.nodeEnvSettings.CITIES = "${process.env.CITIES}";
         window.nodeEnvSettings.ORGANIZATIONS = '${process.env.ORGANIZATIONS}';

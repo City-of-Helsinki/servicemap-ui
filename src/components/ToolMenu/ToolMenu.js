@@ -53,10 +53,24 @@ const ToolMenu = ({
       ? `services=${selectedDistrictServices}` : null;
     const parkingSpaces = selectedParkingAreaIds.length
       ? `parkingSpaces=${selectedParkingAreaIds.join(',')}` : null;
-    const units = parkingUnits.length
-      ? 'parkingUnits=true' : null;
     const addressCoordinates = districtAddressData.address
       ? `lat=${districtAddressData.address.location.coordinates[1]}&lng=${districtAddressData.address.location.coordinates[0]}` : null;
+
+    let unitsParams = []
+    if (parkingUnits) {
+      const keyMap = {
+        'helsinki-531': 'parkingGarages=true',
+        'vantaa-2204': 'sharedCarParking=true',
+        'vantaa-2207': 'accessibleStreetParking=true'
+      };
+    
+      Object.keys(parkingUnits).forEach((key) => {
+        if (parkingUnits[key].length && keyMap[key]) {
+          unitsParams.push(keyMap[key]);
+        }
+      });
+    }
+    const units = unitsParams.join('&')
 
     const params = [
       ...(selected ? [selected] : []),
