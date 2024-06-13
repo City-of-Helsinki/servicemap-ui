@@ -23,17 +23,6 @@ fixture`Settings view tests`
 
 test('Settings does opens and closes correctly', async (t) => {
   await t
-    .expect(sensesDropdownSelector.visible).ok()
-    .expect(mobilityDropdownSelector.visible).ok()
-    .expect(cityDropdownSelector.visible).ok()
-    .expect(organisationDropdownSelector.visible).ok()
-  ;
-
-  await t
-    .click(Selector('#settings-accordion'))
-  ;
-
-  await t
     .expect(sensesDropdownSelector.visible).notOk()
     .expect(mobilityDropdownSelector.visible).notOk()
     .expect(cityDropdownSelector.visible).notOk()
@@ -41,7 +30,7 @@ test('Settings does opens and closes correctly', async (t) => {
   ;
 
   await t
-    .click(Selector('#settings-accordion'))
+    .click(Selector('[data-sm="SettingsMenuButton"]'))
   ;
 
   await t
