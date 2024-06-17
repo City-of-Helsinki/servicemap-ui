@@ -44,15 +44,6 @@ if (typeof settings.MAPS === 'undefined') {
     settings.MAPS = 'servicemap,ortographic,guidemap,accessible_map';
 }
 
-if (typeof settings.OLD_MAP_LINK_EN === 'undefined'
-    && typeof settings.OLD_MAP_LINK_FI === 'undefined'
-    && typeof settings.OLD_MAP_LINK_SV === 'undefined') {
-    // If not set default to Helsinki
-    settings.OLD_MAP_LINK_EN = 'https://palvelukartta-vanha.hel.fi/?lang=en';
-    settings.OLD_MAP_LINK_FI = 'https://palvelukartta-vanha.hel.fi/?lang=fi';
-    settings.OLD_MAP_LINK_SV = 'https://palvelukartta-vanha.hel.fi/?lang=sv';
-}
-
 if (typeof settings.CITIES === 'undefined') {
   // If not set default to Helsinki
   settings.CITIES = 'helsinki,espoo,vantaa,kauniainen,kirkkonummi';
@@ -291,9 +282,6 @@ export default {
     sv: 'servicekarta',
     en: 'servicemap',
   },
-  "oldMapEn": settings.OLD_MAP_LINK_EN,
-  "oldMapFi": settings.OLD_MAP_LINK_FI,
-  "oldMapSv": settings.OLD_MAP_LINK_SV,
   "accessibilityStatementURL": {
     fi: settings.ACCESSIBILITY_STATEMENT_URL_FI,
     sv: settings.ACCESSIBILITY_STATEMENT_URL_SV,

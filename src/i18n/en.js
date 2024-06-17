@@ -397,7 +397,6 @@ const translations = {
   'home.example.search': 'Search for',
   'home.message': 'Message from the developers',
   'home.send.feedback': 'Give feedback',
-  'home.old.link': 'Old version of Servicemap',
 
   // Location
   'location.notFound': 'Location not found',
