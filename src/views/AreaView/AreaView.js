@@ -28,11 +28,9 @@ import {
   selectParkingUnitsMap
 } from '../../redux/selectors/district';
 import { selectMapRef } from '../../redux/selectors/general';
-import { selectCities } from '../../redux/selectors/settings';
 import { parseSearchParams } from '../../utils';
 import { getAddressText } from '../../utils/address';
 import { districtFetch } from '../../utils/fetch';
-import { filterByCitySettings, resolveCitySettings } from '../../utils/filters';
 import useLocaleText from '../../utils/useLocaleText';
 import fetchAddress from '../MapView/utils/fetchAddress';
 import { fitUnitsToMap, focusDistrict, focusDistricts, useMapFocusDisabled } from '../MapView/utils/mapActions';
@@ -58,16 +56,13 @@ const AreaView = ({ embed }) => {
   const districtAddressData = useSelector(selectDistrictAddressData);
   const subdistrictUnits = useSelector(selectSubdistrictUnits);
   const selectedSubdistricts = useSelector(selectSelectedSubdistricts);
-  const citySettings = useSelector(selectCities);
   const unitsFetching = useSelector(state => selectDistrictUnitFetch(state).nodesFetching);
-  const districtData = useSelector(selectDistrictDataBySelectedType);
+  const selectedDistrictData = useSelector(selectDistrictDataBySelectedType);
   const map = useSelector(selectMapRef);
   const addressDistrict = useSelector(getAddressDistrict);
   const parkingUnitsMap = useSelector(selectParkingUnitsMap);
   const getLocaleText = useLocaleText();
 
-  const cityFilter = filterByCitySettings(resolveCitySettings(citySettings, location, embed));
-  const selectedDistrictData = districtData.filter(cityFilter);
   const parkingAreas = useSelector(selectSelectedParkingAreas);
   const geometryLoaded = !!selectedDistrictData[0]?.boundary || !!parkingAreas[0]?.boundary;
 
