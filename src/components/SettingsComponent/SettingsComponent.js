@@ -38,10 +38,9 @@ const SettingsComponent = ({ variant }) => {
   const chipLabel = intl.formatMessage({ id: 'settings.accordion.open' });
   return (
     <NoSsr>
-      <StyledContainer
+      <Container
         disableGutters
         sx={{ pb: 2, bgcolor: 'primary.main' }}
-        paddingtopsettings={+(variant === 'paddingTopSettings')}
       >
         <StyledAccordion
           settingsVisible={settingsVisible}
@@ -71,14 +70,10 @@ const SettingsComponent = ({ variant }) => {
           }
           collapseContent={(<SettingsDropdowns />)}
         />
-      </StyledContainer>
+      </Container>
     </NoSsr>
   );
 };
-
-const StyledContainer = styled(Container)(({ theme, paddingtopsettings }) => (
-  paddingtopsettings ? { paddingTop: theme.spacing(2) } : {}
-));
 
 const StyledAccordion = styled(SMAccordion)(({ theme, settingsVisible }) => ({
   height: settingsVisible ? 32 : '100%',

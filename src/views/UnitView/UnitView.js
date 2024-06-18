@@ -18,7 +18,6 @@ import {
   LinkSettingsDialog,
   ReadSpeakerButton,
   SearchBar,
-  SettingsComponent,
   SimpleListItem,
   SMButton,
   TabLists,
@@ -580,7 +579,6 @@ const UnitView = (props) => {
                     ? renderUnitLocation()
                     : renderPicture()
                 }
-                <SettingsComponent variant="paddingTopSettings" />
               </>
           )}
           />
@@ -595,7 +593,6 @@ const UnitView = (props) => {
           <Typography color="primary" variant="body1">
             <FormattedMessage id="unit.details.notFound" />
           </Typography>
-          <SettingsComponent />
         </div>
       </StyledRootContainer>
     );
