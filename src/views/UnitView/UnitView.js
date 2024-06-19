@@ -17,6 +17,7 @@ import {
   Container,
   LinkSettingsDialog,
   ReadSpeakerButton,
+  RouteBar,
   SearchBar,
   SimpleListItem,
   SMButton,
@@ -514,7 +515,10 @@ const UnitView = (props) => {
           titleComponent="h3"
           shareLink={elem}
         />
-      </>
+        {unit?.location?.coordinates && 
+          <RouteBar unit={unit} userLocation={userLocation} />
+        }
+      </> 
     );
 
     if (unitFetching) {

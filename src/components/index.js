@@ -18,6 +18,7 @@ import Loading from './Loading';
 import MobileComponent from './MobileComponent';
 import ReadSpeakerButton from './ReadSpeakerButton';
 import ResultOrderer from './ResultOrderer';
+import RouteBar from './RouteBar/RouteBar';
 import SettingsComponent from './SettingsComponent';
 import SMButton from './ServiceMapButton';
 import SMRadio from './SMRadio';
@@ -78,6 +79,7 @@ export {
   ResultItem,
   ResultList,
   ResultOrderer,
+  RouteBar,
   ServiceItem,
   SettingsComponent,
   SimpleListItem,
