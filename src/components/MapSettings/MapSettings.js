@@ -29,15 +29,26 @@ const MapSettings = () => {
     };
   });
 
-  const createUrl = () => {
+  const createHelsinkiUrl = () => {
     const { lng, lat } = map.getCenter();
-    return ExternalMapUrlCreator.create3DMapUrl(lng, lat, map.getZoom(), mapType, locale);
+    return ExternalMapUrlCreator.createHelsinki3DMapUrl(lng, lat, map.getZoom(), mapType, locale);
   };
 
-  const openUrl = () => {
-    const urlTo3dMap = createUrl();
+  const openHelsinkiUrl = () => {
+    const urlTo3dMap = createHelsinkiUrl();
     window.open(urlTo3dMap);
   };
+
+  const openEspooUrl = () => {
+    const { lng, lat } = map.getCenter();
+    const urlToEspooMap = ExternalMapUrlCreator.createEspoo3DMapUrl(lng, lat, locale);
+    window.open(urlToEspooMap)
+  }
+
+  const openVantaaUrl = () => {
+    const urlToVantaaMap = ExternalMapUrlCreator.createVantaa3DMapUrl(locale);
+    window.open(urlToVantaaMap)
+  }
 
   return (
     <>
@@ -68,10 +79,15 @@ const MapSettings = () => {
       </FormControl>
       <Styled3DMapContainer>
         <MobileSettingsHeader textId="settings.3dmap.title" />
-        <Typography><FormattedMessage id="settings.3dmap.info" /></Typography>
-        <Styled3DMapLinkButton onClick={openUrl} role="link" data-sm="3dMapLink">
-          <Typography><FormattedMessage id="settings.3dmap.link" /></Typography>
+        <Styled3DMapLinkButton onClick={openHelsinkiUrl} role="link" data-sm="3dMapLink">
+          <Typography><FormattedMessage id="settings.3dmap.link.helsinki" /></Typography>
         </Styled3DMapLinkButton>
+        <Styled3DMapLinkButton onClick={openEspooUrl} role="link" data-sm="3dMapLink">
+          <Typography><FormattedMessage id="settings.3dmap.link.espoo" /></Typography>
+        </Styled3DMapLinkButton>
+        <Styled3DMapLinkButton onClick={openVantaaUrl} role="link" data-sm="3dMapLink">
+          <Typography><FormattedMessage id="settings.3dmap.link.vantaa" /></Typography>
+        </Styled3DMapLinkButton>  
       </Styled3DMapContainer>
     </>
   );
@@ -80,6 +96,8 @@ const MapSettings = () => {
 const Styled3DMapContainer = styled('div')(({ theme }) => ({
   paddingTop: theme.spacing(3),
   textAlign: 'left',
+  display: 'flex',
+  flexDirection: 'column',
 }));
 
 const Styled3DMapLinkButton = styled(SMButton)(({ theme }) => ({
