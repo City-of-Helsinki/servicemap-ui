@@ -28,7 +28,7 @@ class ExternalMapUrlCreator {
    * @param lang locale in what the map should be opened
    * @returns url to kartta.hel.fi/3d
    */
-  static create3DMapUrl(lng, lat, zoom, mapType, lang) {
+  static createHelsinki3DMapUrl(lng, lat, zoom, mapType, lang) {
     const distance = calculateDistance(mapType, zoom);
     // Leaflet zoom levels represent a zoom by power of 2. Magic number 52800 was calculated by
     // measuring Malmi runway with ruler and testing "distance" param until a fit was found.
@@ -42,6 +42,17 @@ class ExternalMapUrlCreator {
     params.append('heading', '360.00');
     params.append('roll', '0.00');
     return `https://kartta.hel.fi/3d/?${params.toString()}`;
+  }
+
+  static createEspoo3DMapUrl() {
+    // TODO: add coordinates to Espoo map if possible
+    return 'https://kartat.espoo.fi/IMS/?layers=Kaupunkimalli';
+  }
+
+  static createVantaa3DMapUrl(lang) {
+    const params = new URLSearchParams();
+    params.append('locale', lang);
+    return `https://vantaa.kunta3d.fi/Map.html?${params.toString()}`;
   }
 }
 
