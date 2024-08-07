@@ -1,4 +1,4 @@
-FROM node:22
+FROM public.ecr.aws/docker/library/node:22
 
 # Create app directory
 WORKDIR /servicemap-ui
