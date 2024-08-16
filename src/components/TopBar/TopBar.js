@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { Map } from '@mui/icons-material';
 import { AppBar, ButtonBase, Container, Toolbar, Typography, useMediaQuery } from '@mui/material';
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
@@ -85,9 +85,22 @@ const TopBar = (props) => {
 
   const handleContrastChange = () => {
     const defaultTheme = themeMode === 'default';
-    dispatch(changeTheme(defaultTheme ? 'dark' : 'default'));
-    dispatch(setMapType(defaultTheme ? 'accessible_map' : SettingsUtility.defaultMapType));
+    const newTheme = defaultTheme ? 'dark' : 'default';
+    const newMapType = defaultTheme ? 'accessible_map' : SettingsUtility.defaultMapType;
+  
+    localStorage.setItem('theme', newTheme);
+  
+    dispatch(changeTheme(newTheme));
+    dispatch(setMapType(newMapType));
   };
+  
+  // Retrieve the theme from local storage when the app is loaded
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+      dispatch(changeTheme(savedTheme));
+    }
+  }, []);
 
   const handleNavigation = (target, data) => {
     // Hide settings and map if open
