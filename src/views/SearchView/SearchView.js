@@ -153,6 +153,17 @@ const SearchView = () => {
     return options;
   };
 
+  function fetchSearchResultsWithoutNumber(searchQuery) {
+    // Check if search query ends with number and fetch data without it.
+    // This is for searching addresses with street number in case of no results.
+    if (searchQuery && searchQuery.match(/\d$/)) {
+      const newSearchQuery = searchQuery.replace(/\d$/, '');
+      if (newSearchQuery !== searchQuery) {
+        dispatch(fetchSearchResults({ q: newSearchQuery }));
+      }
+    }
+  }
+
   // Check if view will fetch data because sreach params has changed
   const shouldFetch = () => {
     const { isFetching, previousSearch } = searchFetchState;
@@ -293,8 +304,12 @@ const SearchView = () => {
         fitUnitsToMap(units, map);
       }
     } else {
-      // Send analytics report if search query did not return results
       const { previousSearch, isFetching } = searchFetchState;
+      if (previousSearch && !isFetching) {
+        // If no results found, try to fetch results without number
+        fetchSearchResultsWithoutNumber(previousSearch);
+      }
+      // Send analytics report if search query did not return results
       if (
         navigator
         && previousSearch
@@ -305,7 +320,7 @@ const SearchView = () => {
         navigator.trackNoResultsPage(previousSearch);
       }
     }
-  }, [JSON.stringify(unorderedSearchResults)]);
+  }, [JSON.stringify(unorderedSearchResults), searchResults]);
 
   useEffect(() => {
     if (embed || !navigator) {
