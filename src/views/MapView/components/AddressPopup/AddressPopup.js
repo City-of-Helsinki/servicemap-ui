@@ -79,7 +79,7 @@ const AddressPopup = ({
   };
 
   return (
-    <Popup className="popup" key="addressPopup" closeButton={false} autoPan={false} position={[mapClickPoint.lat, mapClickPoint.lng]}>
+    <Popup className="popup" key="addressPopup" autoPan={false} position={[mapClickPoint.lat, mapClickPoint.lng]}>
       <StyledAddressPopupContainer>
         <Typography ref={addressTextRef} variant="subtitle2" component="p">
           <FormattedMessage id="map.address.searching" />
