@@ -257,6 +257,14 @@ const SearchView = () => {
     }
   }
 
+  function reorderBbox(bbox) {
+    if (bbox.length !== 4) {
+      throw new Error('Invalid bbox length. Expected an array of 4 elements.');
+    }
+    // Reorder the bbox coordinates to match the order that the API requires
+    return [bbox[1], bbox[0], bbox[3], bbox[2]];
+  }
+
   useEffect(() => {
     if (embed) {
       // Do not mess with settings when embedded
@@ -284,6 +292,13 @@ const SearchView = () => {
   useEffect(() => {
     const options = getSearchParamData();
     if (shouldFetch() && Object.keys(options).length) {
+      const bbox = parseBboxFromLocation(location);
+      if (embed && bbox) {
+        // Filter search results by bbox if embedded and bbox is provided
+        const reorderedBbox = reorderBbox(bbox);
+        options.bbox = reorderedBbox;
+        options.bbox_srid = 4326;
+      }
       dispatch(fetchSearchResults(options));
     }
   }, [match.params]);
