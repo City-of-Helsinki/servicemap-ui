@@ -27,6 +27,7 @@ test('Should navigate to embedder tool', async (t) => {
 
 test('Should navigate back to home from embedder tool', async (t) => {
   await t
+    .setNativeDialogHandler(() => true)
     .click(mapToolsButton)
     .click(embedderToolButton)
     .click(embedderToolCloseButton)
@@ -41,6 +42,7 @@ fixture`Navigation embedder`
 
 test('Should navigate to home page from embedder tool', async (t) => {
   await t
+    .setNativeDialogHandler(() => true)
     .click(embedderToolCloseButton)
     .expect(searchBarInput.exists).ok();
 });

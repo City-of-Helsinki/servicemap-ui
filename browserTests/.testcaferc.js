@@ -3,6 +3,7 @@ const testcafe = require('testcafe');
 const { server } = config;
 
 async function setCookies(t) {
+  await t.setNativeDialogHandler(null);
   const afterOneYear = new Date();
   afterOneYear.setDate(afterOneYear.getDate() + 365);
   const url = await testcafe.ClientFunction(() => document.location.href)();

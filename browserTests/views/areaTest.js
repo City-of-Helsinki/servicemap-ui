@@ -123,8 +123,9 @@ test.skip('Address search bar field updates and gets results', async (t, inputTe
     .expect(addressBar.value).eql(suggestionText, 'Address search bar did not update text when suggestion was selected');
 });
 
-test('Embeder tool does not crash area view', async (t) => {
+test('Embedder tool does not crash area view', async (t) => {
   await t
+    .setNativeDialogHandler(() => true)
     .click(mapToolsButton)
     .click(embedderToolButton)
     .click(embedderToolCloseButton)
