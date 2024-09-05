@@ -6,9 +6,9 @@ import {
   ButtonBase, Divider, ListItem, Typography,
 } from '@mui/material';
 import { useHistory, useLocation } from 'react-router-dom';
-import config from '../../../../../config';
 import InfoList from '../InfoList';
 import unitSectionFilter from '../../utils/unitSectionFilter';
+import routeDetails from '../../utils/routeDetails';
 import { getAddressFromUnit } from '../../../../utils/address';
 import useLocaleText from '../../../../utils/useLocaleText';
 import { parseSearchParams, stringifySearchParams } from '../../../../utils';
@@ -213,31 +213,8 @@ const ContactInfo = ({ unit, userLocation, headingLevel }) => {
 
   // Add route info to data in location exists
   const unitLocation = unit.location;
-
   if (unitLocation?.coordinates) {
-    // Temporary link implementation for route info
-    let currentLocationString = ' ';
-
-    if (userLocation?.addressData) {
-      const { street, number } = userLocation.addressData;
-      const { latitude, longitude } = userLocation.coordinates;
-
-      const userAddress = `${getLocaleText(street.name)} ${number}, ${street.municipality}`;
-      currentLocationString = `${userAddress}::${latitude},${longitude}`;
-    }
-    let url = '';
-    let extraText = '';
-
-    if (config.hslRouteGuideCities?.includes(unit.municipality)) {
-      url = config.hslRouteGuideURL;
-      extraText = intl.formatMessage({ id: 'unit.route.extra.hslRouteGuide' });
-    } else {
-      url = config.reittiopasURL;
-      extraText = intl.formatMessage({ id: 'unit.route.extra.routeGuide' });
-    }
-
-    const destinationString = `${getLocaleText(unit.name)}, ${unit.municipality}::${unitLocation.coordinates[1]},${unitLocation.coordinates[0]}`;
-    const routeUrl = `${url}${currentLocationString}/${destinationString}?locale=${intl.locale}`;
+    const { routeUrl, extraText } = routeDetails(unit, userLocation);
 
     const route = {
       type: 'ROUTE',

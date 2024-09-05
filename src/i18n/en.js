@@ -397,7 +397,6 @@ const translations = {
   'home.example.search': 'Search for',
   'home.message': 'Message from the developers',
   'home.send.feedback': 'Give feedback',
-  'home.old.link': 'Old version of Servicemap',
 
   // Location
   'location.notFound': 'Location not found',
@@ -699,7 +698,9 @@ const translations = {
   'settings.map.accessible_map': 'High contrast map',
   'settings.3dmap.title': '3D-uban data model',
   'settings.3dmap.info': 'The Urban data model is based on the city’s map and geographic data, registers, point clouds obtained by laser scanning, aerial photographs and building data models. Use the link below to go to view the city model.',
-  'settings.3dmap.link': '3D-uban data model (new tab)',
+  'settings.3dmap.link.helsinki': 'Helsinki 3D-map (new tab)',
+  'settings.3dmap.link.espoo': 'Espoo 3D-map (new tab)',
+  'settings.3dmap.link.vantaa': 'Vantaa 3D-map (new tab)',
   'settings.aria.changed': 'Settings have changed. Remember to save',
   'settings.aria.closed': 'Settings closed',
   'settings.aria.open': 'Open settings',

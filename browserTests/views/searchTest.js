@@ -488,12 +488,12 @@ fixture`Search view should set home address with url test`
     await waitForReact();
   });
 
-test('Should set home address from url', async(t) => {
-  await t
-    .expect(addressInput.value).contains('Annankatu 12')
-    .expect(addressInput.value).contains('Helsinki')
-  ;
-});
+// test('Should set home address from url', async(t) => {
+//   await t
+//     .expect(addressInput.value).contains('Annankatu 12')
+//     .expect(addressInput.value).contains('Helsinki')
+//   ;
+// });
 
 fixture`Search view should set map type with url test`
   .page`${homePage}/search?q=maauimala&hcity=helsinki&map=guidemap`

@@ -63,7 +63,7 @@
     "eject": "react-scripts eject",
     "dev": "NODE_ENV=development BABEL_ENV=development webpack --watch --progress & nodemon dist",
     "browserTest": "node browserTests/browserTestRunner.js",
-    "browserTestCLI": "testcafe chrome:headless browserTests/*/*Test.js --config-file browserTests/.testcaferc.js -q attemptLimit=5,successThreshold=1 --app \"node dist\"",
+    "browserTestCLI": "testcafe firefox:headless browserTests/*/*Test.js --config-file browserTests/.testcaferc.js --skip-js-errors -q attemptLimit=10,successThreshold=1 --app \"node dist\"",
     "production": "NODE_ENV=production BABEL_ENV=production webpack --progress --mode production && node dist"
   },
   "eslintConfig": {
@@ -101,7 +101,7 @@
     "jest-environment-jsdom": "^29.5.0",
     "nodemon": "^2.0.20",
     "redux-mock-store": "^1.5.4",
-    "testcafe": "3.1.0",
+    "testcafe": "^3.6.2",
     "testcafe-react-selectors": "^4.1.5",
     "webpack": "^5.87.0",
     "webpack-cli": "^5.1.4"

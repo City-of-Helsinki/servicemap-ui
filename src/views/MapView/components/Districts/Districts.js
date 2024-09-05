@@ -16,7 +16,7 @@ import {
   selectSelectedParkingAreaIds,
   selectSelectedSubdistricts,
 } from '../../../../redux/selectors/district';
-import { selectMeasuringMode, selectNavigator } from '../../../../redux/selectors/general';
+import { selectMapRef, selectMeasuringMode, selectNavigator } from '../../../../redux/selectors/general';
 import { selectCities } from '../../../../redux/selectors/settings';
 import { getPage, selectThemeMode } from '../../../../redux/selectors/user';
 import { parseSearchParams } from '../../../../utils';
@@ -45,6 +45,7 @@ const Districts = ({
   const useContrast = useSelector(selectThemeMode) === 'dark';
   const navigator = useSelector(selectNavigator);
   const currentPage = useSelector(getPage);
+  const map = useSelector(selectMapRef);
   const measuringMode = useSelector(selectMeasuringMode);
   const highlightedDistrict = useSelector(getHighlightedDistrict);
   const addressDistrict = useSelector(getAddressDistrict);
@@ -61,6 +62,11 @@ const Districts = ({
 
   const districtOnClick = (e, district) => {
     if (measuringMode) return;
+    
+    // Focus to selected district
+    if (district?.boundary?.coordinates) {
+      map.fitBounds(district.boundary.coordinates);
+    }
 
     if (district.type === 'nature_reserve' && config.natureAreaURL !== 'undefined') {
       let link;

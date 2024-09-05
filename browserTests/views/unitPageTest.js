@@ -11,6 +11,7 @@ const testUrl = `${getBaseUrl()}/fi/unit/51342`
 const selectSettingsAndClose = async (t) => {
   if (t) {
     await t
+      .click(Selector('[data-sm="SettingsMenuButton"]'))
       .click(Selector(sensesDropdown))
       .click(Selector('[data-sm="senses-hearingAid"]'))
       .click(Selector('[data-sm="senses-visuallyImpaired"]'))

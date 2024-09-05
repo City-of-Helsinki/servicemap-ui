@@ -17,8 +17,8 @@ import {
   Container,
   LinkSettingsDialog,
   ReadSpeakerButton,
+  RouteBar,
   SearchBar,
-  SettingsComponent,
   SimpleListItem,
   SMButton,
   TabLists,
@@ -515,7 +515,10 @@ const UnitView = (props) => {
           titleComponent="h3"
           shareLink={elem}
         />
-      </>
+        {unit?.location?.coordinates && 
+          <RouteBar unit={unit} userLocation={userLocation} />
+        }
+      </> 
     );
 
     if (unitFetching) {
@@ -580,7 +583,6 @@ const UnitView = (props) => {
                     ? renderUnitLocation()
                     : renderPicture()
                 }
-                <SettingsComponent variant="paddingTopSettings" />
               </>
           )}
           />
@@ -595,7 +597,6 @@ const UnitView = (props) => {
           <Typography color="primary" variant="body1">
             <FormattedMessage id="unit.details.notFound" />
           </Typography>
-          <SettingsComponent />
         </div>
       </StyledRootContainer>
     );

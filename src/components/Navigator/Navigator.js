@@ -120,7 +120,8 @@ class Navigator extends React.Component {
     const { params } = match;
     const locale = params && params.lng;
 
-    const embedValue = typeof embed !== 'undefined' ? embed : isEmbed();
+    const isEmbeddableView = target !== 'info' && target !== 'feedback';
+    const embedValue = isEmbeddableView ? (typeof embed !== 'undefined' ? embed : isEmbed()) : false;
 
     return generatePath(target, locale, data, embedValue);
   }
