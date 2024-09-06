@@ -185,6 +185,7 @@ const translations = {
   'parkingArea.popup.info4': 'Avgifterna och begränsningarna gäller inte personer med boende- eller företagsparkeringstillstånd om parkeringsplatsen har markerats som boendeparkeringsplats.',
   'parkingArea.popup.info5': 'Avgifterna och begränsningarna gäller inte personer med boende- eller företagsparkeringstillstånd om parkeringsplatsen har markerats som boendeparkeringsplats.',
   'parkingArea.popup.info6': 'Avgifterna och begränsningarna gäller inte personer med boende- eller företagsparkeringstillstånd om parkeringsplatsen har markerats som boendeparkeringsplats.',
+  'parkingArea.popup.info7': 'Parkering förbjuden',
 
   'parkingArea.popup.vantaa.neighbourhood': 'Stadsdelen: {value}',
   'parkingArea.popup.vantaa.name': 'Namn: {value}',

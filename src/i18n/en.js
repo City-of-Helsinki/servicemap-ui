@@ -184,6 +184,7 @@ const translations = {
   'parkingArea.popup.info4': 'The fees and restrictions do not apply to those who possess a resident or business parking permit if the parking area is a designated resident parking area.',
   'parkingArea.popup.info5': 'The fees and restrictions do not apply to those who possess a resident or business parking permit if the parking area is a designated resident parking area.',
   'parkingArea.popup.info6': 'The fees and restrictions do not apply to those who possess a resident or business parking permit if the parking area is a designated resident parking area.',
+  'parkingArea.popup.info7': 'Parking prohibited',
 
   'parkingArea.popup.vantaa.neighbourhood': 'City District: {value}',
   'parkingArea.popup.vantaa.name': 'Name: {value}',
