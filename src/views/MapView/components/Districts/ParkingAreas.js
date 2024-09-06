@@ -110,6 +110,16 @@ const ParkingAreas = () => {
     zIndex: theme.zIndex.infront,
   });
 
+  function getHelsinkiTooltipText(extraData) {
+    const messages = [
+      intl.formatMessage({ id: `parkingArea.popup.payment${extraData.class}` }),
+      extraData.max_duration ? intl.formatMessage({ id: `parkingArea.popup.duration${extraData.class}` }, { duration: extraData.max_duration }) : '',
+      extraData.validity_period ? intl.formatMessage({ id: `parkingArea.popup.validity${extraData.class}` }, { validity: extraData.validity_period }) : '',
+      extraData.class === '5' ? intl.formatMessage({ id: 'parkingArea.popup.duration5' }) : ''
+    ];
+    return messages.filter(message => message).join(' - ');
+  }
+
   function resolveTooltipText(area) {
     const type = area?.type;
     if (type === 'park_and_ride_area') {
@@ -122,8 +132,12 @@ const ParkingAreas = () => {
       return `${area.extra?.area_key ?? ''}${getLocaleText(area.name)} - ${intl.formatMessage({ id: 'area.list.heavy_traffic' })}`;
     }
     if (area.name) {
-      const translationKey = `area.list.${type}`;
-      return `${area.extra?.area_key ?? ''}${getLocaleText(area.name)} - ${intl.formatMessage({ id: translationKey })}`;
+      if (area.municipality === 'helsinki') {
+        return getHelsinkiTooltipText(area.extra);
+      } else {
+        const translationKey = `area.list.${type}`;
+        return `${area.extra?.area_key ?? ''}${getLocaleText(area.name)} - ${intl.formatMessage({ id: translationKey })}`;
+      }
     }
     return null;
   }

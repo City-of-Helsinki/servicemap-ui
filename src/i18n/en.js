@@ -164,6 +164,7 @@ const translations = {
   'parkingArea.popup.payment4': 'Paid parking',
   'parkingArea.popup.payment5': 'Paid parking',
   'parkingArea.popup.payment6': 'Paid parking',
+  'parkingArea.popup.payment7': 'Parking ban',
   'parkingArea.popup.duration1': 'Maximum duration of parking: {duration}',
   'parkingArea.popup.duration2': 'Maximum duration of parking: {duration}',
   'parkingArea.popup.duration3': '',
