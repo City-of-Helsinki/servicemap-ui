@@ -184,6 +184,7 @@ const translations = {
   'parkingArea.popup.info4': 'Maksut ja rajoitukset eivät koske asukas- ja yrityspysäköintitunnusten omistajia, jos pysäköintipaikka on merkitty asukaspysäköintipaikaksi.',
   'parkingArea.popup.info5': 'Maksut ja rajoitukset eivät koske asukas- ja yrityspysäköintitunnusten omistajia, jos pysäköintipaikka on merkitty asukaspysäköintipaikaksi.',
   'parkingArea.popup.info6': 'Maksut ja rajoitukset eivät koske asukas- ja yrityspysäköintitunnusten omistajia, jos pysäköintipaikka on merkitty asukaspysäköintipaikaksi.',
+  'parkingArea.popup.info7': 'Pysäköinti kielletty',
 
   'parkingArea.popup.vantaa.neighbourhood': 'Kaupunginosa: {value}',
   'parkingArea.popup.vantaa.name': 'Nimi: {value}',
