@@ -165,6 +165,7 @@ const translations = {
   'parkingArea.popup.payment4': 'Parkering mot avgift',
   'parkingArea.popup.payment5': 'Parkering mot avgift',
   'parkingArea.popup.payment6': 'Parkering mot avgift',
+  'parkingArea.popup.payment7': 'Parkeringsförbud',
   'parkingArea.popup.duration1': 'Parkering tillåten högst: {duration}',
   'parkingArea.popup.duration2': 'Parkering tillåten högst: {duration}',
   'parkingArea.popup.duration3': '',

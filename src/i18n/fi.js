@@ -164,6 +164,7 @@ const translations = {
   'parkingArea.popup.payment4': 'Maksullinen pysäköinti',
   'parkingArea.popup.payment5': 'Maksullinen pysäköinti',
   'parkingArea.popup.payment6': 'Maksullinen pysäköinti',
+  'parkingArea.popup.payment7': 'Pysäköintikielto',
   'parkingArea.popup.duration1': 'Pysäköinti sallittu enintään: {duration}',
   'parkingArea.popup.duration2': 'Pysäköinti sallittu enintään: {duration}',
   'parkingArea.popup.duration3': '',
