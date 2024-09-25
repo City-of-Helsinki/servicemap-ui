@@ -26,7 +26,7 @@ const UnitGeometry = ({ data }) => {
               break;
             }
             case 'MultiPolygon': {
-              unitGeometry = swapCoordinates(coordinates[0]);
+              unitGeometry = coordinates.map(polygon => swapCoordinates(polygon));
               break;
             }
             default:
