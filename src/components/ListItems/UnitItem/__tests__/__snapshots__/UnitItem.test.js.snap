@@ -14,7 +14,7 @@ exports[`<UnitItem /> should work 1`] = `
       <img
         alt=""
         aria-hidden="true"
-        class=" css-15p9n5u"
+        class="css-15p9n5u"
         src="data:image/png;base64,00"
       />
     </div>
@@ -51,7 +51,7 @@ exports[`<UnitItem /> should work 1`] = `
         <div>
           <p
             aria-hidden="true"
-            class="MuiTypography-root MuiTypography-caption  ResultItem-subtitle css-16auzzq-MuiTypography-root"
+            class="MuiTypography-root MuiTypography-caption ResultItem-subtitle css-16auzzq-MuiTypography-root"
             hidemargin="true"
           >
             Kunnallinen palvelu

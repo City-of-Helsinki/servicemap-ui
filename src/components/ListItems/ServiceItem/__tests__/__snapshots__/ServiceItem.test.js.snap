@@ -3,7 +3,7 @@
 exports[`<ServiceItem /> should work 1`] = `
 <div>
   <li
-    class="MuiButtonBase-root MuiListItem-root css-1ls6ttt MuiListItem-gutters MuiListItem-padding MuiListItem-button null  css-18azhdn-MuiButtonBase-root-MuiListItem-root"
+    class="MuiButtonBase-root MuiListItem-root css-1ls6ttt MuiListItem-gutters MuiListItem-padding MuiListItem-button null css-18azhdn-MuiButtonBase-root-MuiListItem-root"
     role="link"
     tabindex="0"
   >
@@ -27,7 +27,7 @@ exports[`<ServiceItem /> should work 1`] = `
         class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10wsksd-MuiTypography-root"
       >
         <p
-          class="MuiTypography-root null  MuiTypography-body2 css-q91igz-MuiTypography-root"
+          class="MuiTypography-root null MuiTypography-body2 css-q91igz-MuiTypography-root"
         >
           Yleiset kirjastot
         </p>

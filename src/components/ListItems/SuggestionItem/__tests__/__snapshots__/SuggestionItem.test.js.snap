@@ -4,7 +4,7 @@ exports[`<SuggestionItem /> should work 1`] = `
 <div>
   <li
     aria-label="Title text Subtitle text"
-    class="MuiButtonBase-root MuiListItem-root css-zkfegi MuiListItem-gutters MuiListItem-padding MuiListItem-button suggestion  css-18azhdn-MuiButtonBase-root-MuiListItem-root"
+    class="MuiButtonBase-root MuiListItem-root css-zkfegi MuiListItem-gutters MuiListItem-padding MuiListItem-button suggestion css-18azhdn-MuiButtonBase-root-MuiListItem-root"
     role="link"
     tabindex="0"
   >

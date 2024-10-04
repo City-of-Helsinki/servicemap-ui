@@ -3,7 +3,7 @@
 exports[`<PaginationComponent /> should work 1`] = `
 <div>
   <div
-    class=" css-fvjx4"
+    class="css-fvjx4"
     data-sm="PaginationComponent"
   >
     <button
@@ -55,7 +55,7 @@ exports[`<PaginationComponent /> should work 1`] = `
       </svg>
     </button>
     <div
-      class=" css-18m5ppr"
+      class="css-18m5ppr"
     >
       <ul
         class="css-5yfqfi"
@@ -68,7 +68,7 @@ exports[`<PaginationComponent /> should work 1`] = `
             type="button"
           >
             <p
-              class="MuiTypography-root MuiTypography-subtitle1  css-1p7ah8z-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-subtitle1 css-1p7ah8z-MuiTypography-root"
             >
               <span
                 aria-hidden="true"
@@ -93,7 +93,7 @@ exports[`<PaginationComponent /> should work 1`] = `
             type="button"
           >
             <p
-              class="MuiTypography-root MuiTypography-subtitle1  css-n45i7m-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-subtitle1 css-n45i7m-MuiTypography-root"
             >
               <span
                 aria-hidden="true"
@@ -117,7 +117,7 @@ exports[`<PaginationComponent /> should work 1`] = `
             type="button"
           >
             <p
-              class="MuiTypography-root MuiTypography-subtitle1  css-1p7ah8z-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-subtitle1 css-1p7ah8z-MuiTypography-root"
             >
               <span
                 aria-hidden="true"
@@ -141,7 +141,7 @@ exports[`<PaginationComponent /> should work 1`] = `
             type="button"
           >
             <p
-              class="MuiTypography-root MuiTypography-subtitle1  css-1p7ah8z-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-subtitle1 css-1p7ah8z-MuiTypography-root"
             >
               <span
                 aria-hidden="true"
@@ -165,7 +165,7 @@ exports[`<PaginationComponent /> should work 1`] = `
             type="button"
           >
             <p
-              class="MuiTypography-root MuiTypography-subtitle1  css-1p7ah8z-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-subtitle1 css-1p7ah8z-MuiTypography-root"
             >
               <span
                 aria-hidden="true"

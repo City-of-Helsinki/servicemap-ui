@@ -29,7 +29,7 @@ exports[`<ResultItem /> should work 1`] = `
         </p>
         <p
           aria-hidden="true"
-          class="MuiTypography-root MuiTypography-body2  ResultItem-title css-1eygwv7-MuiTypography-root"
+          class="MuiTypography-root MuiTypography-body2 ResultItem-title css-1eygwv7-MuiTypography-root"
           data-sm="ResultItemTitle"
           role="textbox"
           simpleitem="0"
@@ -43,7 +43,7 @@ exports[`<ResultItem /> should work 1`] = `
           <p
             aria-hidden="true"
             caption="true"
-            class="MuiTypography-root MuiTypography-caption  ResultItem-distance css-bgkxzc-MuiTypography-root"
+            class="MuiTypography-root MuiTypography-caption ResultItem-distance css-bgkxzc-MuiTypography-root"
             marginleft="true"
           >
             100m
@@ -54,7 +54,7 @@ exports[`<ResultItem /> should work 1`] = `
         <div>
           <p
             aria-hidden="true"
-            class="MuiTypography-root MuiTypography-caption  ResultItem-subtitle css-16auzzq-MuiTypography-root"
+            class="MuiTypography-root MuiTypography-caption ResultItem-subtitle css-16auzzq-MuiTypography-root"
             hidemargin="true"
           >
             Subtitle text
@@ -65,7 +65,7 @@ exports[`<ResultItem /> should work 1`] = `
         >
           <p
             aria-hidden="true"
-            class="MuiTypography-root MuiTypography-caption  ResultItem-bottom css-o763o0-MuiTypography-root"
+            class="MuiTypography-root MuiTypography-caption ResultItem-bottom css-o763o0-MuiTypography-root"
           >
             Bottom text
           </p>

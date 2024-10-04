@@ -3,7 +3,7 @@
 exports[`<SimpleListItem /> should work 1`] = `
 <div>
   <li
-    class="MuiListItem-root css-1ls6ttt MuiListItem-gutters MuiListItem-padding null  css-aaug5z-MuiListItem-root"
+    class="MuiListItem-root css-1ls6ttt MuiListItem-gutters MuiListItem-padding null css-aaug5z-MuiListItem-root"
     tabindex="-1"
   >
     <div
@@ -13,7 +13,7 @@ exports[`<SimpleListItem /> should work 1`] = `
         class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10wsksd-MuiTypography-root"
       >
         <p
-          class="MuiTypography-root null  MuiTypography-body2 css-q91igz-MuiTypography-root"
+          class="MuiTypography-root null MuiTypography-body2 css-q91igz-MuiTypography-root"
         >
           Title text
         </p>
