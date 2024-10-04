@@ -63,7 +63,7 @@ exports[`<UnitDataList /> should work 1`] = `
             </p>
             <p
               aria-hidden="true"
-              class="MuiTypography-root MuiTypography-body2  ResultItem-title css-1eygwv7-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-body2 ResultItem-title css-1eygwv7-MuiTypography-root"
               data-sm="ResultItemTitle"
               role="textbox"
               simpleitem="0"
@@ -124,7 +124,7 @@ exports[`<UnitDataList /> should work 1`] = `
             </p>
             <p
               aria-hidden="true"
-              class="MuiTypography-root MuiTypography-body2  ResultItem-title css-1eygwv7-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-body2 ResultItem-title css-1eygwv7-MuiTypography-root"
               data-sm="ResultItemTitle"
               role="textbox"
               simpleitem="0"
@@ -185,7 +185,7 @@ exports[`<UnitDataList /> should work 1`] = `
             </p>
             <p
               aria-hidden="true"
-              class="MuiTypography-root MuiTypography-body2  ResultItem-title css-1eygwv7-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-body2 ResultItem-title css-1eygwv7-MuiTypography-root"
               data-sm="ResultItemTitle"
               role="textbox"
               simpleitem="0"
@@ -198,7 +198,7 @@ exports[`<UnitDataList /> should work 1`] = `
     </ul>
     <button
       aria-label="Show more events (2)"
-      class="MuiButtonBase-root SMButton  css-nttxw8-MuiButtonBase-root"
+      class="MuiButtonBase-root SMButton css-nttxw8-MuiButtonBase-root"
       color="default"
       id="UniteventsButton"
       margin="1"

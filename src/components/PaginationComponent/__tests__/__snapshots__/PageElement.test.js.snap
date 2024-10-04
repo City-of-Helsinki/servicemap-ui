@@ -10,7 +10,7 @@ exports[`<PageElement /> should work 1`] = `
       type="button"
     >
       <p
-        class="MuiTypography-root MuiTypography-subtitle1  css-1p7ah8z-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-subtitle1 css-1p7ah8z-MuiTypography-root"
       >
         <span
           aria-hidden="true"
