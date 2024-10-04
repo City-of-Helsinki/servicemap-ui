@@ -41,7 +41,7 @@ if (typeof settings.INITIAL_MAP_POSITION === 'undefined') {
 
 if (typeof settings.MAPS === 'undefined') {
     // If not set default to Helsinki
-    settings.MAPS = 'servicemap,ortographic,guidemap,accessible_map';
+    settings.MAPS = 'servicemap,ortographic,accessible_map,guidemap,plainmap';
 }
 
 if (typeof settings.CITIES === 'undefined') {
@@ -69,6 +69,9 @@ if (typeof settings.ORTOGRAPHIC_MAP_URL === 'undefined') {
 if (typeof settings.GUIDE_MAP_URL === 'undefined') {
   // If not set default to Helsinki
   settings.GUIDE_MAP_URL = 'https://kartta.hel.fi/ws/geoserver/avoindata/gwc/service/wmts?layer=avoindata:Karttasarja_PKS&tilematrixset=ETRS-GK25&Service=WMTS&Request=GetTile&Version=1.0.0&TileMatrix=ETRS-GK25:{z}&TileCol={x}&TileRow={y}&Format=image%2Fpng';
+}
+if (typeof settings.PLAIN_MAP_URL === 'undefined') {
+  settings.PLAIN_MAP_URL = 'https://tiles-test.hel.ninja/nls_maps/avoin/wmts/1.0.0/selkokartta/default/ETRS-TM35FIN/{z}/{y}/{x}.png';
 }
 
 if (typeof settings.REITTIOPAS_URL === 'undefined') {
@@ -252,6 +255,7 @@ export default {
   "ortographicWMSURL": settings.ORTOGRAPHIC_WMS_URL,
   "ortographicWMSLAYER": settings.ORTOGRAPHIC_WMS_LAYER,
   "guideMapURL": settings.GUIDE_MAP_URL,
+  "plainMapURL": settings.PLAIN_MAP_URL,
   "reittiopasURL": settings.REITTIOPAS_URL,
   "hslRouteGuideURL": settings.HSL_ROUTE_GUIDE_URL,
   "outdoorExerciseURL": settings.OUTDOOR_EXERCISE_URL,
