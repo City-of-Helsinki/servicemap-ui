@@ -36,6 +36,13 @@ const tileLayers = {
     resolutions: [8192, 4096, 2048, 1024, 512, 256, 128, 64, 32, 16, 8, 4, 2, 1, 0.5, 0.25, 0.125, 0.0625],
     origin: [24451424, 8388608],
   },
+  plainMapLayer: {
+    crsName: 'EPSG:3067',
+    projDef: '+proj=utm +zone=35 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs +type=crs',
+    boundPoints: [[-548576, 6291456], [1548576, 8388608]],
+    resolutions: [8192, 4096, 2048, 1024, 512, 256, 128, 64, 32, 16, 8, 4, 2, 1, 0.5, 0.25, 0.125, 0.0625],
+    origin: [-548576, 8388608],
+  },
   orthoImageLayer: {
     crsName: 'EPSG:3879',
     projDef: '+proj=tmerc +lat_0=0 +lon_0=25 +k=1 +x_0=25500000 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs',
@@ -120,7 +127,25 @@ const mapTypes = {
       [60.00855312110063, 25.271114398151653],
     ],
   },
-  // TODO: Add "accessible_map"
+  plainmap: {
+    name: 'plainmap',
+    attribution: 'map.attribution.nls',
+    layer: tileLayers.plainMapLayer,
+    generateUrl: () => config.plainMapURL,
+    minZoom: 8,
+    maxZoom: 15,
+    zoom: 10,
+    clusterPopupVisibility: 11,
+    unitZoom: 12,
+    mobileZoom: 9,
+    detailZoom: 14,
+    mapBounds: [
+      [70.09, 31.59],
+      [70.09, 19.08],
+      [58.84, 19.08],
+      [58.84, 31.59],
+    ],
+  },
 };
 
 const getMapOptions = (type, locale) => {
