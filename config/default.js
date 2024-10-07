@@ -71,7 +71,7 @@ if (typeof settings.GUIDE_MAP_URL === 'undefined') {
   settings.GUIDE_MAP_URL = 'https://kartta.hel.fi/ws/geoserver/avoindata/gwc/service/wmts?layer=avoindata:Karttasarja_PKS&tilematrixset=ETRS-GK25&Service=WMTS&Request=GetTile&Version=1.0.0&TileMatrix=ETRS-GK25:{z}&TileCol={x}&TileRow={y}&Format=image%2Fpng';
 }
 if (typeof settings.PLAIN_MAP_URL === 'undefined') {
-  settings.PLAIN_MAP_URL = 'https://tiles-test.hel.ninja/nls_maps/avoin/wmts/1.0.0/selkokartta/default/ETRS-TM35FIN/{z}/{y}/{x}.png';
+  settings.PLAIN_MAP_URL = 'https://mml-tiles.hel.ninja/avoin/wmts/1.0.0/selkokartta/default/ETRS-TM35FIN/{z}/{y}/{x}.png';
 }
 
 if (typeof settings.REITTIOPAS_URL === 'undefined') {
