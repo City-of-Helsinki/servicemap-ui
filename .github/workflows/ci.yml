@@ -36,6 +36,7 @@ jobs:
       ORTOGRAPHIC_WMS_URL: "https://kartta.hsy.fi/geoserver/wms"
       ORTOGRAPHIC_WMS_LAYER: "taustakartat_ja_aluejaot:Ortoilmakuva_2019"
       GUIDE_MAP_URL: https://kartta.hel.fi/ws/geoserver/avoindata/gwc/service/wmts?layer=avoindata:Karttasarja_PKS&tilematrixset=ETRS-GK25&Service=WMTS&Request=GetTile&Version=1.0.0&TileMatrix=ETRS-GK25:{z}&TileCol={x}&TileRow={y}&Format=image%2Fpng
+      PLAIN_MAP_URL: https://mml-tiles.hel.ninja/avoin/wmts/1.0.0/selkokartta/default/ETRS-TM35FIN/{z}/{y}/{x}.png
       READ_FEEDBACK_URLS_HELSINKI: https://palautteet.hel.fi/fi/hae-palautteita#/app/search?r=12&text=,https://palautteet.hel.fi/sv/hae-palautteita#/app/search?r=12&text=,https://palautteet.hel.fi/en/hae-palautteita#/app/search?r=12&text=
       ADDITIONAL_FEEDBACK_URLS_ESPOO: https://easiointi.espoo.fi/eFeedback/fi,https://easiointi.espoo.fi/eFeedback/sv,https://easiointi.espoo.fi/eFeedback/en
       ADDITIONAL_FEEDBACK_URLS_KAUNIAINEN: https://www.kauniainen.fi/kaupunki-ja-paatoksenteko/osallistu-ja-vaikuta/,https://www.kauniainen.fi/sv/staden-och-beslutsfattande/delta-och-paverka/,https://www.kauniainen.fi/kaupunki-ja-paatoksenteko/osallistu-ja-vaikuta/
