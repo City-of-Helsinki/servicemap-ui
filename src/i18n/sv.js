@@ -1,5 +1,5 @@
 /* eslint-disable quote-props */
-const translations = {
+export default {
   'app.title': 'Servicekarta',
   'app.description': 'Alla tjänster i huvudstadsregionen inom räckhåll.',
   'app.og.image.alt': 'Servicekarta logo',
@@ -731,16 +731,3 @@ const translations = {
   'opens.new.tab': '(ny flik)',
   'alert.close': 'Stäng meddelande',
 };
-
-let overridingExternalTranslations;
-
-// Read and merge external translations with current translations
-try {
-  // eslint-disable-next-line global-require,import/no-unresolved
-  overridingExternalTranslations = require('./externalTranslations/sv.json');
-} catch (e) {
-  overridingExternalTranslations = {};
-}
-
-const swedishTranslations = { ...translations, ...overridingExternalTranslations };
-export default swedishTranslations;
