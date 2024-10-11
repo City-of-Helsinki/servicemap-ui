@@ -161,32 +161,27 @@ if (typeof settings.SLOW_FETCH_MESSAGE_TIMEOUT === 'undefined') {
   settings.SLOW_FETCH_MESSAGE_TIMEOUT = 3000;
 }
 
-let municipalities;
-try {
-  municipalities = require('./municipalities.json');
-} catch(e) {
-  municipalities = {
-    fi: {
-      espoo: 'Espoo',
-      helsinki: 'Helsinki',
-      kauniainen: 'Kauniainen',
-      vantaa: 'Vantaa',
-      kirkkonummi: 'Kirkkonummi'
-    },
-    en: {
-      espoo: 'Espoo',
-      helsinki: 'Helsinki',
-      kauniainen: 'Kauniainen',
-      vantaa: 'Vantaa',
-      kirkkonummi: 'Kirkkonummi'
-    },
-    sv: {
-      espoo: 'Esbo',
-      helsinki: 'Helsingfors',
-      kauniainen: 'Grankulla',
-      vantaa: 'Vanda',
-      kirkkonummi: 'Kyrkslätt'
-    }
+const municipalities = {
+  fi: {
+    espoo: 'Espoo',
+    helsinki: 'Helsinki',
+    kauniainen: 'Kauniainen',
+    vantaa: 'Vantaa',
+    kirkkonummi: 'Kirkkonummi'
+  },
+  en: {
+    espoo: 'Espoo',
+    helsinki: 'Helsinki',
+    kauniainen: 'Kauniainen',
+    vantaa: 'Vantaa',
+    kirkkonummi: 'Kirkkonummi'
+  },
+  sv: {
+    espoo: 'Esbo',
+    helsinki: 'Helsingfors',
+    kauniainen: 'Grankulla',
+    vantaa: 'Vanda',
+    kirkkonummi: 'Kyrkslätt'
   }
 }
 /**

@@ -1,5 +1,5 @@
 /* eslint-disable quote-props */
-const translations = {
+export default {
   'app.title': 'Service map',
   'app.description': 'Find services near your home',
   'app.og.image.alt': 'Servicemap logo',
@@ -730,16 +730,3 @@ const translations = {
   'opens.new.tab': '(new tab)',
   'alert.close': 'Close the notification',
 };
-
-let overridingExternalTranslations;
-
-// Read and merge external translations with current translations
-try {
-  // eslint-disable-next-line global-require,import/no-unresolved
-  overridingExternalTranslations = require('./externalTranslations/en.json');
-} catch (e) {
-  overridingExternalTranslations = {};
-}
-
-const englishTranslations = { ...translations, ...overridingExternalTranslations };
-export default englishTranslations;
