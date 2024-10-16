@@ -224,7 +224,7 @@ const TopBar = (props) => {
                       {renderMapButton()}
                       {renderMenuButton(pageType)}
                     </StyledMobileButtonContainer>
-                    {renderDrawerMenu(pageType)}
+                      {renderDrawerMenu(pageType)}
                   </MobileComponent>
                   <DesktopComponent>
                     <StyledNav>
@@ -240,7 +240,7 @@ const TopBar = (props) => {
                           <StyledMobileButtonContainer>
                             {renderMenuButton()}
                           </StyledMobileButtonContainer>
-                          {renderDrawerMenu(pageType)}
+                            {renderDrawerMenu(pageType)}
                         </>
                       )}
                     </StyledNav>
