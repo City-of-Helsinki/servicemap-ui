@@ -31,6 +31,7 @@
     "express-sitemap": "^1.8.0",
     "hds-design-tokens": "3.6.0",
     "hds-react": "3.6.0",
+    "http-status-typed": "^2.0.1",
     "intl": "^1.2.5",
     "isomorphic-style-loader": "^5.1.0",
     "leaflet": "1.7.1",
