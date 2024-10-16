@@ -437,6 +437,12 @@ export default {
   'map.button.sidebar.show': 'Utvidga sidopanelen',
   'map.button.expand': 'Utvidga',
   'map.button.expand.aria': 'Öppna kartan',
+  'map.heightProfile.title': 'Höjdprofil',
+  'map.heightProfile.distance': 'Avstånd',
+  'map.heightProfile.elevation': 'Höjd',
+  'map.heightProfile.segmentLength': 'Totalt avstånd',
+  'map.heightProfile.type': 'Typ',
+  'map.heightProfile.legend': 'Färgskala',
 
   // Print
   'print.alert': 'Använd utskriftsalternativet i verktygsmenyn',

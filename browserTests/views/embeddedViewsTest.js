@@ -107,7 +107,7 @@ const loadingIndicator = Selector('[data-sm="LoadingIndicator"]');
   // Division url
   test.page`${getBaseUrl()}/fi/embed/division/kunta:helsinki/kaupunginosa:029?level=all`
   ('Division url shows units and area correctly', async (t) => {
-    const district = Selector('.leaflet-pane .leaflet-overlay-pane').find('canvas').exists;
+    const district = Selector('.leaflet-pane .leaflet-overlay-pane').find('svg').exists;
     
     await t
       .expect(loadingIndicator.exists).notOk('should load data')

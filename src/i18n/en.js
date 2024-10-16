@@ -436,6 +436,12 @@ export default {
   'map.button.sidebar.show': 'Show sidebar',
   'map.button.expand': 'Expand',
   'map.button.expand.aria': 'Open map',
+  'map.heightProfile.title': 'Height profile',
+  'map.heightProfile.distance': 'Distance',
+  'map.heightProfile.elevation': 'Elevation',
+  'map.heightProfile.segmentLength': 'Total length',
+  'map.heightProfile.type': 'Type',
+  'map.heightProfile.legend': 'Legend',
 
   // Print
   'print.alert': 'Use the toolbox printing option',
