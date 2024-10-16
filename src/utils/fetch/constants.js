@@ -59,6 +59,7 @@ export const APIHandlers = {
       accessibility_description: true,
       include: 'services,keywords,department,entrances',
       geometry: true,
+      geometry_3d: true,
     },
     envName: config.serviceMapAPI.id,
   },

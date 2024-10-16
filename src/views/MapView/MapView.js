@@ -33,6 +33,7 @@ import EventMarkers from './components/EventMarkers';
 import HideSidebarButton from './components/HideSidebarButton';
 import MarkerCluster from './components/MarkerCluster';
 import PanControl from './components/PanControl';
+import ElevationControl from './components/ElevationControl';
 import SimpleStatisticalComponent from './components/StatisticalDataMapInfo';
 import StatisticalDistricts from './components/StatisticalDistricts';
 import TransitStops from './components/TransitStops';
@@ -50,6 +51,7 @@ import useMapUnits from './utils/useMapUnits';
 if (global.window) {
   require('leaflet');
   require('leaflet.markercluster');
+  require('leaflet.heightgraph');
   global.rL = require('react-leaflet');
 }
 
@@ -212,6 +214,8 @@ const MapView = (props) => {
 
   const unitHasLocationAndGeometry = (un) => un?.location && un?.geometry;
 
+  const unitHasLineStringLocationAndGeometry = (un) => un?.location && un?.geometry && un?.geometry?.type === 'MultiLineString';
+
   // Render
 
   const renderUnitGeometry = () => {
@@ -280,7 +284,6 @@ const MapView = (props) => {
       <>
         <MapContainer
           tap={false} // This should fix leaflet safari double click bug
-          preferCanvas
           className={`${mapClass} ${embedded ? mapNoSidebarClass : ''} `}
           key={mapObject.options.name}
           zoomControl={false}
@@ -347,6 +350,10 @@ const MapView = (props) => {
 
           {currentPage === 'unit' && highlightedUnit?.entrances?.length && unitHasLocationAndGeometry(highlightedUnit) && (
             <EntranceMarker />
+          )}
+
+          {!disableInteraction && currentPage === 'unit' && unitHasLineStringLocationAndGeometry(highlightedUnit) && (
+            <ElevationControl data={highlightedUnit} isMobile={isMobile}/>
           )}
 
           {!hideUserMarker && userLocation && (

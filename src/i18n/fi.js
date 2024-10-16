@@ -436,7 +436,12 @@ export default {
   'map.button.sidebar.show': 'Laajenna sivupaneeli',
   'map.button.expand': 'Laajenna',
   'map.button.expand.aria': 'Avaa kartta',
-
+  'map.heightProfile.title': 'Korkeusprofiili',
+  'map.heightProfile.distance': 'Etäisyys',
+  'map.heightProfile.elevation': 'Korkeus',
+  'map.heightProfile.segmentLength': 'Kokonaispituus',
+  'map.heightProfile.type': 'Tyyppi',
+  'map.heightProfile.legend': 'Selite',
 
   // Print
   'print.alert': 'Käytä tulostamiseen työkaluvalikon tulostusta',
