@@ -167,21 +167,6 @@ export const fetchSelectedUnitData = (req, res, next) => {
     }
     accessibilitySentencesFetch(null, null, accessibilitySentenceFetchEnd, fetchOnError, null, id, controller);
 
-    // Fetch reservations for unit
-    const reservationFetchEnd = (data) => {
-      if (!store || !store.dispatch || !data) {
-        response();
-        return;
-      }
-      const {
-        fetchSuccess, fetchProgressUpdate,
-      } = reservations;
-      store.dispatch(fetchProgressUpdate(data.results.length, data.count));
-      store.dispatch(fetchSuccess(data.results));
-      response();
-    }
-    reservationsFetch({ unit: `tprek:${id}` }, null, reservationFetchEnd, fetchOnError, null, null, controller)
-
   } catch(e) {
     console.log('Error in fetchSelectedUnitData', e.message);
     next();
