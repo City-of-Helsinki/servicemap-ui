@@ -142,6 +142,19 @@ class UnitHelper {
     navigator[action]('unit', { id });
   }
 
+  static setDefaults = (unit) => {
+    if (!unit) {
+      return null;
+    }
+    // Set default names for the unit
+    let { name } = unit;
+    name.fi = name.fi || '';
+    name.sv = name.sv || '';
+    name.en = name.en || '';
+    unit.name = name;
+    return unit;
+  }
+
   static getContractText = (unit, intl, getLocaleText) => {
     const { contract_type } = unit;
     if (!contract_type?.description?.fi) return null;

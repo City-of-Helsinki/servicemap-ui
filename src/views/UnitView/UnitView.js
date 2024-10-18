@@ -315,6 +315,8 @@ const UnitView = (props) => {
     }
     const contractText = UnitHelper.getContractText(unit, intl, getLocaleText);
 
+    UnitHelper.setDefaults(unit);
+
     let detailReadSpeakerButton = null;
 
     if (config.showReadSpeakerButton) {
