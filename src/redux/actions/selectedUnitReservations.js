@@ -32,7 +32,7 @@ export const fetchReservations = (id, pageSize, all = false) => async (dispatch,
   } : null;
 
   // Fetch data
-  reservationsFetch({ unit: `tprek:${id}`, page_size: pageSize || 5 }, onStart, onSuccess, onError, onNext);
+  //reservationsFetch({ unit: `tprek:${id}`, page_size: pageSize || 5 }, onStart, onSuccess, onError, onNext);
 };
 
 
@@ -45,5 +45,5 @@ export const fetchAdditionalReservations = next => async (dispatch) => {
   const onError = e => dispatch(fetchError(e.message));
 
   // Fetch data
-  reservationsFetch(null, onStart, onSuccess, onError, null, null, null, next);
+  //reservationsFetch(null, onStart, onSuccess, onError, null, null, null, next);
 };
