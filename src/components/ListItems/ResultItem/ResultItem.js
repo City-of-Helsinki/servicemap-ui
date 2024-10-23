@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import {
-  ListItem, ListItemIcon, Typography, Divider,
+  ListItemButton, ListItemIcon, Typography, Divider,
 } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
 import { useSelector } from 'react-redux';
@@ -81,10 +81,9 @@ const ResultItem = ({
 
   return (
     <>
-      <StyledListItem
+      <StyledListItemButton
         data-sm="ResultItemComponent"
         selected={selected}
-        button
         role={role}
         component="li"
         tabIndex={0}
@@ -188,7 +187,7 @@ const ResultItem = ({
             )
           }
         </StyledItemTextContainer>
-      </StyledListItem>
+      </StyledListItemButton>
       {divider && (
         <li aria-hidden>
           <StyledDivider
@@ -212,7 +211,7 @@ const StyledDivider = styled(Divider)(({ theme, simpleitem }) => (
     }
 ));
 
-const StyledListItem = styled(ListItem)(({ theme }) => ({
+const StyledListItemButton = styled(ListItemButton)(({ theme }) => ({
   padding: theme.spacing(1),
 }));
 
