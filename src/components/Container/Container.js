@@ -51,7 +51,15 @@ const StyledPaper = styled(Paper)(containerStyles);
 
 const Container = (props) => {
   const {
-    className, children, margin, noMargin, paper, text, title, titleComponent, ...rest
+    className = '',
+    children,
+    margin = false,
+    noMargin = false,
+    paper = false,
+    text = false,
+    title = null,
+    titleComponent = 'h3',
+    ...rest
   } = props;
 
   const ContainerComponent = paper ? StyledPaper : StyledDiv;
@@ -85,16 +93,6 @@ Container.propTypes = {
   text: PropTypes.bool,
   title: PropTypes.string,
   titleComponent: PropTypes.oneOf(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']),
-};
-
-Container.defaultProps = {
-  className: '',
-  margin: false,
-  noMargin: false,
-  paper: false,
-  text: false,
-  title: null,
-  titleComponent: 'h3',
 };
 
 export default Container;

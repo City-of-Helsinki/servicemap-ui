@@ -11,7 +11,7 @@ import { getLocale } from '../../../redux/selectors/user';
 import LocaleUtility from '../../../utils/locale';
 import MobileNavButton from '../MobileNavButton/MobileNavButton';
 
-const LanguageMenuComponent = ({ mobile }) => {
+const LanguageMenuComponent = ({ mobile = false }) => {
   const locale = useSelector(getLocale);
   const location = useLocation();
   const [langAnchorEl, setLangAnchorEl] = useState(null);
@@ -127,10 +127,6 @@ const StyledTypography = styled(Typography)(({ theme, mobile, bold }) => {
 
 LanguageMenuComponent.propTypes = {
   mobile: PropTypes.bool,
-};
-
-LanguageMenuComponent.defaultProps = {
-  mobile: false,
 };
 
 export default LanguageMenuComponent;

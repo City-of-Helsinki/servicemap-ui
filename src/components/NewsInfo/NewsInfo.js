@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import { selectNews } from '../../redux/selectors/alerts';
 import NewsItem from './components/NewsItem/NewsItem';
 
-const NewsInfo = ({ showCount }) => {
+const NewsInfo = ({ showCount = 1 }) => {
   const news = useSelector(selectNews)?.data;
   if (!news?.length) {
     return null;
@@ -34,10 +34,6 @@ const NewsInfo = ({ showCount }) => {
 
 NewsInfo.propTypes = {
   showCount: PropTypes.number,
-};
-
-NewsInfo.defaultProps = {
-  showCount: 1,
 };
 
 export default NewsInfo;

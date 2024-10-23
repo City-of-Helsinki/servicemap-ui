@@ -5,8 +5,8 @@ import { FormattedMessage } from 'react-intl';
 import config from '../../../config';
 
 const ReadSpeakerButton = ({
-  className,
-  encodedURL,
+  className = null,
+  encodedURL = null,
   intl,
   readID,
 }) => {
@@ -65,11 +65,6 @@ ReadSpeakerButton.propTypes = {
   encodedURL: PropTypes.string,
   intl: PropTypes.objectOf(PropTypes.any).isRequired,
   readID: PropTypes.string.isRequired,
-};
-
-ReadSpeakerButton.defaultProps = {
-  className: null,
-  encodedURL: null,
 };
 
 export default ReadSpeakerButton;

@@ -14,15 +14,15 @@ import PaginationComponent from '../../PaginationComponent';
 import { parseSearchParams, stringifySearchParams } from '../../../utils';
 
 const PaginatedList = ({
-  beforePagination,
-  customComponent,
+  beforePagination = null,
+  customComponent = null,
   data,
   id,
-  itemsPerPage,
-  srTitle,
-  title,
+  itemsPerPage = 10,
+  srTitle = null,
+  title = null,
   titleComponent,
-  embeddedList,
+  embeddedList = null,
 }) => {
   const navigator = useSelector(selectNavigator);
   const location = useLocation();
@@ -162,15 +162,6 @@ PaginatedList.propTypes = {
   title: PropTypes.string,
   titleComponent: PropTypes.oneOf(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']).isRequired,
   embeddedList: PropTypes.string,
-};
-
-PaginatedList.defaultProps = {
-  beforePagination: null,
-  customComponent: null,
-  itemsPerPage: 10,
-  srTitle: null,
-  title: null,
-  embeddedList: null,
 };
 
 export default PaginatedList;

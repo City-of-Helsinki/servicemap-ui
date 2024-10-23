@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 
 const SMIcon = ({
-  className, icon, ...rest
+  className = '', icon, ...rest
 }) => (
   <StyledIcon aria-hidden="true" className={`${className} ${icon}`} {...rest} />
 );
@@ -19,10 +19,6 @@ const StyledIcon = styled('span')(({ theme }) => ({
 SMIcon.propTypes = {
   className: PropTypes.string,
   icon: PropTypes.string.isRequired,
-};
-
-SMIcon.defaultProps = {
-  className: '',
 };
 
 export default SMIcon;

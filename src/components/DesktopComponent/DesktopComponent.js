@@ -4,7 +4,7 @@ import useMobileStatus from '../../utils/isMobile';
 
 
 // Content wrapped with this component show only on Desktop widths
-const DesktopComponent = ({ children }) => {
+const DesktopComponent = ({ children = null }) => {
   const isMobile = useMobileStatus();
   if (!isMobile && children) {
     return (
@@ -20,10 +20,6 @@ const DesktopComponent = ({ children }) => {
 
 DesktopComponent.propTypes = {
   children: PropTypes.node,
-};
-
-DesktopComponent.defaultProps = {
-  children: null,
 };
 
 export default DesktopComponent;
