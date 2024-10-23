@@ -43,7 +43,7 @@ const getViewState = (map) => ({
   zoom: map.getZoom(),
 });
 
-function SideBar({ selectedAddress, setSelectedAddress }) {
+function SideBar({ selectedAddress = null, setSelectedAddress }) {
   const dispatch = useDispatch();
   const intl = useIntl();
   const location = useLocation();
@@ -235,10 +235,6 @@ const StyledInfoText = styled(Typography)(({ theme }) => ({
 SideBar.propTypes = {
   selectedAddress: PropTypes.objectOf(PropTypes.any),
   setSelectedAddress: PropTypes.func.isRequired,
-};
-
-SideBar.defaultProps = {
-  selectedAddress: null,
 };
 
 export default SideBar;

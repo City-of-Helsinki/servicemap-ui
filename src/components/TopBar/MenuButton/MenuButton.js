@@ -8,7 +8,7 @@ import MobileNavButton from '../MobileNavButton/MobileNavButton';
 
 
 const MenuButton = ({
-  drawerOpen, pageType, toggleDrawerMenu,
+  drawerOpen, pageType = null, toggleDrawerMenu,
 }) => {
   const intl = useIntl();
   const buttonLabelClass = css({
@@ -39,10 +39,6 @@ MenuButton.propTypes = {
   drawerOpen: PropTypes.bool.isRequired,
   pageType: PropTypes.string,
   toggleDrawerMenu: PropTypes.func.isRequired,
-};
-
-MenuButton.defaultProps = {
-  pageType: null,
 };
 
 export default MenuButton;

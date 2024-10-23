@@ -5,7 +5,7 @@ import {
 } from '@mui/material';
 
 const SMRadio = ({
-  controls, initialValue, name, label, onChange, ...rest
+  controls, initialValue = null, name, label = null, onChange, ...rest
 }) => {
   const [value, setValue] = useState(initialValue);
 
@@ -56,11 +56,6 @@ SMRadio.propTypes = {
   label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   name: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
-};
-
-SMRadio.defaultProps = {
-  initialValue: null,
-  label: null,
 };
 
 export default SMRadio;

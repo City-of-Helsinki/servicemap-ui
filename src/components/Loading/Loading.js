@@ -7,7 +7,11 @@ import config from '../../../config';
 
 const Loading = (props) => {
   const {
-    children, hideNumbers, text, progress, reducer,
+    children = null,
+    hideNumbers = false,
+    text = null,
+    progress = null,
+    reducer = null,
   } = props;
   const intl = useIntl();
   const [showSlowMessage, setShowSlowMessage] = useState(false);
@@ -98,12 +102,4 @@ Loading.propTypes = {
       PropTypes.array,
     ]),
   }),
-};
-
-Loading.defaultProps = {
-  children: null,
-  hideNumbers: false,
-  text: null,
-  reducer: null,
-  progress: null,
 };

@@ -16,7 +16,7 @@ import SettingsUtility from '../../../../utils/settings';
 import useLocaleText from '../../../../utils/useLocaleText';
 import { Container, Loading } from '../../../../components';
 
-const AccessibilityInfo = ({ titleAlways, headingLevel }) => {
+const AccessibilityInfo = ({ titleAlways = false, headingLevel }) => {
   const settings = useSelector(selectSettings);
   const unit = useSelector(getSelectedUnit);
   const accessibilitySentences = useSelector(selectSelectedUnitAccessibilitySentences);
@@ -351,10 +351,6 @@ const StyledDescriptionsTitle = styled(Typography)(({ theme }) => ({
 AccessibilityInfo.propTypes = {
   headingLevel: PropTypes.oneOf([2, 3, 4, 5]).isRequired,
   titleAlways: PropTypes.bool,
-};
-
-AccessibilityInfo.defaultProps = {
-  titleAlways: false,
 };
 
 export default AccessibilityInfo;

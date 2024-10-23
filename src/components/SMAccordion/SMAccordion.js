@@ -5,18 +5,18 @@ import { ArrowDropDown } from '@mui/icons-material';
 import styled from '@emotion/styled';
 
 const SMAccordion = ({
-  isOpen,
-  defaultOpen,
-  adornment,
+  isOpen = null,
+  defaultOpen = false,
+  adornment = null,
   titleContent,
-  collapseContent,
-  onOpen,
-  disabled,
-  disableUnmount, // Disables accordion collapse content unmount on accordion close
-  simpleItem,
-  openButtonSrText,
-  className,
-  elevated,
+  collapseContent = null,
+  onOpen = () => {},
+  disabled = false,
+  disableUnmount = false, // Disables accordion collapse content unmount on accordion close
+  simpleItem = false,
+  openButtonSrText = null,
+  className = '',
+  elevated = false,
 }) => {
   const [open, setOpen] = useState(defaultOpen);
   // This state makes sure that the component does not initially render closed accordion contents
@@ -145,20 +145,6 @@ SMAccordion.propTypes = {
   openButtonSrText: PropTypes.string,
   className: PropTypes.string,
   disableUnmount: PropTypes.bool,
-};
-
-SMAccordion.defaultProps = {
-  isOpen: null,
-  defaultOpen: false,
-  collapseContent: null,
-  adornment: null,
-  onOpen: () => {},
-  disabled: false,
-  simpleItem: false,
-  elevated: false,
-  openButtonSrText: null,
-  className: '',
-  disableUnmount: false,
 };
 
 export default SMAccordion;

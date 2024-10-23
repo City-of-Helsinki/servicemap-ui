@@ -5,7 +5,13 @@ import styled from '@emotion/styled';
 import { SMSwitch } from '../../../../components';
 
 const DistrictToggleButton = ({
-  district, onToggle, selected, selectionSize, label, inputProps, ...rest
+  district,
+  onToggle,
+  selected = false,
+  selectionSize = null,
+  label = null,
+  inputProps = {},
+  ...rest
 }) => {
   const switchBorderClass = css({
     border: '1px solid #949494',
@@ -64,13 +70,6 @@ DistrictToggleButton.propTypes = {
     tabindex: PropTypes.string,
   }),
   label: PropTypes.objectOf(PropTypes.any),
-};
-
-DistrictToggleButton.defaultProps = {
-  selected: false,
-  inputProps: {},
-  label: null,
-  selectionSize: null,
 };
 
 export default DistrictToggleButton;

@@ -75,17 +75,17 @@ const EmbeddedActions = () => {
 const MapView = (props) => {
   const {
     location,
-    hideUserMarker,
-    highlightedUnit,
-    highlightedDistrict,
-    isMobile,
+    hideUserMarker = false,
+    highlightedUnit = null,
+    highlightedDistrict = null,
+    isMobile = false,
     setMapRef,
     findUserLocation,
-    userLocation,
+    userLocation = null,
     measuringMode,
-    toggleSidebar,
-    sidebarHidden,
-    disableInteraction,
+    toggleSidebar = null,
+    sidebarHidden = false,
+    disableInteraction = false,
   } = props;
 
   // State
@@ -475,15 +475,4 @@ MapView.propTypes = {
   toggleSidebar: PropTypes.func,
   sidebarHidden: PropTypes.bool,
   disableInteraction: PropTypes.bool,
-};
-
-MapView.defaultProps = {
-  hideUserMarker: false,
-  highlightedDistrict: null,
-  highlightedUnit: null,
-  isMobile: false,
-  toggleSidebar: null,
-  sidebarHidden: false,
-  userLocation: null,
-  disableInteraction: false,
 };

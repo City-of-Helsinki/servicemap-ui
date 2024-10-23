@@ -19,7 +19,12 @@ const getLocalizedText = (reservation, locale) => {
   }
 };
 
-const ReservationItem = ({ reservation, intl, divider }) => {
+
+const ReservationItem = ({
+  reservation,
+  intl,
+  divider = true
+}) => {
   const locale = useSelector(getLocale);
   const localizedText = getLocalizedText(reservation, locale);
 
@@ -47,10 +52,6 @@ ReservationItem.propTypes = {
     name_sv: PropTypes.string,
   }).isRequired,
   divider: PropTypes.bool,
-};
-
-ReservationItem.defaultProps = {
-  divider: true,
 };
 
 export default ReservationItem;

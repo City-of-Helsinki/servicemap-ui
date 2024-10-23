@@ -81,7 +81,9 @@ const StyledBoldText = styled(Typography)(() => ({
 }));
 
 const TransitStopInfo = ({
-  stop, onCloseClick, type,
+  stop = {},
+  onCloseClick,
+  type = null,
 }) => {
   const useContrast = useSelector(selectMapType) === 'accessible_map';
   const getLocaleText = useLocaleText();
@@ -170,11 +172,6 @@ TransitStopInfo.propTypes = {
   stop: PropTypes.objectOf(PropTypes.any),
   onCloseClick: PropTypes.func.isRequired,
   type: PropTypes.string,
-};
-
-TransitStopInfo.defaultProps = {
-  stop: {},
-  type: null,
 };
 
 export default TransitStopInfo;

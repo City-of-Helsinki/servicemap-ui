@@ -6,7 +6,7 @@ import { getIcon } from '../../../../components';
 import { selectThemeMode } from '../../../../redux/selectors/user';
 
 
-const CoordinateMarker = ({ position }) => {
+const CoordinateMarker = ({ position = null }) => {
   const { Marker } = global.rL;
   const { divIcon } = global.L;
   const useContrast = useSelector(selectThemeMode) === 'dark';
@@ -32,10 +32,6 @@ const CoordinateMarker = ({ position }) => {
 
 CoordinateMarker.propTypes = {
   position: PropTypes.arrayOf(PropTypes.string),
-};
-
-CoordinateMarker.defaultProps = {
-  position: null,
 };
 
 export default CoordinateMarker;
