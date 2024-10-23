@@ -32,14 +32,14 @@ const allowedInitialValues = [
 ];
 
 const ResultOrderer = ({
-  initialOrder,
+  initialOrder = null,
   direction,
   intl,
   order,
-  disabled,
+  disabled = false,
   setDirection,
   setOrder,
-  userLocation,
+  userLocation = null,
 }) => {
   const accessibiliySettingsLength = useSelector(selectSelectedAccessibilitySettings).length;
   const [openSettings, setOpenSettings] = useState(false);
@@ -172,12 +172,6 @@ ResultOrderer.propTypes = {
   setOrder: PropTypes.func.isRequired,
   disabled: PropTypes.bool,
   userLocation: PropTypes.objectOf(PropTypes.any),
-};
-
-ResultOrderer.defaultProps = {
-  initialOrder: null,
-  disabled: false,
-  userLocation: null,
 };
 
 const StyledTune = styled(Tune)(() => ({

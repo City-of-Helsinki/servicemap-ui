@@ -15,7 +15,12 @@ class PaginationComponent extends React.Component {
 
   render() {
     const {
-      current, handlePageChange, intl, maxShownPages, pageCount, embeddedList,
+      current,
+      handlePageChange,
+      intl,
+      maxShownPages = 7,
+      pageCount,
+      embeddedList = false,
     } = this.props;
 
     // Return if only 1 page
@@ -135,12 +140,6 @@ PaginationComponent.propTypes = {
   maxShownPages: PropTypes.number,
   pageCount: PropTypes.number.isRequired,
   embeddedList: PropTypes.bool,
-};
-
-// Default props
-PaginationComponent.defaultProps = {
-  maxShownPages: 7,
-  embeddedList: false,
 };
 
 export default PaginationComponent;

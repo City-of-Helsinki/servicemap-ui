@@ -6,22 +6,22 @@ import styled from '@emotion/styled';
 // ServiceMapButton
 const SMButton = (props) => {
   const {
-    'aria-label': ariaLabel,
-    children,
+    'aria-label': ariaLabel = null,
+    children = null,
     intl,
-    className,
-    small,
-    color,
-    icon,
-    messageID,
-    messageCount,
+    className = '',
+    small = false,
+    color = 'default',
+    icon = null,
+    messageID = null,
+    messageCount = null,
     onClick,
-    margin,
-    style,
-    role,
-    disabled,
-    textVariant,
-    passingRef,
+    margin = false,
+    style = null,
+    role = 'button',
+    disabled = false,
+    textVariant = 'caption',
+    passingRef = null,
     ...rest
   } = props;
   let buttonTitle = null;
@@ -156,23 +156,6 @@ SMButton.propTypes = {
   textVariant: PropTypes.string,
   messageCount: PropTypes.number,
   passingRef: PropTypes.shape({ current: PropTypes.objectOf(PropTypes.any) }),
-};
-
-SMButton.defaultProps = {
-  'aria-label': null,
-  children: null,
-  className: '',
-  small: false,
-  color: 'default',
-  icon: null,
-  margin: false,
-  messageID: null,
-  style: null,
-  disabled: false,
-  textVariant: 'caption',
-  messageCount: null,
-  passingRef: null,
-  role: 'button',
 };
 
 export default SMButton;

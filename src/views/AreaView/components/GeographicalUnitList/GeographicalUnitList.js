@@ -27,7 +27,7 @@ import {
 
 // Custom uncontrolled checkbox that allows default value
 const UnitCheckbox = ({
-  handleUnitCheckboxChange, id, defaultChecked,
+  handleUnitCheckboxChange, id, defaultChecked = false,
 }) => {
   const [checked, setChecked] = useState(defaultChecked);
 
@@ -176,10 +176,6 @@ UnitCheckbox.propTypes = {
   handleUnitCheckboxChange: PropTypes.func.isRequired,
   defaultChecked: PropTypes.bool,
   id: PropTypes.number.isRequired,
-};
-
-UnitCheckbox.defaultProps = {
-  defaultChecked: false,
 };
 
 export default GeographicalUnitList;

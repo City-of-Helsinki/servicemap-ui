@@ -17,7 +17,9 @@ import { getLocale } from '../../../redux/selectors/user';
 
 const HomeLogo = React.forwardRef((props, ref) => {
   const {
-    contrast, small, ...rest
+    contrast = false,
+    small = false,
+    ...rest
   } = props;
   const locale = useSelector(getLocale);
 
@@ -65,11 +67,6 @@ const StyledImage = styled('img')(() => ({
 HomeLogo.propTypes = {
   contrast: PropTypes.bool,
   small: PropTypes.bool,
-};
-
-HomeLogo.defaultProps = {
-  contrast: false,
-  small: false,
 };
 
 export default HomeLogo;
