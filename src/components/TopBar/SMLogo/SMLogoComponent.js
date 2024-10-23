@@ -10,7 +10,7 @@ import HomeLogo from '../../Logos/HomeLogo';
 import { isHomePage } from '../../../utils/path';
 import useMobileStatus from '../../../utils/isMobile';
 
-const SMLogoComponent = ({ onClick, small }) => {
+const SMLogoComponent = ({ onClick, small = false }) => {
   const intl = useIntl();
   const themeMode = useSelector(selectThemeMode);
   const location = useLocation();
@@ -32,10 +32,6 @@ const StyledHomeLogo = styled(HomeLogo)(({ mobile }) => ({
 SMLogoComponent.propTypes = {
   onClick: PropTypes.func.isRequired,
   small: PropTypes.bool,
-};
-
-SMLogoComponent.defaultProps = {
-  small: false,
 };
 
 export default SMLogoComponent;

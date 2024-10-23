@@ -14,7 +14,11 @@ import useLocaleText from '../../../../utils/useLocaleText';
 import { parseSearchParams, stringifySearchParams } from '../../../../utils';
 import { SMAccordion } from '../../../../components';
 
-const ContactInfo = ({ unit, userLocation, headingLevel }) => {
+const ContactInfo = ({
+  unit,
+  userLocation = null,
+  headingLevel = 'h4',
+}) => {
   const intl = useIntl();
   const history = useHistory();
   const location = useLocation();
@@ -274,11 +278,6 @@ ContactInfo.propTypes = {
   unit: PropTypes.objectOf(PropTypes.any).isRequired,
   userLocation: PropTypes.objectOf(PropTypes.any),
   headingLevel: PropTypes.string,
-};
-
-ContactInfo.defaultProps = {
-  userLocation: null,
-  headingLevel: 'h4',
 };
 
 export default ContactInfo;

@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-// Custom map controls shoudld be wrapped with this component
+// Custom map controls should be wrapped with this component
 
 const POSITION_CLASSES = {
   bottomleft: 'leaflet-bottom leaflet-left',
@@ -11,7 +11,7 @@ const POSITION_CLASSES = {
   topright: 'leaflet-top leaflet-right',
 };
 
-const CustomControls = ({ position, children }) => {
+const CustomControls = ({ position, children = null }) => {
   // This converts children into array, even if children prop is single object or array of objects
   const controls = [children].flat().filter(item => item);
 
@@ -48,10 +48,6 @@ const StyledControlsContainer = styled.div(({ theme }) => ({
 CustomControls.propTypes = {
   children: PropTypes.node,
   position: PropTypes.oneOf(Object.keys(POSITION_CLASSES)).isRequired,
-};
-
-CustomControls.defaultProps = {
-  children: null,
 };
 
 export default CustomControls;

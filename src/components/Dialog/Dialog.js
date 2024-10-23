@@ -14,11 +14,11 @@ import useMobileStatus from '../../utils/isMobile';
 const Dialog = ({
   title,
   content,
-  actions,
-  open,
+  actions = null,
+  open = false,
   setOpen,
-  referer,
-  onClose,
+  referer = null,
+  onClose = null,
 }) => {
   const intl = useIntl();
   const dialogRef = useRef();
@@ -138,13 +138,6 @@ Dialog.propTypes = {
       anchorEl: PropTypes.objectOf(PropTypes.any),
     }),
   }),
-};
-
-Dialog.defaultProps = {
-  actions: null,
-  onClose: null,
-  open: false,
-  referer: null,
 };
 
 export default Dialog;

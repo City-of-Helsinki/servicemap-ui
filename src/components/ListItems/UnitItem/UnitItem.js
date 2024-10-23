@@ -14,10 +14,10 @@ import isClient, { formatDistanceObject } from '../../../utils';
 import useLocaleText from '../../../utils/useLocaleText';
 
 const UnitItem = ({
-  unit,
-  onClick,
-  divider,
-  simpleItem,
+  unit = {},
+  onClick = null,
+  divider = true,
+  simpleItem = false,
 }) => {
   const getLocaleText = useLocaleText();
   const intl = useIntl();
@@ -134,11 +134,4 @@ UnitItem.propTypes = {
   onClick: PropTypes.func,
   divider: PropTypes.bool,
   simpleItem: PropTypes.bool,
-};
-
-UnitItem.defaultProps = {
-  unit: {},
-  onClick: null,
-  divider: true,
-  simpleItem: false,
 };
