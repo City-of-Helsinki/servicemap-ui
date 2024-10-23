@@ -1,9 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ListItem from '@mui/material/ListItem';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import { Typography, Divider } from '@mui/material';
+import { Divider, ListItemButton, ListItemIcon, ListItemText, Typography } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
 import styled from '@emotion/styled';
 import { css } from '@emotion/css';
@@ -48,10 +45,13 @@ const SimpleListItem = (props) => {
     marginLeft: theme.spacing(2),
     marginRight: theme.spacing(2),
     whiteSpace: 'pre-line',
+    userSelect: 'text',
+    cursor: 'default',
   });
 
   const linkClass = css({
     color: theme.palette.link.main,
+    cursor: 'pointer',
     textDecoration: 'underline',
   });
 
@@ -61,9 +61,8 @@ const SimpleListItem = (props) => {
 
   return (
     <>
-      <ListItem
+      <ListItemButton
         className={`${className} ${dark ? 'dark' : ''}`}
-        button={!!link || button}
         role={link ? 'link' : role}
         tabIndex={isLinkOrButton ? 0 : -1}
         component="li"
@@ -97,7 +96,7 @@ const SimpleListItem = (props) => {
           </Typography>
           <Typography style={visuallyHidden}>{srText}</Typography>
         </ListItemText>
-      </ListItem>
+      </ListItemButton>
       {divider && (
         <li aria-hidden>
           <StyledDivider />
