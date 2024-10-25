@@ -221,7 +221,7 @@ export default {
   // Embedder
   'embedder.city.title': 'Staden',
   'embedder.city.aria.label': 'Välj stadsgränser för inbäddningen',
-  'embedder.organization.title': 'Palveluntarjoaja', // TODO: translate
+  'embedder.organization.title': 'Tjänsteleverantör',
   'embedder.close': 'Stäng inbäddningsverktyget',
   'embedder.code.title': 'Kopiera HTML-koden',
   'embedder.height.title': 'Inbäddningens höjd',
@@ -721,7 +721,7 @@ export default {
   'settings.choose.mobility': 'Välj fysisk funktionsnedsättning',
   'settings.choose.senses': 'Välj sensorisk funktionsnedsättning',
   'settings.choose.cities': 'Välj stadsinställningar',
-  'settings.choose.organization': 'Valitse palveluntarjoaja', // TODO: translate
+  'settings.choose.organization': 'Välj tjänsteleverantör',
   'settings.map.info': 'I kartinställningarna kan du välja det kartunderlag som passar dig bäst.',
   'settings.reset_button.title': 'Rensa alla mina val',
 

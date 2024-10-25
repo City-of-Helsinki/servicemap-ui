@@ -220,7 +220,7 @@ export default {
   // Embedder
   'embedder.city.title': 'City',
   'embedder.city.aria.label': 'Choose city limits for the embedding',
-  'embedder.organization.title': 'Palveluntarjoaja', // TODO: translate
+  'embedder.organization.title': 'Service provider',
   'embedder.close': 'Close embedding tool',
   'embedder.code.title': 'Copy the HTML code',
   'embedder.height.title': 'Height of the embedding',
@@ -720,7 +720,7 @@ export default {
   'settings.choose.mobility': 'Select your mobility issue',
   'settings.choose.senses': 'Select your sensory processing issues',
   'settings.choose.cities': 'Select your city setting',
-  'settings.choose.organization': 'Valitse palveluntarjoaja', // TODO: translate
+  'settings.choose.organization': 'Choose a service provider',
   'settings.map.info': 'You can select the background map that best suits you in the map settings.',
   'settings.reset_button.title': 'Clear all my selections',
 
