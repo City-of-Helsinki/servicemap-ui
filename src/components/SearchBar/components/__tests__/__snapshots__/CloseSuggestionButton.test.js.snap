@@ -7,13 +7,13 @@ exports[`<CloseSuggestionButton /> should work 1`] = `
     tabindex="0"
   >
     <p
-      class="MuiTypography-root MuiTypography-body2 css-1ak20dk-MuiTypography-root"
+      class="MuiTypography-root MuiTypography-body2 css-5rfmx0-MuiTypography-root"
     >
       Hide the list of suggestions
     </p>
     <svg
       aria-hidden="true"
-      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-6yqi1c-MuiSvgIcon-root"
+      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-zst572-MuiSvgIcon-root"
       data-testid="ArrowDownwardIcon"
       focusable="false"
       viewBox="0 0 24 24"
