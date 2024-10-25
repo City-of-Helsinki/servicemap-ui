@@ -3,13 +3,13 @@
 exports[`<UnitItem /> should work 1`] = `
 <div>
   <li
-    class="MuiButtonBase-root MuiListItem-root MuiListItem-gutters MuiListItem-padding MuiListItem-button css-tjwta7-MuiButtonBase-root-MuiListItem-root"
+    class="MuiButtonBase-root MuiListItemButton-root MuiListItemButton-gutters MuiListItemButton-root MuiListItemButton-gutters css-mctqh3-MuiButtonBase-root-MuiListItemButton-root"
     data-sm="UnitItem"
     role="link"
     tabindex="0"
   >
     <div
-      class="MuiListItemIcon-root css-1v52qf3-MuiListItemIcon-root"
+      class="MuiListItemIcon-root css-vqgk90-MuiListItemIcon-root"
     >
       <img
         alt=""
@@ -26,7 +26,7 @@ exports[`<UnitItem /> should work 1`] = `
         data-sm="ResultItemTopRow"
       >
         <p
-          class="MuiTypography-root MuiTypography-body2 ResultItem-srOnly ResultItem-title css-1eygwv7-MuiTypography-root"
+          class="MuiTypography-root MuiTypography-body2 ResultItem-srOnly ResultItem-title css-8goqxi-MuiTypography-root"
           style="border: 0px; height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 1px;"
         >
           
@@ -39,7 +39,7 @@ exports[`<UnitItem /> should work 1`] = `
         </p>
         <p
           aria-hidden="true"
-          class="MuiTypography-root MuiTypography-body2 css-in3yi3 ResultItem-title css-1eygwv7-MuiTypography-root"
+          class="MuiTypography-root MuiTypography-body2 css-in3yi3 ResultItem-title css-8goqxi-MuiTypography-root"
           data-sm="ResultItemTitle"
           role="textbox"
           simpleitem="0"
@@ -51,7 +51,7 @@ exports[`<UnitItem /> should work 1`] = `
         <div>
           <p
             aria-hidden="true"
-            class="MuiTypography-root MuiTypography-caption ResultItem-subtitle css-16auzzq-MuiTypography-root"
+            class="MuiTypography-root MuiTypography-caption ResultItem-subtitle css-1jo8v13-MuiTypography-root"
             hidemargin="true"
           >
             Kunnallinen palvelu
@@ -64,7 +64,7 @@ exports[`<UnitItem /> should work 1`] = `
     aria-hidden="true"
   >
     <hr
-      class="MuiDivider-root MuiDivider-inset css-1tvkns7-MuiDivider-root"
+      class="MuiDivider-root MuiDivider-inset css-t02qfg-MuiDivider-root"
       simpleitem="0"
     />
   </li>

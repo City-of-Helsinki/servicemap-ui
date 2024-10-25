@@ -7,32 +7,33 @@ exports[`<UnitDataList /> should work 1`] = `
       class="css-1d2iwu5"
     >
       <h4
-        class="MuiTypography-root MuiTypography-subtitle1 css-kdfysq-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-subtitle1 css-1l1wz4d-MuiTypography-root"
       >
         Events
       </h4>
     </div>
     <p
-      class="MuiTypography-root MuiTypography-body2 MuiTypography-alignLeft css-r3354m-MuiTypography-root"
+      class="MuiTypography-root MuiTypography-body2 MuiTypography-alignLeft css-1xcycjb-MuiTypography-root"
+      style="--Typography-textAlign: left;"
     >
       Here you can find information about events provided by the unit
     </p>
     <ul
-      class="MuiList-root css-1mk9mw3-MuiList-root"
+      class="MuiList-root css-54zhjy-MuiList-root"
     >
       <li
-        class="MuiButtonBase-root MuiListItem-root MuiListItem-gutters MuiListItem-padding MuiListItem-button css-tjwta7-MuiButtonBase-root-MuiListItem-root"
+        class="MuiButtonBase-root MuiListItemButton-root MuiListItemButton-gutters MuiListItemButton-root MuiListItemButton-gutters css-mctqh3-MuiButtonBase-root-MuiListItemButton-root"
         data-sm="ResultItemComponent"
         data-testid="EventItem"
         role="link"
         tabindex="0"
       >
         <div
-          class="MuiListItemIcon-root css-1v52qf3-MuiListItemIcon-root"
+          class="MuiListItemIcon-root css-vqgk90-MuiListItemIcon-root"
         >
           <svg
             aria-hidden="true"
-            class="MuiSvgIcon-root MuiSvgIcon-colorPrimary MuiSvgIcon-fontSizeMedium css-8is58z-MuiSvgIcon-root"
+            class="MuiSvgIcon-root MuiSvgIcon-colorPrimary MuiSvgIcon-fontSizeMedium css-nz3u40-MuiSvgIcon-root"
             data-testid="EventIcon"
             focusable="false"
             viewBox="0 0 24 24"
@@ -50,7 +51,7 @@ exports[`<UnitDataList /> should work 1`] = `
             data-sm="ResultItemTopRow"
           >
             <p
-              class="MuiTypography-root MuiTypography-body2 ResultItem-srOnly ResultItem-title css-1eygwv7-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-body2 ResultItem-srOnly ResultItem-title css-8goqxi-MuiTypography-root"
               style="border: 0px; height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 1px;"
             >
               
@@ -63,7 +64,7 @@ exports[`<UnitDataList /> should work 1`] = `
             </p>
             <p
               aria-hidden="true"
-              class="MuiTypography-root MuiTypography-body2 ResultItem-title css-1eygwv7-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-body2 ResultItem-title css-8goqxi-MuiTypography-root"
               data-sm="ResultItemTitle"
               role="textbox"
               simpleitem="0"
@@ -77,23 +78,23 @@ exports[`<UnitDataList /> should work 1`] = `
         aria-hidden="true"
       >
         <hr
-          class="MuiDivider-root MuiDivider-inset css-1tvkns7-MuiDivider-root"
+          class="MuiDivider-root MuiDivider-inset css-t02qfg-MuiDivider-root"
           simpleitem="0"
         />
       </li>
       <li
-        class="MuiButtonBase-root MuiListItem-root MuiListItem-gutters MuiListItem-padding MuiListItem-button css-tjwta7-MuiButtonBase-root-MuiListItem-root"
+        class="MuiButtonBase-root MuiListItemButton-root MuiListItemButton-gutters MuiListItemButton-root MuiListItemButton-gutters css-mctqh3-MuiButtonBase-root-MuiListItemButton-root"
         data-sm="ResultItemComponent"
         data-testid="EventItem"
         role="link"
         tabindex="0"
       >
         <div
-          class="MuiListItemIcon-root css-1v52qf3-MuiListItemIcon-root"
+          class="MuiListItemIcon-root css-vqgk90-MuiListItemIcon-root"
         >
           <svg
             aria-hidden="true"
-            class="MuiSvgIcon-root MuiSvgIcon-colorPrimary MuiSvgIcon-fontSizeMedium css-8is58z-MuiSvgIcon-root"
+            class="MuiSvgIcon-root MuiSvgIcon-colorPrimary MuiSvgIcon-fontSizeMedium css-nz3u40-MuiSvgIcon-root"
             data-testid="EventIcon"
             focusable="false"
             viewBox="0 0 24 24"
@@ -111,7 +112,7 @@ exports[`<UnitDataList /> should work 1`] = `
             data-sm="ResultItemTopRow"
           >
             <p
-              class="MuiTypography-root MuiTypography-body2 ResultItem-srOnly ResultItem-title css-1eygwv7-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-body2 ResultItem-srOnly ResultItem-title css-8goqxi-MuiTypography-root"
               style="border: 0px; height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 1px;"
             >
               
@@ -124,7 +125,7 @@ exports[`<UnitDataList /> should work 1`] = `
             </p>
             <p
               aria-hidden="true"
-              class="MuiTypography-root MuiTypography-body2 ResultItem-title css-1eygwv7-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-body2 ResultItem-title css-8goqxi-MuiTypography-root"
               data-sm="ResultItemTitle"
               role="textbox"
               simpleitem="0"
@@ -138,23 +139,23 @@ exports[`<UnitDataList /> should work 1`] = `
         aria-hidden="true"
       >
         <hr
-          class="MuiDivider-root MuiDivider-inset css-1tvkns7-MuiDivider-root"
+          class="MuiDivider-root MuiDivider-inset css-t02qfg-MuiDivider-root"
           simpleitem="0"
         />
       </li>
       <li
-        class="MuiButtonBase-root MuiListItem-root MuiListItem-gutters MuiListItem-padding MuiListItem-button css-tjwta7-MuiButtonBase-root-MuiListItem-root"
+        class="MuiButtonBase-root MuiListItemButton-root MuiListItemButton-gutters MuiListItemButton-root MuiListItemButton-gutters css-mctqh3-MuiButtonBase-root-MuiListItemButton-root"
         data-sm="ResultItemComponent"
         data-testid="EventItem"
         role="link"
         tabindex="0"
       >
         <div
-          class="MuiListItemIcon-root css-1v52qf3-MuiListItemIcon-root"
+          class="MuiListItemIcon-root css-vqgk90-MuiListItemIcon-root"
         >
           <svg
             aria-hidden="true"
-            class="MuiSvgIcon-root MuiSvgIcon-colorPrimary MuiSvgIcon-fontSizeMedium css-8is58z-MuiSvgIcon-root"
+            class="MuiSvgIcon-root MuiSvgIcon-colorPrimary MuiSvgIcon-fontSizeMedium css-nz3u40-MuiSvgIcon-root"
             data-testid="EventIcon"
             focusable="false"
             viewBox="0 0 24 24"
@@ -172,7 +173,7 @@ exports[`<UnitDataList /> should work 1`] = `
             data-sm="ResultItemTopRow"
           >
             <p
-              class="MuiTypography-root MuiTypography-body2 ResultItem-srOnly ResultItem-title css-1eygwv7-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-body2 ResultItem-srOnly ResultItem-title css-8goqxi-MuiTypography-root"
               style="border: 0px; height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 1px;"
             >
               
@@ -185,7 +186,7 @@ exports[`<UnitDataList /> should work 1`] = `
             </p>
             <p
               aria-hidden="true"
-              class="MuiTypography-root MuiTypography-body2 ResultItem-title css-1eygwv7-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-body2 ResultItem-title css-8goqxi-MuiTypography-root"
               data-sm="ResultItemTitle"
               role="textbox"
               simpleitem="0"
@@ -198,7 +199,7 @@ exports[`<UnitDataList /> should work 1`] = `
     </ul>
     <button
       aria-label="Show more events (2)"
-      class="MuiButtonBase-root SMButton css-nttxw8-MuiButtonBase-root"
+      class="MuiButtonBase-root SMButton css-1a222ty-MuiButtonBase-root"
       color="default"
       id="UniteventsButton"
       margin="1"
@@ -210,7 +211,7 @@ exports[`<UnitDataList /> should work 1`] = `
     >
       <svg
         aria-hidden="true"
-        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1macy6t-MuiSvgIcon-root"
+        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-x6yuh7-MuiSvgIcon-root"
         data-testid="ArrowDropDownIcon"
         focusable="false"
         viewBox="0 0 24 24"
@@ -221,7 +222,7 @@ exports[`<UnitDataList /> should work 1`] = `
       </svg>
       <p
         aria-hidden="true"
-        class="MuiTypography-root MuiTypography-button css-1rnrch9-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-button css-k3ltew-MuiTypography-root"
       >
         Show more events (2)
       </p>
