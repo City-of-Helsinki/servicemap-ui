@@ -1,7 +1,7 @@
 /* eslint-disable */
 import { Selector } from 'testcafe';
 import { ReactSelector, waitForReact } from 'testcafe-react-selectors';
-import { getBaseUrl, getLocation } from '../utility';
+import { acceptCookieConcent, getBaseUrl, getLocation } from '../utility';
 import {
   addressSearchBarInput,
   cityDropdown,
@@ -30,8 +30,9 @@ const addressInput = Selector(addressSearchBarInput);
 
 fixture`Search view test`
   .page`${searchPage}`
-  .beforeEach(async () => {
+  .beforeEach(async (t) => {
     await waitForReact();
+    await acceptCookieConcent(t);
   });
 
 const searchUnits = async (t, search = 'uimastadion') => {
@@ -335,8 +336,9 @@ const cityChips = Selector(`${cityDropdown} ${settingChip}`);
 
 fixture`Search view custom url with city and org param test`
   .page`${homePage}`
-  .beforeEach(async () => {
+  .beforeEach(async (t) => {
     await waitForReact();
+    await acceptCookieConcent(t);
   });
 
 
@@ -425,8 +427,9 @@ test('Should not mess up organization settings between embedded and normal view'
 
 fixture`Search view custom url with accessibility param test`
   .page`${homePage}`
-  .beforeEach(async () => {
+  .beforeEach(async (t) => {
     await waitForReact();
+    await acceptCookieConcent(t);
   });
 
 
@@ -450,8 +453,9 @@ test('Should override accessibility settings', async(t) => {
 
 fixture`Search view should set settings to url test`
   .page`${homePage}`
-  .beforeEach(async () => {
+  .beforeEach(async (t) => {
     await waitForReact();
+    await acceptCookieConcent(t);
   });
 
 
@@ -484,8 +488,9 @@ test('Should set user settings to url', async(t) => {
 
 fixture`Search view should set home address with url test`
   .page`${homePage}/search?q=maauimala&hcity=helsinki&hstreet=Annankatu+12`
-  .beforeEach(async () => {
+  .beforeEach(async (t) => {
     await waitForReact();
+    await acceptCookieConcent(t);
   });
 
 // test('Should set home address from url', async(t) => {
@@ -497,8 +502,9 @@ fixture`Search view should set home address with url test`
 
 fixture`Search view should set map type with url test`
   .page`${homePage}/search?q=maauimala&hcity=helsinki&map=guidemap`
-  .beforeEach(async () => {
+  .beforeEach(async (t) => {
     await waitForReact();
+    await acceptCookieConcent(t);
   });
 
 test('Should set map type from url', async(t) => {
