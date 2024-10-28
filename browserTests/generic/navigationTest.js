@@ -1,6 +1,6 @@
 import { waitForReact } from 'testcafe-react-selectors';
 import { Selector } from 'testcafe';
-import { getBaseUrl } from '../utility';
+import { acceptCookieConcent, getBaseUrl } from '../utility';
 import {
   embedderToolButton,
   embedderToolCloseButton,
@@ -14,8 +14,9 @@ import {
 
 fixture`Navigation home page`
   .page`${getBaseUrl()}/fi`
-  .beforeEach(async () => {
+  .beforeEach(async (t) => {
     await waitForReact();
+    await acceptCookieConcent(t);
   });
 
 test('Should navigate to embedder tool', async (t) => {

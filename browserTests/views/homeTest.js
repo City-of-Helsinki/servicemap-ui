@@ -1,15 +1,16 @@
 /* eslint-disable */
 import { Selector } from 'testcafe';
 import { waitForReact } from 'testcafe-react-selectors';
-import { getBaseUrl, getLocation } from '../utility';
+import { acceptCookieConcent, getBaseUrl, getLocation } from '../utility';
 import { feedbackButton, infoButton } from '../utility/pageObjects';
 
 const viewUrl = `${getBaseUrl()}/fi/`;
 
 fixture`Home view test`
   .page`${viewUrl}`
-  .beforeEach(async () => {
+  .beforeEach(async (t) => {
     await waitForReact();
+    await acceptCookieConcent(t);
   });
 
 test('Test home page navigation button clicks take user to correct pages', async (t) => {
