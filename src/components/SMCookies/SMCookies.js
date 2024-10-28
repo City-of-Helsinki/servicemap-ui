@@ -8,6 +8,7 @@ import { getLocale } from '../../redux/selectors/user';
 import { COOKIE_MODAL_ROOT_ID } from '../../utils/constants';
 import { isEmbed } from '../../utils/path';
 import { getMatomoTracker } from '../../utils/tracking';
+import featureFlags from '../../../config/featureFlags';
 
 function SMCookies() {
   const intl = useIntl();
@@ -17,7 +18,7 @@ function SMCookies() {
   const cookieDomain = typeof window !== 'undefined' ? window.location.hostname : undefined;
   const embed = isEmbed();
 
-  if (embed) {
+  if (embed || !featureFlags.smCookies) {
     // No cookie modal or tracking in embed mode
     return null;
   }

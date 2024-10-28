@@ -1,7 +1,7 @@
 /* eslint-disable */
 import { Selector } from 'testcafe';
 import { waitForReact } from 'testcafe-react-selectors';
-import { getBaseUrl } from '../utility';
+import { acceptCookieConcent, getBaseUrl } from '../utility';
 import {
   cityDropdown,
   mapToolsButton,
@@ -17,8 +17,9 @@ const organisationDropdownSelector = Selector(organisationDropdown)
 
 fixture`Settings view tests`
   .page`${getBaseUrl()}/fi/`
-  .beforeEach(async () => {
+  .beforeEach(async (t) => {
     await waitForReact();
+    await acceptCookieConcent(t);
   });
 
 test('Settings does opens and closes correctly', async (t) => {
