@@ -26,7 +26,7 @@ function RouteBar({ unit, userLocation }) {
   );
 }
 
-const StyledContainer = styled('div')(({ theme }) => ({
+const StyledContainer = styled(Link)(({ theme }) => ({
   display: 'flex',
   background: 'paper',
   padding: theme.spacing(1),
