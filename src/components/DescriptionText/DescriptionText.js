@@ -4,10 +4,7 @@ import { Typography, Divider } from '@mui/material';
 import styled from '@emotion/styled';
 
 const DescriptionText = ({
-  description,
-  html = false,
-  title,
-  titleComponent,
+  description, html, title, titleComponent,
 }) => {
   // Hide linebreak html elements from screen readers
   const hideBRFromSR = text => text.replaceAll('<br>', '<br aria-hidden="true" />');
@@ -62,5 +59,10 @@ DescriptionText.propTypes = {
   html: PropTypes.bool,
   titleComponent: PropTypes.oneOf(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']).isRequired,
 };
+
+DescriptionText.defaultProps = {
+  html: false,
+};
+
 
 export default DescriptionText;

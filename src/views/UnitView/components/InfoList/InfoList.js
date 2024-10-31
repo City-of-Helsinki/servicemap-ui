@@ -5,7 +5,7 @@ import useLocaleText from '../../../../utils/useLocaleText';
 import { SimpleListItem, TitledList } from '../../../../components';
 
 const InfoList = ({
-  data, title, titleComponent = 'h3', intl,
+  data, title, titleComponent, intl,
 }) => {
   const getLocaleText = useLocaleText();
 
@@ -134,4 +134,8 @@ InfoList.propTypes = {
   title: PropTypes.objectOf(PropTypes.any).isRequired,
   titleComponent: PropTypes.oneOf(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']),
   intl: PropTypes.objectOf(PropTypes.any).isRequired,
+};
+
+InfoList.defaultProps = {
+  titleComponent: 'h3',
 };

@@ -41,8 +41,8 @@ class Navigator extends React.Component {
   componentDidMount() {
     const {
       history,
-      mobility = null,
-      senses = null,
+      mobility,
+      senses,
     } = this.props;
 
     this.prevPathName = history.location.pathname;
@@ -59,8 +59,8 @@ class Navigator extends React.Component {
   componentDidUpdate() {
     const {
       history,
-      mobility = null,
-      senses = null,
+      mobility,
+      senses,
     } = this.props;
 
     if (this.unlisten) {
@@ -77,7 +77,7 @@ class Navigator extends React.Component {
   }
 
   trackPageView = ({ mobility, senses }) => {
-    const { tracker = null } = this.props;
+    const { tracker } = this.props;
 
     // Simple custom servicemap page view tracking
     servicemapTrackPageView();
@@ -95,7 +95,7 @@ class Navigator extends React.Component {
   };
 
   trackNoResultsPage = (noResultsQuery) => {
-    const { tracker = null } = this.props;
+    const { tracker } = this.props;
     if (tracker && shouldSentAnalytics()) {
       this.unlisten = null;
       setTimeout(() => {
@@ -272,6 +272,12 @@ Navigator.propTypes = {
   senses: PropTypes.arrayOf(PropTypes.string),
   mobility: PropTypes.string,
   tracker: PropTypes.objectOf(PropTypes.any),
+};
+
+Navigator.defaultProps = {
+  senses: null,
+  mobility: null,
+  tracker: null,
 };
 
 // Listen to redux state

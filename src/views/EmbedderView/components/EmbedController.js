@@ -14,21 +14,21 @@ import CustomInput from './CustomInput';
 const EmbedController = ({
   titleComponent,
   titleID,
-  description = null,
-  checkboxControls = null,
-  checkboxLabelledBy = null,
-  inputAriaLabel = null,
-  inputButtonOnClick = null,
-  inputButtonText = null,
-  inputDisabled = null,
-  inputOnChange = null,
-  inputPreText = null,
-  inputValue = null,
-  radioAriaLabel = null,
-  radioControls = null,
-  radioName = null,
-  radioOnChange = null,
-  radioValue = null,
+  description,
+  checkboxControls,
+  checkboxLabelledBy,
+  inputAriaLabel,
+  inputButtonOnClick,
+  inputButtonText,
+  inputDisabled,
+  inputOnChange,
+  inputPreText,
+  inputValue,
+  radioAriaLabel,
+  radioControls,
+  radioName,
+  radioOnChange,
+  radioValue,
 }) => {
   const renderCheckboxes = () => {
     if (!checkboxControls || !checkboxLabelledBy) {
@@ -189,6 +189,24 @@ EmbedController.propTypes = {
   radioName: PropTypes.string,
   radioOnChange: PropTypes.func,
   radioValue: PropTypes.string,
+};
+
+EmbedController.defaultProps = {
+  checkboxControls: null,
+  checkboxLabelledBy: null,
+  description: null,
+  inputAriaLabel: null,
+  inputButtonOnClick: null,
+  inputButtonText: null,
+  inputDisabled: null,
+  inputOnChange: null,
+  inputPreText: null,
+  inputValue: null,
+  radioAriaLabel: null,
+  radioControls: null,
+  radioOnChange: null,
+  radioName: null,
+  radioValue: null,
 };
 
 export default EmbedController;

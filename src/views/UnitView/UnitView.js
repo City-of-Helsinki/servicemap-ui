@@ -58,8 +58,8 @@ import { parseUnitViewUrlParams } from './utils/unitViewUrlParamAndSettingsHandl
 
 const UnitView = (props) => {
   const {
-    embed = false,
-    match = {},
+    embed,
+    match,
     fetchSelectedUnit,
     fetchUnitEvents,
     fetchReservations,
@@ -724,4 +724,9 @@ UnitView.propTypes = {
   fetchUnitEvents: PropTypes.func.isRequired,
   fetchHearingMaps: PropTypes.func.isRequired,
   match: PropTypes.objectOf(PropTypes.any),
+};
+
+UnitView.defaultProps = {
+  embed: false,
+  match: {},
 };

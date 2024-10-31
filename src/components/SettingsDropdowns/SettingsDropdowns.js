@@ -29,7 +29,7 @@ import SMButton from '../ServiceMapButton';
 import constants from '../SettingsComponent/constants';
 import SMAutocomplete from '../SMAutocomplete';
 
-const SettingsDropdowns = ({ variant = 'default'}) => {
+const SettingsDropdowns = ({ variant }) => {
   const intl = useIntl();
   const dispatch = useDispatch();
   const getLocaleText = useLocaleText();
@@ -282,6 +282,10 @@ const StyledAutocomplete = styled(SMAutocomplete)(({ theme, ownsettings, colormo
 
 SettingsDropdowns.propTypes = {
   variant: PropTypes.oneOf(['default', 'ownSettings']),
+};
+
+SettingsDropdowns.defaultProps = {
+  variant: 'default',
 };
 
 export default SettingsDropdowns;

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { uppercaseFirst } from '../../utils';
 
-const BoldedText = ({ text, shouldBeBold = null}) => {
+const BoldedText = ({ text, shouldBeBold }) => {
   if (!text) {
     return null;
   }
@@ -48,6 +48,10 @@ const BoldedText = ({ text, shouldBeBold = null}) => {
 BoldedText.propTypes = {
   text: PropTypes.string.isRequired,
   shouldBeBold: PropTypes.string,
+};
+
+BoldedText.defaultProps = {
+  shouldBeBold: null,
 };
 
 export default BoldedText;

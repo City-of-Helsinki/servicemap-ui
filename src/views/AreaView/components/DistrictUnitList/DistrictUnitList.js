@@ -24,7 +24,7 @@ import {
 
 const DistrictUnitList = (props) => {
   const {
-    intl, selectedAddress = null, district,
+    intl, selectedAddress, district,
   } = props;
 
   const citySettings = useSelector(selectCities);
@@ -190,6 +190,10 @@ DistrictUnitList.propTypes = {
   district: PropTypes.objectOf(PropTypes.any).isRequired,
   selectedAddress: PropTypes.objectOf(PropTypes.any),
   intl: PropTypes.objectOf(PropTypes.any).isRequired,
+};
+
+DistrictUnitList.defaultProps = {
+  selectedAddress: null,
 };
 
 export default React.memo(DistrictUnitList);

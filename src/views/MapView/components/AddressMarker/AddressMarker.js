@@ -11,8 +11,8 @@ import useLocaleText from '../../../../utils/useLocaleText';
 import { getIcon } from '../../../../components';
 
 const AddressMarker = ({
-  embeded = false,
-  position = null,
+  embeded,
+  position,
 }) => {
   const getLocaleText = useLocaleText();
   const theme = useTheme();
@@ -75,6 +75,11 @@ const AddressMarker = ({
 AddressMarker.propTypes = {
   position: PropTypes.arrayOf(PropTypes.number),
   embeded: PropTypes.bool,
+};
+
+AddressMarker.defaultProps = {
+  embeded: false,
+  position: null,
 };
 
 export default AddressMarker;

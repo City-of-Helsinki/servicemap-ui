@@ -4,7 +4,7 @@ import { styled } from '@mui/material/styles';
 import React from 'react';
 
 const MobileNavButton = ({
-  icon, text, showBorder = false, ...rest
+  icon, text, showBorder, ...rest
 }) => (
   <StyledButtonBase
     sx={showBorder
@@ -36,4 +36,8 @@ MobileNavButton.propTypes = {
   icon: PropTypes.node.isRequired,
   text: PropTypes.node.isRequired,
   showBorder: PropTypes.bool,
+};
+
+MobileNavButton.defaultProps = {
+  showBorder: false,
 };

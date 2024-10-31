@@ -95,11 +95,7 @@ class MenuButton extends React.Component {
 
   render() {
     const {
-      buttonIcon = null,
-      buttonText,
-      id = null,
-      panelID,
-      dataSm,
+      buttonIcon, buttonText, id, panelID, dataSm,
     } = this.props;
     const { open } = this.state;
 
@@ -210,6 +206,11 @@ MenuButton.propTypes = {
     text: PropTypes.string.isRequired,
     onClick: PropTypes.func.isRequired,
   })).isRequired,
+};
+
+MenuButton.defaultProps = {
+  buttonIcon: null,
+  id: null,
 };
 
 export default MenuButton;

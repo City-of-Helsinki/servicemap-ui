@@ -12,14 +12,14 @@ import { getPathName } from '../../utils/path';
 
 const BackButton = (props) => {
   const {
-    className = '',
-    onClick = null,
-    style = {},
-    variant = null,
-    srHidden = false,
-    ariaLabel = null,
-    text = null,
-    focusVisibleClassName = null,
+    className,
+    onClick,
+    style,
+    variant,
+    srHidden,
+    ariaLabel,
+    text,
+    focusVisibleClassName,
   } = props;
   const breadcrumb = useSelector(selectBreadcrumb);
   const navigator = useSelector(selectNavigator);
@@ -173,6 +173,17 @@ BackButton.propTypes = {
   ariaLabel: PropTypes.string,
   text: PropTypes.string,
   focusVisibleClassName: PropTypes.string,
+};
+
+BackButton.defaultProps = {
+  className: '',
+  style: {},
+  onClick: null,
+  variant: null,
+  srHidden: false,
+  ariaLabel: null,
+  text: null,
+  focusVisibleClassName: null,
 };
 
 export default BackButton;

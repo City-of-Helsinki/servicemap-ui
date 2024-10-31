@@ -9,13 +9,7 @@ import React, { useEffect, useState } from 'react';
  * CustomInput component
  */
 const CustomInput = ({
-  ariaLabel = null,
-  buttonClick = null,
-  buttonText = null,
-  disabled = null,
-  initialValue = null,
-  onChange = null,
-  preText = null,
+  ariaLabel, buttonClick, buttonText, disabled, initialValue, onChange, preText,
 }) => {
   const [value, setValue] = useState(initialValue);
   useEffect(() => {
@@ -73,6 +67,16 @@ CustomInput.propTypes = {
   preText: PropTypes.string,
   onChange: PropTypes.func,
   buttonText: PropTypes.node,
+};
+
+CustomInput.defaultProps = {
+  ariaLabel: null,
+  disabled: null,
+  initialValue: null,
+  buttonClick: null,
+  preText: null,
+  onChange: null,
+  buttonText: null,
 };
 
 const StyledPaper = styled(Paper)(() => ({

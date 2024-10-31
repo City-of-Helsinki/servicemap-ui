@@ -18,7 +18,7 @@ import ServiceMapAPI from '../../utils/newFetch/ServiceMapAPI';
 import { getAddressText } from '../../utils/address';
 import { focusToPosition } from '../../views/MapView/utils/mapActions';
 
-const AddressSearchBar = ({ title = null, handleAddressChange }) => {
+const AddressSearchBar = ({ title, handleAddressChange }) => {
   const intl = useIntl();
   const getLocaleText = useLocaleText();
   const dispatch = useDispatch();
@@ -300,6 +300,10 @@ const StyledIconButton = styled(IconButton)(({ theme }) => ({
 AddressSearchBar.propTypes = {
   handleAddressChange: PropTypes.func.isRequired,
   title: PropTypes.objectOf(PropTypes.any),
+};
+
+AddressSearchBar.defaultProps = {
+  title: null,
 };
 
 export default AddressSearchBar;

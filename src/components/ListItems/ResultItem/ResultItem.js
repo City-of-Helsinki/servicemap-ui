@@ -14,21 +14,21 @@ import locationIconContrastHover from '../../../assets/icons/LocationHoverContra
 import { selectThemeMode } from '../../../redux/selectors/user';
 
 const ResultItem = ({
-  bottomHighlight = false,
-  bottomText = null,
-  onClick = () => {},
-  icon = null,
-  subtitle = null,
+  bottomHighlight,
+  bottomText,
+  onClick,
+  icon,
+  subtitle,
   title,
-  distance = null,
-  divider = true,
-  role = 'link',
-  srLabel = null,
-  selected = false,
-  padded = false,
-  extendedClasses = null,
-  unitId = null,
-  simpleItem = false,
+  distance,
+  divider,
+  role,
+  srLabel,
+  selected,
+  padded,
+  extendedClasses,
+  unitId,
+  simpleItem,
   ...rest
 }) => {
   const themeMode = useSelector(selectThemeMode);
@@ -336,4 +336,21 @@ ResultItem.propTypes = {
   unitId: PropTypes.number,
   padded: PropTypes.bool,
   simpleItem: PropTypes.bool,
+};
+
+ResultItem.defaultProps = {
+  bottomHighlight: false,
+  bottomText: null,
+  extendedClasses: null,
+  unitId: null,
+  icon: null,
+  onClick: () => {},
+  subtitle: null,
+  distance: null,
+  divider: true,
+  role: 'link',
+  srLabel: null,
+  selected: false,
+  padded: false,
+  simpleItem: false,
 };

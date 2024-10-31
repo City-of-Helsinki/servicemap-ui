@@ -14,7 +14,7 @@ import {
 } from '../../../../components';
 
 const ExtendedData = ({
-  currentUnit = null,
+  currentUnit,
   events,
   fetchSelectedUnit,
   fetchReservations,
@@ -195,6 +195,10 @@ ExtendedData.propTypes = {
   fetchReservations: PropTypes.func.isRequired,
   fetchUnitEvents: PropTypes.func.isRequired,
   reservations: PropTypes.objectOf(PropTypes.any).isRequired,
+};
+
+ExtendedData.defaultProps = {
+  currentUnit: null,
 };
 
 export default ExtendedData;

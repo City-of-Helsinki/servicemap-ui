@@ -19,10 +19,10 @@ import PaginatedList from '../Lists/PaginatedList';
 const TabLists = ({
   location,
   data,
-  onTabChange = null,
-  focusClass = null,
-  focusText = null,
-  headerComponents = null,
+  onTabChange,
+  focusClass,
+  focusText,
+  headerComponents,
 }) => {
   const isMobile = useMobileStatus();
   const theme = useTheme();
@@ -402,6 +402,13 @@ TabLists.propTypes = {
   location: PropTypes.objectOf(PropTypes.any).isRequired,
   focusClass: PropTypes.string,
   focusText: PropTypes.string,
+};
+
+TabLists.defaultProps = {
+  headerComponents: null,
+  focusClass: null,
+  focusText: null,
+  onTabChange: null,
 };
 
 export default TabLists;

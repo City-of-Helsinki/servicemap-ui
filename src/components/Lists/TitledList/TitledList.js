@@ -9,17 +9,18 @@ import styled from '@emotion/styled';
 import SMButton from '../../ServiceMapButton';
 
 const TitledList = ({
-  children = null,
+  children,
   buttonMessageID,
   buttonMessageCount,
-  buttonID = null,
-  title = null,
-  titleComponent = 'h3',
-  divider = true,
-  onButtonClick = null,
-  loading = false,
-  subtitle = null,
-  description = null,
+  buttonID,
+  title,
+  titleComponent,
+  divider,
+  onButtonClick,
+  loading,
+  subtitle,
+  description,
+  id,
 }) => {
   const list = children;
 
@@ -137,6 +138,20 @@ TitledList.propTypes = {
   titleComponent: PropTypes.oneOf(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']),
   loading: PropTypes.bool,
   id: PropTypes.string,
+};
+
+TitledList.defaultProps = {
+  buttonID: null,
+  titleComponent: 'h3',
+  divider: true,
+  onButtonClick: null,
+  title: null,
+  description: null,
+  buttonMessageCount: null,
+  subtitle: null,
+  buttonMessageID: null,
+  loading: false,
+  id: null,
 };
 
 export default TitledList;

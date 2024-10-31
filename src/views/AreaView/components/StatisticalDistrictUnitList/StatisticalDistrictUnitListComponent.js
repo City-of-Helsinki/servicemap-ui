@@ -25,10 +25,7 @@ import {
 
 // Custom uncontrolled checkbox that allows default value
 const UnitCheckbox = ({
-  handleUnitCheckboxChange,
-  id,
-  defaultChecked = false,
-  inputProps = {},
+  handleUnitCheckboxChange, id, defaultChecked, inputProps,
 }) => {
   const [checked, setChecked] = useState(defaultChecked);
 
@@ -199,6 +196,11 @@ UnitCheckbox.propTypes = {
   inputProps: PropTypes.shape({
     'aria-label': PropTypes.string,
   }),
+};
+
+UnitCheckbox.defaultProps = {
+  defaultChecked: false,
+  inputProps: {},
 };
 
 export default StatisticalDistrictUnitListComponent;

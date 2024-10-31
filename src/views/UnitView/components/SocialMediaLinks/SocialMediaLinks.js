@@ -112,4 +112,7 @@ SocialMediaLinks.propTypes = {
   unit: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
+SocialMediaLinks.defaultProps = {
+};
+
 export default SocialMediaLinks;

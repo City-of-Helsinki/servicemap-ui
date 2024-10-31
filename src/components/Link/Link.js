@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 
 const Link = ({
   children,
-  className = null,
+  className,
   onClick,
 }) => (
   <StyledLink
@@ -30,6 +30,10 @@ Link.propTypes = {
   children: PropTypes.node.isRequired,
   className: PropTypes.string,
   onClick: PropTypes.func.isRequired,
+};
+
+Link.defaultProps = {
+  className: null,
 };
 
 export default Link;

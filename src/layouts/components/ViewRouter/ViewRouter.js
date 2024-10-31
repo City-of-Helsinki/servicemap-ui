@@ -24,7 +24,7 @@ const TitleWrapper = ({ children, messageId }) => (
   </>
 );
 
-const PageWrapper = ({ children, headMsgId = null, page = null }) => (
+const PageWrapper = ({ children, headMsgId, page }) => (
   <>
     <PageHandler messageId={headMsgId} page={page} />
     {children}
@@ -40,6 +40,11 @@ PageWrapper.propTypes = {
   children: PropTypes.node.isRequired,
   headMsgId: PropTypes.string,
   page: PropTypes.string,
+};
+
+PageWrapper.defaultProps = {
+  headMsgId: null,
+  page: null,
 };
 
 const Home = () => (

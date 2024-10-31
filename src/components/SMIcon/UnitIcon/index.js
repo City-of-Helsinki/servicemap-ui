@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { selectSelectedAccessibilitySettings } from '../../../redux/selectors/settings';
 import UnitHelper from '../../../utils/unitHelper';
 
-const UnitIcon = ({ className = null, unit = null }) => {
+const UnitIcon = ({ className, unit }) => {
   const selectedShortcomings = useSelector(selectSelectedAccessibilitySettings);
   const iconClass = `${className || ''}`;
   if (unit && !selectedShortcomings.length) {
@@ -21,6 +21,11 @@ const StyledIcon = styled('img')(() => ({
 UnitIcon.propTypes = {
   className: PropTypes.string,
   unit: PropTypes.objectOf(PropTypes.any),
+};
+
+UnitIcon.defaultProps = {
+  className: null,
+  unit: null,
 };
 
 export default UnitIcon;
