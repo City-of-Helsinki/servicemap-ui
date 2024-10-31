@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { InputBase, IconButton, Paper, List, ListItemButton, Typography, ButtonBase } from '@mui/material';
+import {
+  InputBase, IconButton, Paper, List, ListItem, Typography, ButtonBase,
+} from '@mui/material';
 import { Cancel, Home } from '@mui/icons-material';
 import { useDispatch, useSelector } from 'react-redux';
 import { visuallyHidden } from '@mui/utils';
@@ -216,20 +218,21 @@ const AddressSearchBar = ({ title = null, handleAddressChange }) => {
           <Paper>
             <List role="listbox" id="address-results">
               {addressResults.map((address, i) => (
-                <ListItemButton
+                <ListItem
                   tabIndex={-1}
                   id={`address-suggestion${i}`}
                   data-sm="AddressSuggestion"
                   role="option"
                   selected={i === resultIndex}
                   key={getAddressText(address, getLocaleText)}
+                  button
                   onClick={() => handleAddressSelect(address)}
                   onKeyDown={keyboardHandler(() => handleAddressSelect(address), ['space', 'enter'])}
                 >
                   <Typography>
                     {getAddressText(address, getLocaleText)}
                   </Typography>
-                </ListItemButton>
+                </ListItem>
               ))}
             </List>
           </Paper>
