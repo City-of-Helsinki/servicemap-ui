@@ -230,7 +230,7 @@ const Districts = ({
         <Polygon
           interactive={!unitsFetching}
           key={district.id}
-          positions={area}
+          positions={[[area]]}
           color={mainColor}
           dashArray={useContrast ? '2, 10, 10, 10' : null}
           dashOffset="20"
@@ -243,6 +243,7 @@ const Districts = ({
               districtOnClick(e, district);
             },
             mouseover: (e) => {
+              e.target.openTooltip();
               e.target.setStyle({ fillOpacity: useContrast ? '0.6' : '0.2' });
             },
             mouseout: (e) => {
@@ -254,6 +255,7 @@ const Districts = ({
             <Tooltip
               sticky
               direction="top"
+              autoPan={false}
             >
               {tooltipTitle}
             </Tooltip>
