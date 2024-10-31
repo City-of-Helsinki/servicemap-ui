@@ -1,4 +1,4 @@
-import { ClientFunction, Selector } from 'testcafe';
+import { Selector, ClientFunction } from 'testcafe';
 import { getContrast, getElementBG, getParentElementBG, getFocusedElement } from '../../src/utils/componentContrast';
 
 export default () => {

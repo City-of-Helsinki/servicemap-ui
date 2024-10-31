@@ -258,7 +258,6 @@ const htmlTemplate = (req, reactDom, preloadedState, css, cssString, emotionCss,
         window.nodeEnvSettings.SLOW_FETCH_MESSAGE_TIMEOUT = "${process.env.SLOW_FETCH_MESSAGE_TIMEOUT}";
 
         window.nodeEnvSettings.FEATURE_SERVICEMAP_PAGE_TRACKING = "${process.env.FEATURE_SERVICEMAP_PAGE_TRACKING}";
-        window.nodeEnvSettings.FEATURE_SM_COOKIES = "${process.env.FEATURE_SM_COOKIES}";
 
         window.nodeEnvSettings.appVersion = {};
         window.nodeEnvSettings.appVersion.tag = "${GIT_TAG}";
