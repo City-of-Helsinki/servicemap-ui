@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import DefaultIcon from '@mui/icons-material/Public';
-import { Divider, List, ListItem, ListItemButton, Typography } from '@mui/material';
+import { Divider, List, ListItem, Typography } from '@mui/material';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
@@ -20,8 +20,9 @@ const SocialMediaLinks = ({ unit }) => {
         <SomeList>
           {links.map((link, i) => (
             <React.Fragment key={link.id}>
-              <SomeItemButton
+              <SomeItem
                 disableGutters
+                button
                 role="link"
                 component="li"
                 onClick={() => link.value.www && window.open(getLocaleText(link.value.www))}
@@ -32,7 +33,7 @@ const SocialMediaLinks = ({ unit }) => {
                 <StyledItemText>
                   {getLocaleText(link.value.name)}
                 </StyledItemText>
-              </SomeItemButton>
+              </SomeItem>
               {(i + 1 === links.length || (i + 1) % columns === 0)
                 ? null : ( // Dont draw divider if last of list or last of row
                   <VerticalDividerContainer aria-hidden>
@@ -75,7 +76,7 @@ const StyledItemText = styled(Typography)(() => ({
   fontSize: '0.875rem',
 }));
 
-const SomeItemButton = styled(ListItemButton)(({ theme }) => ({
+const SomeItem = styled(ListItem)(({ theme }) => ({
   width: '25%',
   display: 'flex',
   flexDirection: 'column',

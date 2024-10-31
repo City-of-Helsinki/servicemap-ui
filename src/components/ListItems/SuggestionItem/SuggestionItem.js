@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import ListItem from '@mui/material/ListItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
 import {
-  Button, Divider, ListItemButton,
-  ListItemIcon, ListItemText, Typography
+  Typography, Divider, Button,
 } from '@mui/material';
 import { css } from '@emotion/css';
 import styled from '@emotion/styled';
@@ -68,7 +70,8 @@ const SuggestionItem = (props) => {
 
   return (
     <>
-      <ListItemButton
+      <ListItem
+        button
         component="li"
         classes={{
           root: listItem,
@@ -140,7 +143,7 @@ const SuggestionItem = (props) => {
             </StyledRemoveText>
           </StyledSuggestIcon>
         )}
-      </ListItemButton>
+      </ListItem>
       {divider ? (
         <li aria-hidden>
           <StyledDivider aria-hidden />
