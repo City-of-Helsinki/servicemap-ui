@@ -31,10 +31,7 @@ const formFieldInitialState = {
 };
 
 const FeedbackView = ({
-  navigator = null,
-  intl,
-  location,
-  selectedUnit = null,
+  navigator, intl, location, selectedUnit,
 }) => {
   const getLocaleText = useLocaleText();
   const isMobile = useMobileStatus();
@@ -501,6 +498,11 @@ FeedbackView.propTypes = {
   intl: PropTypes.objectOf(PropTypes.any).isRequired,
   location: PropTypes.objectOf(PropTypes.any).isRequired,
   selectedUnit: PropTypes.objectOf(PropTypes.any),
+};
+
+FeedbackView.defaultProps = {
+  navigator: null,
+  selectedUnit: null,
 };
 
 export default FeedbackView;

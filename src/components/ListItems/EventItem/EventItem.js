@@ -11,9 +11,9 @@ const EventItem = ({
   changeSelectedEvent,
   event,
   intl,
-  navigator = null,
-  simpleItem = false,
-  divider = true,
+  navigator,
+  simpleItem,
+  divider,
 }) => {
   const getLocaleText = useLocaleText();
   const dateString = formatEventDate(event, intl);
@@ -74,4 +74,10 @@ EventItem.propTypes = {
   simpleItem: PropTypes.bool,
   navigator: PropTypes.objectOf(PropTypes.any),
   divider: PropTypes.bool,
+};
+
+EventItem.defaultProps = {
+  navigator: null,
+  simpleItem: false,
+  divider: true,
 };

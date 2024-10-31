@@ -69,7 +69,7 @@ const getEmergencyCareUnit = (division) => {
   }
   return null;
 };
-const AddressView = ({ embed = false }) => {
+const AddressView = ({ embed }) => {
   const intl = useIntl();
   // This is not nice that we have 3 isFetching variables
   const [isFetchingAddress, setIsFetchingAddress] = useState(false);
@@ -403,4 +403,8 @@ export default AddressView;
 
 AddressView.propTypes = {
   embed: PropTypes.bool,
+};
+
+AddressView.defaultProps = {
+  embed: false,
 };

@@ -49,7 +49,7 @@ function getAreaPeriod(selectedArea) {
   return undefined;
 }
 
-const AreaView = ({ embed = false }) => {
+const AreaView = ({ embed }) => {
   const dispatch = useDispatch();
   const location = useLocation();
   const history = useHistory();
@@ -259,6 +259,10 @@ const AreaView = ({ embed = false }) => {
 
 AreaView.propTypes = {
   embed: PropTypes.bool,
+};
+
+AreaView.defaultProps = {
+  embed: false,
 };
 
 export default AreaView;

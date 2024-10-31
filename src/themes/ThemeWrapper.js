@@ -6,7 +6,7 @@ import themes from '.';
 import { selectThemeMode } from '../redux/selectors/user';
 
 // Component to handle theme changes
-const ThemeHandler = ({ children = null }) => {
+const ThemeHandler = ({ children }) => {
   const themeMode = useSelector(selectThemeMode);
   return (// Get correct theme setting from store
     <ThemeProvider theme={themeMode === 'dark' ? themes.SMThemeDark : themes.SMTheme}>
@@ -16,6 +16,9 @@ const ThemeHandler = ({ children = null }) => {
 };
 ThemeHandler.propTypes = {
   children: PropTypes.node,
+};
+ThemeHandler.defaultProps = {
+  children: null,
 };
 
 export default ThemeHandler;

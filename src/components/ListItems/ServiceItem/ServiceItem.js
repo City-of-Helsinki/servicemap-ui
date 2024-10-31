@@ -12,9 +12,7 @@ import { setNewCurrentService } from '../../../redux/actions/services';
 
 const ServiceItem = (props) => {
   const {
-    service,
-    divider = true,
-    link = true,
+    service, divider, link,
   } = props;
   const navigator = useSelector(selectNavigator);
   const [icon, setIcon] = useState(<img alt="" src={null} style={{ height: 24 }} aria-hidden="true" />);
@@ -68,4 +66,9 @@ ServiceItem.propTypes = {
   service: PropTypes.objectOf(PropTypes.any).isRequired,
   divider: PropTypes.bool,
   link: PropTypes.bool,
+};
+
+ServiceItem.defaultProps = {
+  divider: true,
+  link: true,
 };

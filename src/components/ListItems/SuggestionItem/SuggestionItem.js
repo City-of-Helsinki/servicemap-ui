@@ -15,17 +15,17 @@ import { keyboardHandler } from '../../../utils';
 
 const SuggestionItem = (props) => {
   const {
-    className = null,
-    divider = false,
+    className,
+    divider,
     text,
-    handleItemClick = null,
-    handleRemoveClick = null,
-    icon = null,
-    selected = false,
-    subtitle = null,
-    query = null,
-    role = null,
-    id = null,
+    handleItemClick,
+    handleRemoveClick,
+    icon,
+    selected,
+    subtitle,
+    query,
+    role,
+    id,
   } = props;
   const theme = useTheme();
 
@@ -69,7 +69,7 @@ const SuggestionItem = (props) => {
   });
 
   return (
-    <>
+    <React.Fragment>
       <ListItem
         button
         component="li"
@@ -149,7 +149,7 @@ const SuggestionItem = (props) => {
           <StyledDivider aria-hidden />
         </li>
       ) : null}
-    </>
+    </React.Fragment>
   );
 };
 
@@ -220,4 +220,17 @@ SuggestionItem.propTypes = {
   role: PropTypes.string,
   id: PropTypes.string,
   className: PropTypes.string,
+};
+
+SuggestionItem.defaultProps = {
+  icon: null,
+  handleItemClick: null,
+  handleRemoveClick: null,
+  divider: false,
+  selected: false,
+  subtitle: null,
+  query: null,
+  role: null,
+  id: null,
+  className: null,
 };

@@ -7,10 +7,10 @@ import { Close } from '@mui/icons-material';
 import styled from '@emotion/styled';
 
 const CloseButton = ({
-  className = null,
+  className,
   intl,
   onClick,
-  textID = null,
+  textID,
   ...rest
 }) => (
   <StyledButton
@@ -44,6 +44,11 @@ CloseButton.propTypes = {
   intl: PropTypes.objectOf(PropTypes.any).isRequired,
   onClick: PropTypes.func.isRequired,
   textID: PropTypes.string,
+};
+
+CloseButton.defaultProps = {
+  className: null,
+  textID: null,
 };
 
 export default CloseButton;

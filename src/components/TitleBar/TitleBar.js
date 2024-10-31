@@ -11,17 +11,17 @@ import config from '../../../config';
 const { topBarHeightMobile } = config;
 
 const TitleBar = ({
-  backButton = false,
-  backButtonOnClick = null,
-  backButtonText = null,
-  backButtonSrText = null,
+  backButton,
+  backButtonOnClick,
+  backButtonText,
+  backButtonSrText,
   title,
   titleComponent,
-  icon = null,
-  shareLink = null,
-  className = null,
-  ariaHidden = false,
-  sticky = false,
+  icon,
+  shareLink,
+  className,
+  ariaHidden,
+  sticky,
 }) => {
   const isMobile = useMobileStatus();
   const componentClasses = `${className || ''}${sticky ? ' sticky' : ''}`;
@@ -199,6 +199,18 @@ TitleBar.propTypes = {
   shareLink: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   ariaHidden: PropTypes.bool,
   sticky: PropTypes.bool,
+};
+
+TitleBar.defaultProps = {
+  backButton: false,
+  backButtonOnClick: null,
+  backButtonText: null,
+  backButtonSrText: null,
+  icon: null,
+  className: null,
+  shareLink: null,
+  ariaHidden: false,
+  sticky: false,
 };
 
 export default TitleBar;

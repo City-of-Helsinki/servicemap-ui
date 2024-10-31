@@ -18,12 +18,12 @@ import useLocaleText from '../../../utils/useLocaleText';
 
 const DivisionItem = ({
   data,
-  distance = null,
+  distance,
   divider,
-  disableTitle = false,
-  customTitle = null,
-  className = null,
-  hideTitle = false,
+  disableTitle,
+  customTitle,
+  className,
+  hideTitle,
 }) => {
   const intl = useIntl();
   const navigator = useSelector(selectNavigator);
@@ -301,6 +301,14 @@ DivisionItem.propTypes = {
    * If we want to hide title from view but not from screen reader.
    */
   hideTitle: PropTypes.bool,
+};
+
+DivisionItem.defaultProps = {
+  distance: null,
+  className: null,
+  disableTitle: false,
+  customTitle: null,
+  hideTitle: false,
 };
 
 export default DivisionItem;

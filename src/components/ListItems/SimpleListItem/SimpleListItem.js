@@ -12,18 +12,18 @@ import { keyboardHandler } from '../../../utils';
 
 const SimpleListItem = (props) => {
   const {
-    button = false,
-    dark = false,
+    button,
+    dark,
     text,
-    link = false,
-    icon = null,
-    handleItemClick = null,
-    role = null,
-    divider = false,
-    selected = false,
-    srText = null,
-    className = null,
-    id = null,
+    link,
+    icon,
+    handleItemClick,
+    role,
+    divider,
+    selected,
+    srText,
+    className,
+    id,
   } = props;
   const isLinkOrButton = button || link;
   const theme = useTheme();
@@ -60,7 +60,7 @@ const SimpleListItem = (props) => {
   });
 
   return (
-    <>
+    <React.Fragment>
       <ListItem
         className={`${className} ${dark ? 'dark' : ''}`}
         button={!!link || button}
@@ -103,7 +103,7 @@ const SimpleListItem = (props) => {
           <StyledDivider />
         </li>
       )}
-    </>
+    </React.Fragment>
   );
 };
 
@@ -145,4 +145,18 @@ SimpleListItem.propTypes = {
   selected: PropTypes.bool,
   className: PropTypes.string,
   id: PropTypes.string,
+};
+
+SimpleListItem.defaultProps = {
+  button: false,
+  dark: false,
+  srText: null,
+  link: false,
+  icon: null,
+  handleItemClick: null,
+  role: null,
+  divider: false,
+  selected: false,
+  className: null,
+  id: null,
 };

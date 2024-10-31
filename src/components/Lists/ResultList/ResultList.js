@@ -20,14 +20,14 @@ class ResultList extends React.Component {
 
   render() {
     const {
-      beforeList = null,
+      beforeList,
       data,
-      customComponent = null,
+      customComponent,
       listId,
-      resultCount = null,
-      title = null,
+      resultCount,
+      title,
       titleComponent,
-      embeddedList = false,
+      embeddedList,
     } = this.props;
 
     return (
@@ -152,4 +152,12 @@ ResultList.propTypes = {
   title: PropTypes.string,
   titleComponent: PropTypes.oneOf(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']).isRequired,
   embeddedList: PropTypes.bool,
+};
+
+ResultList.defaultProps = {
+  beforeList: null,
+  customComponent: null,
+  resultCount: null,
+  title: null,
+  embeddedList: false,
 };

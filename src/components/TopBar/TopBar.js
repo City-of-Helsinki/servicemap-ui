@@ -44,7 +44,7 @@ const TopBar = (props) => {
   const isOnHomePage = isHomePage(location?.pathname);
 
   const {
-    hideButtons = false,
+    hideButtons,
     smallScreen,
   } = props;
 
@@ -352,6 +352,10 @@ const StyledToolbarWhite = styled(Toolbar)(({ theme, mobile }) => (
 TopBar.propTypes = {
   smallScreen: PropTypes.bool.isRequired,
   hideButtons: PropTypes.bool,
+};
+
+TopBar.defaultProps = {
+  hideButtons: false,
 };
 
 export default TopBar;

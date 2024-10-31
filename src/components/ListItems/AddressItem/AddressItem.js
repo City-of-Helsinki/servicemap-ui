@@ -11,11 +11,11 @@ import useLocaleText from '../../../utils/useLocaleText';
 const AddressItem = (props) => {
   const {
     address,
-    selected = false,
-    className = null,
-    showPostalCode = true,
-    role = null,
-    id = null,
+    selected,
+    className,
+    showPostalCode,
+    role,
+    id,
   } = props;
   const navigator = useSelector(selectNavigator);
   const getLocaleText = useLocaleText();
@@ -56,4 +56,12 @@ AddressItem.propTypes = {
   showPostalCode: PropTypes.bool,
   role: PropTypes.string,
   id: PropTypes.string,
+};
+
+AddressItem.defaultProps = {
+  selected: false,
+  className: null,
+  showPostalCode: true,
+  role: null,
+  id: null,
 };

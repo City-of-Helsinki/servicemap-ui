@@ -9,7 +9,7 @@ import serviceTree from '../../assets/images/service-tree.jpg';
 import mobilityTree from '../../assets/images/mobility-tree.jpg';
 
 const HomeView = (props) => {
-  const { navigator = null } = props;
+  const { navigator } = props;
 
   const renderNavigationOptions = () => {
     let areaSelection = null;
@@ -65,4 +65,8 @@ export default HomeView;
 // Typechecking
 HomeView.propTypes = {
   navigator: PropTypes.objectOf(PropTypes.any),
+};
+
+HomeView.defaultProps = {
+  navigator: null,
 };

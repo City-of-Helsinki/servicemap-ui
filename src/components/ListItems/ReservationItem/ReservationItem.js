@@ -4,11 +4,7 @@ import { EventAvailable } from '@mui/icons-material';
 import SimpleListItem from '../SimpleListItem';
 import useLocaleText from '../../../utils/useLocaleText';
 
-const ReservationItem = ({
-  reservation,
-  intl,
-  divider = true
-}) => {
+const ReservationItem = ({ reservation, intl, divider }) => {
   const getLocaleText = useLocaleText();
   return (
     <SimpleListItem
@@ -32,6 +28,10 @@ ReservationItem.propTypes = {
     name: PropTypes.objectOf(PropTypes.any),
   }).isRequired,
   divider: PropTypes.bool,
+};
+
+ReservationItem.defaultProps = {
+  divider: true,
 };
 
 export default ReservationItem;

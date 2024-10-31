@@ -30,13 +30,13 @@ const suggestionCount = 8;
 
 const SuggestionBox = (props) => {
   const {
-    closeMobileSuggestions = null,
-    visible = false,
-    searchQuery = null,
+    closeMobileSuggestions,
+    visible,
+    searchQuery,
     handleSubmit,
     handleBlur,
-    focusedSuggestion = null,
-    isMobile = false,
+    focusedSuggestion,
+    isMobile,
   } = props;
 
   const [suggestions, setSuggestions] = useState(null);
@@ -357,6 +357,14 @@ SuggestionBox.propTypes = {
   handleBlur: PropTypes.func.isRequired,
   focusedSuggestion: PropTypes.number,
   isMobile: PropTypes.bool,
+};
+
+SuggestionBox.defaultProps = {
+  closeMobileSuggestions: null,
+  visible: false,
+  searchQuery: null,
+  focusedSuggestion: null,
+  isMobile: false,
 };
 
 export default SuggestionBox;

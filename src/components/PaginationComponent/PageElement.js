@@ -27,12 +27,7 @@ const StyledTypographyPageElementActive = styled(StyledTypography)(() => ({
 
 // Page number element
 const PageElement = ({
-  className = '',
-  intl,
-  isActive,
-  number,
-  onClick,
-  ...rest
+  className, intl, isActive, number, onClick, ...rest
 }) => {
   const TypographyComponent = isActive
     ? StyledTypographyPageElementActive
@@ -73,6 +68,10 @@ PageElement.propTypes = {
   isActive: PropTypes.bool.isRequired,
   number: PropTypes.number.isRequired,
   onClick: PropTypes.func.isRequired,
+};
+
+PageElement.defaultProps = {
+  className: '',
 };
 
 export default injectIntl(PageElement);

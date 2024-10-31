@@ -15,7 +15,7 @@ import SMAccordion from '../SMAccordion';
 import SettingsDropdowns from '../SettingsDropdowns';
 import constants from './constants';
 
-const SettingsComponent = ({ variant = null }) => {
+const SettingsComponent = ({ variant }) => {
   const intl = useIntl();
   const dispatch = useDispatch();
   const settings = useSelector(selectSettings);
@@ -116,6 +116,10 @@ const StyledChipContainer = styled('div')(({ theme }) => ({
 
 SettingsComponent.propTypes = {
   variant: PropTypes.string,
+};
+
+SettingsComponent.defaultProps = {
+  variant: null,
 };
 
 export default SettingsComponent;

@@ -12,11 +12,7 @@ import { focusToPosition } from '../../views/MapView/utils/mapActions';
 class UnitFetcher extends React.Component {
   componentDidMount() {
     const {
-      match = {},
-      fetchSelectedUnit,
-      fetchReservations,
-      unit = null,
-      fetchAccessibilitySentences,
+      match, fetchSelectedUnit, fetchReservations, unit, fetchAccessibilitySentences,
     } = this.props;
     const { params } = match;
 
@@ -38,10 +34,7 @@ class UnitFetcher extends React.Component {
   }
 
   centerMap = () => {
-    const {
-      map = null,
-      unit = null,
-    } = this.props;
+    const { map, unit } = this.props;
     const { location } = unit;
     if (location && location.coordinates && map) {
       focusToPosition(map, location.coordinates);
@@ -84,4 +77,10 @@ UnitFetcher.propTypes = {
   fetchSelectedUnit: PropTypes.func.isRequired,
   map: PropTypes.objectOf(PropTypes.any),
   match: PropTypes.objectOf(PropTypes.any),
+};
+
+UnitFetcher.defaultProps = {
+  unit: null,
+  map: null,
+  match: {},
 };

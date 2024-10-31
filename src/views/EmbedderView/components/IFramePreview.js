@@ -6,16 +6,16 @@ import { FormattedMessage } from 'react-intl';
 import embedderConfig from '../embedderConfig';
 
 const IFramePreview = ({
-  customWidth = null,
+  customWidth,
   embedUrl,
-  fixedHeight = null,
+  fixedHeight,
   heightMode,
-  ratioHeight = null,
+  ratioHeight,
   title,
   titleComponent,
   widthMode,
   renderMapControls,
-  bottomList = false,
+  bottomList,
   minHeightWithBottomList,
 }) => {
   if (!embedUrl) {
@@ -130,6 +130,13 @@ IFramePreview.propTypes = {
   bottomList: PropTypes.bool,
   minHeightWithBottomList: PropTypes.string.isRequired,
   renderMapControls: PropTypes.func.isRequired,
+};
+
+IFramePreview.defaultProps = {
+  customWidth: null,
+  fixedHeight: null,
+  ratioHeight: null,
+  bottomList: false,
 };
 
 export default IFramePreview;

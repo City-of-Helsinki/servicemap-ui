@@ -15,10 +15,7 @@ import {
   StyledServiceTabServiceList,
 } from '../styled/styled';
 
-export const DistrictAreaList = ({
-  selectedAddress = null,
-  district,
-}) => {
+export const DistrictAreaList = ({ selectedAddress, district }) => {
   const intl = useIntl();
   const citySettings = useSelector(selectCities);
   const addressDistrict = useSelector(getAddressDistrict);
@@ -116,6 +113,10 @@ export const DistrictAreaList = ({
 DistrictAreaList.propTypes = {
   district: PropTypes.objectOf(PropTypes.any).isRequired,
   selectedAddress: PropTypes.objectOf(PropTypes.any),
+};
+
+DistrictAreaList.defaultProps = {
+  selectedAddress: null,
 };
 
 export default DistrictAreaList;

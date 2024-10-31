@@ -15,8 +15,7 @@ import getPageDescriptions from './pageDescriptions';
 
 const PageHandler = (props) => {
   const {
-    page = null,
-    messageId = 'app.title',
+    page, messageId,
   } = props;
 
   const intl = useIntl();
@@ -70,6 +69,11 @@ const PageHandler = (props) => {
 PageHandler.propTypes = {
   messageId: PropTypes.string,
   page: PropTypes.string,
+};
+
+PageHandler.defaultProps = {
+  messageId: 'app.title',
+  page: null,
 };
 
 export default PageHandler;

@@ -22,9 +22,9 @@ const StyledTitleBar = styled(TitleBar)(({ theme }) => ({
 
 const ServiceView = (props) => {
   const {
-    match = {},
+    match,
     fetchService,
-    embed = false,
+    embed,
     location,
   } = props;
   const getLocaleText = useLocaleText();
@@ -153,6 +153,11 @@ ServiceView.propTypes = {
   match: PropTypes.objectOf(PropTypes.any),
   fetchService: PropTypes.func.isRequired,
   location: PropTypes.objectOf(PropTypes.any).isRequired,
+};
+
+ServiceView.defaultProps = {
+  embed: false,
+  match: {},
 };
 
 export default ServiceView;
