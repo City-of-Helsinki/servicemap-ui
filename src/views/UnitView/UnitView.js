@@ -360,7 +360,7 @@ const UnitView = (props) => {
           <UnitLinks unit={unit} />
           <ElectronicServices unit={unit} />
           {!isMobile && feedbackButton()}
-          {!isMobile && (<ReadFeedbackLink unit={UnitHelper.setDefaults(unit)} />)}
+          {!isMobile && (<ReadFeedbackLink unit={unit} />)}
           {isMobile && renderPicture()}
         </div>
       </StyledContentContainer>

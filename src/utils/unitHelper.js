@@ -142,19 +142,6 @@ class UnitHelper {
     navigator[action]('unit', { id });
   }
 
-  static setDefaults = (unit = {}) => {
-    const { name = {} } = unit;
-    return {
-        ...unit,
-        name: {
-            fi: '',
-            sv: '',
-            en: '',
-            ...name,
-        }
-    };
-};
-
   static getContractText = (unit, intl, getLocaleText) => {
     const { contract_type } = unit;
     if (!contract_type?.description?.fi) return null;
