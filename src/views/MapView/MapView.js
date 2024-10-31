@@ -298,7 +298,7 @@ const MapView = (props) => {
           detailZoom={mapObject.options.detailZoom}
           maxBounds={mapObject.options.mapBounds || mapOptions.defaultMaxBounds}
           maxBoundsViscosity={1.0}
-          ref={(map) => {
+          whenCreated={(map) => {
             setMapElement(map);
             setMapRef(map);
           }}
