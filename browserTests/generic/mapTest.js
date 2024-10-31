@@ -1,13 +1,12 @@
 import { waitForReact } from 'testcafe-react-selectors';
 import { Selector } from 'testcafe';
-import { acceptCookieConcent, getBaseUrl } from '../utility';
+import { getBaseUrl } from '../utility';
 
 /* eslint-disable */
 fixture`Map tests`
   .page`${getBaseUrl()}/fi`
-  .beforeEach(async (t) => {
+  .beforeEach(async () => {
     await waitForReact();
-    await acceptCookieConcent(t);
   });
 
 test.skip('Transit marker visible after zoom', async (t) => {
@@ -30,9 +29,8 @@ test.skip('Transit marker visible after zoom', async (t) => {
 
 fixture`Search unit geometry test`
   .page`${getBaseUrl()}/fi/search?q=latu`
-  .beforeEach(async (t) => {
+  .beforeEach(async () => {
     await waitForReact();
-    await acceptCookieConcent(t);
   });
 
 test('Unit geometry is drawn on map', async (t) => {
@@ -45,9 +43,8 @@ test('Unit geometry is drawn on map', async (t) => {
 
 fixture`Unit page geometry test`
   .page`${getBaseUrl()}/fi/unit/56544`
-  .beforeEach(async (t) => {
+  .beforeEach(async () => {
     await waitForReact();
-    await acceptCookieConcent(t);
   });
 
 test('Unit geometry is drawn on map', async (t) => {

@@ -1,7 +1,7 @@
 import { Selector } from 'testcafe';
 import { waitForReact } from 'testcafe-react-selectors';
 
-import { acceptCookieConcent, getBaseUrl, getLocation } from '../utility';
+import { getBaseUrl, getLocation } from '../utility';
 import finnish from '../../src/i18n/fi';
 import { treeSearchTest, treeViewAccordionTest } from '../utility/TreeViewTest';
 
@@ -10,9 +10,8 @@ const searchBackButton = Selector('#SearchBar .SMBackButton');
 /* eslint-disable */
 fixture`Service tree page tests`
   .page`${getBaseUrl()}/fi/services`
-  .beforeEach(async (t) => {
+  .beforeEach(async () => {
     await waitForReact();
-    await acceptCookieConcent(t);
   });
 
 treeViewAccordionTest();

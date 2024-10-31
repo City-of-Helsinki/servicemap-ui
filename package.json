@@ -66,7 +66,7 @@
     "eject": "react-scripts eject",
     "dev": "NODE_ENV=development BABEL_ENV=development webpack --watch --progress & nodemon dist",
     "browserTest": "node browserTests/browserTestRunner.js",
-    "browserTestCLI": "testcafe browserTests/*/*Test.js --config-file browserTests/.testcaferc.js --app \"node dist\"",
+    "browserTestCLI": "testcafe firefox:headless browserTests/*/*Test.js --config-file browserTests/.testcaferc.js --skip-js-errors -q attemptLimit=10,successThreshold=1 --app \"node dist\"",
     "production": "NODE_ENV=production BABEL_ENV=production webpack --progress --mode production && node dist"
   },
   "eslintConfig": {

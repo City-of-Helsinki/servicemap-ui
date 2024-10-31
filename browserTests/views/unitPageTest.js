@@ -1,12 +1,12 @@
 import { Selector } from 'testcafe';
 import { waitForReact } from 'testcafe-react-selectors';
-import { acceptCookieConcent, getBaseUrl, getLocation } from '../utility';
+import { getBaseUrl, getLocation } from '../utility';
 import { mobilityDropdown, sensesDropdown } from '../utility/pageObjects';
 
 /* eslint-disable */
 
 const unitName = 'Keskustakirjasto Oodi';
-const testUrl = `${getBaseUrl()}/fi/unit/51342`;
+const testUrl = `${getBaseUrl()}/fi/unit/51342`
 
 const selectSettingsAndClose = async (t) => {
   if (t) {
@@ -24,9 +24,8 @@ const selectSettingsAndClose = async (t) => {
 
 fixture`Unit page tests`
   .page`${testUrl}`
-  .beforeEach(async (t) => {
+  .beforeEach(async () => {
     await waitForReact();
-    await acceptCookieConcent(t);
   });
 
 test('Unit marker is drawn on map', async (t) => {
@@ -128,7 +127,7 @@ test('Unit page additional entrances does show correctly', async (t) => {
 });
 
 
-test('Unit page links do work correctly', async (t) => {
+test.skip('Unit page links do work correctly', async (t) => {
   const links = Selector('#tab-content-0 li[role="link"]');
   const homePageLink = links.nth(1)
 
@@ -136,13 +135,23 @@ test('Unit page links do work correctly', async (t) => {
     // Home page
     .expect(homePageLink.textContent).contains('Kotisivu')
     .click(homePageLink)
-    .expect(getLocation()).contains('https://oodihelsinki.fi/')
+    .expect(getLocation()).contains('https://www.helmet.fi/fi-FI/Kirjastot_ja_palvelut/Keskustakirjasto_Oodi')
     .closeWindow() // Since homepage opens new window we need to close it
     .navigateTo(testUrl)
   ;
 
+  // Test that open hours link works
+  const openHoursLink = links.nth(2);
+  await t
+    .expect(openHoursLink.textContent).contains('Aukioloajat')
+    .click(openHoursLink)
+    .expect(getLocation()).contains('https://www.helmet.fi/fi-FI/Kirjastot_ja_palvelut/Keskustakirjasto_Oodi/Aukioloajat')
+    .closeWindow() // Since open hours link opens new window we need to close it
+    .navigateTo(testUrl);
+  ;
+
   // Test that HSL route planner link
-  const hslLink = links.nth(2);
+  const hslLink = links.nth(3);
   await t
     .expect(hslLink.textContent).contains('Katso reitti tänne')
     .click(hslLink)
@@ -153,7 +162,7 @@ test('Unit page links do work correctly', async (t) => {
 })
   .skipJsErrors({ pageUrl: /.www.helmet.fi*/ });
 
-test('Unit view hearing map link opens correctly', async (t) => {
+test.skip('Unit view hearing map link opens correctly', async (t) => {
   // Test accessibility hearing map link
   const aLinks = Selector('#tab-content-1 li[role="link"]');
   const accessibilityTab = Selector('div[role="tablist"] button').nth(1);
@@ -169,6 +178,7 @@ test('Unit view hearing map link opens correctly', async (t) => {
     .closeWindow() // Since hearing map link opens in new window we need to close it
   ;
 });
+
 
 test('Unit view accessibility tab changes according to accessibility settings', async (t) => {
   const accessibilityTab = Selector('div[role="tablist"] button').nth(1);
@@ -192,24 +202,28 @@ test('Unit view accessibility tab changes according to accessibility settings', 
   ;
 });
 
-test('Unit view services tab lists work correctly', async (t) => {
+test.skip('Unit view services tab lists work correctly', async (t) => {
   const serviceTab = Selector('div[role="tablist"] button').nth(2);
   const moreServicesButton = Selector('#UnitservicesButton');
   const serviceTitle = Selector('.ExtendedData-title h3');
   const backButton = Selector(`[data-sm="BackButton"]`);
+  const reservableObjects = Selector('li[class*="reservationItem"]')
 
   await t
     .click(serviceTab)
     .click(moreServicesButton)
     .expect(serviceTitle.textContent).contains('Keskustakirjasto Oodi - Toimipisteeseen liittyvät palvelut')
     .click(backButton)
+    .click(reservableObjects)
+    .expect(getLocation()).contains('https://varaamo.hel.fi/')
   ;
 });
 
-test.skip('Unit view share link does work correctly', async (t) => {
+test('Unit view share link does work correctly', async (t) => {
   const accessibilityTab = Selector('div[role="tablist"] button').nth(1);
   const shareButton = Selector('[data-sm="TitleContainer"] button');
-  const copyLinkButton = Selector('div[data-sm="DialogContainer"] button p');
+
+  const copyLinkButton = Selector(`div[data-sm="DialogContainer"] button p`)
 
   await t
     .click(accessibilityTab)

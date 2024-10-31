@@ -1,6 +1,6 @@
 import { Selector } from 'testcafe';
 import { ReactSelector, waitForReact } from 'testcafe-react-selectors';
-import { acceptCookieConcent, getBaseUrl } from '../utility';
+import { getBaseUrl } from '../utility';
 
 import paginationTest from '../utility/paginationTest';
 import resultOrdererTest from '../utility/resultOrdererTest';
@@ -10,9 +10,8 @@ const coordinates = ['60.281936', '24.949933'];
 /* eslint-disable */
 fixture`Service page coordinate tests`
   .page`${getBaseUrl()}/fi/service/813?lat=${coordinates[0]}&lon=${coordinates[1]}`
-  .beforeEach(async (t) => {
+  .beforeEach(async () => {
     await waitForReact();
-    await acceptCookieConcent(t);
   });
 
 test('User marker is drawn on map based on coordinates', async (t) => {
@@ -28,9 +27,8 @@ const servicePage = `${getBaseUrl()}/fi/service/813`;
 
 fixture`Service page tests`
   .page`${servicePage}`
-  .beforeEach(async (t) => {
+  .beforeEach(async () => {
     await waitForReact();
-    await acceptCookieConcent(t);
   });
 
 
