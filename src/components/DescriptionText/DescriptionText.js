@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Typography, Divider } from '@mui/material';
 import styled from '@emotion/styled';
+import isClient from '../../utils';
 
 const DescriptionText = ({
   description, html, title, titleComponent,
@@ -9,10 +10,12 @@ const DescriptionText = ({
   // Hide linebreak html elements from screen readers
   const hideBRFromSR = text => text.replaceAll('<br>', '<br aria-hidden="true" />');
 
+  // Rendering only in client since dangerouslySetInnerHTML causes mismatch errors
+  // between server and client HTML and not rendering anything on client side
   // TODO: Figure out a way to have server render description text identical to client
-  // NOTE: tried using NoSSR-tag. It fixed mismatch error, however it broke GitHub actions tests
+  // NOTE: tried using NoSSR-tag. It fixed mismatch error, however it brokw github actions tests
 
-  if (description) {
+  if (description && isClient()) {
     return (
       <StyledDiv>
         <StyledTypographySubtitle
