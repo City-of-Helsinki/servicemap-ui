@@ -49,7 +49,7 @@ const createContentStyles = (
       marginBottom: bottomNavHeight,
       flex: !isMobile || fullMobileMap ? 1 : 0,
       display: 'flex',
-      visibility: isMobile && !fullMobileMap ? 'hidden' : 'visible',
+      visibility: isMobile && !fullMobileMap ? 'hidden' : '',
       height: isMobile ? `calc(100% - ${topBarHeight})` : '100%',
       width: '100%',
       zIndex: 900,
