@@ -74,6 +74,7 @@ export default {
   'area.neighborhood.title': 'Välj stadsdel',
   'area.postcode_area.title': 'Välj postnummer',
   'area.major_district.title': 'Välj stordistrikt',
+  'area.service.filter': 'Filtrering av geografiska tjänster',
   'area.statisticalDistrict.info': 'Välj först befolkningsdataområdet, varefter du kan bläddra bland regionens tjänster',
   'area.statisticalDistrict.title': 'Välj befolkningsdataområde',
   'area.statisticalDistrict.section': 'Beskärning: {text}',

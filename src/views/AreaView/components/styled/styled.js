@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import {
-  Divider, List, ListItem, Typography,
+  Divider, List, ListItem, Typography, InputBase, Button,
 } from '@mui/material';
 import { SMAccordion } from '../../../../components';
 
@@ -113,6 +113,40 @@ const StyledUnitList = styled(List)(({ theme }) => ({
   paddingBottom: theme.spacing(1),
 }));
 
+const StyledRowContainer = styled('div')`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`;
+const StyledServiceFilterContainer = styled('div')(({ theme }) => ({
+  padding: theme.spacing(2),
+  paddingLeft: 72,
+  display: 'flex',
+  flexDirection: 'column',
+}));
+const StyledServiceFilterText = styled(Typography)(({ theme }) => ({
+  paddingBottom: theme.spacing(1),
+  fontWeight: 'bold',
+}));
+const StyledServiceFilter = styled(InputBase)(({ theme }) => ({
+  backgroundColor: theme.palette.white.main,
+  flex: '1 0 auto',
+}));
+const StyledServiceFilterButton = styled(Button)(({ theme }) => ({
+  flex: '0 0 auto',
+  borderRadius: 0,
+  borderTopRightRadius: 4,
+  borderBottomRightRadius: 4,
+  boxShadow: 'none',
+  padding: theme.spacing(1, 2),
+  textTransform: 'none',
+  '& svg': {
+    fontSize: 20,
+    marginBottom: theme.spacing(0.5),
+  },
+  flexDirection: 'column',
+}));
+
 export {
   StyledDivider,
   StyledDistrictServiceList,
@@ -134,4 +168,9 @@ export {
   StyledUnitListArea,
   StyledAccordionServiceTitle,
   StyledUnitList,
+  StyledRowContainer,
+  StyledServiceFilterContainer,
+  StyledServiceFilterText,
+  StyledServiceFilter,
+  StyledServiceFilterButton,
 };
