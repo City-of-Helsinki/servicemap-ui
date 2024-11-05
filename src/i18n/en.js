@@ -74,6 +74,7 @@ export default {
   'area.neighborhood.title': 'Choose neighbourhood',
   'area.postcode_area.title': 'Choose postal code',
   'area.major_district.title': 'Choose major district',
+  'area.service.filter': 'Filtering of services for areas',
   'area.statisticalDistrict.info': 'First, select a population data area, and then you can browse the area\'s services',
   'area.statisticalDistrict.title': 'Select a population data area',
   'area.statisticalDistrict.section': 'Cropping: {text}',
