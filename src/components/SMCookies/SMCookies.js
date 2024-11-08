@@ -1,34 +1,47 @@
+/* eslint-disable no-underscore-dangle */
 import { CookieModal } from 'hds-react';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
-import { useDispatch, useSelector } from 'react-redux';
-import { setTracker } from '../../redux/actions/tracker';
-import { selectTracker } from '../../redux/selectors/general';
+import { useSelector } from 'react-redux';
 import { getLocale } from '../../redux/selectors/user';
 import { COOKIE_MODAL_ROOT_ID } from '../../utils/constants';
 import { isEmbed } from '../../utils/path';
-import { getMatomoTracker } from '../../utils/tracking';
 import featureFlags from '../../../config/featureFlags';
 
 function SMCookies() {
   const intl = useIntl();
   const locale = useSelector(getLocale);
-  const tracker = useSelector(selectTracker);
-  const dispatch = useDispatch();
   const cookieDomain = typeof window !== 'undefined' ? window.location.hostname : undefined;
   const embed = isEmbed();
+  const [mounted, setMounted] = useState(false);
 
-  if (embed || !featureFlags.smCookies) {
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (embed || !mounted || !featureFlags.smCookies) {
     // No cookie modal or tracking in embed mode
     return null;
   }
 
-  function parseConsentsAndActOnThem(consents) {
-    if (!tracker && consents.matomo) {
-      const matomoTracker = getMatomoTracker();
-      if (matomoTracker) {
-        dispatch(setTracker(matomoTracker));
+  function onAllConsentsGiven(consents) {
+    if (window._paq) {
+      if (consents.matomo) {
+        //  start tracking
+        window._paq.push(['rememberCookieConsentGiven']);
+        window._paq.push(['rememberConsentGiven']);
+      } else {
+        // tell matomo to forget conset
+        window._paq.push(['forgetCookieConsentGiven']);
+        window._paq.push(['forgetConsentGiven']);
       }
+    }
+  }
+
+  function onConsentsParsed(consents) {
+    if (window._paq && consents.matomo === undefined) {
+      // tell matomo to wait for consent:
+      window._paq.push(['requireCookieConsent']);
     }
   }
 
@@ -39,21 +52,19 @@ function SMCookies() {
       groups: [
         {
           commonGroup: 'statistics',
-          cookies: [
-            {
-              id: 'matomo',
-              name: '_pk*',
-              hostName: 'digia.fi',
-              description: intl.formatMessage({ id: 'cookies.matomo.description' }),
-              expiration: intl.formatMessage({ id: 'cookies.matomo.expiration' }, { days: 393 }),
-            },
-          ],
+          cookies: [{
+            id: 'matomo',
+            name: '_pk*',
+            hostName: 'digia.fi',
+            description: intl.formatMessage({ id: 'cookies.matomo.description' }),
+            expiration: intl.formatMessage({ id: 'cookies.matomo.expiration' }, { days: 393 }),
+          }],
         },
       ],
     },
     focusTargetSelector: '#app',
-    onAllConsentsGiven: consents => parseConsentsAndActOnThem(consents),
-    onConsentsParsed: consents => parseConsentsAndActOnThem(consents),
+    onAllConsentsGiven,
+    onConsentsParsed,
   };
   return (
     <CookieModal

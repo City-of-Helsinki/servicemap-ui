@@ -1,7 +1,7 @@
 export function getSettings() {
   if (typeof window !== 'undefined' && typeof window.nodeEnvSettings !== 'undefined') {
-      // Needed in browser run context
-      return window.nodeEnvSettings;
+    // Needed in browser run context
+    return window.nodeEnvSettings;
   }
   // This enables reading the environment variables from a .env file,
   // useful in a local development context.
@@ -24,24 +24,24 @@ const version = getVersion();
 
 
 if (typeof settings.PRODUCTION_PREFIX === 'undefined') {
-    // This is the correct way to set fail-safe defaults for
-    // configuration variables.
-    //
-    // This is because the defaults have to be set when in server
-    // context and they need to be assigned to process.env so that
-    // they get transferred to the client from the appropriate
-    // process.env values by the node server when rendering HTML.
-    settings.PRODUCTION_PREFIX = 'sm';
+  // This is the correct way to set fail-safe defaults for
+  // configuration variables.
+  //
+  // This is because the defaults have to be set when in server
+  // context and they need to be assigned to process.env so that
+  // they get transferred to the client from the appropriate
+  // process.env values by the node server when rendering HTML.
+  settings.PRODUCTION_PREFIX = 'sm';
 }
 
 if (typeof settings.INITIAL_MAP_POSITION === 'undefined') {
-    // If not set default to Helsinki
-    settings.INITIAL_MAP_POSITION = '60.170377597530016,24.941309323934886';
+  // If not set default to Helsinki
+  settings.INITIAL_MAP_POSITION = '60.170377597530016,24.941309323934886';
 }
 
 if (typeof settings.MAPS === 'undefined') {
-    // If not set default to Helsinki
-    settings.MAPS = 'servicemap,ortographic,accessible_map,guidemap,plainmap';
+  // If not set default to Helsinki
+  settings.MAPS = 'servicemap,ortographic,accessible_map,guidemap,plainmap';
 }
 
 if (typeof settings.CITIES === 'undefined') {
@@ -133,6 +133,10 @@ if (typeof settings.SENTRY_DSN_CLIENT === 'undefined') {
   settings.SENTRY_DSN_CLIENT = false;
 }
 
+if (settings.MATOMO_URL === 'undefined') {
+  settings.MATOMO_URL = undefined;
+}
+
 if (settings.MATOMO_MOBILITY_DIMENSION_ID === 'undefined') {
   settings.MATOMO_MOBILITY_DIMENSION_ID = undefined;
 }
@@ -140,7 +144,6 @@ if (settings.MATOMO_MOBILITY_DIMENSION_ID === 'undefined') {
 if (settings.MATOMO_SENSES_DIMENSION_ID === 'undefined') {
   settings.MATOMO_SENSES_DIMENSION_ID = undefined;
 }
-
 if (settings.MATOMO_NO_RESULTS_DIMENSION_ID === 'undefined') {
   settings.MATOMO_NO_RESULTS_DIMENSION_ID = undefined;
 }
@@ -151,6 +154,10 @@ if (settings.MATOMO_URL === 'undefined') {
 
 if (settings.MATOMO_SITE_ID === 'undefined') {
   settings.MATOMO_SITE_ID = undefined;
+}
+
+if (settings.MATOMO_ENABLED === 'undefined') {
+  settings.MATOMO_ENABLED = undefined;
 }
 
 if (typeof settings.EMBEDDER_DOCUMENTATION_URL === 'undefined') {
@@ -189,7 +196,7 @@ const municipalities = {
  */
 const splitTripleIntoThreeLangs = (text) => ({ fi: text.split(',')[0], sv: text.split(',')[1], en: text.split(',')[2] })
 
-export default {
+const defaultConfig = {
   "version": version.tag,
   "commit": version.commit,
   // API
@@ -228,7 +235,7 @@ export default {
     "id": 'HEARING_MAP_API',
   },
   // constants
-  "accessibilityColors":  {
+  "accessibilityColors": {
     "default": "#2242C7",
     "missingInfo": "#4A4A4A",
     "shortcomings": "#b00021",
@@ -306,5 +313,8 @@ export default {
   "matomoNoResultsDimensionID": settings.MATOMO_NO_RESULTS_DIMENSION_ID,
   "matomoUrl": settings.MATOMO_URL,
   "matomoSiteId": settings.MATOMO_SITE_ID,
+  "matomoEnabled": settings.MATOMO_ENABLED,
   "slowFetchMessageTimeout": Number(settings.SLOW_FETCH_MESSAGE_TIMEOUT)
 }
+
+export default defaultConfig;
