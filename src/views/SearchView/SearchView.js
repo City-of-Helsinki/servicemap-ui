@@ -1,19 +1,28 @@
 /* eslint-disable camelcase */
 
 import styled from '@emotion/styled';
-import { Divider, Link, NoSsr, Paper, Typography } from '@mui/material';
+import {
+  Divider, Link, NoSsr, Paper, Typography,
+} from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
 import React, { useEffect, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useRouteMatch } from 'react-router-dom';
-import { AddressSearchBar, Container, Loading, SearchBar, SettingsComponent, TabLists } from '../../components';
+import {
+  AddressSearchBar, Container, Loading, SearchBar, SettingsComponent, TabLists,
+} from '../../components';
 import fetchSearchResults from '../../redux/actions/search';
-import { activateSetting, resetAccessibilitySettings, setCities, setMapType, setOrganizations } from '../../redux/actions/settings';
+import {
+  activateSetting, resetAccessibilitySettings, setCities, setMapType, setOrganizations,
+} from '../../redux/actions/settings';
 import { changeCustomUserLocation, resetCustomPosition } from '../../redux/actions/user';
 import { selectBounds, selectMapRef, selectNavigator } from '../../redux/selectors/general';
 import { getOrderedSearchResultData, selectResultsData, selectSearchResults } from '../../redux/selectors/results';
-import { selectMapType, selectSelectedAccessibilitySettings, selectSelectedCities, selectSelectedOrganizationIds } from '../../redux/selectors/settings';
+import {
+  // eslint-disable-next-line max-len
+  selectMapType, selectSelectedAccessibilitySettings, selectSelectedCities, selectSelectedOrganizationIds,
+} from '../../redux/selectors/settings';
 import { selectCustomPositionAddress } from '../../redux/selectors/user';
 import { keyboardHandler, parseSearchParams } from '../../utils';
 import { viewTitleID } from '../../utils/accessibility';
@@ -26,10 +35,12 @@ import optionsToSearchQuery from '../../utils/search';
 import SettingsUtility from '../../utils/settings';
 import fetchAddressData from '../AddressView/utils/fetchAddressData';
 import { fitUnitsToMap } from '../MapView/utils/mapActions';
+import useMatomo from '../../components/Matomo/hooks/useMatomo';
+import config from '../../../config';
 
 const focusClass = 'TabListFocusTarget';
 
-const SearchView = () => {
+function SearchView() {
   const [analyticsSent, setAnalyticsSent] = useState(null);
   const orderedData = useSelector(getOrderedSearchResultData);
   const unorderedSearchResults = useSelector(selectResultsData);
@@ -51,11 +62,13 @@ const SearchView = () => {
   const location = useLocation();
   const match = useRouteMatch();
   const intl = useIntl();
+  const { trackPageView } = useMatomo();
+
   const searchResults = applyCityAndOrganizationFilter(orderedData, location, embed);
 
   const getResultsByType = type => searchResults.filter(item => item.object_type === type);
 
-  const stringifySearchQuery = (data) => {
+  const stringifySearchQuery = data => {
     try {
       const search = Object.keys(data).map(key => (`${key}:${data[key]}`));
       return search.join(',');
@@ -207,7 +220,7 @@ const SearchView = () => {
     return null;
   };
 
-  const handleUserAddressChange = (address) => {
+  const handleUserAddressChange = address => {
     if (address) {
       dispatch(changeCustomUserLocation(
         [address.location.coordinates[1], address.location.coordinates[0]],
@@ -287,6 +300,7 @@ const SearchView = () => {
     handleCityAndOrganisationSettings(municipality, city, organization);
     handleAccessibilityParams(accessibility_setting);
     handleAddressParam(hcity, hstreet);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -301,6 +315,7 @@ const SearchView = () => {
       }
       dispatch(fetchSearchResults(options));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [match.params]);
 
   useEffect(() => {
@@ -332,35 +347,45 @@ const SearchView = () => {
         && analyticsSent !== previousSearch
       ) {
         setAnalyticsSent(previousSearch);
-        navigator.trackNoResultsPage(previousSearch);
+
+        if (!isEmbed()) {
+          trackPageView({
+            href: window.location.href,
+            ...config.matomoMobilityDimensionID && (
+              { id: config.matomoNoResultsDimensionID, value: previousSearch }
+            ),
+          });
+        }
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [JSON.stringify(unorderedSearchResults), searchResults]);
 
-  useEffect(() => {
-    if (embed || !navigator) {
-      return;
-    }
-    navigator.setParameter('city', selectedCities);
-    navigator.setParameter('organization', selectedOrganizationIds);
-    navigator.setParameter('accessibility_setting', selectedAccessibilitySettings);
-    if (bounds) {
-      navigator.setParameter('bbox', getBboxFromBounds(bounds));
-    }
-    if (customPositionAddress) {
-      const { municipality, name } = getAddressNavigatorParamsConnector(customPositionAddress);
-      navigator.setParameter('hcity', municipality);
-      navigator.setParameter('hstreet', name);
-    } else {
-      navigator.removeParameter('hcity');
-      navigator.removeParameter('hstreet');
-    }
-    navigator.setParameter('map', mapType);
-  },
-  [
-    navigator, embed, selectedCities, selectedOrganizationIds, selectedAccessibilitySettings,
-    bounds, customPositionAddress, mapType,
-  ],
+  useEffect(
+    () => {
+      if (embed || !navigator) {
+        return;
+      }
+      navigator.setParameter('city', selectedCities);
+      navigator.setParameter('organization', selectedOrganizationIds);
+      navigator.setParameter('accessibility_setting', selectedAccessibilitySettings);
+      if (bounds) {
+        navigator.setParameter('bbox', getBboxFromBounds(bounds));
+      }
+      if (customPositionAddress) {
+        const { municipality, name } = getAddressNavigatorParamsConnector(customPositionAddress);
+        navigator.setParameter('hcity', municipality);
+        navigator.setParameter('hstreet', name);
+      } else {
+        navigator.removeParameter('hcity');
+        navigator.removeParameter('hstreet');
+      }
+      navigator.setParameter('map', mapType);
+    },
+    [
+      navigator, embed, selectedCities, selectedOrganizationIds, selectedAccessibilitySettings,
+      bounds, customPositionAddress, mapType,
+    ],
   );
 
   const renderSearchBar = () => (
@@ -526,7 +551,7 @@ const SearchView = () => {
       {renderScreenReaderInfo()}
       {searchFetchState.isFetching ? (
         <Loading reducer={searchFetchState} />
-      ) : renderResults() }
+      ) : renderResults()}
       {renderNotFound()}
       {isMobile ? (
         // Jump link back to beginning of current page
@@ -538,7 +563,7 @@ const SearchView = () => {
       ) : null}
     </StyledContainer>
   );
-};
+}
 
 export default SearchView;
 
