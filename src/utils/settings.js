@@ -12,7 +12,7 @@ const ALLOWED = {
 const ACCESSIBILITY_MAPPING = {
   colorblind: 'colour_blind',
   hearingAid: 'hearing_aid',
-  visuallyImpaired: 'visual_impairment',
+  visuallyImpaired: 'visually_impaired',
 };
 
 class SettingsUtility {
