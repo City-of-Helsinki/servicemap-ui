@@ -438,7 +438,7 @@ test('Should override accessibility settings', async(t) => {
   const senseChips = Selector(settingsMenuPanel).find(`${sensesDropdown} ${settingChip}`);
   const mobilityInput = Selector(settingsMenuPanel).find(`${mobilityDropdown} input`);
   await t
-    .navigateTo(`${bathUrl}&accessibility_setting=visual_impairment,reduced_mobility,colour_blind`)
+    .navigateTo(`${bathUrl}&accessibility_setting=visually_impaired,reduced_mobility,colour_blind`)
     .click(settingsMenuButton)
     .expect(senseChips.count).eql(2)
     .expect(senseChips.withText('Minun on vaikea erottaa värejä').exists).ok()
