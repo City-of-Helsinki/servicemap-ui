@@ -93,7 +93,14 @@ const ElevationControl = ({ data, isMobile}) => {
     control.addTo(map);
     control.addData(geoJson);
 
-    const layer = L.geoJson(geoJson);
+    const layer = L.geoJson(geoJson, {
+        style: {
+            color: '#FD4F00',
+            opacity: 0.8,
+            weight: 3,
+            fillOpacity: 0.5
+        }
+    });
     layer
         .on({
             'mousemove': onRoute,
