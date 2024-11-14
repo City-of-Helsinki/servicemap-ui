@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable react/forbid-prop-types */
 import { css, Global } from '@emotion/react';
 import '@formatjs/intl-pluralrules/dist/locale-data/en';
@@ -35,9 +36,11 @@ import ThemeWrapper from './themes/ThemeWrapper';
 import isClient from './utils';
 import LocaleUtility from './utils/locale';
 import EmbedderView from './views/EmbedderView';
+import useMobileStatus from './utils/isMobile';
+import { COOKIE_MODAL_ROOT_ID } from './utils/constants';
 
 // General meta tags for app
-const MetaTags = () => {
+function MetaTags() {
   const intl = useIntl();
   return (
     <Helmet>
@@ -51,7 +54,7 @@ const MetaTags = () => {
       <meta name="twitter:image:alt" data-react-helmet="true" content={intl.formatMessage({ id: 'app.og.image.alt' })} />
     </Helmet>
   );
-};
+}
 
 function App() {
   const locale = useSelector(getLocale);
@@ -65,6 +68,8 @@ function App() {
     }
   }, []);
 
+  const isMobile = useMobileStatus();
+
   return (
     <StyledEngineProvider>
       <Global
@@ -73,6 +78,11 @@ function App() {
           '#cookie-consent-language-selector-button': {
             display: 'none',
           },
+          ...isMobile && ({
+            [`#${COOKIE_MODAL_ROOT_ID} > div > div`]: {
+              bottom: '4.875rem',
+            },
+          }),
         })}
       />
       <ThemeWrapper>
@@ -97,7 +107,7 @@ function App() {
 }
 
 // Wrapper to get language route
-const LanguageWrapper = () => {
+function LanguageWrapper() {
   if (isClient()) {
     return (
       <BrowserRouter>
@@ -113,8 +123,9 @@ const LanguageWrapper = () => {
       <Route path="/:lng" component={App} />
     </Switch>
   );
-};
+}
 
+// eslint-disable-next-line max-len
 export default withStyles(styles, appStyles, SMFonts, HSLFonts, printCSS, hdsStyle)(LanguageWrapper);
 
 // Typechecking
