@@ -8,7 +8,7 @@ describe('SettingsUtility.isValidAccessibilitySenseImpairment', () => {
     expect(SettingsUtility.isValidAccessibilitySenseImpairment('visuallyImpaired')).toBe(true);
     expect(SettingsUtility.isValidAccessibilitySenseImpairment('colour_blind')).toBe(false);
     expect(SettingsUtility.isValidAccessibilitySenseImpairment('hearing_aid')).toBe(false);
-    expect(SettingsUtility.isValidAccessibilitySenseImpairment('visual_impairment')).toBe(false);
+    expect(SettingsUtility.isValidAccessibilitySenseImpairment('visually_impaired')).toBe(false);
     expect(SettingsUtility.isValidAccessibilitySenseImpairment(null)).toBe(false);
     expect(SettingsUtility.isValidAccessibilitySenseImpairment(undefined)).toBe(false);
   });
@@ -21,7 +21,7 @@ describe('SettingsUtility.mapValidAccessibilitySenseImpairmentValueToKey', () =>
     expect(SettingsUtility.mapValidAccessibilitySenseImpairmentValueToKey('visuallyImpaired')).toBe(undefined);
     expect(SettingsUtility.mapValidAccessibilitySenseImpairmentValueToKey('colour_blind')).toBe('colorblind');
     expect(SettingsUtility.mapValidAccessibilitySenseImpairmentValueToKey('hearing_aid')).toBe('hearingAid');
-    expect(SettingsUtility.mapValidAccessibilitySenseImpairmentValueToKey('visual_impairment')).toBe('visuallyImpaired');
+    expect(SettingsUtility.mapValidAccessibilitySenseImpairmentValueToKey('visually_impaired')).toBe('visuallyImpaired');
     expect(SettingsUtility.mapValidAccessibilitySenseImpairmentValueToKey(null)).toBe(undefined);
     expect(SettingsUtility.mapValidAccessibilitySenseImpairmentValueToKey(undefined)).toBe(undefined);
   });
@@ -53,10 +53,10 @@ describe('SettingsUtility.parseShortcomingSettings', () => {
     let result = SettingsUtility.parseShortcomingSettings({
       mobility: 'wheelchair', colorblind: true, visuallyImpaired: true, hearing_aid: true,
     }).sort(alphabeticCompare);
-    expect(result).toEqual(['colour_blind', 'visual_impairment', 'wheelchair']);
+    expect(result).toEqual(['colour_blind', 'visually_impaired', 'wheelchair']);
     result = SettingsUtility.parseShortcomingSettings({
       mobility: 'hearingAid', colorblind: false, visuallyImpaired: true, hearing_aid: true,
     }).sort(alphabeticCompare);
-    expect(result).toEqual(['visual_impairment']);
+    expect(result).toEqual(['visually_impaired']);
   });
 });

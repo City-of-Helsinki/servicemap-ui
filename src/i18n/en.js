@@ -1,5 +1,5 @@
 /* eslint-disable quote-props */
-const translations = {
+export default {
   'app.title': 'Service map',
   'app.description': 'Find services near your home',
   'app.og.image.alt': 'Servicemap logo',
@@ -220,7 +220,7 @@ const translations = {
   // Embedder
   'embedder.city.title': 'City',
   'embedder.city.aria.label': 'Choose city limits for the embedding',
-  'embedder.organization.title': 'Palveluntarjoaja', // TODO: translate
+  'embedder.organization.title': 'Service provider',
   'embedder.close': 'Close embedding tool',
   'embedder.code.title': 'Copy the HTML code',
   'embedder.height.title': 'Height of the embedding',
@@ -436,6 +436,12 @@ const translations = {
   'map.button.sidebar.show': 'Show sidebar',
   'map.button.expand': 'Expand',
   'map.button.expand.aria': 'Open map',
+  'map.heightProfile.title': 'Height profile',
+  'map.heightProfile.distance': 'Distance',
+  'map.heightProfile.elevation': 'Elevation',
+  'map.heightProfile.segmentLength': 'Total length',
+  'map.heightProfile.type': 'Type',
+  'map.heightProfile.legend': 'Legend',
 
   // Print
   'print.alert': 'Use the toolbox printing option',
@@ -714,7 +720,7 @@ const translations = {
   'settings.choose.mobility': 'Select your mobility issue',
   'settings.choose.senses': 'Select your sensory processing issues',
   'settings.choose.cities': 'Select your city setting',
-  'settings.choose.organization': 'Valitse palveluntarjoaja', // TODO: translate
+  'settings.choose.organization': 'Choose a service provider',
   'settings.map.info': 'You can select the background map that best suits you in the map settings.',
   'settings.reset_button.title': 'Clear all my selections',
 
@@ -730,16 +736,3 @@ const translations = {
   'opens.new.tab': '(new tab)',
   'alert.close': 'Close the notification',
 };
-
-let overridingExternalTranslations;
-
-// Read and merge external translations with current translations
-try {
-  // eslint-disable-next-line global-require,import/no-unresolved
-  overridingExternalTranslations = require('./externalTranslations/en.json');
-} catch (e) {
-  overridingExternalTranslations = {};
-}
-
-const englishTranslations = { ...translations, ...overridingExternalTranslations };
-export default englishTranslations;

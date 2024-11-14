@@ -1,5 +1,5 @@
 /* eslint-disable quote-props */
-const translations = {
+export default {
   'app.title': 'Palvelukartta',
   'app.description': 'Pääkaupunkiseudun kaikki julkiset palvelut ulottuvillasi.',
   'app.og.image.alt': 'Palvelukartan logo',
@@ -436,7 +436,12 @@ const translations = {
   'map.button.sidebar.show': 'Laajenna sivupaneeli',
   'map.button.expand': 'Laajenna',
   'map.button.expand.aria': 'Avaa kartta',
-
+  'map.heightProfile.title': 'Korkeusprofiili',
+  'map.heightProfile.distance': 'Etäisyys',
+  'map.heightProfile.elevation': 'Korkeus',
+  'map.heightProfile.segmentLength': 'Kokonaispituus',
+  'map.heightProfile.type': 'Tyyppi',
+  'map.heightProfile.legend': 'Selite',
 
   // Print
   'print.alert': 'Käytä tulostamiseen työkaluvalikon tulostusta',
@@ -733,16 +738,3 @@ const translations = {
   'opens.new.tab': '(uusi välilehti)',
   'alert.close': 'Sulje ilmoitus',
 };
-
-let overridingExternalTranslations;
-
-// Read and merge external translations with current translations
-try {
-  // eslint-disable-next-line global-require,import/no-unresolved
-  overridingExternalTranslations = require('./externalTranslations/fi.json');
-} catch (e) {
-  overridingExternalTranslations = {};
-}
-
-const finnishTranslations = { ...translations, ...overridingExternalTranslations };
-export default finnishTranslations;

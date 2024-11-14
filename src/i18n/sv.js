@@ -1,5 +1,5 @@
 /* eslint-disable quote-props */
-const translations = {
+export default {
   'app.title': 'Servicekarta',
   'app.description': 'Alla tjänster i huvudstadsregionen inom räckhåll.',
   'app.og.image.alt': 'Servicekarta logo',
@@ -221,7 +221,7 @@ const translations = {
   // Embedder
   'embedder.city.title': 'Staden',
   'embedder.city.aria.label': 'Välj stadsgränser för inbäddningen',
-  'embedder.organization.title': 'Palveluntarjoaja', // TODO: translate
+  'embedder.organization.title': 'Tjänsteleverantör',
   'embedder.close': 'Stäng inbäddningsverktyget',
   'embedder.code.title': 'Kopiera HTML-koden',
   'embedder.height.title': 'Inbäddningens höjd',
@@ -437,6 +437,12 @@ const translations = {
   'map.button.sidebar.show': 'Utvidga sidopanelen',
   'map.button.expand': 'Utvidga',
   'map.button.expand.aria': 'Öppna kartan',
+  'map.heightProfile.title': 'Höjdprofil',
+  'map.heightProfile.distance': 'Avstånd',
+  'map.heightProfile.elevation': 'Höjd',
+  'map.heightProfile.segmentLength': 'Totalt avstånd',
+  'map.heightProfile.type': 'Typ',
+  'map.heightProfile.legend': 'Färgskala',
 
   // Print
   'print.alert': 'Använd utskriftsalternativet i verktygsmenyn',
@@ -715,7 +721,7 @@ const translations = {
   'settings.choose.mobility': 'Välj fysisk funktionsnedsättning',
   'settings.choose.senses': 'Välj sensorisk funktionsnedsättning',
   'settings.choose.cities': 'Välj stadsinställningar',
-  'settings.choose.organization': 'Valitse palveluntarjoaja', // TODO: translate
+  'settings.choose.organization': 'Välj tjänsteleverantör',
   'settings.map.info': 'I kartinställningarna kan du välja det kartunderlag som passar dig bäst.',
   'settings.reset_button.title': 'Rensa alla mina val',
 
@@ -731,16 +737,3 @@ const translations = {
   'opens.new.tab': '(ny flik)',
   'alert.close': 'Stäng meddelande',
 };
-
-let overridingExternalTranslations;
-
-// Read and merge external translations with current translations
-try {
-  // eslint-disable-next-line global-require,import/no-unresolved
-  overridingExternalTranslations = require('./externalTranslations/sv.json');
-} catch (e) {
-  overridingExternalTranslations = {};
-}
-
-const swedishTranslations = { ...translations, ...overridingExternalTranslations };
-export default swedishTranslations;

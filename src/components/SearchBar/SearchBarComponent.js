@@ -289,10 +289,10 @@ const SearchBar = ({
           inputProps={{
             role: 'combobox',
             'aria-haspopup': !!showSuggestions,
-            'aria-label': intl.formatMessage({ id: 'search.searchField' }),
             'aria-owns': showSuggestions ? listID : null,
             'aria-activedescendant': showSuggestions ? `suggestion${focusedSuggestion}` : null,
           }}
+          id="search-bar"
           type="text"
           inputRef={searchRef}
           classes={{ focused: focusedClass }}
@@ -343,14 +343,16 @@ const SearchBar = ({
 
   const renderText = (isMobile = false) => {
     return (
-      <StyledInfoText
-        align="left"
-        sticky={(isActive && isMobile) || undefined}
-        color="inherit"
-        variant="body2"
-      >
-        <FormattedMessage id="search.searchbar.infoText" />
-      </StyledInfoText>
+      <label htmlFor="search-bar">
+        <StyledInfoText
+          align="left"
+          sticky={(isActive && isMobile) || undefined}
+          color="inherit"
+          variant="body2"
+        >
+          <FormattedMessage id="search.searchbar.infoText" />
+        </StyledInfoText>
+      </label>
     );
   };
 

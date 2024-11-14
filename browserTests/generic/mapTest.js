@@ -34,7 +34,7 @@ fixture`Search unit geometry test`
   });
 
 test('Unit geometry is drawn on map', async (t) => {
-  const polygon = Selector('.leaflet-pane .leaflet-overlay-pane').find('canvas');
+  const polygon = Selector('.leaflet-pane .leaflet-overlay-pane').find('svg');
   const listItem = Selector('#paginatedList-Toimipisteet-results li[role="link"]').nth(0);
   await t
     .click(listItem)
@@ -48,7 +48,7 @@ fixture`Unit page geometry test`
   });
 
 test('Unit geometry is drawn on map', async (t) => {
-  const polygon = Selector('.leaflet-pane .leaflet-overlay-pane').find('canvas');
+  const polygon = Selector('.leaflet-pane .leaflet-overlay-pane').find('svg');
   await t
     .expect(polygon.exists).ok();
 });

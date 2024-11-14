@@ -11,9 +11,6 @@
 # production
 /build
 
-# external translations
-/src/i18n/externalTranslations
-
 # misc
 .DS_Store
 .env
@@ -29,5 +26,3 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-
-municipalities.json
