@@ -38,7 +38,7 @@ const ExtendedData = ({
           fetchUnitEvents(unit, 50, true);
           break;
         case 'reservations':
-          fetchReservations(unit, 20, true);
+          fetchReservations(unit, true);
           break;
         default:
       }
@@ -163,7 +163,7 @@ const ExtendedData = ({
             id="reservations"
             data={data || []}
             customComponent={item => (
-              <ReservationItem key={item.id} reservation={item} />
+              <ReservationItem key={item.pk} reservation={item} />
             )}
             srTitle={srTitle}
             title={titleText}
