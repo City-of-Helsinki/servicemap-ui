@@ -22,7 +22,7 @@ const UnitDataList = ({
   const dataItems = data.data;
   let fullDataLength;
 
-  if (type === 'educationServices') {
+  if (type === 'educationServices' || type === 'reservations') {
     fullDataLength = dataItems?.length;
   } else {
     fullDataLength = data.max;
@@ -57,7 +57,7 @@ const UnitDataList = ({
     } if (type === 'reservations') {
       return (
         shownData.map((item, i) => (
-          <ReservationItem key={item.id} reservation={item} divider={i !== shownData.length - 1} />
+          <ReservationItem key={item.pk} reservation={item} divider={i !== shownData.length - 1} />
         ))
       );
     }

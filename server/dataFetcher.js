@@ -180,7 +180,7 @@ export const fetchSelectedUnitData = (req, res, next) => {
       store.dispatch(fetchSuccess(data.results));
       response();
     }
-    reservationsFetch({ unit: `tprek:${id}` }, null, reservationFetchEnd, fetchOnError, null, null, controller)
+    reservationsFetch(null, null, reservationFetchEnd, fetchOnError, null, id, controller);
 
   } catch(e) {
     console.log('Error in fetchSelectedUnitData', e.message);
