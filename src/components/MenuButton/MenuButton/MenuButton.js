@@ -9,9 +9,13 @@ import { keyboardHandler } from '../../../utils';
 import config from '../../../../config';
 
 class MenuButton extends React.Component {
-  state = {
-    open: false,
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      open: false,
+    };
+  }
 
   handleToggle = () => {
     this.setState(state => ({ open: !state.open }));
@@ -31,7 +35,7 @@ class MenuButton extends React.Component {
   };
 
   // Menu should close if user leaves the selection area
-  closeMenuOnFocusExit = (event) => {
+  closeMenuOnFocusExit = event => {
     const { menuItems } = this.props;
     const menuItemIds = menuItems.map(v => v.id);
 
@@ -55,9 +59,11 @@ class MenuButton extends React.Component {
           disableGutters
           sx={{ overflowY: panelID === 'SettingsMenuPanel' ? 'visible' : 'auto' }}
         >
-          <Typography sx={{
-            textAlign: 'left', fontWeight: 700, fontSize: '1.03rem', pb: 1,
-          }}
+          <Typography
+            component="h2"
+            sx={{
+              textAlign: 'left', fontWeight: 700, fontSize: '1.03rem', pb: 1,
+            }}
           >
             <FormattedMessage id={menuHeader} />
           </Typography>
@@ -77,12 +83,11 @@ class MenuButton extends React.Component {
                   aria-hidden={v.ariaHidden}
                 >
                   <span>{v.icon}</span>
-                  <Typography sx={{ pl: 3, fontWeight: 700 }} variant="subtitle1">{v.text}</Typography>
+                  <Typography component="h3" sx={{ pl: 3, fontWeight: 700 }} variant="subtitle1">{v.text}</Typography>
                 </StyledMenuItemButton>
                 {i !== menuItems.length - 1
                   ? <Divider aria-hidden />
-                  : null
-                }
+                  : null}
               </React.Fragment>
             ))
           }
@@ -108,14 +113,14 @@ class MenuButton extends React.Component {
         <StyledButton
           id={id}
           data-sm={dataSm}
-          ref={(node) => {
+          ref={node => {
             this.anchorEl = node;
           }}
           aria-controls={open ? panelID : undefined}
           aria-haspopup="true"
           aria-expanded={open}
           onClick={this.handleToggle}
-          onKeyDown={(e) => {
+          onKeyDown={e => {
             if (open) {
               keyboardHandler(this.handleClose, ['esc'])(e);
             }

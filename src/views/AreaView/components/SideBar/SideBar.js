@@ -1,3 +1,4 @@
+/* eslint-disable react/forbid-prop-types */
 import styled from '@emotion/styled';
 import {
   BusinessCenter, EscalatorWarning, LocationCity, Map,
@@ -38,7 +39,7 @@ import ServiceTab from '../ServiceTab';
 import StatisticalDistrictList from '../StatisticalDistrictList';
 import { StyledListItem, StyledLoadingText } from '../styled/styled';
 
-const getViewState = (map) => ({
+const getViewState = map => ({
   center: map.getCenter(),
   zoom: map.getZoom(),
 });
@@ -86,6 +87,7 @@ function SideBar({ selectedAddress = null, setSelectedAddress }) {
         dispatch(setMapState(getViewState(map)));
       }
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mapState, map]);
 
   const clearRadioButtonValue = useCallback(() => {
@@ -151,7 +153,7 @@ function SideBar({ selectedAddress = null, setSelectedAddress }) {
     <div data-sm="AreaView">
       <TitleBar
         title={intl.formatMessage({ id: 'general.pageLink.area' })}
-        titleComponent="p"
+        titleComponent="h3"
         backButton={!isMobile}
       />
       <StyledInfoText>
@@ -216,7 +218,7 @@ function SideBar({ selectedAddress = null, setSelectedAddress }) {
   );
 }
 
-const iconClass = (theme) => ({
+const iconClass = theme => ({
   padding: theme.spacing(2),
   paddingLeft: theme.spacing(0),
 });
