@@ -22,7 +22,7 @@ exports[`<UnitDataList /> should work 1`] = `
       class="MuiList-root css-54zhjy-MuiList-root"
     >
       <li
-        class="MuiButtonBase-root MuiListItemButton-root MuiListItemButton-gutters MuiListItemButton-root MuiListItemButton-gutters css-mctqh3-MuiButtonBase-root-MuiListItemButton-root"
+        class="MuiButtonBase-root MuiListItemButton-root MuiListItemButton-gutters MuiListItemButton-root MuiListItemButton-gutters css-oga50u-MuiButtonBase-root-MuiListItemButton-root"
         data-sm="ResultItemComponent"
         data-testid="EventItem"
         role="link"
@@ -83,7 +83,7 @@ exports[`<UnitDataList /> should work 1`] = `
         />
       </li>
       <li
-        class="MuiButtonBase-root MuiListItemButton-root MuiListItemButton-gutters MuiListItemButton-root MuiListItemButton-gutters css-mctqh3-MuiButtonBase-root-MuiListItemButton-root"
+        class="MuiButtonBase-root MuiListItemButton-root MuiListItemButton-gutters MuiListItemButton-root MuiListItemButton-gutters css-oga50u-MuiButtonBase-root-MuiListItemButton-root"
         data-sm="ResultItemComponent"
         data-testid="EventItem"
         role="link"
@@ -144,7 +144,7 @@ exports[`<UnitDataList /> should work 1`] = `
         />
       </li>
       <li
-        class="MuiButtonBase-root MuiListItemButton-root MuiListItemButton-gutters MuiListItemButton-root MuiListItemButton-gutters css-mctqh3-MuiButtonBase-root-MuiListItemButton-root"
+        class="MuiButtonBase-root MuiListItemButton-root MuiListItemButton-gutters MuiListItemButton-root MuiListItemButton-gutters css-oga50u-MuiButtonBase-root-MuiListItemButton-root"
         data-sm="ResultItemComponent"
         data-testid="EventItem"
         role="link"
@@ -199,7 +199,7 @@ exports[`<UnitDataList /> should work 1`] = `
     </ul>
     <button
       aria-label="Show more events (2)"
-      class="MuiButtonBase-root SMButton css-1a222ty-MuiButtonBase-root"
+      class="MuiButtonBase-root SMButton css-1r4tpir-MuiButtonBase-root"
       color="default"
       id="UniteventsButton"
       margin="1"

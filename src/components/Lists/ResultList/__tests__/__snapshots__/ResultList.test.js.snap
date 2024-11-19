@@ -41,7 +41,7 @@ exports[`<ResultList /> should work 1`] = `
       id="testID"
     >
       <li
-        class="MuiButtonBase-root MuiListItemButton-root MuiListItemButton-gutters MuiListItemButton-root MuiListItemButton-gutters css-mctqh3-MuiButtonBase-root-MuiListItemButton-root"
+        class="MuiButtonBase-root MuiListItemButton-root MuiListItemButton-gutters MuiListItemButton-root MuiListItemButton-gutters css-oga50u-MuiButtonBase-root-MuiListItemButton-root"
         data-sm="UnitItem"
         role="link"
         tabindex="0"
@@ -107,7 +107,7 @@ exports[`<ResultList /> should work 1`] = `
         />
       </li>
       <li
-        class="MuiButtonBase-root MuiListItemButton-root MuiListItemButton-gutters MuiListItemButton-root MuiListItemButton-gutters css-mctqh3-MuiButtonBase-root-MuiListItemButton-root"
+        class="MuiButtonBase-root MuiListItemButton-root MuiListItemButton-gutters MuiListItemButton-root MuiListItemButton-gutters css-oga50u-MuiButtonBase-root-MuiListItemButton-root"
         data-sm="UnitItem"
         role="link"
         tabindex="0"

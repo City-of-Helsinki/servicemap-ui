@@ -8,7 +8,7 @@ exports[`<PaginationComponent /> should work 1`] = `
   >
     <button
       aria-label="Previous page"
-      class="MuiButtonBase-root SMButton css-16f78l8-MuiButtonBase-root"
+      class="MuiButtonBase-root SMButton css-vfffhu-MuiButtonBase-root"
       color="primary"
       id="PaginationPreviousButton"
       margin="0"
@@ -32,7 +32,7 @@ exports[`<PaginationComponent /> should work 1`] = `
     </button>
     <button
       aria-label="Next page"
-      class="MuiButtonBase-root SMButton css-4cjl82-MuiButtonBase-root"
+      class="MuiButtonBase-root SMButton css-nymwz-MuiButtonBase-root"
       color="primary"
       id="PaginationNextButton"
       margin="0"
@@ -62,7 +62,7 @@ exports[`<PaginationComponent /> should work 1`] = `
       >
         <li>
           <button
-            class="MuiButtonBase-root css-1walttk-MuiButtonBase-root"
+            class="MuiButtonBase-root css-9fh4tn-MuiButtonBase-root"
             role="link"
             tabindex="0"
             type="button"
@@ -86,7 +86,7 @@ exports[`<PaginationComponent /> should work 1`] = `
         </li>
         <li>
           <button
-            class="MuiButtonBase-root Mui-disabled css-1walttk-MuiButtonBase-root"
+            class="MuiButtonBase-root Mui-disabled css-9fh4tn-MuiButtonBase-root"
             disabled=""
             role="link"
             tabindex="-1"
@@ -111,7 +111,7 @@ exports[`<PaginationComponent /> should work 1`] = `
         </li>
         <li>
           <button
-            class="MuiButtonBase-root css-1walttk-MuiButtonBase-root"
+            class="MuiButtonBase-root css-9fh4tn-MuiButtonBase-root"
             role="link"
             tabindex="0"
             type="button"
@@ -135,7 +135,7 @@ exports[`<PaginationComponent /> should work 1`] = `
         </li>
         <li>
           <button
-            class="MuiButtonBase-root css-1walttk-MuiButtonBase-root"
+            class="MuiButtonBase-root css-9fh4tn-MuiButtonBase-root"
             role="link"
             tabindex="0"
             type="button"
@@ -159,7 +159,7 @@ exports[`<PaginationComponent /> should work 1`] = `
         </li>
         <li>
           <button
-            class="MuiButtonBase-root css-1walttk-MuiButtonBase-root"
+            class="MuiButtonBase-root css-9fh4tn-MuiButtonBase-root"
             role="link"
             tabindex="0"
             type="button"
