@@ -14,6 +14,124 @@ const props = {
   },
 };
 
+// Color palette from Helsinki Design System
+const colors = {
+  lightGray: 'rgba(222, 222, 222, 1)',
+  black03: '#F4F4F4',
+};
+
+// Color palette for normal theme
+export const paletteDefault = {
+  primary: {
+    main: 'rgb(10, 26, 175)',
+    highContrast: '#fff',
+  },
+  secondary: {
+    main: 'rgb(43, 47, 57)',
+    hover: '#1d39ad',
+  },
+  white: {
+    light: '#f2f2f2',
+    main: '#FFFFFF',
+    dark: '#949494',
+    contrastText: '#000',
+  },
+  detail: {
+    main: 'rgb(10, 26, 175)',
+    alpha: 'rgb(10, 26, 175, 0.5)',
+  },
+  disabled: {
+    main: 'rgb(239, 239, 239)',
+    strong: '#898989',
+  },
+  focusBorder: {
+    main: 'rgb(71, 131, 235)',
+  },
+  warning: {
+    main: '#AF0021',
+  },
+  measuringStroke: {
+    main: '#fff',
+    background: 'rgb(10, 26, 175)',
+    border: '#fff',
+  },
+  link: {
+    main: '#3333FF',
+  },
+  border: {
+    main: colors.lightGray,
+  },
+  hover: {
+    main: colors.black03,
+  },
+};
+
+// Color palette for dark theme
+export const paletteDark = {
+  primary: {
+    main: 'rgb(53, 54, 56)',
+    highContrast: '#fff',
+  },
+  secondary: {
+    main: 'rgb(43, 47, 57)',
+    hover: '#5b5d61',
+  },
+  background: {
+    main: '#4A4A4C',
+    plain: '#4A4A4C',
+    front:
+      'linear-gradient(326.21deg, rgba(0, 0, 0, 0.79) 0%, rgba(71, 71, 71, 0.79) 100%)',
+  },
+  white: {
+    light: '#f2f2f2',
+    main: '#FFFFFF',
+    dark: '#949494',
+    contrastText: '#000',
+  },
+  detail: {
+    main: '#585B63',
+    alpha: 'rgba(88,91,99,0.5)',
+  },
+  disabled: {
+    main: 'rgb(239, 239, 239)',
+    strong: '#898989',
+  },
+  warning: {
+    main: '#AF0021',
+  },
+  focusBorder: {
+    main: '#000',
+  },
+  measuringStroke: {
+    main: '#313131',
+    background: '#A6A6A6',
+    border: '#fff',
+  },
+  link: {
+    main: '#3333FF',
+  },
+  border: {
+    main: colors.lightGray,
+  },
+  hover: {
+    main: colors.black03,
+  },
+};
+
+const focusIndicator = {
+  outline: '2px solid transparent !important',
+  borderRadius: '4px',
+  boxShadow: `0 0 0 2px rgb(255, 255, 255), 0 0 0 6px ${paletteDefault.primary.main}, 0 0 0 8px rgb(255, 255, 255) !important`,
+  zIndex: '1',
+};
+
+const focusIndicatorDark = {
+  outline: '2px solid transparent !important',
+  boxShadow:
+    '0 0 0 2px rgb(255, 255, 255), 0 0 0 6px rgb(0, 0, 0), 0 0 0 8px rgb(255, 255, 255) !important',
+  zIndex: '1',
+};
+
 const components = theme => ({
   MuiListItem: {
     styleOverrides: {
@@ -198,124 +316,6 @@ const typography = {
     letterSpacing: '0.125rem', // 2px
     lineHeight: '1rem',
   },
-};
-
-// Color palette from Helsinki Design System
-const colors = {
-  lightGray: 'rgba(222, 222, 222, 1)',
-  black03: '#F4F4F4',
-};
-
-// Color palette for normal theme
-export const paletteDefault = {
-  primary: {
-    main: 'rgb(10, 26, 175)',
-    highContrast: '#fff',
-  },
-  secondary: {
-    main: 'rgb(43, 47, 57)',
-    hover: '#1d39ad',
-  },
-  white: {
-    light: '#f2f2f2',
-    main: '#FFFFFF',
-    dark: '#949494',
-    contrastText: '#000',
-  },
-  detail: {
-    main: 'rgb(10, 26, 175)',
-    alpha: 'rgb(10, 26, 175, 0.5)',
-  },
-  disabled: {
-    main: 'rgb(239, 239, 239)',
-    strong: '#898989',
-  },
-  focusBorder: {
-    main: 'rgb(71, 131, 235)',
-  },
-  warning: {
-    main: '#AF0021',
-  },
-  measuringStroke: {
-    main: '#fff',
-    background: 'rgb(10, 26, 175)',
-    border: '#fff',
-  },
-  link: {
-    main: '#3333FF',
-  },
-  border: {
-    main: colors.lightGray,
-  },
-  hover: {
-    main: colors.black03,
-  },
-};
-
-// Color palette for dark theme
-export const paletteDark = {
-  primary: {
-    main: 'rgb(53, 54, 56)',
-    highContrast: '#fff',
-  },
-  secondary: {
-    main: 'rgb(43, 47, 57)',
-    hover: '#5b5d61',
-  },
-  background: {
-    main: '#4A4A4C',
-    plain: '#4A4A4C',
-    front:
-      'linear-gradient(326.21deg, rgba(0, 0, 0, 0.79) 0%, rgba(71, 71, 71, 0.79) 100%)',
-  },
-  white: {
-    light: '#f2f2f2',
-    main: '#FFFFFF',
-    dark: '#949494',
-    contrastText: '#000',
-  },
-  detail: {
-    main: '#585B63',
-    alpha: 'rgba(88,91,99,0.5)',
-  },
-  disabled: {
-    main: 'rgb(239, 239, 239)',
-    strong: '#898989',
-  },
-  warning: {
-    main: '#AF0021',
-  },
-  focusBorder: {
-    main: '#000',
-  },
-  measuringStroke: {
-    main: '#313131',
-    background: '#A6A6A6',
-    border: '#fff',
-  },
-  link: {
-    main: '#3333FF',
-  },
-  border: {
-    main: colors.lightGray,
-  },
-  hover: {
-    main: colors.black03,
-  },
-};
-
-const focusIndicator = {
-  outline: '2px solid transparent',
-  borderRadius: '4px',
-  boxShadow: `0 0 0 2px rgb(255, 255, 255), 0 0 0 6px ${paletteDefault.primary.main}, 0 0 0 8px rgb(255, 255, 255)`,
-  zIndex: '1',
-};
-
-const focusIndicatorDark = {
-  outline: '2px solid transparent',
-  boxShadow:
-    '0 0 0 2px rgb(255, 255, 255), 0 0 0 6px rgb(0, 0, 0), 0 0 0 8px rgb(255, 255, 255)',
-  zIndex: '1',
 };
 
 // Themes
