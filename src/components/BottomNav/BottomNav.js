@@ -17,7 +17,7 @@ import MobileSettingsHeader from '../MobileSettingsHeader/MobileSettingsHeader';
 
 const { bottomNavHeight } = config;
 
-const BottomNav = () => {
+function BottomNav() {
   const location = useLocation();
   const intl = useIntl();
   const small = useMediaQuery('(max-width:477px)');
@@ -59,7 +59,7 @@ const BottomNav = () => {
     }
   };
 
-  const handleNav = (value) => {
+  const handleNav = value => {
     switch (value) {
       // Back button
       case 0:
@@ -103,7 +103,7 @@ const BottomNav = () => {
         }}
       >
         <StyledDiv>
-          <MobileSettingsHeader textId="general.ownSettings" />
+          <MobileSettingsHeader textId="general.ownSettings" onClose={handleBackButton} />
           <SettingsDropdowns variant="ownSettings" />
         </StyledDiv>
       </StyledDrawer>
@@ -121,7 +121,7 @@ const BottomNav = () => {
           },
         }}
       >
-        <MapSettings />
+        <MapSettings onClose={handleBackButton} />
       </StyledDrawer>
       <nav>
         <StyledPaper elevation={10}>
@@ -153,7 +153,7 @@ const BottomNav = () => {
       </nav>
     </>
   );
-};
+}
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
   position: 'fixed',
@@ -172,7 +172,6 @@ const StyledBottomNavigation = styled(BottomNavigation)(() => ({
   backgroundColor: '#F4F4F4',
   height: 78,
 }));
-
 
 const StyledBottomNavigationAction = styled(BottomNavigationAction)(({ small }) => {
   const styles = {
