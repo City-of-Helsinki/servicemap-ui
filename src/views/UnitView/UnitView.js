@@ -1,6 +1,9 @@
+/* eslint-disable react/forbid-prop-types */
 /* eslint-disable no-underscore-dangle */
 import styled from '@emotion/styled';
-import { Hearing, Mail, OpenInFull, Share } from '@mui/icons-material';
+import {
+  Hearing, Mail, OpenInFull, Share,
+} from '@mui/icons-material';
 import { Button, Typography } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
 import Watermark from '@uiw/react-watermark';
@@ -56,7 +59,7 @@ import UnitLinks from './components/UnitLinks';
 import UnitsServicesList from './components/UnitsServicesList';
 import { parseUnitViewUrlParams } from './utils/unitViewUrlParamAndSettingsHandler';
 
-const UnitView = (props) => {
+function UnitView(props) {
   const {
     embed = false,
     match = {},
@@ -87,6 +90,7 @@ const UnitView = (props) => {
   const getLocaleText = useLocaleText();
   const dispatch = useDispatch();
   const history = useHistory();
+  const accessiblityTabRef = useRef();
 
   const getImageAlt = () => `${intl.formatMessage({ id: 'unit.picture' })}${getLocaleText(unit.name)}`;
 
@@ -117,11 +121,12 @@ const UnitView = (props) => {
       dispatch(setMapType(value));
     });
     resetUrlSearchParams();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const initializePTVAccessibilitySentences = () => {
     if (unit) {
-      unit.identifiers.forEach((element) => {
+      unit.identifiers.forEach(element => {
         if (element.namespace === 'ptv') {
           const ptvId = element.value;
           fetchAccessibilitySentences(ptvId);
@@ -135,7 +140,7 @@ const UnitView = (props) => {
     const unitId = params.unit;
     // If no selected unit data, or selected unit data is old, fetch new data
     if (!stateUnit || !checkCorrectUnit(stateUnit) || !stateUnit.complete) {
-      fetchSelectedUnit(unitId, (unit) => {
+      fetchSelectedUnit(unitId, unit => {
         setUnit(unit);
         if (unit?.keywords?.fi?.some(keyword => keyword.toLowerCase() === 'kuuluvuuskartta')) {
           fetchHearingMaps(unitId);
@@ -214,18 +219,21 @@ const UnitView = (props) => {
         map.setView(viewPosition?.current?.center, viewPosition?.current?.zoom);
       }
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => { // If unit changes without the component unmounting, update data
     if (unit) {
       intializeUnitData();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [match.params.unit]);
 
   useEffect(() => {
     if (config.usePtvAccessibilityApi) {
       initializePTVAccessibilitySentences();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [unit]);
 
   if (embed) {
@@ -311,7 +319,7 @@ const UnitView = (props) => {
 
   const renderDetailTab = () => {
     if (!unit || !unit.complete) {
-      return <></>;
+      return null;
     }
     const contractText = UnitHelper.getContractText(unit, intl, getLocaleText);
 
@@ -347,7 +355,11 @@ const UnitView = (props) => {
           </Container>
 
           {/* View Components */}
-          <ContactInfo unit={unit} userLocation={userLocation} />
+          <ContactInfo
+            unit={unit}
+            userLocation={userLocation}
+            accessiblityTabRef={accessiblityTabRef}
+          />
           <SocialMediaLinks unit={unit} />
           <UnitDataList
             listLength={3}
@@ -409,7 +421,7 @@ const UnitView = (props) => {
 
   const renderServiceTab = () => {
     if (!unit || !unit.complete) {
-      return <></>;
+      return null;
     }
 
     return (
@@ -464,7 +476,7 @@ const UnitView = (props) => {
         color="primary"
         aria-label={intl.formatMessage({ id: 'map.button.expand.aria' })}
         icon={<StyledMapIcon />}
-        onClick={(e) => {
+        onClick={e => {
           e.preventDefault();
           if (navigator) {
             navigator.openMap();
@@ -480,7 +492,6 @@ const UnitView = (props) => {
       </StyledMapContainer>
     </StyledUnitLocationContainer>
   );
-
 
   const render = () => {
     const title = unit && unit.name ? getLocaleText(unit.name) : '';
@@ -515,10 +526,9 @@ const UnitView = (props) => {
           titleComponent="h3"
           shareLink={elem}
         />
-        {unit?.location?.coordinates && 
-          <RouteBar unit={unit} userLocation={userLocation} />
-        }
-      </> 
+        {unit?.location?.coordinates
+          && <RouteBar unit={unit} userLocation={userLocation} />}
+      </>
     );
 
     if (unitFetching) {
@@ -551,6 +561,7 @@ const UnitView = (props) => {
           data: null,
           itemsPerPage: null,
           title: intl.formatMessage({ id: 'accessibility' }),
+          ref: accessiblityTabRef,
         },
         {
           id: 'services',
@@ -584,7 +595,7 @@ const UnitView = (props) => {
                     : renderPicture()
                 }
               </>
-          )}
+            )}
           />
         </div>
       );
@@ -603,7 +614,7 @@ const UnitView = (props) => {
   };
 
   return render();
-};
+}
 
 export default UnitView;
 
