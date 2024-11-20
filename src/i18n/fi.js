@@ -726,6 +726,7 @@ export default {
   'settings.choose.organization': 'Valitse palveluntarjoaja',
   'settings.map.info': 'Kartta-asetuksista voit valita sinulle parhaiten sopivan pohjakartan.',
   'settings.reset_button.title': 'Tyhjennä kaikki valintani',
+  'settings.reset_button.ariaLive': 'Kaikki valinnat tyhjennettiin.',
 
   // Tools
   'tool.download': 'Lataa tiedot',
