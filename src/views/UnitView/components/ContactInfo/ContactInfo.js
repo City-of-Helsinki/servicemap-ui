@@ -1,3 +1,4 @@
+/* eslint-disable react/forbid-prop-types */
 import styled from '@emotion/styled';
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -14,11 +15,9 @@ import useLocaleText from '../../../../utils/useLocaleText';
 import { parseSearchParams, stringifySearchParams } from '../../../../utils';
 import { SMAccordion } from '../../../../components';
 
-const ContactInfo = ({
-  unit,
-  userLocation = null,
-  headingLevel = 'h4',
-}) => {
+function ContactInfo({
+  unit, userLocation, headingLevel, accessiblityTabRef,
+}) {
   const intl = useIntl();
   const history = useHistory();
   const location = useLocation();
@@ -36,7 +35,9 @@ const ContactInfo = ({
   const phone = {
     type: 'PHONE',
     value: unit.phone ? { phone: unit.phone } : intl.formatMessage({ id: 'unit.phone.missing' }),
-    noDivider: showCallInfo || (subgroupContacts && subgroupContacts.length > 0), // TODO: fix this hard coded value when unit data returns call charge boolean
+    // TODO: fix this hard coded value when unit data returns call charge boolean
+    noDivider: showCallInfo
+      || (subgroupContacts && subgroupContacts.length > 0),
   };
   const email = {
     type: 'EMAIL',
@@ -50,11 +51,12 @@ const ContactInfo = ({
     } : intl.formatMessage({ id: 'unit.homepage.missing' }),
   };
 
-  const addNewTabSuffix = (text) => `${text} ${intl.formatMessage({ id: 'opens.new.tab' })}`;
+  const addNewTabSuffix = text => `${text} ${intl.formatMessage({ id: 'opens.new.tab' })}`;
 
   // Custom list item component for call charge info
   const callInformation = {
-    component: showCallInfo // TODO: fix this hard coded value when unit data returns call charge boolean
+    // TODO: fix this hard coded value when unit data returns call charge boolean
+    component: showCallInfo
       && (
         <React.Fragment key="callInformation">
           <StyledAccordionItem>
@@ -80,44 +82,52 @@ const ContactInfo = ({
   // Custom list item component for additional entrances
   const entrances = {
     component: additionalEntrances?.length
-    && (
-      <React.Fragment key="entrances">
-        <StyledAccordionItem>
-          <StyledSMAccordion
-            disableUnmount
-            titleContent={<Typography id="additional-entrances"><FormattedMessage id="unit.entrances.show" /></Typography>}
-            collapseContent={(
-              <StyledAccordionContainer data-sm="AdditionalEntranceContent">
-                {additionalEntrances.map(entrance => (
-                  entrance.name ? (
-                    <Typography key={getLocaleText(entrance.name)}>
-                      {getLocaleText(entrance.name)}
+      && (
+        <React.Fragment key="entrances">
+          <StyledAccordionItem>
+            <StyledSMAccordion
+              disableUnmount
+              titleContent={<Typography id="additional-entrances"><FormattedMessage id="unit.entrances.show" /></Typography>}
+              collapseContent={(
+                <StyledAccordionContainer data-sm="AdditionalEntranceContent">
+                  {additionalEntrances.map(entrance => (
+                    entrance.name ? (
+                      <Typography key={getLocaleText(entrance.name)}>
+                        {getLocaleText(entrance.name)}
+                      </Typography>
+                    ) : null
+                  ))}
+                  <StyledAccessibilityLink
+                    role="link"
+                    onClick={() => {
+                      // Navigate to accessibility tab by clicking tab
+                      if (accessiblityTabRef.current) {
+                        accessiblityTabRef.current.click();
+                        accessiblityTabRef.current.focus();
+
+                        return;
+                      }
+
+                      // Navigate to accessibility tab by changing url tab parameter
+                      const searchParams = parseSearchParams(location.search);
+                      searchParams.t = 'accessibilityDetails';
+                      const searchString = stringifySearchParams(searchParams);
+                      history.push(`${location.pathname}?${searchString}`);
+                    }}
+                  >
+                    <Typography>
+                      {addNewTabSuffix(intl.formatMessage({ id: 'unit.entrances.accessibility' }))}
                     </Typography>
-                  ) : null
-                ))}
-                <StyledAccessibilityLink
-                  role="link"
-                  onClick={() => {
-                    // Navigate to accessibility tab by changing url tab parameter
-                    const searchParams = parseSearchParams(location.search);
-                    searchParams.t = 'accessibilityDetails';
-                    const searchString = stringifySearchParams(searchParams);
-                    history.push(`${location.pathname}?${searchString}`);
-                  }}
-                >
-                  <Typography>
-                    {addNewTabSuffix(intl.formatMessage({ id: 'unit.entrances.accessibility' }))}
-                  </Typography>
-                </StyledAccessibilityLink>
-              </StyledAccordionContainer>
+                  </StyledAccessibilityLink>
+                </StyledAccordionContainer>
               )}
-          />
-        </StyledAccordionItem>
-        <li aria-hidden>
-          <StyledShortDivider />
-        </li>
-      </React.Fragment>
-    ),
+            />
+          </StyledAccordionItem>
+          <li aria-hidden>
+            <StyledShortDivider />
+          </li>
+        </React.Fragment>
+      ),
   };
 
   const otherAddress = {
@@ -180,7 +190,7 @@ const ContactInfo = ({
                   ) : null
                 ))}
               </StyledAccordionContainer>
-              )}
+            )}
           />
         </StyledAccordionItem>
         <li aria-hidden>
@@ -238,7 +248,7 @@ const ContactInfo = ({
       titleComponent={headingLevel}
     />
   );
-};
+}
 
 const StyledShortDivider = styled(Divider)(({ theme }) => ({
   marginLeft: theme.spacing(9),
@@ -278,6 +288,13 @@ ContactInfo.propTypes = {
   unit: PropTypes.objectOf(PropTypes.any).isRequired,
   userLocation: PropTypes.objectOf(PropTypes.any),
   headingLevel: PropTypes.string,
+  accessiblityTabRef: PropTypes.shape({ current: PropTypes.any }),
+};
+
+ContactInfo.defaultProps = {
+  userLocation: null,
+  headingLevel: 'h4',
+  accessiblityTabRef: null,
 };
 
 export default ContactInfo;
