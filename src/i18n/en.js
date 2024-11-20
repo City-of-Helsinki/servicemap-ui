@@ -724,6 +724,7 @@ export default {
   'settings.choose.organization': 'Choose a service provider',
   'settings.map.info': 'You can select the background map that best suits you in the map settings.',
   'settings.reset_button.title': 'Clear all my selections',
+  'settings.reset_button.ariaLive': 'All selections were cleared.',
 
   // Tools
   'tool.download': 'Download data',

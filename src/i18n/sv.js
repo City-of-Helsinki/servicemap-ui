@@ -725,6 +725,7 @@ export default {
   'settings.choose.organization': 'Välj tjänsteleverantör',
   'settings.map.info': 'I kartinställningarna kan du välja det kartunderlag som passar dig bäst.',
   'settings.reset_button.title': 'Rensa alla mina val',
+  'settings.reset_button.ariaLive': 'Alla val har rensats.',
 
   // Tools
   'tool.download': 'Exportera',
