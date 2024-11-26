@@ -26,11 +26,9 @@ export const APIHandlers = {
     envName: config.serviceMapAPI.id,
   },
   reservations: {
-    url: `${config.reservationsAPI.root}/resource/`,
-    options: {
-      page_size: 5,
-    },
-    envName: config.serviceMapAPI.id,
+    url: id => `${config.reservationsAPI.root}/v1/palvelukartta/reservation-units/${id}`,
+    options: {},
+    envName: config.reservationsAPI.id,
   },
   search: {
     url: `${config.serviceMapAPI.root}${config.serviceMapAPI.version}/search/`,

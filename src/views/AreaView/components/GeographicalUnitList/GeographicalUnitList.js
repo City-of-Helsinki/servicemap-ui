@@ -1,7 +1,10 @@
 import { Checkbox, List, Typography } from '@mui/material';
 import PropTypes from 'prop-types';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, {
+  useCallback, useEffect, useMemo, useRef, useState,
+} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useIntl } from 'react-intl';
 import { UnitItem } from '../../../../components';
 import {
   addSelectedDistrictService,
@@ -13,7 +16,7 @@ import {
   selectSelectedDistrictServices,
 } from '../../../../redux/selectors/district';
 import { getLocale } from '../../../../redux/selectors/user';
-import { uppercaseFirst } from '../../../../utils';
+import { keyboardHandler, uppercaseFirst } from '../../../../utils';
 import { orderUnits } from '../../../../utils/orderUnits';
 import useLocaleText from '../../../../utils/useLocaleText';
 import {
@@ -24,6 +27,7 @@ import {
   StyledUnitList,
   StyledUnitListArea,
 } from '../styled/styled';
+import ServiceFilterContainer from '../ServiceFilterContainer/ServiceFilterContainer';
 
 // Custom uncontrolled checkbox that allows default value
 const UnitCheckbox = ({
@@ -56,7 +60,16 @@ const GeographicalUnitList = ({ initialOpenItems }) => {
   const locale = useSelector(getLocale);
   const [serviceList, setServiceList] = useState([]);
   const [initialCheckedItems] = useState(selectedServices);
+  const inputRef = useRef();
+  const { formatMessage } = useIntl();
+  const [filterValue, setFilterValue] = useState('');
+  const title = formatMessage({ id: 'area.service.filter' });
 
+  const handlefilterButtonClick = () => {
+    if (inputRef) {
+      setFilterValue(inputRef.current.value);
+    }
+  };
 
   const handleUnitCheckboxChange = useCallback((event, id) => {
     if (event.target.checked) {
@@ -112,18 +125,37 @@ const GeographicalUnitList = ({ initialOpenItems }) => {
     if (emptyCategories.length) {
       dispatch(removeSelectedDistrictService(emptyCategories));
     }
+
+    // Use filter
+    if (filterValue) {
+      const filteredServiceList = serviceList.filter((category) => {
+        const name = getLocaleText(category.name);
+        return name.toLowerCase().includes(filterValue.toLowerCase());
+      });
+      setServiceList(filteredServiceList);
+      return;
+    }
+
     setServiceList(serviceList);
   };
 
 
   useEffect(() => {
     createServiceCategories();
-  }, [filteredSubdistrictUnits]);
-
+  }, [filteredSubdistrictUnits, filterValue]);
 
   // Render list of units for neighborhood and postcode-area subdistricts
   const renderUnitList = useMemo(() => (
     <StyledUnitListArea>
+      <ServiceFilterContainer
+        title={title}
+        inputRef={inputRef}
+        keyboardHandler={keyboardHandler}
+        handlefilterButtonClick={handlefilterButtonClick}
+        filterValue={filterValue}
+        setFilterValue={setFilterValue}
+        formatMessage={formatMessage}
+      />
       <List disablePadding>
         {serviceList.map(category => (
           <StyledListItem
