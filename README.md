@@ -42,12 +42,12 @@ Launches the application using `node dist` command and then launches TestCafe te
 
 ## How to use
 For development: 
-- Make sure npm packages are installed by running `npm install`in project root.
+- Make sure npm packages are installed by running `npm install --legacy-peer-deps`in project root.
 - Make sure you have environment variables set. `.env.example` should have all required values so you can copy it to `.env`.
 - Then you can start development server using `npm run dev`. Which watches files and updates on code changes.
 
 To run in production mode:
-- Make sure npm packages are installed by running `npm install`in project root.
+- Make sure npm packages are installed by running `npm install --legacy-peer-deps`in project root.
 - Make sure you have environment variables set. `.env.example` should have all required values so you can copy it to `.env`.
 - Build files by running `npm run build`
 - Then you can just run the app with `npm start`
