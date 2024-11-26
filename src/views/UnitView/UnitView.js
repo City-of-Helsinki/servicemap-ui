@@ -49,7 +49,7 @@ import Description from './components/Description';
 import ElectronicServices from './components/ElectronicServices';
 import Highlights from './components/Highlights';
 import PriceInfo from './components/PriceInfo';
-import ReadFeedbackLink from './components/ReadFeedbackLink/ReadFeedbackLink';
+// import ReadFeedbackLink from './components/ReadFeedbackLink/ReadFeedbackLink';
 import SocialMediaLinks from './components/SocialMediaLinks';
 import UnitDataList from './components/UnitDataList';
 import UnitLinks from './components/UnitLinks';
@@ -360,7 +360,7 @@ const UnitView = (props) => {
           <UnitLinks unit={unit} />
           <ElectronicServices unit={unit} />
           {!isMobile && feedbackButton()}
-          {!isMobile && (<ReadFeedbackLink unit={UnitHelper.setDefaults(unit)} />)}
+          {/* {!isMobile && (<ReadFeedbackLink unit={UnitHelper.setDefaults(unit)} />)} */}
           {isMobile && renderPicture()}
         </div>
       </StyledContentContainer>
