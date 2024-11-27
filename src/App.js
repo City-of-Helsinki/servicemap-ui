@@ -12,7 +12,7 @@ import '@formatjs/intl-relativetimeformat/dist/locale-data/sv';
 import '@formatjs/intl-relativetimeformat/polyfill';
 import { StyledEngineProvider } from '@mui/material';
 // To add css variables for hds components
-// import hdsStyle from 'hds-design-tokens';
+import hdsStyle from 'hds-design-tokens';
 import withStyles from 'isomorphic-style-loader/withStyles';
 import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
@@ -23,7 +23,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import appStyles from './App.css';
 import ogImage from './assets/images/servicemap-meta-img.png';
 import { DataFetcher, Navigator } from './components';
-// import SMCookies from './components/SMCookies/SMCookies';
+import SMCookies from './components/SMCookies/SMCookies';
 import HSLFonts from './hsl-icons.css';
 import styles from './index.css';
 import DefaultLayout from './layouts';
@@ -79,7 +79,7 @@ function App() {
         <IntlProvider {...intlData}>
           <MetaTags />
           {/* <StylesProvider generateClassName={generateClassName}> */}
-          {/* <SMCookies /> */}
+          <SMCookies />
           <div className="App">
             <Switch>
               <Route path="*/embedder" component={EmbedderView} />
@@ -115,7 +115,7 @@ const LanguageWrapper = () => {
   );
 };
 
-export default withStyles(styles, appStyles, SMFonts, HSLFonts, printCSS)(LanguageWrapper);
+export default withStyles(styles, appStyles, SMFonts, HSLFonts, printCSS, hdsStyle)(LanguageWrapper);
 
 // Typechecking
 App.propTypes = {

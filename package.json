@@ -30,6 +30,8 @@
     "dotenv": "^8.2.0",
     "express": "^4.19.2",
     "express-sitemap": "^1.8.0",
+    "hds-design-tokens": "3.10.1",
+    "hds-react": "3.10.1",
     "http-status-typed": "^2.0.1",
     "intl": "^1.2.5",
     "isomorphic-style-loader": "^5.1.0",
