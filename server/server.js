@@ -52,7 +52,7 @@ const setupTests = () => {
 setupTests();
 
 // Handle sitemap creation
-  if (sitemapActive()) {
+if (sitemapActive()) {
   // Generate sitemap on start
   generateSitemap();
   // Update sitemap every monday
@@ -70,10 +70,6 @@ const supportedLanguages = config.supportedLanguages;
 // This is required for proxy setups to work in production
 app.set('trust proxy', true);
 
-// The request handler must be the first middleware on the app
-if (Sentry) {
-  app.use(Sentry.Handlers.requestHandler());
-}
 // Add static folder
 app.use(express.static(path.resolve(__dirname, 'src')));
 
@@ -151,9 +147,9 @@ app.get('/*', (req, res, next) => {
   res.end(htmlTemplate(req, reactDom, preloadedState, css, cssString, emotionCss, locale, helmet, customValues));
 });
 
-// The error handler must be before any other error middleware
+// Setup Sentry error handler
 if (Sentry) {
-  app.use(Sentry.Handlers.errorHandler());
+  Sentry.setupExpressErrorHandler(app);
 }
 console.log('Application version tag:', GIT_TAG, 'commit:', GIT_COMMIT);
 console.log(`Starting server on port ${process.env.PORT || 2048}`);
