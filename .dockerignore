@@ -1,7 +1,6 @@
 node_modules/
 dist/
 build/
-.env
 .env.example
 .travis.yml
 .docker-compose.yml
