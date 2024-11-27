@@ -137,7 +137,7 @@ const UnitView = (props) => {
     if (!stateUnit || !checkCorrectUnit(stateUnit) || !stateUnit.complete) {
       fetchSelectedUnit(unitId, (unit) => {
         setUnit(unit);
-        if (unit?.keywords?.fi?.includes('kuuluvuuskartta')) {
+        if (unit?.keywords?.fi?.some(keyword => keyword.toLowerCase() === 'kuuluvuuskartta')) {
           fetchHearingMaps(unitId);
         }
       });
