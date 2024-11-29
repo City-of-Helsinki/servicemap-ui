@@ -99,10 +99,12 @@ const AddressView = ({ embed = false }) => {
         setIsFetchingDistricts(false);
       });
   };
-
-  const fetchUnits = (lnglat) => {
+  
+  const fetchUnits = (lnglat, distance = 100) => {
+    // By default, fetch units within 100 meters but if there are less than 50 units,
+    // fetch units within 500 meters
     setIsFetchingUnits(true);
-    fetchAddressUnits(lnglat)
+    fetchAddressUnits(lnglat, distance)
       .then(data => {
         const units = data?.results || [];
         units.forEach((unit) => {
@@ -110,6 +112,10 @@ const AddressView = ({ embed = false }) => {
         });
         dispatch(setAddressUnits(units));
         setIsFetchingUnits(false);
+
+        if (units.length < 50 && distance === 100) {
+          fetchUnits(lnglat, 500);
+        }
       });
   };
 
