@@ -1,9 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, useIntl } from 'react-intl';
-import {
-  InputBase, IconButton, Paper, List, ListItem, Typography, ButtonBase,
-} from '@mui/material';
+import { InputBase, IconButton, Paper, List, ListItemButton, Typography, ButtonBase } from '@mui/material';
 import { Cancel, Home } from '@mui/icons-material';
 import { useDispatch, useSelector } from 'react-redux';
 import { visuallyHidden } from '@mui/utils';
@@ -18,7 +16,7 @@ import ServiceMapAPI from '../../utils/newFetch/ServiceMapAPI';
 import { getAddressText } from '../../utils/address';
 import { focusToPosition } from '../../views/MapView/utils/mapActions';
 
-const AddressSearchBar = ({ title, handleAddressChange }) => {
+const AddressSearchBar = ({ title = null, handleAddressChange }) => {
   const intl = useIntl();
   const getLocaleText = useLocaleText();
   const dispatch = useDispatch();
@@ -218,21 +216,20 @@ const AddressSearchBar = ({ title, handleAddressChange }) => {
           <Paper>
             <List role="listbox" id="address-results">
               {addressResults.map((address, i) => (
-                <ListItem
+                <ListItemButton
                   tabIndex={-1}
                   id={`address-suggestion${i}`}
                   data-sm="AddressSuggestion"
                   role="option"
                   selected={i === resultIndex}
                   key={getAddressText(address, getLocaleText)}
-                  button
                   onClick={() => handleAddressSelect(address)}
                   onKeyDown={keyboardHandler(() => handleAddressSelect(address), ['space', 'enter'])}
                 >
                   <Typography>
                     {getAddressText(address, getLocaleText)}
                   </Typography>
-                </ListItem>
+                </ListItemButton>
               ))}
             </List>
           </Paper>
@@ -300,10 +297,6 @@ const StyledIconButton = styled(IconButton)(({ theme }) => ({
 AddressSearchBar.propTypes = {
   handleAddressChange: PropTypes.func.isRequired,
   title: PropTypes.objectOf(PropTypes.any),
-};
-
-AddressSearchBar.defaultProps = {
-  title: null,
 };
 
 export default AddressSearchBar;

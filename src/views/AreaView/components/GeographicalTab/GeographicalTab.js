@@ -39,7 +39,7 @@ import {
 } from '../styled/styled';
 
 const GeographicalTab = ({
-  initialOpenItems,
+  initialOpenItems = [],
   clearRadioButtonValue,
 }) => {
   const dispatch = useDispatch();
@@ -209,10 +209,6 @@ const StyledFormatListBulleted = styled(FormatListBulleted)(({ theme }) => ({
 
 GeographicalTab.propTypes = {
   initialOpenItems: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
-};
-
-GeographicalTab.defaultProps = {
-  initialOpenItems: [],
 };
 
 export default React.memo(GeographicalTab);

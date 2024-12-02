@@ -33,12 +33,12 @@ import { getFullHistory } from './previousSearchData';
 let blurTimeout = null;
 
 const SearchBar = ({
-  background,
-  className,
-  hideBackButton,
-  isSticky,
-  header,
-  margin,
+  background = 'default',
+  className = '',
+  hideBackButton = false,
+  isSticky = null,
+  header = false,
+  margin = false,
 }) => {
   const blurDelay = 150;
   const rootClass = 'SearchBar';
@@ -640,15 +640,6 @@ SearchBar.propTypes = {
   hideBackButton: PropTypes.bool,
   isSticky: PropTypes.number,
   margin: PropTypes.bool,
-};
-
-SearchBar.defaultProps = {
-  background: 'default',
-  className: '',
-  header: false,
-  hideBackButton: false,
-  isSticky: null,
-  margin: false,
 };
 
 export default SearchBar;

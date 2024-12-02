@@ -52,7 +52,7 @@ const setupTests = () => {
 setupTests();
 
 // Handle sitemap creation
-  if (sitemapActive()) {
+if (sitemapActive()) {
   // Generate sitemap on start
   generateSitemap();
   // Update sitemap every monday
@@ -70,10 +70,6 @@ const supportedLanguages = config.supportedLanguages;
 // This is required for proxy setups to work in production
 app.set('trust proxy', true);
 
-// The request handler must be the first middleware on the app
-if (Sentry) {
-  app.use(Sentry.Handlers.requestHandler());
-}
 // Add static folder
 app.use(express.static(path.resolve(__dirname, 'src')));
 
@@ -151,9 +147,9 @@ app.get('/*', (req, res, next) => {
   res.end(htmlTemplate(req, reactDom, preloadedState, css, cssString, emotionCss, locale, helmet, customValues));
 });
 
-// The error handler must be before any other error middleware
+// Setup Sentry error handler
 if (Sentry) {
-  app.use(Sentry.Handlers.errorHandler());
+  Sentry.setupExpressErrorHandler(app);
 }
 console.log('Application version tag:', GIT_TAG, 'commit:', GIT_COMMIT);
 console.log(`Starting server on port ${process.env.PORT || 2048}`);
@@ -172,13 +168,13 @@ const htmlTemplate = (req, reactDom, preloadedState, css, cssString, emotionCss,
     ${emotionCss}
     <!-- jss-insertion-point -->
     <style id="jss-server-side">${cssString}</style>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
-    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
     crossorigin=""
       />
     <script
-      src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-      integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
       crossorigin="">
     </script>
     <style>
@@ -221,6 +217,7 @@ const htmlTemplate = (req, reactDom, preloadedState, css, cssString, emotionCss,
         window.nodeEnvSettings.MATOMO_NO_RESULTS_DIMENSION_ID = "${process.env.MATOMO_NO_RESULTS_DIMENSION_ID}";
         window.nodeEnvSettings.MATOMO_URL = "${process.env.MATOMO_URL}";
         window.nodeEnvSettings.MATOMO_SITE_ID = "${process.env.MATOMO_SITE_ID}";
+        window.nodeEnvSettings.MATOMO_ENABLED = "${process.env.MATOMO_ENABLED}";
         window.nodeEnvSettings.MODE = "${process.env.MODE}";
         window.nodeEnvSettings.INITIAL_MAP_POSITION = "${customValues.initialMapPosition}";
         window.nodeEnvSettings.SERVICE_MAP_URL = "${process.env.SERVICE_MAP_URL}";
@@ -258,6 +255,7 @@ const htmlTemplate = (req, reactDom, preloadedState, css, cssString, emotionCss,
         window.nodeEnvSettings.SLOW_FETCH_MESSAGE_TIMEOUT = "${process.env.SLOW_FETCH_MESSAGE_TIMEOUT}";
 
         window.nodeEnvSettings.FEATURE_SERVICEMAP_PAGE_TRACKING = "${process.env.FEATURE_SERVICEMAP_PAGE_TRACKING}";
+        window.nodeEnvSettings.FEATURE_SM_COOKIES = "${process.env.FEATURE_SM_COOKIES}";
 
         window.nodeEnvSettings.appVersion = {};
         window.nodeEnvSettings.appVersion.tag = "${GIT_TAG}";

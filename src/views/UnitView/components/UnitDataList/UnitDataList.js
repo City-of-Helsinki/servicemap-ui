@@ -13,7 +13,11 @@ import { selectNavigator } from '../../../../redux/selectors/general';
 import { getSelectedUnit } from '../../../../redux/selectors/selectedUnit';
 
 const UnitDataList = ({
-  data, listLength, type, period, disableTitle,
+  data = null,
+  listLength = 5,
+  type,
+  period = null,
+  disableTitle = false,
 }) => {
   const location = useLocation();
   const navigator = useSelector(selectNavigator);
@@ -105,13 +109,6 @@ UnitDataList.propTypes = {
   type: PropTypes.string.isRequired,
   period: PropTypes.string,
   disableTitle: PropTypes.bool,
-};
-
-UnitDataList.defaultProps = {
-  data: null,
-  listLength: 5,
-  period: null,
-  disableTitle: false,
 };
 
 export default UnitDataList;

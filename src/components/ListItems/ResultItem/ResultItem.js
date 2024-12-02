@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import {
-  ListItem, ListItemIcon, Typography, Divider,
+  ListItemButton, ListItemIcon, Typography, Divider,
 } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
 import { useSelector } from 'react-redux';
@@ -14,21 +14,21 @@ import locationIconContrastHover from '../../../assets/icons/LocationHoverContra
 import { selectThemeMode } from '../../../redux/selectors/user';
 
 const ResultItem = ({
-  bottomHighlight,
-  bottomText,
-  onClick,
-  icon,
-  subtitle,
+  bottomHighlight = false,
+  bottomText = null,
+  onClick = () => {},
+  icon = null,
+  subtitle = null,
   title,
-  distance,
-  divider,
-  role,
-  srLabel,
-  selected,
-  padded,
-  extendedClasses,
-  unitId,
-  simpleItem,
+  distance = null,
+  divider = true,
+  role = 'link',
+  srLabel = null,
+  selected = false,
+  padded = false,
+  extendedClasses = null,
+  unitId = null,
+  simpleItem = false,
   ...rest
 }) => {
   const themeMode = useSelector(selectThemeMode);
@@ -81,10 +81,9 @@ const ResultItem = ({
 
   return (
     <>
-      <StyledListItem
+      <StyledListItemButton
         data-sm="ResultItemComponent"
         selected={selected}
-        button
         role={role}
         component="li"
         tabIndex={0}
@@ -188,7 +187,7 @@ const ResultItem = ({
             )
           }
         </StyledItemTextContainer>
-      </StyledListItem>
+      </StyledListItemButton>
       {divider && (
         <li aria-hidden>
           <StyledDivider
@@ -212,7 +211,7 @@ const StyledDivider = styled(Divider)(({ theme, simpleitem }) => (
     }
 ));
 
-const StyledListItem = styled(ListItem)(({ theme }) => ({
+const StyledListItemButton = styled(ListItemButton)(({ theme }) => ({
   padding: theme.spacing(1),
 }));
 
@@ -336,21 +335,4 @@ ResultItem.propTypes = {
   unitId: PropTypes.number,
   padded: PropTypes.bool,
   simpleItem: PropTypes.bool,
-};
-
-ResultItem.defaultProps = {
-  bottomHighlight: false,
-  bottomText: null,
-  extendedClasses: null,
-  unitId: null,
-  icon: null,
-  onClick: () => {},
-  subtitle: null,
-  distance: null,
-  divider: true,
-  role: 'link',
-  srLabel: null,
-  selected: false,
-  padded: false,
-  simpleItem: false,
 };

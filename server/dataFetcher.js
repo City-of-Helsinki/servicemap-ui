@@ -125,7 +125,7 @@ export const fetchSelectedUnitData = (req, res, next) => {
       }
       data.complete = true;
       store.dispatch(changeSelectedUnit(data));
-      if (data.keywords.fi?.includes('kuuluvuuskartta')) {
+      if (data.keywords.fi?.some(keyword => keyword.toLowerCase() === 'kuuluvuuskartta')) {
         const hearingMapAPI = new HearingMapAPI();
         const {
           fetchSuccess, fetchError,

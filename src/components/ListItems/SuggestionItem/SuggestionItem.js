@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import ListItem from '@mui/material/ListItem';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
 import {
-  Typography, Divider, Button,
+  Button, Divider, ListItemButton,
+  ListItemIcon, ListItemText, Typography
 } from '@mui/material';
 import { css } from '@emotion/css';
 import styled from '@emotion/styled';
@@ -15,17 +13,17 @@ import { keyboardHandler } from '../../../utils';
 
 const SuggestionItem = (props) => {
   const {
-    className,
-    divider,
+    className = null,
+    divider = false,
     text,
-    handleItemClick,
-    handleRemoveClick,
-    icon,
-    selected,
-    subtitle,
-    query,
-    role,
-    id,
+    handleItemClick = null,
+    handleRemoveClick = null,
+    icon = null,
+    selected = false,
+    subtitle = null,
+    query = null,
+    role = null,
+    id = null,
   } = props;
   const theme = useTheme();
 
@@ -69,9 +67,8 @@ const SuggestionItem = (props) => {
   });
 
   return (
-    <React.Fragment>
-      <ListItem
-        button
+    <>
+      <ListItemButton
         component="li"
         classes={{
           root: listItem,
@@ -143,13 +140,13 @@ const SuggestionItem = (props) => {
             </StyledRemoveText>
           </StyledSuggestIcon>
         )}
-      </ListItem>
+      </ListItemButton>
       {divider ? (
         <li aria-hidden>
           <StyledDivider aria-hidden />
         </li>
       ) : null}
-    </React.Fragment>
+    </>
   );
 };
 
@@ -220,17 +217,4 @@ SuggestionItem.propTypes = {
   role: PropTypes.string,
   id: PropTypes.string,
   className: PropTypes.string,
-};
-
-SuggestionItem.defaultProps = {
-  icon: null,
-  handleItemClick: null,
-  handleRemoveClick: null,
-  divider: false,
-  selected: false,
-  subtitle: null,
-  query: null,
-  role: null,
-  id: null,
-  className: null,
 };

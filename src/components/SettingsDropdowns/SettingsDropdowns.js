@@ -1,9 +1,13 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import styled from '@emotion/styled';
-import { Checkbox, ListItem, TextField, Typography } from '@mui/material';
+import {
+  Checkbox, ListItem, TextField, Typography,
+} from '@mui/material';
 import PropTypes from 'prop-types';
 import React, { useRef, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
+import { visuallyHidden } from '@mui/utils';
 import config from '../../../config';
 import { resetMobilityTreeSelections } from '../../redux/actions/mobilityTree';
 import { resetServiceTreeSelections } from '../../redux/actions/serviceTree';
@@ -29,7 +33,7 @@ import SMButton from '../ServiceMapButton';
 import constants from '../SettingsComponent/constants';
 import SMAutocomplete from '../SMAutocomplete';
 
-const SettingsDropdowns = ({ variant }) => {
+function SettingsDropdowns({ variant }) {
   const intl = useIntl();
   const dispatch = useDispatch();
   const getLocaleText = useLocaleText();
@@ -37,6 +41,8 @@ const SettingsDropdowns = ({ variant }) => {
   // Format settings from redux to easier structure
   const settingsValues = constants.convertToSettingsValues(settings);
   const [openSettings, setOpenSettings] = useState(null);
+  const [resetText, setResetText] = useState('');
+
   const highlightedOption = useRef(null);
   const themeMode = useSelector(selectThemeMode);
   const ownSettingsVariant = variant === 'ownSettings';
@@ -61,7 +67,7 @@ const SettingsDropdowns = ({ variant }) => {
     { id: organization.id, title: getLocaleText(organization.name) }
   ));
 
-  const toggleSettingsBox = (id) => {
+  const toggleSettingsBox = id => {
     if (openSettings === id) setOpenSettings(null);
     else setOpenSettings(id);
   };
@@ -70,6 +76,9 @@ const SettingsDropdowns = ({ variant }) => {
     if (!id) {
       return;
     }
+
+    setResetText('');
+
     if (category === 'mobility') {
       dispatch(setMobility(id));
       setOpenSettings(null);
@@ -122,6 +131,8 @@ const SettingsDropdowns = ({ variant }) => {
     dispatch(resetCustomPosition());
     dispatch(changeTheme('default'));
     dispatch(resetUserPosition());
+
+    setResetText(intl.formatMessage({ id: 'settings.reset_button.ariaLive' }));
   };
 
   const handleKeyboardSelect = (id, category, event) => {
@@ -171,8 +182,9 @@ const SettingsDropdowns = ({ variant }) => {
         ChipProps={{
           clickable: true, onDelete: null, variant: ownSettingsVariant ? 'outlined' : 'filled',
         }}
-        slotProps={{ 
-          popper:{ sx: { pb: 1 } } // This padding fixes the listBox position on small screens where the list is renderend to top of input
+        slotProps={{
+          // eslint-disable-next-line max-len
+          popper: { sx: { pb: 1 } }, // This padding fixes the listBox position on small screens where the list is renderend to top of input
         }}
         renderOption={(props, option) => (isSingleOption
           ? ( // Single option options box
@@ -188,12 +200,11 @@ const SettingsDropdowns = ({ variant }) => {
               />
               <Typography>{option.title}</Typography>
             </ListItem>
-          ))
-        }
+          ))}
         renderInput={({ inputProps, ...rest }) => (
           <TextField
             label={label}
-            onClick={(e) => {
+            onClick={e => {
               e?.stopPropagation();
               toggleSettingsBox(label);
             }}
@@ -222,6 +233,7 @@ const SettingsDropdowns = ({ variant }) => {
       {renderSettingsElement(citySettingsList, intl.formatMessage({ id: 'settings.choose.cities' }), 'cities')}
       {renderSettingsElement(organizationSettingsList, intl.formatMessage({ id: 'settings.choose.organization' }), 'organizations')}
       <div>
+        <Typography aria-live="polite" style={visuallyHidden}>{resetText}</Typography>
         <StyledButton
           data-sm="reset-settings-button"
           ownsettings={+ownSettingsVariant}
@@ -234,7 +246,7 @@ const SettingsDropdowns = ({ variant }) => {
       </div>
     </>
   );
-};
+}
 
 const StyledButton = styled(SMButton)(() => ({ marginRight: 0 }));
 
@@ -280,12 +292,12 @@ const StyledAutocomplete = styled(SMAutocomplete)(({ theme, ownsettings, colormo
   return { ...styles, ...ownSettingsStyles };
 });
 
-SettingsDropdowns.propTypes = {
-  variant: PropTypes.oneOf(['default', 'ownSettings']),
-};
-
 SettingsDropdowns.defaultProps = {
   variant: 'default',
+};
+
+SettingsDropdowns.propTypes = {
+  variant: PropTypes.oneOf(['default', 'ownSettings']),
 };
 
 export default SettingsDropdowns;

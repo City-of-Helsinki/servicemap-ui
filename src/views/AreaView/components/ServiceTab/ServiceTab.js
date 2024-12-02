@@ -37,8 +37,8 @@ import {
 
 const ServiceTab = (props) => {
   const {
-    selectedAddress,
-    initialOpenItems,
+    selectedAddress = null,
+    initialOpenItems = [],
   } = props;
   const dispatch = useDispatch();
   const districtData = useSelector(selectDistrictData);
@@ -272,11 +272,6 @@ const StyledListLevelTwo = styled(List)(() => ({
 ServiceTab.propTypes = {
   initialOpenItems: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
   selectedAddress: PropTypes.objectOf(PropTypes.any),
-};
-
-ServiceTab.defaultProps = {
-  initialOpenItems: [],
-  selectedAddress: null,
 };
 
 export default React.memo(ServiceTab);

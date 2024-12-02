@@ -3,7 +3,7 @@ import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import 'whatwg-fetch';
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { hydrateRoot } from 'react-dom/client';
 import * as Sentry from "@sentry/react";
 import { Helmet } from 'react-helmet';
 import { createStore, applyMiddleware } from 'redux';
@@ -62,8 +62,6 @@ const preloadedState = getPreloadedState();
 // Create Redux store with initial state
 const store = createStore(rootReducer, preloadedState, applyMiddleware(thunk));
 
-const app = document.getElementById('app');
-
 const insertCss = (...styles) => {
   const removeCss = styles.map(style => style._insertCss());
   return () => removeCss.forEach(dispose => dispose());
@@ -100,7 +98,4 @@ function Main() {
   );
 }
 
-
-ReactDOM.hydrate(
-  <Main />, app,
-);
+hydrateRoot(document.getElementById('app'), <Main />);

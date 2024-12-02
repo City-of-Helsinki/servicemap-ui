@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable react/forbid-prop-types */
 import { css, Global } from '@emotion/react';
 import '@formatjs/intl-pluralrules/dist/locale-data/en';
@@ -15,15 +16,16 @@ import { StyledEngineProvider } from '@mui/material';
 import hdsStyle from 'hds-design-tokens';
 import withStyles from 'isomorphic-style-loader/withStyles';
 import PropTypes from 'prop-types';
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { Helmet } from 'react-helmet';
 import { IntlProvider, useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import {
+  BrowserRouter, Route, Switch, useLocation,
+} from 'react-router-dom';
 import appStyles from './App.css';
 import ogImage from './assets/images/servicemap-meta-img.png';
 import { DataFetcher, Navigator } from './components';
-import SMCookies from './components/SMCookies/SMCookies';
 import HSLFonts from './hsl-icons.css';
 import styles from './index.css';
 import DefaultLayout from './layouts';
@@ -35,9 +37,19 @@ import ThemeWrapper from './themes/ThemeWrapper';
 import isClient from './utils';
 import LocaleUtility from './utils/locale';
 import EmbedderView from './views/EmbedderView';
+import useMobileStatus from './utils/isMobile';
+import { COOKIE_MODAL_ROOT_ID } from './utils/constants';
+import MatomoTracker from './components/Matomo/MatomoTracker';
+import MatomoContext from './components/Matomo/matomo-context';
+import config from '../config';
+import useMatomo from './components/Matomo/hooks/useMatomo';
+import { selectMobility, selectSenses } from './redux/selectors/settings';
+import SMCookies from './components/SMCookies/SMCookies';
+import { isEmbed } from './utils/path';
+import { servicemapTrackPageView } from './utils/tracking';
 
 // General meta tags for app
-const MetaTags = () => {
+function MetaTags() {
   const intl = useIntl();
   return (
     <Helmet>
@@ -51,11 +63,15 @@ const MetaTags = () => {
       <meta name="twitter:image:alt" data-react-helmet="true" content={intl.formatMessage({ id: 'app.og.image.alt' })} />
     </Helmet>
   );
-};
+}
 
 function App() {
   const locale = useSelector(getLocale);
   const intlData = LocaleUtility.intlData(locale);
+  const { trackPageView } = useMatomo();
+  const location = useLocation();
+  const senses = useSelector(selectSenses);
+  const mobility = useSelector(selectMobility);
 
   // Remove the server-side injected CSS.
   useEffect(() => {
@@ -65,6 +81,25 @@ function App() {
     }
   }, []);
 
+  const isMobile = useMobileStatus();
+  useEffect(() => {
+    // Simple custom servicemap page view tracking
+    servicemapTrackPageView();
+
+    if (!isEmbed()) {
+      trackPageView({
+        href: window.location.href,
+        ...config.matomoMobilityDimensionID && config.matomoSensesDimensionID && ({
+          customDimensions: [
+            { id: config.matomoMobilityDimensionID, value: mobility || '' },
+            { id: config.matomoSensesDimensionID, value: senses?.join(',') },
+          ],
+        }),
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.pathname, location.search, mobility, senses]);
+
   return (
     <StyledEngineProvider>
       <Global
@@ -73,6 +108,11 @@ function App() {
           '#cookie-consent-language-selector-button': {
             display: 'none',
           },
+          ...isMobile && ({
+            [`#${COOKIE_MODAL_ROOT_ID} > div > div`]: {
+              bottom: '4.875rem',
+            },
+          }),
         })}
       />
       <ThemeWrapper>
@@ -97,14 +137,34 @@ function App() {
 }
 
 // Wrapper to get language route
-const LanguageWrapper = () => {
+function LanguageWrapper() {
+  const matomoTracker = useMemo(() => {
+    if (config.matomoUrl && config.matomoSiteId && config.matomoEnabled) {
+      return new MatomoTracker({
+        urlBase: `//${config.matomoUrl}/`,
+        siteId: config.matomoSiteId,
+        trackerUrl: 'tracker.php',
+        srcUrl: 'piwik.min.js',
+        enabled: config.matomoEnabled === 'true' && !isEmbed(),
+        linkTracking: false,
+        configurations: {
+          requireCookieConsent: undefined,
+        },
+      });
+    }
+
+    return null;
+  }, []);
+
   if (isClient()) {
     return (
-      <BrowserRouter>
-        <Switch>
-          <Route path="/:lng" component={App} />
-        </Switch>
-      </BrowserRouter>
+      <MatomoContext.Provider value={matomoTracker}>
+        <BrowserRouter>
+          <Switch>
+            <Route path="/:lng" component={App} />
+          </Switch>
+        </BrowserRouter>
+      </MatomoContext.Provider>
     );
   }
 
@@ -113,8 +173,9 @@ const LanguageWrapper = () => {
       <Route path="/:lng" component={App} />
     </Switch>
   );
-};
+}
 
+// eslint-disable-next-line max-len
 export default withStyles(styles, appStyles, SMFonts, HSLFonts, printCSS, hdsStyle)(LanguageWrapper);
 
 // Typechecking

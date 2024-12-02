@@ -1,7 +1,7 @@
 /* eslint-disable */
 import { Selector } from 'testcafe';
 import { waitForReact } from 'testcafe-react-selectors';
-import { getBaseUrl, getLocation } from '../utility';
+import { acceptCookieConcent, getBaseUrl, getLocation } from '../utility';
 import {
   accordionSelector,
   addressSearchBarInput,
@@ -12,8 +12,9 @@ import {
 
 fixture`Area view test`
   .page`${getBaseUrl()}/fi/area`
-  .beforeEach(async () => {
+  .beforeEach(async (t) => {
     await waitForReact();
+    await acceptCookieConcent(t);
   });
 
 const drawerButtons = Selector('[data-sm="ServiceTabComponent"]').find(accordionSelector);

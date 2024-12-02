@@ -180,7 +180,4 @@ TransitStops.propTypes = {
   mapObject: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
-TransitStops.defaultProps = {
-};
-
 export default TransitStops;

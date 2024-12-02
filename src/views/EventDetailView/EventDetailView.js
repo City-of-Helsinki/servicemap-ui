@@ -20,14 +20,14 @@ import useMobileStatus from '../../utils/isMobile';
 
 const EventDetailView = (props) => {
   const {
-    event,
+    event = null,
     changeSelectedEvent,
     fetchSelectedUnit,
     match,
-    selectedUnit,
-    map,
+    selectedUnit = null,
+    map = null,
     intl,
-    embed,
+    embed = false,
   } = props;
 
   const isMobile = useMobileStatus();
@@ -241,13 +241,6 @@ EventDetailView.propTypes = {
   match: PropTypes.objectOf(PropTypes.any).isRequired,
   intl: PropTypes.objectOf(PropTypes.any).isRequired,
   selectedUnit: PropTypes.objectOf(PropTypes.any),
-};
-
-EventDetailView.defaultProps = {
-  embed: false,
-  event: null,
-  map: null,
-  selectedUnit: null,
 };
 
 export default EventDetailView;

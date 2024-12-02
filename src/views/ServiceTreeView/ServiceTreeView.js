@@ -1,11 +1,12 @@
-import { css } from '@emotion/css';
+/* eslint-disable react/forbid-prop-types */
 import styled from '@emotion/styled';
 import { Search } from '@mui/icons-material';
-import { Checkbox, List, Typography } from '@mui/material';
-import { useTheme } from '@mui/styles';
+import { List, Typography } from '@mui/material';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Checkbox as HDSCheckbox } from 'hds-react';
+import { visuallyHidden } from '@mui/utils';
 import config from '../../../config';
 import { SMAccordion, SMButton, TitleBar } from '../../components';
 import { setMobilityTree } from '../../redux/actions/mobilityTree';
@@ -44,7 +45,7 @@ const getVariantDependentVariables = (variant, serviceTreeServices, mobilityTree
   };
 };
 
-const ServiceTreeView = ({ intl, variant }) => {
+function ServiceTreeView({ intl, variant }) {
   const navigator = useSelector(selectNavigator);
   const citySettings = useSelector(selectSelectedCities);
   const organizationSettings = useSelector(selectSelectedOrganizations);
@@ -61,7 +62,6 @@ const ServiceTreeView = ({ intl, variant }) => {
   const dispatch = useDispatch();
   const getLocaleText = useLocaleText();
   const isMobile = useMobileStatus();
-  const theme = useTheme();
   const {
     serviceApi,
     titleKey,
@@ -88,7 +88,7 @@ const ServiceTreeView = ({ intl, variant }) => {
       const nodeObjects = node.children.map(child => services.find(e => e.id === child));
       nodes.push(...nodeObjects);
       // Check if any child nodes are opened to repeat this function on them
-      nodeObjects.forEach((obj) => {
+      nodeObjects.forEach(obj => {
         if (obj?.id && opened.some(item => item === obj.id)) {
           nodes.push(...checkChildNodes(obj));
         }
@@ -108,7 +108,9 @@ const ServiceTreeView = ({ intl, variant }) => {
   const fetchNodeCounts = async (nodes, fullSearch) => {
     const idList = nodes.map(node => node.id);
     // Do not fetch unit counts again for nodes that have the data, unless specified by fullSearch
-    const filteredIdList = fullSearch ? idList : idList.filter(id => !unitCounts.some(count => count.id === id))
+    const filteredIdList = fullSearch ? idList : idList
+      .filter(id => !unitCounts.some(count => count.id === id));
+
     const smAPI = new ServiceMapAPI();
     const fetchOptions = {};
     if (organizationSettings.length) {
@@ -119,17 +121,17 @@ const ServiceTreeView = ({ intl, variant }) => {
       fetchOptions.municipality = citySettings;
     }
     const counts = await Promise.all(
-      filteredIdList.map(async (id) => {
+      filteredIdList.map(async id => {
         const count = await smAPI.serviceNodeSearch(variant, id, fetchOptions, true);
         return { id, count };
       }),
     );
     if (fullSearch) {
-      setUnitCounts(counts)
+      setUnitCounts(counts);
     } else {
-      setUnitCounts([...unitCounts, ...counts])
+      setUnitCounts([...unitCounts, ...counts]);
     }
-  }
+  };
 
   const setInitialServices = () => {
     // Fetch initially shown service nodes when first entering the pag
@@ -142,11 +144,11 @@ const ServiceTreeView = ({ intl, variant }) => {
       });
   };
 
-  const fetchChildServices = async (service) => {
+  const fetchChildServices = async service => {
     // Fetch and set to state the child nodes of the opened node
     fetch(`${serviceApi}?parent=${service}&page=1&page_size=1000`)
       .then(response => response.json())
-      .then((data) => {
+      .then(data => {
         setServices([...services, ...data.results]);
         if (variant === SERVICE_TREE) {
           fetchNodeCounts(data.results);
@@ -183,12 +185,11 @@ const ServiceTreeView = ({ intl, variant }) => {
     }
     if (child?.children) {
       data.push(...child.children);
-      child.children.forEach((c) => {
+      child.children.forEach(c => {
         getSelectedChildNodes(c, data);
       });
     } return data;
   };
-
 
   const handleExpand = (service, isOpen) => {
     if (isOpen) { // Close expanded item
@@ -215,7 +216,7 @@ const ServiceTreeView = ({ intl, variant }) => {
         setSelected(selected.filter(element => element.id !== item.id));
       }
 
-    // If checbox is not checked, add checkbox selections
+      // If checbox is not checked, add checkbox selections
     } else {
       // Select all visible child nodes as well
       let newState = [item, ...checkChildNodes(item)];
@@ -280,6 +281,7 @@ const ServiceTreeView = ({ intl, variant }) => {
     if (!services.length) {
       setInitialServices();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -287,6 +289,7 @@ const ServiceTreeView = ({ intl, variant }) => {
       setUnitCounts([]);
       fetchNodeCounts(services, true);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [citySettings, organizationSettings]);
 
   function calculateTitle(item) {
@@ -295,7 +298,7 @@ const ServiceTreeView = ({ intl, variant }) => {
     }
 
     // Calculate count
-    const countItem = unitCounts.find(countItem => countItem.id === item.id)
+    const countItem = unitCounts.find(countItem => countItem.id === item.id);
     return `${getLocaleText(item.name)} ${countItem !== null && countItem !== undefined ? `(${countItem.count})` : ''}`;
   }
 
@@ -314,10 +317,6 @@ const ServiceTreeView = ({ intl, variant }) => {
     const childIsSelected = checkChildNodes(item)
       .some(node => selected.some(item => item.id === node.id));
 
-    const checkBoxFocusClass = css({
-      boxShadow: `inset 0 0 0 4px ${theme.palette.primary.main} !important`,
-    });
-
     return (
       <li key={item.id}>
         <StyledAccordion
@@ -331,14 +330,14 @@ const ServiceTreeView = ({ intl, variant }) => {
               {level > 0 && (drawOuterLines(level, last, item.id))}
               <StyledCheckBox>
                 {drawCheckboxLines(isOpen, level, item.id)}
-                <Checkbox
-                  focusVisibleClassName={checkBoxFocusClass}
-                  inputProps={{ title: checkboxSrTitle }}
-                  onClick={e => handleCheckboxClick(e, item)}
-                  icon={<StyledCheckBoxIcon />}
-                  color="primary"
+                <HDSCheckbox
+                  id={item.id}
+                  name={item.id}
+                  label={<Typography component="span" style={visuallyHidden}>{checkboxSrTitle}</Typography>}
                   checked={isSelected}
                   indeterminate={childIsSelected && !isSelected}
+                  onChange={e => handleCheckboxClick(e, item)}
+                  style={{ '--size': '1rem' }}
                 />
               </StyledCheckBox>
             </>
@@ -381,7 +380,7 @@ const ServiceTreeView = ({ intl, variant }) => {
 
   // If node's parent is also checked, add only parent to list of selected nodes for search
   const selectedList = [];
-  selected.forEach((e) => {
+  selected.forEach(e => {
     if (!selected.some(i => i.id === e.parent)) {
       selectedList.push(e);
     }
@@ -421,7 +420,7 @@ const ServiceTreeView = ({ intl, variant }) => {
       </StyledFloatingDiv>
     </StyledFlexContainer>
   );
-};
+}
 
 const StyledFlexContainer = styled.div(() => ({
   display: 'flex',
@@ -472,15 +471,6 @@ const StyledGuidanceInfoText = styled(Typography)(({ theme }) => ({
   paddingTop: theme.spacing(1),
   color: '#fff',
   textAlign: 'left',
-}));
-
-const StyledCheckBoxIcon = styled('span')(() => ({
-  margin: -1,
-  width: 15,
-  height: 15,
-  backgroundColor: '#fff',
-  border: '1px solid #323232;',
-  borderRadius: 1,
 }));
 
 const StyledCheckBox = styled('div')(() => ({

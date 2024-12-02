@@ -1,8 +1,11 @@
 import styled from '@emotion/styled';
-import { FormControl, FormControlLabel, Radio, RadioGroup, Typography } from '@mui/material';
+import {
+  FormControl, FormControlLabel, Radio, RadioGroup, Typography,
+} from '@mui/material';
 import React from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
 import { setMapType } from '../../redux/actions/settings';
 import { selectMapRef } from '../../redux/selectors/general';
 import { selectMapType } from '../../redux/selectors/settings';
@@ -12,7 +15,7 @@ import MobileSettingsHeader from '../MobileSettingsHeader/MobileSettingsHeader';
 import SMButton from '../ServiceMapButton';
 import ExternalMapUrlCreator from './externalMapUrlCreator';
 
-const MapSettings = () => {
+function MapSettings({ onClose }) {
   const intl = useIntl();
   const dispatch = useDispatch();
 
@@ -21,7 +24,7 @@ const MapSettings = () => {
   const locale = useSelector(getLocale);
 
   const mapSettings = {};
-  SettingsUtility.mapSettings.forEach((setting) => {
+  SettingsUtility.mapSettings.forEach(setting => {
     mapSettings[setting] = {
       action: () => setMapType(setting),
       labelId: `settings.map.${setting}`,
@@ -42,18 +45,18 @@ const MapSettings = () => {
   const openEspooUrl = () => {
     const { lng, lat } = map.getCenter();
     const urlToEspooMap = ExternalMapUrlCreator.createEspoo3DMapUrl(lng, lat, locale);
-    window.open(urlToEspooMap)
-  }
+    window.open(urlToEspooMap);
+  };
 
   const openVantaaUrl = () => {
     const urlToVantaaMap = ExternalMapUrlCreator.createVantaa3DMapUrl(locale);
-    window.open(urlToVantaaMap)
-  }
+    window.open(urlToVantaaMap);
+  };
 
   return (
     <>
       <FormControl sx={{ textAlign: 'left', pt: 3 }} component="fieldset" fullWidth>
-        <MobileSettingsHeader textId="settings.map.title" />
+        <MobileSettingsHeader textId="settings.map.title" onClose={onClose} />
         <Typography><FormattedMessage id="settings.map.info" /></Typography>
         <RadioGroup
           aria-label={intl.formatMessage({ id: 'settings.map.title' })}
@@ -62,23 +65,25 @@ const MapSettings = () => {
           onChange={(event, value) => dispatch(setMapType(value))}
           value={mapType}
         >
-          {Object.keys(mapSettings).map((key) => {
+          {Object.keys(mapSettings).map(key => {
             if (Object.prototype.hasOwnProperty.call(mapSettings, key)) {
               const item = mapSettings[key];
-              return (<FormControlLabel
-                value={key}
-                key={key}
-                control={(<Radio id={`${key}-map-type-radio`} color="primary" />)}
-                labelPlacement="end"
-                label={<FormattedMessage id={item.labelId} />}
-              />);
+              return (
+                <FormControlLabel
+                  value={key}
+                  key={key}
+                  control={(<Radio id={`${key}-map-type-radio`} color="primary" />)}
+                  labelPlacement="end"
+                  label={<FormattedMessage id={item.labelId} />}
+                />
+              );
             }
             return null;
           })}
         </RadioGroup>
       </FormControl>
       <Styled3DMapContainer>
-        <MobileSettingsHeader textId="settings.3dmap.title" />
+        <MobileSettingsHeader textId="settings.3dmap.title" onClose={onClose} />
         <Styled3DMapLinkButton onClick={openHelsinkiUrl} role="link" data-sm="3dMapLink">
           <Typography><FormattedMessage id="settings.3dmap.link.helsinki" /></Typography>
         </Styled3DMapLinkButton>
@@ -87,11 +92,11 @@ const MapSettings = () => {
         </Styled3DMapLinkButton>
         <Styled3DMapLinkButton onClick={openVantaaUrl} role="link" data-sm="3dMapLink">
           <Typography><FormattedMessage id="settings.3dmap.link.vantaa" /></Typography>
-        </Styled3DMapLinkButton>  
+        </Styled3DMapLinkButton>
       </Styled3DMapContainer>
     </>
   );
-};
+}
 
 const Styled3DMapContainer = styled('div')(({ theme }) => ({
   paddingTop: theme.spacing(3),
@@ -103,5 +108,13 @@ const Styled3DMapContainer = styled('div')(({ theme }) => ({
 const Styled3DMapLinkButton = styled(SMButton)(({ theme }) => ({
   marginTop: theme.spacing(2),
 }));
+
+MapSettings.propTypes = {
+  onClose: PropTypes.func,
+};
+
+MapSettings.defaultProps = {
+  onClose: null,
+};
 
 export default MapSettings;

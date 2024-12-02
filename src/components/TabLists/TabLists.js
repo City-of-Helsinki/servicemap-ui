@@ -1,3 +1,4 @@
+/* eslint-disable react/forbid-prop-types */
 /* eslint-disable react/no-multi-comp */
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
@@ -16,14 +17,14 @@ import config from '../../../config';
 import useMobileStatus from '../../utils/isMobile';
 import PaginatedList from '../Lists/PaginatedList';
 
-const TabLists = ({
+function TabLists({
   location,
   data,
   onTabChange,
   focusClass,
   focusText,
   headerComponents,
-}) => {
+}) {
   const isMobile = useMobileStatus();
   const theme = useTheme();
   const navigator = useSelector(selectNavigator);
@@ -154,7 +155,7 @@ const TabLists = ({
   const renderHeader = () => {
     let fullData = [];
 
-    data.forEach((element) => {
+    data.forEach(element => {
       if (element.data && !element.noOrderer) {
         fullData = [...fullData, ...element.data];
       }
@@ -216,16 +217,16 @@ const TabLists = ({
         }
         {
           fullData.length > 0 && (
-            <>
-              <ResultOrderer disabled={disabled} />
-            </>
+            <ResultOrderer disabled={disabled} />
           )
         }
         {
           focusClass
           && focusText
           && (
-            <Typography style={visuallyHidden} className={focusClass} tabIndex={-1}>{focusText}</Typography>
+            <Typography style={visuallyHidden} className={focusClass} tabIndex={-1}>
+              {focusText}
+            </Typography>
           )
         }
         <StyledTabs
@@ -237,43 +238,46 @@ const TabLists = ({
           style={styles}
         >
           {
-              filteredData.map((item, index) => {
-                if (item.data && item.data.length > 0) {
-                  const label = `${item.title} ${item.component ? '' : `(${item.data.length})`}`.trim();
-                  const tabId = `${item.title}-${item.data.length}`;
-                  return (
-                    <StyledTab
-                      id={tabId}
-                      key={tabId}
-                      aria-controls={`tab-content-${index}`}
-                      aria-label={item.ariaLabel ? item.ariaLabel : null}
-                      classes={{
-                        root: tabRootClass,
-                        selected: selectedClass,
-                      }}
-                      label={label}
-                      onClick={item.onClick ? () => item.onClick(index) : null}
-                      focusVisibleClassName={tabFocusClass}
-                    />
-                  );
-                }
+            filteredData.map((item, index) => {
+              if (item.data && item.data.length > 0) {
+                const label = `${item.title} ${item.component ? '' : `(${item.data.length})`}`.trim();
+                const tabId = `${item.title}-${item.data.length}`;
+
                 return (
-                  <Tab
-                    id={`Tab${index}`}
-                    key={`${item.title}`}
+                  <StyledTab
+                    id={tabId}
+                    key={tabId}
+                    ref={item.ref}
                     aria-controls={`tab-content-${index}`}
                     aria-label={item.ariaLabel ? item.ariaLabel : null}
                     classes={{
                       root: tabRootClass,
                       selected: selectedClass,
                     }}
-                    label={`${item.title}`}
+                    label={label}
                     onClick={item.onClick ? () => item.onClick(index) : null}
                     focusVisibleClassName={tabFocusClass}
                   />
                 );
-              })
-            }
+              }
+              return (
+                <Tab
+                  id={`Tab${index}`}
+                  key={`${item.title}`}
+                  ref={item.ref}
+                  aria-controls={`tab-content-${index}`}
+                  aria-label={item.ariaLabel ? item.ariaLabel : null}
+                  classes={{
+                    root: tabRootClass,
+                    selected: selectedClass,
+                  }}
+                  label={`${item.title}`}
+                  onClick={item.onClick ? () => item.onClick(index) : null}
+                  focusVisibleClassName={tabFocusClass}
+                />
+              );
+            })
+          }
         </StyledTabs>
       </>
     );
@@ -281,8 +285,8 @@ const TabLists = ({
 
   useEffect(() => {
     calculateHeaderStylings();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isMobile]);
-
 
   useEffect(() => {
     // Change tab if selected tab is changed on url
@@ -290,8 +294,8 @@ const TabLists = ({
     if (tabFromUrl !== tabIndex) {
       handleTabChange(null, tabFromUrl);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location]);
-
 
   const render = () => (
     <>
@@ -359,7 +363,7 @@ const TabLists = ({
   );
 
   return render();
-};
+}
 
 const StyledTabs = styled(Tabs)(({ theme }) => ({
   position: 'sticky',
@@ -405,10 +409,10 @@ TabLists.propTypes = {
 };
 
 TabLists.defaultProps = {
-  headerComponents: null,
+  onTabChange: null,
   focusClass: null,
   focusText: null,
-  onTabChange: null,
+  headerComponents: null,
 };
 
 export default TabLists;

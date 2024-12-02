@@ -11,22 +11,24 @@ import {
 import { ArrowForward } from '@mui/icons-material';
 import styled from '@emotion/styled';
 
-const CardSmall = ({ headerMessageID, messageID, onClick, image }) => {
+function CardSmall({
+  headerMessageID, messageID, onClick, image,
+}) {
   return (
     <ButtonBase onClick={onClick} role="link">
       <StyledCard>
         <StyledCardMedia
-          component='img'
-          height='auto'
+          component="img"
+          height="auto"
           image={image}
           aria-hidden
         />
         <StyledCardContent>
           <StyledTextContainer>
-            <Typography variant='subtitle1'>
+            <Typography variant="subtitle1" component="h3">
               <FormattedMessage id={headerMessageID} />
             </Typography>
-            <Typography variant='body2'>
+            <Typography variant="body2">
               <FormattedMessage id={messageID} />
             </Typography>
           </StyledTextContainer>
@@ -35,7 +37,7 @@ const CardSmall = ({ headerMessageID, messageID, onClick, image }) => {
       </StyledCard>
     </ButtonBase>
   );
-};
+}
 
 const StyledCard = styled(Card)(({ theme }) => ({
   display: 'flex',
@@ -54,7 +56,7 @@ const StyledCard = styled(Card)(({ theme }) => ({
   },
 }));
 
-const StyledCardMedia = styled(CardMedia)(({ theme }) => ({
+const StyledCardMedia = styled(CardMedia)(() => ({
   width: 80,
 }));
 
@@ -72,7 +74,7 @@ const StyledTextContainer = styled.div(({ theme }) => ({
   paddingRight: theme.spacing(1),
 }));
 
-const StyledArrowForward = styled(ArrowForward)(({ theme }) => ({
+const StyledArrowForward = styled(ArrowForward)(() => ({
   marginLeft: 'auto',
 }));
 

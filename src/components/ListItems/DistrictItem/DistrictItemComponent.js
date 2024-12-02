@@ -8,9 +8,9 @@ import { AreaIcon } from '../../SMIcon';
 
 const DistrictItemComponent = ({
   area,
-  hideDivider,
-  paddedDivider,
-  title,
+  hideDivider = false,
+  paddedDivider = false,
+  title = true,
 }) => {
   const intl = useIntl();
   const getLocaleText = useLocaleText();
@@ -99,12 +99,6 @@ DistrictItemComponent.propTypes = {
   hideDivider: PropTypes.bool,
   paddedDivider: PropTypes.bool,
   title: PropTypes.bool,
-};
-
-DistrictItemComponent.defaultProps = {
-  hideDivider: false,
-  paddedDivider: false,
-  title: true,
 };
 
 export default DistrictItemComponent;

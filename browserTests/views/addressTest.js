@@ -1,15 +1,16 @@
 /* eslint-disable */
 import { Selector } from 'testcafe';
 import { ReactSelector, waitForReact } from 'testcafe-react-selectors';
-import { getBaseUrl, getLocation } from '../utility';
+import { acceptCookieConcent, getBaseUrl, getLocation } from '../utility';
 import { addressSearchBarInput } from '../utility/pageObjects';
 
 const testLocation = `${getBaseUrl()}/fi/address/helsinki/Topeliuksenkatu 27`;
 
 fixture`Address view test`
   .page`${testLocation}`
-  .beforeEach(async () => {
+  .beforeEach(async (t) => {
     await waitForReact();
+    await acceptCookieConcent(t);
   });
 
 test('AddressView does render correct view', async (t) => {

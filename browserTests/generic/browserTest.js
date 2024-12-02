@@ -4,15 +4,16 @@ import { Selector } from 'testcafe';
 import { waitForReact } from 'testcafe-react-selectors';
 
 import { paletteDefault, paletteDark } from '../../src/themes'
-import { getBaseUrl, getLocation } from '../utility';
+import { acceptCookieConcent, getBaseUrl, getLocation } from '../utility';
 
 const siteRoot = `${getBaseUrl()}`;
 
 // TODO: move these to the related view folders
 fixture`General tests`
   .page`${siteRoot}/fi`
-  .beforeEach(async () => {
+  .beforeEach(async (t) => {
     await waitForReact();
+    await acceptCookieConcent(t);
   });
 
 test('Language does change', async (t) => {

@@ -38,19 +38,28 @@ Launches Jest test runner.<br>
 Launches TestCafe test runner and performs browser tests on headless chrome.<br>
 
 ### `npm run browserTestCLI`
-Launches the application using `node dist` command and then launches TestCafe test runner in headless mode. Mainly used by Travis CI.
+Launches the application using `node dist` command and then launches TestCafe test runner in headless mode. Mainly used in GitHub Actions.
 
 ## How to use
 For development: 
-- Make sure npm packages are installed by running `npm install`in project root.
+- Make sure npm packages are installed by running `npm install --legacy-peer-deps`in project root.
 - Make sure you have environment variables set. `.env.example` should have all required values so you can copy it to `.env`.
 - Then you can start development server using `npm run dev`. Which watches files and updates on code changes.
+- Open the application by loading `localhost:2048` in the browser
 
 To run in production mode:
-- Make sure npm packages are installed by running `npm install`in project root.
+- Make sure npm packages are installed by running `npm install --legacy-peer-deps`in project root.
 - Make sure you have environment variables set. `.env.example` should have all required values so you can copy it to `.env`.
 - Build files by running `npm run build`
-- Then you can just run the app with `npm start`
+- Then you can run the app with `npm start`
+- Open the application by loading `localhost:2048` in the browser
+
+To run with docker compose:
+- Install Docker if not installed, check that port `2048` is free, not occupied by running server.
+- Make sure you have environment variables set. `.env.example` should have all required values so you can copy it to `.env`.
+- Run `docker compose up`
+- Open the application by loading `localhost:2048` in the browser
+
 
 ## Environment variables
 This is a documentation (some day hopefully exhaustive) of environment variables and how to use them.
