@@ -170,8 +170,8 @@ function SearchView() {
     // Check if search query ends with number and fetch data without it.
     // This is for searching addresses with street number in case of no results.
     if (searchQuery && searchQuery.match(/\d$/)) {
-      const newSearchQuery = searchQuery.replace(/\d$/, '');
-      if (newSearchQuery !== searchQuery) {
+      const newSearchQuery = searchQuery.replace(/\d+$/, '');
+      if (newSearchQuery && newSearchQuery !== searchQuery) {
         dispatch(fetchSearchResults({ q: newSearchQuery }));
       }
     }
@@ -335,7 +335,8 @@ function SearchView() {
       }
     } else {
       const { previousSearch, isFetching } = searchFetchState;
-      if (previousSearch && !isFetching) {
+      const options = getSearchParamData();
+      if (options.q && previousSearch && !isFetching) {
         // If no results found, try to fetch results without number
         fetchSearchResultsWithoutNumber(previousSearch);
       }
