@@ -335,7 +335,8 @@ function SearchView() {
       }
     } else {
       const { previousSearch, isFetching } = searchFetchState;
-      if (previousSearch && !isFetching) {
+      const options = getSearchParamData();
+      if (options.q && previousSearch && !isFetching) {
         // If no results found, try to fetch results without number
         fetchSearchResultsWithoutNumber(previousSearch);
       }
