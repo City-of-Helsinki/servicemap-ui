@@ -97,6 +97,49 @@ input[type="search"]::-webkit-search-cancel-button{
   user-select: none;
 }
 
+.height-profile-buttons {
+  display: flex;
+  margin-left: 5px;
+}
+
+.height-profile-prev-button {
+  background: url(assets/icons/icon-arrow-previous.svg) no-repeat center center;
+  width: 26px;
+  height: 26px;
+  margin-top: -34px;
+  border: 1px solid #ccc;
+  box-shadow: 0 0px 2px rgba(0, 0, 0, 0.6);
+  border-radius: 2px;
+
+  &:hover,
+  &:active {
+    color: #0072c6;
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.height-profile-next-button {
+  background: url(assets/icons/icon-arrow-next.svg) no-repeat center center;
+  width: 26px;
+  height: 26px;
+  margin-top: -34px;
+  border: 1px solid #ccc;
+  box-shadow: 0 0px 2px rgba(0, 0, 0, 0.6);
+  border-radius: 2px;
+
+  &:hover,
+  &:active {
+    color: #0072c6;
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
 .heightgraph-toggle {
   cursor: pointer;
   box-shadow: 0 1px 7px rgba(0, 0, 0, .4);

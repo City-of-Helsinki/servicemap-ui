@@ -353,7 +353,7 @@ const MapView = (props) => {
           )}
 
           {!disableInteraction && currentPage === 'unit' && unitHasLineStringLocationAndGeometry(highlightedUnit) && (
-            <ElevationControl data={highlightedUnit} isMobile={isMobile}/>
+            <ElevationControl unit={highlightedUnit} isMobile={isMobile}/>
           )}
 
           {!hideUserMarker && userLocation && (
