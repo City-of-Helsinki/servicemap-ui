@@ -40,7 +40,7 @@ test('Unit geometry is drawn on map', async (t) => {
   const listItem = Selector('#paginatedList-Toimipisteet-results li[role="link"]').nth(0);
   await t
     .click(listItem)
-    .expect(polygon.exists).ok('Unit geometry not drawn on map');
+    .expect(polygon.exists).ok('Unit geometry is drawn on map');
 });
 
 fixture`Unit page geometry test`
@@ -54,4 +54,34 @@ test('Unit geometry is drawn on map', async (t) => {
   const polygon = Selector('.leaflet-pane .leaflet-overlay-pane').find('svg');
   await t
     .expect(polygon.exists).ok();
+});
+
+test('Height profile is drawn on map', async (t) => {
+  const heightProfile = Selector('.heightgraph').find('svg');
+  await t
+    .expect(heightProfile.exists).ok();
+});
+
+test('Height profile browse buttons exist', async (t) => {
+  const heightProfilePrevButton = Selector('.height-profile-prev-button');
+  const heightProfileNextButton = Selector('.height-profile-next-button');
+  await t
+    .expect(heightProfilePrevButton.exists).ok()
+    .expect(heightProfileNextButton.exists).ok()
+});
+
+test('Height profile geometry browsing', async (t) => {
+  const heightProfilePrevButton = Selector('.height-profile-prev-button');
+  const heightProfileNextButton = Selector('.height-profile-next-button');
+  const polygon = Selector('.leaflet-pane .leaflet-overlay-pane').find('svg');
+  await t
+    .expect(polygon.exists).ok('Unit geometry is drawn on map');
+  
+  await t
+    .click(heightProfileNextButton)
+    .expect(polygon.exists).ok('Unit next geometry is drawn on map');
+  
+  await t
+    .click(heightProfilePrevButton)
+    .expect(polygon.exists).ok('Unit previous geometry is drawn on map');
 });
