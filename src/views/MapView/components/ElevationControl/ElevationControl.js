@@ -51,13 +51,6 @@ const ElevationControl = ({ unit, isMobile}) => {
         }
     }];
   }
-
-  const onRoute = event => {
-    control.mapMousemoveHandler(event, { showMapMarker: true });
-  }
-  const outRoute = event => {
-    control.mapMouseoutHandler(2000);
-  }
   
   useEffect(() => {
     if(!geometry?.coordinates) {
@@ -66,6 +59,13 @@ const ElevationControl = ({ unit, isMobile}) => {
     }
     
     const geoJson = constructProfileGeoJson(geometry?.coordinates);
+
+    const onRoute = event => {
+      control.mapMousemoveHandler(event, { showMapMarker: true });
+    }
+    const outRoute = event => {
+      control.mapMouseoutHandler(2000);
+    }
 
     const control = L.control.heightgraph({
       position: !isMobile ? 'bottomright' : 'topright',
