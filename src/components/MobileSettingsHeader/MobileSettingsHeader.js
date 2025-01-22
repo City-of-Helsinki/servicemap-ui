@@ -5,7 +5,7 @@ import React from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 
-function MobileSettingsHeader({ textId, onClose }) {
+function MobileSettingsHeader({ textId, onClose = null }) {
   const intl = useIntl();
 
   return (
@@ -51,10 +51,6 @@ const StyledCloseButton = styled(IconButton)(() => ({
 MobileSettingsHeader.propTypes = {
   textId: PropTypes.string.isRequired,
   onClose: PropTypes.func,
-};
-
-MobileSettingsHeader.defaultProps = {
-  onClose: null,
 };
 
 export default MobileSettingsHeader;
