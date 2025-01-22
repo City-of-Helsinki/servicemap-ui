@@ -28,8 +28,4 @@ ErrorBoundary.propTypes = {
   errorComponent: PropTypes.node,
 };
 
-ErrorBoundary.defaultProps = {
-  errorComponent: null,
-};
-
 export default ErrorBoundary;

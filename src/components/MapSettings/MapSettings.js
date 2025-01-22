@@ -15,7 +15,7 @@ import MobileSettingsHeader from '../MobileSettingsHeader/MobileSettingsHeader';
 import SMButton from '../ServiceMapButton';
 import ExternalMapUrlCreator from './externalMapUrlCreator';
 
-function MapSettings({ onClose }) {
+function MapSettings({ onClose = null }) {
   const intl = useIntl();
   const dispatch = useDispatch();
 
@@ -111,10 +111,6 @@ const Styled3DMapLinkButton = styled(SMButton)(({ theme }) => ({
 
 MapSettings.propTypes = {
   onClose: PropTypes.func,
-};
-
-MapSettings.defaultProps = {
-  onClose: null,
 };
 
 export default MapSettings;

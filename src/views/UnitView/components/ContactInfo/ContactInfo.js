@@ -16,7 +16,10 @@ import { parseSearchParams, stringifySearchParams } from '../../../../utils';
 import { SMAccordion } from '../../../../components';
 
 function ContactInfo({
-  unit, userLocation, headingLevel, accessiblityTabRef,
+  unit,
+  userLocation = null,
+  headingLevel = 'h4',
+  accessiblityTabRef = null,
 }) {
   const intl = useIntl();
   const history = useHistory();
@@ -289,12 +292,6 @@ ContactInfo.propTypes = {
   userLocation: PropTypes.objectOf(PropTypes.any),
   headingLevel: PropTypes.string,
   accessiblityTabRef: PropTypes.shape({ current: PropTypes.any }),
-};
-
-ContactInfo.defaultProps = {
-  userLocation: null,
-  headingLevel: 'h4',
-  accessiblityTabRef: null,
 };
 
 export default ContactInfo;
