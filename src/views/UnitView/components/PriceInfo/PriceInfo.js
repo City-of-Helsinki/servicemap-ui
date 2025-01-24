@@ -42,7 +42,7 @@ const PriceInfo = ({ unit }) => {
         if (item.value?.name) {
           return (
             <React.Fragment key={localeText}>
-              <Typography>{`${localeText}`}</Typography>
+              {`${localeText}`}
               <br />
             </React.Fragment>
           );
