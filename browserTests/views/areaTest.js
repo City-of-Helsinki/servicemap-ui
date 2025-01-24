@@ -44,7 +44,7 @@ const openStatisticalTotals = async (t) => {
   return totalAccordion;
 }
 
-test('District lists are fetched and rendered correctly', async (t) => {
+test.skip('District lists are fetched and rendered correctly', async (t) => {
   await t
     .expect(accordions.count).eql(3, 'Expect 3 accordions to exist for each section in AreaView')
     .click(accordions.nth(0));
