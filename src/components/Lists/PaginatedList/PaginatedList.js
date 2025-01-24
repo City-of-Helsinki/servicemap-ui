@@ -1,6 +1,6 @@
 /* eslint-disable react/no-multi-comp */
 import React, {
-  useEffect, useLayoutEffect, useRef, useState,
+  useEffect, useRef, useState,
 } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
@@ -44,7 +44,7 @@ const PaginatedList = ({
   }
 
   // Track window size change on embedded list view
-  useLayoutEffect(() => {
+  useEffect(() => {
     const updateSize = () => {
       const listContainerSize = document.getElementById('unitListContainer')?.clientHeight;
       setWindowHeight(listContainerSize || window.innerHeight);
