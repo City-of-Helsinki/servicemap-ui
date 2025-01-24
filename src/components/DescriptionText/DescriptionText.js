@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Typography, Divider } from '@mui/material';
+import { Typography, Divider, NoSsr } from '@mui/material';
 import styled from '@emotion/styled';
 
 const DescriptionText = ({
@@ -11,28 +11,26 @@ const DescriptionText = ({
 }) => {
   // Hide linebreak html elements from screen readers
   const hideBRFromSR = text => text.replaceAll('<br>', '<br aria-hidden="true" />');
-
-  // TODO: Figure out a way to have server render description text identical to client
-  // NOTE: tried using NoSSR-tag. It fixed mismatch error, however it broke GitHub actions tests
-
   if (description) {
     return (
-      <StyledDiv>
-        <StyledTypographySubtitle
-          component={titleComponent}
-          variant="subtitle1"
-        >
-          {title}
-        </StyledTypographySubtitle>
-        <StyledDivider aria-hidden="true" />
-        { !html ? (
-          <StyledTypographyParagraph variant="body2">
-            {description}
-          </StyledTypographyParagraph>
-        ) : (
-          <StyledTypographyParagraph dangerouslySetInnerHTML={{ __html: hideBRFromSR(description) }} variant="body2" />
-        )}
-      </StyledDiv>
+      <NoSsr>
+        <StyledDiv>
+          <StyledTypographySubtitle
+            component={titleComponent}
+            variant="subtitle1"
+          >
+            {title}
+          </StyledTypographySubtitle>
+          <StyledDivider aria-hidden="true" />
+          { !html ? (
+            <StyledTypographyParagraph variant="body2">
+              {description}
+            </StyledTypographyParagraph>
+          ) : (
+            <StyledTypographyParagraph dangerouslySetInnerHTML={{ __html: hideBRFromSR(description) }} variant="body2" />
+          )}
+        </StyledDiv>
+      </NoSsr>
     );
   }
   return null;
@@ -57,7 +55,7 @@ const StyledDivider = styled(Divider)(({ theme }) => ({
 }));
 
 DescriptionText.propTypes = {
-  description: PropTypes.string.isRequired,
+  description: PropTypes.node.isRequired,
   title: PropTypes.node.isRequired,
   html: PropTypes.bool,
   titleComponent: PropTypes.oneOf(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']).isRequired,

@@ -542,27 +542,27 @@ function SearchView() {
   }
 
   return (
-    <StyledContainer>
-      {renderSearchBar()}
-      {renderSearchInfo()}
-      <NoSsr>
+    <NoSsr>
+      <StyledContainer>
+        {renderSearchBar()}
+        {renderSearchInfo()}
         <AddressSearchBar title={<FormattedMessage id="area.searchbar.infoText.address" />} handleAddressChange={handleUserAddressChange} />
         <SettingsComponent />
-      </NoSsr>
-      {renderScreenReaderInfo()}
-      {searchFetchState.isFetching ? (
-        <Loading reducer={searchFetchState} />
-      ) : renderResults()}
-      {renderNotFound()}
-      {isMobile ? (
-        // Jump link back to beginning of current page
-        <Typography style={visuallyHidden} component="h3">
-          <Link href={`#${viewTitleID}`} tabIndex={-1}>
-            <FormattedMessage id="general.return.viewTitle" />
-          </Link>
-        </Typography>
-      ) : null}
-    </StyledContainer>
+        {renderScreenReaderInfo()}
+        {searchFetchState.isFetching ? (
+          <Loading reducer={searchFetchState} />
+        ) : renderResults()}
+        {renderNotFound()}
+        {isMobile ? (
+          // Jump link back to beginning of current page
+          <Typography style={visuallyHidden} component="h3">
+            <Link href={`#${viewTitleID}`} tabIndex={-1}>
+              <FormattedMessage id="general.return.viewTitle" />
+            </Link>
+          </Typography>
+        ) : null}
+      </StyledContainer>
+    </NoSsr>
   );
 }
 
