@@ -23,8 +23,7 @@ jobs:
       EVENTS_API: https://api.hel.fi/linkedevents/v1
       RESERVATIONS_API: https://tilavaraus.hel.fi
       PRODUCTION_PREFIX: SM
-      DIGITRANSIT_API: https://api.digitransit.fi/routing/v1/routers/hsl/index/graphql
-      DIGITRANSIT_API_KEY: a9219bfb875d4cc79b5f69123b57d0db
+      DIGITRANSIT_API: https://digitransit-proxy.api.hel.fi/routing/v1/routers/hsl/index/graphql
       FEEDBACK_URL: https://api.hel.fi/servicemap/open311/
       HEARING_MAP_API: https://kuulokuvat.fi/api/v1/servicemap-url
       MODE: production
