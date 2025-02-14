@@ -4,7 +4,6 @@ import { getBboxFromBounds } from '../../../utils/mapUtility';
 
 const digitransitApiHeaders = () => ({
   'Content-Type': 'application/graphql',
-  'digitransit-subscription-key': `${config.digitransitApiKey.root}`,
 });
 
 /* eslint-disable global-require */
