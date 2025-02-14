@@ -15,13 +15,14 @@ import { fetchBikeStations, fetchStops } from '../../utils/transitFetch';
 import TransitStopInfo from './TransitStopInfo';
 import getTypeAndClass from './util/util';
 
-const StyledTransitIconMap = styled.span(({ color }) => ({
+const StyledTransitIconMap = styled.span(({ color, className }) => ({
   fontSize: transitIconSize,
   height: transitIconSize,
   margin: 0,
   lineHeight: 1,
   textShadow: '-1px 0 #fff, 0 1px #fff, 1px 0 #fff, 0 -1px #fff',
   color,
+  className,
 }));
 
 const TransitStops = ({ mapObject }) => {
@@ -42,6 +43,7 @@ const TransitStops = ({ mapObject }) => {
     zIndex: theme.zIndex.behind,
     color: 'white',
     fontSize: transitIconSize,
+    marginTop: '8px',
   });
 
   const map = useMapEvents({
@@ -109,7 +111,7 @@ const TransitStops = ({ mapObject }) => {
   }, []);
 
   const getTransitIcon = (type) => {
-    const { divIcon } = require('leaflet');
+    const { divIcon } = global.L;
     const { color, className } = getTypeAndClass(type);
     return divIcon({
       html: renderToStaticMarkup(
