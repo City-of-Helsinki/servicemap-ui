@@ -41,3 +41,26 @@
 .icon-icon-hsl-metro:before { content: "5"; }
 .icon-icon-hsl-ferry:before { content: "6"; }
 .icon-icon-hsl-bike:before { content: "7"; }
+
+.icon-icon-hsl-bus {
+  color: #007AC9;
+}
+.icon-icon-hsl-tram {
+  color: #00985F;
+}
+.icon-icon-hsl-train {
+  color: #8C4799;
+}
+.icon-icon-hsl-metro {
+  color: #FF6319;
+}
+.icon-icon-hsl-ferry {
+  color: #00B9E4;
+}
+.icon-icon-hsl-bike {
+  color: #00985F;
+}
+
+.leaflet-marker-icon {
+  font-size: 30px;
+}
