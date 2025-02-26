@@ -21,7 +21,7 @@ jobs:
       SERVICEMAP_API: https://api.hel.fi/servicemap/
       SERVICEMAP_API_VERSION: "v2"
       EVENTS_API: https://api.hel.fi/linkedevents/v1
-      RESERVATIONS_API: https://tilavaraus.hel.fi
+      RESERVATIONS_API: https://varaamo.hel.fi
       PRODUCTION_PREFIX: SM
       DIGITRANSIT_API: https://digitransit-proxy.api.hel.fi/routing/v1/routers/hsl/index/graphql
       FEEDBACK_URL: https://api.hel.fi/servicemap/open311/
