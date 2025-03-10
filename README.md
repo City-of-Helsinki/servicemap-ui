@@ -33,6 +33,9 @@ Runs the app by starting node server using build files.
 
 Launches Jest test runner.<br>
 
+### `npm run test:e2e`
+Launches [Playwright](playwright.config.js) test runner and performs browser tests. 
+
 ### `npm run browserTest`
 
 Launches TestCafe test runner and performs browser tests on headless chrome.<br>

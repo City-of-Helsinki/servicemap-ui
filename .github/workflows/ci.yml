@@ -59,4 +59,5 @@ jobs:
     - run: npm install --legacy-peer-deps
     - run: npm run testBuild
     - run: npm test
-    - run: npm run browserTestCLI
+    - run: npm run test:e2e:install
+    - run: npm run test:e2e
