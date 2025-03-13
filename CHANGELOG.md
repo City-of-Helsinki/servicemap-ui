@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.2.0](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.1.0...servicemap-ui-v2.2.0) (2025-03-13)
+
+
+### Features
+
+* Migrate to DigiTransit Routing API v2 ([071b1a4](https://github.com/City-of-Helsinki/servicemap-ui/commit/071b1a417f380fc41faaf1230540a91fd30bf25f))
+
 ## [2.1.0](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.0.35...servicemap-ui-v2.1.0) (2025-02-26)
 
 
