@@ -41,7 +41,7 @@ const fetchStops = async (map) => {
       body:
       `{
         stopsByBbox(minLat: ${wideBounds.getSouthWest().lat}, minLon: ${wideBounds.getSouthWest().lng}, maxLat: ${wideBounds.getNorthEast().lat}, maxLon: ${wideBounds.getNorthEast().lng} ) {
-          vehicleType
+          vehicleMode
           gtfsId
           name
           lat
@@ -65,10 +65,10 @@ const fetchStops = async (map) => {
     .then((data) => {
       // Handle subwaystops and return list of all stops
       const stops = data[0].data.stopsByBbox;
-      const subwayStations = stops.filter(stop => stop.vehicleType === 1);
+      const subwayStations = stops.filter(stop => stop.vehicleMode === 'SUBWAY');
 
       // Remove subwaystations from stops list since they will be replaced with subway entrances
-      const filteredStops = stops.filter(stop => stop.vehicleType !== 1);
+      const filteredStops = stops.filter(stop => stop.vehicleMode !== 'SUBWAY');
 
       const entrances = data[1].results;
 
@@ -104,7 +104,7 @@ const fetchStops = async (map) => {
             lon: entrance.location.coordinates[0],
             name: entrance.name,
             patterns: closest.stop.patterns,
-            vehicleType: closest.stop.vehicleType,
+            vehicleMode: closest.stop.vehicleMode,
           };
           filteredStops.push(newStop);
         }

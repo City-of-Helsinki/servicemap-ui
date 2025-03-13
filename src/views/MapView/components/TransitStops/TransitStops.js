@@ -25,7 +25,7 @@ const StyledTransitIconMap = styled.span(({ color, className }) => ({
   className,
 }));
 
-const TransitStops = ({ mapObject }) => {
+function TransitStops({ mapObject }) {
   const isMobile = useMobileStatus();
   const useContrast = useSelector(selectMapType) === 'accessible_map';
   const { Marker, Popup } = global.rL;
@@ -67,7 +67,7 @@ const TransitStops = ({ mapObject }) => {
 
   const fetchTransitStops = () => {
     fetchStops(map)
-      .then((stops) => {
+      .then(stops => {
         if (showTransitStops()) {
           setTransitStops(stops);
         }
@@ -110,7 +110,7 @@ const TransitStops = ({ mapObject }) => {
     loadBikeStations();
   }, []);
 
-  const getTransitIcon = (type) => {
+  const getTransitIcon = type => {
     const { divIcon } = global.L;
     const { color, className } = getTypeAndClass(type);
     return divIcon({
@@ -133,8 +133,8 @@ const TransitStops = ({ mapObject }) => {
 
   return (
     <>
-      {transitStops.map((stop) => {
-        const icon = getTransitIcon(stop.vehicleType);
+      {transitStops.map(stop => {
+        const icon = getTransitIcon(stop.vehicleMode);
         return (
           <Marker
             icon={icon}
@@ -153,7 +153,7 @@ const TransitStops = ({ mapObject }) => {
           </Marker>
         );
       })}
-      {rentalBikeStations.map((station) => {
+      {rentalBikeStations.map(station => {
         const icon = getTransitIcon(7);
         return (
           <Marker
@@ -176,7 +176,7 @@ const TransitStops = ({ mapObject }) => {
       })}
     </>
   );
-};
+}
 
 TransitStops.propTypes = {
   mapObject: PropTypes.objectOf(PropTypes.any).isRequired,
