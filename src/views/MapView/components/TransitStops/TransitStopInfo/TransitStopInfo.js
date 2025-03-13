@@ -118,7 +118,7 @@ const TransitStopInfo = ({
   }, []);
 
   const renderDepartureTimes = () => {
-    const { color, className } = getTypeAndClass(stop.vehicleType);
+    const { color, className } = getTypeAndClass(stop.vehicleMode);
     const icon = <TransitStopIcon color={useContrast ? '#000000' : color} className={className} />;
 
     if (stopData.departureTimes?.length) {
