@@ -10,7 +10,7 @@ export default function getTypeAndClass(vehicleMode) {
       return { color: '#fcb919', className: 'icon-icon-hsl-bike' };
     case 'FERRY': // Ferry stops
       return { color: '#00B9E4', className: 'icon-icon-hsl-ferry' };
-    case 'TRAIN': // Train stops
+    case 'RAIL': // Train stops
     default:
       return { color: '#8C4799', className: 'icon-icon-hsl-train' };
   }
