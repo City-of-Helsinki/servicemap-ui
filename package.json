@@ -12,7 +12,7 @@
     "@mui/material": "^6.1.4",
     "@mui/styles": "^6.1.4",
     "@mui/utils": "^6.1.4",
-    "@sentry/node": "^8.34.0",
+    "@sentry/node": "^8.49.0",
     "@sentry/react": "^8.34.0",
     "@turf/area": "^6.5.0",
     "@turf/boolean-equal": "^6.5.0",
