@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
-import { renderHook } from '@testing-library/react-hooks';
-import { render } from '@testing-library/react';
+import { render, renderHook } from '@testing-library/react';
 
 import MatomoContext, { MatomoProvider } from '../../matomo-context';
 import * as MatomoTracker from '../../MatomoTracker';
