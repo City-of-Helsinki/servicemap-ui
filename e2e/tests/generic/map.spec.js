@@ -1,11 +1,11 @@
 import { test, expect } from '@playwright/test';
-import { acceptCookieConcent, getBaseUrl } from '../utils';
+import { acceptCookieConcent } from '../utils';
 import { MapPage } from '../utils/pageObjects';
 
 test.describe('Map tests', () => {
   // Before each test, navigate to the Finnish site and accept cookies.
   test.beforeEach(async ({ page }) => {
-    await page.goto(`${getBaseUrl()}/fi`);
+    await page.goto(`/fi`);
     await acceptCookieConcent(page);
   });
 
@@ -36,7 +36,7 @@ test.describe('Map tests', () => {
 test.describe('Search unit geometry test', () => {
   test.beforeEach(async ({ page }) => {
     // Navigate to the search URL in Finnish with query "latu"
-    await page.goto(`${getBaseUrl()}/fi/search?q=latu`);
+    await page.goto(`/fi/search?q=latu`);
     await acceptCookieConcent(page);
   });
 
@@ -56,7 +56,7 @@ test.describe('Unit page geometry test', () => {
   const UNIT_ID = '56544';
 
   test.beforeEach(async ({ page }) => {
-    await page.goto(`${getBaseUrl()}/fi/unit/${UNIT_ID}`);
+    await page.goto(`/fi/unit/${UNIT_ID}`);
     await acceptCookieConcent(page);
   });
 

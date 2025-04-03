@@ -1,8 +1,8 @@
 import { test, expect } from '@playwright/test';
-import { acceptCookieConcent, getBaseUrl, getLocation } from '../utils';
+import { acceptCookieConcent, getLocation } from '../utils';
 import { AddressPage } from '../utils/pageObjects';
 
-const testLocation = `${getBaseUrl()}/fi/address/helsinki/Topeliuksenkatu 27`;
+const testLocation = `/fi/address/helsinki/Topeliuksenkatu 27`;
 
 test.describe('AddressView tests', () => {
   test.beforeEach(async ({ page }) => {

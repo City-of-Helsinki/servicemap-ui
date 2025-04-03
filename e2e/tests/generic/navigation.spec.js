@@ -1,10 +1,10 @@
 import { test, expect } from '@playwright/test';
-import { acceptCookieConcent, getBaseUrl } from '../utils';
+import { acceptCookieConcent } from '../utils';
 import { NavigationPage } from '../utils/pageObjects';
 
 test.describe('Navigation home page', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto(`${getBaseUrl()}/fi`);
+    await page.goto(`/fi`);
     await acceptCookieConcent(page);
   });
 
@@ -38,7 +38,7 @@ test.describe('Navigation home page', () => {
 test.describe('Navigation embedder', () => {
   test.beforeEach(async ({ page }) => {
     // Navigate directly to the embedder page using the base URL for Finnish.
-    await page.goto(`${getBaseUrl()}/fi/embedder`);
+    await page.goto(`/fi/embedder`);
   });
 
   /**

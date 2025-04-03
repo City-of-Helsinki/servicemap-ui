@@ -1,5 +1,4 @@
 import { test, expect } from '@playwright/test';
-import { getBaseUrl } from '../utils';
 import { EmbeddedView } from '../utils/pageObjects';
 
 test.describe('Embed view test', () => {
@@ -12,7 +11,7 @@ test.describe('Embed view test', () => {
   test('Embedded unit view shows unit marker', async ({ page }) => {
     const embeddedView = new EmbeddedView(page);
     // Navigate to the embedded unit view for unit with ID 51342.
-    await page.goto(`${getBaseUrl()}/fi/embed/unit/51342`);
+    await page.goto(`/fi/embed/unit/51342`);
 
     // Assert that the loading indicator is absent, indicating that the data has loaded.
     await expect(embeddedView.loadingIndicator).toHaveCount(0);
@@ -31,7 +30,7 @@ test.describe('Embed view test', () => {
    */
   test('Embedded unit view shows nearby services', async ({ page }) => {
     const embeddedView = new EmbeddedView(page);
-    await page.goto(`${getBaseUrl()}/fi/embed/unit/68398?services=961,239&distance=100`);
+    await page.goto(`/fi/embed/unit/68398?services=961,239&distance=100`);
 
     // Confirm that the loading indicator is not present (data is loaded)
     await expect(embeddedView.loadingIndicator).toHaveCount(0);
@@ -52,7 +51,7 @@ test.describe('Embed view test', () => {
    */
   test('Embedded search view shows search results', async ({ page }) => {
     const embeddedView = new EmbeddedView(page);
-    await page.goto(`${getBaseUrl()}/fi/embed/search?q=kirjastot&show_list=side`);
+    await page.goto(`/fi/embed/search?q=kirjastot&show_list=side`);
 
     // Get the search results list container and its first item
     const unitListItem = embeddedView.unitList.first();
@@ -81,7 +80,7 @@ test.describe('Embed view test', () => {
    */
   test('Embedded search view shows specified units', async ({ page }) => {
     const embeddedView = new EmbeddedView(page);
-    await page.goto(`${getBaseUrl()}/fi/embed/search?units=64196,45980,8264,32359`);
+    await page.goto(`/fi/embed/search?units=64196,45980,8264,32359`);
 
     // Ensure no loading indicator is present (data has loaded)
     await expect(embeddedView.loadingIndicator).toHaveCount(0);
@@ -97,7 +96,7 @@ test.describe('Embed view test', () => {
    */
   test('Embedded search view shows service node units', async ({ page }) => {
     const embeddedView = new EmbeddedView(page);
-    await page.goto(`${getBaseUrl()}/fi/embed/search?service_node=1065,1066,1062`);
+    await page.goto(`/fi/embed/search?service_node=1065,1066,1062`);
 
     // Confirm that the loading indicator is not present, meaning data has loaded.
     await expect(embeddedView.loadingIndicator).toHaveCount(0);
@@ -117,7 +116,7 @@ test.describe('Embed view test', () => {
   test('Embedded search view shows event units', async ({ page }) => {
     const embeddedView = new EmbeddedView(page);
     // Navigate to the embedded search page with event query parameter.
-    await page.goto(`${getBaseUrl()}/fi/embed/search?events=yso:p4354`);
+    await page.goto(`/fi/embed/search?events=yso:p4354`);
 
     // Assert that the loading indicator is no longer present.
     await expect(embeddedView.loadingIndicator).toHaveCount(0);
@@ -134,7 +133,7 @@ test.describe('Embed view test', () => {
    */
   test('Embedded service view shows service units', async ({ page }) => {
     const embeddedView = new EmbeddedView(page);
-    await page.goto(`${getBaseUrl()}/fi/embed/service/813`);
+    await page.goto(`/fi/embed/service/813`);
 
     // Check that data has finished loading.
     await expect(embeddedView.loadingIndicator).toHaveCount(0);
@@ -154,7 +153,7 @@ test.describe('Embed view test', () => {
   test('Embedded address view shows nearby service units correctly', async ({ page }) => {
     const embeddedView = new EmbeddedView(page);
     // Navigate to the address view with service units rendered.
-    await page.goto(`${getBaseUrl()}/fi/embed/address/helsinki/Eläintarhantie 3/`);
+    await page.goto(`/fi/embed/address/helsinki/Eläintarhantie 3/`);
 
     // Ensure data has loaded by checking the absence of the loading indicator.
     await expect(embeddedView.loadingIndicator).toHaveCount(0);
@@ -162,7 +161,7 @@ test.describe('Embed view test', () => {
     await embeddedView.unitMarkers.first().waitFor({ state: 'visible' });
 
     // Navigate to a variant that should remove service unit markers.
-    await page.goto(`${getBaseUrl()}/fi/embed/address/helsinki/Eläintarhantie 3/?units=none`);
+    await page.goto(`/fi/embed/address/helsinki/Eläintarhantie 3/?units=none`);
     // Confirm that data is loaded.
     await expect(embeddedView.loadingIndicator).toHaveCount(0);
     // Verify that no service unit markers are present as expected.
@@ -179,7 +178,7 @@ test.describe('Embed view test', () => {
    */
   test('Embedded area view shows service area units correctly', async ({ page }) => {
     const embeddedView = new EmbeddedView(page);
-    await page.goto(`${getBaseUrl()}/fi/embed/area?selected=health_station_district&lat=60.2049198&lng=24.8995213`);
+    await page.goto(`/fi/embed/area?selected=health_station_district&lat=60.2049198&lng=24.8995213`);
 
     // Ensure that the loading indicator is not present, indicating data has loaded.
     await expect(embeddedView.loadingIndicator).toHaveCount(0);
@@ -199,7 +198,7 @@ test.describe('Embed view test', () => {
    */
   test('Embedded area view shows geographical area service units correctly', async ({ page }) => {
     const embeddedView = new EmbeddedView(page);
-    await page.goto(`${getBaseUrl()}/fi/embed/area?selected=neighborhood&districts=ocd-division/country:fi/kunta:helsinki/kaupunginosa:011,ocd-division/country:fi/kunta:helsinki/kaupunginosa:014&services=239,813`);
+    await page.goto(`/fi/embed/area?selected=neighborhood&districts=ocd-division/country:fi/kunta:helsinki/kaupunginosa:011,ocd-division/country:fi/kunta:helsinki/kaupunginosa:014&services=239,813`);
 
     // Confirm that data has been loaded by ensuring no loading indicator is visible.
     await expect(embeddedView.loadingIndicator).toHaveCount(0, { timeout: 20000 });
@@ -219,7 +218,7 @@ test.describe('Embed view test', () => {
    */
   test('Division url shows units and area correctly', async ({ page }) => {
     const embeddedView = new EmbeddedView(page);
-    await page.goto(`${getBaseUrl()}/fi/embed/division/kunta:helsinki/kaupunginosa:029?level=all`);
+    await page.goto(`/fi/embed/division/kunta:helsinki/kaupunginosa:029?level=all`);
 
     // Ensure that the loading indicator is not present.
     await expect(embeddedView.loadingIndicator).toHaveCount(0);

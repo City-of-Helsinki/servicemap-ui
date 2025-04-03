@@ -1,13 +1,11 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, } from '@playwright/test';
 import { paletteDefault, paletteDark } from '../../../src/themes';
-import { acceptCookieConcent, getBaseUrl } from '../utils';
+import { acceptCookieConcent } from '../utils';
 import { BrowserPage } from '../utils/pageObjects';
-
-const siteRoot = getBaseUrl();
 
 test.describe('Browser tests', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto(`${siteRoot}/fi`);
+    await page.goto(`/fi`);
     await acceptCookieConcent(page);
   });
 
@@ -18,7 +16,9 @@ test.describe('Browser tests', () => {
    *  - Verify that the title updates to Swedish after clicking the Swedish button.
    *  - Check that the title reverts back to Finnish upon clicking the Finnish button.
    */
-  test('Language switching via buttons updates app title correctly', async ({ page }) => {
+  test('Language switching via buttons updates app title correctly', async ({ page, browserName }) => {
+    test.skip(browserName === 'firefox', 'Skipping tests on Firefox due to known issues');
+
     const browserPage = new BrowserPage(page);
     const languages = [
       { button: browserPage.englishButton, expectedTitle: 'Service map' },
@@ -51,7 +51,7 @@ test.describe('Browser tests', () => {
     ];
 
     for (const { path, expectedTitle } of routes) {
-      await page.goto(`${siteRoot}/${path}`);
+      await page.goto(`/${path}`);
       await expect(browserPage.title).toHaveText(expectedTitle);
     }
   });

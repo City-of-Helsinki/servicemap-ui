@@ -1,11 +1,10 @@
 import { test, expect } from '@playwright/test';
 import { UnitExtendedPage } from '../utils/pageObjects';
-import { getBaseUrl } from '../utils';
 
 const pages = [
-  `${getBaseUrl()}/fi/unit/51342/events`,
-  `${getBaseUrl()}/fi/unit/51342/services`,
-  `${getBaseUrl()}/fi/unit/51342/reservations`
+  `/fi/unit/51342/events`,
+  `/fi/unit/51342/services`,
+  `/fi/unit/51342/reservations`
 ];
 
 const unitName = 'Keskustakirjasto Oodi';

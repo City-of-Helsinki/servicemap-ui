@@ -1,13 +1,13 @@
 import { test, expect } from '@playwright/test';
 import finnish from '../../../src/i18n/fi';
-import { acceptCookieConcent, getBaseUrl, getLocation } from '../utils';
+import { acceptCookieConcent, getLocation } from '../utils';
 import { TreeView } from '../utils/pageObjects';
 /**
  * Mobility tree page tests
  */
 test.describe('Mobility tree page tests', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto(`${getBaseUrl()}/fi/mobility`);
+    await page.goto(`/fi/mobility`);
     await acceptCookieConcent(page);
   });
 

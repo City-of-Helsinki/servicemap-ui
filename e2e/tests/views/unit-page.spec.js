@@ -1,8 +1,8 @@
 import { test, expect } from '@playwright/test';
-import { acceptCookieConcent, getBaseUrl, getLocation } from '../utils';
+import { acceptCookieConcent, getLocation } from '../utils';
 import { UnitPage } from '../utils/pageObjects';
 
-const testUrl = `${getBaseUrl()}/fi/unit/51342`;
+const testUrl = `/fi/unit/51342`;
 
 test.describe('Unit page tests', () => {
   test.beforeEach(async ({ page }) => {

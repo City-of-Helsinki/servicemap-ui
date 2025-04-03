@@ -1,8 +1,8 @@
 import { test, expect } from '@playwright/test';
-import { acceptCookieConcent, getBaseUrl, getLocation } from '../utils';
+import { acceptCookieConcent, getLocation } from '../utils';
 import { HomePage } from '../utils/pageObjects';
 
-const viewUrl = `${getBaseUrl()}/fi/`;
+const viewUrl = `/fi/`;
 
 test.describe('Home view test', () => {
   test.beforeEach(async ({ page }) => {
@@ -65,7 +65,7 @@ test.describe('Home view test', () => {
 
     await homePage.backButton.click();
     await expect(homePage.unitMarkers).toHaveCount(0);
-    expect(await getLocation(page)).toBe(viewUrl);
+    expect(page).toHaveURL(viewUrl);
 
     await homePage.searchInput.click();
     await homePage.searchInput.type('kirjasto');
@@ -76,6 +76,6 @@ test.describe('Home view test', () => {
 
     await homePage.backButton.click();
     await expect(homePage.unitMarkers).toHaveCount(0);
-    expect(await getLocation(page)).toBe(viewUrl);
+    expect(page).toHaveURL(viewUrl);
   });
 });

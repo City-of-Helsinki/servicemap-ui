@@ -1,5 +1,3 @@
-const config = require('../../config');
-
 /**
  * Gets the current page URL
  * @param {import('@playwright/test').Page} page - Playwright page object
@@ -8,12 +6,6 @@ const config = require('../../config');
 export const getLocation = async (page) => {
   return page.url();
 };
-
-/**
- * Gets the base URL for the application
- * @returns {string} Base URL
- */
-export const getBaseUrl = () => `http://${config.server.address}:${config.server.port}`;
 
 /**
  * Accepts the cookie consent if present

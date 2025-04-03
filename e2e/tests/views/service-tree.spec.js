@@ -1,11 +1,11 @@
 import { test, expect } from '@playwright/test';
-import { acceptCookieConcent, getBaseUrl, getLocation } from '../utils';
+import { acceptCookieConcent, getLocation } from '../utils';
 import finnish from '../../../src/i18n/fi';
 import { TreeView } from '../utils/pageObjects';
 
 test.describe('Service tree page tests', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto(`${getBaseUrl()}/fi/services`);
+    await page.goto(`/fi/services`);
     await acceptCookieConcent(page);
   });
 
