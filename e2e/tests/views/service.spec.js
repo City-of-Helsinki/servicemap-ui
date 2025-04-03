@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { acceptCookieConcent, getBaseUrl } from '../utils';
+import { acceptCookieConcent } from '../utils';
 import paginationTest from '../utils/paginationTest';
 import resultOrdererTest from '../utils/resultOrdererTest';
 import { ServicePage } from '../utils/pageObjects';
@@ -8,7 +8,7 @@ const coordinates = ['60.281936', '24.949933'];
 
 test.describe('Service page coordinate tests', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto(`${getBaseUrl()}/fi/service/813?lat=${coordinates[0]}&lon=${coordinates[1]}`);
+    await page.goto(`/fi/service/813?lat=${coordinates[0]}&lon=${coordinates[1]}`);
     await acceptCookieConcent(page);
   });
 
@@ -18,7 +18,7 @@ test.describe('Service page coordinate tests', () => {
   });
 });
 
-const servicePageUrl = `${getBaseUrl()}/fi/service/813`;
+const servicePageUrl = `/fi/service/813`;
 
 test.describe('Service page tests', () => {
   test.beforeEach(async ({ page }) => {

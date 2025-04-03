@@ -1,14 +1,13 @@
 import { test, expect } from '@playwright/test';
 import { AxeBuilder } from '@axe-core/playwright';
-import { acceptCookieConcent, getBaseUrl } from '../utils';
+import { acceptCookieConcent } from '../utils';
 import { ToolMenuPage } from '../utils/pageObjects';
 
 test.describe('General tests', () => {
-  const siteRoot = getBaseUrl();
   const EXPECTED_MENU_ITEMS = 4;
 
   test.beforeEach(async ({ page }) => {
-    await page.goto(`${siteRoot}/fi`);
+    await page.goto(`/fi`);
     await acceptCookieConcent(page);
   });
 
@@ -25,7 +24,7 @@ test.describe('General tests', () => {
     */
   test('ToolMenu closes correctly with different interactions', async ({ page, browserName }) => {
     test.skip(browserName === 'firefox', 'Skipping tests on Firefox due to known issues');
-    
+
     const toolMenuPage = new ToolMenuPage(page);
     const closeScenarios = [
       {

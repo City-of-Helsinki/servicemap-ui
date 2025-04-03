@@ -230,10 +230,12 @@ export class SearchPage {
 
   async searchUnits(search = 'kirjasto') {
     await this.searchInput.click();
-    await this.searchInput.press('Meta+A');
+    // Use a cross-platform approach to select all text
+    await this.searchInput.focus();
+    await this.searchInput.evaluate(el => el.select());
+    // Delete the selected text and type the new search
     await this.searchInput.press('Delete');
     await this.searchInput.type(search);
-    //await this.searchInput.press('Enter');
   }
 }
 

@@ -1,10 +1,10 @@
 import { test, expect } from '@playwright/test';
-import { acceptCookieConcent, getBaseUrl, getLocation } from '../utils';
+import { acceptCookieConcent, getLocation } from '../utils';
 import { AreaPage } from '../utils/pageObjects';
 
 test.describe('Area view test', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto(`${getBaseUrl()}/fi/area`);
+    await page.goto(`/fi/area`);
     await acceptCookieConcent(page);
   });
 
@@ -81,7 +81,7 @@ test.describe('Area view test', () => {
     await areaPage.unitList.locator('div').first().click();
 
     const location = await getLocation(page);
-    expect(location).toContain(`${getBaseUrl()}/fi/unit`);
+    expect(location).toContain(`/fi/unit`);
   });
 
   /**

@@ -1,10 +1,10 @@
 import { test, expect } from '@playwright/test';
-import { acceptCookieConcent, getBaseUrl } from '../utils';
+import { acceptCookieConcent } from '../utils';
 import { SettingsPage } from '../utils/pageObjects';
 
 test.describe('Settings view test', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto(`${getBaseUrl()}/fi/`);
+    await page.goto(`/fi/`);
     await acceptCookieConcent(page);
   });
 

@@ -1,10 +1,8 @@
 import { test, expect } from '@playwright/test';
 import { AxeBuilder } from '@axe-core/playwright';
 import { createHtmlReport } from 'axe-html-reporter';
-import { getBaseUrl, acceptCookieConcent } from '../utils';
+import { acceptCookieConcent } from '../utils';
 import { buttonFocusTests } from '../utils/button-focus-test';
-// import { componentContrastTest } from '../utils/component-contrast-test';
-// import { inputFieldFocusTests } from '../utils/input-field-focus-test';
 
 /**
  * Runs axe accessibility check on the given page.
@@ -53,7 +51,7 @@ async function axeCheckHandler(page, testInfo, disableRules = []) {
   expect.soft(accessibilityScanResults.violations).toEqual([]);
 }
 
-const disabledRules= {
+const disabledRules = {
   frontpage: ['aria-required-attr', 'aria-hidden-focus', 'region'],
   search: ['aria-allowed-role', 'aria-hidden-focus', 'aria-required-attr', 'list', 'region'],
   unit: ['aria-allowed-role', 'aria-hidden-focus', 'aria-required-attr', 'list', 'region'],
@@ -66,7 +64,7 @@ const disabledRules= {
 
 test.describe('Frontpage Accessibility Tests', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto(`${getBaseUrl()}/fi/`);
+    await page.goto(`/fi/`);
     await acceptCookieConcent(page);
   });
 
@@ -75,17 +73,11 @@ test.describe('Frontpage Accessibility Tests', () => {
   });
 
   buttonFocusTests();
-
-  // inputFieldFocusTests();
-
-  // componentContrastTest('.SMButton');
-
-  // componentContrastTest('.SMBackButton');
 });
 
 test.describe('Search Page Accessibility Tests', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto(`${getBaseUrl()}/fi/search?q=kirjasto`, { waitUntil: 'networkidle' });
+    await page.goto(`/fi/search?q=kirjasto`, { waitUntil: 'networkidle' });
     await acceptCookieConcent(page);
   });
 
@@ -94,17 +86,11 @@ test.describe('Search Page Accessibility Tests', () => {
   });
 
   buttonFocusTests();
-
-  // inputFieldFocusTests();
-
-  // componentContrastTest('.SMButton');
-
-  // componentContrastTest('.SMBackButton');
 });
 
 test.describe('Unit Page Accessibility Tests', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto(`${getBaseUrl()}/fi/unit/8215`);
+    await page.goto(`/fi/unit/8215`);
     await acceptCookieConcent(page);
   });
 
@@ -113,17 +99,11 @@ test.describe('Unit Page Accessibility Tests', () => {
   });
 
   buttonFocusTests();
-
-  // inputFieldFocusTests();
-
-  // componentContrastTest('.SMButton');
-
-  // componentContrastTest('.SMBackButton');
 });
 
 test.describe('Service Page Accessibility Tests', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto(`${getBaseUrl()}/fi/service/813`);
+    await page.goto(`/fi/service/813`);
     await acceptCookieConcent(page);
   });
 
@@ -132,17 +112,11 @@ test.describe('Service Page Accessibility Tests', () => {
   });
 
   buttonFocusTests();
-
-  // inputFieldFocusTests();
-
-  // componentContrastTest('.SMButton');
-
-  // componentContrastTest('.SMBackButton');
 });
 
 test.describe('Address Page Accessibility Tests', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto(`${getBaseUrl()}/fi/address/helsinki/Fleminginkatu 1`);
+    await page.goto(`/fi/address/helsinki/Fleminginkatu 1`);
     await acceptCookieConcent(page);
   });
 
@@ -151,17 +125,11 @@ test.describe('Address Page Accessibility Tests', () => {
   });
 
   buttonFocusTests();
-
-  // inputFieldFocusTests();
-
-  // componentContrastTest('.SMButton');
-
-  // componentContrastTest('.SMBackButton');
 });
 
 test.describe('Area Page Accessibility Tests', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto(`${getBaseUrl()}/fi/area`);
+    await page.goto(`/fi/area`);
     await acceptCookieConcent(page);
   });
 
@@ -170,17 +138,11 @@ test.describe('Area Page Accessibility Tests', () => {
   });
 
   buttonFocusTests();
-
-  // inputFieldFocusTests();
-
-  // componentContrastTest('.SMButton');
-
-  // componentContrastTest('.SMBackButton');
 });
 
 test.describe('Service Tree Page Accessibility Tests', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto(`${getBaseUrl()}/fi/services`);
+    await page.goto(`/fi/services`);
     await acceptCookieConcent(page);
   });
 
@@ -189,17 +151,11 @@ test.describe('Service Tree Page Accessibility Tests', () => {
   });
 
   buttonFocusTests();
-
-  // inputFieldFocusTests();
-
-  // componentContrastTest('.SMButton');
-
-  // componentContrastTest('.SMBackButton');
 });
 
 test.describe('Event Page Accessibility Tests', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto(`${getBaseUrl()}/fi/event/helmet:190724`);
+    await page.goto(`/fi/event/helmet:190724`);
     await acceptCookieConcent(page);
   });
 
@@ -208,10 +164,4 @@ test.describe('Event Page Accessibility Tests', () => {
   });
 
   buttonFocusTests();
-
-  // inputFieldFocusTests();
-
-  // componentContrastTest('.SMButton');
-
-  // componentContrastTest('.SMBackButton');
 });

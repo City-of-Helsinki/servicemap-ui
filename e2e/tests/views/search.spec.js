@@ -1,14 +1,14 @@
 import { test, expect } from '@playwright/test';
-import { acceptCookieConcent, getBaseUrl, getLocation } from '../utils';
+import { acceptCookieConcent, getLocation } from '../utils';
 import { SearchPage } from '../utils/pageObjects';
 import paginationTest from '../utils/paginationTest';
 import resultOrdererTest from '../utils/resultOrdererTest';
 
 // Common URLs
-const searchPageUrl = `${getBaseUrl()}/fi/search?q=kirjasto`;
-const bathUrl = `${getBaseUrl()}/fi/search?q=maauimala`;
-const embedBathUrl = `${getBaseUrl()}/fi/embed/search?q=maauimala&search_language=fi&show_list=side`;
-const homePage = `${getBaseUrl()}/fi`;
+const searchPageUrl = `/fi/search?q=kirjasto`;
+const bathUrl = `/fi/search?q=maauimala`;
+const embedBathUrl = `/fi/embed/search?q=maauimala&search_language=fi&show_list=side`;
+const homePage = `/fi`;
 
 /**
  * Search view tests
@@ -443,7 +443,7 @@ test.describe('Search view test', () => {
    */
   test('Search suggestion click works correctly', async ({ page }) => {
     const searchPage = new SearchPage(page);
-    expect(await getLocation(page)).toContain(`${getBaseUrl()}/fi/search`);
+    expect(await getLocation(page)).toContain(`/fi/search`);
 
     const { searchInput } = searchPage;
     await searchInput.click();

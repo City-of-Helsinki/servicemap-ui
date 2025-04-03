@@ -1,6 +1,8 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { defineConfig, devices } from '@playwright/test';
 
+export const E2E_TESTS_ENV_URL = process.env.E2E_TESTS_ENV_URL ?? 'http://localhost:2048';
+
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
@@ -28,10 +30,13 @@ export default defineConfig({
     ['html', { open: 'never', outputFolder: 'report/html' }]
   ],
 
+  expect: {
+    timeout: 15000
+  },
   // Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions
   use: {
     // Base URL to use in actions like `await page.goto('/')`.
-    baseURL: process.env.E2E_TESTS_ENV_URL ?? 'http://localhost:2048',
+    baseURL: E2E_TESTS_ENV_URL,
 
     // Whether to ignore HTTPS errors when sending network requests
     ignoreHTTPSErrors: true,
@@ -64,8 +69,8 @@ export default defineConfig({
 
   webServer: {
     command: 'node dist',
-    url: 'http://localhost:2048',
-    reuseExistingServer: process.env.CI ? false : true,
+    url: E2E_TESTS_ENV_URL,
+    reuseExistingServer: !process.env.CI,
     timeout: 120 * 1000, // 2 minutes
   },
 
@@ -78,11 +83,5 @@ export default defineConfig({
       name: 'firefox',
       use: { ...devices['Desktop Firefox'] },
     },
-    //{
-    //  name: 'Mobile Safari',
-    //  use: {
-    //    ...devices['iPhone 13'],
-    //  },
-    //},
   ],
 });
