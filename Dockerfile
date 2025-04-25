@@ -1,15 +1,21 @@
-FROM public.ecr.aws/docker/library/node:22
+FROM registry.access.redhat.com/ubi9/nodejs-22
 
 # Create app directory
 WORKDIR /servicemap-ui
 
+USER root
+
+RUN chown -R default:root /servicemap-ui
+
 # Install app dependencies
-# A wildcard is used to ensure both package.json AND package-lock.json are copied
-# where available (npm@5+)
-COPY package*.json ./
+COPY --chown=default:root package.json package-lock.json /servicemap-ui/
+
 RUN npm install --legacy-peer-deps
 
-COPY . .
+COPY --chown=default:root . /servicemap-ui/
+
+USER default
+
 RUN npm run build
 
 # If you are building your code for production
