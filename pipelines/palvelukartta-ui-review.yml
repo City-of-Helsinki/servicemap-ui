@@ -54,4 +54,4 @@ extends:
     #   DEBUG: 1
     ## Default value to nodeVersion is set on template.
     ## Used tool version
-    # nodeVersion: 18
+    # nodeVersion: 22
