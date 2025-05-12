@@ -27,7 +27,7 @@
     "core-js": "^3.25.1",
     "d3": "^7.9.0",
     "dotenv": "^8.2.0",
-    "express": "^4.19.2",
+    "express": "^4.21.2",
     "express-sitemap": "^1.8.0",
     "hds-design-tokens": "3.10.1",
     "hds-react": "3.10.1",
