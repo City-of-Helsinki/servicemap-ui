@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.3.0](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.2.0...servicemap-ui-v2.3.0) (2025-05-13)
+
+
+### Features
+
+* Convert TestCafe tests ([#1237](https://github.com/City-of-Helsinki/servicemap-ui/issues/1237)) ([6dedae1](https://github.com/City-of-Helsinki/servicemap-ui/commit/6dedae1f7b6521aeddebd4742c73821209aca769))
+* Dockerfile use redhat Node image PL-51 ([#1241](https://github.com/City-of-Helsinki/servicemap-ui/issues/1241)) ([840a580](https://github.com/City-of-Helsinki/servicemap-ui/commit/840a5802f52837db1982824d36e83f9585134d26))
+
 ## [2.2.0](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.1.0...servicemap-ui-v2.2.0) (2025-03-13)
 
 
