@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.3.1](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.3.0...servicemap-ui-v2.3.1) (2025-05-20)
+
+
+### Dependencies
+
+* Bump path-to-regexp and express ([#1239](https://github.com/City-of-Helsinki/servicemap-ui/issues/1239)) ([49b607a](https://github.com/City-of-Helsinki/servicemap-ui/commit/49b607a55f55c5ec3670e16eedd2a223ea735ee6))
+
 ## [2.3.0](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.2.0...servicemap-ui-v2.3.0) (2025-05-13)
 
 
