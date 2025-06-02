@@ -252,6 +252,7 @@ const htmlTemplate = (req, reactDom, preloadedState, css, cssString, emotionCss,
         window.nodeEnvSettings.ADDITIONAL_FEEDBACK_URLS_KAUNIAINEN = "${process.env.ADDITIONAL_FEEDBACK_URLS_KAUNIAINEN}";
         window.nodeEnvSettings.READ_FEEDBACK_URLS_HELSINKI = "${process.env.READ_FEEDBACK_URLS_HELSINKI}";
         window.nodeEnvSettings.SLOW_FETCH_MESSAGE_TIMEOUT = "${process.env.SLOW_FETCH_MESSAGE_TIMEOUT}";
+        window.nodeEnvSettings.HELSINKI_MAPTILES_ENABLED = "${process.env.HELSINKI_MAPTILES_ENABLED}";
 
         window.nodeEnvSettings.FEATURE_SERVICEMAP_PAGE_TRACKING = "${process.env.FEATURE_SERVICEMAP_PAGE_TRACKING}";
         window.nodeEnvSettings.FEATURE_SM_COOKIES = "${process.env.FEATURE_SM_COOKIES}";

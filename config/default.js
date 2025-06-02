@@ -191,10 +191,13 @@ const municipalities = {
     kirkkonummi: 'Kyrkslätt'
   }
 }
+
+settings.HELSINKI_MAPTILES_ENABLED = settings.HELSINKI_MAPTILES_ENABLED === "true";
+
 /**
  * Assumes comma separated and ordered triple of fi, sv, en
  */
-const splitTripleIntoThreeLangs = (text) => ({ fi: text.split(',')[0], sv: text.split(',')[1], en: text.split(',')[2] })
+const splitTripleIntoThreeLangs = (text) => ({fi: text.split(',')[0], sv: text.split(',')[1], en: text.split(',')[2]})
 
 const defaultConfig = {
   "version": version.tag,
@@ -310,7 +313,8 @@ const defaultConfig = {
   "matomoUrl": settings.MATOMO_URL,
   "matomoSiteId": settings.MATOMO_SITE_ID,
   "matomoEnabled": settings.MATOMO_ENABLED,
-  "slowFetchMessageTimeout": Number(settings.SLOW_FETCH_MESSAGE_TIMEOUT)
+  "slowFetchMessageTimeout": Number(settings.SLOW_FETCH_MESSAGE_TIMEOUT),
+  "helsinkiMaptilesEnabled": settings.HELSINKI_MAPTILES_ENABLED
 }
 
 export default defaultConfig;

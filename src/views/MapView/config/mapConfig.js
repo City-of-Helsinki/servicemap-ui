@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 import config from '../../../../config';
-import { isRetina } from '../../../utils';
+import {isRetina} from '../../../utils';
 
 // The default maximum bounds of the map
 const defaultMapBounds = {
@@ -65,6 +65,7 @@ const mapTypes = {
     name: 'servicemap',
     attribution: 'map.attribution.osm',
     generateUrl: (suffix = '') => `${config.servicemapURL}${suffix}.png`,
+    urlTemplate: config.servicemapURL,
     minZoom: 9,
     maxZoom: 18,
     zoom: 13,
@@ -77,6 +78,7 @@ const mapTypes = {
     name: 'accessible_map',
     attribution: 'map.attribution.osm',
     generateUrl: (suffix = '') => `${config.accessibleMapURL}${suffix}.png`,
+    urlTemplate: config.accessibleMapURL,
     minZoom: 9,
     maxZoom: 18,
     zoom: 13,
@@ -148,6 +150,12 @@ const mapTypes = {
   },
 };
 
+const setHelsinkiMaptilesUrl = function getHelsinkiMaptilesOptions(mapOptions, suffix, locale) {
+  const styleLanguage = ['fi', 'sv'].includes(locale) ? locale : 'fi';
+  mapOptions.url = mapOptions.urlTemplate.replace(/{language}/, styleLanguage).replace(/{suffix}/, suffix);
+  return mapOptions;
+}
+
 const getMapOptions = (type, locale) => {
   const mapOptions = mapTypes[type] || mapTypes.servicemap;
 
@@ -158,12 +166,19 @@ const getMapOptions = (type, locale) => {
       if (isRetina) {
         suffix += '@2x';
       }
+      if (config.helsinkiMaptilesEnabled) {
+        return setHelsinkiMaptilesUrl(mapOptions, suffix, locale);
+      }
       if (locale === 'sv') {
         suffix += '@sv';
       }
       break;
     }
     case 'accessible_map': {
+      if (config.helsinkiMaptilesEnabled) {
+        return setHelsinkiMaptilesUrl(mapOptions, suffix, locale);
+      }
+
       if (locale === 'sv') {
         suffix += '@sv';
       }
