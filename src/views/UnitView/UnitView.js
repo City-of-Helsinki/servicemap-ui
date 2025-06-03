@@ -12,7 +12,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory, useLocation, useParams } from 'react-router-dom';
 import config from '../../../config';
 import paths from '../../../config/paths';
 import {
@@ -62,7 +62,6 @@ import { parseUnitViewUrlParams } from './utils/unitViewUrlParamAndSettingsHandl
 function UnitView(props) {
   const {
     embed = false,
-    match = {},
     fetchSelectedUnit,
     fetchUnitEvents,
     fetchReservations,
@@ -80,7 +79,9 @@ function UnitView(props) {
   const stateUnit = useSelector(getSelectedUnit);
   const map = useSelector(selectMapRef);
   const location = useLocation();
-  const checkCorrectUnit = unit => unit && unit.id === parseInt(match.params.unit, 10);
+  const { unit: unitParam } = useParams();
+
+  const checkCorrectUnit = unit => unit && unit.id === parseInt(unitParam, 10);
 
   const [unit, setUnit] = useState(checkCorrectUnit(stateUnit) ? stateUnit : null);
   const viewPosition = useRef(null);
@@ -136,10 +137,10 @@ function UnitView(props) {
   };
 
   const intializeUnitData = () => {
-    const { params } = match;
-    const unitId = params.unit;
+    const unitId = unitParam;
+
     // If no selected unit data, or selected unit data is old, fetch new data
-    if (!stateUnit || !checkCorrectUnit(stateUnit) || !stateUnit.complete) {
+    if (!stateUnit || !checkCorrectUnit(stateUnit) || !stateUnit.complete || !hearingMaps) {
       fetchSelectedUnit(unitId, unit => {
         setUnit(unit);
         if (unit?.keywords?.fi?.some(keyword => keyword.toLowerCase() === 'kuuluvuuskartta')) {
@@ -227,7 +228,7 @@ function UnitView(props) {
       intializeUnitData();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [match.params.unit]);
+  }, [unitParam]);
 
   useEffect(() => {
     if (config.usePtvAccessibilityApi) {
@@ -734,5 +735,4 @@ UnitView.propTypes = {
   fetchSelectedUnit: PropTypes.func.isRequired,
   fetchUnitEvents: PropTypes.func.isRequired,
   fetchHearingMaps: PropTypes.func.isRequired,
-  match: PropTypes.objectOf(PropTypes.any),
 };
