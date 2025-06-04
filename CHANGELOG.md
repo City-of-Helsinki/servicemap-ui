@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.4.0](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.3.1...servicemap-ui-v2.4.0) (2025-06-04)
+
+
+### Features
+
+* Add support for helsinki maptiles ([b37faf1](https://github.com/City-of-Helsinki/servicemap-ui/commit/b37faf1144998fee2cd95fdceb1deba2c4cd9f9a))
+
+
+### Bug Fixes
+
+* UnitView refetch hearingMaps ([cdc72ee](https://github.com/City-of-Helsinki/servicemap-ui/commit/cdc72eed0d82310d974ee6f131264984984fab60))
+
 ## [2.3.1](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.3.0...servicemap-ui-v2.3.1) (2025-05-20)
 
 
