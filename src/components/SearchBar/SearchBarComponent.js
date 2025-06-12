@@ -173,7 +173,8 @@ const SearchBar = ({
       }
 
       if (navigator) {
-        navigator.push('search', { q: searchQuery });
+        // Encode searchQuery to handle special characters in the URL
+        navigator.push('search', { q: encodeURIComponent(searchQuery) });
       }
     }
   };
