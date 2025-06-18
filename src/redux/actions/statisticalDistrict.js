@@ -56,10 +56,10 @@ const normalizeItem = (item) => {
   // Format statistical data to include proportions
   if (categories) {
     const categoryKeys = Object.keys(categories);
-    categoryKeys.forEach((key) => {
+    categoryKeys.forEach(key => {
       const dataKeys = Object.keys(categories[key]);
       const dataValues = {};
-      const { total } = categories[key];
+      const total = categories[key].ALL;
       dataKeys
         .forEach((k) => {
           const dataPoint = categories[key][k];
