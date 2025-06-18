@@ -92,7 +92,7 @@ const StatisticalDistrictTooltip = ({
   const getLocaleText = useLocaleText();
   const { formatMessage } = useIntl();
   const category = useSelector(getStatisticalDistrictSelectedCategory);
-  const isTotal = section === 'total';
+  const isTotal = section === 'ALL';
   const hasValue = typeof district?.selectedValue === 'number';
   const values = {
     count: district.selectedValue,
