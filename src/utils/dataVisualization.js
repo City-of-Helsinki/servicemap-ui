@@ -1,23 +1,23 @@
 
 class DataVisualization {
   STATISTICS_DATASETS = {
-    total: 'väestö_yhteensä',
+    ALL: 'väestö_yhteensä',
     '0-6': '06vuotiaat',
-    '7-17': '717vuotiaat',
-    '18-29': '1829vuotiaat',
-    '30-49': '3049vuotiaat',
-    '50-64': '5064vuotiaat',
-    '65+': '65vuotiaat',
+    '7-15': '715vuotiaat',
+    '16-18': '1618vuotiaat',
+    '19-34': '1934vuotiaat',
+    '35-64': '3564vuotiaat',
+    '65-': '65vuotiaat',
   };
 
   FORECAST_DATASETS = {
-    total: 'väestö_yhteensä',
+    ALL: 'väestö_yhteensä',
     '0-6': '06vuotiaat',
     '7-17': '717vuotiaat',
     '18-29': '1829vuotiaat',
     '30-49': '3049vuotiaat',
     '50-64': '5064vuotiaat',
-    '65+': '65vuotiaat',
+    '65-': '65vuotiaat',
   };
 
   STATISTICS_TYPES = {
@@ -80,7 +80,7 @@ class DataVisualization {
 
   getForecastsLayers = () => Object.keys(this.FORECAST_DATASETS);
 
-  isTotal = value => value === 'total'
+  isTotal = value => value === 'ALL';
 
   isForecast = category => typeof category === 'string' && category.indexOf(this.POPULATION_FORECAST_STRING) > -1;
 

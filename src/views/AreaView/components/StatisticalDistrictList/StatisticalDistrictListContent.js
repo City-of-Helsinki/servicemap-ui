@@ -80,7 +80,7 @@ const StatisticalDistrictListContent = () => {
   };
 
   const getDistrictDataInfo = (district) => {
-    const isTotal = selection?.section === 'total';
+    const isTotal = selection?.section === 'ALL';
     const hasValue = typeof district.selectedValue === 'number';
     let id;
 
