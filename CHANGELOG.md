@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.4.1](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.4.0...servicemap-ui-v2.4.1) (2025-06-21)
+
+
+### Dependencies
+
+* Bump http-proxy-middleware from 2.0.7 to 2.0.9 ([#1242](https://github.com/City-of-Helsinki/servicemap-ui/issues/1242)) ([adc6f28](https://github.com/City-of-Helsinki/servicemap-ui/commit/adc6f28fd025bc32e6f5cb0680443796c0ecb831))
+
 ## [2.4.0](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.3.1...servicemap-ui-v2.4.0) (2025-06-04)
 
 
