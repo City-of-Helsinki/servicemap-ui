@@ -5,12 +5,17 @@ WORKDIR /servicemap-ui
 
 USER root
 
+RUN curl --fail --silent --proto '=https' --tlsv1.2 https://dl.yarnpkg.com/rpm/yarn.repo \
+  --output /etc/yum.repos.d/yarn.repo
+RUN yum -y install yarn
+
 RUN chown -R default:root /servicemap-ui
 
 # Install app dependencies
 COPY --chown=default:root --chmod=444 package.json yarn.lock /servicemap-ui/
 
-RUN yarn install --frozen-lockfile
+# Install dependencies
+RUN yarn && yarn cache clean --force
 
 COPY --chown=default:root . /servicemap-ui/
 
