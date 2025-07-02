@@ -68,6 +68,7 @@
     "test:coverage": "jest test --coverage",
     "test:e2e:install": "playwright install",
     "test:e2e": "playwright test",
+    "lint": ":",
     "eject": "react-scripts eject",
     "dev": "NODE_ENV=development BABEL_ENV=development webpack --watch --progress & nodemon dist",
     "production": "NODE_ENV=production BABEL_ENV=production webpack --progress --mode production && node dist"
