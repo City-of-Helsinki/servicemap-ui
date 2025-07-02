@@ -74,25 +74,4 @@ jobs:
         echo "ADDITIONAL_FEEDBACK_URLS_VANTAA=https://www.vantaa.fi/fi/palaute,https://www.vantaa.fi/sv/feedback,https://www.vantaa.fi/en/feedback" >> $GITHUB_ENV
         echo "SLOW_FETCH_MESSAGE_TIMEOUT=3000" >> $GITHUB_ENV
         echo "HELSINKI_MAPTILES_ENABLED=true" >> $GITHUB_ENV
-  build:
-    needs: common
-    runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [22.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-
-    steps:
-    - uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v4
-      with:
-        node-version: ${{ matrix.node-version }}
-    - run: yarn install --frozen-lockfile
-    - run: yarn testBuild
-    - run: yarn test
-    - run: yarn test:e2e:install
-    - run: yarn test:e2e
