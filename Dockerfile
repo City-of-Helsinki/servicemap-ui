@@ -8,15 +8,15 @@ USER root
 RUN chown -R default:root /servicemap-ui
 
 # Install app dependencies
-COPY --chown=default:root --chmod=444 package.json package-lock.json /servicemap-ui/
+COPY --chown=default:root --chmod=444 package.json yarn.lock /servicemap-ui/
 
-RUN npm ci --legacy-peer-deps
+RUN yarn install --frozen-lockfile
 
 COPY --chown=default:root . /servicemap-ui/
 
 USER default
 
-RUN npm run build
+RUN yarn build
 
 USER root
 
