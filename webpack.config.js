@@ -67,13 +67,31 @@ const css = {
   ],
 };
 
+const getGitTag = () => {
+  try {
+    return cp.execSync('git describe --abbrev=0 --tags', { cwd: '.' })
+      .toString()
+      .replace(/\r?\n|\r/g, '');
+  } catch (error) {
+    // Fallback when no tags exist
+    return 'no-tag';
+  }
+};
+
+const getGitCommit = () => {
+  try {
+    return cp.execSync('git rev-parse --short HEAD', { cwd: '.' })
+      .toString()
+      .trim();
+  } catch (error) {
+    // Fallback when git is not available
+    return 'unknown';
+  }
+};
+
 const gitVersionInfoPlugin = new webpack.DefinePlugin({
-  GIT_TAG: JSON.stringify(cp.execSync('git describe --abbrev=0 --tags', { cwd: '.' })
-    .toString()
-    .replace(/\r?\n|\r/g, '')),
-  GIT_COMMIT: JSON.stringify(cp.execSync('git rev-parse --short HEAD', { cwd: '.' })
-    .toString()
-    .trim()),
+  GIT_TAG: JSON.stringify(getGitTag()),
+  GIT_COMMIT: JSON.stringify(getGitCommit()),
 });
 
 const plugins = [gitVersionInfoPlugin];
