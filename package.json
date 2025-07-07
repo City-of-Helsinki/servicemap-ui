@@ -63,7 +63,7 @@
   "scripts": {
     "start": "node dist",
     "build": "NODE_ENV=production BABEL_ENV=production webpack --mode production ",
-    "testBuild": "NODE_ENV=development BABEL_ENV=development webpack --mode development",
+    "build:test": "NODE_ENV=development BABEL_ENV=development webpack --mode development",
     "test": "jest test",
     "test:coverage": "jest test --coverage",
     "test:e2e:install": "playwright install",
