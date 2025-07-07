@@ -5,7 +5,8 @@ WORKDIR /servicemap-ui
 
 USER root
 
-RUN curl --silent --proto "=https" --tlsv1.2 --location https://dl.yarnpkg.com/rpm/yarn.repo | tee /etc/yum.repos.d/yarn.repo
+RUN curl --fail --silent --proto '=https' --tlsv1.2 https://dl.yarnpkg.com/rpm/yarn.repo \
+  --output /etc/yum.repos.d/yarn.repo
 RUN yum -y install yarn
 
 RUN chown -R default:root /servicemap-ui
