@@ -1,5 +1,22 @@
 # Changelog
 
+## [2.5.0](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.4.0...servicemap-ui-v2.5.0) (2025-07-07)
+
+
+### Features
+
+* Adapt to new statistical districts schema ([f95b804](https://github.com/City-of-Helsinki/servicemap-ui/commit/f95b8049a9c8270cd585225fd8e648f61c20b225))
+
+
+### Bug Fixes
+
+* Encode search query to handle special characters ([#1249](https://github.com/City-of-Helsinki/servicemap-ui/issues/1249)) ([a4af679](https://github.com/City-of-Helsinki/servicemap-ui/commit/a4af679e7842dc662de6c7551aae568360355e95))
+
+
+### Dependencies
+
+* Bump http-proxy-middleware from 2.0.7 to 2.0.9 ([#1242](https://github.com/City-of-Helsinki/servicemap-ui/issues/1242)) ([adc6f28](https://github.com/City-of-Helsinki/servicemap-ui/commit/adc6f28fd025bc32e6f5cb0680443796c0ecb831))
+
 ## [2.4.0](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.3.1...servicemap-ui-v2.4.0) (2025-06-04)
 
 
