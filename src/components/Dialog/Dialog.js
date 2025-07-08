@@ -1,17 +1,22 @@
-import React, { useRef } from 'react';
+import { css } from '@emotion/css';
+import styled from '@emotion/styled';
 import {
-  Dialog as MUIDialog, DialogActions, DialogContent, DialogTitle, Typography,
+  Dialog as MUIDialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Typography,
 } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
 import PropTypes from 'prop-types';
-import { css } from '@emotion/css';
+import React, { useRef } from 'react';
 import { useIntl } from 'react-intl';
-import styled from '@emotion/styled';
-import SMButton from '../ServiceMapButton';
-import CloseButton from '../CloseButton';
-import useMobileStatus from '../../utils/isMobile';
 
-const Dialog = ({
+import useMobileStatus from '../../utils/isMobile';
+import CloseButton from '../CloseButton';
+import SMButton from '../ServiceMapButton';
+
+function Dialog({
   title,
   content,
   actions = null,
@@ -19,7 +24,7 @@ const Dialog = ({
   setOpen,
   referer = null,
   onClose = null,
-}) => {
+}) {
   const intl = useIntl();
   const dialogRef = useRef();
   const isMobile = useMobileStatus();
@@ -62,24 +67,23 @@ const Dialog = ({
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
         fullScreen={isMobile}
-        classes={
-          !isMobile ? { root: muiRootClass } : null
-        }
+        classes={!isMobile ? { root: muiRootClass } : null}
       >
         <StyledRoot>
           {/* Empty element that makes keyboard focus loop in dialog */}
-          <Typography style={visuallyHidden} aria-hidden tabIndex="0" onFocus={focusToLastElement} />
+          <Typography
+            style={visuallyHidden}
+            aria-hidden
+            tabIndex="0"
+            onFocus={focusToLastElement}
+          />
           <StyledTopArea>
-            <StyledCloseButtonTop
-              autoFocus
-              onClick={handleClose}
-              role="link"
-            />
-            <StyledDialogTitle id="form-dialog-title" autoFocus>{title}</StyledDialogTitle>
+            <StyledCloseButtonTop autoFocus onClick={handleClose} role="link" />
+            <StyledDialogTitle id="form-dialog-title" autoFocus>
+              {title}
+            </StyledDialogTitle>
           </StyledTopArea>
-          <DialogContent className={muiRootClass}>
-            {content}
-          </DialogContent>
+          <DialogContent className={muiRootClass}>{content}</DialogContent>
           <DialogActions>
             {actions}
             <StyledCloseButton onClick={handleClose} role="link">
@@ -87,12 +91,17 @@ const Dialog = ({
             </StyledCloseButton>
           </DialogActions>
           {/* Empty element that makes keyboard focus loop in dialog */}
-          <Typography style={visuallyHidden} aria-hidden tabIndex="0" onFocus={focusToFirstElement} />
+          <Typography
+            style={visuallyHidden}
+            aria-hidden
+            tabIndex="0"
+            onFocus={focusToFirstElement}
+          />
         </StyledRoot>
       </MUIDialog>
     </div>
   );
-};
+}
 
 const StyledCloseButton = styled(SMButton)(({ theme }) => ({
   ...theme.typography.body2,

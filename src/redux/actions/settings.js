@@ -2,52 +2,56 @@ import config from '../../../config';
 import LocalStorageUtility from '../../utils/localStorage';
 import SettingsUtility from '../../utils/settings';
 
-const setAccessibilitySelection = (prefix, key, value) => async (dispatch, getState) => {
-  const { settings } = getState();
-  const settingsHasKey = Object.prototype.hasOwnProperty.call(settings, key);
-  const keyIsValid = SettingsUtility.isValidAccessibilitySenseImpairment(key);
-  if (settingsHasKey && keyIsValid) {
-    const newValue = typeof value !== 'undefined' ? !!value : !settings[key];
-    dispatch({
-      type: `${prefix}_SET_SELECTION`,
-      selection: newValue,
-    });
-    LocalStorageUtility.saveItem(key, newValue); // Save value to localStorage
-  }
-};
+const setAccessibilitySelection =
+  (prefix, key, value) => async (dispatch, getState) => {
+    const { settings } = getState();
+    const settingsHasKey = Object.prototype.hasOwnProperty.call(settings, key);
+    const keyIsValid = SettingsUtility.isValidAccessibilitySenseImpairment(key);
+    if (settingsHasKey && keyIsValid) {
+      const newValue = typeof value !== 'undefined' ? !!value : !settings[key];
+      dispatch({
+        type: `${prefix}_SET_SELECTION`,
+        selection: newValue,
+      });
+      LocalStorageUtility.saveItem(key, newValue); // Save value to localStorage
+    }
+  };
 
-const setRadioSelection = prefix => selection => ({
+const setRadioSelection = (prefix) => (selection) => ({
   type: `${prefix}_SET_SELECTION`,
   selection,
 });
 
-const setMobilitySetting = setting => async (dispatch) => {
+const setMobilitySetting = (setting) => async (dispatch) => {
   if (SettingsUtility.isValidMobilitySetting(setting)) {
     dispatch(setRadioSelection('MOBILITY')(setting));
     LocalStorageUtility.saveItem('mobility', setting); // Save value to localStorage
   }
 };
 
-const setMapTypeSetting = setting => async (dispatch) => {
+const setMapTypeSetting = (setting) => async (dispatch) => {
   if (SettingsUtility.isValidMapSetting(setting)) {
     dispatch(setRadioSelection('MAP_TYPE')(setting));
     LocalStorageUtility.saveItem('mapType', setting); // Save value to localStorage
   }
 };
 
-export const setSettingsAccordionCollapsed = collapsed => async (dispatch) => {
-  if (SettingsUtility.isValidValueForSettingsCollapsed(collapsed)) {
-    LocalStorageUtility.saveItem('settingsCollapsed', collapsed);
-    dispatch({ type: 'SETTINGS_OPENED', selection: collapsed });
-  }
-};
+export const setSettingsAccordionCollapsed =
+  (collapsed) => async (dispatch) => {
+    if (SettingsUtility.isValidValueForSettingsCollapsed(collapsed)) {
+      LocalStorageUtility.saveItem('settingsCollapsed', collapsed);
+      dispatch({ type: 'SETTINGS_OPENED', selection: collapsed });
+    }
+  };
 
-export const toggleCity = values => async (dispatch) => {
+export const toggleCity = (values) => async (dispatch) => {
   if (!SettingsUtility.isValidCitySetting(values)) {
     return;
   }
   const citySettings = {};
-  config.cities.forEach((city) => { citySettings[city] = !!values[city]; });
+  config.cities.forEach((city) => {
+    citySettings[city] = !!values[city];
+  });
 
   dispatch({
     type: 'CITY_SET_SELECTION',
@@ -58,7 +62,7 @@ export const toggleCity = values => async (dispatch) => {
   });
 };
 
-export const toggleOrganization = values => async (dispatch) => {
+export const toggleOrganization = (values) => async (dispatch) => {
   if (!SettingsUtility.isValidOrganizationSetting(values)) {
     return;
   }
@@ -75,31 +79,34 @@ export const toggleOrganization = values => async (dispatch) => {
   });
 };
 
-export const setCities = cities => {
+export const setCities = (cities) => {
   const newCityValues = {};
-  config.cities.forEach(city => {
+  config.cities.forEach((city) => {
     newCityValues[city] = cities.includes(city);
   });
   return toggleCity(newCityValues);
 };
 
-export const setOrganizations = orgIds => {
+export const setOrganizations = (orgIds) => {
   const newOrgValues = {};
-  config.organizations.forEach(org => {
+  config.organizations.forEach((org) => {
     newOrgValues[org.id] = orgIds.includes(org.id);
   });
   return toggleOrganization(newOrgValues);
 };
 
-export const toggleHearingAid = (value = undefined) => setAccessibilitySelection('HEARING', 'hearingAid', value);
+export const toggleHearingAid = (value = undefined) =>
+  setAccessibilitySelection('HEARING', 'hearingAid', value);
 
-export const toggleVisuallyImpaired = (value = undefined) => setAccessibilitySelection('SIGHT', 'visuallyImpaired', value);
+export const toggleVisuallyImpaired = (value = undefined) =>
+  setAccessibilitySelection('SIGHT', 'visuallyImpaired', value);
 
-export const toggleColorblind = (value = undefined) => setAccessibilitySelection('COLORBLIND', 'colorblind', value);
+export const toggleColorblind = (value = undefined) =>
+  setAccessibilitySelection('COLORBLIND', 'colorblind', value);
 
-export const setMobility = value => setMobilitySetting(value);
+export const setMobility = (value) => setMobilitySetting(value);
 
-export const setMapType = value => setMapTypeSetting(value);
+export const setMapType = (value) => setMapTypeSetting(value);
 
 export const resetSenseSettings = () => async (dispatch) => {
   dispatch(toggleHearingAid(false));
@@ -115,16 +122,16 @@ export const resetAccessibilitySettings = () => async (dispatch) => {
 };
 
 export const resetCitySettings = () => async (dispatch) => {
-  const citySettings = { };
-  config.cities.forEach(city => {
+  const citySettings = {};
+  config.cities.forEach((city) => {
     citySettings[city] = false;
   });
   dispatch(toggleCity(citySettings));
 };
 
 export const resetOrganizationSettings = () => async (dispatch) => {
-  const orgSettings = { };
-  config.organizations.forEach(org => {
+  const orgSettings = {};
+  config.organizations.forEach((org) => {
     orgSettings[org.id] = false;
   });
   dispatch(toggleOrganization(orgSettings));

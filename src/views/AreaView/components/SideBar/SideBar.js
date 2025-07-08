@@ -1,7 +1,10 @@
 /* eslint-disable react/forbid-prop-types */
 import styled from '@emotion/styled';
 import {
-  BusinessCenter, EscalatorWarning, LocationCity, Map,
+  BusinessCenter,
+  EscalatorWarning,
+  LocationCity,
+  Map,
 } from '@mui/icons-material';
 import { List, Typography } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
@@ -10,6 +13,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
+
 import {
   AddressSearchBar,
   MobileComponent,
@@ -29,7 +33,10 @@ import {
   selectDistrictsFetching,
   selectSelectedDistrictType,
 } from '../../../../redux/selectors/district';
-import { selectMapRef, selectNavigator } from '../../../../redux/selectors/general';
+import {
+  selectMapRef,
+  selectNavigator,
+} from '../../../../redux/selectors/general';
 import { parseSearchParams, stringifySearchParams } from '../../../../utils';
 import useMobileStatus from '../../../../utils/isMobile';
 import { mapHasMapPane } from '../../../../utils/mapUtility';
@@ -39,7 +46,7 @@ import ServiceTab from '../ServiceTab';
 import StatisticalDistrictList from '../StatisticalDistrictList';
 import { StyledListItem, StyledLoadingText } from '../styled/styled';
 
-const getViewState = map => ({
+const getViewState = (map) => ({
   center: map.getCenter(),
   zoom: map.getZoom(),
 });
@@ -64,8 +71,9 @@ function SideBar({ selectedAddress = null, setSelectedAddress }) {
   const getInitialOpenItems = () => {
     if (selectedAreaType) {
       const category = dataStructure.find(
-        data => data.id === selectedAreaType
-          || data.districts.some(obj => obj.id === selectedAreaType),
+        (data) =>
+          data.id === selectedAreaType ||
+          data.districts.some((obj) => obj.id === selectedAreaType)
       );
       return [category?.id];
     }
@@ -161,39 +169,32 @@ function SideBar({ selectedAddress = null, setSelectedAddress }) {
       </StyledInfoText>
       <AddressSearchBar
         handleAddressChange={setSelectedAddress}
-        title={(
+        title={
           <>
-            <FormattedMessage id="area.searchbar.infoText.address" />
-            {' '}
+            <FormattedMessage id="area.searchbar.infoText.address" />{' '}
             <FormattedMessage id="area.searchbar.infoText.optional" />
           </>
-        )}
+        }
       />
       <List>
-        {
-          categories.map((category, i) => (
-            <StyledListItem
-              divider
-              disableGutters
-              key={category.title}
-            >
-              <SMAccordion // Top level categories
-                adornment={category.icon}
-                defaultOpen={false}
-                disableUnmount
-                onOpen={(e, open) => areaSectionSelection(open, i)}
-                isOpen={areaSelection === i}
-                elevated={areaSelection === i}
-                titleContent={(
-                  <Typography component="p" variant="subtitle1">
-                    {category.title}
-                  </Typography>
-                )}
-                collapseContent={category.component}
-              />
-            </StyledListItem>
-          ))
-        }
+        {categories.map((category, i) => (
+          <StyledListItem divider disableGutters key={category.title}>
+            <SMAccordion // Top level categories
+              adornment={category.icon}
+              defaultOpen={false}
+              disableUnmount
+              onOpen={(e, open) => areaSectionSelection(open, i)}
+              isOpen={areaSelection === i}
+              elevated={areaSelection === i}
+              titleContent={
+                <Typography component="p" variant="subtitle1">
+                  {category.title}
+                </Typography>
+              }
+              collapseContent={category.component}
+            />
+          </StyledListItem>
+        ))}
       </List>
       <MobileComponent>
         {!districtsFetching.length && (
@@ -209,23 +210,31 @@ function SideBar({ selectedAddress = null, setSelectedAddress }) {
       </MobileComponent>
       <StyledLoadingText>
         <Typography style={visuallyHidden} aria-live="assertive">
-          {districtsFetching.length
-            ? <FormattedMessage id="general.loading" />
-            : <FormattedMessage id="general.loading.done" />}
+          {districtsFetching.length ? (
+            <FormattedMessage id="general.loading" />
+          ) : (
+            <FormattedMessage id="general.loading.done" />
+          )}
         </Typography>
       </StyledLoadingText>
     </div>
   );
 }
 
-const iconClass = theme => ({
+const iconClass = (theme) => ({
   padding: theme.spacing(2),
   paddingLeft: theme.spacing(0),
 });
 
-const StyledBusinessCenter = styled(BusinessCenter)(({ theme }) => iconClass(theme));
-const StyledLocationCity = styled(LocationCity)(({ theme }) => iconClass(theme));
-const StyledEscalatorWarning = styled(EscalatorWarning)(({ theme }) => iconClass(theme));
+const StyledBusinessCenter = styled(BusinessCenter)(({ theme }) =>
+  iconClass(theme)
+);
+const StyledLocationCity = styled(LocationCity)(({ theme }) =>
+  iconClass(theme)
+);
+const StyledEscalatorWarning = styled(EscalatorWarning)(({ theme }) =>
+  iconClass(theme)
+);
 const StyledInfoText = styled(Typography)(({ theme }) => ({
   padding: theme.spacing(2),
   paddingTop: 0,

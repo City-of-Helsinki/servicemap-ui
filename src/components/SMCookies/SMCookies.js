@@ -3,15 +3,17 @@ import { CookieModal } from 'hds-react';
 import React, { useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
+
+import featureFlags from '../../../config/featureFlags';
 import { getLocale } from '../../redux/selectors/user';
 import { COOKIE_MODAL_ROOT_ID } from '../../utils/constants';
 import { isEmbed } from '../../utils/path';
-import featureFlags from '../../../config/featureFlags';
 
 function SMCookies() {
   const intl = useIntl();
   const locale = useSelector(getLocale);
-  const cookieDomain = typeof window !== 'undefined' ? window.location.hostname : undefined;
+  const cookieDomain =
+    typeof window !== 'undefined' ? window.location.hostname : undefined;
   const embed = isEmbed();
   const [mounted, setMounted] = useState(false);
 
@@ -52,13 +54,20 @@ function SMCookies() {
       groups: [
         {
           commonGroup: 'statistics',
-          cookies: [{
-            id: 'matomo',
-            name: '_pk*',
-            hostName: 'digia.fi',
-            description: intl.formatMessage({ id: 'cookies.matomo.description' }),
-            expiration: intl.formatMessage({ id: 'cookies.matomo.expiration' }, { days: 393 }),
-          }],
+          cookies: [
+            {
+              id: 'matomo',
+              name: '_pk*',
+              hostName: 'digia.fi',
+              description: intl.formatMessage({
+                id: 'cookies.matomo.description',
+              }),
+              expiration: intl.formatMessage(
+                { id: 'cookies.matomo.expiration' },
+                { days: 393 }
+              ),
+            },
+          ],
         },
       ],
     },

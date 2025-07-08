@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import React, { Fragment, useEffect, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
+
 import {
   addSelectedParkingArea,
   fetchParkingAreaGeometry,
@@ -30,18 +31,26 @@ import {
   resolveParkingAreaName,
 } from '../../../../utils/parking';
 import useLocaleText from '../../../../utils/useLocaleText';
-import { getDistrictCategory, parkingUnitCategoryIds } from '../../utils/districtDataHelper';
-import { StyledAreaListItem, StyledCheckBoxIcon, StyledListLevelThree } from '../styled/styled';
+import {
+  getDistrictCategory,
+  parkingUnitCategoryIds,
+} from '../../utils/districtDataHelper';
+import {
+  StyledAreaListItem,
+  StyledCheckBoxIcon,
+  StyledListLevelThree,
+} from '../styled/styled';
 
 const constructInitialSelectedParkingUnits = (parkingUnitsMap) => {
   const selected = {};
-  parkingUnitCategoryIds.forEach(parkingUnitCategoryId => {
-    selected[parkingUnitCategoryId] = !!parkingUnitsMap[parkingUnitCategoryId]?.length;
+  parkingUnitCategoryIds.forEach((parkingUnitCategoryId) => {
+    selected[parkingUnitCategoryId] =
+      !!parkingUnitsMap[parkingUnitCategoryId]?.length;
   });
   return selected;
 };
 
-const ParkingAreaList = ({ variant }) => {
+function ParkingAreaList({ variant }) {
   const dispatch = useDispatch();
   const getLocaleText = useLocaleText();
   const selectedDistrictType = useSelector(selectSelectedDistrictType);
@@ -51,14 +60,18 @@ const ParkingAreaList = ({ variant }) => {
 
   const [areaDataInfo, setAreaDataInfo] = useState([]);
   const initialState = constructInitialSelectedParkingUnits(parkingUnitsMap);
-  const [parkingUnitsSelectedMap, setParkingUnitsSelectedMap] = useState(initialState);
+  const [parkingUnitsSelectedMap, setParkingUnitsSelectedMap] =
+    useState(initialState);
 
   const toggleParkingUnits = async (event, parkingUnitsId) => {
     const newValue = { ...parkingUnitsSelectedMap };
     if (event.target.checked) {
       newValue[parkingUnitsId] = true;
       setParkingUnitsSelectedMap(newValue);
-      if (selectedDistrictType && getDistrictCategory(selectedDistrictType !== 'parking')) {
+      if (
+        selectedDistrictType &&
+        getDistrictCategory(selectedDistrictType !== 'parking')
+      ) {
         dispatch(setSelectedDistrictType(null));
       }
       dispatch(fetchParkingUnits(parkingUnitsId));
@@ -70,7 +83,10 @@ const ParkingAreaList = ({ variant }) => {
   };
 
   const handleParkingCheckboxChange = (id) => {
-    if (!selectedParkingAreaIds.length && getDistrictCategory(selectedDistrictType) !== 'parking') {
+    if (
+      !selectedParkingAreaIds.length &&
+      getDistrictCategory(selectedDistrictType) !== 'parking'
+    ) {
       dispatch(setSelectedDistrictType(null));
     }
     if (selectedParkingAreaIds.includes(id)) {
@@ -78,7 +94,7 @@ const ParkingAreaList = ({ variant }) => {
     } else {
       dispatch(addSelectedParkingArea(id));
     }
-    if (!parkingAreas.some(obj => resolveParkingAreaId(obj) === id)) {
+    if (!parkingAreas.some((obj) => resolveParkingAreaId(obj) === id)) {
       dispatch(fetchParkingAreaGeometry(id));
     }
   };
@@ -100,8 +116,8 @@ const ParkingAreaList = ({ variant }) => {
     // This fetches only 1 result from each parking space type to get category names for list
     const smAPI = new ServiceMapAPI();
     const promises = resolveTypesForVariant()
-      .map(parkingType => resolveParamsForParkingFetch(parkingType))
-      .map(async params => smAPI.parkingAreaInfo(params));
+      .map((parkingType) => resolveParamsForParkingFetch(parkingType))
+      .map(async (params) => smAPI.parkingAreaInfo(params));
     const parkingAreaObjects = await Promise.all(promises);
     setAreaDataInfo(parkingAreaObjects.flat());
   };
@@ -139,81 +155,79 @@ const ParkingAreaList = ({ variant }) => {
         className="parkingSpaces"
       >
         <StyledFormControlLabel
-          control={(
+          control={
             <Checkbox
               color="primary"
               icon={<StyledCheckBoxIcon />}
               checked={checked}
-              onChange={e => toggleParkingUnits(e, parkingUnitsId)}
+              onChange={(e) => toggleParkingUnits(e, parkingUnitsId)}
             />
-          )}
-          label={(
+          }
+          label={
             <Typography id="parkingSpacesName" aria-hidden>
               <FormattedMessage id={labelKey} />
             </Typography>
-          )}
+          }
         />
       </StyledAreaListItem>
     );
   }
 
-  const renderedParkingCategoryIds = (
-    () => {
-      if (variant === 'helsinki') {
-        return parkingUnitCategoryIds.filter(id => id.includes('helsinki'));
-      }
-      if (variant === 'vantaa/passenger_car') {
-        return parkingUnitCategoryIds.filter(id => id.includes('vantaa'));
-      }
-      return [];
+  const renderedParkingCategoryIds = (() => {
+    if (variant === 'helsinki') {
+      return parkingUnitCategoryIds.filter((id) => id.includes('helsinki'));
     }
-  )();
+    if (variant === 'vantaa/passenger_car') {
+      return parkingUnitCategoryIds.filter((id) => id.includes('vantaa'));
+    }
+    return [];
+  })();
   return (
     <StyledListLevelThree data-sm="ParkingList" disablePadding>
       {areaDataInfo.map((area) => {
         const fullId = resolveParkingAreaId(area);
         return (
           <Fragment key={fullId}>
-            <StyledAreaListItem
-              key={fullId}
-              divider
-              className={fullId}
-            >
+            <StyledAreaListItem key={fullId} divider className={fullId}>
               <StyledFormControlLabel
-                control={(
+                control={
                   <Checkbox
                     color="primary"
                     icon={<StyledCheckBoxIcon />}
                     checked={selectedParkingAreaIds.includes(fullId)}
                     onChange={() => handleParkingCheckboxChange(fullId)}
                   />
-                )}
-                label={(
+                }
+                label={
                   <Typography id={`${fullId}Name`} aria-hidden>
                     {renderAreaName(area)}
                   </Typography>
-                )}
+                }
               />
             </StyledAreaListItem>
           </Fragment>
         );
       })}
 
-      {renderedParkingCategoryIds.map(parkingCategoryId => (
+      {renderedParkingCategoryIds.map((parkingCategoryId) => (
         <Fragment key={parkingCategoryId}>
           {getStyledAreaListItem(parkingCategoryId)}
         </Fragment>
       ))}
     </StyledListLevelThree>
   );
-};
+}
 
 const StyledFormControlLabel = styled(FormControlLabel)(({ theme }) => ({
   paddingLeft: theme.spacing(2),
 }));
 
 ParkingAreaList.propTypes = {
-  variant: PropTypes.oneOf(['helsinki', 'vantaa/passenger_car', 'vantaa/heavy_traffic']).isRequired,
+  variant: PropTypes.oneOf([
+    'helsinki',
+    'vantaa/passenger_car',
+    'vantaa/heavy_traffic',
+  ]).isRequired,
 };
 
 export default ParkingAreaList;

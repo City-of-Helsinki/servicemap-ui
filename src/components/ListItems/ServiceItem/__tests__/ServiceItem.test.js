@@ -1,16 +1,17 @@
 import React from 'react';
+
+import { getRenderWithProviders } from '../../../../../jestUtils';
 import { initialState } from '../../../../redux/reducers/user';
 import ServiceItem from '../index';
-import { getRenderWithProviders } from '../../../../../jestUtils';
 
 const mockData = {
-  "name": {
-      "fi": "yleiset kirjastot",
-      "sv": "allmänna bibliotek",
-      "en": "public libraries"
+  name: {
+    fi: 'yleiset kirjastot',
+    sv: 'allmänna bibliotek',
+    en: 'public libraries',
   },
-  "id": 813,
-  "clarification_enabled": false,
+  id: 813,
+  clarification_enabled: false,
 };
 
 // Generic required props for SimpleListItem
@@ -24,7 +25,7 @@ const renderWithProviders = getRenderWithProviders({
   service: {
     current: null,
   },
-})
+});
 
 describe('<ServiceItem />', () => {
   it('should work', () => {
@@ -40,7 +41,9 @@ describe('<ServiceItem />', () => {
     const dividerItem = items[1];
 
     // List item's image should be aria-hidden
-    expect(firstItem.querySelector('img').getAttribute('aria-hidden')).toBeTruthy();
+    expect(
+      firstItem.querySelector('img').getAttribute('aria-hidden')
+    ).toBeTruthy();
     expect(firstItem.getAttribute('role')).toEqual('link');
     expect(firstItem.getAttribute('tabIndex')).toEqual('0');
     // expect(firstItemSRText.className.indexOf('ResultItem-title') > 0).toBeTruthy();

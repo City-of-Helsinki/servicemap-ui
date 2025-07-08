@@ -5,10 +5,11 @@ import { ButtonBase, Divider, List, Typography } from '@mui/material';
 import PropTypes from 'prop-types';
 /* eslint-disable camelcase */
 import React, { useEffect, useState } from 'react';
-import Helmet from 'react-helmet';
+import { Helmet } from 'react-helmet';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useRouteMatch } from 'react-router-dom';
+
 import config from '../../../config';
 import {
   DesktopComponent,
@@ -35,12 +36,18 @@ import {
 } from '../../redux/selectors/address';
 import { selectMapRef, selectNavigator } from '../../redux/selectors/general';
 import { selectResultsData } from '../../redux/selectors/results';
-import { calculateDistance, getCurrentlyUsedPosition } from '../../redux/selectors/unit';
+import {
+  calculateDistance,
+  getCurrentlyUsedPosition,
+} from '../../redux/selectors/unit';
 import { formatDistanceObject, parseSearchParams } from '../../utils';
 import { getAddressText } from '../../utils/address';
 import useLocaleText from '../../utils/useLocaleText';
 import { getCategoryDistricts } from '../AreaView/utils/districtDataHelper';
-import { focusToPosition, useMapFocusDisabled } from '../MapView/utils/mapActions';
+import {
+  focusToPosition,
+  useMapFocusDisabled,
+} from '../MapView/utils/mapActions';
 import fetchAddressData from './utils/fetchAddressData';
 import fetchAddressUnits from './utils/fetchAddressUnits';
 import fetchAdministrativeDistricts from './utils/fetchAdministrativeDistricts';
@@ -69,7 +76,7 @@ const getEmergencyCareUnit = (division) => {
   }
   return null;
 };
-const AddressView = ({ embed = false }) => {
+function AddressView({ embed = false }) {
   const intl = useIntl();
   // This is not nice that we have 3 isFetching variables
   const [isFetchingAddress, setIsFetchingAddress] = useState(false);
@@ -86,42 +93,43 @@ const AddressView = ({ embed = false }) => {
   const adminDistricts = useSelector(selectAddressAdminDistricts);
   const addressData = useSelector(selectAddressData);
   const currentPosition = useSelector(getCurrentlyUsedPosition);
-  const getDistance = unit => formatDistanceObject(intl, calculateDistance(unit, currentPosition));
+  const getDistance = (unit) =>
+    formatDistanceObject(intl, calculateDistance(unit, currentPosition));
 
   const mapFocusDisabled = useMapFocusDisabled();
 
   const fetchAddressDistricts = (lnglat) => {
     // Fetch administrative districts data
     setIsFetchingDistricts(true);
-    fetchAdministrativeDistricts(lnglat)
-      .then(response => {
-        dispatch(setAdminDistricts(response));
-        setIsFetchingDistricts(false);
-      });
+    fetchAdministrativeDistricts(lnglat).then((response) => {
+      dispatch(setAdminDistricts(response));
+      setIsFetchingDistricts(false);
+    });
   };
-  
+
   const fetchUnits = (lnglat, distance = 100) => {
     // By default, fetch units within 100 meters but if there are less than 50 units,
     // fetch units within 500 meters
     setIsFetchingUnits(true);
-    fetchAddressUnits(lnglat, distance)
-      .then(data => {
-        const units = data?.results || [];
-        units.forEach((unit) => {
-          unit.object_type = 'unit';
-        });
-        dispatch(setAddressUnits(units));
-        setIsFetchingUnits(false);
-
-        if (units.length < 50 && distance === 100) {
-          fetchUnits(lnglat, 500);
-        }
+    fetchAddressUnits(lnglat, distance).then((data) => {
+      const units = data?.results || [];
+      units.forEach((unit) => {
+        unit.object_type = 'unit';
       });
+      dispatch(setAddressUnits(units));
+      setIsFetchingUnits(false);
+
+      if (units.length < 50 && distance === 100) {
+        fetchUnits(lnglat, 500);
+      }
+    });
   };
 
   const handleAddressData = (address) => {
     dispatch(setAddressData(address));
-    dispatch(setAddressLocation({ addressCoordinates: address.location.coordinates }));
+    dispatch(
+      setAddressLocation({ addressCoordinates: address.location.coordinates })
+    );
     const { coordinates } = address.location;
 
     if (!mapFocusDisabled) {
@@ -137,13 +145,12 @@ const AddressView = ({ embed = false }) => {
     dispatch(setAddressUnits([]));
 
     setIsFetchingAddress(true);
-    fetchAddressData(municipality, street)
-      .then(address => {
-        if (address?.length) {
-          handleAddressData(address[0]);
-        }
-        setIsFetchingAddress(false);
-      });
+    fetchAddressData(municipality, street).then((address) => {
+      if (address?.length) {
+        handleAddressData(address[0]);
+      }
+      setIsFetchingAddress(false);
+    });
   };
 
   // Gets address data from previously fetched search results
@@ -151,19 +158,18 @@ const AddressView = ({ embed = false }) => {
     if (!searchResults.length) return null;
     const addressNameFromParams = match.params.street;
     const municipalityFromParams = match.params.municipality.toLowerCase();
-    return searchResults.find(item => (
-      addressNameFromParams === getLocaleText(item.name)
-      && municipalityFromParams === item.municipality.id
-    ));
+    return searchResults.find(
+      (item) =>
+        addressNameFromParams === getLocaleText(item.name) &&
+        municipalityFromParams === item.municipality.id
+    );
   };
 
   const renderHead = () => {
     const title = getAddressText(addressData, getLocaleText);
     return (
       <Helmet>
-        <title>
-          {`${title} | ${intl.formatMessage({ id: 'app.title' })}`}
-        </title>
+        <title>{`${title} | ${intl.formatMessage({ id: 'app.title' })}`}</title>
       </Helmet>
     );
   };
@@ -187,20 +193,39 @@ const AddressView = ({ embed = false }) => {
 
   const renderNearbyList = () => {
     if (isFetchingAddress || isFetchingUnits || !units) {
-      return <Typography data-sm="LoadingMessage"><FormattedMessage id="general.loading" /></Typography>;
+      return (
+        <Typography data-sm="LoadingMessage">
+          <FormattedMessage id="general.loading" />
+        </Typography>
+      );
     }
     if (!units.length) {
-      return <Typography data-sm="NoDataMessage"><FormattedMessage id="general.noData" /></Typography>;
+      return (
+        <Typography data-sm="NoDataMessage">
+          <FormattedMessage id="general.noData" />
+        </Typography>
+      );
     }
     return null;
   };
 
   const renderClosebyServices = () => {
-    if (!addressData || isFetchingAddress || isFetchingDistricts || !adminDistricts) {
-      return <Typography><FormattedMessage id="general.loading" /></Typography>;
+    if (
+      !addressData ||
+      isFetchingAddress ||
+      isFetchingDistricts ||
+      !adminDistricts
+    ) {
+      return (
+        <Typography>
+          <FormattedMessage id="general.loading" />
+        </Typography>
+      );
     }
     // Get emergency division
-    const emergencyDiv = adminDistricts.find(x => x.type === 'emergency_care_district');
+    const emergencyDiv = adminDistricts.find(
+      (x) => x.type === 'emergency_care_district'
+    );
 
     // Also add rescue areas that have no units
     const rescueAreaIDs = getCategoryDistricts('protection');
@@ -216,40 +241,45 @@ const AddressView = ({ embed = false }) => {
       return false;
     });
 
-    const getCustomRescueAreaTitle = area => `${area.origin_id} - ${getLocaleText(area.name)}`;
-    const majorDistricts = adminDistricts.filter(x => x.type === 'major_district');
+    const getCustomRescueAreaTitle = (area) =>
+      `${area.origin_id} - ${getLocaleText(area.name)}`;
+    const majorDistricts = adminDistricts.filter(
+      (x) => x.type === 'major_district'
+    );
     const unitlessDistricts = [...rescueAreas, ...majorDistricts];
 
     function collectUnitsFromDistrict(district) {
       return [district.unit, ...(district.units || [])]
-        .filter(x => !!x)
+        .filter((x) => !!x)
         .filter(
-          (unit, index, self) => index
-            === self.findIndex(x => x.id === unit.id),
-        );// Distinct by id
+          (unit, index, self) =>
+            index === self.findIndex((x) => x.id === unit.id)
+        ); // Distinct by id
     }
 
     const setsOfUnitsFromDistricts = adminDistricts
-      .filter(d => !hiddenDivisions[d.type])
-      .map(district => ({
+      .filter((d) => !hiddenDivisions[d.type])
+      .map((district) => ({
         district,
         units: collectUnitsFromDistrict(district),
       }))
       .filter(({ units }) => units.length)
-      .map(({ district, units }) => units
-        .map(unit => {
+      .map(({ district, units }) =>
+        units.map((unit) => {
           const newUnit = { ...unit, area: district };
           if (district.type === 'health_station_district') {
             newUnit.emergencyUnitId = getEmergencyCareUnit(emergencyDiv);
           }
           return newUnit;
-        }),
+        })
       );
 
     return (
       <>
         <StyledServicesTitle>
-          <Typography align="left" variant="body2"><FormattedMessage id="address.services.info" /></Typography>
+          <Typography align="left" variant="body2">
+            <FormattedMessage id="address.services.info" />
+          </Typography>
           <StyledButtonBase
             role="link"
             onClick={() => {
@@ -265,8 +295,8 @@ const AddressView = ({ embed = false }) => {
         </StyledServicesTitle>
         <Divider aria-hidden />
         <List>
-          {
-            setsOfUnitsFromDistricts.flatMap(units => units.map((data, index) => {
+          {setsOfUnitsFromDistricts.flatMap((units) =>
+            units.map((data, index) => {
               const key = `${data.area.id}-${data.id}`;
               const distance = getDistance(data);
               const customTitle = rescueAreaIDs.includes(data.area.type)
@@ -282,9 +312,9 @@ const AddressView = ({ embed = false }) => {
                   customTitle={customTitle}
                 />
               );
-            }))
-          }
-          {unitlessDistricts.map(area => (
+            })
+          )}
+          {unitlessDistricts.map((area) => (
             <DistrictItem key={area.id} area={area} />
           ))}
         </List>
@@ -353,7 +383,7 @@ const AddressView = ({ embed = false }) => {
       {renderTopBar()}
       <TabLists
         data={tabs}
-        headerComponents={(
+        headerComponents={
           <StyledTopArea>
             {addressData && units && (
               <MobileComponent>
@@ -372,11 +402,11 @@ const AddressView = ({ embed = false }) => {
               </MobileComponent>
             )}
           </StyledTopArea>
-        )}
+        }
       />
     </div>
   );
-};
+}
 
 const StyledButtonBase = styled(ButtonBase)(({ theme }) => ({
   color: theme.palette.link.main,

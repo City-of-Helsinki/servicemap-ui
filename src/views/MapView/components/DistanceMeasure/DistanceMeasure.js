@@ -5,16 +5,13 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { useMapEvents } from 'react-leaflet';
+
 import { StyledHslIcon } from '../styled/styled';
 
-const DistanceMeasure = (props) => {
-  const {
-    markerArray, setMarkerArray, lineArray, setLineArray,
-  } = props;
+function DistanceMeasure(props) {
+  const { markerArray, setMarkerArray, lineArray, setLineArray } = props;
 
-  const {
-    Marker, Polyline, Tooltip, Popup,
-  } = global.rL;
+  const { Marker, Polyline, Tooltip, Popup } = global.rL;
 
   const theme = useTheme();
   const [icon, setIcon] = useState(null);
@@ -27,7 +24,9 @@ const DistanceMeasure = (props) => {
     zoom() {
       // Distance markers lose interactive status after zooming. Add it back manually
       setTimeout(() => {
-        const measureMarkers = document.getElementsByClassName('leaflet-marker-draggable');
+        const measureMarkers = document.getElementsByClassName(
+          'leaflet-marker-draggable'
+        );
         if (measureMarkers.length) {
           measureMarkers.forEach((marker) => {
             marker.classList.add('leaflet-interactive');
@@ -72,7 +71,6 @@ const DistanceMeasure = (props) => {
     };
   }, []);
 
-
   useEffect(() => {
     // Create marker icon on component mount
     const icon = global.L.divIcon({
@@ -84,7 +82,7 @@ const DistanceMeasure = (props) => {
         <>
           <StyledHslIcon className="icon-icon-hsl-background" />
           <span className="icon-icon-address" />
-        </>,
+        </>
       ),
     });
     setIcon(icon);
@@ -103,41 +101,47 @@ const DistanceMeasure = (props) => {
             position={point}
             eventHandlers={{
               click: () => {},
-              mouseOver: e => e.target.openPopup(),
-              mouseOut: e => e.target.closePopup(),
-              drag: e => updateLine(e, i),
+              mouseOver: (e) => e.target.openPopup(),
+              mouseOut: (e) => e.target.closePopup(),
+              drag: (e) => updateLine(e, i),
             }}
           >
             {/* Show distance tooltip on last marker */}
             {markerArray.length > 1 && i === markerArray.length - 1 && (
-            <Tooltip
-              direction="top"
-              offset={[0, -40]}
-              permanent
-            >
-              <Typography>{`${getDistance()}m`}</Typography>
-            </Tooltip>
+              <Tooltip direction="top" offset={[0, -40]} permanent>
+                <Typography>{`${getDistance()}m`}</Typography>
+              </Tooltip>
             )}
             {/* Show distance popup on markers when clicked */}
             {i !== 0 && i !== markerArray.length - 1 && (
-            <Popup closeButton={false} autoPan={false}>
-              <StyledDistancePopup>
-                <Typography>
-                  {`${getDistance(i)}m`}
-                </Typography>
-              </StyledDistancePopup>
-            </Popup>
+              <Popup closeButton={false} autoPan={false}>
+                <StyledDistancePopup>
+                  <Typography>{`${getDistance(i)}m`}</Typography>
+                </StyledDistancePopup>
+              </Popup>
             )}
           </Marker>
         ))}
-        <Polyline color={theme.palette.measuringStroke.border} weight="14" positions={lineArray} />
-        <Polyline color={theme.palette.measuringStroke.background} weight="10" positions={lineArray} />
-        <Polyline color={theme.palette.measuringStroke.main} dashArray="12" positions={lineArray} />
+        <Polyline
+          color={theme.palette.measuringStroke.border}
+          weight="14"
+          positions={lineArray}
+        />
+        <Polyline
+          color={theme.palette.measuringStroke.background}
+          weight="10"
+          positions={lineArray}
+        />
+        <Polyline
+          color={theme.palette.measuringStroke.main}
+          dashArray="12"
+          positions={lineArray}
+        />
       </>
     );
   }
   return null;
-};
+}
 const StyledDistancePopup = styled.div(() => ({
   padding: 8,
 }));

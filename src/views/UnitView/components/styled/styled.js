@@ -20,8 +20,4 @@ const StyledVerticalMarginContainer = styled.div(({ theme }) => ({
   marginBottom: theme.spacing(2),
 }));
 
-export {
-  StyledAlignLeftParagraph,
-  StyledLink,
-  StyledVerticalMarginContainer,
-};
+export { StyledAlignLeftParagraph, StyledLink, StyledVerticalMarginContainer };

@@ -1,31 +1,26 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import {
-  ButtonBase,
-  Divider,
-  Drawer,
-  Typography,
-} from '@mui/material';
-import { ArrowForward } from '@mui/icons-material';
-import { FormattedMessage } from 'react-intl';
-import styled from '@emotion/styled';
 import { css } from '@emotion/css';
+import styled from '@emotion/styled';
+import { ArrowForward } from '@mui/icons-material';
+import { ButtonBase, Divider, Drawer, Typography } from '@mui/material';
 import { useTheme } from '@mui/styles';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectThemeMode, getPage, getLocale } from '../../../redux/selectors/user';
-import { changeTheme } from '../../../redux/actions/user';
-import openA11yLink from '../util';
+
 import config from '../../../../config';
+import { changeTheme } from '../../../redux/actions/user';
+import {
+  getLocale,
+  getPage,
+  selectThemeMode,
+} from '../../../redux/selectors/user';
+import openA11yLink from '../util';
 
 const { topBarHeight, topBarHeightMobile } = config;
 
-const DrawerMenu = (props) => {
-  const {
-    pageType,
-    isOpen,
-    toggleDrawerMenu,
-    handleNavigation,
-  } = props;
+function DrawerMenu(props) {
+  const { pageType, isOpen, toggleDrawerMenu, handleNavigation } = props;
   const dispatch = useDispatch();
   const currentPage = useSelector(getPage);
   const locale = useSelector(getLocale);
@@ -42,8 +37,12 @@ const DrawerMenu = (props) => {
       }}
     >
       <StyledTextContainer>
-        <StyledTitle><FormattedMessage id={headerId} /></StyledTitle>
-        <Typography sx={{ color: '#666', fontSize: '0.913rem', lineHeight: '1.5rem' }}>
+        <StyledTitle>
+          <FormattedMessage id={headerId} />
+        </StyledTitle>
+        <Typography
+          sx={{ color: '#666', fontSize: '0.913rem', lineHeight: '1.5rem' }}
+        >
           <FormattedMessage id={textId} />
         </Typography>
       </StyledTextContainer>
@@ -51,19 +50,30 @@ const DrawerMenu = (props) => {
     </StyledButtonBase>
   );
 
-  const menuSecondaryButton = (headerId, pageId, handleClick, isLink, buttonId) => (
+  const menuSecondaryButton = (
+    headerId,
+    pageId,
+    handleClick,
+    isLink,
+    buttonId
+  ) => (
     <StyledButtonBase
       id={buttonId}
       sx={{ backgroundColor: 'rgba(167, 200, 232, 0.15)' }}
       aria-current={pageId && currentPage === pageId}
       role={isLink ? 'link' : 'button'}
-      onClick={handleClick || (() => {
-        toggleDrawerMenu();
-        handleNavigation(pageId);
-      })}
+      onClick={
+        handleClick ||
+        (() => {
+          toggleDrawerMenu();
+          handleNavigation(pageId);
+        })
+      }
     >
       <StyledTextContainer>
-        <StyledTitle><FormattedMessage id={headerId} /></StyledTitle>
+        <StyledTitle>
+          <FormattedMessage id={headerId} />
+        </StyledTitle>
       </StyledTextContainer>
     </StyledButtonBase>
   );
@@ -87,8 +97,17 @@ const DrawerMenu = (props) => {
       variant="persistent"
       anchor="right"
       open={isOpen}
-      classes={{ paper: pageType === 'mobile' ? drawerContainerMobileClass : drawerContainerClass }}
-      PaperProps={{ sx: { top: `${pageType === 'mobile' ? topBarHeightMobile : topBarHeight}px` } }}
+      classes={{
+        paper:
+          pageType === 'mobile'
+            ? drawerContainerMobileClass
+            : drawerContainerClass,
+      }}
+      PaperProps={{
+        sx: {
+          top: `${pageType === 'mobile' ? topBarHeightMobile : topBarHeight}px`,
+        },
+      }}
     >
       <StyledScrollContainer>
         {/* Main links */}
@@ -98,7 +117,11 @@ const DrawerMenu = (props) => {
         <Divider />
         {menuMainButton('services', 'home.buttons.services', 'services')}
         <Divider />
-        {menuMainButton('general.pageLink.mobilityTree', 'home.buttons.mobilityTree', 'mobilityTree')}
+        {menuMainButton(
+          'general.pageLink.mobilityTree',
+          'home.buttons.mobilityTree',
+          'mobilityTree'
+        )}
         <Divider />
 
         {/* Smaller buttons  */}
@@ -107,20 +130,39 @@ const DrawerMenu = (props) => {
             ? 'general.contrast.ariaLabel.on'
             : 'general.contrast.ariaLabel.off',
           null,
-          () => dispatch(changeTheme(themeMode === 'default' ? 'dark' : 'default')),
+          () =>
+            dispatch(changeTheme(themeMode === 'default' ? 'dark' : 'default')),
           false,
-          'ContrastButton',
+          'ContrastButton'
         )}
         <Divider />
-        {menuSecondaryButton('info.statement', 'accessibilityStatement', () => openA11yLink(locale), true, 'AccessibilityStatementButton')}
+        {menuSecondaryButton(
+          'info.statement',
+          'accessibilityStatement',
+          () => openA11yLink(locale),
+          true,
+          'AccessibilityStatementButton'
+        )}
         <Divider />
-        {menuSecondaryButton('home.send.feedback', 'feedback', null, true, 'FeedbackButton')}
+        {menuSecondaryButton(
+          'home.send.feedback',
+          'feedback',
+          null,
+          true,
+          'FeedbackButton'
+        )}
         <Divider />
-        {menuSecondaryButton('general.pageTitles.info', 'info', null, true, 'PageInfoButton')}
+        {menuSecondaryButton(
+          'general.pageTitles.info',
+          'info',
+          null,
+          true,
+          'PageInfoButton'
+        )}
       </StyledScrollContainer>
     </Drawer>
   );
-};
+}
 
 const StyledButtonBase = styled(ButtonBase)(({ theme }) => ({
   paddingLeft: theme.spacing(2),

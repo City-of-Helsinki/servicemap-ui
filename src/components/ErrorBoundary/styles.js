@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
-import HomeLogo from '../Logos/HomeLogo';
+
 import mapBackground from '../../assets/images/front-page-map-bg.png';
+import HomeLogo from '../Logos/HomeLogo';
 
 const StyledContent = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -28,7 +29,8 @@ const StyledDiv = styled('div')(() => ({
 }));
 
 const BackGroundCover = styled('div')(() => ({
-  background: 'linear-gradient(180deg, #FFFFFF 42.74%, rgba(255, 255, 255, 0.0001) 100%)',
+  background:
+    'linear-gradient(180deg, #FFFFFF 42.74%, rgba(255, 255, 255, 0.0001) 100%)',
   opacity: 0.93,
 }));
 
@@ -37,9 +39,4 @@ const ViewLogo = styled(HomeLogo)(({ theme }) => ({
   marginBottom: theme.spacing(5),
 }));
 
-export {
-  BackGroundCover,
-  StyledContent,
-  StyledDiv,
-  ViewLogo,
-};
+export { BackGroundCover, StyledContent, StyledDiv, ViewLogo };

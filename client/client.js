@@ -2,22 +2,23 @@
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import 'whatwg-fetch';
+
+import { CacheProvider } from '@emotion/react';
+import * as Sentry from '@sentry/react';
+import StyleContext from 'isomorphic-style-loader/StyleContext';
 import React from 'react';
 import { hydrateRoot } from 'react-dom/client';
-import * as Sentry from "@sentry/react";
 import { Helmet } from 'react-helmet';
-import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
+import { applyMiddleware, createStore } from 'redux';
 import thunk from 'redux-thunk';
-import StyleContext from 'isomorphic-style-loader/StyleContext';
-import ac from 'abortcontroller-polyfill';
-import rootReducer from '../src/redux/rootReducer';
-import App from '../src/App';
-import SettingsUtility from '../src/utils/settings';
-import favicon from '../src/assets/icons/favicon.ico';
+
 import config from '../config';
 import createEmotionCache from '../server/createEmotionCache';
-import { CacheProvider } from '@emotion/react';
+import App from '../src/App';
+import favicon from '../src/assets/icons/favicon.ico';
+import rootReducer from '../src/redux/rootReducer';
+import SettingsUtility from '../src/utils/settings';
 
 if (config.sentryDSN) {
   Sentry.init({
@@ -31,10 +32,6 @@ if (config.sentryDSN) {
       /adrum/,
     ],
   });
-}
-
-if (!global.AbortController) {
-  global.AbortController = ac.AbortController;
 }
 
 const getPreloadedState = () => {
@@ -63,8 +60,8 @@ const preloadedState = getPreloadedState();
 const store = createStore(rootReducer, preloadedState, applyMiddleware(thunk));
 
 const insertCss = (...styles) => {
-  const removeCss = styles.map(style => style._insertCss());
-  return () => removeCss.forEach(dispose => dispose());
+  const removeCss = styles.map((style) => style._insertCss());
+  return () => removeCss.forEach((dispose) => dispose());
 };
 
 // Create cache object which will inject emotion styles from cache
@@ -82,7 +79,6 @@ function Main() {
   return (
     <CacheProvider value={cache}>
       <Provider store={store}>
-
         {/* Provider to help with isomorphic style loader */}
         <StyleContext.Provider value={{ insertCss }}>
           {

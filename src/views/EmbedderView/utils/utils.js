@@ -17,7 +17,7 @@ export const getEmbedURL = (url, params = {}) => {
     delete data.city;
   }
   if (params.organization?.length > 0) {
-    data.organization = params.organization.map(org => org.id).join(',');
+    data.organization = params.organization.map((org) => org.id).join(',');
   } else {
     delete data.organization;
   }

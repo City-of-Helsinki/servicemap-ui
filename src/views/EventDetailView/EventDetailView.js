@@ -1,9 +1,9 @@
 /* eslint-disable no-underscore-dangle */
 import styled from '@emotion/styled';
-import React, { useEffect, useState } from 'react';
+import { AccessTime, Event, Phone } from '@mui/icons-material';
 import PropTypes from 'prop-types';
+import React, { useEffect, useState } from 'react';
 
-import { AccessTime, Phone, Event } from '@mui/icons-material';
 import {
   DescriptionText,
   SearchBar,
@@ -12,13 +12,13 @@ import {
   TitledList,
   UnitItem,
 } from '../../components';
-import UnitHelper from '../../utils/unitHelper';
 import { eventFetch } from '../../utils/fetch';
-import { focusToPosition } from '../MapView/utils/mapActions';
-import useLocaleText from '../../utils/useLocaleText';
 import useMobileStatus from '../../utils/isMobile';
+import UnitHelper from '../../utils/unitHelper';
+import useLocaleText from '../../utils/useLocaleText';
+import { focusToPosition } from '../MapView/utils/mapActions';
 
-const EventDetailView = (props) => {
+function EventDetailView(props) {
   const {
     event = null,
     changeSelectedEvent,
@@ -35,9 +35,14 @@ const EventDetailView = (props) => {
   const [centered, setCentered] = useState(false);
   const [fetchingEvent, setFetchingEvent] = useState(false);
 
-
   const centerMap = (unit) => {
-    if (unit && (unit.location || unit.position) && map && map.options.maxZoom && !centered) {
+    if (
+      unit &&
+      (unit.location || unit.position) &&
+      map &&
+      map.options.maxZoom &&
+      !centered
+    ) {
       const location = unit.location || unit.position;
       setCentered(true);
       focusToPosition(map, location.coordinates);
@@ -47,16 +52,28 @@ const EventDetailView = (props) => {
   // TODO: maybe combine this with the date fomratting used in events component
   const formatDate = (event) => {
     const startDate = intl.formatDate(event.start_time, {
-      year: 'numeric', month: 'numeric', day: 'numeric',
+      year: 'numeric',
+      month: 'numeric',
+      day: 'numeric',
     });
     const endDate = intl.formatDate(event.end_time, {
-      year: 'numeric', month: 'numeric', day: 'numeric',
+      year: 'numeric',
+      month: 'numeric',
+      day: 'numeric',
     });
     const startDateFull = intl.formatDate(event.start_time, {
-      weekday: 'long', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric',
+      weekday: 'long',
+      month: 'long',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
     });
     const endDateFull = intl.formatDate(event.end_time, {
-      weekday: 'long', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric',
+      weekday: 'long',
+      month: 'long',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
     });
 
     let time = `${startDateFull} —\n${endDateFull}`;
@@ -90,10 +107,11 @@ const EventDetailView = (props) => {
           // Attempt fetching selected unit if it doesn't exist or isn't correct one
           const unit = data.location;
           if (typeof unit === 'object' && unit.id) {
-            const unitId = typeof unit.id === 'string' ? unit.id.split(':').pop() : unit.id;
+            const unitId =
+              typeof unit.id === 'string' ? unit.id.split(':').pop() : unit.id;
             if (
-              !UnitHelper.isValidUnit(selectedUnit)
-                  || parseInt(unitId, 10) !== selectedUnit.id
+              !UnitHelper.isValidUnit(selectedUnit) ||
+              parseInt(unitId, 10) !== selectedUnit.id
             ) {
               fetchSelectedUnit(unitId, (data) => {
                 centerMap(data);
@@ -101,17 +119,25 @@ const EventDetailView = (props) => {
             }
           }
         };
-        eventFetch(options, onStart, onSuccess, onError, null, match.params.event);
+        eventFetch(
+          options,
+          onStart,
+          onSuccess,
+          onError,
+          null,
+          match.params.event
+        );
       }
     } else if (!selectedUnit || event.location.id !== selectedUnit.id) {
       // Attempt fetching selected unit if it doesn't exist or isn't correct one
       const unit = event.location;
       centerMap(event.location);
       if (typeof unit === 'object' && unit.id) {
-        const unitId = typeof unit.id === 'string' ? unit.id.split(':').pop() : unit.id;
+        const unitId =
+          typeof unit.id === 'string' ? unit.id.split(':').pop() : unit.id;
         if (
-          !UnitHelper.isValidUnit(selectedUnit)
-              || parseInt(unitId, 10) !== selectedUnit.id
+          !UnitHelper.isValidUnit(selectedUnit) ||
+          parseInt(unitId, 10) !== selectedUnit.id
         ) {
           fetchSelectedUnit(unitId);
         }
@@ -125,12 +151,14 @@ const EventDetailView = (props) => {
     }
   }, [map]);
 
-
   const renderEventDetails = () => {
     if (!event) return null;
     const unit = selectedUnit;
     const description = event.description || event.short_description;
-    const phoneText = unit && unit.phone ? `${unit.phone} ${intl.formatMessage({ id: 'unit.call.number' })}` : null;
+    const phoneText =
+      unit && unit.phone
+        ? `${unit.phone} ${intl.formatMessage({ id: 'unit.call.number' })}`
+        : null;
     const time = formatDate(event);
 
     return (
@@ -142,7 +170,10 @@ const EventDetailView = (props) => {
           />
         ) : null}
         <StyledContent>
-          <TitledList titleComponent="h4" title={intl.formatMessage({ id: 'unit.contact.info' })}>
+          <TitledList
+            titleComponent="h4"
+            title={intl.formatMessage({ id: 'unit.contact.info' })}
+          >
             <SimpleListItem
               key="eventHours"
               icon={<AccessTime />}
@@ -150,31 +181,20 @@ const EventDetailView = (props) => {
               srText={intl.formatMessage({ id: 'event.time' })}
               divider
             />
-            {
-            unit
-            && (
-              <UnitItem
-                key="unitInfo"
-                unit={unit}
+            {unit && <UnitItem key="unitInfo" unit={unit} />}
+            {phoneText && (
+              <SimpleListItem
+                key="contactNumber"
+                icon={<Phone />}
+                text={phoneText}
+                srText={intl.formatMessage({ id: 'unit.phone' })}
+                link
+                divider
+                handleItemClick={() => {
+                  window.location.href = `tel:${unit.phone}`;
+                }}
               />
-            )
-          }
-            {
-             phoneText
-             && (
-             <SimpleListItem
-               key="contactNumber"
-               icon={<Phone />}
-               text={phoneText}
-               srText={intl.formatMessage({ id: 'unit.phone' })}
-               link
-               divider
-               handleItemClick={() => {
-                 window.location.href = `tel:${unit.phone}`;
-               }}
-             />
-             )
-           }
+            )}
           </TitledList>
 
           <DescriptionText
@@ -204,9 +224,7 @@ const EventDetailView = (props) => {
 
   return (
     <div>
-      {!isMobile ? (
-        <SearchBar margin />
-      ) : null}
+      {!isMobile ? <SearchBar margin /> : null}
 
       <TitleBar
         sticky
@@ -218,7 +236,7 @@ const EventDetailView = (props) => {
       {renderEventDetails()}
     </div>
   );
-};
+}
 
 const StyledImage = styled('img')(() => ({
   width: '100%',

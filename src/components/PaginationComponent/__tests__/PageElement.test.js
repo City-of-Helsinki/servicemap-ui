@@ -1,18 +1,9 @@
 // Link.react.test.js
-import React from 'react';
 import { fireEvent } from '@testing-library/react';
-import PageElement from '../PageElement';
-import { getRenderWithProviders } from '../../../../jestUtils';
+import React from 'react';
 
-// Mock props for intl provider
-const intlMock = {
-  locale: 'en',
-  messages: {
-    'general.pagination.openPage': 'Open page {count}',
-    'general.pagination.currentlyOpenedPage': 'Sivu {count}, avattu',
-  },
-  wrapRichTextChunksInFragment: false,
-};
+import { getRenderWithProviders } from '../../../../jestUtils';
+import PageElement from '../PageElement';
 
 // Generic required props for ResultItem
 const mockProps = {
@@ -31,7 +22,9 @@ describe('<PageElement />', () => {
 
   it('simulates click event', () => {
     const mockCallBack = jest.fn();
-    const { getByRole } = renderWithProviders(<PageElement {...mockProps} onClick={mockCallBack} />);
+    const { getByRole } = renderWithProviders(
+      <PageElement {...mockProps} onClick={mockCallBack} />
+    );
 
     fireEvent.click(getByRole('link'));
     expect(mockCallBack.mock.calls.length).toEqual(1);
@@ -39,7 +32,9 @@ describe('<PageElement />', () => {
 
   it('simulates keyboard event', () => {
     const mockCallBack = jest.fn();
-    const { getByRole } = renderWithProviders(<PageElement {...mockProps} onClick={mockCallBack} />);
+    const { getByRole } = renderWithProviders(
+      <PageElement {...mockProps} onClick={mockCallBack} />
+    );
 
     fireEvent.keyDown(getByRole('link'), {
       key: 'Enter',
@@ -59,22 +54,30 @@ describe('<PageElement />', () => {
 
   it('does show text correctly', () => {
     const { container } = renderWithProviders(<PageElement {...mockProps} />);
-    expect(container.querySelector('span')).toHaveTextContent(`${mockProps.number}`);
+    expect(container.querySelector('span')).toHaveTextContent(
+      `${mockProps.number}`
+    );
   });
 
   it('does set active correctly', () => {
-    const { getByRole } = renderWithProviders(<PageElement {...mockProps} isActive />);
+    const { getByRole } = renderWithProviders(
+      <PageElement {...mockProps} isActive />
+    );
     expect(getByRole('link')).toBeDisabled();
   });
 
   it('does use default accessibility attributes correctly', () => {
-    const { container, getByRole } = renderWithProviders(<PageElement {...mockProps} />);
+    const { container, getByRole } = renderWithProviders(
+      <PageElement {...mockProps} />
+    );
 
     // Expect screen reader texts to render correctly
     expect(container.querySelectorAll('p')[1]).toHaveTextContent('Open page 2');
 
     // // Expect aria-hidden attributes to be placed correctly
-    expect(container.querySelectorAll('p')[1]).not.toHaveAttribute('aria-hidden');
+    expect(container.querySelectorAll('p')[1]).not.toHaveAttribute(
+      'aria-hidden'
+    );
     expect(container.querySelector('span')).toHaveAttribute('aria-hidden');
 
     // // Expect role to be set to link
@@ -86,13 +89,12 @@ describe('<PageElement />', () => {
 
   it('does use given accessibility attributes correctly', () => {
     const { container, getByRole } = renderWithProviders(
-      <PageElement
-        {...mockProps}
-        isActive
-      />,
+      <PageElement {...mockProps} isActive />
     );
 
-    expect(container.querySelectorAll('p')[1]).toHaveTextContent(`Page ${mockProps.number} currently opened`);
+    expect(container.querySelectorAll('p')[1]).toHaveTextContent(
+      `Page ${mockProps.number} currently opened`
+    );
 
     // Expect element to have tabIndex -1
     expect(getByRole('link')).toHaveAttribute('tabindex', '-1');

@@ -5,14 +5,13 @@ import React, { useRef, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useMapEvents } from 'react-leaflet';
 import { useLocation } from 'react-router-dom';
+
 import { SMButton } from '../../../../components';
 import { getAddressText, useNavigationParams } from '../../../../utils/address';
 import useLocaleText from '../../../../utils/useLocaleText';
 import fetchAddress from '../../utils/fetchAddress';
 
-const AddressPopup = ({
-  navigator,
-}) => {
+function AddressPopup({ navigator }) {
   const { Popup } = global.rL;
   const intl = useIntl();
   const getLocaleText = useLocaleText();
@@ -26,11 +25,18 @@ const AddressPopup = ({
 
   const updatePopupText = (type) => {
     if (type === 'addressFound') {
-      addressTextRef.current.innerText = intl.formatMessage({ id: 'map.address.info' });
-      addressButtonRef.current.innerText = getAddressText(addressData.current, getLocaleText);
+      addressTextRef.current.innerText = intl.formatMessage({
+        id: 'map.address.info',
+      });
+      addressButtonRef.current.innerText = getAddressText(
+        addressData.current,
+        getLocaleText
+      );
     }
     if (type === 'noAddress') {
-      addressTextRef.current.innerText = intl.formatMessage({ id: 'map.address.notFound' });
+      addressTextRef.current.innerText = intl.formatMessage({
+        id: 'map.address.notFound',
+      });
     }
   };
 
@@ -51,7 +57,6 @@ const AddressPopup = ({
       }
     },
   });
-
 
   if (!mapClickPoint) return null;
 
@@ -79,7 +84,12 @@ const AddressPopup = ({
   };
 
   return (
-    <Popup className="popup" key="addressPopup" autoPan={false} position={[mapClickPoint.lat, mapClickPoint.lng]}>
+    <Popup
+      className="popup"
+      key="addressPopup"
+      autoPan={false}
+      position={[mapClickPoint.lat, mapClickPoint.lng]}
+    >
       <StyledAddressPopupContainer>
         <Typography ref={addressTextRef} variant="subtitle2" component="p">
           <FormattedMessage id="map.address.searching" />
@@ -88,7 +98,10 @@ const AddressPopup = ({
           onClick={() => {
             if (navigator && addressData.current) {
               setMapClickPoint(null);
-              navigator.push('address', getAddressNavigatorParams(addressData.current));
+              navigator.push(
+                'address',
+                getAddressNavigatorParams(addressData.current)
+              );
             }
           }}
         >
@@ -103,7 +116,7 @@ const AddressPopup = ({
       </StyledAddressPopupContainer>
     </Popup>
   );
-};
+}
 
 const StyledAddressPopupButton = styled(ButtonBase)(({ theme }) => ({
   paddingTop: theme.spacing(0.5),

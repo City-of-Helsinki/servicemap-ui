@@ -22,7 +22,7 @@ const getBboxFromBounds = (bounds, reverse = false) => {
   return bbox;
 };
 
-const isFloat = val => {
+const isFloat = (val) => {
   const floatRegex = /^-?\d+(?:[.,]\d*?)?$/;
   if (!floatRegex.test(val)) {
     return false;
@@ -37,13 +37,13 @@ const isFloat = val => {
  * @param location
  * @returns bbox array if valid bbox
  */
-const parseBboxFromLocation = location => {
-  const isValidBboxString = bb => {
+const parseBboxFromLocation = (location) => {
+  const isValidBboxString = (bb) => {
     const parts = bb?.split(',');
     if (parts?.length !== 4) {
       return false;
     }
-    return parts.every(part => isFloat(part));
+    return parts.every((part) => isFloat(part));
   };
 
   const bbox = getSearchParam(location, 'bbox');
@@ -57,7 +57,7 @@ const mapHasMapPane = (leafLetMap) => {
   return !!panes && !!panes.mapPane;
 };
 
-const getCoordinatesFromUrl = location => {
+const getCoordinatesFromUrl = (location) => {
   // Attempt to get coordinates from URL
   const usp = new URLSearchParams(location.search);
   const lat = usp.get('lat');
@@ -68,9 +68,9 @@ const getCoordinatesFromUrl = location => {
   return [lat, lng];
 };
 
-const swapCoordinates = coordinates => [coordinates[1], coordinates[0]];
+const swapCoordinates = (coordinates) => [coordinates[1], coordinates[0]];
 
-const coordinateIsActive = location => {
+const coordinateIsActive = (location) => {
   try {
     return !!getCoordinatesFromUrl(location);
   } catch (e) {
@@ -81,8 +81,8 @@ const coordinateIsActive = location => {
 
 export {
   coordinateIsActive,
-  getCoordinatesFromUrl,
   getBboxFromBounds,
+  getCoordinatesFromUrl,
   mapHasMapPane,
   parseBboxFromLocation,
   swapCoordinates,

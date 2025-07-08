@@ -1,13 +1,10 @@
-
 import { selectedUnitFetch } from '../../utils/fetch';
 import { selectedUnit } from './fetchDataActions';
 
-const {
-  isFetching, setNewData, fetchError, fetchSuccess,
-} = selectedUnit;
+const { isFetching, setNewData, fetchError, fetchSuccess } = selectedUnit;
 
 // Change selected unit to given unit
-export const changeSelectedUnit = unit => async (dispatch) => {
+export const changeSelectedUnit = (unit) => async (dispatch) => {
   const newUnit = unit;
   if (newUnit) {
     newUnit.object_type = 'unit';
@@ -29,7 +26,7 @@ export const fetchSelectedUnit = (id, callback) => async (dispatch) => {
       callback(data);
     }
   };
-  const onError = e => dispatch(fetchError(e.message));
+  const onError = (e) => dispatch(fetchError(e.message));
 
   // Fetch data
   selectedUnitFetch(null, onStart, onSuccess, onError, null, id);

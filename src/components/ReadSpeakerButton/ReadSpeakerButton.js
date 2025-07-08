@@ -1,15 +1,16 @@
 /* eslint-disable jsx-a11y/no-access-key */
-import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import React, { useEffect } from 'react';
 import { FormattedMessage } from 'react-intl';
+
 import config from '../../../config';
 
-const ReadSpeakerButton = ({
+function ReadSpeakerButton({
   className = null,
   encodedURL = null,
   intl,
   readID,
-}) => {
+}) {
   useEffect(() => {
     /**
      * ReadSpeaker fixes to fix click events and stop active player from
@@ -18,8 +19,10 @@ const ReadSpeakerButton = ({
      */
     const rs = window.ReadSpeaker;
     if (rs) {
-      // eslint-disable-next-line no-undef
-      rs.q(() => { rspkr.ui.addClickEvents(); });
+      rs.q(() => {
+        // eslint-disable-next-line no-undef
+        rspkr.ui.addClickEvents();
+      });
     }
     return () => {
       if (rs) {
@@ -34,18 +37,27 @@ const ReadSpeakerButton = ({
     };
   }, []);
 
-  const locale = intl && intl.locale ? config.readspeakerLocales[intl.locale] : null;
+  const locale =
+    intl && intl.locale ? config.readspeakerLocales[intl.locale] : null;
   if (!locale || !readID) {
     return null;
   }
   return (
-    <div aria-hidden="true" id="readspeaker_button1" className={`rs_skip rsbtn rs_preserve ${className || ''}`}>
+    <div
+      aria-hidden="true"
+      id="readspeaker_button1"
+      className={`rs_skip rsbtn rs_preserve ${className || ''}`}
+    >
       <a
         rel="nofollow"
         className="rsbtn_play"
         // accessKey="L"
         title={intl.formatMessage({ id: 'general.readspeaker.title' })}
-        href={`//app-eu.readspeaker.com/cgi-bin/rsent?customerid=11515&amp;lang=${locale}&amp;readid=${readID}&amp;${encodedURL ? `url=${encodedURL}` : ''}`}
+        href={
+          `//app-eu.readspeaker.com/cgi-bin/rsent?customerid=11515&amp;lang=${locale}` +
+          `&amp;readid=${readID}` +
+          (encodedURL ? `&amp;url=${encodedURL}` : '')
+        }
       >
         <span className="rsbtn_left rsimg rspart">
           <span className="rsbtn_text">
@@ -58,7 +70,7 @@ const ReadSpeakerButton = ({
       </a>
     </div>
   );
-};
+}
 
 ReadSpeakerButton.propTypes = {
   className: PropTypes.string,

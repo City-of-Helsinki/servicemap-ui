@@ -7,11 +7,12 @@ import React, { useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
+
 import { getLocale } from '../../../redux/selectors/user';
 import LocaleUtility from '../../../utils/locale';
 import MobileNavButton from '../MobileNavButton/MobileNavButton';
 
-const LanguageMenuComponent = ({ mobile = false }) => {
+function LanguageMenuComponent({ mobile = false }) {
   const locale = useSelector(getLocale);
   const location = useLocation();
   const [langAnchorEl, setLangAnchorEl] = useState(null);
@@ -29,29 +30,26 @@ const LanguageMenuComponent = ({ mobile = false }) => {
     });
     return (
       <>
-        {LocaleUtility.availableLocales
-          .map((currentLocale) => {
-            return (
-              <ButtonBase
-                sx={{ mr: 3, height: '100%', whiteSpace: 'nowrap' }}
-                aria-current={currentLocale === locale ? 'true' : false}
-                role="link"
-                key={currentLocale}
-                focusVisibleClassName={topButtonFocusedClass}
-                lang={currentLocale}
-                onClick={() => changeLang(currentLocale)}
-              >
-                <StyledTypography
-                  mobile={+(!!mobile)}
-                  bold={+(currentLocale === locale)}
-                  color="inherit"
-                  variant="body2"
-                >
-                  <FormattedMessage id={`general.language.${currentLocale}`} />
-                </StyledTypography>
-              </ButtonBase>
-            );
-          })}
+        {LocaleUtility.availableLocales.map((currentLocale) => (
+          <ButtonBase
+            sx={{ mr: 3, height: '100%', whiteSpace: 'nowrap' }}
+            aria-current={currentLocale === locale ? 'true' : false}
+            role="link"
+            key={currentLocale}
+            focusVisibleClassName={topButtonFocusedClass}
+            lang={currentLocale}
+            onClick={() => changeLang(currentLocale)}
+          >
+            <StyledTypography
+              mobile={+!!mobile}
+              bold={+(currentLocale === locale)}
+              color="inherit"
+              variant="body2"
+            >
+              <FormattedMessage id={`general.language.${currentLocale}`} />
+            </StyledTypography>
+          </ButtonBase>
+        ))}
       </>
     );
   }
@@ -89,17 +87,21 @@ const LanguageMenuComponent = ({ mobile = false }) => {
           sx: { p: 0 },
         }}
       >
-        {LocaleUtility.availableLocales
-          .map(currentLocale => (
-            <MenuItem key={currentLocale} sx={{ pt: 0, pb: 0, justifyContent: 'center' }} onClick={() => handleMobileClose(currentLocale)}>
-              <Typography><FormattedMessage id={`general.language.${currentLocale}`} /></Typography>
-            </MenuItem>
-          ))
-        }
+        {LocaleUtility.availableLocales.map((currentLocale) => (
+          <MenuItem
+            key={currentLocale}
+            sx={{ pt: 0, pb: 0, justifyContent: 'center' }}
+            onClick={() => handleMobileClose(currentLocale)}
+          >
+            <Typography>
+              <FormattedMessage id={`general.language.${currentLocale}`} />
+            </Typography>
+          </MenuItem>
+        ))}
       </Menu>
     </>
   );
-};
+}
 
 const StyledTypography = styled(Typography)(({ theme, mobile, bold }) => {
   const styles = {};

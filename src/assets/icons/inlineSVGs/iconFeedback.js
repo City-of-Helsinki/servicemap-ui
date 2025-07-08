@@ -1,7 +1,14 @@
+/* eslint-disable max-len */
 import React from 'react';
 
 const iconFeedback = () => (
-  <svg width="16px" height="12px" viewBox="0 0 16 12" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <svg
+    width="16px"
+    height="12px"
+    viewBox="0 0 16 12"
+    version="1.1"
+    xmlns="http://www.w3.org/2000/svg"
+  >
     <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
       <g transform="translate(-60.000000, -709.000000)">
         <g transform="translate(59.000000, 706.000000)">

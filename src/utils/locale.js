@@ -1,5 +1,5 @@
-import messagesFi from '../i18n/fi';
 import messagesEn from '../i18n/en';
+import messagesFi from '../i18n/fi';
 import messagesSv from '../i18n/sv';
 
 /**
@@ -20,9 +20,9 @@ class LocaleUtility {
   static availableLocales = Object.keys(LocaleUtility.messages);
 
   // Figure out if give locale is valid locale
-  static isValidLocale = locale => (
-    locale && Object.prototype.hasOwnProperty.call(LocaleUtility.messages, locale)
-  )
+  static isValidLocale = (locale) =>
+    locale &&
+    Object.prototype.hasOwnProperty.call(LocaleUtility.messages, locale);
 
   // Get data object with locale and messages (for React Intl)
   static intlData = (locale) => {
@@ -36,7 +36,7 @@ class LocaleUtility {
       locale: newLocale,
       messages: newMessages,
     };
-  }
+  };
 }
 
 export default LocaleUtility;

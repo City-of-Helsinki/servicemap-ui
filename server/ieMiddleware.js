@@ -5,15 +5,15 @@ import StyleContext from 'isomorphic-style-loader/StyleContext';
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { Provider } from 'react-redux';
+
 import ThemeWrapper from '../src/themes/ThemeWrapper';
 
 // Check if user agent is Internet Explorer
 function isIE(userAgent) {
-  var ua = userAgent;
-  var msie = ua.indexOf("MSIE ");
+  const ua = userAgent;
+  const msie = ua.indexOf('MSIE ');
 
-  if (msie > -1 || !!ua.match(/Trident.*rv\:11\./))
-  {
+  if (msie > -1 || !!ua.match(/Trident.*rv:11\./)) {
     return true;
   }
 
@@ -43,19 +43,38 @@ const IEHTML = (req, reactDom, css, cssString) => `
 `;
 
 // IE Template
-const IETemplate = () => {
+function IETemplate() {
   return (
     <StyledContainer>
       <StyledRow>
         <StyledErrorIcon />
         <div>
           <p>Palvelukartta-palvelu ei toimi Internet Explorer-selaimella</p>
-          <p>Käytä toista selainta, kuten&nbsp;
-            <a href="https://www.google.com/intl/fi_fi/chrome/" target="_blank" rel="noopener noreferer">Chrome</a>
+          <p>
+            Käytä toista selainta, kuten&nbsp;
+            <a
+              href="https://www.google.com/intl/fi_fi/chrome/"
+              target="_blank"
+              rel="noopener noreferer noreferrer"
+            >
+              Chrome
+            </a>
             ,&nbsp;
-            <a href="https://www.mozilla.org/fi/firefox/new/" target="_blank" rel="noopener noreferer">Firefox</a>
+            <a
+              href="https://www.mozilla.org/fi/firefox/new/"
+              target="_blank"
+              rel="noopener noreferer noreferrer"
+            >
+              Firefox
+            </a>
             &nbsp;tai&nbsp;
-            <a href="https://www.microsoft/fi-fi/edge/" target="_blank" rel="noopener noreferer">Edge</a>
+            <a
+              href="https://www.microsoft/fi-fi/edge/"
+              target="_blank"
+              rel="noopener noreferer noreferrer"
+            >
+              Edge
+            </a>
             &nbsp;ole hyvä
           </p>
         </div>
@@ -64,12 +83,31 @@ const IETemplate = () => {
         <StyledErrorIcon />
         <div>
           <p>Servicekarta tjänsten fungerar inte med Internet Explorer</p>
-          <p>Vänligen använd någon annan webbläsare t.ex.&nbsp;
-            <a href="https://www.google.com/intl/sv/chrome/" target="_blank" rel="noopener noreferer">Chrome</a>
+          <p>
+            Vänligen använd någon annan webbläsare t.ex.&nbsp;
+            <a
+              href="https://www.google.com/intl/sv/chrome/"
+              target="_blank"
+              rel="noopener noreferer noreferrer"
+            >
+              Chrome
+            </a>
             ,&nbsp;
-            <a href="https://www.mozilla.org/sv-SE/firefox/new/" target="_blank" rel="noopener noreferer">Firefox</a>
+            <a
+              href="https://www.mozilla.org/sv-SE/firefox/new/"
+              target="_blank"
+              rel="noopener noreferer noreferrer"
+            >
+              Firefox
+            </a>
             &nbsp;eller&nbsp;
-            <a href="https://www.microsoft/sv-se/edge/" target="_blank" rel="noopener noreferer">Edge</a>
+            <a
+              href="https://www.microsoft/sv-se/edge/"
+              target="_blank"
+              rel="noopener noreferer noreferrer"
+            >
+              Edge
+            </a>
           </p>
         </div>
       </StyledRow>
@@ -77,18 +115,37 @@ const IETemplate = () => {
         <StyledErrorIcon />
         <div>
           <p>Servicemap service does not work with Internet Explorer.</p>
-          <p>Please use another browser such as&nbsp;
-            <a href="https://www.google.com/intl/en_us/chrome/" target="_blank" rel="noopener noreferer">Chrome</a>
+          <p>
+            Please use another browser such as&nbsp;
+            <a
+              href="https://www.google.com/intl/en_us/chrome/"
+              target="_blank"
+              rel="noopener noreferer noreferrer"
+            >
+              Chrome
+            </a>
             ,&nbsp;
-            <a href="https://www.mozilla.org/en-US/firefox/new/" target="_blank" rel="noopener noreferer">Firefox</a>
+            <a
+              href="https://www.mozilla.org/en-US/firefox/new/"
+              target="_blank"
+              rel="noopener noreferer noreferrer"
+            >
+              Firefox
+            </a>
             &nbsp;or&nbsp;
-            <a href="https://www.microsoft/en-us/edge/" target="_blank" rel="noopener noreferer">Edge</a>
+            <a
+              href="https://www.microsoft/en-us/edge/"
+              target="_blank"
+              rel="noopener noreferer noreferrer"
+            >
+              Edge
+            </a>
           </p>
         </div>
       </StyledRow>
     </StyledContainer>
-  )
-};
+  );
+}
 
 // Template wrapper
 class WrappedTemplate extends React.Component {
@@ -118,9 +175,10 @@ const ieHandler = (req, res, next) => {
     const ua = req.headers['user-agent'];
     const ie = isIE(ua);
     if (ie) {
-      let store = req._context;
+      const store = req._context;
       const css = new Set();
-      const insertCss = (...styles) => styles.forEach(style => css.add(style._getCss()));
+      const insertCss = (...styles) =>
+        styles.forEach((style) => css.add(style._getCss()));
       // Create server style sheets
       const sheets = new ServerStyleSheets();
       const jsx = sheets.collect(
@@ -140,9 +198,9 @@ const ieHandler = (req, res, next) => {
   } catch (e) {
     console.error(`Error while handling IE middleware: ${e.message}`);
   }
-  
+
   next();
-}
+};
 
 export default ieHandler;
 

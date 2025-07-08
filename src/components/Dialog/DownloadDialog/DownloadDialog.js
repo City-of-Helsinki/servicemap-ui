@@ -13,6 +13,7 @@ import React, { useEffect, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
+
 import { selectResultsPreviousSearch } from '../../../redux/selectors/results';
 import { getSelectedUnit } from '../../../redux/selectors/selectedUnit';
 import { selectServiceCurrent } from '../../../redux/selectors/service';
@@ -24,10 +25,7 @@ import { getIcon } from '../../SMIcon';
 import Dialog from '../index';
 import { fetchServiceNames } from './utils';
 
-const DownloadDialog = ({
-  open,
-  ...rest
-}) => {
+function DownloadDialog({ open, ...rest }) {
   const getLocaleText = useLocaleText();
   const downloadData = useDownloadData();
   const page = useSelector(getPage);
@@ -66,8 +64,7 @@ const DownloadDialog = ({
     if (!snIDs) {
       return;
     }
-    fetchServiceNames(snIDs)
-      .then(data => setServiceNames(data));
+    fetchServiceNames(snIDs).then((data) => setServiceNames(data));
   }, [snIDs]);
 
   const formats = [
@@ -89,23 +86,15 @@ const DownloadDialog = ({
           setFormat(value);
         }}
       >
-        {
-          formats.map(f => (
-            <FormControlLabel
-              key={f.name}
-              control={(
-                <Radio
-                  color="primary"
-                />
-              )}
-              label={(
-                <Typography variant="body2">{f.name}</Typography>
-              )}
-              labelPlacement="end"
-              value={f.name}
-            />
-          ))
-        }
+        {formats.map((f) => (
+          <FormControlLabel
+            key={f.name}
+            control={<Radio color="primary" />}
+            label={<Typography variant="body2">{f.name}</Typography>}
+            labelPlacement="end"
+            value={f.name}
+          />
+        ))}
       </StyledRadioGroup>
     </FormControl>
   );
@@ -120,7 +109,9 @@ const DownloadDialog = ({
           const content = JSON.stringify(downloadData, null, 2);
           const tab = window.open();
           tab.document.open();
-          tab.document.write(`<html><body><pre style="white-space: pre;">${content}</pre></body></html>`);
+          tab.document.write(
+            `<html><body><pre style="white-space: pre;">${content}</pre></body></html>`
+          );
           tab.document.close();
         };
       default:
@@ -131,7 +122,8 @@ const DownloadDialog = ({
   const croppingText = () => {
     let text;
     let selectionText;
-    const getPageText = page => intl.formatMessage({ id: `download.cropText.${page}` });
+    const getPageText = (page) =>
+      intl.formatMessage({ id: `download.cropText.${page}` });
     switch (page) {
       case 'unit':
         selectionText = selectedUnit?.name && getLocaleText(selectedUnit.name);
@@ -143,7 +135,7 @@ const DownloadDialog = ({
         break;
       case 'search':
         if (serviceNames) {
-          const nameArray = serviceNames.map(name => getLocaleText(name));
+          const nameArray = serviceNames.map((name) => getLocaleText(name));
           selectionText = nameArray.join(', ');
           text = getPageText('service');
         } else {
@@ -155,7 +147,10 @@ const DownloadDialog = ({
         text = intl.formatMessage({ id: 'download.cropText.none' });
     }
 
-    const unitCount = intl.formatMessage({ id: 'map.unit.cluster.popup.info' }, { count: downloadData?.length });
+    const unitCount = intl.formatMessage(
+      { id: 'map.unit.cluster.popup.info' },
+      { count: downloadData?.length }
+    );
     let dataText = intl.formatMessage({ id: 'download.data.none' });
     // If data is array show location count
     if (downloadData?.length) {
@@ -169,36 +164,31 @@ const DownloadDialog = ({
 
     return (
       <StyledDivCroppingContainer>
-        <StyledCroppingTitleTypography
-          variant="subtitle1"
-          component="h3"
-        >
+        <StyledCroppingTitleTypography variant="subtitle1" component="h3">
           {croppingTitle}
         </StyledCroppingTitleTypography>
         <Typography variant="body2">{text}</Typography>
-        {
-          selectionText
-          && (
-            <StyledCroppingTextTypography variant="body2">
-              {selectionText}
-            </StyledCroppingTextTypography>
-          )
-        }
-        {
-          dataText
-          && (
-            <StyledUnitCountDiv>
-              {icon}
-              <Typography component="p" variant="body2">{dataText}</Typography>
-            </StyledUnitCountDiv>
-          )
-        }
+        {selectionText && (
+          <StyledCroppingTextTypography variant="body2">
+            {selectionText}
+          </StyledCroppingTextTypography>
+        )}
+        {dataText && (
+          <StyledUnitCountDiv>
+            {icon}
+            <Typography component="p" variant="body2">
+              {dataText}
+            </Typography>
+          </StyledUnitCountDiv>
+        )}
       </StyledDivCroppingContainer>
     );
   };
 
   const dialogText = intl.formatMessage({ id: 'download.info' });
-  const dialogCoordinateText = intl.formatMessage({ id: 'download.coordinate' });
+  const dialogCoordinateText = intl.formatMessage({
+    id: 'download.coordinate',
+  });
   // const formatText = intl.formatMessage({ id: 'download.format' });
   const downloadTitle = intl.formatMessage({ id: 'download.title' });
   const downloadText = intl.formatMessage({ id: 'download.download' });
@@ -208,23 +198,27 @@ const DownloadDialog = ({
       open={open}
       {...rest}
       title={downloadTitle}
-      content={(
+      content={
         <StyledDivContainer>
           <Typography variant="body2">{dialogText}</Typography>
-          <StyledTopMarginTypography variant="body2">{dialogCoordinateText}</StyledTopMarginTypography>
+          <StyledTopMarginTypography variant="body2">
+            {dialogCoordinateText}
+          </StyledTopMarginTypography>
           {croppingText()}
           {btnGroup}
         </StyledDivContainer>
-      )}
-      actions={downloadOnClick ? (
-        <SMButton color="primary" role="button" onClick={downloadOnClick}>
-          {downloadText}
-          <StyledOpenInNew />
-        </SMButton>
-      ) : null}
+      }
+      actions={
+        downloadOnClick ? (
+          <SMButton color="primary" role="button" onClick={downloadOnClick}>
+            {downloadText}
+            <StyledOpenInNew />
+          </SMButton>
+        ) : null
+      }
     />
   );
-};
+}
 
 const StyledRadioGroup = styled(RadioGroup)(() => ({
   flexDirection: 'row',

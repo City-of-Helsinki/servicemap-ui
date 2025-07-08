@@ -1,6 +1,6 @@
 const initialState = null;
 
-export default (state = initialState, action) => {
+const navigatorReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'SET_NAVIGATOR_REF':
       return action.ref;
@@ -8,3 +8,5 @@ export default (state = initialState, action) => {
       return state;
   }
 };
+
+export default navigatorReducer;

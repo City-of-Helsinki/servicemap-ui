@@ -1,12 +1,16 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
+import PropTypes from 'prop-types';
+import React from 'react';
 
-const SMIcon = ({
-  className = '', icon, ...rest
-}) => (
-  <StyledIcon aria-hidden="true" className={`${className} ${icon}`} {...rest} />
-);
+function SMIcon({ className = '', icon, ...rest }) {
+  return (
+    <StyledIcon
+      aria-hidden="true"
+      className={`${className} ${icon}`}
+      {...rest}
+    />
+  );
+}
 
 const StyledIcon = styled('span')(({ theme }) => ({
   alignSelf: 'center',

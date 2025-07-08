@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
-import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import React, { useEffect } from 'react';
 
 // Custom map controls should be wrapped with this component
 
@@ -11,13 +11,13 @@ const POSITION_CLASSES = {
   topright: 'leaflet-top leaflet-right',
 };
 
-const CustomControls = ({ position, children = null }) => {
+function CustomControls({ position, children = null }) {
   // This converts children into array, even if children prop is single object or array of objects
-  const controls = [children].flat().filter(item => item);
+  const controls = [children].flat().filter((item) => item);
 
   useEffect(() => {
     if (controls.length) {
-    // This prevents control button click propagation
+      // This prevents control button click propagation
       const div = global.L.DomUtil.get(`controlsContainer${position}`);
       global.L.DomEvent.disableClickPropagation(div);
     }
@@ -26,20 +26,21 @@ const CustomControls = ({ position, children = null }) => {
   if (!controls.length) return null;
   const positionClass = position && POSITION_CLASSES[position];
 
-  const renderControl = element => (
+  const renderControl = (element) => (
     <div key={element.key} className="leaflet-control">
       {element}
     </div>
   );
 
   return (
-    <StyledControlsContainer className={`${positionClass}`} id={`controlsContainer${position}`}>
-      {controls.map(component => (
-        renderControl(component)
-      ))}
+    <StyledControlsContainer
+      className={`${positionClass}`}
+      id={`controlsContainer${position}`}
+    >
+      {controls.map((component) => renderControl(component))}
     </StyledControlsContainer>
   );
-};
+}
 
 const StyledControlsContainer = styled.div(({ theme }) => ({
   marginBottom: theme.spacing(2),

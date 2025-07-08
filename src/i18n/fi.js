@@ -1,7 +1,9 @@
-/* eslint-disable quote-props */
+/* eslint-disable import/no-anonymous-default-export */
+/* eslint-disable max-len */
 export default {
   'app.title': 'Palvelukartta',
-  'app.description': 'Pääkaupunkiseudun kaikki julkiset palvelut ulottuvillasi.',
+  'app.description':
+    'Pääkaupunkiseudun kaikki julkiset palvelut ulottuvillasi.',
   'app.og.image.alt': 'Palvelukartan logo',
   'app.errorpage.title': 'Virheviestisivu',
   'app.navigation.language': 'Kieli ja kontrasti',
@@ -9,10 +11,11 @@ export default {
   'app.navigation.settings': 'Asetukset',
 
   // Accessibility
-  'accessibility': 'Esteettömyys',
+  accessibility: 'Esteettömyys',
   'accessibility.info': 'Esteettömyystiedot',
   'accessibility.details': 'Tarkemmat tiedot',
-  'accessibility.details.summary': 'Tarkemmat tiedot esteettömyydestä (uusi välilehti)',
+  'accessibility.details.summary':
+    'Tarkemmat tiedot esteettömyydestä (uusi välilehti)',
   'accessibility.stamp': 'Esteettömyys huomioitu',
   'accessibility.shortcomings': 'Puutteet',
   'accessibility.shortcomings.plural': `{count, plural,
@@ -22,7 +25,7 @@ export default {
                               }`,
 
   // Address
-  'address': 'Osoite',
+  address: 'Osoite',
   'address.description': 'Katso osoitteen lähellä olevat palvelut', // TODO: translate
   'address.search': 'Osoitehaku',
   'address.search.cleared': 'Hakukenttä tyhjennetty',
@@ -34,14 +37,18 @@ export default {
   'address.districts': 'Alueet',
   'address.plural': 'Osoitteet',
   'address.services.header': 'Palvelualueet',
-  'address.services.info': 'Kunnalliset palvelut, joiden piiriin sijainti kuuluu',
+  'address.services.info':
+    'Kunnalliset palvelut, joiden piiriin sijainti kuuluu',
   'address.area.link': 'Tutustu alueisiin kartalla.',
-  'address.emergency_care.common': 'Terveysaseman ollessa kiinni sekä öisin klo 22- 8 alle 16-vuotiaiden päivystys on <a>Uudessa lastensairaalassa</a> [<a1>kotisivut</a1>] ja aikuisten päivystys',
+  'address.emergency_care.common':
+    'Terveysaseman ollessa kiinni sekä öisin klo 22- 8 alle 16-vuotiaiden päivystys on <a>Uudessa lastensairaalassa</a> [<a1>kotisivut</a1>] ja aikuisten päivystys',
   'address.emergency_care.children_hospital.link': '/fi/unit/62976',
-  'address.emergency_care.common.link': 'https://www.hus.fi/potilaalle/sairaalat-ja-toimipisteet/uusi-lastensairaala',
+  'address.emergency_care.common.link':
+    'https://www.hus.fi/potilaalle/sairaalat-ja-toimipisteet/uusi-lastensairaala',
   'address.emergency_care.unit.26107': 'Malmin sairaalassa',
   'address.emergency_care.unit.26104': 'Haartmanin sairaalassa',
-  'address.emergency_care.link': 'https://www.hel.fi/fi/sosiaali-ja-terveyspalvelut/terveydenhoito/kiireellinen-hoito-ja-paivystys',
+  'address.emergency_care.link':
+    'https://www.hel.fi/fi/sosiaali-ja-terveyspalvelut/terveydenhoito/kiireellinen-hoito-ja-paivystys',
   'address.emergency_care.link.text': '[<a>päivystyssivut</a>]',
 
   // Area
@@ -56,35 +63,44 @@ export default {
   'area.services.nearby': 'Lähialueiden toimipisteet listana',
   'area.services.nearby.rescue_area': 'Lähialueiden suojelupiirit listana',
   'area.services.nearby.rescue_district': 'Lähialueiden suojelulohkot listana',
-  'area.services.nearby.rescue_sub_district': 'Lähialueiden suojelualalohkot listana',
+  'area.services.nearby.rescue_sub_district':
+    'Lähialueiden suojelualalohkot listana',
   'area.services.all': 'Toimipisteet listana',
   'area.services.all.rescue_area': 'Suojelupiirit listana',
   'area.services.all.rescue_district': 'Suojelulohkot listana',
   'area.services.all.rescue_sub_district': 'Suojelualalohkot listana',
-  'area.info': 'Valitse alue, jonka palveluista haluat tietoa. Kirjoittamalla alla olevaan hakukenttään kotiosoitteesi saat näkyville karttaan ja Alueen palvelut -välilehdelle alueet ja piirit, joihin kuulut',
+  'area.info':
+    'Valitse alue, jonka palveluista haluat tietoa. Kirjoittamalla alla olevaan hakukenttään kotiosoitteesi saat näkyville karttaan ja Alueen palvelut -välilehdelle alueet ja piirit, joihin kuulut',
   'area.choose.district': 'Valitse alue',
   'area.list': 'Alueen valinta',
   'area.localAddress.title': 'Osoitteesi tiedot',
   'area.localAddress.neighborhood': 'Kaupunginosa: {area}',
   'area.localAddress.postCode': 'Postinumero: {area}',
   'area.geographicalServices.neighborhood': 'Kaupunginosan palvelut ({length})',
-  'area.geographicalServices.postcode_area': 'Postinumeroalueen palvelut ({length})',
+  'area.geographicalServices.postcode_area':
+    'Postinumeroalueen palvelut ({length})',
   'area.geographicalServices.major_district': 'Suurpiirin palvelut ({length})',
-  'area.geographicalServices.statistical_district': 'Väestötietoalueiden palvelut',
+  'area.geographicalServices.statistical_district':
+    'Väestötietoalueiden palvelut',
   'area.neighborhood.title': 'Valitse kaupunginosa',
   'area.postcode_area.title': 'Valitse postinumero',
   'area.major_district.title': 'Valitse suurpiiri',
   'area.service.filter': 'Palvelujen suodatus',
-  'area.statisticalDistrict.info': 'Valitse ensin väestötietoalue, jonka jälkeen voit selata alueen palveluita',
-  'area.statisticalDistrict.label': '{count} henkilöä, {percent}% alueen koko väestöstä',
+  'area.statisticalDistrict.info':
+    'Valitse ensin väestötietoalue, jonka jälkeen voit selata alueen palveluita',
+  'area.statisticalDistrict.label':
+    '{count} henkilöä, {percent}% alueen koko väestöstä',
   'area.statisticalDistrict.label.total': '{count} henkilöä',
   'area.statisticalDistrict.label.people': '{count} henkilöä',
   'area.statisticalDistrict.label.percent': '{percent}% alueen koko väestöstä',
   'area.statisticalDistrict.label.noResults': 'Väestötietoa ei saatavilla',
-  'area.statisticalDistrict.service.filter': 'Väestötietoalueiden palvelujen suodatus',
+  'area.statisticalDistrict.service.filter':
+    'Väestötietoalueiden palvelujen suodatus',
   'area.statisticalDistrict.service.filter.button': 'Suodata',
-  'area.statisticalDistrict.service.filter.button.aria': 'Suodata väestötietoalueiden palveluita',
-  'area.statisticalDistrict.service.filter.aria.notification': 'Väestötietoalueiden palvelut suodatettu sanalla {filterValue}',
+  'area.statisticalDistrict.service.filter.button.aria':
+    'Suodata väestötietoalueiden palveluita',
+  'area.statisticalDistrict.service.filter.aria.notification':
+    'Väestötietoalueiden palvelut suodatettu sanalla {filterValue}',
   'area.statisticalDistrict.title': 'Valitse väestötietoalue',
   'area.statisticalDistrict.section': 'Rajaus: {text}',
   'area.statisticalDistrict.noData': 'Tietoja ei pystytty hakemaan',
@@ -112,10 +128,14 @@ export default {
   'area.list.rescue_sub_district': 'Suojelualalohko',
   'area.list.health_station_district': 'Terveysasema-alue',
   'area.list.maternity_clinic_district': 'Neuvola-alue',
-  'area.list.lower_comprehensive_school_district_fi': 'Suomenkielinen ala-astealue',
-  'area.list.lower_comprehensive_school_district_sv': 'Ruotsinkielinen ala-astealue',
-  'area.list.upper_comprehensive_school_district_fi': 'Suomenkielinen yläastealue',
-  'area.list.upper_comprehensive_school_district_sv': 'Ruotsinkielinen yläastealue',
+  'area.list.lower_comprehensive_school_district_fi':
+    'Suomenkielinen ala-astealue',
+  'area.list.lower_comprehensive_school_district_sv':
+    'Ruotsinkielinen ala-astealue',
+  'area.list.upper_comprehensive_school_district_fi':
+    'Suomenkielinen yläastealue',
+  'area.list.upper_comprehensive_school_district_sv':
+    'Ruotsinkielinen yläastealue',
   'area.list.preschool_education_fi': 'Suomenkielinen esiopetusalue',
   'area.list.preschool_education_sv': 'Ruotsinkielinen esiopetusalue',
   'area.list.nature_reserve': 'Luonnonsuojelualueet',
@@ -128,10 +148,14 @@ export default {
   'area.list.rescue_sub_district.plural': 'Suojelualalohkot',
   'area.list.health_station_district.plural': 'Terveysasema-alueet',
   'area.list.maternity_clinic_district.plural': 'Neuvola-alueet',
-  'area.list.lower_comprehensive_school_district_fi.plural': 'Suomenkieliset ala-astealueet',
-  'area.list.lower_comprehensive_school_district_sv.plural': 'Ruotsinkieliset ala-astealueet',
-  'area.list.upper_comprehensive_school_district_fi.plural': 'Suomenkieliset yläastealueet',
-  'area.list.upper_comprehensive_school_district_sv.plural': 'Ruotsinkieliset yläastealueet',
+  'area.list.lower_comprehensive_school_district_fi.plural':
+    'Suomenkieliset ala-astealueet',
+  'area.list.lower_comprehensive_school_district_sv.plural':
+    'Ruotsinkieliset ala-astealueet',
+  'area.list.upper_comprehensive_school_district_fi.plural':
+    'Suomenkieliset yläastealueet',
+  'area.list.upper_comprehensive_school_district_sv.plural':
+    'Ruotsinkieliset yläastealueet',
   'area.list.preschool_education_fi.plural': 'Suomenkieliset esiopetusalueet',
   'area.list.preschool_education_sv.plural': 'Ruotsinkieliset esiopetusalueet',
   'area.list.nature_reserve.plural': 'Luonnonsuojelualueet',
@@ -158,7 +182,8 @@ export default {
   'area.list.hgv_no_parking_area': 'Kielletyt kadunvarret',
   'area.list.park_and_ride_area': 'Liityntäpysäköinti',
   'area.parking.tooltip.park_and_ride_area': 'Liityntäpysäköinti',
-  'area.parking.tooltip.hgv_no_parking_area': 'Raskas liikenne - kielletyt kadunvarret',
+  'area.parking.tooltip.hgv_no_parking_area':
+    'Raskas liikenne - kielletyt kadunvarret',
   'cookies.matomo.description': 'Matomo-tilastointijärjestelmän eväste.',
   'cookies.matomo.expiration': '{days} päivää',
 
@@ -176,19 +201,28 @@ export default {
   'parkingArea.popup.duration4': 'Pysäköinti sallittu enintään: {duration}',
   'parkingArea.popup.duration5': 'Pysäköinti sallittu enintään: 4 h',
   'parkingArea.popup.duration6': '',
-  'parkingArea.popup.validity1': 'Pysäköinnin aikarajoitus voimassa: {validity}',
-  'parkingArea.popup.validity2': 'Pysäköinnin aikarajoitus voimassa: {validity}',
+  'parkingArea.popup.validity1':
+    'Pysäköinnin aikarajoitus voimassa: {validity}',
+  'parkingArea.popup.validity2':
+    'Pysäköinnin aikarajoitus voimassa: {validity}',
   'parkingArea.popup.validity3': 'Pysäköinti kielletty: {validity}',
   'parkingArea.popup.validity4': 'Pysäköinti on maksullista: {validity}',
   'parkingArea.popup.validity5': 'Pysäköinti on maksullista: {validity}',
   'parkingArea.popup.validity6': 'Pysäköinti on maksullista: {validity}',
-  'parkingArea.popup.info': 'Tiedot ovat suuntaa-antavia. Tarkista tiedot aina liikennemerkistä.',
-  'parkingArea.popup.info1': 'Rajoitukset eivät koske asukas- ja yrityspysäköintitunnusten omistajia, jos pysäköintipaikka on merkitty asukaspysäköintipaikaksi.',
-  'parkingArea.popup.info2': 'Rajoitukset eivät koske asukas- ja yrityspysäköintitunnusten omistajia, jos pysäköintipaikka on merkitty asukaspysäköintipaikaksi.',
-  'parkingArea.popup.info3': 'Rajoitukset eivät koske asukas- ja yrityspysäköintitunnusten omistajia, jos pysäköintipaikka on merkitty asukaspysäköintipaikaksi.',
-  'parkingArea.popup.info4': 'Maksut ja rajoitukset eivät koske asukas- ja yrityspysäköintitunnusten omistajia, jos pysäköintipaikka on merkitty asukaspysäköintipaikaksi.',
-  'parkingArea.popup.info5': 'Maksut ja rajoitukset eivät koske asukas- ja yrityspysäköintitunnusten omistajia, jos pysäköintipaikka on merkitty asukaspysäköintipaikaksi.',
-  'parkingArea.popup.info6': 'Maksut ja rajoitukset eivät koske asukas- ja yrityspysäköintitunnusten omistajia, jos pysäköintipaikka on merkitty asukaspysäköintipaikaksi.',
+  'parkingArea.popup.info':
+    'Tiedot ovat suuntaa-antavia. Tarkista tiedot aina liikennemerkistä.',
+  'parkingArea.popup.info1':
+    'Rajoitukset eivät koske asukas- ja yrityspysäköintitunnusten omistajia, jos pysäköintipaikka on merkitty asukaspysäköintipaikaksi.',
+  'parkingArea.popup.info2':
+    'Rajoitukset eivät koske asukas- ja yrityspysäköintitunnusten omistajia, jos pysäköintipaikka on merkitty asukaspysäköintipaikaksi.',
+  'parkingArea.popup.info3':
+    'Rajoitukset eivät koske asukas- ja yrityspysäköintitunnusten omistajia, jos pysäköintipaikka on merkitty asukaspysäköintipaikaksi.',
+  'parkingArea.popup.info4':
+    'Maksut ja rajoitukset eivät koske asukas- ja yrityspysäköintitunnusten omistajia, jos pysäköintipaikka on merkitty asukaspysäköintipaikaksi.',
+  'parkingArea.popup.info5':
+    'Maksut ja rajoitukset eivät koske asukas- ja yrityspysäköintitunnusten omistajia, jos pysäköintipaikka on merkitty asukaspysäköintipaikaksi.',
+  'parkingArea.popup.info6':
+    'Maksut ja rajoitukset eivät koske asukas- ja yrityspysäköintitunnusten omistajia, jos pysäköintipaikka on merkitty asukaspysäköintipaikaksi.',
   'parkingArea.popup.info7': 'Pysäköinti kielletty',
 
   'parkingArea.popup.vantaa.neighbourhood': 'Kaupunginosa: {value}',
@@ -206,12 +240,15 @@ export default {
   'download.cropText.service': 'Toimipisteet valituilla palveluilla:',
   'download.cropText.search': 'Toimipisteet tekstihaun perusteella:',
   'download.cropText.none': 'Ei valittua rajausta',
-  'download.data.none': 'Valitse ensin palvelukartalle näkyviin toimipisteitä selaus- tai hakutoiminnoilla ja palaa tähän näkymään tallentaaksesi valittujen toimipisteiden tiedot.',
+  'download.data.none':
+    'Valitse ensin palvelukartalle näkyviin toimipisteitä selaus- tai hakutoiminnoilla ja palaa tähän näkymään tallentaaksesi valittujen toimipisteiden tiedot.',
   'download.download': 'Lataa tiedot (uusi välilehti)',
   'download.format': 'Tiedostomuoto:',
-  'download.info': 'Tallenna rajaamiesi toimipisteiden tiedot tiedostoon, jonka voi ladata esimerkiksi Google Maps -sovellukseen tai jatkokäsitellä.',
+  'download.info':
+    'Tallenna rajaamiesi toimipisteiden tiedot tiedostoon, jonka voi ladata esimerkiksi Google Maps -sovellukseen tai jatkokäsitellä.',
   'download.title': 'Lataa toimipisteen tiedot',
-  'download.coordinate': 'Palvelukartan koordinaattijärjestelmä on: ETRS89 / GK25FIN (EPSG:3879)',
+  'download.coordinate':
+    'Palvelukartan koordinaattijärjestelmä on: ETRS89 / GK25FIN (EPSG:3879)',
 
   // Event
   'event.description': 'Kuvaus',
@@ -230,42 +267,58 @@ export default {
   'embedder.code.title': 'Kopioi HTML-koodi',
   'embedder.height.title': 'Upotuksen korkeus',
   'embedder.height.aria.label': 'Valitse upotuksen korkeus',
-  'embedder.height.ratio.label': 'Suhteellinen korkeus. Upotuksen korkeuden suhde leveyteen on määritelty',
-  'embedder.height.fixed.label': 'Absoluuttinen korkeus. Upotuksen korkeus on määritelty pikseleissä',
+  'embedder.height.ratio.label':
+    'Suhteellinen korkeus. Upotuksen korkeuden suhde leveyteen on määritelty',
+  'embedder.height.fixed.label':
+    'Absoluuttinen korkeus. Upotuksen korkeus on määritelty pikseleissä',
   'embedder.height.input.aria.fixed': 'Upotuksen korkeus pikseleissä',
-  'embedder.height.input.aria.ratio': 'Upotuksen korkeus prosentteina leveydestä',
+  'embedder.height.input.aria.ratio':
+    'Upotuksen korkeus prosentteina leveydestä',
   'embedder.iframe.title': 'Palvelukartan upotusikkuna',
   'embedder.language.title': 'Upotuksen kieli',
   'embedder.language.aria.label': 'Valitse upotuksen kieli',
-  'embedder.language.description.fi': 'Toimipisteiden tiedot näytetään suomen kielellä. Taustakartta on suomenkielinen.',
-  'embedder.language.description.sv': 'Toimipisteiden tiedot näytetään ruotsin kielellä. Taustakartta on ruotsinkielinen.',
-  'embedder.language.description.en': 'Toimipisteiden tiedot näytetään englannin kielellä. Taustakartta on suomenkielinen.',
+  'embedder.language.description.fi':
+    'Toimipisteiden tiedot näytetään suomen kielellä. Taustakartta on suomenkielinen.',
+  'embedder.language.description.sv':
+    'Toimipisteiden tiedot näytetään ruotsin kielellä. Taustakartta on ruotsinkielinen.',
+  'embedder.language.description.en':
+    'Toimipisteiden tiedot näytetään englannin kielellä. Taustakartta on suomenkielinen.',
   'embedder.map.title': 'Taustakartta',
   'embedder.map.aria.label': 'Valitse taustakartta',
   'embedder.options.title': 'Näytä kartalla',
   'embedder.options.label.units': 'Näytä toimipisteet',
   'embedder.options.list.title': 'Toimipistelista',
   'embedder.options.label.list.none': 'Piilota toimipistelista',
-  'embedder.options.label.list.side': 'Näytä toimipisteet listana (kartan vieressä)',
-  'embedder.options.label.list.bottom': 'Näytä toimipisteet listana (kartan alla)',
-  'embedder.options.label.transit': 'Näytä joukkoliikenteen pysäkit (Tarkenna karttaa lähietäisyydelle, jotta joukkoliikennepysäkit näkyvät)',
-  'embedder.options.label.bbox': 'Rajaa upotuskartta esikatseluikkunassa näkyvään alueeseen',
+  'embedder.options.label.list.side':
+    'Näytä toimipisteet listana (kartan vieressä)',
+  'embedder.options.label.list.bottom':
+    'Näytä toimipisteet listana (kartan alla)',
+  'embedder.options.label.transit':
+    'Näytä joukkoliikenteen pysäkit (Tarkenna karttaa lähietäisyydelle, jotta joukkoliikennepysäkit näkyvät)',
+  'embedder.options.label.bbox':
+    'Rajaa upotuskartta esikatseluikkunassa näkyvään alueeseen',
   'embedder.preview.title': 'Kartan esikatselu',
   'embedder.service.title': 'Palvelut',
   'embedder.service.aria.label': 'Valitse näytettävät palvelut',
   'embedder.service.none': 'Kartta näytetään ilman toimipisteitä',
-  'embedder.service.common': 'Kartalla näytetään yleisimmät kaupunkilaisen arkeen liittyvät toimipisteet: koulut, päiväkodit ja terveyskeskukset.',
-  'embedder.service.all': 'Kartalla näytetään kaikki toimipisteet. Jos aluerajaus on liian laaja, upotuksen näyttäminen hidastuu ja sen havainnollisuus vähenee.',
+  'embedder.service.common':
+    'Kartalla näytetään yleisimmät kaupunkilaisen arkeen liittyvät toimipisteet: koulut, päiväkodit ja terveyskeskukset.',
+  'embedder.service.all':
+    'Kartalla näytetään kaikki toimipisteet. Jos aluerajaus on liian laaja, upotuksen näyttäminen hidastuu ja sen havainnollisuus vähenee.',
   'embedder.title': 'Palvelukartan upotustyökalu',
-  'embedder.title.info': 'Palvelukartan upotustyökalulla voit upottaa Palvelukartan yksittäisiä näkymiä osaksi mitä tahansa verkkosivua.',
+  'embedder.title.info':
+    'Palvelukartan upotustyökalulla voit upottaa Palvelukartan yksittäisiä näkymiä osaksi mitä tahansa verkkosivua.',
   'embedder.info.title': 'Ohjeet upotustyökalun käyttöön',
-  'embedder.info.description': 'Valitse alla olevasta valikoimasta karttanäkymään haluamasi toiminnallisuudet. Kopioi kartan alta URL-linkki tai html-koodi käyttöösi.\n\n Tarkemmat ohjeet upotustyökalun käyttöön eri tilanteissa löydät',
+  'embedder.info.description':
+    'Valitse alla olevasta valikoimasta karttanäkymään haluamasi toiminnallisuudet. Kopioi kartan alta URL-linkki tai html-koodi käyttöösi.\n\n Tarkemmat ohjeet upotustyökalun käyttöön eri tilanteissa löydät',
   'embedder.info.link': 'täältä (uusi välilehti)',
   'embedder.url.title': 'Kopioi URL',
   'embedder.width.title': 'Upotuksen leveys',
   'embedder.width.aria.label': 'Valitse upotuksen leveys',
-  'embedder.width.auto.label': 'Automaattinen leveys. Upotus täyttää leveyssuunnassa elementin, johon se on sijoitettu. Tässä esikatselussa upotus on sijoitettu katkoviivalla merkittyyn vakiolevyiseen elementtiin.',
-  'embedder.width.custom.label': 'Asetettu leveys. Upotuksen leveys on määritelty pikseleissä.',
+  'embedder.width.auto.label':
+    'Automaattinen leveys. Upotus täyttää leveyssuunnassa elementin, johon se on sijoitettu. Tässä esikatselussa upotus on sijoitettu katkoviivalla merkittyyn vakiolevyiseen elementtiin.',
+  'embedder.width.custom.label':
+    'Asetettu leveys. Upotuksen leveys on määritelty pikseleissä.',
   'embedder.width.input.aria.auto': 'Upotuksen leveys prosentteina',
   'embedder.width.input.aria.custom': 'Upotuksen leveys pikseleissä',
 
@@ -274,18 +327,24 @@ export default {
   'feedback.title': 'Anna palautetta tästä verkkopalvelusta',
   'feedback.title.unit': 'Anna palautetta toimipisteelle {unit}',
   'feedback.email': 'Sähköpostiosoite',
-  'feedback.email.info': 'Jos haluat, että vastaamme antamaasi palautteeseen, anna sähköpostiosoitteesi.',
+  'feedback.email.info':
+    'Jos haluat, että vastaamme antamaasi palautteeseen, anna sähköpostiosoitteesi.',
   'feedback.feedback': 'Palautteesi (pakollinen)',
-  'feedback.feedback.info': 'Kerro mahdollisimman yksityiskohtaisesti mitä palautetta haluat antaa.',
-  'feedback.permission': 'Palautteeni saa julkaista (tarkastuksen jälkeen). Sähköpostiosoitetta ei julkaista.',
-  'feedback.additionalInfo': 'Antamasi palaute ohjautuu Helsingin kaupungin palautejärjestelmään.',
-  'feedback.additionalInfo.link': 'Tietoja ja ohjeita palautteen antamisesta (linkki avautuu uuteen välilehteen).',
+  'feedback.feedback.info':
+    'Kerro mahdollisimman yksityiskohtaisesti mitä palautetta haluat antaa.',
+  'feedback.permission':
+    'Palautteeni saa julkaista (tarkastuksen jälkeen). Sähköpostiosoitetta ei julkaista.',
+  'feedback.additionalInfo':
+    'Antamasi palaute ohjautuu Helsingin kaupungin palautejärjestelmään.',
+  'feedback.additionalInfo.link':
+    'Tietoja ja ohjeita palautteen antamisesta (linkki avautuu uuteen välilehteen).',
   'feedback.send': 'Lähetä palaute',
   'feedback.sending': 'Lähetetään...',
   'feedback.send.error': 'Lähetä palaute. Pakollinen kenttä täyttämättä',
   'feedback.error.required': 'Pakollinen kenttä',
   'feedback.error.email.invalid': 'Sähköpostin pitää olla oikeassa muodossa',
-  'feedback.srError.email.invalid': 'Sähköpostiosoite on virheellinen. Korjaa sähköpostiosoite.',
+  'feedback.srError.email.invalid':
+    'Sähköpostiosoite on virheellinen. Korjaa sähköpostiosoite.',
   'feedback.srError.feedback.required': 'Palaute puuttuu. Kirjoita palaute.',
   'feedback.modal.confirm': 'OK',
   'feedback.modal.leave': 'Haluatko varmasti poistua tältä sivulta?',
@@ -333,7 +392,8 @@ export default {
   'general.closeSettings': 'Sulje asetukset',
   'general.hideSettings': 'Piilota omat asetukset',
   'general.fetching': 'Ladataan tietoja...',
-  'general.fetchingTakesTime': 'Hakutuloksia on paljon, lataus kestää hieman kauemmin',
+  'general.fetchingTakesTime':
+    'Hakutuloksia on paljon, lataus kestää hieman kauemmin',
   'general.home': 'Koti',
   'general.home.logo.ariaLabel': 'Palvelukartta - Siirry etusivulle',
   'general.noData': 'Tietoa ei saatavilla',
@@ -397,10 +457,12 @@ export default {
   // Home
   'home.buttons.settings': 'Tallenna omat kaupunki- ja esteettömyysasetuksesi',
   'home.buttons.services': 'Tutustu palveluihin palveluluettelon avulla',
-  'home.buttons.mobilityTree': 'Tutustu liikkumisen monipuolisiin vaihtoehtoihin',
+  'home.buttons.mobilityTree':
+    'Tutustu liikkumisen monipuolisiin vaihtoehtoihin',
   'home.buttons.closeByServices': 'Näytä lähellä olevat palvelut',
   'home.buttons.instructions': 'Vinkkejä Palvelukartan käyttöön',
-  'home.buttons.area': 'Katso terveys-, neuvola-, oppilaaksiotto-, esiopetus-, väestön- ja luonnonsuojelualueet sekä kaupunginosat',
+  'home.buttons.area':
+    'Katso terveys-, neuvola-, oppilaaksiotto-, esiopetus-, väestön- ja luonnonsuojelualueet sekä kaupunginosat',
   'home.example.search': 'Hae hakusanalla',
   'home.message': 'Terveisiä palvelukartan kehittäjiltä',
   'home.send.feedback': 'Anna palautetta',
@@ -420,16 +482,20 @@ export default {
   'link.settings.dialog.title': 'Jaa linkki toimipisteeseen',
   'link.settings.dialog.tooltip': 'Kopioitu leikepöydälle',
   'link.settings.dialog.tooltip.aria': 'Kopioi sivun linkki leikepöydälle',
-  'link.settings.dialog.tooltip.aria.a11y': 'Kopioi esteettömyyasetukset sisältävä sivun linkki leikepöydälle',
+  'link.settings.dialog.tooltip.aria.a11y':
+    'Kopioi esteettömyyasetukset sisältävä sivun linkki leikepöydälle',
   'link.settings.dialog.buttons.action': 'Kopioi leikepöydälle',
 
   // Map
-  'map': 'Kartta',
+  map: 'Kartta',
   'map.open': 'Avaa Kartta',
   'map.close': 'Sulje Kartta',
-  'map.ariaLabel': 'Karttanäkymä. Kartan tietoja voi tarkastella tällä hetkellä vain näönvaraisesti.',
-  'map.attribution.osm': '&copy; <a href="http://osm.org/copyright">OpenStreetMapin tekijät</a>',
-  'map.attribution.helsinki': '&copy; Helsingin, Espoon, Vantaan ja Kauniaisen kaupungit',
+  'map.ariaLabel':
+    'Karttanäkymä. Kartan tietoja voi tarkastella tällä hetkellä vain näönvaraisesti.',
+  'map.attribution.osm':
+    '&copy; <a href="http://osm.org/copyright">OpenStreetMapin tekijät</a>',
+  'map.attribution.helsinki':
+    '&copy; Helsingin, Espoon, Vantaan ja Kauniaisen kaupungit',
   'map.attribution.nls': '&copy; Maanmittauslaitos',
   'map.transit.endStation': 'Päätepysäkki',
   'map.address.coordinate': 'Tee linkki GPS-koordinaatteihin',
@@ -455,7 +521,7 @@ export default {
   'print.table.header.number': 'Numero kartalla',
 
   // Units
-  'unit': 'Toimipiste',
+  unit: 'Toimipiste',
   'unit.showInformation': 'Näytä toimipisteen tiedot',
   'unit.accessibility.hearingMaps': 'Kuuluvuuskartat',
   'unit.accessibility.noInfo': 'Ei esteettömyystietoja',
@@ -478,7 +544,8 @@ export default {
   'unit.eServices': 'Sähköinen asiointi',
   'unit.reservations': 'Varattavat kohteet',
   'unit.events': 'Toimipisteen tapahtumat',
-  'unit.events.description': 'Tästä löydät tietoa toimipisteen tarjoamista eri tapahtumista',
+  'unit.events.description':
+    'Tästä löydät tietoa toimipisteen tarjoamista eri tapahtumista',
   'unit.events.count': `{count, plural,
     =0 {}
     one {# tapahtuma}
@@ -508,7 +575,8 @@ export default {
   'unit.otherAddress.link': 'Katso lisätiedot (uusi välilehti)',
   'unit.contact': 'Yhteyshenkilö',
   'unit.school.year': 'Lukuvuosi',
-  'unit.reservations.description': 'Tästä löydät tietoa toimipisteen tarjoamista varattavista tiloista ja tarvikkeista.',
+  'unit.reservations.description':
+    'Tästä löydät tietoa toimipisteen tarjoamista varattavista tiloista ja tarvikkeista.',
 
   'unit.reservations.count': `{count, plural,
     =0 {}
@@ -521,7 +589,8 @@ export default {
   'unit.list.events': 'Tapahtumat',
   'unit.list.reservations': 'Varattavat kohteet',
   'unit.services': 'Toimipisteeseen liittyvät palvelut',
-  'unit.services.description': 'Palvelukuvauksen ohella löydät tietoa kunnan tarjoamista eri asiointikanavista.',
+  'unit.services.description':
+    'Palvelukuvauksen ohella löydät tietoa kunnan tarjoamista eri asiointikanavista.',
   'unit.services.more': 'Näytä lisää palveluja ({count})',
   'unit.services.count': `{count, plural,
     =0 {}
@@ -533,16 +602,19 @@ export default {
   'unit.educationServices.description': 'Lukuvuosi {period}',
   'unit.educationServices.more': 'Näytä lisää palveluja ({count})',
   'unit.route': 'Katso reitti tänne',
-  'unit.route.extra.hslRouteGuide': '(Uusi välilehti. HSL-reittiopas ei ole saavutettava palvelu)',
-  'unit.route.extra.routeGuide': '(Uusi välilehti. Matka.fi-reittiopas ei ole saavutettava palvelu)',
+  'unit.route.extra.hslRouteGuide':
+    '(Uusi välilehti. HSL-reittiopas ei ole saavutettava palvelu)',
+  'unit.route.extra.routeGuide':
+    '(Uusi välilehti. Matka.fi-reittiopas ei ole saavutettava palvelu)',
   'unit.socialMedia.title': 'Toimipiste sosiaalisessa mediassa',
   'unit.outdoorLink': 'Katso liikuntapaikan kunto ulkoliikunta.fi palvelusta',
   'unit.seo.description': 'Katso sijainti kartalla',
-  'unit.seo.description.accessibility': 'Katso esteettömyystiedot ja sijainti kartalla',
+  'unit.seo.description.accessibility':
+    'Katso esteettömyystiedot ja sijainti kartalla',
   'unit.readFeedbackLink': 'Katso annettuja palautteita',
 
   // Search
-  'search': 'Hae',
+  search: 'Hae',
   'search.arrowLabel': 'Tarkenna',
   'search.cancelText': 'Tyhjennä hakukenttä',
   'search.removeSuggestion': 'Poista',
@@ -585,7 +657,8 @@ export default {
   'search.notFound': 'Haulla ei löytynyt hakutuloksia',
   'search.started': 'Haku aloitettu',
   'search.infoText': '{count} Hakutulosta',
-  'search.searchbar.headerText': 'Pääkaupunkiseudun kaikki julkiset palvelut ulottuvillasi.',
+  'search.searchbar.headerText':
+    'Pääkaupunkiseudun kaikki julkiset palvelut ulottuvillasi.',
   'search.searchbar.infoText': 'Hae palveluita, toimipisteitä tai osoitteita',
   'search.skipLink': 'Siirry suoraan hakutuloksiin',
   'search.skipSuggestions': 'Sulje hakuehdotukset',
@@ -605,14 +678,16 @@ export default {
   'search.tryAgainBody.spelling': 'tarkista kirjoitusasu',
   'search.tryAgainBody.city': 'tarkista kaupunkivalinnat',
   'search.tryAgainBody.service': 'kirjoita palvelun nimi',
-  'search.tryAgainBody.address': 'kirjoita osoite, jonka läheltä etsit palvelua',
-  'search.tryAgainBody.keyword': 'kirjoita avainsanoja, esim. luontopolku, ruotsinkielinen päiväkoti',
+  'search.tryAgainBody.address':
+    'kirjoita osoite, jonka läheltä etsit palvelua',
+  'search.tryAgainBody.keyword':
+    'kirjoita avainsanoja, esim. luontopolku, ruotsinkielinen päiväkoti',
   'search.expand': 'Hae tarkempia hakuehdotuksia',
   'search.closeExpand': 'Palaa hakuun',
   'search.addText': 'Lisää',
 
   // Service
-  'service': 'Palvelu',
+  service: 'Palvelu',
   'service.plural': 'Palvelut',
   'service.nearby': 'Palvelut täällä asuville',
   'service.units.empty': 'Palvelulla ei ole toimipisteitä',
@@ -620,7 +695,7 @@ export default {
   'service.description': 'Katso palveluiden sijainnit ja yhteystiedot',
 
   // Service tree
-  'services': 'Palveluluettelo',
+  services: 'Palveluluettelo',
   'services.selections': `{count, plural,
     one {Olet tehnyt (#) valinnan}
     other {Olet tehnyt (#) valintaa}
@@ -633,12 +708,14 @@ export default {
   'services.search.sr.selected': 'Tee haku palveluilla: {services}',
   'services.category.select': 'Kaikki',
   'services.category.open': 'Avaa kategoria',
-  'services.info': 'Valitse vähintään yksi palvelu alla olevasta palveluluettelosta, että voit suorittaa haun.',
+  'services.info':
+    'Valitse vähintään yksi palvelu alla olevasta palveluluettelosta, että voit suorittaa haun.',
   'services.tree.level': 'Taso',
-  'mobilityTree.info': 'Tutustu liikkumisen vaihtoehtoihin valitsemalla vähintään yksi palvelu alla olevista vaihtoehdoista suorittaaksesi haun.',
+  'mobilityTree.info':
+    'Tutustu liikkumisen vaihtoehtoihin valitsemalla vähintään yksi palvelu alla olevista vaihtoehdoista suorittaaksesi haun.',
 
   // Settings
-  'settings': 'Asetukset',
+  settings: 'Asetukset',
   'settings.open': 'Avaa asetusvalinnat',
   'settings.close': 'Piilota asetusvalinnat',
   'settings.change': 'Muokkaa asetuksiasi',
@@ -666,7 +743,8 @@ export default {
   'settings.info.title': 'Valitsemasi asetukset vaikuttavat hakutulokseen',
   'settings.info.title.city': 'Kaupunkiasetukset vaikuttavat aluetietoihin',
   'settings.info.title.noSettings': 'Muuta haku- tai esteettömyysasetuksia',
-  'settings.info.title.noSettings.city': 'Muuta kaupunkiasetuksia rajataksesi alueita',
+  'settings.info.title.noSettings.city':
+    'Muuta kaupunkiasetuksia rajataksesi alueita',
   'settings.mobility.title': 'Liikkumisrajoitteet',
   'settings.mobility.none': 'Ei liikkumisrajoitteita',
   'settings.mobility.wheelchair': 'Käytän pyörätuolia',
@@ -684,8 +762,10 @@ export default {
   'settings.city.vantaa': 'Vantaa',
   'settings.city.kauniainen': 'Kauniainen',
   'settings.city.kirkkonummi': 'Kirkkonummi',
-  'settings.city.länsi-uudenmaan hyvinvointialue': 'Länsi-Uudenmaan hyvinvointialue',
-  'settings.city.vantaan ja keravan hyvinvointialue': 'Vantaan ja Keravan hyvinvointialue',
+  'settings.city.länsi-uudenmaan hyvinvointialue':
+    'Länsi-Uudenmaan hyvinvointialue',
+  'settings.city.vantaan ja keravan hyvinvointialue':
+    'Vantaan ja Keravan hyvinvointialue',
   'settings.city.askola': 'Askola',
   'settings.city.hanko': 'Hanko',
   'settings.city.hyvinkää': 'Hyvinkää',
@@ -714,7 +794,8 @@ export default {
   'settings.map.accessible_map': 'Korkeakontrastinen kartta',
   'settings.map.plainmap': 'Selkokartta',
   'settings.3dmap.title': '3D-kartat',
-  'settings.3dmap.info': 'Kaupunkitietomallissa voit katsella paitsi rakennuksia ja niiden tietoja, myös maanpintamallia eli maaston muotoja. Siirry alla olevan linkin avulla katselemaan kaupunkimallia.',
+  'settings.3dmap.info':
+    'Kaupunkitietomallissa voit katsella paitsi rakennuksia ja niiden tietoja, myös maanpintamallia eli maaston muotoja. Siirry alla olevan linkin avulla katselemaan kaupunkimallia.',
   'settings.3dmap.link.helsinki': 'Helsingin 3D-kartta (uusi välilehti)',
   'settings.3dmap.link.espoo': 'Espoon 3D-kartta (uusi välilehti)',
   'settings.3dmap.link.vantaa': 'Vantaan 3D-kartta (uusi välilehti)',
@@ -728,7 +809,8 @@ export default {
   'settings.choose.senses': 'Valitse aistirajoitteesi',
   'settings.choose.cities': 'Valitse kaupunkiasetuksesi',
   'settings.choose.organization': 'Valitse palveluntarjoaja',
-  'settings.map.info': 'Kartta-asetuksista voit valita sinulle parhaiten sopivan pohjakartan.',
+  'settings.map.info':
+    'Kartta-asetuksista voit valita sinulle parhaiten sopivan pohjakartan.',
   'settings.reset_button.title': 'Tyhjennä kaikki valintani',
   'settings.reset_button.ariaLive': 'Kaikki valinnat tyhjennettiin.',
 

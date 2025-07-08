@@ -1,16 +1,24 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import {
-  IconButton, Typography, Button, ButtonBase, useMediaQuery,
-} from '@mui/material';
-import { ArrowBack } from '@mui/icons-material';
 import styled from '@emotion/styled';
+import { ArrowBack } from '@mui/icons-material';
+import {
+  Button,
+  ButtonBase,
+  IconButton,
+  Typography,
+  useMediaQuery,
+} from '@mui/material';
+import PropTypes from 'prop-types';
+import React, { useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
-import { selectBreadcrumb, selectNavigator } from '../../redux/selectors/general';
+
+import {
+  selectBreadcrumb,
+  selectNavigator,
+} from '../../redux/selectors/general';
 import { getPathName } from '../../utils/path';
 
-const BackButton = (props) => {
+function BackButton(props) {
   const {
     className = '',
     onClick = null,
@@ -44,7 +52,6 @@ const BackButton = (props) => {
     }
   }
 
-
   // Attempt to generate custom text
   const textId = `general.back.${idSuffix}`;
   const defaultMessage = intl.formatMessage({ id: 'general.back' });
@@ -62,24 +69,26 @@ const BackButton = (props) => {
   };
 
   const renderContainerVariantButton = (CustomButton) => (
-    <>
-      <CustomButton
-        data-sm="BackButton"
-        role="link"
-        className={`SMBackButton ${className}`}
-        style={style}
-        aria-hidden={srHidden}
-        aria-label={ariaLabel || buttonTitle}
-        onClick={e => onClickAction(e)}
+    <CustomButton
+      data-sm="BackButton"
+      role="link"
+      className={`SMBackButton ${className}`}
+      style={style}
+      aria-hidden={srHidden}
+      aria-label={ariaLabel || buttonTitle}
+      onClick={(e) => onClickAction(e)}
+    >
+      <ArrowBack fontSize="inherit" />
+      <StyledContainerText
+        aria-hidden
+        fontSize="inherit"
+        color="inherit"
+        variant="body2"
       >
-        <ArrowBack fontSize="inherit" />
-        <StyledContainerText aria-hidden fontSize="inherit" color="inherit" variant="body2">
-          {text || buttonTitle}
-        </StyledContainerText>
-      </CustomButton>
-    </>
+        {text || buttonTitle}
+      </StyledContainerText>
+    </CustomButton>
   );
-
 
   if (variant === 'icon') {
     return (
@@ -91,7 +100,7 @@ const BackButton = (props) => {
         aria-hidden={srHidden}
         aria-label={ariaLabel || buttonText}
         focusVisibleClassName={focusVisibleClassName}
-        onClick={e => onClickAction(e)}
+        onClick={(e) => onClickAction(e)}
       >
         <ArrowBack fontSize="inherit" />
       </IconButton>
@@ -119,14 +128,12 @@ const BackButton = (props) => {
       role="link"
       variant="contained"
       color="primary"
-      onClick={e => onClickAction(e)}
+      onClick={(e) => onClickAction(e)}
     >
       {buttonText}
-
     </Button>
-
   );
-};
+}
 
 const StyledContainerText = styled(Typography)(({ theme }) => ({
   color: 'inherit',

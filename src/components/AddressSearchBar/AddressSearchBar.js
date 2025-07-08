@@ -1,22 +1,35 @@
-import React, { useState, useEffect, useRef } from 'react';
-import PropTypes from 'prop-types';
-import { FormattedMessage, useIntl } from 'react-intl';
-import { InputBase, IconButton, Paper, List, ListItemButton, Typography, ButtonBase } from '@mui/material';
-import { Cancel, Home } from '@mui/icons-material';
-import { useDispatch, useSelector } from 'react-redux';
-import { visuallyHidden } from '@mui/utils';
 import styled from '@emotion/styled';
-import { setOrder, setDirection } from '../../redux/actions/sort';
+import { Cancel, Home } from '@mui/icons-material';
+import {
+  ButtonBase,
+  IconButton,
+  InputBase,
+  List,
+  ListItemButton,
+  Paper,
+  Typography,
+} from '@mui/material';
+import { visuallyHidden } from '@mui/utils';
+import PropTypes from 'prop-types';
+import React, { useEffect, useRef, useState } from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { setDirection, setOrder } from '../../redux/actions/sort';
 import { selectMapRef } from '../../redux/selectors/general';
-import { getLocale, selectCustomPosition, selectUserPosition } from '../../redux/selectors/user';
+import {
+  getLocale,
+  selectCustomPosition,
+  selectUserPosition,
+} from '../../redux/selectors/user';
 import { keyboardHandler } from '../../utils';
-import useMobileStatus from '../../utils/isMobile';
-import useLocaleText from '../../utils/useLocaleText';
-import ServiceMapAPI from '../../utils/newFetch/ServiceMapAPI';
 import { getAddressText } from '../../utils/address';
+import useMobileStatus from '../../utils/isMobile';
+import ServiceMapAPI from '../../utils/newFetch/ServiceMapAPI';
+import useLocaleText from '../../utils/useLocaleText';
 import { focusToPosition } from '../../views/MapView/utils/mapActions';
 
-const AddressSearchBar = ({ title = null, handleAddressChange }) => {
+function AddressSearchBar({ title = null, handleAddressChange }) {
   const intl = useIntl();
   const getLocaleText = useLocaleText();
   const dispatch = useDispatch();
@@ -114,10 +127,9 @@ const AddressSearchBar = ({ title = null, handleAddressChange }) => {
       if (currentLocation) {
         setCurrentLocation(null);
       }
-      fetchAddressResults(debouncedInputValue)
-        .then(data => {
-          setAddressResults(data);
-        });
+      fetchAddressResults(debouncedInputValue).then((data) => {
+        setAddressResults(data);
+      });
     } else if (addressResults.length) {
       setAddressResults([]);
     }
@@ -145,27 +157,41 @@ const AddressSearchBar = ({ title = null, handleAddressChange }) => {
     }
   }, [defaultAddress]);
 
-  const showSuggestions = inputRef.current?.value.length > 1 && addressResults?.length;
+  const showSuggestions =
+    inputRef.current?.value.length > 1 && addressResults?.length;
   // Add info text for location selection
-  const locationInfoText = currentLocation ? intl.formatMessage({ id: 'address.search.location' }, { location: currentLocation }) : '';
+  const locationInfoText = currentLocation
+    ? intl.formatMessage(
+        { id: 'address.search.location' },
+        { location: currentLocation }
+      )
+    : '';
   // Figure out which info text to use
-  let infoText = showSuggestions && addressResults.length ? <FormattedMessage id="search.suggestions.suggestions" values={{ count: addressResults.length }} /> : locationInfoText;
+  let infoText =
+    showSuggestions && addressResults.length ? (
+      <FormattedMessage
+        id="search.suggestions.suggestions"
+        values={{ count: addressResults.length }}
+      />
+    ) : (
+      locationInfoText
+    );
   if (cleared) {
     infoText = <FormattedMessage id="address.search.cleared" />;
   } else {
     infoText = (
       <>
         {infoText}
-        {
-          addressResults.length ? (<FormattedMessage id="address.search.suggestion" />) : null
-        }
+        {addressResults.length ? (
+          <FormattedMessage id="address.search.suggestion" />
+        ) : null}
       </>
     );
   }
 
   return (
     <StyledContainer>
-      <form action="" onSubmit={e => handleSubmit(e)}>
+      <form action="" onSubmit={(e) => handleSubmit(e)}>
         <label htmlFor="address-search-bar">
           <Typography color="inherit">{title}</Typography>
         </label>
@@ -179,38 +205,51 @@ const AddressSearchBar = ({ title = null, handleAddressChange }) => {
               role: 'combobox',
               'aria-haspopup': !!showSuggestions,
               'aria-owns': showSuggestions ? 'address-results' : null,
-              'aria-activedescendant': showSuggestions && resultIndex !== null ? `address-suggestion${resultIndex}` : null,
+              'aria-activedescendant':
+                showSuggestions && resultIndex !== null
+                  ? `address-suggestion${resultIndex}`
+                  : null,
             }}
             type="text"
-            onBlur={isMobile ? () => {} : e => clearSuggestions(e)}
+            onBlur={isMobile ? () => {} : (e) => clearSuggestions(e)}
             onFocus={() => setResultIndex(null)}
             defaultValue={getAddressText(defaultAddress, getLocaleText)}
-            onChange={e => handleInputChange(e.target.value)}
-            onKeyDown={e => showSuggestions && handleSearchBarKeyPress(e)}
-            endAdornment={currentLocation ? (
-              <StyledIconButton
-                aria-label={intl.formatMessage({ id: 'search.cancelText' })}
-                onClick={() => {
-                  setCleared(true);
-                  setCurrentLocation(null);
-                  handleAddressChange(null);
-                  inputRef.current.value = '';
-                }}
-              >
-                <StyledClear />
-              </StyledIconButton>
-            ) : null}
+            onChange={(e) => handleInputChange(e.target.value)}
+            onKeyDown={(e) => showSuggestions && handleSearchBarKeyPress(e)}
+            endAdornment={
+              currentLocation ? (
+                <StyledIconButton
+                  aria-label={intl.formatMessage({ id: 'search.cancelText' })}
+                  onClick={() => {
+                    setCleared(true);
+                    setCurrentLocation(null);
+                    handleAddressChange(null);
+                    inputRef.current.value = '';
+                  }}
+                >
+                  <StyledClear />
+                </StyledIconButton>
+              ) : null
+            }
           />
           <StyledSearchButton
-          // aria-label={intl.formatMessage({ id: 'search' })}
-            onClick={e => handleSubmit(e)}
+            // aria-label={intl.formatMessage({ id: 'search' })}
+            onClick={(e) => handleSubmit(e)}
             variant="contained"
           >
-            <Typography>{intl.formatMessage({ id: 'search.addText' })}</Typography>
+            <Typography>
+              {intl.formatMessage({ id: 'search.addText' })}
+            </Typography>
             <Home />
           </StyledSearchButton>
 
-          <Typography aria-live="polite" id="resultLength" style={visuallyHidden}>{infoText}</Typography>
+          <Typography
+            aria-live="polite"
+            id="resultLength"
+            style={visuallyHidden}
+          >
+            {infoText}
+          </Typography>
         </StyledFlexContainer>
         {showSuggestions ? (
           <Paper>
@@ -224,7 +263,10 @@ const AddressSearchBar = ({ title = null, handleAddressChange }) => {
                   selected={i === resultIndex}
                   key={getAddressText(address, getLocaleText)}
                   onClick={() => handleAddressSelect(address)}
-                  onKeyDown={keyboardHandler(() => handleAddressSelect(address), ['space', 'enter'])}
+                  onKeyDown={keyboardHandler(
+                    () => handleAddressSelect(address),
+                    ['space', 'enter']
+                  )}
                 >
                   <Typography>
                     {getAddressText(address, getLocaleText)}
@@ -237,7 +279,7 @@ const AddressSearchBar = ({ title = null, handleAddressChange }) => {
       </form>
     </StyledContainer>
   );
-};
+}
 
 const StyledContainer = styled.div(({ theme }) => ({
   padding: theme.spacing(2),
@@ -246,7 +288,6 @@ const StyledContainer = styled.div(({ theme }) => ({
   color: '#fff',
   textAlign: 'left',
 }));
-
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
   paddingLeft: theme.spacing(2),

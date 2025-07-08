@@ -30,9 +30,9 @@ const embedderConfig = {
   },
   BACKGROUND_MAPS: SettingsUtility.mapSettings,
   CITIES: SettingsUtility.citySettings,
-  ORGANIZATIONS: config.organizations.filter(org => (
+  ORGANIZATIONS: config.organizations.filter((org) =>
     SettingsUtility.organizationSettings.includes(org.id)
-  )),
+  ),
   DEFAULT_IFRAME_PROPERTIES: {
     style: {
       width: '100%',

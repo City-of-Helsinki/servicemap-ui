@@ -1,19 +1,31 @@
+import 'leaflet.markercluster/dist/MarkerCluster.css';
+import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
+
 import { css } from '@emotion/css';
 import styled from '@emotion/styled';
 import { useTheme } from '@mui/styles';
-import 'leaflet.markercluster/dist/MarkerCluster.css';
-import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
 import PropTypes from 'prop-types';
 import React, { useCallback, useEffect, useState } from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { useIntl } from 'react-intl';
 import { useMap } from 'react-leaflet';
 import { useSelector } from 'react-redux';
+
 import { selectNavigator } from '../../../../redux/selectors/general';
 import { selectMapType } from '../../../../redux/selectors/settings';
-import { calculateDistance, getCurrentlyUsedPosition } from '../../../../redux/selectors/unit';
-import { getLocale, getPage, selectThemeMode } from '../../../../redux/selectors/user';
-import isClient, { formatDistanceObject, keyboardHandler } from '../../../../utils';
+import {
+  calculateDistance,
+  getCurrentlyUsedPosition,
+} from '../../../../redux/selectors/unit';
+import {
+  getLocale,
+  getPage,
+  selectThemeMode,
+} from '../../../../redux/selectors/user';
+import isClient, {
+  formatDistanceObject,
+  keyboardHandler,
+} from '../../../../utils';
 import { getAddressFromUnit } from '../../../../utils/address';
 import formatEventDate from '../../../../utils/events';
 import useMobileStatus from '../../../../utils/isMobile';
@@ -33,7 +45,7 @@ const tooltipOptions = (permanent, className) => ({
   offset: [0, -25],
 });
 
-const popupOptions = isMobile => ({
+const popupOptions = (isMobile) => ({
   autoClose: false,
   autoPan: !!isMobile,
   closeButton: true,
@@ -54,12 +66,12 @@ const getClusterIconSize = (count) => {
 
 const clusterData = {};
 
-const MarkerCluster = ({
+function MarkerCluster({
   data,
   highlightedUnit,
   measuringMode,
   disableInteraction,
-}) => {
+}) {
   const theme = useTheme();
   const intl = useIntl();
   const distanceCoordinates = useSelector(getCurrentlyUsedPosition);
@@ -72,9 +84,8 @@ const MarkerCluster = ({
   const embeded = isEmbed();
   const isMobile = useMobileStatus();
   const locale = useSelector(getLocale);
-  const getDistance = unit => (
-    formatDistanceObject(intl, calculateDistance(unit, distanceCoordinates))
-  );
+  const getDistance = (unit) =>
+    formatDistanceObject(intl, calculateDistance(unit, distanceCoordinates));
   const [cluster, setCluster] = useState(null);
   // for some reason theme was empty in emotion styled so the emotion/css is used here
   // to access theme
@@ -241,7 +252,8 @@ const MarkerCluster = ({
         if (current instanceof global.L.MarkerCluster) {
           const clusterMarkers = current.getAllChildMarkers();
           return clusterMarkers.some(
-            marker => marker?.options?.customUnitData?.id === highlightedUnit.id,
+            (marker) =>
+              marker?.options?.customUnitData?.id === highlightedUnit.id
           );
         }
         return current?.options?.customUnitData?.id === highlightedUnit.id;
@@ -252,58 +264,50 @@ const MarkerCluster = ({
     return null;
   };
 
-  const createPopupContent = (unit, distance) => (
+  const createPopupContent = (unit, distance) =>
     ReactDOMServer.renderToStaticMarkup(
       <div className={unitTooltipWrapperClass}>
-        <p className={unitTooltipTitleClass}>{unit.name && getLocaleText(unit.name)}</p>
-        {
-          unit.street_address
-          && (
-            <p className={unitTooltipSubtitleClass}>
-              {getAddressFromUnit(unit, getLocaleText, intl)}
+        <p className={unitTooltipTitleClass}>
+          {unit.name && getLocaleText(unit.name)}
+        </p>
+        {unit.street_address && (
+          <p className={unitTooltipSubtitleClass}>
+            {getAddressFromUnit(unit, getLocaleText, intl)}
+          </p>
+        )}
+        {distance && (
+          <p
+            data-sm="kyyy"
+            className={`${unitTooltipSubtitleClass} ${unitTooltipCaptionClass}`}
+          >
+            {intl.formatMessage({ id: 'unit.distance' })}
+            {distance.distance}
+            {distance.type}
+          </p>
+        )}
+        {unit.events?.length ? (
+          <div className={unitTooltipEventContainerClass}>
+            <StyledUnitTooltipDivider />
+            <p className={unitTooltipSubtitleClass}>{unit.events[0].name.fi}</p>
+            <p
+              className={`${unitTooltipSubtitleClass} ${unitTooltipCaptionClass}`}
+            >
+              {formatEventDate(unit.events[0], intl)}
             </p>
-          )
-        }
-        {
-          distance
-          && (
-            <p data-sm="kyyy" className={`${unitTooltipSubtitleClass} ${unitTooltipCaptionClass}`}>
-              {intl.formatMessage({ id: 'unit.distance' })}
-              {distance.distance}
-              {distance.type}
-            </p>
-          )
-        }
-        {
-          unit.events?.length
-            ? (
-              <div className={unitTooltipEventContainerClass}>
-                <StyledUnitTooltipDivider />
-                <p className={unitTooltipSubtitleClass}>
-                  {unit.events[0].name.fi}
-                </p>
-                <p className={`${unitTooltipSubtitleClass} ${unitTooltipCaptionClass}`}>
-                  {formatEventDate(unit.events[0], intl)}
-                </p>
-              </div>
-            ) : null
-        }
+          </div>
+        ) : null}
         {isMobile && (
           <p className={unitTooltipLinkClass}>
             {intl.formatMessage({ id: 'unit.showInformation' })}
           </p>
         )}
-      </div>,
-    )
-  );
+      </div>
+    );
 
   // Closure function for handling unit based popup content
   const getUnitPopupContent = (unit) => {
     const distance = getDistance(unit);
-    return createPopupContent(
-      unit,
-      distance,
-    );
+    return createPopupContent(unit, distance);
   };
 
   // Open highlighted units' popup
@@ -329,7 +333,7 @@ const MarkerCluster = ({
     clusterMouseover,
     clusterMouseout,
     clusterAnimationend,
-    showListOfUnits,
+    showListOfUnits
   ) => {
     if (!isClient()) {
       return null;
@@ -373,45 +377,39 @@ const MarkerCluster = ({
     return clusterLayer;
   };
 
-  const createTooltipContent = (unit, distance) => (
+  const createTooltipContent = (unit, distance) =>
     ReactDOMServer.renderToStaticMarkup(
       <div>
-        <p className={unitTooltipTitleClass}>{unit.name && getLocaleText(unit.name)}</p>
+        <p className={unitTooltipTitleClass}>
+          {unit.name && getLocaleText(unit.name)}
+        </p>
         <StyledUnitTooltipSubContainer>
-          {
-            unit.street_address
-            && (
-              <p className={unitTooltipSubtitleClass}>
-                {typeof unit.street_address === 'string'
-                  ? unit.street_address
-                  : getLocaleText(unit.street_address)
-                }
-              </p>
-            )
-          }
-          {
-            distance
-            && (
-              <p className={unitTooltipSubtitleClass}>
-                {distance.distance}
-                {distance.type}
-              </p>
-            )
-          }
+          {unit.street_address && (
+            <p className={unitTooltipSubtitleClass}>
+              {typeof unit.street_address === 'string'
+                ? unit.street_address
+                : getLocaleText(unit.street_address)}
+            </p>
+          )}
+          {distance && (
+            <p className={unitTooltipSubtitleClass}>
+              {distance.distance}
+              {distance.type}
+            </p>
+          )}
         </StyledUnitTooltipSubContainer>
-      </div>,
-    )
-  );
+      </div>
+    );
 
   // Parse unitData from clusterMarker
   const parseUnitData = (marker) => {
     if (!(marker instanceof global.L.MarkerCluster)) {
       return null;
     }
-    return marker.getAllChildMarkers()
-      .map(marker => marker?.options?.customUnitData)
-      .filter(unitData => !!unitData);
-
+    return marker
+      .getAllChildMarkers()
+      .map((marker) => marker?.options?.customUnitData)
+      .filter((unitData) => !!unitData);
   };
 
   // Function for creating custom icon for cluster group
@@ -423,15 +421,31 @@ const MarkerCluster = ({
     const iconSize = getClusterIconSize(cCount);
     const children = cluster.getAllChildMarkers();
     const unitClasses = children
-      .map(marker => marker?.options?.customUnitData?.id && `unit-marker-${marker.options.customUnitData.id}`)
-      .filter(v => !!v);
+      .map(
+        (marker) =>
+          marker?.options?.customUnitData?.id &&
+          `unit-marker-${marker.options.customUnitData.id}`
+      )
+      .filter((v) => !!v);
     const iconClasses = unitClasses.join(' ');
     const icon = global.L.divIcon({
       html: `
         <div class="${bgCircleClass} ${markerCircleClass} ${iconClasses}" aria-hidden="true" tabindex="-1">
-          <div class="${outerCircleClass} ${markerCircleClass} ${useContrast ? 'dark' : ''}" aria-hidden="true" tabindex="-1">
-            <div class="${midCircleClass} ${markerCircleClass} ${useContrast ? 'dark' : ''}" aria-hidden="true" tabindex="-1">
-              <div class="${innerCircleClass} ${markerCircleClass} ${useContrast ? 'dark' : ''}" aria-hidden="true" tabindex="-1">
+          <div
+            class="${outerCircleClass} ${markerCircleClass} ${useContrast ? 'dark' : ''}"
+            aria-hidden="true"
+            tabindex="-1"
+          >
+            <div
+              class="${midCircleClass} ${markerCircleClass} ${useContrast ? 'dark' : ''}"
+              aria-hidden="true"
+              tabindex="-1"
+            >
+              <div
+                class="${innerCircleClass} ${markerCircleClass} ${useContrast ? 'dark' : ''}"
+                aria-hidden="true"
+                tabindex="-1"
+              >
                 ${cCount}
               </div>
             </div>
@@ -449,7 +463,10 @@ const MarkerCluster = ({
     if (!marker) return;
     const { highlightedMarker } = clusterData;
     // Open popoup on marker click even if it is already highlighted unit.
-    if (marker.options.customUnitData.id === highlightedMarker?.options.customUnitData.id) {
+    if (
+      marker.options.customUnitData.id ===
+      highlightedMarker?.options.customUnitData.id
+    ) {
       if (marker.isPopupOpen()) {
         marker.openPopup();
       }
@@ -466,12 +483,13 @@ const MarkerCluster = ({
   const { clusterPopupVisibility } = mapTypes[mapType];
   const popupTexts = {
     title: intl.formatMessage({ id: 'unit.plural' }),
-    info: count => intl.formatMessage({ id: 'map.unit.cluster.popup.info' }, { count }),
+    info: (count) =>
+      intl.formatMessage({ id: 'map.unit.cluster.popup.info' }, { count }),
   };
   const onClusterItemClick = (unit) => {
     UnitHelper.unitElementClick(navigator, unit);
   };
-  const showListOfUnits = () => (map.getZoom() > clusterPopupVisibility);
+  const showListOfUnits = () => map.getZoom() > clusterPopupVisibility;
 
   // Cluster popup content
   const clusterPopupContent = (units) => {
@@ -503,14 +521,18 @@ const MarkerCluster = ({
     list.className = unitPopupListClass;
 
     // Add units to list
-    units.filter(unit => unit?.name)
+    units
+      .filter((unit) => unit?.name)
       .forEach((unit) => {
         const listItem = document.createElement('li');
         // Create span for interactive list item content
         const span = document.createElement('span');
         listItem.setAttribute('tabindex', '0');
         listItem.setAttribute('role', 'link');
-        listItem.onkeydown = keyboardHandler(() => onClusterItemClick(unit), ['enter', 'space']);
+        listItem.onkeydown = keyboardHandler(
+          () => onClusterItemClick(unit),
+          ['enter', 'space']
+        );
         listItem.onclick = () => {
           if (onClusterItemClick) {
             onClusterItemClick(unit);
@@ -550,8 +572,7 @@ const MarkerCluster = ({
     const cluster = a?.layer;
     // Close popup on mouseout if cluster is not highlighted cluster
     // or cluster doesn't show list of units
-    if (!showListOfUnits() && cluster !== clusterData.highlightedCluster
-    ) {
+    if (!showListOfUnits() && cluster !== clusterData.highlightedCluster) {
       cluster.closePopup();
     }
   };
@@ -562,15 +583,21 @@ const MarkerCluster = ({
     if (cluster.isPopupOpen()) {
       return;
     }
-    const units = orderUnits(parseUnitData(cluster), { locale, direction: 'desc', order: 'alphabetical' });
+    const units = orderUnits(parseUnitData(cluster), {
+      locale,
+      direction: 'desc',
+      order: 'alphabetical',
+    });
 
     // Create popuelement and add events
     const elem = clusterPopupContent(units);
     // Bind and open popup with content to cluster
-    a.layer.bindPopup(elem, {
-      closeButton: true,
-      offset: [4, -14],
-    }).openPopup();
+    a.layer
+      .bindPopup(elem, {
+        closeButton: true,
+        offset: [4, -14],
+      })
+      .openPopup();
   };
 
   const clusterAnimationEnd = (a) => {
@@ -599,7 +626,7 @@ const MarkerCluster = ({
       clusterMouseover,
       clusterMouseout,
       clusterAnimationEnd,
-      showListOfUnits,
+      showListOfUnits
     );
     // Add cluster to map
     map.addLayer(mcg);
@@ -629,7 +656,7 @@ const MarkerCluster = ({
       return;
     }
     // Filter units of object_type unit
-    const unitListFiltered = data.filter(unit => unit.object_type === 'unit');
+    const unitListFiltered = data.filter((unit) => unit.object_type === 'unit');
     if (!unitListFiltered.length) {
       return;
     }
@@ -637,44 +664,46 @@ const MarkerCluster = ({
     const markers = [];
 
     // Add unit markers to clusterlayer
-    unitListFiltered.filter(unit => unit?.location)
+    unitListFiltered
+      .filter((unit) => unit?.location)
       .forEach((unit) => {
         // Distance
         const distance = getDistance(unit);
-        const tooltipContent = createTooltipContent(
-          unit,
-          distance,
-        );
-        const popupContent = createPopupContent(
-          unit,
-          distance,
-        );
-        const tooltipPermanent = highlightedUnit
-          && (highlightedUnit.id === unit.id && UnitHelper.isUnitPage());
+        const tooltipContent = createTooltipContent(unit, distance);
+        const popupContent = createPopupContent(unit, distance);
+        const tooltipPermanent =
+          highlightedUnit &&
+          highlightedUnit.id === unit.id &&
+          UnitHelper.isUnitPage();
         const unitHasEvents = tooltipPermanent && unit.events?.length;
 
-        const markerClasses = `unit-marker-${unit.id} ${unitMarkerClass} ${unitHasEvents ? unitMarkerEventClass : ''} ${useContrast ? ' dark' : ''}`;
+        const markerClasses = [
+          `unit-marker-${unit.id}`,
+          unitMarkerClass,
+          unitHasEvents ? unitMarkerEventClass : '',
+          useContrast ? ' dark' : '',
+        ].join(' ');
         const markerElem = global.L.marker(
           [unit.location.coordinates[1], unit.location.coordinates[0]],
           {
             icon: drawMarkerIcon(
               useContrast,
               markerClasses,
-              tooltipPermanent && unitHasEvents,
+              tooltipPermanent && unitHasEvents
             ),
             customUnitData: unit,
             keyboard: false,
-          },
-        ).bindPopup(
-          popupContent,
-          popupOptions(isMobile),
-        );
+          }
+        ).bindPopup(popupContent, popupOptions(isMobile));
 
         if (isMobile) {
           markerElem.on('popupopen', (e) => {
             // Bind click event to popup when popup is opened
-            e.popup.getElement().addEventListener('click',
-              () => UnitHelper.unitElementClick(navigator, unit));
+            e.popup
+              .getElement()
+              .addEventListener('click', () =>
+                UnitHelper.unitElementClick(navigator, unit)
+              );
           });
         }
 
@@ -682,7 +711,7 @@ const MarkerCluster = ({
         if (!tooltipPermanent && !isMobile) {
           markerElem.bindTooltip(
             tooltipContent,
-            tooltipOptions(false, unitTooltipContainerClass),
+            tooltipOptions(false, unitTooltipContainerClass)
           );
         } else {
           // If marker is highlighted save reference
@@ -709,7 +738,8 @@ const MarkerCluster = ({
       item.setAttribute('tabindex', '-1');
       item.setAttribute('aria-hidden', 'true');
       // Remove marker interaction when using measuring tool or if interactions are disabled
-      if (measuringMode || disableInteraction) item.classList.remove('leaflet-interactive');
+      if (measuringMode || disableInteraction)
+        item.classList.remove('leaflet-interactive');
     });
   }, [cluster, data, isMobile, measuringMode]);
 
@@ -733,13 +763,13 @@ const MarkerCluster = ({
   }, [measuringMode]);
 
   return null;
-};
+}
 
 MarkerCluster.propTypes = {
   data: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-    }),
+    })
   ).isRequired,
 };
 

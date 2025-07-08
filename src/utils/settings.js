@@ -1,8 +1,15 @@
-import LocalStorageUtility from './localStorage';
 import config from '../../config';
+import LocalStorageUtility from './localStorage';
 
 const ALLOWED = {
-  mobility: [null, 'none', 'wheelchair', 'reduced_mobility', 'rollator', 'stroller'],
+  mobility: [
+    null,
+    'none',
+    'wheelchair',
+    'reduced_mobility',
+    'rollator',
+    'stroller',
+  ],
   city: [null, ...config.cities],
   organizations: [null, ...config.organizations.map((org) => org.id)],
   map: config.maps,
@@ -35,8 +42,8 @@ class SettingsUtility {
   // AccessibilityRelatedSettings
   // Filter mobility and accessibility settings from null values
   static accessibilityRelatedSettings = [
-    ...SettingsUtility.mobilitySettings.filter(v => v),
-    ...SettingsUtility.accessibilityImpairmentKeys.filter(v => v),
+    ...SettingsUtility.mobilitySettings.filter((v) => v),
+    ...SettingsUtility.accessibilityImpairmentKeys.filter((v) => v),
   ];
 
   static isValidAccessibilitySenseImpairment(key) {
@@ -44,8 +51,9 @@ class SettingsUtility {
   }
 
   static mapValidAccessibilitySenseImpairmentValueToKey(value) {
-    return SettingsUtility.accessibilityImpairmentKeys
-      .find(key => ACCESSIBILITY_MAPPING[key] === value);
+    return SettingsUtility.accessibilityImpairmentKeys.find(
+      (key) => ACCESSIBILITY_MAPPING[key] === value
+    );
   }
 
   static isValidMobilitySetting(value) {
@@ -103,13 +111,17 @@ class SettingsUtility {
     const mapType = LocalStorageUtility.getItem('mapType');
     const settings = {
       mobility: mobility === 'null' ? null : mobility,
-      mapType: config.maps.includes(mapType) ? mapType : SettingsUtility.defaultMapType,
+      mapType: config.maps.includes(mapType)
+        ? mapType
+        : SettingsUtility.defaultMapType,
       colorblind: LocalStorageUtility.getItem('colorblind') === 'true',
-      visuallyImpaired: LocalStorageUtility.getItem('visuallyImpaired') === 'true',
+      visuallyImpaired:
+        LocalStorageUtility.getItem('visuallyImpaired') === 'true',
       hearingAid: LocalStorageUtility.getItem('hearingAid') === 'true',
       cities: {},
       organizations: {},
-      settingsCollapsed: LocalStorageUtility.getItem('settingsCollapsed') === 'true',
+      settingsCollapsed:
+        LocalStorageUtility.getItem('settingsCollapsed') === 'true',
     };
 
     config.cities.forEach((city) => {
@@ -117,7 +129,8 @@ class SettingsUtility {
     });
 
     config.organizations.forEach((organization) => {
-      settings.organizations[organization.id] = LocalStorageUtility.getItem(organization.id) === 'true';
+      settings.organizations[organization.id] =
+        LocalStorageUtility.getItem(organization.id) === 'true';
     });
 
     return settings;
@@ -130,12 +143,19 @@ class SettingsUtility {
     }
     const data = [];
     const { mobility } = settings;
-    if (typeof mobility === 'string' && SettingsUtility.isValidMobilitySetting(mobility) && mobility !== 'none') {
+    if (
+      typeof mobility === 'string' &&
+      SettingsUtility.isValidMobilitySetting(mobility) &&
+      mobility !== 'none'
+    ) {
       data.push(mobility);
     }
 
     SettingsUtility.accessibilityImpairmentKeys.forEach((key) => {
-      if (Object.prototype.hasOwnProperty.call(settings, key) && settings[key]) {
+      if (
+        Object.prototype.hasOwnProperty.call(settings, key) &&
+        settings[key]
+      ) {
         data.push(ACCESSIBILITY_MAPPING[key]);
       }
     });

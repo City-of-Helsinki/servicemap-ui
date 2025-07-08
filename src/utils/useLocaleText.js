@@ -1,5 +1,6 @@
 import { useCallback } from 'react';
 import { useSelector } from 'react-redux';
+
 import { getLocale } from '../redux/selectors/user';
 
 // This returns correct string from text object according to locale
@@ -13,7 +14,7 @@ export const getLocaleString = (locale, obj) => {
 
   // Default rerturned string is the first one listed that is not empty string
   if (!value) {
-    value = Object.values(obj).find(value => value?.length);
+    value = Object.values(obj).find((value) => value?.length);
   }
 
   return value || '';
@@ -21,7 +22,7 @@ export const getLocaleString = (locale, obj) => {
 
 const useLocaleText = () => {
   const locale = useSelector(getLocale);
-  return useCallback(obj => getLocaleString(locale, obj), [locale]);
+  return useCallback((obj) => getLocaleString(locale, obj), [locale]);
 };
 
 export default useLocaleText;

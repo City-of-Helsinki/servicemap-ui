@@ -1,11 +1,18 @@
 import styled from '@emotion/styled';
-import { Checkbox, Divider, FormControlLabel, Link, Typography } from '@mui/material';
+import {
+  Checkbox,
+  Divider,
+  FormControlLabel,
+  Link,
+  Typography,
+} from '@mui/material';
 import PropTypes from 'prop-types';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import URI from 'urijs';
+
 import config from '../../../config';
 import paths from '../../../config/paths';
 import { CloseButton, SMButton } from '../../components';
@@ -28,10 +35,7 @@ import embedderConfig from './embedderConfig';
 import * as smurl from './utils/url';
 import { getEmbedURL, getLanguage } from './utils/utils';
 
-const hideCitiesAndOrgsIn = [
-  paths.unit.regex,
-  paths.address.regex,
-];
+const hideCitiesAndOrgsIn = [paths.unit.regex, paths.address.regex];
 
 const hideServicesIn = [
   paths.search.regex,
@@ -44,12 +48,12 @@ const hideServicesIn = [
 /**
  * @param embedUrl (or normal url)
  */
-const showCitiesAndOrganisations = embedUrl => {
+const showCitiesAndOrganisations = (embedUrl) => {
   if (typeof embedUrl !== 'string') {
     return false;
   }
   const originalUrl = embedUrl.replace('/embed', '');
-  return hideCitiesAndOrgsIn.every(r => !r.test(originalUrl));
+  return hideCitiesAndOrgsIn.every((r) => !r.test(originalUrl));
 };
 
 // Timeout for handling width and height input changes
@@ -59,7 +63,7 @@ const timeoutDelay = 1000;
 const documentationLink = config.embedderDocumentationUrl;
 const { topBarHeight } = config;
 
-const EmbedderView = () => {
+function EmbedderView() {
   const intl = useIntl();
   const mapType = useSelector(selectMapType);
   const navigator = useSelector(selectNavigator);
@@ -105,9 +109,10 @@ const EmbedderView = () => {
     if (!showCitiesAndOrganisations(url) || organization1 === '') {
       return [];
     }
-    const urlParamOrgs = organization1?.split(',')
-      ?.map(orgId => config.organizations.find(org => org.id === orgId))
-      ?.filter(org => org);
+    const urlParamOrgs = organization1
+      ?.split(',')
+      ?.map((orgId) => config.organizations.find((org) => org.id === orgId))
+      ?.filter((org) => org);
     return urlParamOrgs || selectedOrgs || [];
   }
 
@@ -117,7 +122,9 @@ const EmbedderView = () => {
   const [city, setCity] = useState(getInitialCities());
   const [organization, setOrganization] = useState(getInitialOrgs());
   const [service, setService] = useState(defaultService);
-  const [customWidth, setCustomWidth] = useState(embedderConfig.DEFAULT_CUSTOM_WIDTH || 100);
+  const [customWidth, setCustomWidth] = useState(
+    embedderConfig.DEFAULT_CUSTOM_WIDTH || 100
+  );
   const [widthMode, setWidthMode] = useState('auto');
   const [fixedHeight, setFixedHeight] = useState(defaultFixedHeight);
   const [ratioHeight, setRatioHeight] = useState(initialRatio);
@@ -210,46 +217,65 @@ const EmbedderView = () => {
   };
 
   // Figure out embed html
-  const createEmbedHTML = useCallback((url) => {
-    const showListBottom = showUnitList === 'bottom';
-    if (!url) {
-      return '';
-    }
-    const renderWrapperStyle = () => (showListBottom
-      ? `position: relative; width:100%; padding-bottom: max(${ratioHeight}%, ${minHeightWithBottomList});`
-      : `position: relative; width:100%; padding-bottom:${ratioHeight}%;`
-    );
-    let height;
-    let html;
-    if (heightMode === 'fixed') { height = fixedHeight; }
-    if (heightMode === 'ratio') {
-      if (widthMode === 'auto') {
-        html = `<div style="${renderWrapperStyle()}"><iframe title="${iframeTitle}" style="position: absolute; top: 0; left: 0; border: none; width: 100%; height: 100%;" src="${url}"></iframe></div>`;
-      } else {
-        height = parseInt(parseInt(customWidth, 10) * (parseInt(ratioHeight, 10) / 100.0), 10);
+  const createEmbedHTML = useCallback(
+    (url) => {
+      const showListBottom = showUnitList === 'bottom';
+      if (!url) {
+        return '';
       }
-    }
+      const renderWrapperStyle = () =>
+        showListBottom
+          ? `position: relative; width:100%; padding-bottom: max(${ratioHeight}%, ${minHeightWithBottomList});`
+          : `position: relative; width:100%; padding-bottom:${ratioHeight}%;`;
+      let height;
+      let html;
+      if (heightMode === 'fixed') {
+        height = fixedHeight;
+      }
+      if (heightMode === 'ratio') {
+        if (widthMode === 'auto') {
+          html = `<div style="${renderWrapperStyle()}">
+            <iframe
+              title="${iframeTitle}"
+              style="position: absolute; top: 0; left: 0; border: none; width: 100%; height: 100%;"
+              src="${url}"
+            ></iframe>
+          </div>`;
+        } else {
+          height = parseInt(
+            parseInt(customWidth, 10) * (parseInt(ratioHeight, 10) / 100.0),
+            10
+          );
+        }
+      }
 
-    if (height) {
-      const width = widthMode !== 'custom' ? (
-        iframeConfig.style && iframeConfig.style.width && iframeConfig.style.width
-      ) : customWidth;
-      const widthUnit = width !== '100%' ? 'px' : '';
-      const heightValue = showListBottom ? `height: max(${height}px, ${minHeightWithBottomList})` : `height: ${height}px`;
-      html = `<iframe title="${iframeTitle}" style="border: none; width: ${width}${widthUnit}; ${heightValue};"
+      if (height) {
+        const width =
+          widthMode !== 'custom'
+            ? iframeConfig.style &&
+              iframeConfig.style.width &&
+              iframeConfig.style.width
+            : customWidth;
+        const widthUnit = width !== '100%' ? 'px' : '';
+        const heightValue = showListBottom
+          ? `height: max(${height}px, ${minHeightWithBottomList})`
+          : `height: ${height}px`;
+        html = `<iframe title="${iframeTitle}" style="border: none; width: ${width}${widthUnit}; ${heightValue};"
                   src="${url}"></iframe>`;
-    }
-    return html;
-  }, [
-    customWidth,
-    fixedHeight,
-    heightMode,
-    iframeTitle,
-    widthMode,
-    ratioHeight,
-    iframeConfig.style,
-    showUnitList,
-  ]);
+      }
+      return html;
+    },
+    [
+      customWidth,
+      fixedHeight,
+      heightMode,
+      iframeTitle,
+      widthMode,
+      ratioHeight,
+      iframeConfig.style,
+      showUnitList,
+    ]
+  );
 
   const showServices = (embedUrl) => {
     if (typeof embedUrl !== 'string') {
@@ -269,17 +295,21 @@ const EmbedderView = () => {
    * Render language controls
    */
   const renderLanguageControl = () => {
-    const description = locale => intl.formatMessage({ id: `embedder.language.description.${locale}` });
-    const languageControls = generateLabel => Object.keys(embedderConfig.LANGUAGES).map(lang => ({
-      value: lang,
-      label: `${uppercaseFirst(embedderConfig.LANGUAGES[userLocale][lang])}. ${generateLabel(lang)}`,
-    }));
+    const description = (locale) =>
+      intl.formatMessage({ id: `embedder.language.description.${locale}` });
+    const languageControls = (generateLabel) =>
+      Object.keys(embedderConfig.LANGUAGES).map((lang) => ({
+        value: lang,
+        label: `${uppercaseFirst(embedderConfig.LANGUAGES[userLocale][lang])}. ${generateLabel(lang)}`,
+      }));
 
     return (
       <EmbedController
         titleID="embedder.language.title"
         titleComponent="h2"
-        radioAriaLabel={intl.formatMessage({ id: 'embedder.language.aria.label' })}
+        radioAriaLabel={intl.formatMessage({
+          id: 'embedder.language.aria.label',
+        })}
         radioName="language"
         radioValue={language}
         radioControls={languageControls(description)}
@@ -292,11 +322,12 @@ const EmbedderView = () => {
    * Render map controls
    */
   const renderMapTypeControl = () => {
-    const getLabel = map => intl.formatMessage({ id: `settings.map.${map}` });
-    const mapControls = generateLabel => embedderConfig.BACKGROUND_MAPS.map(map => ({
-      value: map,
-      label: `${generateLabel(map)}`,
-    }));
+    const getLabel = (map) => intl.formatMessage({ id: `settings.map.${map}` });
+    const mapControls = (generateLabel) =>
+      embedderConfig.BACKGROUND_MAPS.map((map) => ({
+        value: map,
+        label: `${generateLabel(map)}`,
+      }));
     return (
       <EmbedController
         titleID="embedder.map.title"
@@ -318,7 +349,7 @@ const EmbedderView = () => {
       return null;
     }
     const cities = city;
-    const cityControls = embedderConfig.CITIES.filter(v => v).map(city => ({
+    const cityControls = embedderConfig.CITIES.filter((v) => v).map((city) => ({
       key: city,
       value: !!cities.includes(city),
       label: uppercaseFirst(city),
@@ -327,7 +358,7 @@ const EmbedderView = () => {
         if (v) {
           setCity([...cities, city]);
         } else {
-          setCity(cities.filter(value => value !== city));
+          setCity(cities.filter((value) => value !== city));
         }
       },
     }));
@@ -350,16 +381,16 @@ const EmbedderView = () => {
       return null;
     }
     const organizations = organization;
-    const organizationControls = embedderConfig.ORGANIZATIONS.map(org => ({
+    const organizationControls = embedderConfig.ORGANIZATIONS.map((org) => ({
       key: org.id,
-      value: !!organizations.some(value => value.id === org.id),
+      value: !!organizations.some((value) => value.id === org.id),
       label: uppercaseFirst(getLocaleText(org.name)),
       icon: null,
       onChange: (v) => {
         if (v) {
           setOrganization([...organizations, org]);
         } else {
-          setOrganization(organizations.filter(value => value.id !== org.id));
+          setOrganization(organizations.filter((value) => value.id !== org.id));
         }
       },
     }));
@@ -381,17 +412,21 @@ const EmbedderView = () => {
     if (!showServices(embedUrl)) {
       return null;
     }
-    const getLabel = service => intl.formatMessage({ id: `embedder.service.${service}` });
-    const serviceControls = generateLabel => ['none', 'common', 'all'].map(service => ({
-      value: service,
-      label: generateLabel(service),
-    }));
+    const getLabel = (service) =>
+      intl.formatMessage({ id: `embedder.service.${service}` });
+    const serviceControls = (generateLabel) =>
+      ['none', 'common', 'all'].map((service) => ({
+        value: service,
+        label: generateLabel(service),
+      }));
 
     return (
       <EmbedController
         titleID="embedder.service.title"
         titleComponent="h2"
-        radioAriaLabel={intl.formatMessage({ id: 'embedder.service.aria.label' })}
+        radioAriaLabel={intl.formatMessage({
+          id: 'embedder.service.aria.label',
+        })}
         radioName="service"
         radioValue={service}
         radioControls={serviceControls(getLabel)}
@@ -417,9 +452,10 @@ const EmbedderView = () => {
     const inputValue = widthMode === 'custom' ? customWidth : 100;
     const inputOnChange = (e, v) => runTimeoutFunction(() => setCustomWidth(v));
     const pretext = widthMode === 'custom' ? 'px' : '%';
-    const ariaLabel = widthMode === 'custom'
-      ? intl.formatMessage({ id: 'embedder.width.input.aria.custom' })
-      : intl.formatMessage({ id: 'embedder.width.input.aria.auto' });
+    const ariaLabel =
+      widthMode === 'custom'
+        ? intl.formatMessage({ id: 'embedder.width.input.aria.custom' })
+        : intl.formatMessage({ id: 'embedder.width.input.aria.auto' });
 
     return (
       <EmbedController
@@ -455,15 +491,18 @@ const EmbedderView = () => {
     ];
     const customHeight = heightMode === 'fixed' ? fixedHeight : ratioHeight;
     const pretext = heightMode === 'fixed' ? 'px' : '%';
-    const ariaLabel = heightMode === 'fixed'
-      ? intl.formatMessage({ id: 'embedder.height.input.aria.fixed' })
-      : intl.formatMessage({ id: 'embedder.height.input.aria.ratio' });
+    const ariaLabel =
+      heightMode === 'fixed'
+        ? intl.formatMessage({ id: 'embedder.height.input.aria.fixed' })
+        : intl.formatMessage({ id: 'embedder.height.input.aria.ratio' });
 
     return (
       <EmbedController
         titleID="embedder.height.title"
         titleComponent="h2"
-        radioAriaLabel={intl.formatMessage({ id: 'embedder.height.aria.label' })}
+        radioAriaLabel={intl.formatMessage({
+          id: 'embedder.height.aria.label',
+        })}
         radioName="height"
         radioValue={heightMode}
         radioControls={controls}
@@ -484,36 +523,39 @@ const EmbedderView = () => {
     );
   };
 
-  const renderMapControls = useCallback(() => (
-    <StyledMapControlContainer>
-      {/* Map bounds */}
-      <FormControlLabel
-        control={(
-          <Checkbox
-            color="primary"
-            checked={!!restrictBounds}
-            value="bounds"
-            onChange={() => setRestrictBounds(!restrictBounds)}
-          />
-        )}
-        label={(<FormattedMessage id="embedder.options.label.bbox" />)}
-      />
-    </StyledMapControlContainer>
-  ), [restrictBounds]);
+  const renderMapControls = useCallback(
+    () => (
+      <StyledMapControlContainer>
+        {/* Map bounds */}
+        <FormControlLabel
+          control={
+            <Checkbox
+              color="primary"
+              checked={!!restrictBounds}
+              value="bounds"
+              onChange={() => setRestrictBounds(!restrictBounds)}
+            />
+          }
+          label={<FormattedMessage id="embedder.options.label.bbox" />}
+        />
+      </StyledMapControlContainer>
+    ),
+    [restrictBounds]
+  );
 
   const renderMarkerOptionsControl = () => {
     const controls = [
       {
         key: 'units',
         value: showUnits,
-        onChange: v => setShowUnits(v),
+        onChange: (v) => setShowUnits(v),
         icon: null,
         labelId: 'embedder.options.label.units',
       },
       {
         key: 'transit',
         value: transit,
-        onChange: v => setTransit(v),
+        onChange: (v) => setTransit(v),
         icon: null,
         labelId: 'embedder.options.label.transit',
       },
@@ -530,20 +572,31 @@ const EmbedderView = () => {
   };
 
   /**
- * Render unit list controls
- */
+   * Render unit list controls
+   */
   const renderListOptionsControl = () => {
     const controls = [
-      { label: intl.formatMessage({ id: 'embedder.options.label.list.none' }), value: 'none' },
-      { label: intl.formatMessage({ id: 'embedder.options.label.list.side' }), value: 'side' },
-      { label: intl.formatMessage({ id: 'embedder.options.label.list.bottom' }), value: 'bottom' },
+      {
+        label: intl.formatMessage({ id: 'embedder.options.label.list.none' }),
+        value: 'none',
+      },
+      {
+        label: intl.formatMessage({ id: 'embedder.options.label.list.side' }),
+        value: 'side',
+      },
+      {
+        label: intl.formatMessage({ id: 'embedder.options.label.list.bottom' }),
+        value: 'bottom',
+      },
     ];
 
     return (
       <EmbedController
         titleID="embedder.options.list.title"
         titleComponent="h2"
-        radioAriaLabel={intl.formatMessage({ id: 'embedder.options.list.title' })}
+        radioAriaLabel={intl.formatMessage({
+          id: 'embedder.options.list.title',
+        })}
         radioName="unitList"
         radioValue={showUnitList}
         radioControls={controls}
@@ -568,9 +621,7 @@ const EmbedderView = () => {
     <>
       <TopBar smallScreen={false} hideButtons />
       <div ref={dialogRef}>
-        {
-          renderHeadInfo()
-        }
+        {renderHeadInfo()}
         <StyledContainer>
           <StyledTitleContainer>
             <StyledCloseButton
@@ -594,41 +645,26 @@ const EmbedderView = () => {
                 <FormattedMessage id="embedder.info.title" />
               </StyledInfoTitle>
               <StyledInfoText align="left">
-                <FormattedMessage id="embedder.info.description" />
-                {' '}
-                <Link underline="always" href={documentationLink} target="_blank">
+                <FormattedMessage id="embedder.info.description" />{' '}
+                <Link
+                  underline="always"
+                  href={documentationLink}
+                  target="_blank"
+                >
                   <FormattedMessage id="embedder.info.link" />
                 </Link>
               </StyledInfoText>
               <br />
               <form>
-                {
-                renderLanguageControl()
-              }
-                {
-                renderServiceControl()
-              }
-                {
-                renderMapTypeControl()
-              }
-                {
-                renderCityControl()
-              }
-              {
-                renderOrganizationControl()
-              }
-                {
-                renderWidthControl()
-              }
-                {
-                renderHeightControl()
-              }
-                {
-                renderMarkerOptionsControl()
-              }
-                {
-                renderListOptionsControl()
-              }
+                {renderLanguageControl()}
+                {renderServiceControl()}
+                {renderMapTypeControl()}
+                {renderCityControl()}
+                {renderOrganizationControl()}
+                {renderWidthControl()}
+                {renderHeightControl()}
+                {renderMarkerOptionsControl()}
+                {renderListOptionsControl()}
               </form>
             </StyledFormContainer>
 
@@ -670,7 +706,7 @@ const EmbedderView = () => {
       </div>
     </>
   );
-};
+}
 const StyledMapControlContainer = styled('div')(() => ({
   display: 'flex',
   flexDirection: 'column',

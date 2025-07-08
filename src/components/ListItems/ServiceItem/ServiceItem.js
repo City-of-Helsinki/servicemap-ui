@@ -1,23 +1,22 @@
-import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-import { useDispatch, useSelector } from 'react-redux';
 import { css } from '@emotion/css';
+import PropTypes from 'prop-types';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { setNewCurrentService } from '../../../redux/actions/services';
 import { selectNavigator } from '../../../redux/selectors/general';
 import { selectServiceCurrent } from '../../../redux/selectors/service';
-import { getIcon } from '../../SMIcon';
 import { uppercaseFirst } from '../../../utils';
-import SimpleListItem from '../SimpleListItem';
 import useLocaleText from '../../../utils/useLocaleText';
-import { setNewCurrentService } from '../../../redux/actions/services';
+import { getIcon } from '../../SMIcon';
+import SimpleListItem from '../SimpleListItem';
 
-const ServiceItem = (props) => {
-  const {
-    service,
-    divider = true,
-    link = true,
-  } = props;
+function ServiceItem(props) {
+  const { service, divider = true, link = true } = props;
   const navigator = useSelector(selectNavigator);
-  const [icon, setIcon] = useState(<img alt="" src={null} style={{ height: 24 }} aria-hidden="true" />);
+  const [icon, setIcon] = useState(
+    <img alt="" src={null} style={{ height: 24 }} aria-hidden="true" />
+  );
   const getLocaleText = useLocaleText();
   const dispatch = useDispatch();
   const currentService = useSelector(selectServiceCurrent);
@@ -35,19 +34,20 @@ const ServiceItem = (props) => {
     text += `: ${getLocaleText(service.clarification)}`;
   }
 
-  const onClick = link ? (e) => {
-    e.preventDefault();
+  const onClick = link
+    ? (e) => {
+        e.preventDefault();
 
-    if (!currentService || currentService.id !== service.id) {
-      dispatch(setNewCurrentService(service));
-    }
-    if (navigator) {
-      navigator.push('service', service.id);
-    }
-  } : null;
+        if (!currentService || currentService.id !== service.id) {
+          dispatch(setNewCurrentService(service));
+        }
+        if (navigator) {
+          navigator.push('service', service.id);
+        }
+      }
+    : null;
 
   const role = link ? 'link' : null;
-
 
   return (
     <SimpleListItem
@@ -60,7 +60,7 @@ const ServiceItem = (props) => {
       handleItemClick={onClick}
     />
   );
-};
+}
 
 export default ServiceItem;
 

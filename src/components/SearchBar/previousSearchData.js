@@ -6,7 +6,6 @@ const historyCount = 5;
 const nextUpdateKey = 'history:updated';
 const halfDay = 43200000; // Half day in milliseconds
 
-
 // Update weights every 5 days
 const updateWeights = (jsonData) => {
   const today = new Date();
@@ -30,7 +29,9 @@ const updateWeights = (jsonData) => {
         }
       });
     } catch (e) {
-      console.warn(`Error while updating previous search weights: ${e.message}`);
+      console.warn(
+        `Error while updating previous search weights: ${e.message}`
+      );
     }
 
     LocalStorageUtility.saveItem(nextUpdateKey, today.getTime() + halfDay * 10);
@@ -43,15 +44,19 @@ export const getPreviousSearches = () => {
 
   if (jsonHistory) {
     // Remove possible duplicates
-    const filteredHistory = jsonHistory.filter((obj, index, array) => (
-      index === array.findIndex(item => (
-        item.object_type === obj.object_type
-        && item.searchText?.toLowerCase() === obj.searchText?.toLowerCase()))
-    ));
+    const filteredHistory = jsonHistory.filter(
+      (obj, index, array) =>
+        index ===
+        array.findIndex(
+          (item) =>
+            item.object_type === obj.object_type &&
+            item.searchText?.toLowerCase() === obj.searchText?.toLowerCase()
+        )
+    );
 
     // Sort history
     const sortedHistory = filteredHistory.sort(
-      (a, b) => b.weightedLastSearch - a.weightedLastSearch,
+      (a, b) => b.weightedLastSearch - a.weightedLastSearch
     );
     return sortedHistory.slice(0, historyCount);
   }
@@ -73,10 +78,11 @@ export const saveSearchToHistory = (searchText, searchItem) => {
     jsonData = toJson(data);
   }
 
-  const current = jsonData.find(item => (
-    item.searchText?.toLowerCase() === searchText.toLowerCase()
-    && item.object_type === searchItem.object_type
-  ));
+  const current = jsonData.find(
+    (item) =>
+      item.searchText?.toLowerCase() === searchText.toLowerCase() &&
+      item.object_type === searchItem.object_type
+  );
 
   if (!current) {
     // Add new item to search history
@@ -88,12 +94,13 @@ export const saveSearchToHistory = (searchText, searchItem) => {
     });
   } else {
     // Update previously searched item weights
-    const searchWeight = (current.weight > 0
-      ? today.getTime() + current.weight * halfDay
-      : today.getTime()
-    );
+    const searchWeight =
+      current.weight > 0
+        ? today.getTime() + current.weight * halfDay
+        : today.getTime();
     current.weightedLastSearch = searchWeight;
-    current.weight = typeof current.weight === 'number' ? current.weight + 1 : 1;
+    current.weight =
+      typeof current.weight === 'number' ? current.weight + 1 : 1;
   }
 
   updateWeights(jsonData);
@@ -109,11 +116,13 @@ export const removeSearchFromHistory = (suggestion, callback) => {
   }
 
   // Remove matching item from history
-  jsonData = jsonData.filter(item => (
-    !(item.searchText === suggestion.searchText
-      && item.object_type === suggestion.object_type
-    )
-  ));
+  jsonData = jsonData.filter(
+    (item) =>
+      !(
+        item.searchText === suggestion.searchText &&
+        item.object_type === suggestion.object_type
+      )
+  );
 
   LocalStorageUtility.saveItem(key, JSON.stringify(jsonData));
 

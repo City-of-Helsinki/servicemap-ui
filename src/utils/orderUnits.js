@@ -1,4 +1,5 @@
 import { useSelector } from 'react-redux';
+
 import { getLocaleString } from '../redux/selectors/locale';
 import getSortingParameters from '../redux/selectors/ordering';
 import { calculateDistance } from '../redux/selectors/unit';
@@ -6,7 +7,11 @@ import UnitHelper from './unitHelper';
 
 export const orderUnits = (unitData, sortingParameters) => {
   const {
-    usedPosition, direction, order, locale, selectedAccessibilitySettings,
+    usedPosition,
+    direction,
+    order,
+    locale,
+    selectedAccessibilitySettings,
   } = sortingParameters;
 
   let results = Array.from(unitData);
@@ -15,13 +20,18 @@ export const orderUnits = (unitData, sortingParameters) => {
     // Accessibility
     case 'accessibility': {
       // Exclude other result types than units from accessibility sorting.
-      const unitResults = results.filter(result => result.object_type === 'unit');
-      const otherResults = results.filter(result => result.object_type !== 'unit');
+      const unitResults = results.filter(
+        (result) => result.object_type === 'unit'
+      );
+      const otherResults = results.filter(
+        (result) => result.object_type !== 'unit'
+      );
 
       unitResults.forEach((element) => {
         // eslint-disable-next-line no-param-reassign
         element.shorcomingCount = UnitHelper.getShortcomingCount(
-          element, selectedAccessibilitySettings,
+          element,
+          selectedAccessibilitySettings
         );
       });
       unitResults.sort((a, b) => {
@@ -42,15 +52,24 @@ export const orderUnits = (unitData, sortingParameters) => {
     // Alphabetical ordering
     case 'alphabetical': {
       // Exclude addressess from alphabetical ordering (addresses should only use the default order)
-      const addressResults = results.filter(result => result.object_type === 'address');
-      const otherResults = results.filter(result => result.object_type !== 'address');
+      const addressResults = results.filter(
+        (result) => result.object_type === 'address'
+      );
+      const otherResults = results.filter(
+        (result) => result.object_type !== 'address'
+      );
 
       otherResults.sort((a, b) => {
-        if (a.object_type === 'address' || b.object_type === 'address') return 0;
+        if (a.object_type === 'address' || b.object_type === 'address')
+          return 0;
         const x = getLocaleString(locale, a.name).toLowerCase();
         const y = getLocaleString(locale, b.name).toLowerCase();
-        if (x > y) { return -1; }
-        if (x < y) { return 1; }
+        if (x > y) {
+          return -1;
+        }
+        if (x < y) {
+          return 1;
+        }
         return 0;
       });
 
@@ -64,8 +83,10 @@ export const orderUnits = (unitData, sortingParameters) => {
       break;
     }
     case 'distance': {
-      const unitsWithoutLocation = results.filter(unit => unit.location === null);
-      const filteredList = results.filter(unit => unit.location !== null);
+      const unitsWithoutLocation = results.filter(
+        (unit) => unit.location === null
+      );
+      const filteredList = results.filter((unit) => unit.location !== null);
       filteredList.sort((a, b) => {
         const aDistance = calculateDistance(a, usedPosition);
         const bDistance = calculateDistance(b, usedPosition);
@@ -80,7 +101,11 @@ export const orderUnits = (unitData, sortingParameters) => {
     // Ordering based on match score
     case 'match': {
       // Using sort_index with assumption that default sort from API is relevance
-      results.sort((a, b) => (direction === 'asc' ? b.sort_index - a.sort_index : a.sort_index - b.sort_index));
+      results.sort((a, b) =>
+        direction === 'asc'
+          ? b.sort_index - a.sort_index
+          : a.sort_index - b.sort_index
+      );
       break;
     }
     default:

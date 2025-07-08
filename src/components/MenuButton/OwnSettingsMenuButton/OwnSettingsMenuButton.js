@@ -1,6 +1,7 @@
-import React from 'react';
 import { AccountCircle } from '@mui/icons-material';
 import PropTypes from 'prop-types';
+import React from 'react';
+
 import SettingsDropdowns from '../../SettingsDropdowns';
 import MenuButton from '../MenuButton';
 
@@ -23,7 +24,6 @@ class OwnSettingsMenuButton extends React.Component {
     );
   }
 }
-
 
 OwnSettingsMenuButton.propTypes = {
   buttonText: PropTypes.string.isRequired,

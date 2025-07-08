@@ -1,10 +1,11 @@
 // CloseSuggestionButton.test.js
-import React from 'react';
-import { fireEvent } from '@testing-library/react';
 import { ArrowDownward } from '@mui/icons-material';
-import { CloseSuggestionButton } from '../CloseSuggestionButton';
+import { fireEvent } from '@testing-library/react';
+import React from 'react';
+
 import { getRenderWithProviders } from '../../../../../jestUtils';
 import englishTranslations from '../../../../i18n/en';
+import { CloseSuggestionButton } from '../CloseSuggestionButton';
 
 // Generic required props for ResultItem
 const mockProps = {
@@ -19,7 +20,9 @@ const renderWithProviders = getRenderWithProviders({});
 
 describe('<CloseSuggestionButton />', () => {
   it('should work', () => {
-    const { container } = renderWithProviders(<CloseSuggestionButton {...mockProps} />);
+    const { container } = renderWithProviders(
+      <CloseSuggestionButton {...mockProps} />
+    );
     expect(container).toMatchSnapshot();
   });
 
@@ -38,8 +41,12 @@ describe('<CloseSuggestionButton />', () => {
     const { getAllByRole } = renderWithProviders(
       <>
         <CloseSuggestionButton {...mockProps} onKeyDown={mockCallBack} />
-        <CloseSuggestionButton {...mockProps} onKeyPress={mockCallBack} srOnly />
-      </>,
+        <CloseSuggestionButton
+          {...mockProps}
+          onKeyPress={mockCallBack}
+          srOnly
+        />
+      </>
     );
 
     fireEvent.keyDown(getAllByRole('button')[0], {
@@ -74,9 +81,13 @@ describe('<CloseSuggestionButton />', () => {
   });
 
   it('does show text correctly', () => {
-    const { container } = renderWithProviders(<CloseSuggestionButton {...mockProps} />);
+    const { container } = renderWithProviders(
+      <CloseSuggestionButton {...mockProps} />
+    );
 
-    expect(container.querySelector('p')).toHaveTextContent(`${englishTranslations['search.suggestions.hideButton']}`);
+    expect(container.querySelector('p')).toHaveTextContent(
+      `${englishTranslations['search.suggestions.hideButton']}`
+    );
   });
 
   it('does use accessibility attributes correctly', () => {
@@ -85,7 +96,7 @@ describe('<CloseSuggestionButton />', () => {
       <>
         <CloseSuggestionButton {...mockProps} />
         <CloseSuggestionButton {...mockProps} srOnly />
-      </>,
+      </>
     );
 
     expect(getAllByRole('button')[0]).toHaveAttribute('role', 'button');

@@ -4,13 +4,14 @@ import { useTheme } from '@mui/styles';
 import React, { useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
+
 import { selectSelectedParkingAreas } from '../../../../redux/selectors/district';
 import useLocaleText from '../../../../utils/useLocaleText';
 import swapCoordinates from '../../utils/swapCoordinates';
 import { StyledAreaPopup } from '../styled/styled';
 
 // This component renders parking areas to map
-const ParkingAreas = () => {
+function ParkingAreas() {
   const { Polygon, Tooltip, Popup } = global.rL;
 
   const getLocaleText = useLocaleText();
@@ -22,18 +23,40 @@ const ParkingAreas = () => {
   const createPopup = (area, e) => {
     e.originalEvent.view.L.DomEvent.stopPropagation(e);
     const extraData = area.extra;
-    const generateTextContent = texts => (
+    const generateTextContent = (texts) => (
       <List>
-        {texts.map(text => <ListItem key={text}><Typography>{text}</Typography></ListItem>)}
+        {texts.map((text) => (
+          <ListItem key={text}>
+            <Typography>{text}</Typography>
+          </ListItem>
+        ))}
       </List>
     );
 
     function helsinkiTexts() {
       return [
-        intl.formatMessage({ id: `parkingArea.popup.payment${extraData.class}` }),
-        ...(extraData.max_duration ? [intl.formatMessage({ id: `parkingArea.popup.duration${extraData.class}` }, { duration: extraData.max_duration })] : []),
-        ...(extraData.validity_period ? [intl.formatMessage({ id: `parkingArea.popup.validity${extraData.class}` }, { validity: extraData.validity_period })] : []),
-        ...(extraData.class === '5' ? [intl.formatMessage({ id: 'parkingArea.popup.duration5' })] : []),
+        intl.formatMessage({
+          id: `parkingArea.popup.payment${extraData.class}`,
+        }),
+        ...(extraData.max_duration
+          ? [
+              intl.formatMessage(
+                { id: `parkingArea.popup.duration${extraData.class}` },
+                { duration: extraData.max_duration }
+              ),
+            ]
+          : []),
+        ...(extraData.validity_period
+          ? [
+              intl.formatMessage(
+                { id: `parkingArea.popup.validity${extraData.class}` },
+                { validity: extraData.validity_period }
+              ),
+            ]
+          : []),
+        ...(extraData.class === '5'
+          ? [intl.formatMessage({ id: 'parkingArea.popup.duration5' })]
+          : []),
         intl.formatMessage({ id: 'parkingArea.popup.info' }),
         intl.formatMessage({ id: `parkingArea.popup.info${extraData.class}` }),
       ];
@@ -41,18 +64,44 @@ const ParkingAreas = () => {
 
     function vantaaTexts() {
       return [
-        intl.formatMessage({ id: 'parkingArea.popup.vantaa.neighbourhood' }, { value: extraData.kaupunginosa }),
-        intl.formatMessage({ id: 'parkingArea.popup.vantaa.name' }, { value: extraData.katu }),
-        intl.formatMessage({ id: 'parkingArea.popup.vantaa.places' }, { value: extraData['paikkamäärä'] }),
-        intl.formatMessage({ id: 'parkingArea.popup.vantaa.type' }, { value: extraData.tyyppi }),
-        intl.formatMessage({ id: 'parkingArea.popup.vantaa.timeRestriction' }, { value: extraData.aikarajoitus }),
-        intl.formatMessage({ id: 'parkingArea.popup.vantaa.validityPeriod' }, { value: extraData.voimassaoloaika }),
-        intl.formatMessage({ id: 'parkingArea.popup.vantaa.moreInfo' }, { value: extraData['lisätiedot'] }),
-        intl.formatMessage({ id: 'parkingArea.popup.vantaa.circlePlace' }, { value: extraData.kiekkopaikka }),
+        intl.formatMessage(
+          { id: 'parkingArea.popup.vantaa.neighbourhood' },
+          { value: extraData.kaupunginosa }
+        ),
+        intl.formatMessage(
+          { id: 'parkingArea.popup.vantaa.name' },
+          { value: extraData.katu }
+        ),
+        intl.formatMessage(
+          { id: 'parkingArea.popup.vantaa.places' },
+          { value: extraData['paikkamäärä'] }
+        ),
+        intl.formatMessage(
+          { id: 'parkingArea.popup.vantaa.type' },
+          { value: extraData.tyyppi }
+        ),
+        intl.formatMessage(
+          { id: 'parkingArea.popup.vantaa.timeRestriction' },
+          { value: extraData.aikarajoitus }
+        ),
+        intl.formatMessage(
+          { id: 'parkingArea.popup.vantaa.validityPeriod' },
+          { value: extraData.voimassaoloaika }
+        ),
+        intl.formatMessage(
+          { id: 'parkingArea.popup.vantaa.moreInfo' },
+          { value: extraData['lisätiedot'] }
+        ),
+        intl.formatMessage(
+          { id: 'parkingArea.popup.vantaa.circlePlace' },
+          { value: extraData.kiekkopaikka }
+        ),
       ];
     }
 
-    const textContent = generateTextContent(area.municipality === 'vantaa' ? vantaaTexts() : helsinkiTexts());
+    const textContent = generateTextContent(
+      area.municipality === 'vantaa' ? vantaaTexts() : helsinkiTexts()
+    );
 
     setAreaPopup({
       position: e.latlng,
@@ -113,31 +162,49 @@ const ParkingAreas = () => {
   function getHelsinkiTooltipText(extraData) {
     const messages = [
       intl.formatMessage({ id: `parkingArea.popup.payment${extraData.class}` }),
-      extraData.max_duration ? intl.formatMessage({ id: `parkingArea.popup.duration${extraData.class}` }, { duration: extraData.max_duration }) : '',
-      extraData.validity_period ? intl.formatMessage({ id: `parkingArea.popup.validity${extraData.class}` }, { validity: extraData.validity_period }) : '',
-      extraData.class === '5' ? intl.formatMessage({ id: 'parkingArea.popup.duration5' }) : ''
+      extraData.max_duration
+        ? intl.formatMessage(
+            { id: `parkingArea.popup.duration${extraData.class}` },
+            { duration: extraData.max_duration }
+          )
+        : '',
+      extraData.validity_period
+        ? intl.formatMessage(
+            { id: `parkingArea.popup.validity${extraData.class}` },
+            { validity: extraData.validity_period }
+          )
+        : '',
+      extraData.class === '5'
+        ? intl.formatMessage({ id: 'parkingArea.popup.duration5' })
+        : '',
     ];
-    return messages.filter(message => message).join(' - ');
+    return messages.filter((message) => message).join(' - ');
   }
 
   function resolveTooltipText(area) {
     const type = area?.type;
     if (type === 'park_and_ride_area') {
-      return intl.formatMessage({ id: 'area.parking.tooltip.park_and_ride_area' });
+      return intl.formatMessage({
+        id: 'area.parking.tooltip.park_and_ride_area',
+      });
     }
     if (type === 'hgv_no_parking_area') {
-      return intl.formatMessage({ id: 'area.parking.tooltip.hgv_no_parking_area' });
+      return intl.formatMessage({
+        id: 'area.parking.tooltip.hgv_no_parking_area',
+      });
     }
     if (type === 'hgv_street_parking_area' || type === 'hgv_parking_area') {
-      return `${area.extra?.area_key ?? ''}${getLocaleText(area.name)} - ${intl.formatMessage({ id: 'area.list.heavy_traffic' })}`;
+      return (
+        `${area.extra?.area_key ?? ''}${getLocaleText(area.name)} - ` +
+        intl.formatMessage({ id: 'area.list.heavy_traffic' })
+      );
     }
     if (area.name) {
       if (area.municipality === 'helsinki') {
         return getHelsinkiTooltipText(area.extra);
-      } else {
-        const translationKey = `area.list.${type}`;
-        return `${area.extra?.area_key ?? ''}${getLocaleText(area.name)} - ${intl.formatMessage({ id: translationKey })}`;
       }
+      const translationKey = `area.list.${type}`;
+      return `${area.extra?.area_key ?? ''}${getLocaleText(area.name)} - ${intl.formatMessage({ id: translationKey })}`;
     }
     return null;
   }
@@ -146,8 +213,8 @@ const ParkingAreas = () => {
     <>
       {selectedAreas.map((area) => {
         const mainColor = getColor(area);
-        const boundary = area.boundary.coordinates.map(
-          coords => swapCoordinates(coords),
+        const boundary = area.boundary.coordinates.map((coords) =>
+          swapCoordinates(coords)
         );
         const tooltipText = resolveTooltipText(area);
         return (
@@ -174,20 +241,20 @@ const ParkingAreas = () => {
             }}
           >
             {tooltipText && (
-              <Tooltip sticky direction="top" autoPan={false}>{tooltipText}</Tooltip>
+              <Tooltip sticky direction="top" autoPan={false}>
+                {tooltipText}
+              </Tooltip>
             )}
           </Polygon>
         );
       })}
       {areaPopup?.textContent ? (
         <Popup onClose={() => setAreaPopup(null)} position={areaPopup.position}>
-          <StyledAreaPopup>
-            {areaPopup.textContent}
-          </StyledAreaPopup>
+          <StyledAreaPopup>{areaPopup.textContent}</StyledAreaPopup>
         </Popup>
       ) : null}
     </>
   );
-};
+}
 
 export default ParkingAreas;

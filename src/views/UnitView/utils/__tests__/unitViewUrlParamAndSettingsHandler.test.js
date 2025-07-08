@@ -12,15 +12,21 @@ describe('parseUnitViewUrlParams', () => {
   });
 
   it('Should reset mobility setting on empty param', () => {
-    baseTest('?search=aaa&city=helsinki&mobility=', [{ setting: 'mobility', value: null }]);
+    baseTest('?search=aaa&city=helsinki&mobility=', [
+      { setting: 'mobility', value: null },
+    ]);
   });
 
   it('Should reset senses setting on empty param', () => {
-    baseTest('?senses=&fooz=accessible_map', [{ setting: 'senses', value: null }]);
+    baseTest('?senses=&fooz=accessible_map', [
+      { setting: 'senses', value: null },
+    ]);
   });
 
   it('Should act on mobility param', () => {
-    baseTest('?search=aaa&city=helsinki&mobility=rollator', [{ setting: 'mobility', value: 'rollator' }]);
+    baseTest('?search=aaa&city=helsinki&mobility=rollator', [
+      { setting: 'mobility', value: 'rollator' },
+    ]);
   });
 
   it('Should act on senses param', () => {
@@ -37,11 +43,14 @@ describe('parseUnitViewUrlParams', () => {
   });
 
   it('Should act on mobility and senses params 1', () => {
-    baseTest('?senses=colorblind%2ChearingAid&fooz=accessible_map&mobility=stroller', [
-      { setting: 'mobility', value: 'stroller' },
-      { setting: 'senses', value: 'colorblind' },
-      { setting: 'senses', value: 'hearingAid' },
-    ]);
+    baseTest(
+      '?senses=colorblind%2ChearingAid&fooz=accessible_map&mobility=stroller',
+      [
+        { setting: 'mobility', value: 'stroller' },
+        { setting: 'senses', value: 'colorblind' },
+        { setting: 'senses', value: 'hearingAid' },
+      ]
+    );
   });
 
   it('Should act on mobility and senses params 2', () => {
@@ -71,6 +80,8 @@ describe('parseUnitViewUrlParams', () => {
   });
 
   it('Should act on map param', () => {
-    baseTest('?map=guidemap&search=safdf', [{ setting: 'mapType', value: 'guidemap' }]);
+    baseTest('?map=guidemap&search=safdf', [
+      { setting: 'mapType', value: 'guidemap' },
+    ]);
   });
 });
