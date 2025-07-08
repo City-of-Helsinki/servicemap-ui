@@ -1,4 +1,4 @@
-export const setTracker = tracker => ({
+export const setTracker = (tracker) => ({
   type: 'SET_TRACKER',
   tracker,
 });

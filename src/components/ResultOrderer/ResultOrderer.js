@@ -1,20 +1,16 @@
 /* eslint-disable no-underscore-dangle */
+import styled from '@emotion/styled';
+import { Tune } from '@mui/icons-material';
+import { FormControl, ListItem, TextField, Typography } from '@mui/material';
 import PropTypes from 'prop-types';
 import React, { useEffect, useRef, useState } from 'react';
-import {
-  FormControl, ListItem, TextField, Typography,
-} from '@mui/material';
-import { Tune } from '@mui/icons-material';
-import styled from '@emotion/styled';
 import { useSelector } from 'react-redux';
-import { selectSelectedAccessibilitySettings } from '../../redux/selectors/settings';
-import SMAutocomplete from '../SMAutocomplete';
-import { keyboardHandler } from '../../utils';
 
-const allowedDirections = [
-  'asc',
-  'desc',
-];
+import { selectSelectedAccessibilitySettings } from '../../redux/selectors/settings';
+import { keyboardHandler } from '../../utils';
+import SMAutocomplete from '../SMAutocomplete';
+
+const allowedDirections = ['asc', 'desc'];
 
 const allowedOrders = [
   // 'match',
@@ -31,7 +27,7 @@ const allowedInitialValues = [
   'distance-asc',
 ];
 
-const ResultOrderer = ({
+function ResultOrderer({
   initialOrder = null,
   direction,
   intl,
@@ -40,14 +36,17 @@ const ResultOrderer = ({
   setDirection,
   setOrder,
   userLocation = null,
-}) => {
-  const accessibiliySettingsLength = useSelector(selectSelectedAccessibilitySettings).length;
+}) {
+  const accessibiliySettingsLength = useSelector(
+    selectSelectedAccessibilitySettings
+  ).length;
   const [openSettings, setOpenSettings] = useState(false);
   const [selectedOption, setSelectedOption] = useState({ direction, order });
   const highlightedOption = useRef(null);
-  const isValidDirection = direction => direction && allowedDirections.indexOf(direction) > -1;
+  const isValidDirection = (direction) =>
+    direction && allowedDirections.indexOf(direction) > -1;
 
-  const isValidOrder = order => order && allowedOrders.indexOf(order) > -1;
+  const isValidOrder = (order) => order && allowedOrders.indexOf(order) > -1;
 
   useEffect(() => {
     if (initialOrder) {
@@ -95,24 +94,43 @@ const ResultOrderer = ({
   };
 
   const options = [
-    { id: 'alphabetical-desc', title: intl.formatMessage({ id: 'sorting.alphabetical.desc' }) },
-    { id: 'alphabetical-asc', title: intl.formatMessage({ id: 'sorting.alphabetical.asc' }) },
-    { id: 'accessibility-desc', title: intl.formatMessage({ id: 'sorting.accessibility.desc' }) },
+    {
+      id: 'alphabetical-desc',
+      title: intl.formatMessage({ id: 'sorting.alphabetical.desc' }),
+    },
+    {
+      id: 'alphabetical-asc',
+      title: intl.formatMessage({ id: 'sorting.alphabetical.asc' }),
+    },
+    {
+      id: 'accessibility-desc',
+      title: intl.formatMessage({ id: 'sorting.accessibility.desc' }),
+    },
   ];
   if (userLocation) {
-    options.push({ id: 'distance-asc', title: intl.formatMessage({ id: 'sorting.distance.asc' }) });
+    options.push({
+      id: 'distance-asc',
+      title: intl.formatMessage({ id: 'sorting.distance.asc' }),
+    });
   }
 
-
   const getValue = () => {
-    const selectedOption = options.find(option => option.id === selectedOptionId);
+    const selectedOption = options.find(
+      (option) => option.id === selectedOptionId
+    );
     return selectedOption?.title;
   };
 
   return (
     <StyledForm autoComplete="off">
       <StyledFormControl>
-        <div style={{ display: 'flex', width: '100%', borderBottom: 'solid 1px white' }}>
+        <div
+          style={{
+            display: 'flex',
+            width: '100%',
+            borderBottom: 'solid 1px white',
+          }}
+        >
           <StyledTune />
           <div style={{ display: 'flex', width: '100%' }}>
             <StyledAutocomplete
@@ -123,19 +141,25 @@ const ResultOrderer = ({
               multiple={false}
               openText={intl.formatMessage({ id: 'settings.open' })}
               closeText={intl.formatMessage({ id: 'settings.close' })}
-              onKeyDown={keyboardHandler(e => handleKeyboardSelect(e), ['space', 'enter', 'up', 'down'])}
+              onKeyDown={keyboardHandler(
+                (e) => handleKeyboardSelect(e),
+                ['space', 'enter', 'up', 'down']
+              )}
               onHighlightChange={(e, option) => {
                 highlightedOption.current = option;
               }}
               options={options}
               clearIcon={null}
               value={getValue()}
-              isOptionEqualToValue={option => selectedOptionId === option.id}
+              isOptionEqualToValue={(option) => selectedOptionId === option.id}
               disableCloseOnSelect={false}
-              getOptionLabel={option => option.title || option}
+              getOptionLabel={(option) => option.title || option}
               ChipProps={{ clickable: true, onDelete: null }}
               renderOption={(props, option) => (
-                <ListItem {...props} onClick={() => handleOptionSelecting(option.id)}>
+                <ListItem
+                  {...props}
+                  onClick={() => handleOptionSelecting(option.id)}
+                >
                   <Typography>{option.title}</Typography>
                 </ListItem>
               )}
@@ -161,7 +185,7 @@ const ResultOrderer = ({
       </StyledFormControl>
     </StyledForm>
   );
-};
+}
 
 ResultOrderer.propTypes = {
   initialOrder: PropTypes.oneOf(allowedInitialValues),

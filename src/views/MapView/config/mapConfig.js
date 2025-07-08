@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 import config from '../../../../config';
-import {isRetina} from '../../../utils';
+import { isRetina } from '../../../utils';
 
 // The default maximum bounds of the map
 const defaultMapBounds = {
@@ -31,23 +31,43 @@ const tileLayers = {
   // These define the options for the different map projections
   guideMapLayer: {
     crsName: 'EPSG:3879',
-    projDef: '+proj=tmerc +lat_0=0 +lon_0=25 +k=1 +x_0=25500000 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs',
-    boundPoints: [[24451424, 6291456], [26548576, 8388608]],
-    resolutions: [8192, 4096, 2048, 1024, 512, 256, 128, 64, 32, 16, 8, 4, 2, 1, 0.5, 0.25, 0.125, 0.0625],
+    projDef:
+      '+proj=tmerc +lat_0=0 +lon_0=25 +k=1 +x_0=25500000 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs',
+    boundPoints: [
+      [24451424, 6291456],
+      [26548576, 8388608],
+    ],
+    resolutions: [
+      8192, 4096, 2048, 1024, 512, 256, 128, 64, 32, 16, 8, 4, 2, 1, 0.5, 0.25,
+      0.125, 0.0625,
+    ],
     origin: [24451424, 8388608],
   },
   plainMapLayer: {
     crsName: 'EPSG:3067',
-    projDef: '+proj=utm +zone=35 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs +type=crs',
-    boundPoints: [[-548576, 6291456], [1548576, 8388608]],
-    resolutions: [8192, 4096, 2048, 1024, 512, 256, 128, 64, 32, 16, 8, 4, 2, 1, 0.5, 0.25, 0.125, 0.0625],
+    projDef:
+      '+proj=utm +zone=35 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs +type=crs',
+    boundPoints: [
+      [-548576, 6291456],
+      [1548576, 8388608],
+    ],
+    resolutions: [
+      8192, 4096, 2048, 1024, 512, 256, 128, 64, 32, 16, 8, 4, 2, 1, 0.5, 0.25,
+      0.125, 0.0625,
+    ],
     origin: [-548576, 8388608],
   },
   orthoImageLayer: {
     crsName: 'EPSG:3879',
-    projDef: '+proj=tmerc +lat_0=0 +lon_0=25 +k=1 +x_0=25500000 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs',
-    boundPoints: [[25472049, 6647388], [25537585, 7695964]],
-    resolutions: [256, 128, 64, 32, 16, 8, 4, 2, 1, 0.5, 0.25, 0.125, 0.0625, 0.03125],
+    projDef:
+      '+proj=tmerc +lat_0=0 +lon_0=25 +k=1 +x_0=25500000 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs',
+    boundPoints: [
+      [25472049, 6647388],
+      [25537585, 7695964],
+    ],
+    resolutions: [
+      256, 128, 64, 32, 16, 8, 4, 2, 1, 0.5, 0.25, 0.125, 0.0625, 0.03125,
+    ],
     origin: [25472049, 7646428],
   },
   // tms35 not used currently
@@ -150,11 +170,17 @@ const mapTypes = {
   },
 };
 
-const setHelsinkiMaptilesUrl = function getHelsinkiMaptilesOptions(mapOptions, suffix, locale) {
+const setHelsinkiMaptilesUrl = function getHelsinkiMaptilesOptions(
+  mapOptions,
+  suffix,
+  locale
+) {
   const styleLanguage = ['fi', 'sv'].includes(locale) ? locale : 'fi';
-  mapOptions.url = mapOptions.urlTemplate.replace(/{language}/, styleLanguage).replace(/{suffix}/, suffix);
+  mapOptions.url = mapOptions.urlTemplate
+    .replace(/{language}/, styleLanguage)
+    .replace(/{suffix}/, suffix);
   return mapOptions;
-}
+};
 
 const getMapOptions = (type, locale) => {
   const mapOptions = mapTypes[type] || mapTypes.servicemap;
@@ -194,9 +220,4 @@ const getMapOptions = (type, locale) => {
 
 const transitIconSize = 30;
 
-export {
-  mapOptions,
-  mapTypes,
-  getMapOptions,
-  transitIconSize,
-};
+export { getMapOptions, mapOptions, mapTypes, transitIconSize };

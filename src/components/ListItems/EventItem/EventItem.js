@@ -1,20 +1,21 @@
 /* eslint-disable camelcase */
-import React from 'react';
-import PropTypes from 'prop-types';
 import { Event } from '@mui/icons-material';
 import { NoSsr } from '@mui/material';
-import ResultItem from '../ResultItem';
-import useLocaleText from '../../../utils/useLocaleText';
-import formatEventDate from '../../../utils/events';
+import PropTypes from 'prop-types';
+import React from 'react';
 
-const EventItem = ({
+import formatEventDate from '../../../utils/events';
+import useLocaleText from '../../../utils/useLocaleText';
+import ResultItem from '../ResultItem';
+
+function EventItem({
   changeSelectedEvent,
   event,
   intl,
   navigator = null,
   simpleItem = false,
   divider = true,
-}) => {
+}) {
   const getLocaleText = useLocaleText();
   const dateString = formatEventDate(event, intl);
 
@@ -62,7 +63,7 @@ const EventItem = ({
       />
     </NoSsr>
   );
-};
+}
 
 export default EventItem;
 

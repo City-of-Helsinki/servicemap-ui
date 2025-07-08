@@ -2,17 +2,21 @@
 import styled from '@emotion/styled';
 import { Search } from '@mui/icons-material';
 import { List, Typography } from '@mui/material';
+import { visuallyHidden } from '@mui/utils';
+import { Checkbox as HDSCheckbox } from 'hds-react';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Checkbox as HDSCheckbox } from 'hds-react';
-import { visuallyHidden } from '@mui/utils';
+
 import config from '../../../config';
 import { SMAccordion, SMButton, TitleBar } from '../../components';
 import { setMobilityTree } from '../../redux/actions/mobilityTree';
 import { setServiceTree } from '../../redux/actions/serviceTree';
 import { selectNavigator } from '../../redux/selectors/general';
-import { selectSelectedCities, selectSelectedOrganizations } from '../../redux/selectors/settings';
+import {
+  selectSelectedCities,
+  selectSelectedOrganizations,
+} from '../../redux/selectors/settings';
 import {
   selectMobilityTreeOpened,
   selectMobilityTreeSelected,
@@ -28,7 +32,11 @@ import useLocaleText from '../../utils/useLocaleText';
 const SERVICE_TREE = 'ServiceTree';
 const MOBILITY_TREE = 'MobilityTree';
 
-const getVariantDependentVariables = (variant, serviceTreeServices, mobilityTreeServices) => {
+const getVariantDependentVariables = (
+  variant,
+  serviceTreeServices,
+  mobilityTreeServices
+) => {
   if (variant === SERVICE_TREE) {
     return {
       ...serviceTreeServices,
@@ -69,7 +77,11 @@ function ServiceTreeView({ intl, variant }) {
     prevServices,
     prevSelected,
     prevOpened,
-  } = getVariantDependentVariables(variant, serviceTreeServices, mobilityTreeServices);
+  } = getVariantDependentVariables(
+    variant,
+    serviceTreeServices,
+    mobilityTreeServices
+  );
 
   // State
   const [services, setServices] = useState(prevServices);
@@ -84,12 +96,14 @@ function ServiceTreeView({ intl, variant }) {
 
   const checkChildNodes = (node, nodes = []) => {
     // Find all visible child nodes, so they can be selected when the parent checkbox is selected
-    if (services.find(e => e.id === node.children[0])) {
-      const nodeObjects = node.children.map(child => services.find(e => e.id === child));
+    if (services.find((e) => e.id === node.children[0])) {
+      const nodeObjects = node.children.map((child) =>
+        services.find((e) => e.id === child)
+      );
       nodes.push(...nodeObjects);
       // Check if any child nodes are opened to repeat this function on them
-      nodeObjects.forEach(obj => {
-        if (obj?.id && opened.some(item => item === obj.id)) {
+      nodeObjects.forEach((obj) => {
+        if (obj?.id && opened.some((item) => item === obj.id)) {
           nodes.push(...checkChildNodes(obj));
         }
       });
@@ -98,33 +112,40 @@ function ServiceTreeView({ intl, variant }) {
     return [];
   };
 
-  const fetchRootNodes = () => (
+  const fetchRootNodes = () =>
     // Fetch all top level 0 nodes (root nodes)
     fetch(`${serviceApi}?level=0&page=1&page_size=100`)
-      .then(response => response.json())
-      .then(data => data.results)
-  );
+      .then((response) => response.json())
+      .then((data) => data.results);
 
   const fetchNodeCounts = async (nodes, fullSearch) => {
-    const idList = nodes.map(node => node.id);
+    const idList = nodes.map((node) => node.id);
     // Do not fetch unit counts again for nodes that have the data, unless specified by fullSearch
-    const filteredIdList = fullSearch ? idList : idList
-      .filter(id => !unitCounts.some(count => count.id === id));
+    const filteredIdList = fullSearch
+      ? idList
+      : idList.filter((id) => !unitCounts.some((count) => count.id === id));
 
     const smAPI = new ServiceMapAPI();
     const fetchOptions = {};
     if (organizationSettings.length) {
-      fetchOptions.organization = organizationSettings.map(setting => setting.id);
+      fetchOptions.organization = organizationSettings.map(
+        (setting) => setting.id
+      );
       fetchOptions.no_private_services = true;
     }
     if (citySettings.length) {
       fetchOptions.municipality = citySettings;
     }
     const counts = await Promise.all(
-      filteredIdList.map(async id => {
-        const count = await smAPI.serviceNodeSearch(variant, id, fetchOptions, true);
+      filteredIdList.map(async (id) => {
+        const count = await smAPI.serviceNodeSearch(
+          variant,
+          id,
+          fetchOptions,
+          true
+        );
         return { id, count };
-      }),
+      })
     );
     if (fullSearch) {
       setUnitCounts(counts);
@@ -135,27 +156,26 @@ function ServiceTreeView({ intl, variant }) {
 
   const setInitialServices = () => {
     // Fetch initially shown service nodes when first entering the pag
-    fetchRootNodes()
-      .then(data => {
-        setServices(data);
-        if (variant === SERVICE_TREE) {
-          fetchNodeCounts(data);
-        }
-      });
+    fetchRootNodes().then((data) => {
+      setServices(data);
+      if (variant === SERVICE_TREE) {
+        fetchNodeCounts(data);
+      }
+    });
   };
 
-  const fetchChildServices = async service => {
+  const fetchChildServices = async (service) => {
     // Fetch and set to state the child nodes of the opened node
     fetch(`${serviceApi}?parent=${service}&page=1&page_size=1000`)
-      .then(response => response.json())
-      .then(data => {
+      .then((response) => response.json())
+      .then((data) => {
         setServices([...services, ...data.results]);
         if (variant === SERVICE_TREE) {
           fetchNodeCounts(data.results);
         }
         // Expand the opened parent node once the child nodes have been fetched
         setOpened([...opened, service]);
-        if (selected.find(e => e.id === service)) {
+        if (selected.find((e) => e.id === service)) {
           setSelected([...selected, ...data.results]);
         }
       });
@@ -163,7 +183,9 @@ function ServiceTreeView({ intl, variant }) {
 
   const getSelectedParentNodes = (item, data = []) => {
     if (item.parent) {
-      const checkdedParent = selected.find(e => e.id === item.parent && e.name);
+      const checkdedParent = selected.find(
+        (e) => e.id === item.parent && e.name
+      );
       if (checkdedParent) {
         data.push(checkdedParent.id);
         if (checkdedParent.parent) {
@@ -181,39 +203,46 @@ function ServiceTreeView({ intl, variant }) {
     // Loop through each checked child node and their checked childs
     let child = item;
     if (typeof item === 'number') {
-      child = selected.find(e => e.id === item);
+      child = selected.find((e) => e.id === item);
     }
     if (child?.children) {
       data.push(...child.children);
-      child.children.forEach(c => {
+      child.children.forEach((c) => {
         getSelectedChildNodes(c, data);
       });
-    } return data;
+    }
+    return data;
   };
 
   const handleExpand = (service, isOpen) => {
-    if (isOpen) { // Close expanded item
-      setOpened(opened.filter(e => e !== service.id));
-    } else if (services.some(e => e.parent === service.id)) { // Expand item without fetching
+    if (isOpen) {
+      // Close expanded item
+      setOpened(opened.filter((e) => e !== service.id));
+    } else if (services.some((e) => e.parent === service.id)) {
+      // Expand item without fetching
       setOpened([...opened, service.id]);
-    } else { // Fetch child nodes then expand
+    } else {
+      // Fetch child nodes then expand
       fetchChildServices(service.id);
     }
   };
 
   const handleCheckboxClick = (e, item) => {
     // If checbox is already checked, remove checkbox selections
-    if (selected.some(element => element.id === item.id)) {
+    if (selected.some((element) => element.id === item.id)) {
       const parentsToRemove = getSelectedParentNodes(item);
       const childrenToRemove = getSelectedChildNodes(item);
       const nodesToRemove = [...parentsToRemove, ...childrenToRemove];
       // Remove nodes from selected state
       if (nodesToRemove.length) {
         setSelected(
-          selected.filter(element => element.id !== item.id && !nodesToRemove.includes(element.id)),
+          selected.filter(
+            (element) =>
+              element.id !== item.id && !nodesToRemove.includes(element.id)
+          )
         );
       } else {
-        setSelected(selected.filter(element => element.id !== item.id));
+        setSelected(selected.filter((element) => element.id !== item.id));
       }
 
       // If checbox is not checked, add checkbox selections
@@ -222,13 +251,17 @@ function ServiceTreeView({ intl, variant }) {
       let newState = [item, ...checkChildNodes(item)];
 
       // If all other sibling nodes are selected too, select parent node as well
-      const parent = services.find(service => service.id === item.parent);
-      if (parent?.children.every(child => [...selected, item].some(i => i.id === child))) {
+      const parent = services.find((service) => service.id === item.parent);
+      if (
+        parent?.children.every((child) =>
+          [...selected, item].some((i) => i.id === child)
+        )
+      ) {
         newState = [...newState, parent];
       }
 
       // Filter duplicates
-      newState = newState.filter(e => !selected.some(i => i.id === e.id));
+      newState = newState.filter((e) => !selected.some((i) => i.id === e.id));
       setSelected([...selected, ...newState]);
       e.stopPropagation();
     }
@@ -261,21 +294,41 @@ function ServiceTreeView({ intl, variant }) {
       return null;
     }
     if (bottom && currentLast) {
-      return <path key={`outerPath${id}`} d="M 17 0 V 30 H 26" stroke="black" fill="transparent" />;
+      return (
+        <path
+          key={`outerPath${id}`}
+          d="M 17 0 V 30 H 26"
+          stroke="black"
+          fill="transparent"
+        />
+      );
     }
     if (bottom && !currentLast) {
-      return <path key={`outerPath${id}`} d="M 17 0 V 60 M 17 30 H 26" stroke="black" fill="transparent" />;
+      return (
+        <path
+          key={`outerPath${id}`}
+          d="M 17 0 V 60 M 17 30 H 26"
+          stroke="black"
+          fill="transparent"
+        />
+      );
     }
-    return <path key={`outerPath${id}`} d="M 17 0 V 60" stroke="black" fill="transparent" />;
+    return (
+      <path
+        key={`outerPath${id}`}
+        d="M 17 0 V 60"
+        stroke="black"
+        fill="transparent"
+      />
+    );
   };
 
-  const drawOuterLines = (level, last, id) => (
+  const drawOuterLines = (level, last, id) =>
     [...Array(level)].map((none, i) => (
       <StyledOuterLines key={`outerLine${level + i}`}>
         {generateDrawPath(last, level === i + 1, i, id)}
       </StyledOuterLines>
-    ))
-  );
+    ));
 
   useEffect(() => {
     if (!services.length) {
@@ -298,24 +351,29 @@ function ServiceTreeView({ intl, variant }) {
     }
 
     // Calculate count
-    const countItem = unitCounts.find(countItem => countItem.id === item.id);
+    const countItem = unitCounts.find((countItem) => countItem.id === item.id);
     return `${getLocaleText(item.name)} ${countItem !== null && countItem !== undefined ? `(${countItem.count})` : ''}`;
   }
 
   const expandingComponent = (item, level, last = []) => {
     const hasChildren = item.children.length;
     const isOpen = opened.includes(item.id);
-    const children = hasChildren ? services.filter(e => e.parent === item.id) : null;
+    const children = hasChildren
+      ? services.filter((e) => e.parent === item.id)
+      : null;
     const titleText = calculateTitle(item);
 
-    const checkboxSrTitle = `${intl.formatMessage({ id: 'services.tree.level' })} ${level + 1} ${getLocaleText(item.name)} ${intl.formatMessage({ id: 'services.category.select' })}`;
+    const checkboxSrTitle = `${intl.formatMessage({
+      id: 'services.tree.level',
+    })} ${level + 1} ${getLocaleText(item.name)} ${intl.formatMessage({ id: 'services.category.select' })}`;
     const itemSrTitle = `${getLocaleText(item.name)} ${intl.formatMessage({ id: 'services.category.open' })}`;
 
-    const isSelected = selected.some(e => e.id === item.id);
+    const isSelected = selected.some((e) => e.id === item.id);
 
     // Check if any child grandchild node is checked, so we can display indeterminate mark.
-    const childIsSelected = checkChildNodes(item)
-      .some(node => selected.some(item => item.id === node.id));
+    const childIsSelected = checkChildNodes(item).some((node) =>
+      selected.some((item) => item.id === node.id)
+    );
 
     return (
       <li key={item.id}>
@@ -325,39 +383,39 @@ function ServiceTreeView({ intl, variant }) {
           simpleItem={!hasChildren}
           isOpen={isOpen}
           openButtonSrText={itemSrTitle}
-          adornment={(
+          adornment={
             <>
-              {level > 0 && (drawOuterLines(level, last, item.id))}
+              {level > 0 && drawOuterLines(level, last, item.id)}
               <StyledCheckBox>
                 {drawCheckboxLines(isOpen, level, item.id)}
                 <HDSCheckbox
                   id={item.id}
                   name={item.id}
-                  label={<Typography component="span" style={visuallyHidden}>{checkboxSrTitle}</Typography>}
+                  label={
+                    <Typography component="span" style={visuallyHidden}>
+                      {checkboxSrTitle}
+                    </Typography>
+                  }
                   checked={isSelected}
                   indeterminate={childIsSelected && !isSelected}
-                  onChange={e => handleCheckboxClick(e, item)}
+                  onChange={(e) => handleCheckboxClick(e, item)}
                   style={{ '--size': '1rem' }}
                 />
               </StyledCheckBox>
             </>
-          )}
-          titleContent={(
-            <StyledText aria-hidden>
-              {titleText}
-            </StyledText>
-          )}
+          }
+          titleContent={<StyledText aria-hidden>{titleText}</StyledText>}
           collapseContent={
             children?.length ? (
               <List disablePadding>
-                {children.map((child, i) => (
+                {children.map((child, i) =>
                   expandingComponent(
                     child, // child service node
                     level + 1, // child node level
                     // If this node is last of its level, add to list
-                    i + 1 === children.length ? [...last, level] : last,
+                    i + 1 === children.length ? [...last, level] : last
                   )
-                ))}
+                )}
               </List>
             ) : null
           }
@@ -370,23 +428,21 @@ function ServiceTreeView({ intl, variant }) {
 
   const renderServiceNodeList = () => (
     <List role="list" disablePadding>
-      {services?.map(service => (
-        !service.parent && (
-          expandingComponent(service, 0)
-        )
-      ))}
+      {services?.map(
+        (service) => !service.parent && expandingComponent(service, 0)
+      )}
     </List>
   );
 
   // If node's parent is also checked, add only parent to list of selected nodes for search
   const selectedList = [];
-  selected.forEach(e => {
-    if (!selected.some(i => i.id === e.parent)) {
+  selected.forEach((e) => {
+    if (!selected.some((i) => i.id === e.parent)) {
       selectedList.push(e);
     }
   });
 
-  const ids = selectedList.map(i => i.id);
+  const ids = selectedList.map((i) => i.id);
 
   return (
     <StyledFlexContainer>
@@ -395,10 +451,10 @@ function ServiceTreeView({ intl, variant }) {
         titleComponent="h3"
         backButton={!isMobile}
       />
-      <StyledGuidanceInfoText variant="body2">{intl.formatMessage({ id: guidanceKey })}</StyledGuidanceInfoText>
-      <StyledMainContent>
-        {renderServiceNodeList()}
-      </StyledMainContent>
+      <StyledGuidanceInfoText variant="body2">
+        {intl.formatMessage({ id: guidanceKey })}
+      </StyledGuidanceInfoText>
+      <StyledMainContent>{renderServiceNodeList()}</StyledMainContent>
       <StyledFloatingDiv>
         <StyledSearchButton
           id="ServiceTreeSearchButton"

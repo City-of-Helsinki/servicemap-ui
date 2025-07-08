@@ -1,4 +1,4 @@
-export const breadcrumbPush = obj => async (dispatch) => {
+export const breadcrumbPush = (obj) => async (dispatch) => {
   dispatch({
     type: 'PUSH_ENTRY',
     entry: obj,
@@ -13,7 +13,8 @@ export const breadcrumbPop = () => async (dispatch, getState) => {
       const latest = breadcrumb[breadcrumb.length - 1];
       const target = latest.focusTarget;
       setTimeout(() => {
-        const e = document.getElementById(target) || document.querySelector(target);
+        const e =
+          document.getElementById(target) || document.querySelector(target);
         if (e) {
           e.focus();
         }
@@ -28,7 +29,7 @@ export const breadcrumbPop = () => async (dispatch, getState) => {
   });
 };
 
-export const breadcrumbReplace = obj => async (dispatch) => {
+export const breadcrumbReplace = (obj) => async (dispatch) => {
   dispatch({
     type: 'REPLACE_ENTRY',
     entry: obj,

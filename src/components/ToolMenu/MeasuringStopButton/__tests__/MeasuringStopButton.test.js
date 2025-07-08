@@ -1,17 +1,17 @@
 // Link.react.test.js
-import React from 'react';
 import { fireEvent } from '@testing-library/react';
-import MeasuringStopButton from '../index';
+import React from 'react';
+
 import { getRenderWithProviders } from '../../../../../jestUtils';
 import englishTranslations from '../../../../i18n/en';
-
+import MeasuringStopButton from '../index';
 
 const renderWithProviders = getRenderWithProviders({});
 
 describe('<MeasuringStopButton />', () => {
   it('should work', () => {
     const { container } = renderWithProviders(
-      <MeasuringStopButton onClick={() => {}} />,
+      <MeasuringStopButton onClick={() => {}} />
     );
     expect(container).toMatchSnapshot();
   });
@@ -19,18 +19,14 @@ describe('<MeasuringStopButton />', () => {
   it('simulates click event', () => {
     const mockCallBack = jest.fn();
     const { getByRole } = renderWithProviders(
-      <MeasuringStopButton
-        onClick={mockCallBack}
-      />,
+      <MeasuringStopButton onClick={mockCallBack} />
     );
     fireEvent.click(getByRole('button'));
     expect(mockCallBack.mock.calls.length).toEqual(1);
   });
 
   it('does render accessibility attributes correctly', () => {
-    const { getByRole } = renderWithProviders(
-      <MeasuringStopButton />,
-    );
+    const { getByRole } = renderWithProviders(<MeasuringStopButton />);
     const buttonBase = getByRole('button');
     const p = buttonBase.querySelector('p');
     const contentText = englishTranslations['tool.measuring.stop'];

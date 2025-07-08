@@ -1,17 +1,24 @@
 import styled from '@emotion/styled';
 import {
-  Checkbox, FormControlLabel, FormGroup, List, ListItem, Paper, Typography,
+  Checkbox,
+  FormControlLabel,
+  FormGroup,
+  List,
+  ListItem,
+  Paper,
+  Typography,
 } from '@mui/material';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
+
 import { SMRadio } from '../../../components';
 import CustomInput from './CustomInput';
 
 /**
  * EmbedController that renders radio controls
  */
-const EmbedController = ({
+function EmbedController({
   titleComponent,
   titleID,
   description = null,
@@ -29,46 +36,40 @@ const EmbedController = ({
   radioName = null,
   radioOnChange = null,
   radioValue = null,
-}) => {
+}) {
   const renderCheckboxes = () => {
     if (!checkboxControls || !checkboxLabelledBy) {
       return null;
     }
     return (
-      <>
-        <FormGroup row role="group" aria-labelledby={checkboxLabelledBy}>
-          <List>
-            {
-              checkboxControls.map(item => (
-                <StyledListItem key={item.key}>
-                  <FormControlLabel
-                    control={(
-                      <Checkbox
-                        color="primary"
-                        checked={!!item.value}
-                        value={item.key}
-                        onChange={() => item.onChange(!item.value)}
-                      />
-                    )}
-                    label={(
-                      <>
-                        {item.icon}
-                        {
-                          item.labelId
-                            ? (
-                              <FormattedMessage id={item.labelId} />
-                            )
-                            : item.label
-                        }
-                      </>
-                    )}
+      <FormGroup row role="group" aria-labelledby={checkboxLabelledBy}>
+        <List>
+          {checkboxControls.map((item) => (
+            <StyledListItem key={item.key}>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    color="primary"
+                    checked={!!item.value}
+                    value={item.key}
+                    onChange={() => item.onChange(!item.value)}
                   />
-                </StyledListItem>
-              ))
-            }
-          </List>
-        </FormGroup>
-      </>
+                }
+                label={
+                  <>
+                    {item.icon}
+                    {item.labelId ? (
+                      <FormattedMessage id={item.labelId} />
+                    ) : (
+                      item.label
+                    )}
+                  </>
+                }
+              />
+            </StyledListItem>
+          ))}
+        </List>
+      </FormGroup>
     );
   };
 
@@ -103,44 +104,29 @@ const EmbedController = ({
           onChange={inputOnChange}
           buttonText={inputButtonText}
         />
-
       </div>
     );
   };
 
   return (
     <StyledPaper>
-      {
-        titleID
-        && (
-          <Typography
-            id={titleID}
-            align="left"
-            variant="h5"
-            component={titleComponent}
-          >
-            <FormattedMessage id={titleID} />
-          </Typography>
-        )
-      }
-      {
-        description
-        && (
-          <Typography align="left">{description}</Typography>
-        )
-      }
-      {
-        renderRadio()
-      }
-      {
-        renderInput()
-      }
-      {
-        renderCheckboxes()
-      }
+      {titleID && (
+        <Typography
+          id={titleID}
+          align="left"
+          variant="h5"
+          component={titleComponent}
+        >
+          <FormattedMessage id={titleID} />
+        </Typography>
+      )}
+      {description && <Typography align="left">{description}</Typography>}
+      {renderRadio()}
+      {renderInput()}
+      {renderCheckboxes()}
     </StyledPaper>
   );
-};
+}
 
 const StyledListItem = styled(ListItem)(() => ({
   paddingLeft: 0,
@@ -162,17 +148,20 @@ const StyledPaper = styled(Paper)(({ theme }) => ({
 }));
 
 EmbedController.propTypes = {
-  titleComponent: PropTypes.oneOf(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']).isRequired,
+  titleComponent: PropTypes.oneOf(['h1', 'h2', 'h3', 'h4', 'h5', 'h6'])
+    .isRequired,
   titleID: PropTypes.string.isRequired,
   description: PropTypes.node,
-  checkboxControls: PropTypes.arrayOf(PropTypes.shape({
-    key: PropTypes.string.isRequired,
-    value: PropTypes.bool.isRequired,
-    onChange: PropTypes.func.isRequired,
-    icon: PropTypes.node,
-    labelId: PropTypes.string,
-    label: PropTypes.string,
-  })),
+  checkboxControls: PropTypes.arrayOf(
+    PropTypes.shape({
+      key: PropTypes.string.isRequired,
+      value: PropTypes.bool.isRequired,
+      onChange: PropTypes.func.isRequired,
+      icon: PropTypes.node,
+      labelId: PropTypes.string,
+      label: PropTypes.string,
+    })
+  ),
   checkboxLabelledBy: PropTypes.string,
   inputAriaLabel: PropTypes.string,
   inputButtonOnClick: PropTypes.func,
@@ -182,10 +171,12 @@ EmbedController.propTypes = {
   inputPreText: PropTypes.string,
   inputValue: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   radioAriaLabel: PropTypes.string,
-  radioControls: PropTypes.arrayOf(PropTypes.shape({
-    label: PropTypes.string,
-    value: PropTypes.string,
-  })),
+  radioControls: PropTypes.arrayOf(
+    PropTypes.shape({
+      label: PropTypes.string,
+      value: PropTypes.string,
+    })
+  ),
   radioName: PropTypes.string,
   radioOnChange: PropTypes.func,
   radioValue: PropTypes.string,

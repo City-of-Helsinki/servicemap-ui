@@ -4,7 +4,7 @@ const initialState = {
   opened: [],
 };
 
-export default (state = initialState, action) => {
+const serviceTreeReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'SET_SERVICE_TREE':
       return {
@@ -15,3 +15,5 @@ export default (state = initialState, action) => {
       return state;
   }
 };
+
+export default serviceTreeReducer;

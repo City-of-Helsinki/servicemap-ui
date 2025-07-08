@@ -5,7 +5,7 @@ const fetchAddressUnits = async (lnglat, distance) => {
   const options = {
     lat: `${lnglat[1]}`,
     lon: `${lnglat[0]}`,
-    distance: distance,
+    distance,
     only: 'name,location,accessibility_shortcoming_count,',
     geometry: false,
     page: 1,

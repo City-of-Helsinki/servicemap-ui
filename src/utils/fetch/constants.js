@@ -1,4 +1,3 @@
-
 import config from '../../../config';
 
 // *****************
@@ -7,7 +6,8 @@ import config from '../../../config';
 // API handlers
 export const APIHandlers = {
   accessibilitySentences: {
-    url: id => `${config.accessibilitySentenceAPI.root}/${config.usePtvAccessibilityApi ? `${id}/sentences/` : `unit/${id}`}`,
+    url: (id) =>
+      `${config.accessibilitySentenceAPI.root}/${config.usePtvAccessibilityApi ? `${id}/sentences/` : `unit/${id}`}`,
     options: {},
     envName: config.accessibilitySentenceAPI.id,
   },
@@ -26,7 +26,8 @@ export const APIHandlers = {
     envName: config.serviceMapAPI.id,
   },
   reservations: {
-    url: id => `${config.reservationsAPI.root}/v1/palvelukartta/reservation-units/${id}`,
+    url: (id) =>
+      `${config.reservationsAPI.root}/v1/palvelukartta/reservation-units/${id}`,
     options: {},
     envName: config.reservationsAPI.id,
   },
@@ -35,14 +36,27 @@ export const APIHandlers = {
     options: {
       page: 1,
       page_size: 200,
-      only: 'unit.street_address,unit.location,unit.name,unit.municipality,unit.contract_type,unit.phone,unit.call_charge_info,unit.email,unit.www,unit.connections,unit.picture_url',
+      only: [
+        'unit.street_address',
+        'unit.location',
+        'unit.name',
+        'unit.municipality',
+        'unit.contract_type',
+        'unit.phone',
+        'unit.call_charge_info',
+        'unit.email',
+        'unit.www',
+        'unit.connections',
+        'unit.picture_url',
+      ].join(','),
       geometry: true,
       include: 'unit.department',
     },
     envName: config.serviceMapAPI.id,
   },
   service: {
-    url: id => `${config.serviceMapAPI.root}${config.serviceMapAPI.version}/service/${id}/`,
+    url: (id) =>
+      `${config.serviceMapAPI.root}${config.serviceMapAPI.version}/service/${id}/`,
     options: {},
     envName: config.serviceMapAPI.id,
   },
@@ -52,7 +66,8 @@ export const APIHandlers = {
     envName: config.serviceMapAPI.id,
   },
   unit: {
-    url: id => `${config.serviceMapAPI.root}${config.serviceMapAPI.version}/unit/${id}/`,
+    url: (id) =>
+      `${config.serviceMapAPI.root}${config.serviceMapAPI.version}/unit/${id}/`,
     options: {
       accessibility_description: true,
       include: 'services,keywords,department,entrances',
@@ -73,7 +88,8 @@ export const APIHandlers = {
     envName: config.serviceMapAPI.id,
   },
   idFetch: {
-    url: type => `${config.serviceMapAPI.root}${config.serviceMapAPI.version}/${type}/`,
+    url: (type) =>
+      `${config.serviceMapAPI.root}${config.serviceMapAPI.version}/${type}/`,
     options: {
       page: 1,
       page_size: 500,
@@ -93,7 +109,7 @@ export const APIHandlers = {
     envName: config.eventsAPI.id,
   },
   event: {
-    url: id => `${config.eventsAPI.root}/event/${id}/`,
+    url: (id) => `${config.eventsAPI.root}/event/${id}/`,
     options: {},
     envName: config.eventsAPI.id,
   },
@@ -110,7 +126,7 @@ export const APIHandlers = {
     envName: config.eventsAPI.id,
   },
   hearingMaps: {
-    url: id => `${config.hearingMapAPI.root}/${id}`,
+    url: (id) => `${config.hearingMapAPI.root}/${id}`,
     envName: config.hearingMapAPI.id,
   },
 };

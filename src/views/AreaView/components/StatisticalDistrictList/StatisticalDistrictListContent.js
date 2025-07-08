@@ -1,25 +1,38 @@
 import { css } from '@emotion/css';
 import {
-  Checkbox, FormControlLabel, List, styled, Typography,
+  Checkbox,
+  FormControlLabel,
+  List,
+  styled,
+  Typography,
 } from '@mui/material';
 import React, { useEffect } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
+
 import { SMAccordion } from '../../../../components';
 import {
-  addAreaSelection, removeAreaSelection, replaceAreaSelection,
+  addAreaSelection,
+  removeAreaSelection,
+  replaceAreaSelection,
 } from '../../../../redux/actions/statisticalDistrict';
 import { selectMapRef } from '../../../../redux/selectors/general';
 import {
-  getCityGroupedData, getStatisticalDistrictAreaSelections, getStatisticalDistrictSelection,
+  getCityGroupedData,
+  getStatisticalDistrictAreaSelections,
+  getStatisticalDistrictSelection,
 } from '../../../../redux/selectors/statisticalDistrict';
 import useLocaleText from '../../../../utils/useLocaleText';
 import { focusDistricts } from '../../../MapView/utils/mapActions';
 import {
-  StyledAreaListItem, StyledBoldText, StyledCheckBoxIcon, StyledListItem, StyledListNoPadding,
+  StyledAreaListItem,
+  StyledBoldText,
+  StyledCheckBoxIcon,
+  StyledListItem,
+  StyledListNoPadding,
 } from '../styled/styled';
 
-const StatisticalDistrictListContent = () => {
+function StatisticalDistrictListContent() {
   const dispatch = useDispatch();
   const cityFilteredData = useSelector(getCityGroupedData);
   const getLocaleText = useLocaleText();
@@ -31,7 +44,9 @@ const StatisticalDistrictListContent = () => {
   useEffect(() => {
     // Focus to districts when area selections change
     let districtsToFocus = cityFilteredData.flat();
-    const filteredData = districtsToFocus.filter(district => areaSelections[district.id]);
+    const filteredData = districtsToFocus.filter(
+      (district) => areaSelections[district.id]
+    );
     if (filteredData.length > 0) {
       districtsToFocus = filteredData;
     }
@@ -67,8 +82,8 @@ const StatisticalDistrictListContent = () => {
       dispatch(replaceAreaSelection(newAreaSelections));
     } else {
       const toBeRemovedSelections = cityFilteredData
-        .filter(v => v[0].municipality === city)[0]
-        .map(district => district.id);
+        .filter((v) => v[0].municipality === city)[0]
+        .map((district) => district.id);
       const newAreaSelections = {
         ...areaSelections,
       };
@@ -96,11 +111,17 @@ const StatisticalDistrictListContent = () => {
       return (
         <>
           <span>
-            <FormattedMessage id="area.statisticalDistrict.label.people" values={{ count: district.selectedValue }} />
+            <FormattedMessage
+              id="area.statisticalDistrict.label.people"
+              values={{ count: district.selectedValue }}
+            />
             ,
           </span>
           <span>
-            <FormattedMessage id="area.statisticalDistrict.label.percent" values={{ percent: district.selectedProportion.toFixed(2) }} />
+            <FormattedMessage
+              id="area.statisticalDistrict.label.percent"
+              values={{ percent: district.selectedProportion.toFixed(2) }}
+            />
           </span>
         </>
       );
@@ -111,7 +132,7 @@ const StatisticalDistrictListContent = () => {
       {
         count: district.selectedValue,
         percent: !isTotal && district.selectedProportion.toFixed(2),
-      },
+      }
     );
   };
 
@@ -127,100 +148,105 @@ const StatisticalDistrictListContent = () => {
         <StyledBoldText component="p">
           <FormattedMessage id="area.statisticalDistrict.title" />
         </StyledBoldText>
-        {
-          cityFilteredData.length === 0
-          && (
-            <Typography variant="body2"><FormattedMessage id="area.city.selection.empty" /></Typography>
-          )
-        }
+        {cityFilteredData.length === 0 && (
+          <Typography variant="body2">
+            <FormattedMessage id="area.city.selection.empty" />
+          </Typography>
+        )}
       </StyledMunicipalitySubtitle>
       <List id="StatisticalCityList">
-        {
-          cityFilteredData.map((data) => {
-            const { municipality } = data[0];
-            const someChildIsChecked = data.some(node => areaSelections[`${node.id}`]);
-            const someChildNotChecked = data.some(node => !areaSelections[`${node.id}`]);
-            const isChecked = someChildIsChecked && !someChildNotChecked;
-            const isIndeterminate = someChildIsChecked && someChildNotChecked;
-            return (
-              <StyledListItem
-                disableGutters
-                key={municipality}
-              >
-                <React.Fragment key={municipality}>
-                  <StyledSMAccordion // City list accordion
-                    defaultOpen={false}
-                    disableUnmount
-                    adornment={(
-                      <StyledFormControlLabel
-                        classes={{
-                          label: statisticalCategoryTitleClass,
-                        }}
-                        control={(
-                          <Checkbox
-                            color="primary"
-                            inputProps={{
-                              'aria-label': formatMessage({ id: `settings.city.${municipality}` }),
+        {cityFilteredData.map((data) => {
+          const { municipality } = data[0];
+          const someChildIsChecked = data.some(
+            (node) => areaSelections[`${node.id}`]
+          );
+          const someChildNotChecked = data.some(
+            (node) => !areaSelections[`${node.id}`]
+          );
+          const isChecked = someChildIsChecked && !someChildNotChecked;
+          const isIndeterminate = someChildIsChecked && someChildNotChecked;
+          return (
+            <StyledListItem disableGutters key={municipality}>
+              <React.Fragment key={municipality}>
+                <StyledSMAccordion // City list accordion
+                  defaultOpen={false}
+                  disableUnmount
+                  adornment={
+                    <StyledFormControlLabel
+                      classes={{
+                        label: statisticalCategoryTitleClass,
+                      }}
+                      control={
+                        <Checkbox
+                          color="primary"
+                          inputProps={{
+                            'aria-label': formatMessage({
+                              id: `settings.city.${municipality}`,
+                            }),
+                          }}
+                          icon={<StyledCheckBoxIcon />}
+                          onChange={() =>
+                            handleMultiSelect(!isChecked, municipality)
+                          }
+                          checked={isChecked}
+                          indeterminate={isIndeterminate}
+                        />
+                      }
+                    />
+                  }
+                  titleContent={
+                    <Typography component="p" variant="body2">
+                      <FormattedMessage id={`settings.city.${municipality}`} />
+                    </Typography>
+                  }
+                  collapseContent={
+                    <StyledListNoPadding>
+                      {data.map((district) => (
+                        <StyledAreaListItem key={district.id} divider>
+                          <StyledFormControlLabelAdjusted
+                            classes={{
+                              label: statisticalCategoryTitleClass,
                             }}
-                            icon={<StyledCheckBoxIcon />}
-                            onChange={() => handleMultiSelect(!isChecked, municipality)}
-                            checked={isChecked}
-                            indeterminate={isIndeterminate}
-                          />
-                        )}
-                      />
-                    )}
-                    titleContent={(
-                      <Typography component="p" variant="body2">
-                        <FormattedMessage id={`settings.city.${municipality}`} />
-                      </Typography>
-                    )}
-                    collapseContent={(
-                      <StyledListNoPadding>
-                        {
-                          data.map(district => (
-                            <StyledAreaListItem key={district.id} divider>
-                              <StyledFormControlLabelAdjusted
-                                classes={{
-                                  label: statisticalCategoryTitleClass,
+                            control={
+                              <Checkbox
+                                color="primary"
+                                inputProps={{
+                                  'aria-label': `${getLocaleText(district.name)}, ${getDistrictDataInfo(district)}`,
                                 }}
-                                control={(
-                                  <Checkbox
-                                    color="primary"
-                                    inputProps={{
-                                      'aria-label': `${getLocaleText(district.name)}, ${getDistrictDataInfo(district)}`,
-                                    }}
-                                    icon={<StyledCheckBoxIcon />}
-                                    onChange={e => handleCheckboxChange(e, district)}
-                                    checked={areaSelections[`${district.id}`] || false}
-                                  />
-                              )}
-                                label={(
-                                  <StyledLabelTypography variant="body2" aria-hidden>
-                                    <span>
-                                      {`${getLocaleText(district.name)}`}
-                                    </span>
-                                    <StyledLabelInfo>
-                                      {getDistrictDataInfo(district)}
-                                    </StyledLabelInfo>
-                                  </StyledLabelTypography>
-                                )}
+                                icon={<StyledCheckBoxIcon />}
+                                onChange={(e) =>
+                                  handleCheckboxChange(e, district)
+                                }
+                                checked={
+                                  areaSelections[`${district.id}`] || false
+                                }
                               />
-                            </StyledAreaListItem>
-                          ))
-                        }
-                      </StyledListNoPadding>
-                    )}
-                  />
-                </React.Fragment>
-              </StyledListItem>
-            );
-          })
-        }
+                            }
+                            label={
+                              <StyledLabelTypography
+                                variant="body2"
+                                aria-hidden
+                              >
+                                <span>{`${getLocaleText(district.name)}`}</span>
+                                <StyledLabelInfo>
+                                  {getDistrictDataInfo(district)}
+                                </StyledLabelInfo>
+                              </StyledLabelTypography>
+                            }
+                          />
+                        </StyledAreaListItem>
+                      ))}
+                    </StyledListNoPadding>
+                  }
+                />
+              </React.Fragment>
+            </StyledListItem>
+          );
+        })}
       </List>
     </>
   );
-};
+}
 
 export default StatisticalDistrictListContent;
 
@@ -245,8 +271,10 @@ const StyledFormControlLabel = styled(FormControlLabel)(({ theme }) => ({
   display: 'flex',
   flex: '1 1 auto',
 }));
-const StyledFormControlLabelAdjusted = styled(FormControlLabel)(({ theme }) => ({
-  paddingLeft: theme.spacing(6),
-  display: 'flex',
-  flex: '1 1 auto',
-}));
+const StyledFormControlLabelAdjusted = styled(FormControlLabel)(
+  ({ theme }) => ({
+    paddingLeft: theme.spacing(6),
+    display: 'flex',
+    flex: '1 1 auto',
+  })
+);

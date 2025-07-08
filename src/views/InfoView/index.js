@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+
 import InfoView from './InfoView';
 
 // Listen to redux state
@@ -12,6 +13,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default withRouter(connect(
-  mapStateToProps,
-)(InfoView));
+export default withRouter(connect(mapStateToProps)(InfoView));

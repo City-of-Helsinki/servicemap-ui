@@ -1,4 +1,3 @@
-
 export const initialState = {
   initialLoad: false,
   locale: 'fi',
@@ -15,7 +14,7 @@ export const initialState = {
   },
 };
 
-export default (state = initialState, action) => {
+const userReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'SET_LOCALE':
       return {
@@ -51,3 +50,5 @@ export default (state = initialState, action) => {
       return state;
   }
 };
+
+export default userReducer;

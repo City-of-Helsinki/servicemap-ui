@@ -1,9 +1,20 @@
+/* eslint-disable max-len */
 import React from 'react';
 
 const iconLocation = () => (
-  <svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <svg
+    width="16px"
+    height="16px"
+    viewBox="0 0 16 16"
+    version="1.1"
+    xmlns="http://www.w3.org/2000/svg"
+  >
     <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
-      <g transform="translate(-60.000000, -403.000000)" fill="inherit" fillRule="nonzero">
+      <g
+        transform="translate(-60.000000, -403.000000)"
+        fill="inherit"
+        fillRule="nonzero"
+      >
         <g transform="translate(60.000000, 403.000000)">
           <path d="M12.1463333,4.21533333 C12.1463333,1.909 10.277,0.0396666667 7.97033333,0.0396666667 C5.66366667,0.0396666667 3.79466667,1.909 3.79466667,4.21533333 C3.79466667,7.51966667 7.97033333,12.4093333 7.97033333,12.4093333 C7.97033333,12.4093333 12.1463333,7.50266667 12.1463333,4.21533333 Z M5.911,3.966 C5.911,2.82833333 6.83333333,1.90633333 7.97066667,1.90633333 C9.108,1.90633333 10.0303333,2.82833333 10.0303333,3.966 C10.0303333,5.10366667 9.108,6.02566667 7.97066667,6.02566667 C6.83333333,6.02566667 5.911,5.10366667 5.911,3.966 Z" />
           <circle cx="7.97033333" cy="3.966" r="1.01266667" />

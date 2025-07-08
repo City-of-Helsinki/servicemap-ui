@@ -7,6 +7,7 @@ import React, { useEffect, useState } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { useMapEvents } from 'react-leaflet';
 import { useSelector } from 'react-redux';
+
 import { selectMapType } from '../../../../redux/selectors/settings';
 import useMobileStatus from '../../../../utils/isMobile';
 import { isEmbed } from '../../../../utils/path';
@@ -55,35 +56,34 @@ function TransitStops({ mapObject }) {
   // Check if transit stops should be shown
   const showTransitStops = () => {
     const transitZoom = isMobile
-      ? mapObject.options.detailZoom - 1 : mapObject.options.detailZoom;
+      ? mapObject.options.detailZoom - 1
+      : mapObject.options.detailZoom;
     const currentZoom = map.getZoom();
 
     const url = new URL(window.location);
     const embeded = isEmbed({ url: url.toString() });
     const showTransit = !embeded || url.searchParams.get('transit') === '1';
 
-    return (currentZoom >= transitZoom) && showTransit;
+    return currentZoom >= transitZoom && showTransit;
   };
 
   const fetchTransitStops = () => {
-    fetchStops(map)
-      .then(stops => {
-        if (showTransitStops()) {
-          setTransitStops(stops);
-        }
-      });
+    fetchStops(map).then((stops) => {
+      if (showTransitStops()) {
+        setTransitStops(stops);
+      }
+    });
   };
 
   const loadBikeStations = () => {
     if (!bikeStationsLoaded && showTransitStops()) {
       setBikeStationsLoaded(true);
       // Load bike stations only once as all the bike stations are fetched.
-      fetchBikeStations()
-        .then(stations => {
-          const list = stations?.data?.bikeRentalStations || [];
-          setRentalBikeStations(list);
-          setVisibleBikeStations(showTransitStops() ? list : []);
-        });
+      fetchBikeStations().then((stations) => {
+        const list = stations?.data?.bikeRentalStations || [];
+        setRentalBikeStations(list);
+        setVisibleBikeStations(showTransitStops() ? list : []);
+      });
     }
   };
 
@@ -110,15 +110,22 @@ function TransitStops({ mapObject }) {
     loadBikeStations();
   }, []);
 
-  const getTransitIcon = type => {
+  const getTransitIcon = (type) => {
     const { divIcon } = global.L;
     const { color, className } = getTypeAndClass(type);
     return divIcon({
       html: renderToStaticMarkup(
         <>
-          <span aria-hidden className={`${transitBackgroundClass} icon-icon-hsl-background`} />
-          <StyledTransitIconMap aria-hidden color={useContrast ? '#000000' : color} className={className} />
-        </>,
+          <span
+            aria-hidden
+            className={`${transitBackgroundClass} icon-icon-hsl-background`}
+          />
+          <StyledTransitIconMap
+            aria-hidden
+            color={useContrast ? '#000000' : color}
+            className={className}
+          />
+        </>
       ),
       iconSize: [transitIconSize, transitIconSize],
       popupAnchor: [0, -13],
@@ -133,7 +140,7 @@ function TransitStops({ mapObject }) {
 
   return (
     <>
-      {transitStops.map(stop => {
+      {transitStops.map((stop) => {
         const icon = getTransitIcon(stop.vehicleMode);
         return (
           <Marker
@@ -153,7 +160,7 @@ function TransitStops({ mapObject }) {
           </Marker>
         );
       })}
-      {rentalBikeStations.map(station => {
+      {rentalBikeStations.map((station) => {
         const icon = getTransitIcon(7);
         return (
           <Marker

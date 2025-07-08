@@ -1,8 +1,9 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
+
 import { uppercaseFirst } from '../../utils';
 
-const BoldedText = ({ text, shouldBeBold = null}) => {
+function BoldedText({ text, shouldBeBold = null }) {
   if (!text) {
     return null;
   }
@@ -17,33 +18,25 @@ const BoldedText = ({ text, shouldBeBold = null}) => {
 
   return (
     <span>
-      {
-        textArray.map((item, index) => {
-          i += 1;
-          return (
-            // eslint-disable-next-line react/no-array-index-key
-            <React.Fragment key={`${item}-${i}`}>
-              {
-                index === 0
-                  ? uppercaseFirst(item)
-                  : item
-              }
-              {index !== textArray.length - 1 && (
-                <b>
-                  {
-                    index === 0 && item === ''
-                      ? uppercaseFirst(processedShouldBeBold)
-                      : processedShouldBeBold
-                  }
-                </b>
-              )}
-            </React.Fragment>
-          );
-        })
-      }
+      {textArray.map((item, index) => {
+        i += 1;
+        return (
+          // eslint-disable-next-line react/no-array-index-key
+          <React.Fragment key={`${item}-${i}`}>
+            {index === 0 ? uppercaseFirst(item) : item}
+            {index !== textArray.length - 1 && (
+              <b>
+                {index === 0 && item === ''
+                  ? uppercaseFirst(processedShouldBeBold)
+                  : processedShouldBeBold}
+              </b>
+            )}
+          </React.Fragment>
+        );
+      })}
     </span>
   );
-};
+}
 
 BoldedText.propTypes = {
   text: PropTypes.string.isRequired,

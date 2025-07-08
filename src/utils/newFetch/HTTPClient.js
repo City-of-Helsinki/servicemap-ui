@@ -1,4 +1,3 @@
-import AbortController from 'abort-controller';
 import config from '../../../config';
 
 export const hearingMapAPIName = 'hearingmap';
@@ -39,7 +38,9 @@ export default class HttpClient {
 
   optionsToSearchParams = (options) => {
     if (typeof options !== 'object') {
-      throw APIFetchError('Invalid options provided for HttpClient optionsToSearchParams method');
+      throw APIFetchError(
+        'Invalid options provided for HttpClient optionsToSearchParams method'
+      );
     }
 
     const params = new URLSearchParams();
@@ -53,7 +54,7 @@ export default class HttpClient {
     });
 
     return params.toString();
-  }
+  };
 
   fetchNext = async (query, results) => {
     const signal = this.abortController?.signal || null;
@@ -63,7 +64,7 @@ export default class HttpClient {
     this.createTimeout();
 
     return fetch(query, { signal })
-      .then(response => response.json())
+      .then((response) => response.json())
       .then(async (response) => {
         const combinedResults = [...results, ...response.results];
         if (this.onProgressUpdate) {
@@ -74,7 +75,7 @@ export default class HttpClient {
         }
         return combinedResults;
       });
-  }
+  };
 
   handleServiceMapResults = async (response, type) => {
     if (type && type === 'post') {
@@ -96,7 +97,7 @@ export default class HttpClient {
       return this.fetchNext(response.next, response.results);
     }
     return response.results;
-  }
+  };
 
   handleLinkedEventsResults = async (response, type) => {
     if (type && type === 'count') {
@@ -113,7 +114,7 @@ export default class HttpClient {
     }
 
     return response.data;
-  }
+  };
 
   handleResults = async (response, type) => {
     if (this.apiName === serviceMapAPIName) {
@@ -125,7 +126,7 @@ export default class HttpClient {
 
     // Default to given response
     return response;
-  }
+  };
 
   handleFetch = async (endpoint, url, options = {}, type) => {
     if (!this.abortController) {
@@ -138,7 +139,9 @@ export default class HttpClient {
     // Since we do not send any POST data to server we expect all fetches to be GET
     // and utilize search parameters for sending required data
     if (typeof options !== 'object') {
-      this.throwAPIError('Invalid options given to HTTPClient\'s handleFetch method');
+      this.throwAPIError(
+        "Invalid options given to HTTPClient's handleFetch method"
+      );
     }
     // Create fetch promise
     const promise = fetch(`${url}`, { ...options, signal });
@@ -164,16 +167,19 @@ export default class HttpClient {
         if (e.name === 'AbortError') {
           this.throwAPIError(`Error ${endpoint} fetch aborted`, e);
         } else {
-          this.throwAPIError(`Error while fetching ${endpoint}: ${e.message}`, e);
+          this.throwAPIError(
+            `Error while fetching ${endpoint}: ${e.message}`,
+            e
+          );
         }
       });
-  }
+  };
 
   // Create a POST fetch request to given endpoint with given data.
   // Base url may be overridden since this was needed for sending stats
   postFetch = async (endpoint, data, overrideBaseUrl = false) => {
     if (typeof data !== 'object') {
-      this.throwAPIError('Invalid data given to HTTPClient\'s fetchPost method');
+      this.throwAPIError("Invalid data given to HTTPClient's fetchPost method");
     }
 
     const postOptions = {
@@ -183,15 +189,22 @@ export default class HttpClient {
       },
       body: new URLSearchParams(data).toString(),
     };
-    return this.handleFetch(endpoint, `${overrideBaseUrl || this.baseURL}/${endpoint}`, postOptions, 'post');
-  }
+    return this.handleFetch(
+      endpoint,
+      `${overrideBaseUrl || this.baseURL}/${endpoint}`,
+      postOptions,
+      'post'
+    );
+  };
 
   // Fetch with GET
   fetch = async (endpoint, searchParams, type) => {
     // Since we do not send any POST data to server we expect all fetches to be GET
     // and utilize search parameters for sending required data
     if (typeof searchParams !== 'string') {
-      this.throwAPIError('Invalid searchParams given to HTTPClient\'s fetch method');
+      this.throwAPIError(
+        "Invalid searchParams given to HTTPClient's fetch method"
+      );
     }
 
     const fetchOptions = {};
@@ -201,13 +214,16 @@ export default class HttpClient {
 
     const url = `${this.baseURL}/${endpoint}${appendSlash ? '/' : ''}?${searchParams}`;
     return this.handleFetch(endpoint, url, fetchOptions, type);
-  }
+  };
 
-  post = async (endpoint, data, overrideBaseUrl) => this.postFetch(endpoint, data, overrideBaseUrl)
+  post = async (endpoint, data, overrideBaseUrl) =>
+    this.postFetch(endpoint, data, overrideBaseUrl);
 
-  get = async (endpoint, options) => this.fetch(endpoint, this.optionsToSearchParams(options));
+  get = async (endpoint, options) =>
+    this.fetch(endpoint, this.optionsToSearchParams(options));
 
-  getSinglePage = (endpoint, options) => this.fetch(endpoint, this.optionsToSearchParams(options), 'single');
+  getSinglePage = (endpoint, options) =>
+    this.fetch(endpoint, this.optionsToSearchParams(options), 'single');
 
   // This fetches 1 result to get meta data with total result count
   getCount = async (endpoint, options) => {
@@ -218,12 +234,18 @@ export default class HttpClient {
       include: null,
       geometry: false,
     };
-    return this.fetch(endpoint, this.optionsToSearchParams(newOptions, true), 'count');
-  }
+    return this.fetch(
+      endpoint,
+      this.optionsToSearchParams(newOptions, true),
+      'count'
+    );
+  };
 
   getConcurrent = async (endpoint, options) => {
     if (!options?.page_size) {
-      throw APIFetchError('Invalid page_size provided for concurrent search method');
+      throw APIFetchError(
+        'Invalid page_size provided for concurrent search method'
+      );
     }
 
     // Get amount of search pages
@@ -240,15 +262,17 @@ export default class HttpClient {
     for (let i = 1; i <= numberOfPages; i += 1) {
       options.page = i;
       const promise = this.getSinglePage(endpoint, options);
-      promises.push(promise.then((results) => {
-        this.clearTimeout();
-        return results;
-      }));
+      promises.push(
+        promise.then((results) => {
+          this.clearTimeout();
+          return results;
+        })
+      );
     }
 
     const results = await Promise.all(promises);
     return results.flat();
-  }
+  };
 
   throwAPIError = (msg, e) => {
     this.status = 'error';
@@ -263,44 +287,50 @@ export default class HttpClient {
 
   abort = () => {
     if (!this.abortController?.abort) {
-      throw new APIFetchError('Invalid AbortController when attempting to abort fetch');
+      throw new APIFetchError(
+        'Invalid AbortController when attempting to abort fetch'
+      );
     }
     this.clearTimeout();
     this.abortController.abort();
-  }
+  };
 
   createTimeout = () => {
     this.timeout = setTimeout(() => {
       this.abort();
     }, this.timeoutTimer);
-  }
+  };
 
   clearTimeout = () => {
     if (this.timeout) {
       clearTimeout(this.timeout);
     }
-  }
+  };
 
   setOnProgressUpdate = (onProgressUpdate) => {
     if (typeof onProgressUpdate !== 'function') {
-      throw new APIFetchError('Invalid onProgressUpdate provided for HTTPClient');
+      throw new APIFetchError(
+        'Invalid onProgressUpdate provided for HTTPClient'
+      );
     }
     this.onProgressUpdate = onProgressUpdate;
-  }
+  };
 
   setOnError = (onError) => {
     if (typeof onError !== 'function') {
       throw new APIFetchError('Invalid onError provided for HTTPClient');
     }
     this.onError = onError;
-  }
+  };
 
   setAbortController = (controller) => {
     if (typeof controller !== 'object') {
-      throw new APIFetchError('Invalid abort controller provided for HTTPClient');
+      throw new APIFetchError(
+        'Invalid abort controller provided for HTTPClient'
+      );
     }
     this.abortController = controller;
-  }
+  };
 
   isFetching = () => this.status === 'fetching';
 }

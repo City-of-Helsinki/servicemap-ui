@@ -2,7 +2,14 @@ import { css } from '@emotion/css';
 import styled from '@emotion/styled';
 import { Warning } from '@mui/icons-material';
 import {
-  ButtonBase, Checkbox, Dialog, DialogContent, DialogTitle, FormControl, InputBase, Typography,
+  ButtonBase,
+  Checkbox,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  FormControl,
+  InputBase,
+  Typography,
 } from '@mui/material';
 import { useTheme } from '@mui/styles';
 import { visuallyHidden } from '@mui/utils';
@@ -10,6 +17,7 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Prompt } from 'react-router-dom';
+
 import config from '../../../config';
 import { DesktopComponent, SMButton, TitleBar } from '../../components';
 import { validateEmail } from '../../utils';
@@ -30,12 +38,12 @@ const formFieldInitialState = {
   },
 };
 
-const FeedbackView = ({
+function FeedbackView({
   navigator = null,
   intl,
   location,
   selectedUnit = null,
-}) => {
+}) {
   const getLocaleText = useLocaleText();
   const isMobile = useMobileStatus();
   const theme = useTheme();
@@ -47,16 +55,22 @@ const FeedbackView = ({
 
   const feedbackMaxLength = 5000;
   const feedbackType = location.pathname.includes('unit') ? 'unit' : 'general';
-  const feedbackLength = formFields?.feedback?.value ? formFields.feedback.value.length : 0;
+  const feedbackLength = formFields?.feedback?.value
+    ? formFields.feedback.value.length
+    : 0;
   const feedbackFull = feedbackLength >= feedbackMaxLength;
   const email = formFields.email.value;
   const feedback = formFields.feedback.value;
 
   const isUnitFeedback = feedbackType === 'unit';
 
-  const feedbackTitle = isUnitFeedback && selectedUnit
-    ? intl.formatMessage({ id: 'feedback.title.unit' }, { unit: getLocaleText(selectedUnit.name) })
-    : intl.formatMessage({ id: 'feedback.title' });
+  const feedbackTitle =
+    isUnitFeedback && selectedUnit
+      ? intl.formatMessage(
+          { id: 'feedback.title.unit' },
+          { unit: getLocaleText(selectedUnit.name) }
+        )
+      : intl.formatMessage({ id: 'feedback.title' });
 
   useEffect(() => {
     focusToViewTitle();
@@ -134,17 +148,22 @@ const FeedbackView = ({
     }
   };
 
-  const backButtonCallback = isUnitFeedback
-    ? React.useCallback(() => {
+  const backButtonCallback = React.useCallback(() => {
+    if (isUnitFeedback && navigator && selectedUnit) {
       navigator.closeFeedback(selectedUnit.id);
-    }, [navigator, feedbackType])
+    }
+  }, [navigator, selectedUnit, isUnitFeedback]);
+
+  const backButtonSrText = isUnitFeedback
+    ? intl.formatMessage({ id: 'general.back.unit' })
     : null;
-  const backButtonSrText = backButtonCallback ? intl.formatMessage({ id: 'general.back.unit' }) : null;
   const handleSend = () => {
     if (!validateForm()) {
       setTimeout(() => {
         // Take focus back to first invalid form element
-        const focusTarget = document.querySelectorAll('form [aria-invalid="true"]');
+        const focusTarget = document.querySelectorAll(
+          'form [aria-invalid="true"]'
+        );
         if (focusTarget?.length > 0) {
           focusTarget[0].focus();
         }
@@ -183,19 +202,21 @@ const FeedbackView = ({
         'Content-Type': 'application/x-www-form-urlencoded',
       },
       body,
-    }).then((response) => {
-      setSending(false);
-      if (response.ok) {
-        resetForm();
-        setModalOpen('send');
-      } else {
+    })
+      .then((response) => {
+        setSending(false);
+        if (response.ok) {
+          resetForm();
+          setModalOpen('send');
+        } else {
+          setModalOpen('error');
+        }
+      })
+      .catch((e) => {
+        console.warn(e);
         setModalOpen('error');
-      }
-    }).catch((e) => {
-      console.warn(e);
-      setModalOpen('error');
-      setSending(false);
-    });
+        setSending(false);
+      });
   };
 
   let feedbackPermission = null;
@@ -222,7 +243,9 @@ const FeedbackView = ({
             aria-labelledby="checkboxTitle"
             classes={{ root: boxClass }}
           />
-          <Typography aria-hidden><FormattedMessage id="feedback.permission" /></Typography>
+          <Typography aria-hidden>
+            <FormattedMessage id="feedback.permission" />
+          </Typography>
         </StyledCheckboxContainer>
       </FormControl>
     );
@@ -255,34 +278,40 @@ const FeedbackView = ({
         />
       </DesktopComponent>
       {/* Confirm dialog */}
-      {
-        modalOpen
-        && (
-          <Dialog open={!!modalOpen} onEntered={() => document.getElementById('dialog-title').focus()}>
-            <StyledModalContainer>
-              <DialogTitle tabIndex={-1} id="dialog-title">
-                <StyledModalTitle aria-live="polite">
-                  <FormattedMessage id={modalOpen === 'send' ? 'feedback.modal.success' : 'feedback.modal.error'} />
-                </StyledModalTitle>
-              </DialogTitle>
-              <DialogContent>
-                <StyledModalButton
-                  margin
-                  role="button"
-                  messageID="feedback.modal.confirm"
-                  color="primary"
-                  onClick={() => {
-                    setModalOpen(false);
-                    if (modalOpen === 'send') {
-                      navigator.goBack();
-                    }
-                  }}
+      {modalOpen && (
+        <Dialog
+          open={!!modalOpen}
+          onEntered={() => document.getElementById('dialog-title').focus()}
+        >
+          <StyledModalContainer>
+            <DialogTitle tabIndex={-1} id="dialog-title">
+              <StyledModalTitle aria-live="polite">
+                <FormattedMessage
+                  id={
+                    modalOpen === 'send'
+                      ? 'feedback.modal.success'
+                      : 'feedback.modal.error'
+                  }
                 />
-              </DialogContent>
-            </StyledModalContainer>
-          </Dialog>
-        )
-      }
+              </StyledModalTitle>
+            </DialogTitle>
+            <DialogContent>
+              <StyledModalButton
+                margin
+                role="button"
+                messageID="feedback.modal.confirm"
+                color="primary"
+                onClick={() => {
+                  setModalOpen(false);
+                  if (modalOpen === 'send') {
+                    navigator.goBack();
+                  }
+                }}
+              />
+            </DialogContent>
+          </StyledModalContainer>
+        </Dialog>
+      )}
 
       <StyledFormContainer>
         <TitleBar
@@ -297,20 +326,28 @@ const FeedbackView = ({
           {/* Email field */}
           <FormControl>
             <StyledTitle id="emailTitle">
-              <span style={visuallyHidden}><FormattedMessage id="feedback.email" /></span>
+              <span style={visuallyHidden}>
+                <FormattedMessage id="feedback.email" />
+              </span>
               <FormattedMessage id="feedback.email.info" />
             </StyledTitle>
-            <StyledSubtitle aria-hidden><FormattedMessage id="feedback.email" /></StyledSubtitle>
+            <StyledSubtitle aria-hidden>
+              <FormattedMessage id="feedback.email" />
+            </StyledSubtitle>
             <StyledInput
               autoComplete="email"
               type="email"
-              classes={{ input: `${inputClass} ${formFields.email.error ? errorClass : ''}` }}
-              onChange={e => handleChange('email', e)}
+              classes={{
+                input: `${inputClass} ${formFields.email.error ? errorClass : ''}`,
+              }}
+              onChange={(e) => handleChange('email', e)}
               onBlur={() => validateEmailField()}
               inputProps={{
                 maxLength: feedbackMaxLength,
                 'aria-invalid': !!formFields.email.error,
-                'aria-labelledby': !formFields.email.error ? 'emailTitle' : 'srErrorEmail',
+                'aria-labelledby': !formFields.email.error
+                  ? 'emailTitle'
+                  : 'srErrorEmail',
               }}
             />
           </FormControl>
@@ -321,10 +358,16 @@ const FeedbackView = ({
                   <StyledWarning />
                   &nbsp;
                   <StyledErrorText color="inherit" aria-hidden>
-                    {intl.formatMessage({ id: formFields.email.errorMessageId })}
+                    {intl.formatMessage({
+                      id: formFields.email.errorMessageId,
+                    })}
                   </StyledErrorText>
                 </StyledErrorContainer>
-                <Typography id="srErrorEmail" role="alert" style={visuallyHidden}>
+                <Typography
+                  id="srErrorEmail"
+                  role="alert"
+                  style={visuallyHidden}
+                >
                   <FormattedMessage id="feedback.srError.email.invalid" />
                 </Typography>
               </>
@@ -334,20 +377,28 @@ const FeedbackView = ({
           {/* Feedback field */}
           <FormControl>
             <StyledTitle id="feedbackTitle">
-              <span style={visuallyHidden}><FormattedMessage id="feedback.feedback" /></span>
+              <span style={visuallyHidden}>
+                <FormattedMessage id="feedback.feedback" />
+              </span>
               <FormattedMessage id="feedback.feedback.info" />
             </StyledTitle>
-            <StyledSubtitle aria-hidden><FormattedMessage id="feedback.feedback" /></StyledSubtitle>
+            <StyledSubtitle aria-hidden>
+              <FormattedMessage id="feedback.feedback" />
+            </StyledSubtitle>
             <StyledInput
               multiline
               rows="5"
-              classes={{ input: `${inputClass} ${formFields.feedback.error ? errorClass : ''}` }}
-              onChange={e => handleChange('feedback', e)}
+              classes={{
+                input: `${inputClass} ${formFields.feedback.error ? errorClass : ''}`,
+              }}
+              onChange={(e) => handleChange('feedback', e)}
               onBlur={() => validateFeedbackField()}
               inputProps={{
                 maxLength: feedbackMaxLength,
                 'aria-invalid': !!formFields.feedback.error,
-                'aria-labelledby': !formFields.feedback.error ? 'feedbackTitle' : 'srErrorFeedback',
+                'aria-labelledby': !formFields.feedback.error
+                  ? 'feedbackTitle'
+                  : 'srErrorFeedback',
               }}
             />
           </FormControl>
@@ -358,10 +409,16 @@ const FeedbackView = ({
                   <StyledWarning />
                   &nbsp;
                   <StyledErrorText color="inherit" aria-hidden>
-                    {intl.formatMessage({ id: formFields.feedback.errorMessageId })}
+                    {intl.formatMessage({
+                      id: formFields.feedback.errorMessageId,
+                    })}
                   </StyledErrorText>
                 </StyledErrorContainer>
-                <Typography id="srErrorFeedback" role="alert" style={visuallyHidden}>
+                <Typography
+                  id="srErrorFeedback"
+                  role="alert"
+                  style={visuallyHidden}
+                >
                   <FormattedMessage id="feedback.srError.feedback.required" />
                 </Typography>
               </>
@@ -374,13 +431,19 @@ const FeedbackView = ({
         </StyledContentArea>
 
         <StyledBottomArea>
-          <StyledInfoText><FormattedMessage id="feedback.additionalInfo" /></StyledInfoText>
+          <StyledInfoText>
+            <FormattedMessage id="feedback.additionalInfo" />
+          </StyledInfoText>
           <StyledLink
             id="FeedbackInfoLink"
             role="link"
-            onClick={() => window.open(getLocaleText(config.feedbackAdditionalInfoLink))}
+            onClick={() =>
+              window.open(getLocaleText(config.feedbackAdditionalInfoLink))
+            }
           >
-            <Typography><FormattedMessage id="feedback.additionalInfo.link" /></Typography>
+            <Typography>
+              <FormattedMessage id="feedback.additionalInfo.link" />
+            </Typography>
           </StyledLink>
           <SMButton
             role="button"
@@ -392,7 +455,7 @@ const FeedbackView = ({
       </StyledFormContainer>
     </>
   );
-};
+}
 const StyledCharacterInfo = styled(Typography)(({ theme, feedback }) => {
   const styles = {
     color: '#000',

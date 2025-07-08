@@ -1,9 +1,9 @@
-import { FormLabel, IconButton } from '@mui/material';
-import { Close } from '@mui/icons-material';
 import styled from '@emotion/styled';
+import { Close } from '@mui/icons-material';
+import { FormLabel, IconButton } from '@mui/material';
+import PropTypes from 'prop-types';
 import React from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
-import PropTypes from 'prop-types';
 
 function MobileSettingsHeader({ textId, onClose = null }) {
   const intl = useIntl();

@@ -4,13 +4,16 @@ import { Typography } from '@mui/material';
 import PropTypes from 'prop-types';
 import React, { memo } from 'react';
 import { FormattedMessage } from 'react-intl';
+
 import { getAddressText } from '../../utils/address';
 import useLocaleText from '../../utils/useLocaleText';
 
 const AddressInfo = memo(({ address, districts }) => {
   const getLocaleText = useLocaleText();
-  const localPostArea = districts.find(obj => obj.type === 'postcode_area');
-  const localNeighborhood = districts.find(obj => obj.type === 'neighborhood');
+  const localPostArea = districts.find((obj) => obj.type === 'postcode_area');
+  const localNeighborhood = districts.find(
+    (obj) => obj.type === 'neighborhood'
+  );
   return (
     <StyledAddressInfoContainer data-sm="AddressInfo">
       <StyledAddressInfoText component="h3">
@@ -24,12 +27,18 @@ const AddressInfo = memo(({ address, districts }) => {
       </StyledAddressInfoIconArea>
       {localPostArea ? (
         <StyledAddressInfoText>
-          <FormattedMessage id="area.localAddress.postCode" values={{ area: getLocaleText(localPostArea.name) }} />
+          <FormattedMessage
+            id="area.localAddress.postCode"
+            values={{ area: getLocaleText(localPostArea.name) }}
+          />
         </StyledAddressInfoText>
       ) : null}
       {localNeighborhood ? (
         <StyledAddressInfoText>
-          <FormattedMessage id="area.localAddress.neighborhood" values={{ area: getLocaleText(localNeighborhood.name) }} />
+          <FormattedMessage
+            id="area.localAddress.neighborhood"
+            values={{ area: getLocaleText(localNeighborhood.name) }}
+          />
         </StyledAddressInfoText>
       ) : null}
     </StyledAddressInfoContainer>

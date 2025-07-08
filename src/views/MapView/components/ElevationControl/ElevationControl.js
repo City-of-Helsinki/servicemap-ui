@@ -1,11 +1,13 @@
-import { useEffect, useState } from 'react';
+/* global L */
 import PropTypes from 'prop-types';
+import { useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
-import { useSelector } from 'react-redux';
 import { useMap } from 'react-leaflet';
+import { useSelector } from 'react-redux';
+
 import { getPage } from '../../../../redux/selectors/user';
 
-const ElevationControl = ({ unit, isMobile}) => {
+function ElevationControl({ unit, isMobile }) {
   const intl = useIntl();
   const map = useMap();
   const currentPage = useSelector(getPage);
@@ -34,68 +36,77 @@ const ElevationControl = ({ unit, isMobile}) => {
   }, [unit, geometryIndex, currentPage]);
 
   function constructProfileGeoJson(coordinates) {
-    return [{
-      'type': 'FeatureCollection',
-      'features': [{
-        'type': 'Feature',
-        'geometry': {
-          'type': 'LineString',
-          'coordinates': coordinates
+    return [
+      {
+        type: 'FeatureCollection',
+        features: [
+          {
+            type: 'Feature',
+            geometry: {
+              type: 'LineString',
+              coordinates,
+            },
+            properties: {
+              attributeType: 'flat',
+            },
+          },
+        ],
+        properties: {
+          summary: 'HeightProfile',
+          label: intl.formatMessage({ id: 'map.heightProfile.title' }),
         },
-        'properties': {
-          'attributeType': 'flat'
-        }}],
-        'properties': {
-          'summary': 'HeightProfile',
-          'label': intl.formatMessage({ id: 'map.heightProfile.title' }),
-        }
-    }];
+      },
+    ];
   }
-  
+
   useEffect(() => {
-    if(!geometry?.coordinates) {
+    if (!geometry?.coordinates) {
       setGeometryIndex(0);
       return;
     }
-    
+
     const geoJson = constructProfileGeoJson(geometry?.coordinates);
 
-    const onRoute = event => {
+    const onRoute = (event) => {
       control.mapMousemoveHandler(event, { showMapMarker: true });
-    }
-    const outRoute = event => {
+    };
+    const outRoute = (event) => {
       control.mapMouseoutHandler(2000);
-    }
+    };
 
     const control = L.control.heightgraph({
       position: !isMobile ? 'bottomright' : 'topright',
       mappings: {
-        'HeightProfile': {
-          'flat': {
+        HeightProfile: {
+          flat: {
             text: intl.formatMessage({ id: 'map.heightProfile.title' }),
-            color: '#FD4F00'
-          }
-        }
+            color: '#FD4F00',
+          },
+        },
       },
       graphStyle: {
         opacity: 0.8,
         'fill-opacity': 0.5,
-        'stroke-width': '3px'
+        'stroke-width': '3px',
       },
       translation: {
         distance: intl.formatMessage({ id: 'map.heightProfile.distance' }),
         elevation: intl.formatMessage({ id: 'map.heightProfile.elevation' }),
-        segment_length: intl.formatMessage({ id: 'map.heightProfile.segmentLength' }),
+        segment_length: intl.formatMessage({
+          id: 'map.heightProfile.segmentLength',
+        }),
         type: intl.formatMessage({ id: 'map.heightProfile.type' }),
         legend: intl.formatMessage({ id: 'map.heightProfile.legend' }),
       },
       expandControls: true,
-      expandCallback: function(expanded) {
-        const heightProfileButtons = L.DomUtil.get("height-profile-buttons");
+      expandCallback(expanded) {
+        const heightProfileButtons = L.DomUtil.get('height-profile-buttons');
         if (heightProfileButtons) {
-          heightProfileButtons.style.visibility = expanded ? "visible" : "hidden";
+          heightProfileButtons.style.visibility = expanded
+            ? 'visible'
+            : 'hidden';
         }
-      }
+      },
     });
 
     const displayGroup = new L.LayerGroup();
@@ -108,39 +119,62 @@ const ElevationControl = ({ unit, isMobile}) => {
         color: '#FD4F00',
         opacity: 0.8,
         weight: 6,
-        fillOpacity: 0.5
-      }
+        fillOpacity: 0.5,
+      },
     });
-    layer.on({
-      'mousemove': onRoute,
-      'mouseout': outRoute,
-    }).addTo(displayGroup);
-    
+    layer
+      .on({
+        mousemove: onRoute,
+        mouseout: outRoute,
+      })
+      .addTo(displayGroup);
+
     if (isMobile) {
       control.getContainer().style.marginTop = '80px';
       control.getContainer().style.marginRight = '-108px';
       control._button.style.marginRight = '154px';
       control._button.style.marginTop = '210px';
-      control.resize({width:370, height:200});
+      control.resize({ width: 370, height: 200 });
     } else {
-      control.resize({width:800, height:300});
+      control.resize({ width: 800, height: 300 });
     }
 
-    const buttonsDiv = L.DomUtil.create("div", "height-profile-buttons", control.getContainer());
-    buttonsDiv.id = "height-profile-buttons";
-    const prevButton = L.DomUtil.create("button", "height-profile-prev-button", buttonsDiv);
-    const nextButton = L.DomUtil.create("button", "height-profile-next-button", buttonsDiv);
-  
-    L.DomEvent.on(prevButton, "mousedown dblclick", L.DomEvent.stopPropagation)
-      .on(prevButton, "click", (event) => {
+    const buttonsDiv = L.DomUtil.create(
+      'div',
+      'height-profile-buttons',
+      control.getContainer()
+    );
+    buttonsDiv.id = 'height-profile-buttons';
+    const prevButton = L.DomUtil.create(
+      'button',
+      'height-profile-prev-button',
+      buttonsDiv
+    );
+    const nextButton = L.DomUtil.create(
+      'button',
+      'height-profile-next-button',
+      buttonsDiv
+    );
+
+    L.DomEvent.on(
+      prevButton,
+      'mousedown dblclick',
+      L.DomEvent.stopPropagation
+    ).on(prevButton, 'click', (event) => {
       if (geometryIndex > 0) {
         setGeometryIndex(geometryIndex - 1);
       }
     });
-  
-    L.DomEvent.on(nextButton, "mousedown dblclick", L.DomEvent.stopPropagation)
-      .on(nextButton, "click", (event) => {
-      if (unit?.geometry_3d && geometryIndex < unit?.geometry_3d?.coordinates?.length - 1) {
+
+    L.DomEvent.on(
+      nextButton,
+      'mousedown dblclick',
+      L.DomEvent.stopPropagation
+    ).on(nextButton, 'click', (event) => {
+      if (
+        unit?.geometry_3d &&
+        geometryIndex < unit?.geometry_3d?.coordinates?.length - 1
+      ) {
         setGeometryIndex(geometryIndex + 1);
       }
     });
@@ -148,7 +182,7 @@ const ElevationControl = ({ unit, isMobile}) => {
     return () => {
       map.removeControl(control);
       map.removeLayer(displayGroup);
-    }
+    };
   }, [geometry, geometryIndex]);
 
   return null;

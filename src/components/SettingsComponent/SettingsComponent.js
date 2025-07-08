@@ -1,21 +1,17 @@
-import PropTypes from 'prop-types';
-import {
-  Chip,
-  Container,
-  NoSsr,
-  Typography,
-} from '@mui/material';
 import styled from '@emotion/styled';
+import { Chip, Container, NoSsr, Typography } from '@mui/material';
+import PropTypes from 'prop-types';
 import React from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
+
 import { setSettingsAccordionCollapsed } from '../../redux/actions/settings';
 import { selectSettings } from '../../redux/selectors/settings';
-import SMAccordion from '../SMAccordion';
 import SettingsDropdowns from '../SettingsDropdowns';
+import SMAccordion from '../SMAccordion';
 import constants from './constants';
 
-const SettingsComponent = ({ variant = null }) => {
+function SettingsComponent({ variant = null }) {
   const intl = useIntl();
   const dispatch = useDispatch();
   const settings = useSelector(selectSettings);
@@ -30,7 +26,9 @@ const SettingsComponent = ({ variant = null }) => {
   // Returns number of selected settings, sense: 0-n, mobility: 0-1, cities: 0-n
   const getSelectedSettingsCount = () => {
     const sense = settingsValues.senses.length;
-    const mobility = (settingsValues.mobility && settingsValues.mobility !== 'none') || undefined;
+    const mobility =
+      (settingsValues.mobility && settingsValues.mobility !== 'none') ||
+      undefined;
     const cities = settingsValues.cities.length;
     return sense + mobility + cities;
   };
@@ -38,23 +36,23 @@ const SettingsComponent = ({ variant = null }) => {
   const chipLabel = intl.formatMessage({ id: 'settings.accordion.open' });
   return (
     <NoSsr>
-      <Container
-        disableGutters
-        sx={{ pb: 2, bgcolor: 'primary.main' }}
-      >
+      <Container disableGutters sx={{ pb: 2, bgcolor: 'primary.main' }}>
         <StyledAccordion
           settingsVisible={settingsVisible}
           defaultOpen={settingsVisible}
           disableUnmount
           onOpen={(e, open) => setSettingsCollapsed(open)}
-          titleContent={settingsVisible
-            ? <Typography id="settings-accordion"><FormattedMessage id="general.hideSettings" /></Typography>
-            : (
+          titleContent={
+            settingsVisible ? (
+              <Typography id="settings-accordion">
+                <FormattedMessage id="general.hideSettings" />
+              </Typography>
+            ) : (
               <>
                 <Typography id="settings-accordion">
                   <FormattedMessage id="general.openSettings" />
                 </Typography>
-                { getSelectedSettingsCount() > 0 && (
+                {getSelectedSettingsCount() > 0 && (
                   <StyledChipContainer>
                     <StyledChip
                       tabIndex={-1}
@@ -68,12 +66,12 @@ const SettingsComponent = ({ variant = null }) => {
               </>
             )
           }
-          collapseContent={(<SettingsDropdowns />)}
+          collapseContent={<SettingsDropdowns />}
         />
       </Container>
     </NoSsr>
   );
-};
+}
 
 const StyledAccordion = styled(SMAccordion)(({ theme, settingsVisible }) => ({
   height: settingsVisible ? 32 : '100%',
@@ -103,7 +101,6 @@ const StyledChip = styled(Chip)(({ theme }) => ({
     backgroundColor: theme.palette.white.main,
   },
 }));
-
 
 const StyledChipContainer = styled('div')(({ theme }) => ({
   display: 'flex',

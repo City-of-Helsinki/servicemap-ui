@@ -1,4 +1,3 @@
-
 class DataVisualization {
   STATISTICS_DATASETS = {
     ALL: 'väestö_yhteensä',
@@ -50,45 +49,56 @@ class DataVisualization {
     if (!data) {
       return undefined;
     }
-    const categories = Object.keys(data)
-      .filter(category => (forecast ? this.isForecast(category) : this.isByAge(category)));
-    const category = categories.reduce(
-      (mostRecent, category) => {
-        if (!mostRecent) {
-          return category;
-        }
-        const mostRecentYear = forecast
-          ? this.getYearForecast(mostRecent)
-          : this.getYearByAge(mostRecent);
-        const categoryYear = forecast
-          ? this.getYearForecast(category)
-          : this.getYearByAge(category);
-        return (
-          mostRecentYear > categoryYear ? mostRecent : category
-        );
-      },
-      undefined,
+    const categories = Object.keys(data).filter((category) =>
+      forecast ? this.isForecast(category) : this.isByAge(category)
     );
+    const category = categories.reduce((mostRecent, category) => {
+      if (!mostRecent) {
+        return category;
+      }
+      const mostRecentYear = forecast
+        ? this.getYearForecast(mostRecent)
+        : this.getYearByAge(mostRecent);
+      const categoryYear = forecast
+        ? this.getYearForecast(category)
+        : this.getYearByAge(category);
+      return mostRecentYear > categoryYear ? mostRecent : category;
+    }, undefined);
     return data[category];
-  }
+  };
 
-  getStatisticsLayer = name => this.STATISTICS_DATASETS[name];
+  getStatisticsLayer = (name) => this.STATISTICS_DATASETS[name];
 
-  getStatisticsType = name => this.STATISTICS_TYPES[name];
+  getStatisticsType = (name) => this.STATISTICS_TYPES[name];
 
   getStatisticsLayers = () => Object.keys(this.STATISTICS_DATASETS);
 
   getForecastsLayers = () => Object.keys(this.FORECAST_DATASETS);
 
-  isTotal = value => value === 'ALL';
+  isTotal = (value) => value === 'ALL';
 
-  isForecast = category => typeof category === 'string' && category.indexOf(this.POPULATION_FORECAST_STRING) > -1;
+  isForecast = (category) =>
+    typeof category === 'string' &&
+    category.indexOf(this.POPULATION_FORECAST_STRING) > -1;
 
-  isByAge = category => typeof category === 'string' && category.indexOf(this.POPULATION_BY_AGE_STRING) > -1;
+  isByAge = (category) =>
+    typeof category === 'string' &&
+    category.indexOf(this.POPULATION_BY_AGE_STRING) > -1;
 
-  getYearByAge = category => (this.isByAge(category) ? parseInt(category.slice(0, category.indexOf(this.POPULATION_BY_AGE_STRING))) : undefined)
+  getYearByAge = (category) =>
+    this.isByAge(category)
+      ? parseInt(
+          category.slice(0, category.indexOf(this.POPULATION_BY_AGE_STRING))
+        )
+      : undefined;
 
-  getYearForecast = category => (this.isForecast(category) ? parseInt(category.slice(0, category.indexOf(this.POPULATION_BY_AGE_STRING))) : undefined);
+  getYearForecast = (category) =>
+    this.isForecast(category)
+      ? parseInt(
+          category.slice(0, category.indexOf(this.POPULATION_BY_AGE_STRING))
+        )
+      : undefined;
 }
 
-export default new DataVisualization();
+const dataVisualizationInstance = new DataVisualization();
+export default dataVisualizationInstance;

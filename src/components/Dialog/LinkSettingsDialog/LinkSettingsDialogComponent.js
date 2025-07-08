@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
+
 import { getSelectedUnit } from '../../../redux/selectors/selectedUnit';
 import {
   selectMapType,
@@ -16,55 +17,58 @@ import SettingsUtility from '../../../utils/settings';
 import useLocaleText from '../../../utils/useLocaleText';
 import Dialog from '../index';
 
-const CopyTooltip = ({
-  children,
-  ...rest
-}) => (
-  <Tooltip
-    arrow
-    PopperProps={{
-      disablePortal: true,
-    }}
-    disableFocusListener
-    disableHoverListener
-    disableTouchListener
-    placement="top"
-    {...rest}
-  >
-    {children}
-  </Tooltip>
-);
+function CopyTooltip({ children, ...rest }) {
+  return (
+    <Tooltip
+      arrow
+      PopperProps={{
+        disablePortal: true,
+      }}
+      disableFocusListener
+      disableHoverListener
+      disableTouchListener
+      placement="top"
+      {...rest}
+    >
+      {children}
+    </Tooltip>
+  );
+}
 
 CopyTooltip.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-const LinkSettingsDialogComponent = ({
+function LinkSettingsDialogComponent({
   activateSetting,
   resetAccessibilitySettings,
   setOpen,
   ...rest
-}) => {
+}) {
   const intl = useIntl();
   const getLocaleText = useLocaleText();
   const unit = useSelector(getSelectedUnit);
   const mapType = useSelector(selectMapType);
-  const a11ySettings = useSelector(selectSelectedAccessibilitySettings)
-    .map(setting => {
-      const impairmentKey = SettingsUtility.mapValidAccessibilitySenseImpairmentValueToKey(setting);
+  const a11ySettings = useSelector(selectSelectedAccessibilitySettings).map(
+    (setting) => {
+      const impairmentKey =
+        SettingsUtility.mapValidAccessibilitySenseImpairmentValueToKey(setting);
       return impairmentKey || setting;
-    });
+    }
+  );
   const [copyTooltipOpen1, setCopyTooltipOpen1] = useState(false);
   const [copyTooltipOpen2, setCopyTooltipOpen2] = useState(false);
   const [showAriaAlert, setShowAriaAlert] = useState(false);
   let timeout = null;
   let timeoutAriaAlert = null;
 
-
-  useEffect(() => () => {
-    clearTimeout(timeout);
-    clearTimeout(timeoutAriaAlert);
-  }, []);
+  useEffect(
+    () => () => {
+      clearTimeout(timeout);
+      clearTimeout(timeoutAriaAlert);
+    },
+    []
+  );
 
   if (!isClient()) {
     return null;
@@ -82,18 +86,25 @@ const LinkSettingsDialogComponent = ({
     }, tooltipFadeTime);
   };
 
-  const actionButtonText = intl.formatMessage({ id: 'link.settings.dialog.buttons.action' });
+  const actionButtonText = intl.formatMessage({
+    id: 'link.settings.dialog.buttons.action',
+  });
   const title = intl.formatMessage({ id: 'link.settings.dialog.title' });
-  const unitName = (unit && unit.name) ? getLocaleText(unit.name) : '';
+  const unitName = unit && unit.name ? getLocaleText(unit.name) : '';
   const tooltip = intl.formatMessage({ id: 'link.settings.dialog.tooltip' });
-  const tooltipAria = intl.formatMessage({ id: 'link.settings.dialog.tooltip.aria.a11y' });
+  const tooltipAria = intl.formatMessage({
+    id: 'link.settings.dialog.tooltip.aria.a11y',
+  });
 
   const getLinkUrl = () => {
     const url = new URL(window.location.href);
     if (a11ySettings.length) {
-      const mobility = a11ySettings.find(v => SettingsUtility.isValidMobilitySetting(v));
-      const senses = a11ySettings
-        .filter(v => SettingsUtility.isValidAccessibilitySenseImpairment(v));
+      const mobility = a11ySettings.find((v) =>
+        SettingsUtility.isValidMobilitySetting(v)
+      );
+      const senses = a11ySettings.filter((v) =>
+        SettingsUtility.isValidAccessibilitySenseImpairment(v)
+      );
 
       if (mobility) {
         url.searchParams.set('mobility', mobility);
@@ -120,7 +131,7 @@ const LinkSettingsDialogComponent = ({
       },
       (e) => {
         console.warn(`Error while copying to clipboard: ${e.message}`);
-      },
+      }
     );
   };
 
@@ -137,7 +148,7 @@ const LinkSettingsDialogComponent = ({
       setOpen={setOpen}
       {...rest}
       title={title}
-      content={(
+      content={
         <StyledContainer data-sm="DialogContainer">
           <CopyTooltip
             open={copyTooltipOpen1}
@@ -160,15 +171,18 @@ const LinkSettingsDialogComponent = ({
               <StyledFileCopy />
             </StyledUrlContainer>
           </CopyTooltip>
-          {
-            showAriaAlert
-            && (
-              <Typography aria-live="polite" id="copy_link_aria_live" style={visuallyHidden}><FormattedMessage id="link.settings.dialog.tooltip" /></Typography>
-            )
-          }
+          {showAriaAlert && (
+            <Typography
+              aria-live="polite"
+              id="copy_link_aria_live"
+              style={visuallyHidden}
+            >
+              <FormattedMessage id="link.settings.dialog.tooltip" />
+            </Typography>
+          )}
         </StyledContainer>
-      )}
-      actions={(
+      }
+      actions={
         <CopyTooltip
           open={copyTooltipOpen2}
           title={tooltip}
@@ -184,10 +198,10 @@ const LinkSettingsDialogComponent = ({
             <StyledShare />
           </StyledShareButton>
         </CopyTooltip>
-      )}
+      }
     />
   );
-};
+}
 
 const StyledContainer = styled('div')(({ theme }) => ({
   padding: theme.spacing(1),

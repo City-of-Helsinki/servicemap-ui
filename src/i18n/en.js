@@ -1,4 +1,5 @@
-/* eslint-disable quote-props */
+/* eslint-disable max-len */
+/* eslint-disable import/no-anonymous-default-export */
 export default {
   'app.title': 'Service map',
   'app.description': 'Find services near your home',
@@ -9,7 +10,7 @@ export default {
   'app.navigation.settings': 'Settings',
 
   // Accessibility
-  'accessibility': 'Accessibility',
+  accessibility: 'Accessibility',
   'accessibility.info': 'Accessibility details',
   'accessibility.details': 'Accessibility details',
   'accessibility.details.summary': 'Summary page (new tab)',
@@ -22,7 +23,7 @@ export default {
                               }`,
 
   // Address
-  'address': 'Address',
+  address: 'Address',
   'address.description': 'View services near the address',
   'address.search': 'Address search',
   'address.search.cleared': 'Search box cleared',
@@ -36,12 +37,15 @@ export default {
   'address.services.header': 'Service areas',
   'address.services.info': 'Services for people who live here',
   'address.area.link': 'Get to know the areas on the map.',
-  'address.emergency_care.common': 'When your health station is closed and in the night between 22-8, emergency care for children and young people under age 16 is provided at <a>New Children\'s Hospital</a> [<a1>homepage</a1>], and for adults at',
+  'address.emergency_care.common':
+    "When your health station is closed and in the night between 22-8, emergency care for children and young people under age 16 is provided at <a>New Children's Hospital</a> [<a1>homepage</a1>], and for adults at",
   'address.emergency_care.children_hospital.link': '/en/unit/62976',
-  'address.emergency_care.common.link': 'https://www.hus.fi/en/patient/hospitals-and-other-units/new-childrens-hospital',
+  'address.emergency_care.common.link':
+    'https://www.hus.fi/en/patient/hospitals-and-other-units/new-childrens-hospital',
   'address.emergency_care.unit.26107': 'Malmi hospital',
   'address.emergency_care.unit.26104': 'Haartman hospital',
-  'address.emergency_care.link': 'https://www.hel.fi/en/health-and-social-services/health-care/urgent-and-emergency-care',
+  'address.emergency_care.link':
+    'https://www.hel.fi/en/health-and-social-services/health-care/urgent-and-emergency-care',
   'address.emergency_care.link.text': '[<a>emergency webpages</a>]',
 
   // Area
@@ -54,40 +58,56 @@ export default {
   'area.tab.statisticalDistricts': 'Demographic data',
   'area.services.local': 'Your civil defence district',
   'area.services.nearby': 'Locations in nearby areas as a list',
-  'area.services.nearby.rescue_area': 'Civil defence districts in surrounding areas',
-  'area.services.nearby.rescue_district': 'Civil defence sections in nearby areas as a list',
-  'area.services.nearby.rescue_sub_district': 'Civil defence subsections in nearby areas as a list',
+  'area.services.nearby.rescue_area':
+    'Civil defence districts in surrounding areas',
+  'area.services.nearby.rescue_district':
+    'Civil defence sections in nearby areas as a list',
+  'area.services.nearby.rescue_sub_district':
+    'Civil defence subsections in nearby areas as a list',
   'area.services.all': 'Locations as a list',
   'area.services.all.rescue_area': 'Civil defence districts as a list',
   'area.services.all.rescue_district': 'Civil defence sections as a list',
-  'area.services.all.rescue_sub_district': 'Civil defence subsections as a list',
-  'area.info': 'Choose an area, whose services you want information about. Writing your home address in the search field opens a map, and the areas and districts that you belong to are shown under the Services in the area tab.',
+  'area.services.all.rescue_sub_district':
+    'Civil defence subsections as a list',
+  'area.info':
+    'Choose an area, whose services you want information about. Writing your home address in the search field opens a map, and the areas and districts that you belong to are shown under the Services in the area tab.',
   'area.choose.district': 'Choose area',
   'area.list': 'Area selection',
   'area.localAddress.title': 'Information according to your address',
   'area.localAddress.neighborhood': 'Neighbourhood: {area}',
   'area.localAddress.postCode': 'Postal code area: {area}',
-  'area.geographicalServices.neighborhood': 'Services of the neighbourhood ({length})',
-  'area.geographicalServices.postcode_area': 'Services of the postal code area ({length})',
-  'area.geographicalServices.major_district': 'Services of the major district ({length})',
-  'area.geographicalServices.statistical_district': 'Demographic data area services',
+  'area.geographicalServices.neighborhood':
+    'Services of the neighbourhood ({length})',
+  'area.geographicalServices.postcode_area':
+    'Services of the postal code area ({length})',
+  'area.geographicalServices.major_district':
+    'Services of the major district ({length})',
+  'area.geographicalServices.statistical_district':
+    'Demographic data area services',
   'area.neighborhood.title': 'Choose neighbourhood',
   'area.postcode_area.title': 'Choose postal code',
   'area.major_district.title': 'Choose major district',
   'area.service.filter': 'Filtering of services for areas',
-  'area.statisticalDistrict.info': 'First, select a population data area, and then you can browse the area\'s services',
+  'area.statisticalDistrict.info':
+    "First, select a population data area, and then you can browse the area's services",
   'area.statisticalDistrict.title': 'Select a population data area',
   'area.statisticalDistrict.section': 'Cropping: {text}',
   'area.statisticalDistrict.noData': 'Information could not be retrieved',
-  'area.statisticalDistrict.label': '{count} people, {percent}% of the entire population of the area',
+  'area.statisticalDistrict.label':
+    '{count} people, {percent}% of the entire population of the area',
   'area.statisticalDistrict.label.total': '{count} people',
   'area.statisticalDistrict.label.people': '{count} people',
-  'area.statisticalDistrict.label.percent': '{percent}% of the entire population of the area',
-  'area.statisticalDistrict.label.noResults': 'Population data information is not available',
-  'area.statisticalDistrict.service.filter': 'Filtering of services for population data areas',
+  'area.statisticalDistrict.label.percent':
+    '{percent}% of the entire population of the area',
+  'area.statisticalDistrict.label.noResults':
+    'Population data information is not available',
+  'area.statisticalDistrict.service.filter':
+    'Filtering of services for population data areas',
   'area.statisticalDistrict.service.filter.button': 'Filter',
-  'area.statisticalDistrict.service.filter.button.aria': 'Filter the services of population data areas',
-  'area.statisticalDistrict.service.filter.aria.notification': 'Population data area services filtered with {filterValue}',
+  'area.statisticalDistrict.service.filter.button.aria':
+    'Filter the services of population data areas',
+  'area.statisticalDistrict.service.filter.aria.notification':
+    'Population data area services filtered with {filterValue}',
   'area.noSelection': 'Choose area from the Choice of Area tab',
   'area.noUnits': 'There are no service points in your chosen area',
   'area.popupLink': 'Show the details for the area (new tab)',
@@ -112,10 +132,14 @@ export default {
   'area.list.rescue_sub_district': 'Civil defence subsection',
   'area.list.health_station_district': 'Health station area',
   'area.list.maternity_clinic_district': 'Maternity clinic area',
-  'area.list.lower_comprehensive_school_district_fi': 'Finnish primary school area',
-  'area.list.lower_comprehensive_school_district_sv': 'Swedish primary school area',
-  'area.list.upper_comprehensive_school_district_fi': 'Finnish secondary school area',
-  'area.list.upper_comprehensive_school_district_sv': 'Swedish secondary school area',
+  'area.list.lower_comprehensive_school_district_fi':
+    'Finnish primary school area',
+  'area.list.lower_comprehensive_school_district_sv':
+    'Swedish primary school area',
+  'area.list.upper_comprehensive_school_district_fi':
+    'Finnish secondary school area',
+  'area.list.upper_comprehensive_school_district_sv':
+    'Swedish secondary school area',
   'area.list.preschool_education_fi': 'Finnish pre-primary education area',
   'area.list.preschool_education_sv': 'Swedish pre-primary education area',
   'area.list.nature_reserve': 'Nature conservation areas',
@@ -128,12 +152,18 @@ export default {
   'area.list.rescue_sub_district.plural': 'Civil defence subsections',
   'area.list.health_station_district.plural': 'Health station areas',
   'area.list.maternity_clinic_district.plural': 'Maternity clinic areas',
-  'area.list.lower_comprehensive_school_district_fi.plural': 'Finnish primary school areas',
-  'area.list.lower_comprehensive_school_district_sv.plural': 'Swedish primary school areas',
-  'area.list.upper_comprehensive_school_district_fi.plural': 'Finnish secondary school areas',
-  'area.list.upper_comprehensive_school_district_sv.plural': 'Swedish secondary school areas',
-  'area.list.preschool_education_fi.plural': 'Finnish pre-primary education areas',
-  'area.list.preschool_education_sv.plural': 'Swedish pre-primary education areas',
+  'area.list.lower_comprehensive_school_district_fi.plural':
+    'Finnish primary school areas',
+  'area.list.lower_comprehensive_school_district_sv.plural':
+    'Swedish primary school areas',
+  'area.list.upper_comprehensive_school_district_fi.plural':
+    'Finnish secondary school areas',
+  'area.list.upper_comprehensive_school_district_sv.plural':
+    'Swedish secondary school areas',
+  'area.list.preschool_education_fi.plural':
+    'Finnish pre-primary education areas',
+  'area.list.preschool_education_sv.plural':
+    'Swedish pre-primary education areas',
   'area.list.nature_reserve.plural': 'Nature conservation areass',
   'area.list.resident_parking_zone.plural': 'Residential parking areas',
   'area.list.parkingSpaces': 'Parking lots',
@@ -158,7 +188,8 @@ export default {
   'area.list.hgv_no_parking_area': 'Prohibited street parking',
   'area.list.park_and_ride_area': 'Park & Ride',
   'area.parking.tooltip.park_and_ride_area': 'Park & Ride',
-  'area.parking.tooltip.hgv_no_parking_area': 'Heavy traffic - Prohibited street parking',
+  'area.parking.tooltip.hgv_no_parking_area':
+    'Heavy traffic - Prohibited street parking',
   'cookies.matomo.description': 'A cookie of the Matomo statistics system.',
   'cookies.matomo.expiration': '{days} days',
 
@@ -182,13 +213,20 @@ export default {
   'parkingArea.popup.validity4': 'Parking is subject to charge: {validity}',
   'parkingArea.popup.validity5': 'Parking is subject to charge: {validity}',
   'parkingArea.popup.validity6': 'Parking is subject to charge: {validity}',
-  'parkingArea.popup.info': 'The information is indicative. Always check the traffic sign for information.',
-  'parkingArea.popup.info1': 'The restrictions do not apply to those who possess a resident or business parking permit, if the parking area is a designated resident parking area.',
-  'parkingArea.popup.info2': 'The restrictions do not apply to those who possess a resident or business parking permit, if the parking area is a designated resident parking area.',
-  'parkingArea.popup.info3': 'The restrictions do not apply to those who possess a resident or business parking permit, if the parking area is a designated resident parking area.',
-  'parkingArea.popup.info4': 'The fees and restrictions do not apply to those who possess a resident or business parking permit if the parking area is a designated resident parking area.',
-  'parkingArea.popup.info5': 'The fees and restrictions do not apply to those who possess a resident or business parking permit if the parking area is a designated resident parking area.',
-  'parkingArea.popup.info6': 'The fees and restrictions do not apply to those who possess a resident or business parking permit if the parking area is a designated resident parking area.',
+  'parkingArea.popup.info':
+    'The information is indicative. Always check the traffic sign for information.',
+  'parkingArea.popup.info1':
+    'The restrictions do not apply to those who possess a resident or business parking permit, if the parking area is a designated resident parking area.',
+  'parkingArea.popup.info2':
+    'The restrictions do not apply to those who possess a resident or business parking permit, if the parking area is a designated resident parking area.',
+  'parkingArea.popup.info3':
+    'The restrictions do not apply to those who possess a resident or business parking permit, if the parking area is a designated resident parking area.',
+  'parkingArea.popup.info4':
+    'The fees and restrictions do not apply to those who possess a resident or business parking permit if the parking area is a designated resident parking area.',
+  'parkingArea.popup.info5':
+    'The fees and restrictions do not apply to those who possess a resident or business parking permit if the parking area is a designated resident parking area.',
+  'parkingArea.popup.info6':
+    'The fees and restrictions do not apply to those who possess a resident or business parking permit if the parking area is a designated resident parking area.',
   'parkingArea.popup.info7': 'Parking prohibited',
 
   'parkingArea.popup.vantaa.neighbourhood': 'City District: {value}',
@@ -206,12 +244,15 @@ export default {
   'download.cropText.service': 'Service points with selected services:',
   'download.cropText.search': 'Service points based on text search:',
   'download.cropText.none': 'No filter values have been selected',
-  'download.data.none': 'First select service points to be shown on the Service Map using the browse or search functions and then return to this view to save the information of the selected service points.',
+  'download.data.none':
+    'First select service points to be shown on the Service Map using the browse or search functions and then return to this view to save the information of the selected service points.',
   'download.download': 'Download the information (new tab)',
   'download.format': 'File format:',
-  'download.info': 'Save the information of the service points that you have filtered into a file, which you can import, for example, to the Google Maps application or continue working with.',
+  'download.info':
+    'Save the information of the service points that you have filtered into a file, which you can import, for example, to the Google Maps application or continue working with.',
   'download.title': 'Download the service location information',
-  'download.coordinate': 'The coordinate system of the Service Map is: ETRS89 / GK25FIN (EPSG:3879)',
+  'download.coordinate':
+    'The coordinate system of the Service Map is: ETRS89 / GK25FIN (EPSG:3879)',
 
   // Event
   'event.description': 'Description',
@@ -230,16 +271,22 @@ export default {
   'embedder.code.title': 'Copy the HTML code',
   'embedder.height.title': 'Height of the embedding',
   'embedder.height.aria.label': 'Choose height of the embedding',
-  'embedder.height.ratio.label': 'Relative height. The height of the embedding in relation to the width has been defined',
-  'embedder.height.fixed.label': 'Absolute height. The height of the embedding has been defined in pixels',
+  'embedder.height.ratio.label':
+    'Relative height. The height of the embedding in relation to the width has been defined',
+  'embedder.height.fixed.label':
+    'Absolute height. The height of the embedding has been defined in pixels',
   'embedder.height.input.aria.fixed': 'Height of the embedding in pixels',
-  'embedder.height.input.aria.ratio': 'Height of the embedding as per cent of the width',
+  'embedder.height.input.aria.ratio':
+    'Height of the embedding as per cent of the width',
   'embedder.iframe.title': 'Service map embedding window',
   'embedder.language.title': 'Language of the embedding',
   'embedder.language.aria.label': 'Choose the language of the embedding',
-  'embedder.language.description.fi': 'Service point information is shown in Finnish. Background map is in Finnish.',
-  'embedder.language.description.sv': 'Service point information is shown in Swedish. Background map is in Swedish.',
-  'embedder.language.description.en': 'Service point information is shown in English. Background map is in Finnish.',
+  'embedder.language.description.fi':
+    'Service point information is shown in Finnish. Background map is in Finnish.',
+  'embedder.language.description.sv':
+    'Service point information is shown in Swedish. Background map is in Swedish.',
+  'embedder.language.description.en':
+    'Service point information is shown in English. Background map is in Finnish.',
   'embedder.map.title': 'Background map',
   'embedder.map.aria.label': 'Choose backgroud map',
   'embedder.preview.title': 'Map preview',
@@ -247,25 +294,35 @@ export default {
   'embedder.options.label.units': 'Show service points',
   'embedder.options.list.title': 'List of service points',
   'embedder.options.label.list.none': 'Hide the list of service points',
-  'embedder.options.label.list.side': 'Show service points as a list (beside the map)',
-  'embedder.options.label.list.bottom': 'Show service points as a list (under the map)',
-  'embedder.options.label.transit': 'Show public transport stops (Zoom in the map to see the stops)',
-  'embedder.options.label.bbox': 'Limit the embedded map to the area in the preview window',
+  'embedder.options.label.list.side':
+    'Show service points as a list (beside the map)',
+  'embedder.options.label.list.bottom':
+    'Show service points as a list (under the map)',
+  'embedder.options.label.transit':
+    'Show public transport stops (Zoom in the map to see the stops)',
+  'embedder.options.label.bbox':
+    'Limit the embedded map to the area in the preview window',
   'embedder.service.title': 'Services',
   'embedder.service.aria.label': 'Choose services to be shown',
   'embedder.service.none': 'Map is shown without service points',
-  'embedder.service.common': 'The city resident\'s most common everyday service points are shown on the map: schools, daycares and health stations.',
-  'embedder.service.all': 'All service points are shown on the map. Too extensive area borders slow down the embedding and decreases its clarity.',
+  'embedder.service.common':
+    "The city resident's most common everyday service points are shown on the map: schools, daycares and health stations.",
+  'embedder.service.all':
+    'All service points are shown on the map. Too extensive area borders slow down the embedding and decreases its clarity.',
   'embedder.title': 'Embedding tool',
-  'embedder.title.info': 'You can embed views of the Service Map into any web page with the embedding tool of the Service Map.',
+  'embedder.title.info':
+    'You can embed views of the Service Map into any web page with the embedding tool of the Service Map.',
   'embedder.info.title': 'Instructions for using the embedding tool',
-  'embedder.info.description': 'Select the functions you want to use while viewing the map from the selection below. Copy the URL link or html code you want to use from the map.\n\n More detailed instructions for using the embedding tool in different situations can be found',
+  'embedder.info.description':
+    'Select the functions you want to use while viewing the map from the selection below. Copy the URL link or html code you want to use from the map.\n\n More detailed instructions for using the embedding tool in different situations can be found',
   'embedder.info.link': 'here (new tab).',
   'embedder.url.title': 'Copy URL',
   'embedder.width.title': 'Width of the embedding',
   'embedder.width.aria.label': 'Choose width of the embedding',
-  'embedder.width.auto.label': 'Automatic width. The embedding fills the width of the element in which it has been placed. In this preview, the embedding has been placed in a standard-width element, which has been outlined with a broken line. ',
-  'embedder.width.custom.label': 'Width has been set. The width of the embedding has been set in pixels.',
+  'embedder.width.auto.label':
+    'Automatic width. The embedding fills the width of the element in which it has been placed. In this preview, the embedding has been placed in a standard-width element, which has been outlined with a broken line. ',
+  'embedder.width.custom.label':
+    'Width has been set. The width of the embedding has been set in pixels.',
   'embedder.width.input.aria.auto': 'Width of the embedding, per cent',
   'embedder.width.input.aria.custom': 'Width of the embedding, pixels',
 
@@ -274,19 +331,25 @@ export default {
   'feedback.title': 'Give feedback on this web service',
   'feedback.title.unit': 'Give feedback on the service point {unit}',
   'feedback.email': 'Email',
-  'feedback.email.info': 'If you want us to answer the feedback, please provide your e-mail address.',
+  'feedback.email.info':
+    'If you want us to answer the feedback, please provide your e-mail address.',
   'feedback.feedback': 'Your feedback (required)',
-  'feedback.feedback.info': 'Tell as precisely as possible, what kind of feedback you want to give.',
-  'feedback.permission': 'My feedback may be published (after checking). The e-mail address will not be published.',
-  'feedback.additionalInfo': 'Your feedback is forwarded to the city of Helsinki\'s feedback system.',
-  'feedback.additionalInfo.link': 'Information and instructions on giving feedback (link opens in new tab).',
+  'feedback.feedback.info':
+    'Tell as precisely as possible, what kind of feedback you want to give.',
+  'feedback.permission':
+    'My feedback may be published (after checking). The e-mail address will not be published.',
+  'feedback.additionalInfo':
+    "Your feedback is forwarded to the city of Helsinki's feedback system.",
+  'feedback.additionalInfo.link':
+    'Information and instructions on giving feedback (link opens in new tab).',
   'feedback.send': 'Send feedback',
   'feedback.sending': 'Sending...',
   'feedback.send.error': 'Send feedback. Mandatory field is empty',
   'feedback.error.required': 'Mandatory field',
   'feedback.error.email.invalid': 'The email must be written correctly.',
   'feedback.srError.email.invalid': 'The email is faulty. Please correct it.',
-  'feedback.srError.feedback.required': 'No feedback submitted. Please write your feedback.',
+  'feedback.srError.feedback.required':
+    'No feedback submitted. Please write your feedback.',
   'feedback.modal.confirm': 'OK',
   'feedback.modal.leave': 'Are you sure you want to leave the page?',
   'feedback.modal.success': 'Thank you for your feedback!',
@@ -333,7 +396,8 @@ export default {
   'general.closeSettings': 'Close settings',
   'general.hideSettings': 'Close map settings',
   'general.fetching': 'Loading data...',
-  'general.fetchingTakesTime': 'There are a lot of search results, the download takes a little longer',
+  'general.fetchingTakesTime':
+    'There are a lot of search results, the download takes a little longer',
   'general.home': 'Home',
   'general.home.logo.ariaLabel': 'Servicemap - Go to home page',
   'general.noData': 'No data available',
@@ -351,9 +415,9 @@ export default {
   'general.pageTitles.home': 'Home page',
   'general.pageTitles.search': 'Search results page',
   'general.pageTitles.unit': 'Service point page',
-  'general.pageTitles.unit.services': 'Service points\' services',
-  'general.pageTitles.unit.events': 'Service points\' events',
-  'general.pageTitles.unit.reservations': 'Service points\' reservable objects',
+  'general.pageTitles.unit.services': "Service points' services",
+  'general.pageTitles.unit.events': "Service points' events",
+  'general.pageTitles.unit.reservations': "Service points' reservable objects",
   'general.pageTitles.service': 'Service page',
   'general.pageTitles.serviceTree': 'Services list page',
   'general.pageTitles.serviceTree.title': 'Services list',
@@ -400,7 +464,8 @@ export default {
   'home.buttons.mobilityTree': 'Get to know the versatile options for movement',
   'home.buttons.closeByServices': 'Show nearby services',
   'home.buttons.instructions': 'Tips for using the service map',
-  'home.buttons.area': 'View the areas for healthcare, education, pre-primary education, civil defence, nature and neighborhoods.',
+  'home.buttons.area':
+    'View the areas for healthcare, education, pre-primary education, civil defence, nature and neighborhoods.',
   'home.example.search': 'Search for',
   'home.message': 'Message from the developers',
   'home.send.feedback': 'Give feedback',
@@ -408,7 +473,7 @@ export default {
   // Location
   'location.notFound': 'Location not found',
   'location.notAllowed': 'Location not allowed',
-  'location.center': 'Center on user\'s location',
+  'location.center': "Center on user's location",
 
   // Loading texts
   'loading.events': 'Loading events {count} / {max}',
@@ -420,16 +485,20 @@ export default {
   'link.settings.dialog.title': 'Share the link to the location',
   'link.settings.dialog.tooltip': 'Copied to the clipboard',
   'link.settings.dialog.tooltip.aria': 'Copy the site link to the clipboard',
-  'link.settings.dialog.tooltip.aria.a11y': 'Copy the site link with accessibility settings to the clipboard',
+  'link.settings.dialog.tooltip.aria.a11y':
+    'Copy the site link with accessibility settings to the clipboard',
   'link.settings.dialog.buttons.action': 'Copy to clipboard',
 
   // Map
-  'map': 'Map',
+  map: 'Map',
   'map.open': 'Open Map',
   'map.close': 'Close Map',
-  'map.ariaLabel': 'Map. Currently map information is only accessible visually.',
-  'map.attribution.osm': '&copy; <a href="http://osm.org/copyright">OpenStreetMap contributors</a>',
-  'map.attribution.helsinki': '&copy; Cities of Helsinki, Espoo, Vantaa ja Kauniainen',
+  'map.ariaLabel':
+    'Map. Currently map information is only accessible visually.',
+  'map.attribution.osm':
+    '&copy; <a href="http://osm.org/copyright">OpenStreetMap contributors</a>',
+  'map.attribution.helsinki':
+    '&copy; Cities of Helsinki, Espoo, Vantaa ja Kauniainen',
   'map.attribution.nls': '&copy; National Land Survey of Finland',
   'map.transit.endStation': 'Terminus',
   'map.address.coordinate': 'Create a link to the GPS coordinates',
@@ -455,7 +524,7 @@ export default {
   'print.table.header.number': 'Number on the map',
 
   // Units
-  'unit': 'Service point',
+  unit: 'Service point',
   'unit.showInformation': 'Show the details for the service point',
   'unit.accessibility.hearingMaps': 'Coverage maps',
   'unit.accessibility.noInfo': 'No accessibility information',
@@ -478,7 +547,8 @@ export default {
   'unit.eServices': 'Electronic services',
   'unit.reservations': 'Reservable objects',
   'unit.events': 'Events',
-  'unit.events.description': 'Here you can find information about events provided by the unit',
+  'unit.events.description':
+    'Here you can find information about events provided by the unit',
   'unit.events.count': `{count, plural,
     =0 {}
     one {# event}
@@ -508,7 +578,8 @@ export default {
   'unit.otherAddress.link': 'See more information (new tab)',
   'unit.contact': 'Contact person',
   'unit.school.year': 'School year',
-  'unit.reservations.description': 'Here you can find information about the unit’s spaces and equipment that may be reserved.',
+  'unit.reservations.description':
+    'Here you can find information about the unit’s spaces and equipment that may be reserved.',
   'unit.reservations.count': `{count, plural,
     =0 {}
     one {# reservable object}
@@ -520,7 +591,8 @@ export default {
   'unit.list.events': 'Events',
   'unit.list.reservations': 'Reservable objects',
   'unit.services': 'Services related to the unit',
-  'unit.services.description': 'Along with the service description, you can find information about different service channels provided by the municipality.',
+  'unit.services.description':
+    'Along with the service description, you can find information about different service channels provided by the municipality.',
   'unit.services.more': 'Show more services ({count})',
   'unit.services.count': `{count, plural,
     =0 {}
@@ -532,16 +604,20 @@ export default {
   'unit.educationServices.description': 'School year {period}',
   'unit.educationServices.more': 'Show more services ({count})',
   'unit.route': 'Look at the route to this place',
-  'unit.route.extra.hslRouteGuide': '(New tab. The HSL Journey Planner is not an accessible service)',
-  'unit.route.extra.routeGuide': '(New tab. The Matka.fi Journey Planner is not an accessible service)',
+  'unit.route.extra.hslRouteGuide':
+    '(New tab. The HSL Journey Planner is not an accessible service)',
+  'unit.route.extra.routeGuide':
+    '(New tab. The Matka.fi Journey Planner is not an accessible service)',
   'unit.socialMedia.title': 'The service point on social media',
-  'unit.outdoorLink': 'Check the condition of an exercise location in the ulkoliikunta.fi service',
+  'unit.outdoorLink':
+    'Check the condition of an exercise location in the ulkoliikunta.fi service',
   'unit.seo.description': 'View service point on the map',
-  'unit.seo.description.accessibility': 'View accessibility info and service point on the map',
+  'unit.seo.description.accessibility':
+    'View accessibility info and service point on the map',
   'unit.readFeedbackLink': 'See the feedback given',
 
   // Search
-  'search': 'Search',
+  search: 'Search',
   'search.arrowLabel': 'Refine',
   'search.cancelText': 'Clear search text',
   'search.removeSuggestion': 'Remove',
@@ -603,14 +679,16 @@ export default {
   'search.tryAgainBody.spelling': 'check spelling',
   'search.tryAgainBody.city': 'check city choices',
   'search.tryAgainBody.service': 'write name of service',
-  'search.tryAgainBody.address': 'write address close to service you are looking for',
-  'search.tryAgainBody.keyword': 'write keywords, e.g. nature trail, Swedish day-care centre',
+  'search.tryAgainBody.address':
+    'write address close to service you are looking for',
+  'search.tryAgainBody.keyword':
+    'write keywords, e.g. nature trail, Swedish day-care centre',
   'search.expand': 'Refine search',
   'search.closeExpand': 'Return to search',
   'search.addText': 'Add',
 
   // Service
-  'service': 'Service',
+  service: 'Service',
   'service.plural': 'Services',
   'service.nearby': 'Nearby services',
   'service.units.empty': 'Service does not have service points',
@@ -618,7 +696,7 @@ export default {
   'service.description': 'View locations and contact information of services',
 
   // Service tree
-  'services': 'Services list',
+  services: 'Services list',
   'services.selections': `{count, plural,
       one {You have made (#) selection}
       other {You have made (#) selections}
@@ -631,12 +709,14 @@ export default {
   'services.search.sr.selected': 'Perform search with services: {services}',
   'services.category.select': 'All',
   'services.category.open': 'Open category',
-  'services.info': 'Before you can perform a search you must choose at least one service from services list below.',
+  'services.info':
+    'Before you can perform a search you must choose at least one service from services list below.',
   'services.tree.level': 'Level',
-  'mobilityTree.info': 'Get to know the movement options by selecting at least one service from the options below to complete the search.',
+  'mobilityTree.info':
+    'Get to know the movement options by selecting at least one service from the options below to complete the search.',
 
   // Settings
-  'settings': 'Settings',
+  settings: 'Settings',
   'settings.open': 'Open settings options',
   'settings.close': 'Hide setting options',
   'settings.change': 'Edit your settings',
@@ -664,7 +744,8 @@ export default {
   'settings.info.title': 'Your selected settings will effect search results',
   'settings.info.title.city': 'The city settings affect the area information',
   'settings.info.title.noSettings': 'Change search or accessibility settings',
-  'settings.info.title.noSettings.city': 'Change the city settings to narrow down the number of areas',
+  'settings.info.title.noSettings.city':
+    'Change the city settings to narrow down the number of areas',
   'settings.mobility.title': 'Mobility impairments',
   'settings.mobility.none': 'No mobility impairments',
   'settings.mobility.wheelchair': 'I use a wheelchair',
@@ -682,8 +763,10 @@ export default {
   'settings.city.vantaa': 'Vantaa',
   'settings.city.kauniainen': 'Kauniainen',
   'settings.city.kirkkonummi': 'Kirkkonummi',
-  'settings.city.länsi-uudenmaan hyvinvointialue': 'Western Uusimaa Wellbeing Services County',
-  'settings.city.vantaan ja keravan hyvinvointialue': 'Wellbeing services county of Vantaa and Kerava',
+  'settings.city.länsi-uudenmaan hyvinvointialue':
+    'Western Uusimaa Wellbeing Services County',
+  'settings.city.vantaan ja keravan hyvinvointialue':
+    'Wellbeing services county of Vantaa and Kerava',
   'settings.city.askola': 'Askola',
   'settings.city.hanko': 'Hanko',
   'settings.city.hyvinkää': 'Hyvinkää',
@@ -712,7 +795,8 @@ export default {
   'settings.map.accessible_map': 'High contrast map',
   'settings.map.plainmap': 'Plain map',
   'settings.3dmap.title': '3D-maps',
-  'settings.3dmap.info': 'The Urban data model is based on the city’s map and geographic data, registers, point clouds obtained by laser scanning, aerial photographs and building data models. Use the link below to go to view the city model.',
+  'settings.3dmap.info':
+    'The Urban data model is based on the city’s map and geographic data, registers, point clouds obtained by laser scanning, aerial photographs and building data models. Use the link below to go to view the city model.',
   'settings.3dmap.link.helsinki': 'Helsinki 3D-map (new tab)',
   'settings.3dmap.link.espoo': 'Espoo 3D-map (new tab)',
   'settings.3dmap.link.vantaa': 'Vantaa 3D-map (new tab)',
@@ -726,7 +810,8 @@ export default {
   'settings.choose.senses': 'Select your sensory processing issues',
   'settings.choose.cities': 'Select your city setting',
   'settings.choose.organization': 'Choose a service provider',
-  'settings.map.info': 'You can select the background map that best suits you in the map settings.',
+  'settings.map.info':
+    'You can select the background map that best suits you in the map settings.',
   'settings.reset_button.title': 'Clear all my selections',
   'settings.reset_button.ariaLive': 'All selections were cleared.',
 

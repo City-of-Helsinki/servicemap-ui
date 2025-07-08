@@ -1,10 +1,11 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import { css } from '@emotion/css';
 import styled from '@emotion/styled';
+import PropTypes from 'prop-types';
+import React from 'react';
+
 import { SMSwitch } from '../../../../components';
 
-const DistrictToggleButton = ({
+function DistrictToggleButton({
   district,
   onToggle,
   selected = false,
@@ -12,16 +13,13 @@ const DistrictToggleButton = ({
   label = null,
   inputProps = {},
   ...rest
-}) => {
+}) {
   const switchBorderClass = css({
     border: '1px solid #949494',
   });
 
   return (
-    <StyledAreaSwitch
-      id={district.id}
-      data-sm="DistrictToggleButton"
-    >
+    <StyledAreaSwitch id={district.id} data-sm="DistrictToggleButton">
       <StyledSMSwitch
         color="primary"
         classes={{ thumb: switchBorderClass }}
@@ -34,16 +32,14 @@ const DistrictToggleButton = ({
           'aria-pressed': selected,
           'aria-labelledby': `${`${district.id}Name`} ${`${district.id}Period`}`,
         }}
-        onChange={e => onToggle(e)}
+        onChange={(e) => onToggle(e)}
         checked={selected}
         {...rest}
       />
-      <StyledLabelContainer>
-        {label}
-      </StyledLabelContainer>
+      <StyledLabelContainer>{label}</StyledLabelContainer>
     </StyledAreaSwitch>
   );
-};
+}
 
 const StyledAreaSwitch = styled('div')(({ theme }) => ({
   paddingLeft: theme.spacing(2),

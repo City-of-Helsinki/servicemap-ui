@@ -1,14 +1,15 @@
-import React from 'react';
-import { Link, Typography } from '@mui/material';
 import styled from '@emotion/styled';
 import RouteIcon from '@mui/icons-material/DirectionsBus';
+import { Link, Typography } from '@mui/material';
+import React from 'react';
 import { useIntl } from 'react-intl';
-import routeDetails from '../../views/UnitView/utils/routeDetails';
+
+import useRouteDetails from '../../views/UnitView/utils/useRouteDetails';
 
 function RouteBar({ unit, userLocation }) {
   const intl = useIntl();
 
-  const { routeUrl, extraText } = routeDetails(unit, userLocation);
+  const { routeUrl, extraText } = useRouteDetails(unit, userLocation);
   const text = intl.formatMessage({ id: 'unit.route' });
   const linkText = `${text}${extraText}`;
 
@@ -17,9 +18,7 @@ function RouteBar({ unit, userLocation }) {
       <Link target="_blank" href={routeUrl}>
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <StyledIcon />
-          <Typography style={{ textAlign: 'left' }}>
-            {linkText}
-          </Typography>
+          <Typography style={{ textAlign: 'left' }}>{linkText}</Typography>
         </div>
       </Link>
     </StyledContainer>

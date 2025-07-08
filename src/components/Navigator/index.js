@@ -1,9 +1,10 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import Navigator from './Navigator';
+
 import { setNavigatorRef } from '../../redux/actions/navigator';
+import Navigator from './Navigator';
 
 /**
  * Wrapper component for Navigator for saving ref to redux state and forwarding
@@ -13,12 +14,10 @@ class NavigatorWrapper extends React.Component {
   saveNavigatorRef = (ref) => {
     const { setNavigatorRef } = this.props;
     setNavigatorRef(ref);
-  }
+  };
 
   render() {
-    const {
-      history, location, match,
-    } = this.props;
+    const { history, location, match } = this.props;
     return (
       <Navigator
         history={history}
@@ -37,9 +36,8 @@ NavigatorWrapper.propTypes = {
   setNavigatorRef: PropTypes.func.isRequired,
 };
 
-export default withRouter(connect(
-  null,
-  {
+export default withRouter(
+  connect(null, {
     setNavigatorRef,
-  },
-)(NavigatorWrapper));
+  })(NavigatorWrapper)
+);

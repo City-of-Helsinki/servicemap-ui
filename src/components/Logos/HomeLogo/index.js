@@ -1,31 +1,27 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { useSelector } from 'react-redux';
-import logoNormal from '../../../assets/images/service-map-logo-fi.svg';
-import logoContrast from '../../../assets/images/service-map-logo-contrast.svg';
-import logoNormalDev from '../../../assets/images/service-map-logo-fi-dev.svg';
-import logoContrastDev from '../../../assets/images/service-map-logo-contrast-dev.svg';
+
+import config from '../../../../config';
+import IconPalvelukarttaContrast from '../../../assets/icons/IconPalvelukarttaContrast.svg';
+import IconPalvelukarttaPrimary from '../../../assets/icons/IconPalvelukarttaPrimary.svg';
 import logoEN from '../../../assets/images/Logo-ENG.svg';
 import logoENContrast from '../../../assets/images/Logo-ENG-Contrast.svg';
 import logoSV from '../../../assets/images/Logo-SWE.svg';
 import logoSVContrast from '../../../assets/images/Logo-SWE-Contrast.svg';
-import IconPalvelukarttaPrimary from '../../../assets/icons/IconPalvelukarttaPrimary.svg';
-import IconPalvelukarttaContrast from '../../../assets/icons/IconPalvelukarttaContrast.svg';
-import config from '../../../../config';
+import logoContrast from '../../../assets/images/service-map-logo-contrast.svg';
+import logoContrastDev from '../../../assets/images/service-map-logo-contrast-dev.svg';
+import logoNormal from '../../../assets/images/service-map-logo-fi.svg';
+import logoNormalDev from '../../../assets/images/service-map-logo-fi-dev.svg';
 import { getLocale } from '../../../redux/selectors/user';
 
 const HomeLogo = React.forwardRef((props, ref) => {
-  const {
-    contrast = false,
-    small = false,
-    ...rest
-  } = props;
+  const { contrast = false, small = false, ...rest } = props;
   const locale = useSelector(getLocale);
 
-  const getSmallLogo = contrast => (
-    contrast ? IconPalvelukarttaContrast : IconPalvelukarttaPrimary
-  );
+  const getSmallLogo = (contrast) =>
+    contrast ? IconPalvelukarttaContrast : IconPalvelukarttaPrimary;
 
   const getProductionLogo = (contrast) => {
     switch (locale) {
@@ -39,7 +35,7 @@ const HomeLogo = React.forwardRef((props, ref) => {
     }
   };
 
-  const getDevLogo = contrast => (contrast ? logoContrastDev : logoNormalDev);
+  const getDevLogo = (contrast) => (contrast ? logoContrastDev : logoNormalDev);
 
   const getLogo = (production = false, contrast = false, small = false) => {
     if (small) {

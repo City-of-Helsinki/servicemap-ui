@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+
 import address from './reducers/address';
 import breadcrumb from './reducers/breadcrumb';
 import districts from './reducers/district';
@@ -29,8 +30,8 @@ import {
   visuallyImpaired,
 } from './reducers/settings';
 import {
-  direction,
   bounds,
+  direction,
   mapRef,
   measuringMode,
   order,

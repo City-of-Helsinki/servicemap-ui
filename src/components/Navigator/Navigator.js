@@ -2,7 +2,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { breadcrumbPop, breadcrumbPush, breadcrumbReplace } from '../../redux/actions/breadcrumb';
+
+import {
+  breadcrumbPop,
+  breadcrumbPush,
+  breadcrumbReplace,
+} from '../../redux/actions/breadcrumb';
 import { selectBreadcrumb } from '../../redux/selectors/general';
 import { selectResultsPreviousSearch } from '../../redux/selectors/results';
 import { generatePath, isEmbed } from '../../utils/path';
@@ -17,9 +22,7 @@ class Navigator extends React.Component {
   prevPathName = null;
 
   componentDidMount() {
-    const {
-      history,
-    } = this.props;
+    const { history } = this.props;
 
     this.prevPathName = history.location.pathname;
 
@@ -32,9 +35,7 @@ class Navigator extends React.Component {
 
   // We need to update history tracking event when settings change
   componentDidUpdate() {
-    const {
-      history,
-    } = this.props;
+    const { history } = this.props;
 
     if (this.unlisten) {
       this.unlisten();
@@ -75,12 +76,7 @@ class Navigator extends React.Component {
    * Go back in history if breadcrumbs has values otherwise return to home view
    */
   goBack = () => {
-    const {
-      breadcrumb,
-      breadcrumbPop,
-      history,
-      location,
-    } = this.props;
+    const { breadcrumb, breadcrumbPop, history, location } = this.props;
 
     // If breadcrumb has values go back else take user to home
     if (breadcrumb && breadcrumb.length > 0) {
@@ -99,11 +95,7 @@ class Navigator extends React.Component {
    */
   // eslint-disable-next-line react/no-unused-class-component-methods
   push = (target, data, focusTarget) => {
-    const {
-      breadcrumbPush,
-      history,
-      location,
-    } = this.props;
+    const { breadcrumbPush, history, location } = this.props;
 
     try {
       if (typeof target === 'string') {
@@ -127,9 +119,7 @@ class Navigator extends React.Component {
    * @param data - Data for path used if target is path key
    */
   replace = (target, data) => {
-    const {
-      history,
-    } = this.props;
+    const { history } = this.props;
 
     try {
       if (typeof target === 'string') {
@@ -158,7 +148,7 @@ class Navigator extends React.Component {
 
   // Remove map param from url
   // eslint-disable-next-line react/no-unused-class-component-methods
-  closeMap = replace => {
+  closeMap = (replace) => {
     const { history } = this.props;
     const url = new URL(window.location);
 
@@ -171,7 +161,7 @@ class Navigator extends React.Component {
   };
 
   // eslint-disable-next-line react/no-unused-class-component-methods
-  closeFeedback = unitID => {
+  closeFeedback = (unitID) => {
     const { breadcrumb } = this.props;
     if (unitID && !breadcrumb.length) {
       this.replace('unit', { id: unitID });
@@ -190,7 +180,7 @@ class Navigator extends React.Component {
   };
 
   // eslint-disable-next-line react/no-unused-class-component-methods
-  removeParameter = param => {
+  removeParameter = (param) => {
     const { history } = this.props;
     const url = new URL(window.location);
 
@@ -199,7 +189,7 @@ class Navigator extends React.Component {
   };
 
   historyCallBack() {
-    return a => {
+    return (a) => {
       if (this.prevPathName === a.pathname) {
         return;
       }
@@ -221,7 +211,7 @@ Navigator.propTypes = {
 };
 
 // Listen to redux state
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   breadcrumb: selectBreadcrumb(state),
   previousSearch: selectResultsPreviousSearch(state),
 });
@@ -229,8 +219,10 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   {
-    breadcrumbPush, breadcrumbPop, breadcrumbReplace,
+    breadcrumbPush,
+    breadcrumbPop,
+    breadcrumbReplace,
   },
   null,
-  { forwardRef: true },
+  { forwardRef: true }
 )(Navigator);

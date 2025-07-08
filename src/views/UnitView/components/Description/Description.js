@@ -1,12 +1,13 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
+
 import { DescriptionText } from '../../../../components';
 import useLocaleText from '../../../../utils/useLocaleText';
 import unitSectionFilter from '../../utils/unitSectionFilter';
 import { StyledAlignLeftParagraph, StyledLink } from '../styled/styled';
 
-const Description = ({ unit }) => {
+function Description({ unit }) {
   const getLocaleText = useLocaleText();
 
   const additionalInfo = [
@@ -29,24 +30,19 @@ const Description = ({ unit }) => {
         {additionalInfo.map((item) => {
           if (item.value.www) {
             return (
-              <StyledAlignLeftParagraph
-                key={item.id}
-                variant="body2"
-              >
-                <StyledLink href={getLocaleText(item.value.www)} target="_blank">
-                  {getLocaleText(item.value.name)}
-                  {' '}
+              <StyledAlignLeftParagraph key={item.id} variant="body2">
+                <StyledLink
+                  href={getLocaleText(item.value.www)}
+                  target="_blank"
+                >
+                  {getLocaleText(item.value.name)}{' '}
                   <FormattedMessage id="opens.new.tab" />
                 </StyledLink>
-
               </StyledAlignLeftParagraph>
             );
           }
           return (
-            <StyledAlignLeftParagraph
-              key={item.id}
-              variant="body2"
-            >
+            <StyledAlignLeftParagraph key={item.id} variant="body2">
               {getLocaleText(item.value.name)}
             </StyledAlignLeftParagraph>
           );
@@ -55,7 +51,7 @@ const Description = ({ unit }) => {
     );
   }
   return null;
-};
+}
 
 Description.propTypes = {
   unit: PropTypes.objectOf(PropTypes.any).isRequired,

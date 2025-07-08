@@ -1,16 +1,12 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Typography, Divider, NoSsr } from '@mui/material';
 import styled from '@emotion/styled';
+import { Divider, NoSsr, Typography } from '@mui/material';
+import PropTypes from 'prop-types';
+import React from 'react';
 
-const DescriptionText = ({
-  description,
-  html = false,
-  title,
-  titleComponent,
-}) => {
+function DescriptionText({ description, html = false, title, titleComponent }) {
   // Hide linebreak html elements from screen readers
-  const hideBRFromSR = text => text.replaceAll('<br>', '<br aria-hidden="true" />');
+  const hideBRFromSR = (text) =>
+    text.replaceAll('<br>', '<br aria-hidden="true" />');
   if (description) {
     return (
       <NoSsr>
@@ -22,19 +18,22 @@ const DescriptionText = ({
             {title}
           </StyledTypographySubtitle>
           <StyledDivider aria-hidden="true" />
-          { !html ? (
+          {!html ? (
             <StyledTypographyParagraph variant="body2">
               {description}
             </StyledTypographyParagraph>
           ) : (
-            <StyledTypographyParagraph dangerouslySetInnerHTML={{ __html: hideBRFromSR(description) }} variant="body2" />
+            <StyledTypographyParagraph
+              dangerouslySetInnerHTML={{ __html: hideBRFromSR(description) }}
+              variant="body2"
+            />
           )}
         </StyledDiv>
       </NoSsr>
     );
   }
   return null;
-};
+}
 
 const StyledDiv = styled('div')(() => ({
   textAlign: 'left',
@@ -58,7 +57,8 @@ DescriptionText.propTypes = {
   description: PropTypes.node.isRequired,
   title: PropTypes.node.isRequired,
   html: PropTypes.bool,
-  titleComponent: PropTypes.oneOf(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']).isRequired,
+  titleComponent: PropTypes.oneOf(['h1', 'h2', 'h3', 'h4', 'h5', 'h6'])
+    .isRequired,
 };
 
 export default DescriptionText;

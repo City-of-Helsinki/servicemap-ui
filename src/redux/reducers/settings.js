@@ -20,13 +20,11 @@ function basicSelectionFunc(action, prefix, state) {
   return state;
 }
 
-const basicSelection = (action, prefix, state = initialState) => {
-  return basicSelectionFunc(action, prefix, state);
-};
+const basicSelection = (action, prefix, state = initialState) =>
+  basicSelectionFunc(action, prefix, state);
 
-const basicSelectionNullInitial = (action, prefix, state = null) => {
-  return basicSelectionFunc(action, prefix, state);
-};
+const basicSelectionNullInitial = (action, prefix, state = null) =>
+  basicSelectionFunc(action, prefix, state);
 
 export const cities = (state = cityInitialState, action) => {
   if (action.type === 'CITY_SET_SELECTION') {
@@ -42,19 +40,27 @@ export const organizations = (state = organizationInitialState, action) => {
   return state;
 };
 
-export const settingsCollapsed = (state = settingsCollapsedInitially, action) => {
+export const settingsCollapsed = (
+  state = settingsCollapsedInitially,
+  action
+) => {
   if (action.type === 'SETTINGS_OPENED') {
     return action.selection;
   }
   return state;
 };
 
-export const hearingAid = (state, action) => basicSelection(action, 'HEARING', state);
+export const hearingAid = (state, action) =>
+  basicSelection(action, 'HEARING', state);
 
-export const visuallyImpaired = (state, action) => basicSelection(action, 'SIGHT', state);
+export const visuallyImpaired = (state, action) =>
+  basicSelection(action, 'SIGHT', state);
 
-export const colorblind = (state, action) => basicSelection(action, 'COLORBLIND', state);
+export const colorblind = (state, action) =>
+  basicSelection(action, 'COLORBLIND', state);
 
-export const mobility = (state, action) => basicSelectionNullInitial(action, 'MOBILITY', state);
+export const mobility = (state, action) =>
+  basicSelectionNullInitial(action, 'MOBILITY', state);
 
-export const mapType = (state, action) => basicSelectionNullInitial(action, 'MAP_TYPE', state);
+export const mapType = (state, action) =>
+  basicSelectionNullInitial(action, 'MAP_TYPE', state);

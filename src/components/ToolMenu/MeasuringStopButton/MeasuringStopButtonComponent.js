@@ -1,11 +1,10 @@
-import React, { useEffect, useRef } from 'react';
-import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
+import PropTypes from 'prop-types';
+import React, { useEffect, useRef } from 'react';
+
 import SMButton from '../../ServiceMapButton';
 
-const MeasuringStopButtonComponent = ({
-  onClick,
-}) => {
+function MeasuringStopButtonComponent({ onClick }) {
   const buttonRef = useRef();
   useEffect(() => {
     // When Measuring is activated focus should move to measuring close button
@@ -24,7 +23,7 @@ const MeasuringStopButtonComponent = ({
       onClick={onClick}
     />
   );
-};
+}
 const StyledButton = styled(SMButton)(() => ({
   position: 'absolute',
   right: 0,

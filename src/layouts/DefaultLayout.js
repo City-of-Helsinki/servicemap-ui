@@ -1,28 +1,40 @@
-import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-import { FormattedMessage, useIntl } from 'react-intl';
-import useMediaQuery from '@mui/material/useMediaQuery';
 import { Typography } from '@mui/material';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import { visuallyHidden } from '@mui/utils';
+import PropTypes from 'prop-types';
+import React, { useEffect, useState } from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import { getPage } from '../redux/selectors/user';
-import MapView from '../views/MapView';
+
 import config from '../../config';
-import ViewRouter from './components/ViewRouter';
-import useMobileStatus from '../utils/isMobile';
-import PrintView from '../views/PrintView';
-import { PrintProvider } from '../context/PrintContext';
-import { viewTitleID } from '../utils/accessibility';
-import { ErrorProvider } from '../context/ErrorContext';
 import {
-  AlertBox, BottomNav, DesktopComponent, ErrorBoundary, ErrorComponent, FocusableSRLinks, TopBar,
+  AlertBox,
+  BottomNav,
+  DesktopComponent,
+  ErrorBoundary,
+  ErrorComponent,
+  FocusableSRLinks,
+  TopBar,
 } from '../components';
+import { ErrorProvider } from '../context/ErrorContext';
+import { PrintProvider } from '../context/PrintContext';
+import { getPage } from '../redux/selectors/user';
+import { viewTitleID } from '../utils/accessibility';
+import useMobileStatus from '../utils/isMobile';
+import MapView from '../views/MapView';
+import PrintView from '../views/PrintView';
+import ViewRouter from './components/ViewRouter';
 
 const { smallScreenBreakpoint } = config;
 
 const createContentStyles = (
-  isMobile, isSmallScreen, landscape, fullMobileMap, currentPage, sidebarHidden,
+  isMobile,
+  isSmallScreen,
+  landscape,
+  fullMobileMap,
+  currentPage,
+  sidebarHidden
 ) => {
   let width = 450;
   if (isMobile) {
@@ -30,7 +42,9 @@ const createContentStyles = (
   } else if (isSmallScreen) {
     width = '50%';
   }
-  const topBarHeight = isMobile ? `${config.topBarHeightMobile}px` : `${config.topBarHeight}px`;
+  const topBarHeight = isMobile
+    ? `${config.topBarHeightMobile}px`
+    : `${config.topBarHeight}px`;
   const bottomNavHeight = isMobile ? `${config.bottomNavHeight}px` : 0;
 
   const styles = {
@@ -90,7 +104,7 @@ const createContentStyles = (
 // (showAlert did not use updated showPrintView value)
 const valueStore = {};
 
-const DefaultLayout = ({ fetchErrors, fetchNews }) => {
+function DefaultLayout({ fetchErrors, fetchNews }) {
   const currentPage = useSelector(getPage);
   const [showPrintView, togglePrintView] = useState(false);
   const [sidebarHidden, toggleSidebarHidden] = useState(false);
@@ -109,7 +123,12 @@ const DefaultLayout = ({ fetchErrors, fetchNews }) => {
   }, []);
 
   const styles = createContentStyles(
-    isMobile, isSmallScreen, landscape, fullMobileMap, currentPage, sidebarHidden,
+    isMobile,
+    isSmallScreen,
+    landscape,
+    fullMobileMap,
+    currentPage,
+    sidebarHidden
   );
   const srLinks = [
     {
@@ -136,78 +155,68 @@ const DefaultLayout = ({ fetchErrors, fetchNews }) => {
     window.onbeforeprint = showAlert;
   }, []);
 
-
   const printClass = `ǹo-print${showPrintView ? ' sr-only' : ''}`;
 
   return (
-    <>
-    <ErrorProvider value={{error, setError}}>
-      {
-        error && <ErrorComponent error={error} />
-      }
-      {
-        !error && 
-        (
-          <ErrorBoundary>
-            <div id="topArea" aria-hidden={false} className={printClass}>
-              <h1 id="app-title" tabIndex={-1} className="sr-only app-title" component="h1">
-                <FormattedMessage id="app.title" />
-              </h1>
-              {/* Jump link to main content for screenreaders
+    <ErrorProvider value={{ error, setError }}>
+      {error && <ErrorComponent error={error} />}
+      {!error && (
+        <ErrorBoundary>
+          <div id="topArea" aria-hidden={false} className={printClass}>
+            <h1
+              id="app-title"
+              tabIndex={-1}
+              className="sr-only app-title"
+              component="h1"
+            >
+              <FormattedMessage id="app.title" />
+            </h1>
+            {/* Jump link to main content for screenreaders
               Must be first interactable element on page */}
-              <FocusableSRLinks items={srLinks} />
-              <PrintProvider value={togglePrint}>
-                <TopBar smallScreen={isSmallScreen} />
-              </PrintProvider>
-            </div>
-            {
-              showPrintView
-              && (
-                <PrintView togglePrintView={togglePrint} />
-              )
-            }
-            <div id="activeRoot" style={styles.activeRoot} className={printClass}>
-              <main className="SidebarWrapper" style={styles.sidebar}>
-                <AlertBox />
-                <div style={styles.sidebarContent} aria-hidden={false}>
-                  <ViewRouter />
-                </div>
-              </main>
-              <Typography style={visuallyHidden}>{intl.formatMessage({ id: 'map.ariaLabel' })}</Typography>
-              <div
-                aria-hidden
-                tabIndex={-1}
-                style={styles.map}
-              >
-                <MapView
-                  sidebarHidden={sidebarHidden}
-                  toggleSidebar={toggleSidebar}
-                  isMobile={!!isMobile}
-                />
+            <FocusableSRLinks items={srLinks} />
+            <PrintProvider value={togglePrint}>
+              <TopBar smallScreen={isSmallScreen} />
+            </PrintProvider>
+          </div>
+          {showPrintView && <PrintView togglePrintView={togglePrint} />}
+          <div id="activeRoot" style={styles.activeRoot} className={printClass}>
+            <main className="SidebarWrapper" style={styles.sidebar}>
+              <AlertBox />
+              <div style={styles.sidebarContent} aria-hidden={false}>
+                <ViewRouter />
               </div>
+            </main>
+            <Typography style={visuallyHidden}>
+              {intl.formatMessage({ id: 'map.ariaLabel' })}
+            </Typography>
+            <div aria-hidden tabIndex={-1} style={styles.map}>
+              <MapView
+                sidebarHidden={sidebarHidden}
+                toggleSidebar={toggleSidebar}
+                isMobile={!!isMobile}
+              />
             </div>
+          </div>
 
-            {isMobile ? (
-              <>
-                <BottomNav />
-                <div style={styles.bottomAligner} />
-              </>
-            ) : null}
+          {isMobile ? (
+            <>
+              <BottomNav />
+              <div style={styles.bottomAligner} />
+            </>
+          ) : null}
 
-            <footer role="contentinfo" aria-hidden={false} className="sr-only">
-              <DesktopComponent>
-                <a href="#app-title">
-                  <FormattedMessage id="general.backToStart" />
-                </a>
-              </DesktopComponent>
-            </footer>
-          </ErrorBoundary>
-        )
-      }
+          <footer role="contentinfo" aria-hidden={false} className="sr-only">
+            <DesktopComponent>
+              <a href="#app-title">
+                <FormattedMessage id="general.backToStart" />
+              </a>
+            </DesktopComponent>
+          </footer>
+        </ErrorBoundary>
+      )}
     </ErrorProvider>
-    </>
   );
-};
+}
 
 // Typechecking
 DefaultLayout.propTypes = {

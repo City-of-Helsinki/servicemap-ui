@@ -1,6 +1,7 @@
 import { injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+
 import FeedbackView from './FeedbackView';
 
 const mapStateToProps = (state) => {
@@ -12,6 +13,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default injectIntl(withRouter(connect(
-  mapStateToProps,
-)(FeedbackView)));
+export default injectIntl(withRouter(connect(mapStateToProps)(FeedbackView)));

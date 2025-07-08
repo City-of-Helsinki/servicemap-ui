@@ -1,14 +1,13 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import InfoList from '../InfoList';
-import unitSectionFilter from '../../utils/unitSectionFilter';
 
-const ElectronicServices = ({ unit }) => {
+import unitSectionFilter from '../../utils/unitSectionFilter';
+import InfoList from '../InfoList';
+
+function ElectronicServices({ unit }) {
   // List data: Homepage link and e-service links
-  const data = [
-    ...unitSectionFilter(unit.connections, 'ESERVICE_LINK'),
-  ];
+  const data = [...unitSectionFilter(unit.connections, 'ESERVICE_LINK')];
 
   return (
     <InfoList
@@ -17,7 +16,7 @@ const ElectronicServices = ({ unit }) => {
       titleComponent="h4"
     />
   );
-};
+}
 
 ElectronicServices.propTypes = {
   unit: PropTypes.objectOf(PropTypes.any).isRequired,

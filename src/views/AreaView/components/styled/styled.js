@@ -1,7 +1,13 @@
 import styled from '@emotion/styled';
 import {
-  Divider, List, ListItem, Typography, InputBase, Button,
+  Button,
+  Divider,
+  InputBase,
+  List,
+  ListItem,
+  Typography,
 } from '@mui/material';
+
 import { SMAccordion } from '../../../../components';
 
 /**
@@ -27,8 +33,12 @@ const StyledDistrictServiceList = styled('div')(() => ({
   boxShadow: 'inset 0px 4px 4px rgba(0, 0, 0, 0.06)',
 }));
 
-const StyledDistrictServiceListLevelFour = styled(StyledDistrictServiceList)(() => levelFour());
-const StyledDistrictServiceListLevelThree = styled(StyledDistrictServiceList)(() => levelThree());
+const StyledDistrictServiceListLevelFour = styled(StyledDistrictServiceList)(
+  () => levelFour()
+);
+const StyledDistrictServiceListLevelThree = styled(StyledDistrictServiceList)(
+  () => levelThree()
+);
 const StyledListLevelThree = styled(List)(() => levelThree());
 
 const StyledServiceList = styled('div')(({ theme }) => ({
@@ -63,9 +73,13 @@ const StyledListNoPadding = styled(List)(({ theme }) => ({
   },
 }));
 
-const StyledListNoPaddingLevelTwo = styled(StyledListNoPadding)(() => levelTwo());
+const StyledListNoPaddingLevelTwo = styled(StyledListNoPadding)(() =>
+  levelTwo()
+);
 
-const StyledListNoPaddingLevelThree = styled(StyledListNoPadding)(() => levelThree());
+const StyledListNoPaddingLevelThree = styled(StyledListNoPadding)(() =>
+  levelThree()
+);
 
 const StyledUnitsAccordion = styled(SMAccordion)(() => ({
   height: 48,
@@ -148,29 +162,29 @@ const StyledServiceFilterButton = styled(Button)(({ theme }) => ({
 }));
 
 export {
-  StyledDivider,
-  StyledDistrictServiceList,
-  StyledDistrictServiceListLevelThree,
-  StyledDistrictServiceListLevelFour,
-  StyledListLevelThree,
-  StyledListItem,
-  StyledAreaListItem,
-  StyledListNoPadding,
-  StyledListNoPaddingLevelTwo,
-  StyledListNoPaddingLevelThree,
-  StyledServiceList,
-  StyledServiceTabServiceList,
-  StyledUnitsAccordion,
-  StyledCaptionText,
-  StyledLoadingText,
-  StyledBoldText,
-  StyledCheckBoxIcon,
-  StyledUnitListArea,
   StyledAccordionServiceTitle,
-  StyledUnitList,
+  StyledAreaListItem,
+  StyledBoldText,
+  StyledCaptionText,
+  StyledCheckBoxIcon,
+  StyledDistrictServiceList,
+  StyledDistrictServiceListLevelFour,
+  StyledDistrictServiceListLevelThree,
+  StyledDivider,
+  StyledListItem,
+  StyledListLevelThree,
+  StyledListNoPadding,
+  StyledListNoPaddingLevelThree,
+  StyledListNoPaddingLevelTwo,
+  StyledLoadingText,
   StyledRowContainer,
-  StyledServiceFilterContainer,
-  StyledServiceFilterText,
   StyledServiceFilter,
   StyledServiceFilterButton,
+  StyledServiceFilterContainer,
+  StyledServiceFilterText,
+  StyledServiceList,
+  StyledServiceTabServiceList,
+  StyledUnitList,
+  StyledUnitListArea,
+  StyledUnitsAccordion,
 };

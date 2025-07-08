@@ -4,8 +4,8 @@ import HttpClient, { APIFetchError, hearingMapAPIName } from './HTTPClient';
 export default class HearingMapAPI extends HttpClient {
   constructor() {
     if (
-      typeof config?.hearingMapAPI?.root === 'string'
-      && config.hearingMapAPI.root.indexOf('undefined') !== -1
+      typeof config?.hearingMapAPI?.root === 'string' &&
+      config.hearingMapAPI.root.indexOf('undefined') !== -1
     ) {
       throw new APIFetchError('HearingMapAPI baseURL missing');
     }
@@ -14,10 +14,12 @@ export default class HearingMapAPI extends HttpClient {
 
   hearingMaps = async (unitID) => {
     if (typeof unitID !== 'string' && typeof unitID !== 'number') {
-      throw new APIFetchError('HearingMapAPI: Invalid unitID provided to hearingMaps fetch method');
+      throw new APIFetchError(
+        'HearingMapAPI: Invalid unitID provided to hearingMaps fetch method'
+      );
     }
     const options = {};
 
     return this.get(`${unitID}`, options);
-  }
+  };
 }

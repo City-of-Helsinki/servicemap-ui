@@ -6,7 +6,7 @@ const initialState = {
   toRender: 'adminDistricts',
 };
 
-export default (state = initialState, action) => {
+const addressReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'SET_ADDRESS_DATA':
       return {
@@ -37,3 +37,5 @@ export default (state = initialState, action) => {
       return state;
   }
 };
+
+export default addressReducer;

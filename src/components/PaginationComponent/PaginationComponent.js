@@ -1,11 +1,12 @@
 /* eslint-disable no-underscore-dangle */
-import React from 'react';
-import PropTypes from 'prop-types';
-import { ArrowForwardIos } from '@mui/icons-material';
 import styled from '@emotion/styled';
+import { ArrowForwardIos } from '@mui/icons-material';
+import PropTypes from 'prop-types';
+import React from 'react';
+
 import Container from '../Container';
-import PageElement from './PageElement';
 import SMButton from '../ServiceMapButton';
+import PageElement from './PageElement';
 
 class PaginationComponent extends React.Component {
   constructor(props) {
@@ -31,7 +32,7 @@ class PaginationComponent extends React.Component {
     const pages = [];
     const maxVisible = pageCount < maxShownPages ? pageCount : maxShownPages;
     const min = current > maxShownPages ? current - maxShownPages + 1 : 1;
-    let max = current < maxVisible ? maxVisible : (current + 1);
+    let max = current < maxVisible ? maxVisible : current + 1;
     max = max > pageCount ? pageCount : max; // Don't allow anything above total page count
 
     for (let i = min; i <= max; i += 1) {
@@ -40,8 +41,10 @@ class PaginationComponent extends React.Component {
           key={i}
           number={i}
           isActive={current === i}
-          onClick={() => { handlePageChange(i, pageCount); }}
-        />,
+          onClick={() => {
+            handlePageChange(i, pageCount);
+          }}
+        />
       );
     }
     return (
@@ -50,7 +53,9 @@ class PaginationComponent extends React.Component {
           // Button backwards one page
           <StyledButtonFlipped
             id="PaginationPreviousButton"
-            aria-label={intl.formatMessage({ id: 'general.pagination.previous' })}
+            aria-label={intl.formatMessage({
+              id: 'general.pagination.previous',
+            })}
             onClick={(e) => {
               e.preventDefault();
               handlePageChange(current - 1, pageCount);
@@ -82,15 +87,11 @@ class PaginationComponent extends React.Component {
         }
         {
           // Page numbers
-          !embeddedList
-            ? (
-              <StyledListContainer>
-                <StyledList>
-                  {pages}
-                </StyledList>
-              </StyledListContainer>
-            )
-            : null
+          !embeddedList ? (
+            <StyledListContainer>
+              <StyledList>{pages}</StyledList>
+            </StyledListContainer>
+          ) : null
         }
       </ButtonContainer>
     );

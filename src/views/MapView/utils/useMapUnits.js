@@ -2,7 +2,11 @@ import distance from '@turf/distance';
 import flip from '@turf/flip';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
-import { selectAddressAdminDistricts, selectAddressUnits } from '../../../redux/selectors/address';
+
+import {
+  selectAddressAdminDistricts,
+  selectAddressUnits,
+} from '../../../redux/selectors/address';
 import {
   getDistrictPrimaryUnits,
   getFilteredSubDistrictUnits,
@@ -13,10 +17,11 @@ import {
   selectResultsIsFetching,
 } from '../../../redux/selectors/results';
 import { getSelectedUnit } from '../../../redux/selectors/selectedUnit';
-import { getServiceUnits, selectServiceIsFetching } from '../../../redux/selectors/service';
 import {
-  getServiceFilteredStatisticalDistrictUnits,
-} from '../../../redux/selectors/statisticalDistrict';
+  getServiceUnits,
+  selectServiceIsFetching,
+} from '../../../redux/selectors/service';
+import { getServiceFilteredStatisticalDistrictUnits } from '../../../redux/selectors/statisticalDistrict';
 import { getLocale, getPage } from '../../../redux/selectors/user';
 import { orderUnits } from '../../../utils/orderUnits';
 import { useEmbedStatus } from '../../../utils/path';
@@ -26,11 +31,11 @@ const handleAdrressUnits = (addressToRender, adminDistricts, addressUnits) => {
   switch (addressToRender) {
     case 'adminDistricts':
       return adminDistricts
-        .flatMap(d => [d.unit, ...(d.units || [])])
-        .filter(x => !!x)
+        .flatMap((d) => [d.unit, ...(d.units || [])])
+        .filter((x) => !!x)
         .filter(
-          (unit, index, self) => index
-            === self.findIndex(x => x.id === unit.id),
+          (unit, index, self) =>
+            index === self.findIndex((x) => x.id === unit.id)
         );
     case 'units':
       return addressUnits;
@@ -39,10 +44,11 @@ const handleAdrressUnits = (addressToRender, adminDistricts, addressUnits) => {
   }
 };
 
-
 // Helper function to add additional service units to unit page if specified on Url parameters
 const handleServiceUnitsFromUrl = (mapUnits, serviceUnits, location) => {
-  const distanceParameter = new URLSearchParams(location.search).get('distance');
+  const distanceParameter = new URLSearchParams(location.search).get(
+    'distance'
+  );
   let additionalUnits = serviceUnits;
   // Filter units within distance
   if (distanceParameter && mapUnits.length === 1) {
@@ -50,15 +56,16 @@ const handleServiceUnitsFromUrl = (mapUnits, serviceUnits, location) => {
     if (targetGeometry) {
       // Function to check if unit coordinates are within the specified distance
       const isWithinDistance = (unitCoord) => {
-        const checkDistance = (a, b) => (
-          distance(a, b) * 1000 <= distanceParameter
-        );
-          // If target has only one point as geometry data, compare distance between points
+        const checkDistance = (a, b) =>
+          distance(a, b) * 1000 <= distanceParameter;
+        // If target has only one point as geometry data, compare distance between points
         if (targetGeometry.type === 'Point') {
           return checkDistance(flip(targetGeometry), unitCoord);
         }
         // Else flatten multiline coordinates to a list of coordinate pairs and check each one
-        return targetGeometry.coordinates.flat().some(coord => checkDistance(coord, unitCoord));
+        return targetGeometry.coordinates
+          .flat()
+          .some((coord) => checkDistance(coord, unitCoord));
       };
 
       // Filter unitlist to include only units within the specified distance
@@ -75,7 +82,6 @@ const handleServiceUnitsFromUrl = (mapUnits, serviceUnits, location) => {
   return additionalUnits;
 };
 
-
 /*
   This hook servers as the single global source that defines which units
   should be rendered to map on each page
@@ -86,13 +92,15 @@ const useMapUnits = () => {
   const location = useLocation();
   const searchResults = useSelector(getOrderedSearchResultData);
   const currentPage = useSelector(getPage);
-  const addressToRender = useSelector(state => state.address.toRender);
+  const addressToRender = useSelector((state) => state.address.toRender);
   const adminDistricts = useSelector(selectAddressAdminDistricts);
   const addressUnits = useSelector(selectAddressUnits);
   const serviceUnits = useSelector(getServiceUnits);
   const districtPrimaryUnits = useSelector(getDistrictPrimaryUnits);
   const districtServiceUnits = useSelector(getFilteredSubDistrictUnits);
-  const statisticalDistrictUnits = useSelector(getServiceFilteredStatisticalDistrictUnits);
+  const statisticalDistrictUnits = useSelector(
+    getServiceFilteredStatisticalDistrictUnits
+  );
   const parkingAreaUnits = useSelector(selectParkingUnitUnits);
   const highlightedUnit = useSelector(getSelectedUnit);
   const locale = useSelector(getLocale);
@@ -110,10 +118,11 @@ const useMapUnits = () => {
     return [];
   }
 
-  const filteredUnits = searchResults.filter(item => (
-    item.object_type === 'unit'
-    || (item.object_type === 'event' && item.location)
-  ));
+  const filteredUnits = searchResults.filter(
+    (item) =>
+      item.object_type === 'unit' ||
+      (item.object_type === 'event' && item.location)
+  );
 
   // Figure out which units to show on map on different pages
   const getMapUnits = () => {
@@ -129,7 +138,11 @@ const useMapUnits = () => {
         return [];
 
       case 'address':
-        return handleAdrressUnits(addressToRender, adminDistricts, addressUnits);
+        return handleAdrressUnits(
+          addressToRender,
+          adminDistricts,
+          addressUnits
+        );
 
       case 'service':
         if (serviceUnits && !unitsLoading) return serviceUnits;
@@ -143,7 +156,11 @@ const useMapUnits = () => {
           ...(statisticalTabOpen ? statisticalDistrictUnits : []),
         ];
 
-        return orderUnits(results, { locale, direction: 'desc', order: 'alphabetical' });
+        return orderUnits(results, {
+          locale,
+          direction: 'desc',
+          order: 'alphabetical',
+        });
       }
       default:
         return [];
@@ -154,7 +171,11 @@ const useMapUnits = () => {
 
   // Add additional service units on unit page if specified in Url parameters
   if (servicesParams && currentPage === 'unit') {
-    const additionalUnits = handleServiceUnitsFromUrl(mapUnits, serviceUnits, location);
+    const additionalUnits = handleServiceUnitsFromUrl(
+      mapUnits,
+      serviceUnits,
+      location
+    );
     if (additionalUnits?.length) {
       mapUnits = [...mapUnits, ...additionalUnits];
     }

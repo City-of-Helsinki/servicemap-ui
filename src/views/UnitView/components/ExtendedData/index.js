@@ -1,8 +1,8 @@
 import { connect } from 'react-redux';
-import { fetchReservations } from '../../../../redux/actions/selectedUnitReservations';
-import { fetchUnitEvents } from '../../../../redux/actions/selectedUnitEvents';
-import { fetchSelectedUnit } from '../../../../redux/actions/selectedUnit';
 
+import { fetchSelectedUnit } from '../../../../redux/actions/selectedUnit';
+import { fetchUnitEvents } from '../../../../redux/actions/selectedUnitEvents';
+import { fetchReservations } from '../../../../redux/actions/selectedUnitReservations';
 import ExtendedData from './ExtendedData';
 
 const mapStateToProps = (state) => {

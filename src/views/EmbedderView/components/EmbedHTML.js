@@ -10,16 +10,14 @@ import {
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
+
 import SMButton from '../../../components/ServiceMapButton';
 import { setBboxToUrl } from '../utils/utils';
 
-
 /**
-   * Renders embed HTMl based on options
-*/
-const EmbedHTML = ({
-  createEmbedHTML, url, setBoundsRef, restrictBounds,
-}) => {
+ * Renders embed HTMl based on options
+ */
+function EmbedHTML({ createEmbedHTML, url, setBoundsRef, restrictBounds }) {
   const intl = useIntl();
   const [bbox, setBbox] = useState(null);
   const [tooltipOpen, setTooltipOpen] = useState(null);
@@ -35,11 +33,14 @@ const EmbedHTML = ({
   };
 
   const copyToClipboard = (text, field) => {
-    navigator.clipboard.writeText(text).then(() => {
-      setTooltipOpen(field);
-    }, () => {
-      console.warn('Clipboard copy failed!');
-    });
+    navigator.clipboard.writeText(text).then(
+      () => {
+        setTooltipOpen(field);
+      },
+      () => {
+        console.warn('Clipboard copy failed!');
+      }
+    );
   };
 
   const renderCopyButton = (id, title, text) => (
@@ -83,34 +84,34 @@ const EmbedHTML = ({
         id="embed-address"
         inputProps={{ tabIndex: -1 }}
         value={embedUrl}
-        endAdornment={(
+        endAdornment={
           <InputAdornment position="end">
             {renderCopyButton(
               'embedUrl',
               intl.formatMessage({ id: 'embedder.url.title' }),
-              embedUrl,
+              embedUrl
             )}
           </InputAdornment>
-        )}
+        }
       />
       {/* Embed HTML code */}
       <StyledOutlinedInputHtmlField
         id="embed-code"
         inputProps={{ tabIndex: -1 }}
         value={htmlText}
-        endAdornment={(
+        endAdornment={
           <InputAdornment position="end">
             {renderCopyButton(
               'embedCode',
               intl.formatMessage({ id: 'embedder.code.title' }),
-              htmlText,
+              htmlText
             )}
           </InputAdornment>
-        )}
+        }
       />
     </div>
   );
-};
+}
 
 const StyledFileCopy = styled(FileCopy)(({ theme }) => ({
   fontSize: 16,

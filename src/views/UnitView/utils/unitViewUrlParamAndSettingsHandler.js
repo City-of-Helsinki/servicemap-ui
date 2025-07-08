@@ -12,14 +12,16 @@ import SettingsUtility from '../../../utils/settings';
  * ?senses=hearingAid&foo=bar will return [{setting: 'senses', value: 'hearingAid'}]
  * ?foo=bar will return []
  */
-export const parseUnitViewUrlParams = urlSearch => {
+export const parseUnitViewUrlParams = (urlSearch) => {
   const search = new URLSearchParams(urlSearch);
   const actions = [];
 
   // mobility
   const mobility = search.get('mobility');
   if (mobility) {
-    const newSetting = SettingsUtility.isValidMobilitySetting(mobility) ? mobility : null;
+    const newSetting = SettingsUtility.isValidMobilitySetting(mobility)
+      ? mobility
+      : null;
     actions.push({ setting: 'mobility', value: newSetting });
   }
   if (mobility === '') {
@@ -32,8 +34,12 @@ export const parseUnitViewUrlParams = urlSearch => {
   // senses
   const senses = search.get('senses')?.split(',');
   if (senses) {
-    const validSenses = senses.filter(s => SettingsUtility.isValidAccessibilitySenseImpairment(s));
-    actions.push(...validSenses.map(sense => ({ setting: 'senses', value: sense })));
+    const validSenses = senses.filter((s) =>
+      SettingsUtility.isValidAccessibilitySenseImpairment(s)
+    );
+    actions.push(
+      ...validSenses.map((sense) => ({ setting: 'senses', value: sense }))
+    );
     if (validSenses.length === 0) {
       actions.push({ setting: 'senses', value: null });
     }

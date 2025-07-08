@@ -3,11 +3,15 @@ import { Link } from 'hds-react';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { useIntl } from 'react-intl';
+
 import config from '../../../../../config';
 import useLocaleText from '../../../../utils/useLocaleText';
-import { StyledAlignLeftParagraph, StyledVerticalMarginContainer } from '../styled/styled';
+import {
+  StyledAlignLeftParagraph,
+  StyledVerticalMarginContainer,
+} from '../styled/styled';
 
-const ReadFeedbackLink = ({ unit }) => {
+function ReadFeedbackLink({ unit }) {
   const getLocaleText = useLocaleText();
   const intl = useIntl();
   const resolveUrl = () => {
@@ -30,7 +34,9 @@ const ReadFeedbackLink = ({ unit }) => {
           size="M"
           external
           openInNewTab
-          openInExternalDomainAriaLabel={intl.formatMessage({ id: 'general.linkLeadsToExternalSite' })}
+          openInExternalDomainAriaLabel={intl.formatMessage({
+            id: 'general.linkLeadsToExternalSite',
+          })}
           openInNewTabAriaLabel={intl.formatMessage({ id: 'general.new.tab' })}
         >
           {text}
@@ -38,7 +44,7 @@ const ReadFeedbackLink = ({ unit }) => {
       </StyledAlignLeftParagraph>
     </StyledVerticalMarginContainer>
   );
-};
+}
 
 const StyledHdsLink = styled(Link)(({ theme }) => ({
   display: 'block',
@@ -58,6 +64,5 @@ ReadFeedbackLink.propTypes = {
     }).isRequired,
   }).isRequired,
 };
-
 
 export default ReadFeedbackLink;

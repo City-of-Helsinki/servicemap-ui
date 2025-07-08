@@ -1,19 +1,25 @@
 import styled from '@emotion/styled';
+import { AccountCircle, ArrowBack, Map, Settings } from '@mui/icons-material';
 import {
-  AccountCircle, ArrowBack, Map, Settings,
-} from '@mui/icons-material';
-import {
-  BottomNavigation, BottomNavigationAction, Drawer, Paper, useMediaQuery,
+  BottomNavigation,
+  BottomNavigationAction,
+  Drawer,
+  Paper,
+  useMediaQuery,
 } from '@mui/material';
 import React, { useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
+
 import config from '../../../config';
-import { selectBreadcrumb, selectNavigator } from '../../redux/selectors/general';
+import {
+  selectBreadcrumb,
+  selectNavigator,
+} from '../../redux/selectors/general';
 import MapSettings from '../MapSettings/MapSettings';
-import SettingsDropdowns from '../SettingsDropdowns';
 import MobileSettingsHeader from '../MobileSettingsHeader/MobileSettingsHeader';
+import SettingsDropdowns from '../SettingsDropdowns';
 
 const { bottomNavHeight } = config;
 
@@ -59,7 +65,7 @@ function BottomNav() {
     }
   };
 
-  const handleNav = value => {
+  const handleNav = (value) => {
     switch (value) {
       // Back button
       case 0:
@@ -103,7 +109,10 @@ function BottomNav() {
         }}
       >
         <StyledDiv>
-          <MobileSettingsHeader textId="general.ownSettings" onClose={handleBackButton} />
+          <MobileSettingsHeader
+            textId="general.ownSettings"
+            onClose={handleBackButton}
+          />
           <SettingsDropdowns variant="ownSettings" />
         </StyledDiv>
       </StyledDrawer>
@@ -125,7 +134,10 @@ function BottomNav() {
       </StyledDrawer>
       <nav>
         <StyledPaper elevation={10}>
-          <StyledBottomNavigation showLabels onChange={(event, newValue) => handleNav(newValue)}>
+          <StyledBottomNavigation
+            showLabels
+            onChange={(event, newValue) => handleNav(newValue)}
+          >
             <StyledBottomNavigationAction
               small={+small}
               label={intl.formatMessage({ id: 'general.backTo' })}
@@ -133,9 +145,11 @@ function BottomNav() {
             />
             <StyledBottomNavigationAction
               small={+small}
-              label={!mapPage || mapSettingsOpen
-                ? intl.formatMessage({ id: 'map.open' })
-                : intl.formatMessage({ id: 'map.close' })}
+              label={
+                !mapPage || mapSettingsOpen
+                  ? intl.formatMessage({ id: 'map.open' })
+                  : intl.formatMessage({ id: 'map.close' })
+              }
               icon={<Map />}
             />
             <StyledBottomNavigationAction
@@ -173,7 +187,9 @@ const StyledBottomNavigation = styled(BottomNavigation)(() => ({
   height: 78,
 }));
 
-const StyledBottomNavigationAction = styled(BottomNavigationAction)(({ small }) => {
+const StyledBottomNavigationAction = styled(BottomNavigationAction)(({
+  small,
+}) => {
   const styles = {
     color: '#000',
   };
@@ -189,7 +205,6 @@ const StyledDiv = styled('div')(({ theme }) => ({
   paddingTop: theme.spacing(3),
 }));
 
-BottomNav.propTypes = {
-};
+BottomNav.propTypes = {};
 
 export default BottomNav;

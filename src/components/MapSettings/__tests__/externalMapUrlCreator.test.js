@@ -71,22 +71,32 @@ describe('ExternalMapUrlCreator', () => {
     },
   ];
 
-  distanceTests
-    .forEach(({ mapType, distances }) => {
-      distances
-        .forEach(({ level, distance }) => {
-          it(`should produce distance ${distance} with zoom level ${level} for map ${mapType}`, () => {
-            const url = ExternalMapUrlCreator.createHelsinki3DMapUrl(60, 25, level, mapType, 'fi');
-            const urlSearchParams = testDefaults(url);
-            expect(urlSearchParams.get('lang')).toBe('fi');
-            expect(urlSearchParams.get('groundPosition')).toBe('60,25,0');
-            expect(urlSearchParams.get('distance')).toBe(`${distance}`);
-          });
-        });
+  distanceTests.forEach(({ mapType, distances }) => {
+    distances.forEach(({ level, distance }) => {
+      it(`should produce distance ${distance} with zoom level ${level} for map ${mapType}`, () => {
+        const url = ExternalMapUrlCreator.createHelsinki3DMapUrl(
+          60,
+          25,
+          level,
+          mapType,
+          'fi'
+        );
+        const urlSearchParams = testDefaults(url);
+        expect(urlSearchParams.get('lang')).toBe('fi');
+        expect(urlSearchParams.get('groundPosition')).toBe('60,25,0');
+        expect(urlSearchParams.get('distance')).toBe(`${distance}`);
+      });
     });
+  });
 
   it('should set coordinates', () => {
-    const url = ExternalMapUrlCreator.createHelsinki3DMapUrl(57.458, 22.9964, 6, orto, 'fi');
+    const url = ExternalMapUrlCreator.createHelsinki3DMapUrl(
+      57.458,
+      22.9964,
+      6,
+      orto,
+      'fi'
+    );
     const urlSearchParams = testDefaults(url);
     expect(urlSearchParams.get('lang')).toBe('fi');
     expect(urlSearchParams.get('groundPosition')).toBe('57.458,22.9964,0');
@@ -94,7 +104,13 @@ describe('ExternalMapUrlCreator', () => {
   });
 
   it('should set lang', () => {
-    const url = ExternalMapUrlCreator.createHelsinki3DMapUrl(54, 22, 6, orto, 'no');
+    const url = ExternalMapUrlCreator.createHelsinki3DMapUrl(
+      54,
+      22,
+      6,
+      orto,
+      'no'
+    );
     const urlSearchParams = testDefaults(url);
     expect(urlSearchParams.get('lang')).toBe('no');
     expect(urlSearchParams.get('groundPosition')).toBe('54,22,0');

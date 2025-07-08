@@ -1,7 +1,7 @@
 /* eslint-disable global-require */
+import config from '../../../../config';
 import SettingsUtility from '../../../utils/settings';
 import { getMapOptions } from '../config/mapConfig';
-import config from '../../../../config';
 
 let L;
 // Check if we are on client side because leafelt map works only on client side
@@ -28,7 +28,7 @@ const CreateMap = (mapType, locale) => {
   // Functions for leaflet crs generation
   const bounds = L.bounds(
     L.point(layer.boundPoints[0]),
-    L.point(layer.boundPoints[1]),
+    L.point(layer.boundPoints[1])
   );
   const crsOpts = {
     origin: layer.origin,

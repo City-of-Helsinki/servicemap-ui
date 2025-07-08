@@ -1,12 +1,16 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
+import React from 'react';
 import { connect } from 'react-redux';
-import { getSelectedUnit } from '../../redux/selectors/selectedUnit';
-import { fetchUnitEvents } from '../../redux/actions/selectedUnitEvents';
-import { fetchSelectedUnit, changeSelectedUnit } from '../../redux/actions/selectedUnit';
+import { withRouter } from 'react-router-dom';
+
+import {
+  changeSelectedUnit,
+  fetchSelectedUnit,
+} from '../../redux/actions/selectedUnit';
 import { fetchAccessibilitySentences } from '../../redux/actions/selectedUnitAccessibility';
+import { fetchUnitEvents } from '../../redux/actions/selectedUnitEvents';
 import { fetchReservations } from '../../redux/actions/selectedUnitReservations';
+import { getSelectedUnit } from '../../redux/selectors/selectedUnit';
 import { focusToPosition } from '../../views/MapView/utils/mapActions';
 
 class UnitFetcher extends React.Component {
@@ -25,7 +29,7 @@ class UnitFetcher extends React.Component {
       fetchReservations(unitId);
       fetchUnitEvents(unitId);
 
-      if (unit && (unit.complete && unitId === `${unit.id}`)) {
+      if (unit && unit.complete && unitId === `${unit.id}`) {
         fetchAccessibilitySentences(unitId);
         this.centerMap();
         return;
@@ -38,15 +42,12 @@ class UnitFetcher extends React.Component {
   }
 
   centerMap = () => {
-    const {
-      map = null,
-      unit = null,
-    } = this.props;
+    const { map = null, unit = null } = this.props;
     const { location } = unit;
     if (location && location.coordinates && map) {
       focusToPosition(map, location.coordinates);
     }
-  }
+  };
 
   render() {
     return null;
@@ -65,16 +66,15 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default withRouter(connect(
-  mapStateToProps,
-  {
+export default withRouter(
+  connect(mapStateToProps, {
     changeSelectedUnit,
     fetchSelectedUnit,
     fetchUnitEvents,
     fetchAccessibilitySentences,
     fetchReservations,
-  },
-)(UnitFetcher));
+  })(UnitFetcher)
+);
 
 // Typechecking
 UnitFetcher.propTypes = {

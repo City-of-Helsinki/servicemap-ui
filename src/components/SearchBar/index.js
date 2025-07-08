@@ -1,5 +1,3 @@
 import SearchBar from './SearchBarComponent';
 
-export {
-  SearchBar,
-};
+export { SearchBar };

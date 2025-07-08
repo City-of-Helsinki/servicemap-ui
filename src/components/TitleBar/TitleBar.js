@@ -1,16 +1,15 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import {
-  Typography,
-} from '@mui/material';
 import styled from '@emotion/styled';
-import BackButton from '../BackButton';
-import useMobileStatus from '../../utils/isMobile';
+import { Typography } from '@mui/material';
+import PropTypes from 'prop-types';
+import React from 'react';
+
 import config from '../../../config';
+import useMobileStatus from '../../utils/isMobile';
+import BackButton from '../BackButton';
 
 const { topBarHeightMobile } = config;
 
-const TitleBar = ({
+function TitleBar({
   backButton = false,
   backButtonOnClick = null,
   backButtonText = null,
@@ -22,7 +21,7 @@ const TitleBar = ({
   className = null,
   ariaHidden = false,
   sticky = false,
-}) => {
+}) {
   const isMobile = useMobileStatus();
   const componentClasses = `${className || ''}${sticky ? ' sticky' : ''}`;
 
@@ -36,30 +35,19 @@ const TitleBar = ({
       className={componentClasses}
     >
       <StyledLinkContainer>
-        {
-          backButton
-          && (
+        {backButton && (
           <StyledBackButton
             onClick={backButtonOnClick}
             text={backButtonText}
             ariaLabel={backButtonSrText}
             variant="container"
           />
-          )
-        }
-        {
-          !backButton
-          && icon
-          && (
-            <StyledIcon aria-hidden="true">
-              {icon}
-            </StyledIcon>
-          )
-        }
+        )}
+        {!backButton && icon && (
+          <StyledIcon aria-hidden="true">{icon}</StyledIcon>
+        )}
       </StyledLinkContainer>
-      <StyledTitleContainer
-        data-sm="TitleContainer"
-      >
+      <StyledTitleContainer data-sm="TitleContainer">
         <StyledTitle
           aria-hidden={ariaHidden}
           large={+!!backButton}
@@ -69,18 +57,18 @@ const TitleBar = ({
         >
           {title}
         </StyledTitle>
-        {shareLink && (
-          <StyledShareLink>
-            {shareLink}
-          </StyledShareLink>
-        )}
+        {shareLink && <StyledShareLink>{shareLink}</StyledShareLink>}
       </StyledTitleContainer>
     </StyledContainer>
   );
-};
+}
 
 const StyledContainer = styled('div')(({
-  theme, textbar, multiline, stickymobile, stickydesktop,
+  theme,
+  textbar,
+  multiline,
+  stickymobile,
+  stickydesktop,
 }) => {
   const styles = {
     display: 'flex',
@@ -165,7 +153,6 @@ const StyledTitle = styled(Typography)(({ large }) => {
   return styles;
 });
 
-
 const StyledShareLink = styled(Typography)(({ theme }) => ({
   fontSize: '1rem',
   color: 'inherit',
@@ -193,7 +180,8 @@ TitleBar.propTypes = {
   backButtonText: PropTypes.string,
   backButtonSrText: PropTypes.string,
   title: PropTypes.node.isRequired,
-  titleComponent: PropTypes.oneOf(['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p']).isRequired,
+  titleComponent: PropTypes.oneOf(['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p'])
+    .isRequired,
   icon: PropTypes.objectOf(PropTypes.any),
   className: PropTypes.string,
   shareLink: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
