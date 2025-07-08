@@ -1,0 +1,44 @@
+{
+  "extends": [
+    "react-app",
+    "plugin:prettier/recommended",
+    "plugin:import/errors",
+    "plugin:import/warnings"
+  ],
+  "plugins": [
+    "simple-import-sort"
+  ],
+  "rules": {
+    "react-hooks/exhaustive-deps": "off",
+    "react/no-unused-prop-types": [
+      "warn",
+      {
+        "skipShapeProps": true
+      }
+    ],
+    "array-bracket-spacing": [
+      "warn",
+      "never"
+    ],
+    "max-len": [
+      "warn",
+      {
+        "code": 120
+      }
+    ],
+    "no-console": "off",
+    "no-plusplus": "error",
+    "no-undef": "warn",
+    "no-unused-expressions": "off",
+    "object-curly-spacing": [
+      "warn",
+      "always"
+    ],
+    "sort-imports": "off",
+    "import/order": "off",
+    "simple-import-sort/imports": "error",
+    "simple-import-sort/exports": "error",
+    "import/named": "off"
+  }
+}
+
