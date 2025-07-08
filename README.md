@@ -21,7 +21,7 @@ Start dev server and runs the app in the development mode.<br>
 
 Builds the app for production to the `dist` folder.<br>
 
-### `yarn testBuild`
+### `yarn build:test`
 
 Builds the app in development mode to the `dist` folder.<br>
 
