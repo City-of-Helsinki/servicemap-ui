@@ -1,14 +1,15 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
-import { NewsInfo, SearchBar, SettingsComponent } from '../../components';
-import config from '../../../config';
-import CardSmall from '../../components/CardSmall/CardSmall';
-import areaServices from '../../assets/images/area-services.jpg';
-import serviceTree from '../../assets/images/service-tree.jpg';
-import mobilityTree from '../../assets/images/mobility-tree.jpg';
+import PropTypes from 'prop-types';
+import React from 'react';
 
-const HomeView = (props) => {
+import config from '../../../config';
+import areaServices from '../../assets/images/area-services.jpg';
+import mobilityTree from '../../assets/images/mobility-tree.jpg';
+import serviceTree from '../../assets/images/service-tree.jpg';
+import { NewsInfo, SearchBar } from '../../components';
+import CardSmall from '../../components/CardSmall/CardSmall';
+
+function HomeView(props) {
   const { navigator = null } = props;
 
   const renderNavigationOptions = () => {
@@ -51,7 +52,7 @@ const HomeView = (props) => {
       {renderNavigationOptions()}
     </div>
   );
-};
+}
 
 const StyledContainer = styled.div(({ theme }) => ({
   paddingTop: theme.spacing(1),

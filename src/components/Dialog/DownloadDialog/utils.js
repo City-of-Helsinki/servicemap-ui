@@ -7,8 +7,7 @@ export const fetchServiceNames = async (ids) => {
     return null;
   }
 
-  return smAPI.serviceNames(ids)
-    .then(data => data?.map(v => v.name));
+  return smAPI.serviceNames(ids).then((data) => data?.map((v) => v.name));
 };
 
 export default fetchServiceNames;

@@ -1,10 +1,10 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { ButtonBase, Typography } from '@mui/material';
 import styled from '@emotion/styled';
+import { ButtonBase, Typography } from '@mui/material';
+import PropTypes from 'prop-types';
+import React from 'react';
 
 // ServiceMapButton
-const SMButton = (props) => {
+function SMButton(props) {
   const {
     'aria-label': ariaLabel = null,
     children = null,
@@ -27,7 +27,10 @@ const SMButton = (props) => {
   let buttonTitle = null;
 
   if (messageID) {
-    buttonTitle = intl.formatMessage({ id: messageID }, { count: messageCount });
+    buttonTitle = intl.formatMessage(
+      { id: messageID },
+      { count: messageCount }
+    );
   }
 
   return (
@@ -47,30 +50,32 @@ const SMButton = (props) => {
       }}
       variant="contained"
     >
-      {
-        icon
-      }
-      {
-        messageID
-        && (
-          <StyledTypography aria-hidden color="inherit" component="p" variant={textVariant || 'caption'}>
-            {buttonTitle}
-          </StyledTypography>
-        )
-      }
-      {
-        !messageID
-        && children
-      }
+      {icon}
+      {messageID && (
+        <StyledTypography
+          aria-hidden
+          color="inherit"
+          component="p"
+          variant={textVariant || 'caption'}
+        >
+          {buttonTitle}
+        </StyledTypography>
+      )}
+      {!messageID && children}
     </StyledButtonBase>
   );
-};
+}
 
 const StyledTypography = styled(Typography)(() => ({
   fontSize: '0.875rem',
 }));
 
-const StyledButtonBase = styled(ButtonBase)(({ theme, small, margin, color }) => {
+const StyledButtonBase = styled(ButtonBase)(({
+  theme,
+  small,
+  margin,
+  color,
+}) => {
   const styles = {
     minHeight: 38,
     padding: '0 11px',

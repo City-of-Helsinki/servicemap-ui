@@ -1,14 +1,15 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { useTheme } from '@mui/styles';
-import { Paper, Typography } from '@mui/material';
 import { css } from '@emotion/css';
 import styled from '@emotion/styled';
-import { getIcon } from '../../../SMIcon';
+import { Paper, Typography } from '@mui/material';
+import { useTheme } from '@mui/styles';
+import PropTypes from 'prop-types';
+import React from 'react';
+
 import useLocaleText from '../../../../utils/useLocaleText';
 import ServiceMapButton from '../../../ServiceMapButton';
+import { getIcon } from '../../../SMIcon';
 
-const NewsItem = ({ item }) => {
+function NewsItem({ item }) {
   const getLocaleText = useLocaleText();
   const theme = useTheme();
   if (!item || !item.title) {
@@ -71,7 +72,7 @@ const NewsItem = ({ item }) => {
       </StyledBottomContent>
     </StyledPaper>
   );
-};
+}
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
   flex: '0 0 auto',

@@ -1,19 +1,23 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
 import { ThemeProvider } from '@mui/material/styles';
-import themes from '.';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { useSelector } from 'react-redux';
+
 import { selectThemeMode } from '../redux/selectors/user';
+import themes from '.';
 
 // Component to handle theme changes
-const ThemeHandler = ({ children = null }) => {
+function ThemeHandler({ children = null }) {
   const themeMode = useSelector(selectThemeMode);
-  return (// Get correct theme setting from store
-    <ThemeProvider theme={themeMode === 'dark' ? themes.SMThemeDark : themes.SMTheme}>
+  return (
+    // Get correct theme setting from store
+    <ThemeProvider
+      theme={themeMode === 'dark' ? themes.SMThemeDark : themes.SMTheme}
+    >
       {children}
     </ThemeProvider>
   );
-};
+}
 ThemeHandler.propTypes = {
   children: PropTypes.node,
 };

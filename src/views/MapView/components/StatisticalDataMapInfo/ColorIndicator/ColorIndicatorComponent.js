@@ -1,27 +1,24 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { styled } from '@mui/material/styles';
 import { Typography } from '@mui/material';
+import { styled } from '@mui/material/styles';
+import PropTypes from 'prop-types';
+import React from 'react';
 
-const ColorIndicatorComponent = ({
-  gradientColor,
-  left,
-  middle,
-  right,
-}) => (
-  <StyledColorIndicatorContainer className="ColorIndicatorContainer">
-    <StyledColorGradiant
-      style={{
-        background: `linear-gradient(to right, rgba(0,0,0,0), ${gradientColor})`,
-      }}
-    />
-    <StyledTextContent component="p" variant="caption">
-      <StyledSpan>{left}</StyledSpan>
-      <StyledSpan>{middle}</StyledSpan>
-      <StyledSpan>{right}</StyledSpan>
-    </StyledTextContent>
-  </StyledColorIndicatorContainer>
-);
+function ColorIndicatorComponent({ gradientColor, left, middle, right }) {
+  return (
+    <StyledColorIndicatorContainer className="ColorIndicatorContainer">
+      <StyledColorGradiant
+        style={{
+          background: `linear-gradient(to right, rgba(0,0,0,0), ${gradientColor})`,
+        }}
+      />
+      <StyledTextContent component="p" variant="caption">
+        <StyledSpan>{left}</StyledSpan>
+        <StyledSpan>{middle}</StyledSpan>
+        <StyledSpan>{right}</StyledSpan>
+      </StyledTextContent>
+    </StyledColorIndicatorContainer>
+  );
+}
 
 ColorIndicatorComponent.propTypes = {
   gradientColor: PropTypes.string.isRequired,

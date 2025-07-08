@@ -1,12 +1,21 @@
 import styled from '@emotion/styled';
-import React from 'react';
-import PropTypes from 'prop-types';
+import { VerifiedUser, Warning } from '@mui/icons-material';
 import {
-  Typography, List, ListItem, ListItemIcon, ListItemText, Divider, NoSsr, Link,
+  Divider,
+  Link,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  NoSsr,
+  Typography,
 } from '@mui/material';
-import { Warning, VerifiedUser } from '@mui/icons-material';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { useSelector } from 'react-redux';
+
+import { Container, Loading } from '../../../../components';
 import {
   getSelectedUnit,
   selectSelectedUnitAccessibilitySentences,
@@ -14,12 +23,13 @@ import {
 import { selectSettings } from '../../../../redux/selectors/settings';
 import SettingsUtility from '../../../../utils/settings';
 import useLocaleText from '../../../../utils/useLocaleText';
-import { Container, Loading } from '../../../../components';
 
-const AccessibilityInfo = ({ titleAlways = false, headingLevel }) => {
+function AccessibilityInfo({ titleAlways = false, headingLevel }) {
   const settings = useSelector(selectSettings);
   const unit = useSelector(getSelectedUnit);
-  const accessibilitySentences = useSelector(selectSelectedUnitAccessibilitySentences);
+  const accessibilitySentences = useSelector(
+    selectSelectedUnitAccessibilitySentences
+  );
   const getLocaleText = useLocaleText();
 
   if (!unit) {
@@ -45,10 +55,14 @@ const AccessibilityInfo = ({ titleAlways = false, headingLevel }) => {
         const item = settings[key];
         // Confirm accessibility values
         // both radio values using item and checkbox values using key
-        if (accessibilitySettings.includes(key) || accessibilitySettings.includes(item)) {
+        if (
+          accessibilitySettings.includes(key) ||
+          accessibilitySettings.includes(item)
+        ) {
           if (typeof item === 'string') {
             shortcomingSettings.push(item);
-          } if (typeof item === 'boolean' && item === true) {
+          }
+          if (typeof item === 'boolean' && item === true) {
             shortcomingSettings.push(SettingsUtility.getApiValidDataKey(key));
           }
         }
@@ -93,52 +107,57 @@ const AccessibilityInfo = ({ titleAlways = false, headingLevel }) => {
       return null;
     }
 
-    return data
-      && data.length
-      && (
-        <>
-          <List>
-            {
-            data.map((item) => {
-              const title = getLocaleText(item.title);
-              const { profiles } = item;
-              let shortcomings = [];
-              profiles.forEach((profile) => {
-                if (profile.shortcomings.length > 0) {
-                  shortcomings = [
-                    ...shortcomings,
-                    ...profile.shortcomings.map(shortcoming => (getLocaleText(shortcoming))),
-                  ];
-                }
-              });
-              return (
-                <StyledListItemAdjustLeft key={title}>
-                  <StyledListItemIcon>
-                    <Warning />
-                  </StyledListItemIcon>
-                  <ListItemText>
-                    <StyledListTitle data-sm="AccessibilityInfoShortcomingTitle" component={heading} variant="body2" align="left">
-                      {title}
-                    </StyledListTitle>
-                    <StyledList>
-                      {
-                        shortcomings.map(shortcoming => (
-                          <StyledListItem key={shortcoming} data-sm="AccessibilityInfoShortcoming">
-                            <Typography component="p" variant="body2">
-                              {shortcoming}
-                            </Typography>
-                          </StyledListItem>
-                        ))
-                      }
-                    </StyledList>
-                  </ListItemText>
-                </StyledListItemAdjustLeft>
-              );
-            })
-          }
-          </List>
-        </>
-      );
+    return (
+      data &&
+      data.length && (
+        <List>
+          {data.map((item) => {
+            const title = getLocaleText(item.title);
+            const { profiles } = item;
+            let shortcomings = [];
+            profiles.forEach((profile) => {
+              if (profile.shortcomings.length > 0) {
+                shortcomings = [
+                  ...shortcomings,
+                  ...profile.shortcomings.map((shortcoming) =>
+                    getLocaleText(shortcoming)
+                  ),
+                ];
+              }
+            });
+            return (
+              <StyledListItemAdjustLeft key={title}>
+                <StyledListItemIcon>
+                  <Warning />
+                </StyledListItemIcon>
+                <ListItemText>
+                  <StyledListTitle
+                    data-sm="AccessibilityInfoShortcomingTitle"
+                    component={heading}
+                    variant="body2"
+                    align="left"
+                  >
+                    {title}
+                  </StyledListTitle>
+                  <StyledList>
+                    {shortcomings.map((shortcoming) => (
+                      <StyledListItem
+                        key={shortcoming}
+                        data-sm="AccessibilityInfoShortcoming"
+                      >
+                        <Typography component="p" variant="body2">
+                          {shortcoming}
+                        </Typography>
+                      </StyledListItem>
+                    ))}
+                  </StyledList>
+                </ListItemText>
+              </StyledListItemAdjustLeft>
+            );
+          })}
+        </List>
+      )
+    );
   };
 
   const renderAccessibilityDescriptions = (heading) => {
@@ -157,50 +176,52 @@ const AccessibilityInfo = ({ titleAlways = false, headingLevel }) => {
     }
 
     return (
-      <>
-        <List>
-          {
-            groupArray.map((key) => {
-              if (Object.prototype.hasOwnProperty.call(groups, key)) {
-                let groupSentences;
-                const group = groups[key];
-                const title = getLocaleText(group);
+      <List>
+        {groupArray.map((key) => {
+          if (Object.prototype.hasOwnProperty.call(groups, key)) {
+            let groupSentences;
+            const group = groups[key];
+            const title = getLocaleText(group);
 
-                if (Object.prototype.hasOwnProperty.call(sentences, key)) {
-                  groupSentences = sentences[key];
-                }
+            if (Object.prototype.hasOwnProperty.call(sentences, key)) {
+              groupSentences = sentences[key];
+            }
 
-                if (groupSentences && groupSentences.length > 0) {
-                  return (
-                    <StyledDescriptionItem key={title}>
-                      <ListItemText>
-                        <StyledListTitle component={heading} variant="body2" align="left">
-                          {title}
-                        </StyledListTitle>
-                        <StyledList>
-                          {
-                            groupSentences.map((sentence) => {
-                              const text = getLocaleText(sentence);
-                              return (
-                                <StyledListItem key={text}>
-                                  <Typography component="p" variant="body2" align="left">
-                                    {text}
-                                  </Typography>
-                                </StyledListItem>
-                              );
-                            })
-                            }
-                        </StyledList>
-                      </ListItemText>
-                    </StyledDescriptionItem>
-                  );
-                }
-              }
-              return null;
-            })
+            if (groupSentences && groupSentences.length > 0) {
+              return (
+                <StyledDescriptionItem key={title}>
+                  <ListItemText>
+                    <StyledListTitle
+                      component={heading}
+                      variant="body2"
+                      align="left"
+                    >
+                      {title}
+                    </StyledListTitle>
+                    <StyledList>
+                      {groupSentences.map((sentence) => {
+                        const text = getLocaleText(sentence);
+                        return (
+                          <StyledListItem key={text}>
+                            <Typography
+                              component="p"
+                              variant="body2"
+                              align="left"
+                            >
+                              {text}
+                            </Typography>
+                          </StyledListItem>
+                        );
+                      })}
+                    </StyledList>
+                  </ListItemText>
+                </StyledDescriptionItem>
+              );
+            }
           }
-        </List>
-      </>
+          return null;
+        })}
+      </List>
     );
   };
 
@@ -233,12 +254,18 @@ const AccessibilityInfo = ({ titleAlways = false, headingLevel }) => {
   }
   const shortcomings = parseAccessibilityShortcomings();
   const { data } = accessibilitySentences;
-  const shouldRenderExtraTitle = data && Object.keys(data.groups).length
-  && Object.keys(data.sentences).length;
+  const shouldRenderExtraTitle =
+    data &&
+    Object.keys(data.groups).length &&
+    Object.keys(data.sentences).length;
 
   const heading = `h${headingLevel}`;
-  const listHeading = (titleAlways || shouldRenderExtraTitle) ? `h${headingLevel + 1}` : heading;
-  const aShortcomings = renderAccessibilityShortcomings(listHeading, shortcomings);
+  const listHeading =
+    titleAlways || shouldRenderExtraTitle ? `h${headingLevel + 1}` : heading;
+  const aShortcomings = renderAccessibilityShortcomings(
+    listHeading,
+    shortcomings
+  );
   const aDescriptions = renderAccessibilityDescriptions(listHeading);
   const noInfo = !aDescriptions && !aShortcomings;
   const noShortcomings = aDescriptions && !aShortcomings;
@@ -247,45 +274,37 @@ const AccessibilityInfo = ({ titleAlways = false, headingLevel }) => {
 
   return (
     <Container>
-      {
-          (titleAlways)
-          && (
-            <StyledTitle variant="subtitle1" component={heading} align="left">
-              <FormattedMessage id="accessibility.info" />
-            </StyledTitle>
-          )
-        }
+      {titleAlways && (
+        <StyledTitle variant="subtitle1" component={heading} align="left">
+          <FormattedMessage id="accessibility.info" />
+        </StyledTitle>
+      )}
       <StyledDivider aria-hidden="true" />
       <NoSsr>
-        {
-            infoText
-        }
-        {
-            aShortcomings
-        }
+        {infoText}
+        {aShortcomings}
       </NoSsr>
-      {
-          shouldRenderExtraTitle
-            ? (
-              <>
-                <StyledDescriptionsTitle component={heading} variant="subtitle1" align="left">
-                  <FormattedMessage id="accessibility.details" />
-                  {unit.accessibility_www ? (
-                    <Link target="_blank" href={unit.accessibility_www}>
-                      <FormattedMessage id="accessibility.details.summary" />
-                    </Link>
-                  ) : null}
-                </StyledDescriptionsTitle>
-                <StyledDivider aria-hidden="true" />
-              </>
-            ) : null
-        }
-      <Loading reducer={accessibilitySentences}>
-        { aDescriptions }
-      </Loading>
+      {shouldRenderExtraTitle ? (
+        <>
+          <StyledDescriptionsTitle
+            component={heading}
+            variant="subtitle1"
+            align="left"
+          >
+            <FormattedMessage id="accessibility.details" />
+            {unit.accessibility_www ? (
+              <Link target="_blank" href={unit.accessibility_www}>
+                <FormattedMessage id="accessibility.details.summary" />
+              </Link>
+            ) : null}
+          </StyledDescriptionsTitle>
+          <StyledDivider aria-hidden="true" />
+        </>
+      ) : null}
+      <Loading reducer={accessibilitySentences}>{aDescriptions}</Loading>
     </Container>
   );
-};
+}
 
 const infoIconClass = ({ theme }) => ({
   paddingRight: theme.spacing(2),

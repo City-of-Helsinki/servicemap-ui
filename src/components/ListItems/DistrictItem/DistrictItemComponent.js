@@ -1,17 +1,18 @@
+import styled from '@emotion/styled';
 import { Divider, ListItem, Typography } from '@mui/material';
 import PropTypes from 'prop-types';
 import React, { Fragment } from 'react';
 import { useIntl } from 'react-intl';
-import styled from '@emotion/styled';
+
 import useLocaleText from '../../../utils/useLocaleText';
 import { AreaIcon } from '../../SMIcon';
 
-const DistrictItemComponent = ({
+function DistrictItemComponent({
   area,
   hideDivider = false,
   paddedDivider = false,
   title = true,
-}) => {
+}) {
   const intl = useIntl();
   const getLocaleText = useLocaleText();
   if (!area || !area.id || !area.type || !area.origin_id) {
@@ -19,37 +20,29 @@ const DistrictItemComponent = ({
   }
 
   const titleText = intl.formatMessage({ id: `area.list.${area.type}` });
-  const getCustomRescueAreaTitle = area => `${!title ? `${titleText} ` : ''}${area.origin_id} - ${getLocaleText(area.name)}`;
+  const getCustomRescueAreaTitle = (area) =>
+    `${!title ? `${titleText} ` : ''}${area.origin_id} - ${getLocaleText(area.name)}`;
 
   return (
     <Fragment key={area.id}>
       <StyledListItem>
-        {
-          title
-          && (
-            <StyledTitle variant="subtitle1">
-              {titleText}
-            </StyledTitle>
-          )
-        }
+        {title && <StyledTitle variant="subtitle1">{titleText}</StyledTitle>}
         <StyledTextContainer>
           <StyledAreaIcon />
-          <StyledBoldText>
-            {getCustomRescueAreaTitle(area)}
-          </StyledBoldText>
+          <StyledBoldText>{getCustomRescueAreaTitle(area)}</StyledBoldText>
         </StyledTextContainer>
       </StyledListItem>
-      {
-        !hideDivider
-        && (
-          <StyledLDividerItem paddedDivider={paddedDivider || undefined} aria-hidden>
-            <Divider aria-hidden />
-          </StyledLDividerItem>
-        )
-      }
+      {!hideDivider && (
+        <StyledLDividerItem
+          paddedDivider={paddedDivider || undefined}
+          aria-hidden
+        >
+          <Divider aria-hidden />
+        </StyledLDividerItem>
+      )}
     </Fragment>
   );
-};
+}
 
 const StyledListItem = styled(ListItem)(({ theme }) => ({
   display: 'flex',

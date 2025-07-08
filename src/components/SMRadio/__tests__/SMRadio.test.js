@@ -1,14 +1,15 @@
 // // Link.react.test.js
 import React from 'react';
-import SMRadio from '../index';
+
 import { getRenderWithProviders } from '../../../../jestUtils';
+import SMRadio from '../index';
 
 // Generic required props for SimpleListItem
 const mockProps = {
   'aria-label': 'Aria label text',
   name: 'service',
   initialValue: 'none',
-  controls: ['none', 'common', 'all'].map(service => ({
+  controls: ['none', 'common', 'all'].map((service) => ({
     value: service,
     label: `label ${service}`,
   })),
@@ -35,15 +36,29 @@ describe('<SMRadio />', () => {
     const { getByLabelText } = renderWithProviders(<SMRadio {...mockProps} />);
 
     // Group attributes
-    expect(getByLabelText(mockProps['aria-label']).getAttribute('aria-label')).toEqual(mockProps['aria-label']);
+    expect(
+      getByLabelText(mockProps['aria-label']).getAttribute('aria-label')
+    ).toEqual(mockProps['aria-label']);
 
-    expect(getByLabelText('label none', { selector: 'input' }).getAttribute('name')).toEqual(mockProps.name);
-    expect(getByLabelText('label none', { selector: 'input' }).value).toEqual(mockProps.initialValue);
+    expect(
+      getByLabelText('label none', { selector: 'input' }).getAttribute('name')
+    ).toEqual(mockProps.name);
+    expect(getByLabelText('label none', { selector: 'input' }).value).toEqual(
+      mockProps.initialValue
+    );
 
-    expect(getByLabelText('label common', { selector: 'input' }).getAttribute('name')).toEqual(mockProps.name);
-    expect(getByLabelText('label common', { selector: 'input' }).value).toEqual('common');
+    expect(
+      getByLabelText('label common', { selector: 'input' }).getAttribute('name')
+    ).toEqual(mockProps.name);
+    expect(getByLabelText('label common', { selector: 'input' }).value).toEqual(
+      'common'
+    );
 
-    expect(getByLabelText('label all', { selector: 'input' }).getAttribute('name')).toEqual(mockProps.name);
-    expect(getByLabelText('label all', { selector: 'input' }).value).toEqual('all');
+    expect(
+      getByLabelText('label all', { selector: 'input' }).getAttribute('name')
+    ).toEqual(mockProps.name);
+    expect(getByLabelText('label all', { selector: 'input' }).value).toEqual(
+      'all'
+    );
   });
 });

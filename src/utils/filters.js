@@ -1,7 +1,11 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useSelector } from 'react-redux';
+
 import config from '../../config';
-import { selectSelectedCities, selectSelectedOrganizationIds } from '../redux/selectors/settings';
+import {
+  selectSelectedCities,
+  selectSelectedOrganizationIds,
+} from '../redux/selectors/settings';
 import { parseSearchParams } from './index';
 import { getUnitCount } from './units';
 
@@ -14,21 +18,24 @@ export const filterEmptyServices = (cities, organizationIds) => (obj) => {
   if (obj.unit_count.total === 0) {
     return false;
   }
-  if (cities.length && cities.every(city => getUnitCount(obj, city) === 0)) {
+  if (cities.length && cities.every((city) => getUnitCount(obj, city) === 0)) {
     return false;
   }
-  return !organizationIds.length || !organizationIds.every(org => getUnitCount(obj, org) === 0);
+  return (
+    !organizationIds.length ||
+    !organizationIds.every((org) => getUnitCount(obj, org) === 0)
+  );
 };
 
-const filterByOrganizationIds = organizationIds => {
+const filterByOrganizationIds = (organizationIds) => {
   if (organizationIds.length === 0) {
     return () => true;
   }
   const organizationSettings = {};
-  organizationIds.forEach(orgId => {
+  organizationIds.forEach((orgId) => {
     organizationSettings[orgId] = true;
   });
-  return result => {
+  return (result) => {
     // There are organizations so we filter by organization
     const contractTypeId = result.contract_type?.id;
     // we do not want NOT_DISPLAYED services
@@ -36,13 +43,20 @@ const filterByOrganizationIds = organizationIds => {
       return false;
     }
     // we do not want private services
-    if (contractTypeId === 'PRIVATE_SERVICE' || PRIVATE_ORGANIZATION_TYPES.includes(result.organizer_type)) {
+    if (
+      contractTypeId === 'PRIVATE_SERVICE' ||
+      PRIVATE_ORGANIZATION_TYPES.includes(result.organizer_type)
+    ) {
       return false;
     }
     const resultDepartment = result.department?.id || result.department;
-    const resultRootDepartment = result.root_department?.id || result.root_department;
+    const resultRootDepartment =
+      result.root_department?.id || result.root_department;
 
-    return organizationSettings[resultDepartment] || organizationSettings[resultRootDepartment];
+    return (
+      organizationSettings[resultDepartment] ||
+      organizationSettings[resultRootDepartment]
+    );
   };
 };
 
@@ -52,17 +66,20 @@ const filterByOrganizationIds = organizationIds => {
  * @param getter access to municipality data, defaults to y => y.municipality
  * @returns filter that checks for municipality
  */
-export const filterByCitySettings = (citySettings, getter = y => y.municipality) => {
+export const filterByCitySettings = (
+  citySettings,
+  getter = (y) => y.municipality
+) => {
   // This is a bit defensive to go with config.cities
-  const selectedCities = config.cities.filter(city => citySettings[city]);
+  const selectedCities = config.cities.filter((city) => citySettings[city]);
   if (!selectedCities.length) {
     return () => true;
   }
   const allowedCitySettings = {};
-  selectedCities.forEach(city => {
+  selectedCities.forEach((city) => {
     allowedCitySettings[city] = true;
   });
-  return x => allowedCitySettings[getter(x)];
+  return (x) => allowedCitySettings[getter(x)];
 };
 
 /**
@@ -72,21 +89,23 @@ export const filterByCitySettings = (citySettings, getter = y => y.municipality)
  * @param getter access to municipality data, defaults to y => y.municipality
  * @returns filter that checks for municipality
  */
-export const filterByCities = (cities, getter = y => y.municipality) => {
+export const filterByCities = (cities, getter = (y) => y.municipality) => {
   const citySettings = {};
-  cities.forEach(city => {
+  cities.forEach((city) => {
     citySettings[city] = true;
   });
   return filterByCitySettings(citySettings, getter);
 };
 
 export const filterCitiesAndOrganizations = (
-  cities = [], organizationIds = [], onlyUnits = false,
+  cities = [],
+  organizationIds = [],
+  onlyUnits = false
 ) => {
-  const getter = result => result.municipality?.id || result.municipality;
+  const getter = (result) => result.municipality?.id || result.municipality;
   const cityFilter = filterByCities(cities, getter);
   const organizationFilter = filterByOrganizationIds(organizationIds);
-  return result => {
+  return (result) => {
     if (onlyUnits && result.object_type !== 'unit') return false;
     // Services are not filtered by cities or organizations
     if (['service', 'servicenode'].includes(result.object_type)) return true;
@@ -100,7 +119,7 @@ export const filterCitiesAndOrganizations = (
 
 export const filterResultTypes = () => (obj) => {
   const allowedTypes = ['unit', 'service', 'address', 'event'];
-  return (allowedTypes.includes(obj.object_type));
+  return allowedTypes.includes(obj.object_type);
 };
 
 /**
@@ -117,7 +136,7 @@ export const resolveCitySettings = (citySettings, location, embed) => {
   }
   const cities = parseSearchParams(location.search)?.city?.split(',') || [];
   const urlCitySettings = {};
-  cities.forEach(city => {
+  cities.forEach((city) => {
     urlCitySettings[city] = true;
   });
   return urlCitySettings;
@@ -132,11 +151,17 @@ export const resolveCitySettings = (citySettings, location, embed) => {
  * @param embed state of embedding
  * @returns filter predicate
  */
-export const resolveCityAndOrganizationFilter = (cities, organizationIds, location, embed) => {
+export const resolveCityAndOrganizationFilter = (
+  cities,
+  organizationIds,
+  location,
+  embed
+) => {
   if (!embed) {
     return filterCitiesAndOrganizations(cities, organizationIds);
   }
-  const splitByComma = text => ((text?.length || 0) === 0 ? [] : text?.split(',')) || [];
+  const splitByComma = (text) =>
+    ((text?.length || 0) === 0 ? [] : text?.split(',')) || [];
   const searchParam = parseSearchParams(location.search);
   const cityParam = searchParam?.city || searchParam?.municipality;
   const cityArray = splitByComma(cityParam);
@@ -150,7 +175,12 @@ export const resolveCityAndOrganizationFilter = (cities, organizationIds, locati
 export const applyCityAndOrganizationFilter = (units, location, embed) => {
   const cities = useSelector(selectSelectedCities);
   const orgIds = useSelector(selectSelectedOrganizationIds);
-  const cityAndOrgFilter = resolveCityAndOrganizationFilter(cities, orgIds, location, embed);
+  const cityAndOrgFilter = resolveCityAndOrganizationFilter(
+    cities,
+    orgIds,
+    location,
+    embed
+  );
   return units.filter(cityAndOrgFilter);
 };
 
@@ -160,7 +190,8 @@ export const applyCityAndOrganizationFilter = (units, location, embed) => {
  * @param {*} cities - selected cities
  * @param {*} organizationIds - selected organization ids
  */
-export const getCityAndOrgFilteredData = (data, cities, organizationIds) => data
-  .filter(filterResultTypes())
-  .filter(filterEmptyServices(cities, organizationIds))
-  .filter(filterCitiesAndOrganizations(cities, organizationIds));
+export const getCityAndOrgFilteredData = (data, cities, organizationIds) =>
+  data
+    .filter(filterResultTypes())
+    .filter(filterEmptyServices(cities, organizationIds))
+    .filter(filterCitiesAndOrganizations(cities, organizationIds));

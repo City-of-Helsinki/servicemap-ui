@@ -22,7 +22,10 @@ const SMSwitch = styled(Switch)(({ theme }) => ({
       color: '#fff',
       '& + .MuiSwitch-track': {
         opacity: 1,
-        backgroundColor: theme.palette.mode === 'dark' ? theme.palette.primary.highContrast : theme.palette.primary.main,
+        backgroundColor:
+          theme.palette.mode === 'dark'
+            ? theme.palette.primary.highContrast
+            : theme.palette.primary.main,
       },
     },
   },
@@ -39,7 +42,9 @@ const SMSwitch = styled(Switch)(({ theme }) => ({
     borderRadius: 16 / 2,
     opacity: 1,
     backgroundColor:
-      theme.palette.mode === 'dark' ? 'rgba(255,255,255,.35)' : 'rgba(0,0,0,.25)',
+      theme.palette.mode === 'dark'
+        ? 'rgba(255,255,255,.35)'
+        : 'rgba(0,0,0,.25)',
     boxSizing: 'border-box',
   },
 }));

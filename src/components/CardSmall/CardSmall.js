@@ -1,6 +1,5 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import styled from '@emotion/styled';
+import { ArrowForward } from '@mui/icons-material';
 import {
   ButtonBase,
   Card,
@@ -8,12 +7,11 @@ import {
   CardMedia,
   Typography,
 } from '@mui/material';
-import { ArrowForward } from '@mui/icons-material';
-import styled from '@emotion/styled';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
 
-function CardSmall({
-  headerMessageID, messageID, onClick, image,
-}) {
+function CardSmall({ headerMessageID, messageID, onClick, image }) {
   return (
     <ButtonBase onClick={onClick} role="link">
       <StyledCard>

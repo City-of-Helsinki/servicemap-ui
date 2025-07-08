@@ -1,35 +1,40 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import { Switch, Route } from 'react-router-dom';
-import SearchView from '../../../views/SearchView';
-import UnitView from '../../../views/UnitView';
-import HomeView from '../../../views/HomeView';
-import ServiceView from '../../../views/ServiceView';
-import EventDetailView from '../../../views/EventDetailView';
-import AddressView from '../../../views/AddressView';
-import ServiceTreeView from '../../../views/ServiceTreeView';
-import ViewTitle from './ViewTitle';
-import PageHandler from '../PageHandler';
-import FeedbackView from '../../../views/FeedbackView';
-import DivisionView from '../../../views/DivisionView';
-import InfoView from '../../../views/InfoView';
-import ExtendedData from '../../../views/UnitView/components/ExtendedData';
-import AreaView from '../../../views/AreaView';
+import React from 'react';
+import { Route, Switch } from 'react-router-dom';
+
 import { ErrorTrigger } from '../../../components';
+import AddressView from '../../../views/AddressView';
+import AreaView from '../../../views/AreaView';
+import DivisionView from '../../../views/DivisionView';
+import EventDetailView from '../../../views/EventDetailView';
+import FeedbackView from '../../../views/FeedbackView';
+import HomeView from '../../../views/HomeView';
+import InfoView from '../../../views/InfoView';
+import SearchView from '../../../views/SearchView';
+import ServiceTreeView from '../../../views/ServiceTreeView';
+import ServiceView from '../../../views/ServiceView';
+import UnitView from '../../../views/UnitView';
+import ExtendedData from '../../../views/UnitView/components/ExtendedData';
+import PageHandler from '../PageHandler';
+import ViewTitle from './ViewTitle';
 
-const TitleWrapper = ({ children, messageId }) => (
-  <>
-    <ViewTitle messageId={messageId} />
-    {children}
-  </>
-);
+function TitleWrapper({ children, messageId }) {
+  return (
+    <>
+      <ViewTitle messageId={messageId} />
+      {children}
+    </>
+  );
+}
 
-const PageWrapper = ({ children, headMsgId = null, page = null }) => (
-  <>
-    <PageHandler messageId={headMsgId} page={page} />
-    {children}
-  </>
-);
+function PageWrapper({ children, headMsgId = null, page = null }) {
+  return (
+    <>
+      <PageHandler messageId={headMsgId} page={page} />
+      {children}
+    </>
+  );
+}
 
 TitleWrapper.propTypes = {
   children: PropTypes.node.isRequired,
@@ -42,129 +47,167 @@ PageWrapper.propTypes = {
   page: PropTypes.string,
 };
 
-const Home = () => (
-  <TitleWrapper messageId="general.pageTitles.home">
-    <PageWrapper headMsgId="" page="home">
-      <HomeView />
-    </PageWrapper>
-  </TitleWrapper>
-);
+function Home() {
+  return (
+    <TitleWrapper messageId="general.pageTitles.home">
+      <PageWrapper headMsgId="" page="home">
+        <HomeView />
+      </PageWrapper>
+    </TitleWrapper>
+  );
+}
 
-const Search = () => (
-  <TitleWrapper messageId="general.pageTitles.search">
-    <PageWrapper headMsgId="search.results.title" page="search">
-      <SearchView />
-    </PageWrapper>
-  </TitleWrapper>
-);
+function Search() {
+  return (
+    <TitleWrapper messageId="general.pageTitles.search">
+      <PageWrapper headMsgId="search.results.title" page="search">
+        <SearchView />
+      </PageWrapper>
+    </TitleWrapper>
+  );
+}
 
-const Unit = () => (
-  <TitleWrapper messageId="general.pageTitles.unit">
-    <PageWrapper headMsgId="" page="unit">
-      <UnitView />
-    </PageWrapper>
-  </TitleWrapper>
-);
+function Unit() {
+  return (
+    <TitleWrapper messageId="general.pageTitles.unit">
+      <PageWrapper headMsgId="" page="unit">
+        <UnitView />
+      </PageWrapper>
+    </TitleWrapper>
+  );
+}
 
-const UnitServices = () => (
-  <TitleWrapper messageId="general.pageTitles.unit.services">
-    <PageWrapper headMsgId="general.pageTitles.unit.services" page="unit">
-      <ExtendedData type="services" />
-    </PageWrapper>
-  </TitleWrapper>
-);
-const UnitEducationServices = () => (
-  <TitleWrapper messageId="general.pageTitles.unit.services">
-    <PageWrapper headMsgId="general.pageTitles.unit.services" page="unit">
-      <ExtendedData type="educationServices" />
-    </PageWrapper>
-  </TitleWrapper>
-);
-const UnitEvents = () => (
-  <TitleWrapper messageId="general.pageTitles.unit.events">
-    <PageWrapper headMsgId="general.pageTitles.unit.events" page="unit">
-      <ExtendedData type="events" />
-    </PageWrapper>
-  </TitleWrapper>
-);
-const UnitReservations = () => (
-  <TitleWrapper messageId="general.pageTitles.unit.reservations">
-    <PageWrapper headMsgId="general.pageTitles.unit.reservations" page="unit">
-      <ExtendedData type="reservations" />
-    </PageWrapper>
-  </TitleWrapper>
-);
-const UnitFeedback = () => (
-  <TitleWrapper messageId="general.pageTitles.feedback">
-    <PageWrapper headMsgId="general.pageTitles.feedback" page="unit">
-      <FeedbackView />
-    </PageWrapper>
-  </TitleWrapper>
-);
+function UnitServices() {
+  return (
+    <TitleWrapper messageId="general.pageTitles.unit.services">
+      <PageWrapper headMsgId="general.pageTitles.unit.services" page="unit">
+        <ExtendedData type="services" />
+      </PageWrapper>
+    </TitleWrapper>
+  );
+}
+function UnitEducationServices() {
+  return (
+    <TitleWrapper messageId="general.pageTitles.unit.services">
+      <PageWrapper headMsgId="general.pageTitles.unit.services" page="unit">
+        <ExtendedData type="educationServices" />
+      </PageWrapper>
+    </TitleWrapper>
+  );
+}
+function UnitEvents() {
+  return (
+    <TitleWrapper messageId="general.pageTitles.unit.events">
+      <PageWrapper headMsgId="general.pageTitles.unit.events" page="unit">
+        <ExtendedData type="events" />
+      </PageWrapper>
+    </TitleWrapper>
+  );
+}
+function UnitReservations() {
+  return (
+    <TitleWrapper messageId="general.pageTitles.unit.reservations">
+      <PageWrapper headMsgId="general.pageTitles.unit.reservations" page="unit">
+        <ExtendedData type="reservations" />
+      </PageWrapper>
+    </TitleWrapper>
+  );
+}
+function UnitFeedback() {
+  return (
+    <TitleWrapper messageId="general.pageTitles.feedback">
+      <PageWrapper headMsgId="general.pageTitles.feedback" page="unit">
+        <FeedbackView />
+      </PageWrapper>
+    </TitleWrapper>
+  );
+}
 
-const Service = () => (
-  <TitleWrapper messageId="general.pageTitles.service">
-    <PageWrapper headMsgId="" page="service">
-      <ServiceView />
-    </PageWrapper>
-  </TitleWrapper>
-);
+function Service() {
+  return (
+    <TitleWrapper messageId="general.pageTitles.service">
+      <PageWrapper headMsgId="" page="service">
+        <ServiceView />
+      </PageWrapper>
+    </TitleWrapper>
+  );
+}
 
-const Event = () => (
-  <TitleWrapper messageId="general.pageTitles.event">
-    <PageWrapper headMsgId="" page="event">
-      <EventDetailView />
-    </PageWrapper>
-  </TitleWrapper>
-);
+function Event() {
+  return (
+    <TitleWrapper messageId="general.pageTitles.event">
+      <PageWrapper headMsgId="" page="event">
+        <EventDetailView />
+      </PageWrapper>
+    </TitleWrapper>
+  );
+}
 
-const Address = () => (
-  <TitleWrapper messageId="general.pageTitles.address">
-    <PageWrapper headMsgId="" page="address">
-      <AddressView />
-    </PageWrapper>
-  </TitleWrapper>
-);
+function Address() {
+  return (
+    <TitleWrapper messageId="general.pageTitles.address">
+      <PageWrapper headMsgId="" page="address">
+        <AddressView />
+      </PageWrapper>
+    </TitleWrapper>
+  );
+}
 
-const ServiceTree = () => (
-  <TitleWrapper messageId="general.pageTitles.serviceTree">
-    <PageWrapper headMsgId="general.pageTitles.serviceTree.title" page="serviceTree">
-      <ServiceTreeView variant="ServiceTree" />
-    </PageWrapper>
-  </TitleWrapper>
-);
+function ServiceTree() {
+  return (
+    <TitleWrapper messageId="general.pageTitles.serviceTree">
+      <PageWrapper
+        headMsgId="general.pageTitles.serviceTree.title"
+        page="serviceTree"
+      >
+        <ServiceTreeView variant="ServiceTree" />
+      </PageWrapper>
+    </TitleWrapper>
+  );
+}
 
-const MobilityTree = () => (
-  <TitleWrapper messageId="general.pageTitles.mobilityTree">
-    <PageWrapper headMsgId="general.pageTitles.mobilityTree.title" page="mobilityTree">
-      <ServiceTreeView variant="MobilityTree" />
-    </PageWrapper>
-  </TitleWrapper>
-);
+function MobilityTree() {
+  return (
+    <TitleWrapper messageId="general.pageTitles.mobilityTree">
+      <PageWrapper
+        headMsgId="general.pageTitles.mobilityTree.title"
+        page="mobilityTree"
+      >
+        <ServiceTreeView variant="MobilityTree" />
+      </PageWrapper>
+    </TitleWrapper>
+  );
+}
 
-const Info = () => (
-  <TitleWrapper messageId="general.pageTitles.info">
-    <PageWrapper headMsgId="general.pageTitles.info" page="info">
-      <InfoView />
-    </PageWrapper>
-  </TitleWrapper>
-);
+function Info() {
+  return (
+    <TitleWrapper messageId="general.pageTitles.info">
+      <PageWrapper headMsgId="general.pageTitles.info" page="info">
+        <InfoView />
+      </PageWrapper>
+    </TitleWrapper>
+  );
+}
 
-const Feedback = () => (
-  <TitleWrapper messageId="general.pageTitles.feedback">
-    <PageWrapper headMsgId="general.pageTitles.feedback" page="feedback">
-      <FeedbackView />
-    </PageWrapper>
-  </TitleWrapper>
-);
+function Feedback() {
+  return (
+    <TitleWrapper messageId="general.pageTitles.feedback">
+      <PageWrapper headMsgId="general.pageTitles.feedback" page="feedback">
+        <FeedbackView />
+      </PageWrapper>
+    </TitleWrapper>
+  );
+}
 
-const Area = () => (
-  <TitleWrapper messageId="general.pageTitles.area">
-    <PageWrapper headMsgId="general.pageTitles.area" page="area">
-      <AreaView />
-    </PageWrapper>
-  </TitleWrapper>
-);
+function Area() {
+  return (
+    <TitleWrapper messageId="general.pageTitles.area">
+      <PageWrapper headMsgId="general.pageTitles.area" page="area">
+        <AreaView />
+      </PageWrapper>
+    </TitleWrapper>
+  );
+}
 
 class ViewRouter extends React.Component {
   constructor(props) {
@@ -172,15 +215,30 @@ class ViewRouter extends React.Component {
     this.state = {};
   }
 
-
   render() {
     return (
       <Switch>
-        <Route exact path="/:lng/unit/:unit/feedback" component={UnitFeedback} />
+        <Route
+          exact
+          path="/:lng/unit/:unit/feedback"
+          component={UnitFeedback}
+        />
         <Route exact path="/:lng/unit/:unit/events" component={UnitEvents} />
-        <Route exact path="/:lng/unit/:unit/reservations" component={UnitReservations} />
-        <Route exact path="/:lng/unit/:unit/services" component={UnitServices} />
-        <Route exact path="/:lng/unit/:unit/educationServices/:period?" component={UnitEducationServices} />
+        <Route
+          exact
+          path="/:lng/unit/:unit/reservations"
+          component={UnitReservations}
+        />
+        <Route
+          exact
+          path="/:lng/unit/:unit/services"
+          component={UnitServices}
+        />
+        <Route
+          exact
+          path="/:lng/unit/:unit/educationServices/:period?"
+          component={UnitEducationServices}
+        />
         <Route exact path="/:lng/unit/:unit" component={Unit} />
         <Route path="/:lng/search" component={Search} />
         <Route path="/:lng/services" component={ServiceTree} />
@@ -202,7 +260,7 @@ class ViewRouter extends React.Component {
         />
         <Route path="/:lng/info/:page?" component={Info} />
         <Route exact path="/:lng/" component={Home} />
-        <Route render={props => <ErrorTrigger error="badUrl" />} />
+        <Route render={(props) => <ErrorTrigger error="badUrl" />} />
       </Switch>
     );
   }

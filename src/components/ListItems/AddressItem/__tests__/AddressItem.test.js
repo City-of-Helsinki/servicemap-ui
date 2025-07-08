@@ -1,16 +1,17 @@
 import React from 'react';
+
+import { getRenderWithProviders } from '../../../../../jestUtils';
 import { initialState } from '../../../../redux/reducers/user';
 import AddressItem from '../index';
-import { getRenderWithProviders } from '../../../../../jestUtils';
 
 const mockData = {
-  "name": {
-      "fi": "yleiset kirjastot",
-      "sv": "allmänna bibliotek",
-      "en": "public libraries"
+  name: {
+    fi: 'yleiset kirjastot',
+    sv: 'allmänna bibliotek',
+    en: 'public libraries',
   },
-  "id": 813,
-  "clarification_enabled": false,
+  id: 813,
+  clarification_enabled: false,
 };
 
 // Generic required props for SimpleListItem
@@ -18,14 +19,13 @@ const mockProps = {
   service: mockData,
 };
 
-
 const renderWithProviders = getRenderWithProviders({
   user: initialState,
   settings: {},
   service: {
     current: null,
   },
-})
+});
 
 describe('<AddressItem />', () => {
   it('should work', () => {
@@ -41,7 +41,9 @@ describe('<AddressItem />', () => {
     const dividerItem = items[1];
 
     // List item's image should be aria-hidden
-    expect(firstItem.querySelector('span').getAttribute('aria-hidden')).toBeTruthy();
+    expect(
+      firstItem.querySelector('span').getAttribute('aria-hidden')
+    ).toBeTruthy();
     expect(firstItem.getAttribute('role')).toEqual('link');
     expect(firstItem.getAttribute('tabIndex')).toEqual('0');
     expect(firstItemResultTitle.getAttribute('aria-hidden')).toBeFalsy();

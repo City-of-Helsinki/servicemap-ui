@@ -34,7 +34,4 @@ const StyledLink = styled('a')(({ theme }) => ({
   },
 }));
 
-export {
-  StyledDiv,
-  StyledLink,
-};
+export { StyledDiv, StyledLink };

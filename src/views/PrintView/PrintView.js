@@ -1,7 +1,14 @@
 /* eslint-disable no-underscore-dangle */
 import styled from '@emotion/styled';
 import {
-  Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
 } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
 import PropTypes from 'prop-types';
@@ -9,6 +16,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
+
 import paths from '../../../config/paths';
 import { SMButton } from '../../components';
 import { selectMapRef } from '../../redux/selectors/general';
@@ -61,7 +69,7 @@ const StyledTableContainer = styled(TableContainer)(() => ({
   },
 }));
 
-const PrintView = ({ togglePrintView }) => {
+function PrintView({ togglePrintView }) {
   const map = useSelector(selectMapRef);
   const intl = useIntl();
   const getLocaleText = useLocaleText();
@@ -94,7 +102,8 @@ const PrintView = ({ togglePrintView }) => {
     if (map.tap) map.tap.disable();
     document.getElementById('print-map').style.cursor = 'default';
     document.querySelector('.leaflet-control-zoom').style.display = 'none';
-    document.querySelector('.leaflet-control-attribution').style.display = 'none';
+    document.querySelector('.leaflet-control-attribution').style.display =
+      'none';
   };
 
   const getMarkers = () => {
@@ -109,16 +118,11 @@ const PrintView = ({ togglePrintView }) => {
       const cl = current?._icon?.classList; // Class list for icon
 
       if (
-        (
-          current instanceof global.L.MarkerCluster
-          || current instanceof global.L.Marker
-        )
+        (current instanceof global.L.MarkerCluster ||
+          current instanceof global.L.Marker) &&
         // Only unit markers and clusters
-        && cl
-        && (
-          cl.contains('unitMarker')
-          || cl.contains('unitClusterMarker')
-        )
+        cl &&
+        (cl.contains('unitMarker') || cl.contains('unitClusterMarker'))
       ) {
         markers.push(current);
       }
@@ -127,9 +131,8 @@ const PrintView = ({ togglePrintView }) => {
     return markers;
   };
 
-  const getClusteredUnits = markerCluster => (
-    markerCluster.getAllChildMarkers().map(mm => mm.options.customUnitData)
-  );
+  const getClusteredUnits = (markerCluster) =>
+    markerCluster.getAllChildMarkers().map((mm) => mm.options.customUnitData);
 
   const isUnitPage = () => paths.unit.regex.test(location.pathname);
 
@@ -145,7 +148,7 @@ const PrintView = ({ togglePrintView }) => {
     let isInvalid = false;
     if (marker instanceof global.L.MarkerCluster) {
       const units = getClusteredUnits(marker);
-      isInvalid = !units.find(v => v.id === unitID);
+      isInvalid = !units.find((v) => v.id === unitID);
     } else if (marker?.options?.customUnitData?.id !== unitID) {
       isInvalid = true;
     }
@@ -159,7 +162,7 @@ const PrintView = ({ togglePrintView }) => {
 
       if (marker instanceof global.L.MarkerCluster) {
         const units = getClusteredUnits(marker);
-        unit = units.find(v => v.id === unitID);
+        unit = units.find((v) => v.id === unitID);
       } else {
         unit = marker.options.customUnitData;
       }
@@ -189,8 +192,7 @@ const PrintView = ({ togglePrintView }) => {
     const { crs, options } = mapOptions;
     const mapCenter = map.getCenter();
     const mapZoom = map.getZoom();
-    const mymap = global.L.map('print-map')
-      .setView(mapCenter, mapZoom);
+    const mymap = global.L.map('print-map').setView(mapCenter, mapZoom);
 
     global.L.tileLayer(options.url, {
       maxZoom: options.maxZoom,
@@ -217,7 +219,10 @@ const PrintView = ({ togglePrintView }) => {
     Object.keys(markers).forEach((key) => {
       if (Object.prototype.hasOwnProperty.call(markers, key)) {
         const marker = markers[key];
-        if (marker.options.id === 'userMarker' || !mapBounds.contains(marker.getLatLng())) {
+        if (
+          marker.options.id === 'userMarker' ||
+          !mapBounds.contains(marker.getLatLng())
+        ) {
           return;
         }
         if (isUnitPage() && isInvalidUnitPageMarker(marker)) {
@@ -241,11 +246,12 @@ const PrintView = ({ togglePrintView }) => {
           coordinates = unitPageUnit.location.coordinates;
         }
 
+        vid += 1;
         const customMarker = global.L.marker(
           coordinates ? [coordinates[1], coordinates[0]] : marker.getLatLng(),
           {
-            icon: createCustomIcon(++vid),
-          },
+            icon: createCustomIcon(vid),
+          }
         );
         layer.addLayer(customMarker);
 
@@ -281,7 +287,12 @@ const PrintView = ({ togglePrintView }) => {
   return (
     <StyledWrapper ref={dialogRef} role="dialog">
       {/* Empty element that makes keyboard focus loop in dialog */}
-      <Typography style={visuallyHidden} aria-hidden tabIndex={0} onFocus={focusToLastElement} />
+      <Typography
+        style={visuallyHidden}
+        aria-hidden
+        tabIndex={0}
+        onFocus={focusToLastElement}
+      />
       <StyledContainer>
         <StyledButtonContainer>
           <SMButton
@@ -320,77 +331,68 @@ const PrintView = ({ togglePrintView }) => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {
-                  descriptions.map((description) => {
-                    if (!description?.units || !description.units[0]) {
-                      return null;
-                    }
-                    const { name, street_address: address } = description.units[0];
-                    return (
-                      <React.Fragment key={description.number}>
-                        <StyledTableRow key={description.number}>
-                          <StyledTableCell>
-                            {description.number}
-                          </StyledTableCell>
-                          <StyledTableCell>
-                            {
-                              name
-                              && (
+                {descriptions.map((description) => {
+                  if (!description?.units || !description.units[0]) {
+                    return null;
+                  }
+                  const { name, street_address: address } =
+                    description.units[0];
+                  return (
+                    <React.Fragment key={description.number}>
+                      <StyledTableRow key={description.number}>
+                        <StyledTableCell>{description.number}</StyledTableCell>
+                        <StyledTableCell>
+                          {name && (
+                            <Typography variant="subtitle1" component="p">
+                              {getLocaleText(name)}
+                            </Typography>
+                          )}
+                          {address && (
+                            <Typography variant="body2">
+                              {getLocaleText(address)}
+                            </Typography>
+                          )}
+                        </StyledTableCell>
+                      </StyledTableRow>
+                      {description.units.slice(1).map((unit) => {
+                        const { name, street_address: address } = unit;
+                        const key = `${description.number}-${unit.id}`;
+                        return (
+                          <StyledTableRow key={key}>
+                            <StyledTableCell />
+                            <StyledTableCell>
+                              {name && (
                                 <Typography variant="subtitle1" component="p">
                                   {getLocaleText(name)}
                                 </Typography>
-                              )
-                            }
-                            {
-                              address
-                              && (
+                              )}
+                              {address && (
                                 <Typography variant="body2">
                                   {getLocaleText(address)}
                                 </Typography>
-                              )
-                            }
-                          </StyledTableCell>
-                        </StyledTableRow>
-                        {
-                          description.units.slice(1).map((unit) => {
-                            const { name, street_address: address } = unit;
-                            const key = `${description.number}-${unit.id}`;
-                            return (
-                              <StyledTableRow key={key}>
-                                <StyledTableCell />
-                                <StyledTableCell>
-                                  {
-                                    name
-                                    && (
-                                      <Typography variant="subtitle1" component="p">{getLocaleText(name)}</Typography>
-                                    )
-                                  }
-                                  {
-                                    address
-                                    && (
-                                      <Typography variant="body2">{getLocaleText(address)}</Typography>
-                                    )
-                                  }
-                                </StyledTableCell>
-                              </StyledTableRow>
-                            );
-                          })
-                        }
-                      </React.Fragment>
-                    );
-                  })
-                }
+                              )}
+                            </StyledTableCell>
+                          </StyledTableRow>
+                        );
+                      })}
+                    </React.Fragment>
+                  );
+                })}
               </TableBody>
             </Table>
-
           </StyledTableContainer>
         </div>
       </StyledContainer>
       {/* Empty element that makes keyboard focus loop in dialog */}
-      <Typography style={visuallyHidden} aria-hidden tabIndex="0" onFocus={focusToFirstElement} />
+      <Typography
+        style={visuallyHidden}
+        aria-hidden
+        tabIndex="0"
+        onFocus={focusToFirstElement}
+      />
     </StyledWrapper>
   );
-};
+}
 
 PrintView.propTypes = {
   togglePrintView: PropTypes.func.isRequired,

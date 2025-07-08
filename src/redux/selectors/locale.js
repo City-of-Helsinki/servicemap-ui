@@ -19,6 +19,4 @@ const getLocaleString = (state, obj) => {
   return value;
 };
 
-export {
-  getLocaleString,
-};
+export { getLocaleString };

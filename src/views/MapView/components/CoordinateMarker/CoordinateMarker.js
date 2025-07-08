@@ -1,19 +1,22 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { useSelector } from 'react-redux';
+
 import { getIcon } from '../../../../components';
 import { selectThemeMode } from '../../../../redux/selectors/user';
 
-
-const CoordinateMarker = ({ position = null }) => {
+function CoordinateMarker({ position = null }) {
   const { Marker } = global.rL;
   const { divIcon } = global.L;
   const useContrast = useSelector(selectThemeMode) === 'dark';
 
   if (!position) return null;
 
-  const icon = getIcon(useContrast ? 'coordinateMarkerContrast' : 'coordinateMarker', {});
+  const icon = getIcon(
+    useContrast ? 'coordinateMarkerContrast' : 'coordinateMarker',
+    {}
+  );
   const coordIcon = divIcon({
     html: renderToStaticMarkup(icon),
     iconSize: [24, 24],
@@ -28,7 +31,7 @@ const CoordinateMarker = ({ position = null }) => {
       keyboard={false}
     />
   );
-};
+}
 
 CoordinateMarker.propTypes = {
   position: PropTypes.arrayOf(PropTypes.string),

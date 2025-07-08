@@ -1,8 +1,7 @@
 /* eslint-disable prefer-destructuring */
 import { useCallback } from 'react';
-import useLocaleText from './useLocaleText';
-import { uppercaseFirst } from '.';
 
+import { uppercaseFirst } from '.';
 
 export const addressMatchParamsToFetchOptions = (match) => {
   if (!match) {
@@ -45,18 +44,26 @@ export const getAddressNavigatorParamsConnector = (address) => {
   };
 };
 
-export const getAddressText = (address, getLocaleText, showPostalCode = true) => {
+export const getAddressText = (
+  address,
+  getLocaleText,
+  showPostalCode = true
+) => {
   if (typeof getLocaleText !== 'function') {
     throw Error('getAddressText requires getLocaleText function');
   }
 
   if (address) {
     const nameObject = address.full_name || address.name;
-    if (!nameObject) throw Error('getAddressText received address with no name');
+    if (!nameObject)
+      throw Error('getAddressText received address with no name');
 
     const addressName = getLocaleText(nameObject);
     const municipality = getLocaleText(address.municipality.name);
-    const postalCode = showPostalCode && address.postal_code_area ? ` ${address.postal_code_area.postal_code}` : '';
+    const postalCode =
+      showPostalCode && address.postal_code_area
+        ? ` ${address.postal_code_area.postal_code}`
+        : '';
     return `${addressName}, ${postalCode} ${municipality}`;
   }
   return '';
@@ -75,13 +82,18 @@ export const getAddressFromUnit = (unit, getLocaleText, intl) => {
   const postalCode = addressZip ? `, ${addressZip}` : '';
   const city = intl.formatMessage({
     id: `settings.city.${unit.municipality}`,
-    defaultMessage: typeof unit.municipality === 'string' ? uppercaseFirst(unit.municipality) : ' ',
+    defaultMessage:
+      typeof unit.municipality === 'string'
+        ? uppercaseFirst(unit.municipality)
+        : ' ',
   });
 
-  return `${typeof unit.street_address === 'string' ? unit.street_address : getLocaleText(unit.street_address)}${postalCode} ${city}`;
+  return `${
+    typeof unit.street_address === 'string'
+      ? unit.street_address
+      : getLocaleText(unit.street_address)
+  }${postalCode} ${city}`;
 };
 
-export const useNavigationParams = () => useCallback(
-  address => getAddressNavigatorParamsConnector(address),
-  [],
-);
+export const useNavigationParams = () =>
+  useCallback((address) => getAddressNavigatorParamsConnector(address), []);

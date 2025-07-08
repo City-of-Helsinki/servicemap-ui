@@ -1,8 +1,9 @@
 // Link.react.test.js
 import React from 'react';
-import LanguageMenu from '../index';
-import { initialState } from '../../../../redux/reducers/user';
+
 import { getRenderWithProviders } from '../../../../../jestUtils';
+import { initialState } from '../../../../redux/reducers/user';
+import LanguageMenu from '../index';
 
 const renderWithProviders = getRenderWithProviders({
   user: initialState,
@@ -12,7 +13,7 @@ const renderWithProviders = getRenderWithProviders({
 describe('<LanguageMenu />', () => {
   it('does render default accessibility attributes correctly', () => {
     const { container } = renderWithProviders(
-      <LanguageMenu onClick={() => {}} />,
+      <LanguageMenu onClick={() => {}} />
     );
     const buttonBase = container.querySelectorAll('button');
     buttonBase.forEach((button) => {

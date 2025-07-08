@@ -1,44 +1,60 @@
 /* eslint-disable camelcase */
-import React from 'react';
-import PropTypes from 'prop-types';
 import { css } from '@emotion/css';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
+
 import { selectNavigator } from '../../../redux/selectors/general';
 import { selectSelectedAccessibilitySettings } from '../../../redux/selectors/settings';
-import { calculateDistance, getCurrentlyUsedPosition } from '../../../redux/selectors/unit';
-import UnitHelper from '../../../utils/unitHelper';
-import ResultItem from '../ResultItem';
-import UnitIcon from '../../SMIcon/UnitIcon';
+import {
+  calculateDistance,
+  getCurrentlyUsedPosition,
+} from '../../../redux/selectors/unit';
 import isClient, { formatDistanceObject } from '../../../utils';
+import UnitHelper from '../../../utils/unitHelper';
 import useLocaleText from '../../../utils/useLocaleText';
+import UnitIcon from '../../SMIcon/UnitIcon';
+import ResultItem from '../ResultItem';
 
-const UnitItem = ({
+function UnitItem({
   unit = {},
   onClick = null,
   divider = true,
   simpleItem = false,
-}) => {
+}) {
   const getLocaleText = useLocaleText();
   const intl = useIntl();
   const selectedShortcomings = useSelector(selectSelectedAccessibilitySettings);
   const navigator = useSelector(selectNavigator);
   const currentlyUsedPosition = useSelector(getCurrentlyUsedPosition);
-  const distance = formatDistanceObject(intl, calculateDistance(unit, currentlyUsedPosition));
+  const distance = formatDistanceObject(
+    intl,
+    calculateDistance(unit, currentlyUsedPosition)
+  );
 
   const parseAccessibilityText = () => {
     let accessText = null;
     let accessibilityProblems = null;
     if (selectedShortcomings.length && unit) {
-      accessibilityProblems = UnitHelper.getShortcomingCount(unit, selectedShortcomings);
+      accessibilityProblems = UnitHelper.getShortcomingCount(
+        unit,
+        selectedShortcomings
+      );
       accessText = intl.formatMessage({ id: 'unit.accessibility.noInfo' });
-      if (accessibilityProblems !== null && typeof accessibilityProblems !== 'undefined') {
+      if (
+        accessibilityProblems !== null &&
+        typeof accessibilityProblems !== 'undefined'
+      ) {
         switch (accessibilityProblems) {
           case 0:
             accessText = intl.formatMessage({ id: 'unit.accessibility.ok' });
             break;
           default:
-            accessText = intl.formatMessage({ id: 'unit.accessibility.problems' }, { count: accessibilityProblems });
+            accessText = intl.formatMessage(
+              { id: 'unit.accessibility.problems' },
+              { count: accessibilityProblems }
+            );
         }
       }
     }
@@ -60,14 +76,19 @@ const UnitItem = ({
   const { problemCount } = accessData;
 
   // Contract type text
-  const contractText = UnitHelper.getContractText(unit, intl, getLocaleText) || '';
+  const contractText =
+    UnitHelper.getContractText(unit, intl, getLocaleText) || '';
 
-  const distanceText = distance ? {
-    text: `${distance.distance} ${distance.type}`,
-    srText: `${distance.distance} ${distance.type === 'm'
-      ? intl.formatMessage({ id: 'general.distance.meters' })
-      : intl.formatMessage({ id: 'general.distance.kilometers' })}`,
-  } : {};
+  const distanceText = distance
+    ? {
+        text: `${distance.distance} ${distance.type}`,
+        srText: `${distance.distance} ${
+          distance.type === 'm'
+            ? intl.formatMessage({ id: 'general.distance.meters' })
+            : intl.formatMessage({ id: 'general.distance.kilometers' })
+        }`,
+      }
+    : {};
 
   const titleClass = css({
     fontWeight: 'bold',
@@ -80,7 +101,9 @@ const UnitItem = ({
         title={getLocaleText(name)}
         subtitle={contractText}
         bottomText={accessText}
-        bottomHighlight={problemCount !== null && typeof problemCount !== 'undefined'}
+        bottomHighlight={
+          problemCount !== null && typeof problemCount !== 'undefined'
+        }
         extendedClasses={{
           typography: {
             title: titleClass,
@@ -124,7 +147,7 @@ const UnitItem = ({
       divider={divider}
     />
   );
-};
+}
 
 export default UnitItem;
 

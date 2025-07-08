@@ -36,9 +36,9 @@ const StyledCloseText = styled(Typography)(() => ({
 }));
 
 export {
-  StyledHslIcon,
   StyledAreaPopup,
-  StyledUnitTooltipWrapper,
-  StyledUnitTooltipTitle,
   StyledCloseText,
+  StyledHslIcon,
+  StyledUnitTooltipTitle,
+  StyledUnitTooltipWrapper,
 };

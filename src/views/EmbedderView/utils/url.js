@@ -1,5 +1,6 @@
 /* eslint-disable no-param-reassign */
 import URI from 'urijs';
+
 import embedderConfig from '../embedderConfig';
 
 const explode = (url) => {

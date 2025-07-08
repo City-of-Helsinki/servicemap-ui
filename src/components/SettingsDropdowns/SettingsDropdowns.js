@@ -1,13 +1,12 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import styled from '@emotion/styled';
-import {
-  Checkbox, ListItem, TextField, Typography,
-} from '@mui/material';
+import { Checkbox, ListItem, TextField, Typography } from '@mui/material';
+import { visuallyHidden } from '@mui/utils';
 import PropTypes from 'prop-types';
 import React, { useRef, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
-import { visuallyHidden } from '@mui/utils';
+
 import config from '../../../config';
 import { resetMobilityTreeSelections } from '../../redux/actions/mobilityTree';
 import { resetServiceTreeSelections } from '../../redux/actions/serviceTree';
@@ -23,7 +22,11 @@ import {
   toggleOrganization,
   toggleVisuallyImpaired,
 } from '../../redux/actions/settings';
-import { changeTheme, resetCustomPosition, resetUserPosition } from '../../redux/actions/user';
+import {
+  changeTheme,
+  resetCustomPosition,
+  resetUserPosition,
+} from '../../redux/actions/user';
 import { selectSettings } from '../../redux/selectors/settings';
 import { selectThemeMode } from '../../redux/selectors/user';
 import { keyboardHandler } from '../../utils';
@@ -49,25 +52,50 @@ function SettingsDropdowns({ variant = 'default' }) {
 
   // Configure rendered settings items
   const senseSettingList = [
-    { id: 'colorblind', title: intl.formatMessage({ id: 'settings.sense.colorblind' }) },
-    { id: 'hearingAid', title: intl.formatMessage({ id: 'settings.sense.hearingAid' }) },
-    { id: 'visuallyImpaired', title: intl.formatMessage({ id: 'settings.sense.visuallyImpaired' }) },
+    {
+      id: 'colorblind',
+      title: intl.formatMessage({ id: 'settings.sense.colorblind' }),
+    },
+    {
+      id: 'hearingAid',
+      title: intl.formatMessage({ id: 'settings.sense.hearingAid' }),
+    },
+    {
+      id: 'visuallyImpaired',
+      title: intl.formatMessage({ id: 'settings.sense.visuallyImpaired' }),
+    },
   ];
   const mobilitySettingList = [
     { id: 'none', title: intl.formatMessage({ id: 'settings.mobility.none' }) },
-    { id: 'wheelchair', title: intl.formatMessage({ id: 'settings.mobility.wheelchair' }) },
-    { id: 'reduced_mobility', title: intl.formatMessage({ id: 'settings.mobility.reduced_mobility' }) },
-    { id: 'rollator', title: intl.formatMessage({ id: 'settings.mobility.rollator' }) },
-    { id: 'stroller', title: intl.formatMessage({ id: 'settings.mobility.stroller' }) },
+    {
+      id: 'wheelchair',
+      title: intl.formatMessage({ id: 'settings.mobility.wheelchair' }),
+    },
+    {
+      id: 'reduced_mobility',
+      title: intl.formatMessage({ id: 'settings.mobility.reduced_mobility' }),
+    },
+    {
+      id: 'rollator',
+      title: intl.formatMessage({ id: 'settings.mobility.rollator' }),
+    },
+    {
+      id: 'stroller',
+      title: intl.formatMessage({ id: 'settings.mobility.stroller' }),
+    },
   ];
-  const citySettingsList = config.cities.map(city => (
-    { id: city, title: intl.formatMessage({ id: `settings.city.${city}` }) }
-  ));
-  const organizationSettingsList = config.organizations?.map(organization => (
-    { id: organization.id, title: getLocaleText(organization.name) }
-  ));
+  const citySettingsList = config.cities.map((city) => ({
+    id: city,
+    title: intl.formatMessage({ id: `settings.city.${city}` }),
+  }));
+  const organizationSettingsList = config.organizations?.map(
+    (organization) => ({
+      id: organization.id,
+      title: getLocaleText(organization.name),
+    })
+  );
 
-  const toggleSettingsBox = id => {
+  const toggleSettingsBox = (id) => {
     if (openSettings === id) setOpenSettings(null);
     else setOpenSettings(id);
   };
@@ -146,11 +174,15 @@ function SettingsDropdowns({ variant = 'default' }) {
   const renderSettingsElement = (options, label, category, isSingleOption) => {
     const getValue = () => {
       if (category === 'mobility') {
-        const val = options.find(option => settingsValues.mobility === option.id);
+        const val = options.find(
+          (option) => settingsValues.mobility === option.id
+        );
         return val?.title || null;
       }
-      const list = options.filter(option => settingsValues[category].includes(option.id));
-      return list.map(item => item.title);
+      const list = options.filter((option) =>
+        settingsValues[category].includes(option.id)
+      );
+      return list.map((item) => item.title);
     };
 
     return (
@@ -167,44 +199,59 @@ function SettingsDropdowns({ variant = 'default' }) {
         closeText={intl.formatMessage({ id: 'settings.close' })}
         options={options}
         value={getValue()}
-        isOptionEqualToValue={option => (
+        isOptionEqualToValue={(option) =>
           category === 'mobility'
             ? settingsValues[category] === option.id
             : settingsValues[category].includes(option.id)
-        )}
+        }
         disableCloseOnSelect={!isSingleOption}
-        getOptionLabel={option => option.title || option}
-        onKeyDown={keyboardHandler(e => handleKeyboardSelect(label, category, e), ['space', 'enter', 'up', 'down'])}
+        getOptionLabel={(option) => option.title || option}
+        onKeyDown={keyboardHandler(
+          (e) => handleKeyboardSelect(label, category, e),
+          ['space', 'enter', 'up', 'down']
+        )}
         onHighlightChange={(e, option) => {
           highlightedOption.current = option;
         }}
         onBlur={() => setOpenSettings(null)}
         ChipProps={{
-          clickable: true, onDelete: null, variant: ownSettingsVariant ? 'outlined' : 'filled',
+          clickable: true,
+          onDelete: null,
+          variant: ownSettingsVariant ? 'outlined' : 'filled',
         }}
         slotProps={{
           // eslint-disable-next-line max-len
           popper: { sx: { pb: 1 } }, // This padding fixes the listBox position on small screens where the list is renderend to top of input
         }}
-        renderOption={(props, option) => (isSingleOption
-          ? ( // Single option options box
-            <ListItem {...props} onClick={() => handleOptionSelecting(option.id, category)} data-sm={`${category}-${option.id}`}>
+        renderOption={(props, option) =>
+          isSingleOption ? (
+            // Single option options box
+            <ListItem
+              {...props}
+              onClick={() => handleOptionSelecting(option.id, category)}
+              data-sm={`${category}-${option.id}`}
+            >
               <Typography>{option.title}</Typography>
             </ListItem>
-          )
-          : ( // Checkbox options box
-            <ListItem {...props} onClick={() => handleOptionSelecting(option.id, category)} data-sm={`${category}-${option.id}`}>
+          ) : (
+            // Checkbox options box
+            <ListItem
+              {...props}
+              onClick={() => handleOptionSelecting(option.id, category)}
+              data-sm={`${category}-${option.id}`}
+            >
               <Checkbox
                 sx={{ mr: 1 }}
                 checked={settingsValues[category].includes(option.id)}
               />
               <Typography>{option.title}</Typography>
             </ListItem>
-          ))}
+          )
+        }
         renderInput={({ inputProps, ...rest }) => (
           <TextField
             label={label}
-            onClick={e => {
+            onClick={(e) => {
               e?.stopPropagation();
               toggleSettingsBox(label);
             }}
@@ -228,12 +275,31 @@ function SettingsDropdowns({ variant = 'default' }) {
 
   return (
     <>
-      {renderSettingsElement(senseSettingList, intl.formatMessage({ id: 'settings.choose.senses' }), 'senses')}
-      {renderSettingsElement(mobilitySettingList, intl.formatMessage({ id: 'settings.choose.mobility' }), 'mobility', true)}
-      {renderSettingsElement(citySettingsList, intl.formatMessage({ id: 'settings.choose.cities' }), 'cities')}
-      {renderSettingsElement(organizationSettingsList, intl.formatMessage({ id: 'settings.choose.organization' }), 'organizations')}
+      {renderSettingsElement(
+        senseSettingList,
+        intl.formatMessage({ id: 'settings.choose.senses' }),
+        'senses'
+      )}
+      {renderSettingsElement(
+        mobilitySettingList,
+        intl.formatMessage({ id: 'settings.choose.mobility' }),
+        'mobility',
+        true
+      )}
+      {renderSettingsElement(
+        citySettingsList,
+        intl.formatMessage({ id: 'settings.choose.cities' }),
+        'cities'
+      )}
+      {renderSettingsElement(
+        organizationSettingsList,
+        intl.formatMessage({ id: 'settings.choose.organization' }),
+        'organizations'
+      )}
       <div>
-        <Typography aria-live="polite" style={visuallyHidden}>{resetText}</Typography>
+        <Typography aria-live="polite" style={visuallyHidden}>
+          {resetText}
+        </Typography>
         <StyledButton
           data-sm="reset-settings-button"
           ownsettings={+ownSettingsVariant}
@@ -250,7 +316,11 @@ function SettingsDropdowns({ variant = 'default' }) {
 
 const StyledButton = styled(SMButton)(() => ({ marginRight: 0 }));
 
-const StyledAutocomplete = styled(SMAutocomplete)(({ theme, ownsettings, colormode }) => {
+const StyledAutocomplete = styled(SMAutocomplete)(({
+  theme,
+  ownsettings,
+  colormode,
+}) => {
   const whiteChip = {
     color: theme.palette.white.contrastText,
     backgroundColor: theme.palette.white.main,
@@ -258,14 +328,20 @@ const StyledAutocomplete = styled(SMAutocomplete)(({ theme, ownsettings, colormo
   const styles = {
     paddingTop: theme.spacing(1),
     paddingBottom: theme.spacing(1),
-    '& .MuiAutocomplete-tag': colormode === 'dark'
-      ? whiteChip
-      : {
-        color: theme.palette.white.main, backgroundColor: 'rgb(47, 60, 187)',
-      },
+    '& .MuiAutocomplete-tag':
+      colormode === 'dark'
+        ? whiteChip
+        : {
+            color: theme.palette.white.main,
+            backgroundColor: 'rgb(47, 60, 187)',
+          },
   };
   if (!ownsettings) {
-    return { ...styles, paddingLeft: theme.spacing(2), paddingRight: theme.spacing(2) };
+    return {
+      ...styles,
+      paddingLeft: theme.spacing(2),
+      paddingRight: theme.spacing(2),
+    };
   }
   const ownSettingsStyles = {
     backgroundColor: theme.palette.white.main,

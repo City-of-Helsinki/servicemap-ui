@@ -1,22 +1,18 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import {
-  ButtonBase,
-  Divider,
-  ListItem,
-  Typography,
-} from '@mui/material';
-import { visuallyHidden } from '@mui/utils';
-import { FormattedMessage, useIntl } from 'react-intl';
 import styled from '@emotion/styled';
+import { ButtonBase, Divider, ListItem, Typography } from '@mui/material';
+import { visuallyHidden } from '@mui/utils';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
+
 import { selectNavigator } from '../../../redux/selectors/general';
-import UnitIcon from '../../SMIcon/UnitIcon';
-import SMLink from '../../Link';
 import { getAddressFromUnit } from '../../../utils/address';
 import useLocaleText from '../../../utils/useLocaleText';
+import SMLink from '../../Link';
+import UnitIcon from '../../SMIcon/UnitIcon';
 
-const DivisionItem = ({
+function DivisionItem({
   data,
   distance = null,
   divider,
@@ -24,7 +20,7 @@ const DivisionItem = ({
   customTitle = null,
   className = null,
   hideTitle = false,
-}) => {
+}) {
   const intl = useIntl();
   const navigator = useSelector(selectNavigator);
   const getLocaleText = useLocaleText();
@@ -35,14 +31,24 @@ const DivisionItem = ({
   if (aStart === 2019 || aEnd === 2019) return null;
 
   const name = data.name ? getLocaleText(data.name) : null;
-  const address = typeof data.street_address === 'object' ? getAddressFromUnit(data, getLocaleText, intl) : (data.street_address || null);
+  const address =
+    typeof data.street_address === 'object'
+      ? getAddressFromUnit(data, getLocaleText, intl)
+      : data.street_address || null;
   const unitOnClick = () => navigator.push('unit', { id: data.id });
 
   const emergencyUnitId = data.emergencyUnitId || null;
-  const emergencyCareText = data.emergencyUnitId ? <FormattedMessage id={`address.emergency_care.unit.${data.emergencyUnitId}`} /> : null;
-  const emergencyOnClick = () => navigator.push('unit', { id: emergencyUnitId });
+  const emergencyCareText = data.emergencyUnitId ? (
+    <FormattedMessage
+      id={`address.emergency_care.unit.${data.emergencyUnitId}`}
+    />
+  ) : null;
+  const emergencyOnClick = () =>
+    navigator.push('unit', { id: emergencyUnitId });
 
-  let title = disableTitle ? null : intl.formatMessage({ id: `area.list.${area.type}` });
+  let title = disableTitle
+    ? null
+    : intl.formatMessage({ id: `area.list.${area.type}` });
   if (customTitle) {
     title = customTitle;
   } else {
@@ -55,14 +61,18 @@ const DivisionItem = ({
     ${name || ''} 
     ${address || ''}
     .
-    ${distance
-    ? `${distance.distance} ${distance.type === 'm'
-      ? intl.formatMessage({ id: 'general.distance.meters' })
-      : intl.formatMessage({ id: 'general.distance.kilometers' })}`
-    : ''} 
+    ${
+      distance
+        ? `${distance.distance} ${
+            distance.type === 'm'
+              ? intl.formatMessage({ id: 'general.distance.meters' })
+              : intl.formatMessage({ id: 'general.distance.kilometers' })
+          }`
+        : ''
+    } 
   `;
 
-  const emergencyCareLink = txt => (
+  const emergencyCareLink = (txt) => (
     <a
       href={intl.formatMessage({ id: 'address.emergency_care.link' })}
       className="external-link"
@@ -71,7 +81,7 @@ const DivisionItem = ({
     </a>
   );
 
-  const emergencyCareCommonLink = txt => (
+  const emergencyCareCommonLink = (txt) => (
     <a
       className="external-link"
       href={intl.formatMessage({ id: 'address.emergency_care.common.link' })}
@@ -82,122 +92,86 @@ const DivisionItem = ({
 
   return (
     <>
-      <StyledListItem
-        component="li"
-        className={`${className || ''}`}
-      >
-        <StyledLinkButton
-          role="link"
-          onClick={unitOnClick}
-        >
+      <StyledListItem component="li" className={`${className || ''}`}>
+        <StyledLinkButton role="link" onClick={unitOnClick}>
           {
             // SROnly element with full readable text
           }
-          <Typography
-            component="p"
-            style={visuallyHidden}
-          >
+          <Typography component="p" style={visuallyHidden}>
             {srText}
           </Typography>
-          {
-            area
-            && !disableTitle
-            && !hideTitle
-            && (
-              <StyledDivisionTitle align="left" aria-hidden variant="subtitle1">
-                {title}
-              </StyledDivisionTitle>
-            )
-          }
+          {area && !disableTitle && !hideTitle && (
+            <StyledDivisionTitle align="left" aria-hidden variant="subtitle1">
+              {title}
+            </StyledDivisionTitle>
+          )}
           <StyledContainer>
             <StyledUnitIcon />
             <StyledContent>
               <StyledFlexRow>
-                {
-                  name
-                  && (
-                    <StyledWeightBold
-                      align="left"
-                      aria-hidden
-                      variant="body2"
-                      component="p"
-                      data-sm="DivisionItemName"
-                    >
-                      {name}
-                    </StyledWeightBold>
-                  )
-                }
-                {
-                  distance
-                  && (
-                    <StyledDivisionDistance
-                      align="left"
-                      aria-hidden
-                      variant="caption"
-                    >
-                      {distance.distance}
-                      {distance.type}
-                    </StyledDivisionDistance>
-                  )
-                }
-              </StyledFlexRow>
-              {
-                address
-                && (
-                  <StyledDivisionAddress
+                {name && (
+                  <StyledWeightBold
+                    align="left"
+                    aria-hidden
+                    variant="body2"
+                    component="p"
+                    data-sm="DivisionItemName"
+                  >
+                    {name}
+                  </StyledWeightBold>
+                )}
+                {distance && (
+                  <StyledDivisionDistance
                     align="left"
                     aria-hidden
                     variant="caption"
                   >
-                    {address}
-                  </StyledDivisionAddress>
-                )
-              }
+                    {distance.distance}
+                    {distance.type}
+                  </StyledDivisionDistance>
+                )}
+              </StyledFlexRow>
+              {address && (
+                <StyledDivisionAddress
+                  align="left"
+                  aria-hidden
+                  variant="caption"
+                >
+                  {address}
+                </StyledDivisionAddress>
+              )}
             </StyledContent>
           </StyledContainer>
         </StyledLinkButton>
-        {
-          emergencyUnitId
-          && (
-            <StyledEmergencyContent>
-              <StyledEmergencyTypography
-                align="left"
-                variant="caption"
-              >
-                <FormattedMessage
-                  id="address.emergency_care.common"
-                  values={{
-                    a: txt => (
-                      <a
-                        className="link"
-                        href={
-                          intl.formatMessage({ id: 'address.emergency_care.children_hospital.link' })
-                        }
-                      >
-                        {txt}
-                      </a>
-                    ),
-                    a1: emergencyCareCommonLink,
-                  }}
-                />
-                {' '}
-                {
-                  emergencyCareText
-                  && (
-                    <SMLink onClick={emergencyOnClick}>
-                      {emergencyCareText}
-                    </SMLink>
-                  )
-                }
-                {' '}
-                <FormattedMessage
-                  id="address.emergency_care.link.text"
-                  values={{ a: emergencyCareLink }}
-                />
-              </StyledEmergencyTypography>
-            </StyledEmergencyContent>
-          )
-        }
+        {emergencyUnitId && (
+          <StyledEmergencyContent>
+            <StyledEmergencyTypography align="left" variant="caption">
+              <FormattedMessage
+                id="address.emergency_care.common"
+                values={{
+                  a: (txt) => (
+                    <a
+                      className="link"
+                      href={intl.formatMessage({
+                        id: 'address.emergency_care.children_hospital.link',
+                      })}
+                    >
+                      {txt}
+                    </a>
+                  ),
+                  a1: emergencyCareCommonLink,
+                }}
+              />{' '}
+              {emergencyCareText && (
+                <SMLink onClick={emergencyOnClick}>{emergencyCareText}</SMLink>
+              )}{' '}
+              <FormattedMessage
+                id="address.emergency_care.link.text"
+                values={{ a: emergencyCareLink }}
+              />
+            </StyledEmergencyTypography>
+          </StyledEmergencyContent>
+        )}
       </StyledListItem>
       {divider && (
         <StyledLi aria-hidden>
@@ -206,7 +180,7 @@ const DivisionItem = ({
       )}
     </>
   );
-};
+}
 const StyledListItem = styled(ListItem)(({ theme }) => ({
   alignItems: 'stretch',
   display: 'flex',

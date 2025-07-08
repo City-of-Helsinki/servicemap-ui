@@ -1,6 +1,6 @@
 /* eslint-disable no-underscore-dangle */
-import MatomoTracker from '../MatomoTracker';
 import { TRACK_TYPES } from '../constants';
+import MatomoTracker from '../MatomoTracker';
 
 const MOCK_URL_BASE = 'https://www.test.fi/';
 const MOCK_TRACKER_URL = 'https://www.test.fi/matomo.php';
@@ -35,16 +35,15 @@ describe('MatomoTracker', () => {
   });
 
   it('should throw error if urlBase missing', () => {
-    expect(
-      () => new MatomoTracker({ siteId: 'test123' }),
-    ).toThrowError();
+    expect(() => new MatomoTracker({ siteId: 'test123' })).toThrowError();
   });
 
   it('should throw error if siteId missing', () => {
     expect(
-      () => new MatomoTracker({
-        urlBase: 'http://www.test.fi',
-      }),
+      () =>
+        new MatomoTracker({
+          urlBase: 'http://www.test.fi',
+        })
     ).toThrowError();
   });
 

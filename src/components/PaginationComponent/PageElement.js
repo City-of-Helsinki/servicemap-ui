@@ -1,9 +1,10 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { injectIntl } from 'react-intl';
-import { Typography, ButtonBase } from '@mui/material';
 import styled from '@emotion/styled';
+import { ButtonBase, Typography } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { injectIntl } from 'react-intl';
+
 import { keyboardHandler } from '../../utils';
 
 const StyledTypography = styled(Typography)(({ theme }) => ({
@@ -26,14 +27,14 @@ const StyledTypographyPageElementActive = styled(StyledTypography)(() => ({
 }));
 
 // Page number element
-const PageElement = ({
+function PageElement({
   className = '',
   intl,
   isActive,
   number,
   onClick,
   ...rest
-}) => {
+}) {
   const TypographyComponent = isActive
     ? StyledTypographyPageElementActive
     : StyledTypographyPageElement;
@@ -52,20 +53,23 @@ const PageElement = ({
           className={className}
           {...rest}
         >
-          <span aria-hidden="true">
-            {number}
-          </span>
+          <span aria-hidden="true">{number}</span>
         </TypographyComponent>
         <Typography style={visuallyHidden}>
           {isActive
-            ? intl.formatMessage({ id: 'general.pagination.currentlyOpenedPage' }, { count: number })
-            : intl.formatMessage({ id: 'general.pagination.openPage' }, { count: number })
-          }
+            ? intl.formatMessage(
+                { id: 'general.pagination.currentlyOpenedPage' },
+                { count: number }
+              )
+            : intl.formatMessage(
+                { id: 'general.pagination.openPage' },
+                { count: number }
+              )}
         </Typography>
       </ButtonBase>
     </li>
   );
-};
+}
 
 PageElement.propTypes = {
   className: PropTypes.string,

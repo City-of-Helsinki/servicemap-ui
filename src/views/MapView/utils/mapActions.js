@@ -1,5 +1,6 @@
 import pointOnFeature from '@turf/point-on-feature';
 import { useLocation } from 'react-router-dom';
+
 import { parseSearchParams } from '../../../utils';
 import { isEmbed } from '../../../utils/path';
 import swapCoordinates from './swapCoordinates';
@@ -24,13 +25,16 @@ const fitUnitsToMap = (units, map) => {
     [corner2.lat, corner2.lng],
   ]);
 
-  const unitList = units.map(obj => (obj.object_type === 'event' ? obj.location : obj));
+  const unitList = units.map((obj) =>
+    obj.object_type === 'event' ? obj.location : obj
+  );
 
   const bounds = [];
 
   unitList.forEach((unit) => {
     if (!unit) return;
-    const coordinates = unit.location?.coordinates || unit.position?.coordinates;
+    const coordinates =
+      unit.location?.coordinates || unit.position?.coordinates;
     if (unit.object_type === 'unit' && coordinates) {
       const unitCoordinates = [coordinates[1], coordinates[0]];
       // Check that unit is within map bounds
@@ -51,24 +55,21 @@ const fitUnitsToMap = (units, map) => {
   }
 };
 
-
 const focusToPosition = (map, coordinates, zoomOption) => {
-  const zoom = typeof zoomOption === 'number' ? zoomOption : map.options.maxZoom - 1;
-  map.setView(
-    [coordinates[1], coordinates[0]],
-    zoom,
-  );
+  const zoom =
+    typeof zoomOption === 'number' ? zoomOption : map.options.maxZoom - 1;
+  map.setView([coordinates[1], coordinates[0]], zoom);
 };
 
 const focusDistrict = (map, coordinates) => {
-  const bounds = coordinates.map(area => swapCoordinates(area));
+  const bounds = coordinates.map((area) => swapCoordinates(area));
   map.fitBounds(bounds);
 };
 
 const focusDistricts = (map, districts) => {
-  const filteredData = districts.filter(obj => obj.boundary);
-  const bounds = filteredData.map(
-    district => district.boundary.coordinates.map(area => swapCoordinates(area)),
+  const filteredData = districts.filter((obj) => obj.boundary);
+  const bounds = filteredData.map((district) =>
+    district.boundary.coordinates.map((area) => swapCoordinates(area))
   );
   map.fitBounds(bounds);
 };
@@ -98,7 +99,8 @@ const panViewToBounds = (map, selectedGeometry, geometryGroup) => {
   // If point is outside of map bounds, move map to area
   if (!mapBounds.contains(pointLatLng)) {
     try {
-      if (geometryGroup?.length) { // If a group of geomteries is given, fit them all to map
+      if (geometryGroup?.length) {
+        // If a group of geomteries is given, fit them all to map
         map.fitBounds(geometryGroup);
       } else {
         map.fitBounds(selectedGeometry.coordinates);
@@ -112,10 +114,10 @@ const panViewToBounds = (map, selectedGeometry, geometryGroup) => {
 export {
   fitBbox,
   fitUnitsToMap,
-  focusToPosition,
   focusDistrict,
   focusDistricts,
-  panViewToBounds,
+  focusToPosition,
   getBoundsFromBbox,
+  panViewToBounds,
   useMapFocusDisabled,
 };

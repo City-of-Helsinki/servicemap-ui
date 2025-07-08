@@ -6,6 +6,7 @@ import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import URI from 'urijs';
+
 import PrintContext from '../../context/PrintContext';
 import {
   selectDistrictAddressData,
@@ -15,7 +16,11 @@ import {
   selectSelectedParkingAreaIds,
   selectSelectedSubdistricts,
 } from '../../redux/selectors/district';
-import { selectMapRef, selectMeasuringMode, selectNavigator } from '../../redux/selectors/general';
+import {
+  selectMapRef,
+  selectMeasuringMode,
+  selectNavigator,
+} from '../../redux/selectors/general';
 import { getPage } from '../../redux/selectors/user';
 import DownloadDialog from '../Dialog/DownloadDialog';
 import { DropDownMenuButton, OwnSettingsMenuButton } from '../MenuButton';
@@ -24,9 +29,7 @@ import MeasuringStopButton from './MeasuringStopButton';
 
 const ToolMenuButtonID = 'ToolMenuButton';
 
-const ToolMenu = ({
-  setMeasuringMode,
-}) => {
+function ToolMenu({ setMeasuringMode }) {
   const togglePrintView = useContext(PrintContext);
   const location = useLocation();
   const [openDownload, setOpenDownload] = React.useState(false);
@@ -46,31 +49,37 @@ const ToolMenu = ({
   const getAreaViewParams = () => {
     // Form url with parameters when user clicks embedder from tool menu
     const selected = selectedDistrictType
-      ? `selected=${selectedDistrictType}` : null;
+      ? `selected=${selectedDistrictType}`
+      : null;
     const districts = selectedSubdistricts.length
-      ? `districts=${selectedSubdistricts.map(i => i).toString()}` : null;
+      ? `districts=${selectedSubdistricts.map((i) => i).toString()}`
+      : null;
     const services = selectedDistrictServices.length
-      ? `services=${selectedDistrictServices}` : null;
+      ? `services=${selectedDistrictServices}`
+      : null;
     const parkingSpaces = selectedParkingAreaIds.length
-      ? `parkingSpaces=${selectedParkingAreaIds.join(',')}` : null;
+      ? `parkingSpaces=${selectedParkingAreaIds.join(',')}`
+      : null;
     const addressCoordinates = districtAddressData.address
-      ? `lat=${districtAddressData.address.location.coordinates[1]}&lng=${districtAddressData.address.location.coordinates[0]}` : null;
+      ? `lat=${districtAddressData.address.location.coordinates[1]}` +
+        `&lng=${districtAddressData.address.location.coordinates[0]}`
+      : null;
 
-    let unitsParams = []
+    const unitsParams = [];
     if (parkingUnits) {
       const keyMap = {
         'helsinki-531': 'parkingGarages=true',
         'vantaa-2204': 'sharedCarParking=true',
-        'vantaa-2207': 'accessibleStreetParking=true'
+        'vantaa-2207': 'accessibleStreetParking=true',
       };
-    
+
       Object.keys(parkingUnits).forEach((key) => {
         if (parkingUnits[key].length && keyMap[key]) {
           unitsParams.push(keyMap[key]);
         }
       });
     }
-    const units = unitsParams.join('&')
+    const units = unitsParams.join('&');
 
     const params = [
       ...(selected ? [selected] : []),
@@ -147,7 +156,9 @@ const ToolMenu = ({
     {
       key: 'measuringTool',
       id: 'MesuringToolMenuButton',
-      text: measuringMode ? intl.formatMessage({ id: 'tool.measuring.stop' }) : intl.formatMessage({ id: 'tool.measuring' }),
+      text: measuringMode
+        ? intl.formatMessage({ id: 'tool.measuring.stop' })
+        : intl.formatMessage({ id: 'tool.measuring' }),
       icon: <StyledSMIcon icon="icon-icon-measuring-tool" />,
       ariaHidden: false,
       onClick: () => {
@@ -171,10 +182,14 @@ const ToolMenu = ({
       {measuringMode && (
         <MeasuringStopButton onClick={() => setMeasuringMode(false)} />
       )}
-      <DownloadDialog open={openDownload} setOpen={setOpenDownload} referer={toolMenuButton} />
+      <DownloadDialog
+        open={openDownload}
+        setOpen={setOpenDownload}
+        referer={toolMenuButton}
+      />
     </>
   );
-};
+}
 
 const iconClass = {
   margin: '0px !important',

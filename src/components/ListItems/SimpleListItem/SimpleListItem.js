@@ -1,13 +1,20 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Divider, ListItemButton, ListItemIcon, ListItemText, Typography } from '@mui/material';
-import { visuallyHidden } from '@mui/utils';
-import styled from '@emotion/styled';
 import { css } from '@emotion/css';
+import styled from '@emotion/styled';
+import {
+  Divider,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Typography,
+} from '@mui/material';
 import { useTheme } from '@mui/styles';
+import { visuallyHidden } from '@mui/utils';
+import PropTypes from 'prop-types';
+import React from 'react';
+
 import { keyboardHandler } from '../../../utils';
 
-const SimpleListItem = (props) => {
+function SimpleListItem(props) {
   const {
     button = false,
     dark = false,
@@ -67,7 +74,11 @@ const SimpleListItem = (props) => {
         tabIndex={isLinkOrButton ? 0 : -1}
         component="li"
         onClick={isLinkOrButton ? handleItemClick : null}
-        onKeyDown={isLinkOrButton ? keyboardHandler(handleItemClick, ['enter', 'space']) : null}
+        onKeyDown={
+          isLinkOrButton
+            ? keyboardHandler(handleItemClick, ['enter', 'space'])
+            : null
+        }
         classes={{
           root: listItemRootClass,
           selected: listItemSelectedClass,
@@ -75,22 +86,19 @@ const SimpleListItem = (props) => {
         selected={selected}
         id={id}
       >
-        {
-          icon
-          && (
-            <StyledListItemIcon aria-hidden link={+(!!link)}>
-              {icon}
-            </StyledListItemIcon>
-          )
-        }
+        {icon && (
+          <StyledListItemIcon aria-hidden link={+!!link}>
+            {icon}
+          </StyledListItemIcon>
+        )}
 
-        <ListItemText
-          classes={{ root: listItemTextClass }}
-        >
+        <ListItemText classes={{ root: listItemTextClass }}>
           <Typography
             color="inherit"
             variant="body2"
-            classes={{ root: `${link ? linkClass : null} ${dark ? whiteTextClass : ''}` }}
+            classes={{
+              root: `${link ? linkClass : null} ${dark ? whiteTextClass : ''}`,
+            }}
           >
             {text}
           </Typography>
@@ -104,7 +112,7 @@ const SimpleListItem = (props) => {
       )}
     </>
   );
-};
+}
 
 const StyledListItemIcon = styled(ListItemIcon)(({ theme, link }) => {
   const styles = {

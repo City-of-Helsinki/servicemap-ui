@@ -6,13 +6,17 @@ import React, { useEffect, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { useMap } from 'react-leaflet';
 import { useSelector } from 'react-redux';
+
 import { getSelectedUnit } from '../../../../redux/selectors/selectedUnit';
 import { selectThemeMode } from '../../../../redux/selectors/user';
 import useLocaleText from '../../../../utils/useLocaleText';
 import { drawEntranceMarkreIcon } from '../../utils/drawIcon';
-import { StyledUnitTooltipTitle, StyledUnitTooltipWrapper } from '../styled/styled';
+import {
+  StyledUnitTooltipTitle,
+  StyledUnitTooltipWrapper,
+} from '../styled/styled';
 
-const EntranceMarker = () => {
+function EntranceMarker() {
   const getLocaleText = useLocaleText();
   const unit = useSelector(getSelectedUnit);
   const useContrast = useSelector(selectThemeMode) === 'dark';
@@ -40,50 +44,47 @@ const EntranceMarker = () => {
     };
   }, []);
 
-
   if (unit?.entrances?.length && showMarkers) {
     const { Marker, Popup } = global.rL || {};
-    return (
-      unit.entrances.map((entrance) => {
-        if (!entrance.location) return null;
-        const position = flip(entrance.location);
-        const distanceBetween = distance(position, unitPoint) * 1000;
-        // Don't show entrances that are too close to the unit marker
-        if (distanceBetween < 5) {
-          return null;
-        }
-        const { coordinates } = position;
+    return unit.entrances.map((entrance) => {
+      if (!entrance.location) return null;
+      const position = flip(entrance.location);
+      const distanceBetween = distance(position, unitPoint) * 1000;
+      // Don't show entrances that are too close to the unit marker
+      if (distanceBetween < 5) {
+        return null;
+      }
+      const { coordinates } = position;
 
-        return (
-          <Marker
-            key={`${coordinates[0]},${coordinates[1]}`}
-            icon={drawEntranceMarkreIcon(useContrast)}
-            position={coordinates}
-          >
-            <Popup>
-              <StyledUnitTooltipWrapper>
-                <StyledUnitTooltipTitle>
-                  {getLocaleText(unit.name)}
-                </StyledUnitTooltipTitle>
-                {entrance.name ? (
-                  <Typography>
-                    {getLocaleText(entrance.name)}
-                  </Typography>
-                ) : null}
-                <StyledEntranceType>
-                  {entrance.is_main_entrance ? (
-                    <FormattedMessage id="unit.entrances.main" />
-                  ) : <FormattedMessage id="unit.entrances.secondary" />}
-                </StyledEntranceType>
-              </StyledUnitTooltipWrapper>
-            </Popup>
-          </Marker>
-        );
-      })
-    );
+      return (
+        <Marker
+          key={`${coordinates[0]},${coordinates[1]}`}
+          icon={drawEntranceMarkreIcon(useContrast)}
+          position={coordinates}
+        >
+          <Popup>
+            <StyledUnitTooltipWrapper>
+              <StyledUnitTooltipTitle>
+                {getLocaleText(unit.name)}
+              </StyledUnitTooltipTitle>
+              {entrance.name ? (
+                <Typography>{getLocaleText(entrance.name)}</Typography>
+              ) : null}
+              <StyledEntranceType>
+                {entrance.is_main_entrance ? (
+                  <FormattedMessage id="unit.entrances.main" />
+                ) : (
+                  <FormattedMessage id="unit.entrances.secondary" />
+                )}
+              </StyledEntranceType>
+            </StyledUnitTooltipWrapper>
+          </Popup>
+        </Marker>
+      );
+    });
   }
   return null;
-};
+}
 
 const StyledEntranceType = styled(Typography)(({ theme }) => ({
   paddingTop: theme.spacing(0.5),

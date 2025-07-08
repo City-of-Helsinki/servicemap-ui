@@ -1,15 +1,16 @@
-import { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+
+import { setHighlightedDistrict } from '../../redux/actions/district';
+import fetchSearchResults from '../../redux/actions/search';
 import { getHighlightedDistrict } from '../../redux/selectors/district';
 import { selectMapRef } from '../../redux/selectors/general';
-import fetchDivisionDistrict from './fetchDivisionDistrict';
-import { focusDistrict } from '../MapView/utils/mapActions';
 import { parseSearchParams } from '../../utils';
-import fetchSearchResults from '../../redux/actions/search';
-import { setHighlightedDistrict } from '../../redux/actions/district';
+import { focusDistrict } from '../MapView/utils/mapActions';
+import fetchDivisionDistrict from './fetchDivisionDistrict';
 
-const DivisionView = ({ location, match }) => {
+function DivisionView({ location, match }) {
   const dispatch = useDispatch();
   const highlightedDistrict = useSelector(getHighlightedDistrict);
   const map = useSelector(selectMapRef);
@@ -38,10 +39,9 @@ const DivisionView = ({ location, match }) => {
 
     if (options) {
       dispatch(fetchSearchResults(options));
-      fetchDivisionDistrict(options.division)
-        .then((data) => {
-          dispatch(setHighlightedDistrict(data[0]));
-        });
+      fetchDivisionDistrict(options.division).then((data) => {
+        dispatch(setHighlightedDistrict(data[0]));
+      });
     }
   }, []);
 
@@ -56,7 +56,7 @@ const DivisionView = ({ location, match }) => {
   }, [map, highlightedDistrict]);
 
   return null;
-};
+}
 
 export default DivisionView;
 

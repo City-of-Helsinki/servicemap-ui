@@ -106,7 +106,9 @@ export const dataSetReducer = (state, action, prefix) => {
         isFetching: atLeast2Fetches,
         errorMessage: null,
         data: [...state.data, ...action.data],
-        count: atLeast2Fetches ? state.count : [...state.data, ...action.data].length,
+        count: atLeast2Fetches
+          ? state.count
+          : [...state.data, ...action.data].length,
         activeFetches: state.activeFetches - 1,
         fetchStartTime: atLeast2Fetches ? state.fetchStartTime : null,
       };
@@ -171,19 +173,34 @@ const dataSingle = (state, action, prefix) => {
   }
 };
 
-
 // Fetch data set reducers
-export const searchResults = (state = dataSetInitialState, action) => dataSetReducer(state, action, 'SEARCH_RESULTS');
-export const service = (state = dataSetInitialState, action) => dataSetReducer(state, action, 'SERVICE');
-export const statisticalDistrictUnits = (state = dataSetInitialState, action) => dataSetReducer(state, action, 'STATISTICAL_DISTRICT_UNITS');
-export const statisticalDistrictServices = (state = dataSetInitialState, action) => dataSetReducer(state, action, 'STATISTICAL_DISTRICT_SERVICES');
-export const unitEvents = (state = dataSingleInitialState, action) => dataSetReducer(state, action, 'SELECTED_UNIT_EVENTS');
-export const reservations = (state = dataSingleInitialState, action) => dataSetReducer(state, action, 'SELECTED_UNIT_RESERVATIONS');
-export const alertNews = (state = dataSingleInitialState, action) => dataSetReducer(state, action, 'ALERT_NEWS');
-export const alertErrors = (state = dataSingleInitialState, action) => dataSetReducer(state, action, 'ALERT_ERRORS');
+export const searchResults = (state = dataSetInitialState, action) =>
+  dataSetReducer(state, action, 'SEARCH_RESULTS');
+export const service = (state = dataSetInitialState, action) =>
+  dataSetReducer(state, action, 'SERVICE');
+export const statisticalDistrictUnits = (state = dataSetInitialState, action) =>
+  dataSetReducer(state, action, 'STATISTICAL_DISTRICT_UNITS');
+export const statisticalDistrictServices = (
+  state = dataSetInitialState,
+  action
+) => dataSetReducer(state, action, 'STATISTICAL_DISTRICT_SERVICES');
+export const unitEvents = (state = dataSingleInitialState, action) =>
+  dataSetReducer(state, action, 'SELECTED_UNIT_EVENTS');
+export const reservations = (state = dataSingleInitialState, action) =>
+  dataSetReducer(state, action, 'SELECTED_UNIT_RESERVATIONS');
+export const alertNews = (state = dataSingleInitialState, action) =>
+  dataSetReducer(state, action, 'ALERT_NEWS');
+export const alertErrors = (state = dataSingleInitialState, action) =>
+  dataSetReducer(state, action, 'ALERT_ERRORS');
 
 // Fetch data single reducers
-export const selectedUnit = (state = dataSingleInitialState, action) => dataSingle(state, action, 'SELECTED_UNIT');
-export const accessibilitySentences = (state = dataSingleInitialState, action) => dataSingle(state, action, 'SELECTED_UNIT_ACCESSIBILITY_SENTENCES');
-export const hearingMaps = (state = dataSingleInitialState, action) => dataSingle(state, action, 'SELECTED_UNIT_HEARING_MAPS');
-export const redirectService = (state = dataSetInitialState, action) => dataSingle(state, action, 'REDIRECT_SERVICE');
+export const selectedUnit = (state = dataSingleInitialState, action) =>
+  dataSingle(state, action, 'SELECTED_UNIT');
+export const accessibilitySentences = (
+  state = dataSingleInitialState,
+  action
+) => dataSingle(state, action, 'SELECTED_UNIT_ACCESSIBILITY_SENTENCES');
+export const hearingMaps = (state = dataSingleInitialState, action) =>
+  dataSingle(state, action, 'SELECTED_UNIT_HEARING_MAPS');
+export const redirectService = (state = dataSetInitialState, action) =>
+  dataSingle(state, action, 'REDIRECT_SERVICE');

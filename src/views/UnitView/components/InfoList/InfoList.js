@@ -1,18 +1,17 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import getItemIconData from '../../constants/itemIconData';
-import useLocaleText from '../../../../utils/useLocaleText';
-import { SimpleListItem, TitledList } from '../../../../components';
+import React from 'react';
 
-const InfoList = ({
-  data, title, titleComponent = 'h3', intl,
-}) => {
+import { SimpleListItem, TitledList } from '../../../../components';
+import useLocaleText from '../../../../utils/useLocaleText';
+import getItemIconData from '../../constants/itemIconData';
+
+function InfoList({ data, title, titleComponent = 'h3', intl }) {
   const getLocaleText = useLocaleText();
 
   const handleItemClick = (data) => {
     if (data.www) {
       let url = data.www;
-      if (typeof (url) === 'object') {
+      if (typeof url === 'object') {
         url = getLocaleText(url);
       }
       window.open(url);
@@ -116,16 +115,15 @@ const InfoList = ({
                   />
                 );
               }
-            } return null;
+            }
+            return null;
           })}
         </TitledList>
       );
     }
   }
-  return (
-    null
-  );
-};
+  return null;
+}
 
 export default InfoList;
 

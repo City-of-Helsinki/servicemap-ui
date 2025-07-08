@@ -1,7 +1,14 @@
+/* eslint-disable max-len */
 import React from 'react';
 
 const iconHelp = () => (
-  <svg width="20px" height="18px" viewBox="0 0 20 18" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <svg
+    width="20px"
+    height="18px"
+    viewBox="0 0 20 18"
+    version="1.1"
+    xmlns="http://www.w3.org/2000/svg"
+  >
     <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
       <g transform="translate(-58.000000, -629.000000)">
         <g transform="translate(58.000000, 629.000000)">

@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
+
 import fetchSearchResults from '../../redux/actions/search';
 import { selectMapRef } from '../../redux/selectors/general';
 import { getPage } from '../../redux/selectors/user';
@@ -8,7 +9,7 @@ import { parseBboxFromLocation } from '../../utils/mapUtility';
 import { fitBbox } from '../../views/MapView/utils/mapActions';
 import { searchParamFetchOptions } from './helpers';
 
-const DataFetcher = () => {
+function DataFetcher() {
   const location = useLocation();
   const currentPage = useSelector(getPage);
   const map = useSelector(selectMapRef);
@@ -29,8 +30,13 @@ const DataFetcher = () => {
 
     const options = searchParamFetchOptions(location, null, true);
     if (
-      !options.bbox || !options.bbox_srid || !options.level
-      || options.q || options.service_node || options.mobility_node || options.service
+      !options.bbox ||
+      !options.bbox_srid ||
+      !options.level ||
+      options.q ||
+      options.service_node ||
+      options.mobility_node ||
+      options.service
     ) {
       return false;
     }
@@ -54,6 +60,6 @@ const DataFetcher = () => {
   }, [currentPage, map]);
 
   return null;
-};
+}
 
 export default DataFetcher;

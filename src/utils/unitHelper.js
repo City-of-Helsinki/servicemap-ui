@@ -1,8 +1,8 @@
 /* eslint-disable camelcase */
-import isClient, { uppercaseFirst } from '.';
 import config from '../../config';
 import paths from '../../config/paths';
 import { drawUnitIcon } from '../views/MapView/utils/drawIcon';
+import isClient, { uppercaseFirst } from '.';
 import { isEmbed } from './path';
 
 // TODO: If berries are not used anymore, clean this class
@@ -34,7 +34,7 @@ class UnitHelper {
 
   static markerIcons = generateMarkerIcons();
 
-  static isValidUnit = unit => unit && unit.object_type === 'unit';
+  static isValidUnit = (unit) => unit && unit.object_type === 'unit';
 
   static isUnitPage = () => paths.unit.regex.test(window.location.href);
 
@@ -85,9 +85,8 @@ class UnitHelper {
   }
   */
 
-  static getIconColor = count => (
-    UnitHelper.accessibilityColors[UnitHelper.getMarkerType(count)]
-  )
+  static getIconColor = (count) =>
+    UnitHelper.accessibilityColors[UnitHelper.getMarkerType(count)];
 
   static getDefaultIcon = () => {
     if (!UnitHelper.markerIcons) {
@@ -98,7 +97,7 @@ class UnitHelper {
     const icon = UnitHelper.markerIcons.default[iconIndex];
 
     return icon;
-  }
+  };
 
   static getIcon = (unit, selectedShortcomings, isStraight = false) => {
     if (!UnitHelper.markerIcons) {
@@ -107,23 +106,26 @@ class UnitHelper {
     if (!unit || !selectedShortcomings?.length) {
       return UnitHelper.markerIcons.default[2];
     }
-    const shortcomingCount = UnitHelper.getShortcomingCount(unit, selectedShortcomings);
+    const shortcomingCount = UnitHelper.getShortcomingCount(
+      unit,
+      selectedShortcomings
+    );
     const markerType = UnitHelper.getMarkerType(shortcomingCount);
 
     let iconIndex = 2;
     if (!isStraight && unit.id) {
-      const index = (unit.id % 5);
+      const index = unit.id % 5;
       iconIndex = index;
     }
 
     const icon = UnitHelper.markerIcons[markerType][iconIndex];
 
     return icon;
-  }
+  };
 
   static unitElementClick = (navigator, unit) => {
     if (!global.window) {
-      throw Error('Can\'t run unitElementClick without window');
+      throw Error("Can't run unitElementClick without window");
     }
     if (!navigator || !navigator.push || !navigator.replace) {
       throw Error('Invalid navigator argument given.');
@@ -138,28 +140,29 @@ class UnitHelper {
       return;
     }
     const action = paths.unit.regex.test(window.location.href)
-      ? 'replace' : 'push';
+      ? 'replace'
+      : 'push';
     navigator[action]('unit', { id });
-  }
+  };
 
   static setDefaults = (unit = {}) => {
     const { name = {} } = unit;
     return {
-        ...unit,
-        name: {
-            fi: '',
-            sv: '',
-            en: '',
-            ...name,
-        }
+      ...unit,
+      name: {
+        fi: '',
+        sv: '',
+        en: '',
+        ...name,
+      },
     };
-};
+  };
 
   static getContractText = (unit, intl, getLocaleText) => {
     const { contract_type } = unit;
     if (!contract_type?.description?.fi) return null;
     return uppercaseFirst(getLocaleText(contract_type.description));
-  }
+  };
 }
 
 export default UnitHelper;

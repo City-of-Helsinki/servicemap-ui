@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+
 import HomeView from './HomeView';
 
 // Listen to redux state

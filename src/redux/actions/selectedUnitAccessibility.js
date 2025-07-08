@@ -1,11 +1,10 @@
-import { accessibilitySentences } from './fetchDataActions';
-import { accessibilitySentencesFetch } from '../../utils/fetch';
 import config from '../../../config';
+import { accessibilitySentencesFetch } from '../../utils/fetch';
+import { accessibilitySentences } from './fetchDataActions';
 
 // Fetch AccessibilitySentences
-const {
-  isFetching, setNewData, fetchError, fetchSuccess,
-} = accessibilitySentences;
+const { isFetching, setNewData, fetchError, fetchSuccess } =
+  accessibilitySentences;
 
 let currentId = 0;
 const ids = {};
@@ -49,11 +48,11 @@ const parsePTVAccessibilitySentences = (data) => {
   data.forEach((element) => {
     if (element.sentenceGroups) {
       const group = buildTranslatedObject(element.sentenceGroups);
-      
+
       // Check if group already exists in groups
       let groupKey;
       Object.keys(groups).forEach((key) => {
-        if (groups[key].fi == group.fi) {
+        if (groups[key].fi === group.fi) {
           groupKey = key;
         }
       });
@@ -70,14 +69,13 @@ const parsePTVAccessibilitySentences = (data) => {
       }
       sentences[i].push(sentence);
     }
-    i++;
+    i = i + 1;
   });
 
   if (Object.keys(sentences).length === 0 || Object.keys(groups).length === 0) {
     return null;
-  } else {
-    return { sentences, groups };
   }
+  return { sentences, groups };
 };
 
 const parseHelsinkiAccessibilitySentences = (data) => {
@@ -111,13 +109,12 @@ const parseHelsinkiAccessibilitySentences = (data) => {
 export const parseAccessibilitySentences = (data) => {
   if (config.usePtvAccessibilityApi) {
     return parsePTVAccessibilitySentences(data);
-  } else {
-    return parseHelsinkiAccessibilitySentences(data);
   }
+  return parseHelsinkiAccessibilitySentences(data);
 };
 
 // Change selected unit to given unit
-export const changeAccessibilitySentences = data => async (dispatch) => {
+export const changeAccessibilitySentences = (data) => async (dispatch) => {
   if (data) {
     const parsedData = parseAccessibilitySentences(data);
     dispatch(setNewData(parsedData));
@@ -126,13 +123,13 @@ export const changeAccessibilitySentences = data => async (dispatch) => {
   }
 };
 
-export const fetchAccessibilitySentences = id => async (dispatch) => {
+export const fetchAccessibilitySentences = (id) => async (dispatch) => {
   const onStart = () => dispatch(isFetching());
   const onSuccess = (data) => {
     const parsedData = parseAccessibilitySentences(data);
     dispatch(fetchSuccess(parsedData));
   };
-  const onError = e => dispatch(fetchError(e.message));
+  const onError = (e) => dispatch(fetchError(e.message));
 
   // Fetch data
   accessibilitySentencesFetch({}, onStart, onSuccess, onError, null, id);

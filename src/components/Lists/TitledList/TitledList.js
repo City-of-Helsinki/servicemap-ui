@@ -1,14 +1,13 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import {
-  List, Typography, Divider,
-} from '@mui/material';
-import { FormattedMessage } from 'react-intl';
-import { ArrowDropDown } from '@mui/icons-material';
 import styled from '@emotion/styled';
+import { ArrowDropDown } from '@mui/icons-material';
+import { Divider, List, Typography } from '@mui/material';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
+
 import SMButton from '../../ServiceMapButton';
 
-const TitledList = ({
+function TitledList({
   children = null,
   buttonMessageID,
   buttonMessageCount,
@@ -20,42 +19,29 @@ const TitledList = ({
   loading = false,
   subtitle = null,
   description = null,
-}) => {
+}) {
   const list = children;
 
   return (
     <>
       {title ? (
         <StyledContainer>
-          <StyledTitleLeft
-            component={titleComponent}
-            variant="subtitle1"
-          >
+          <StyledTitleLeft component={titleComponent} variant="subtitle1">
             {title}
           </StyledTitleLeft>
-          {
-          subtitle
-          && (
-            <StyledTitleRight
-              component="p"
-              variant="caption"
-            >
+          {subtitle && (
+            <StyledTitleRight component="p" variant="caption">
               {subtitle}
             </StyledTitleRight>
-          )
-        }
+          )}
         </StyledContainer>
       ) : null}
       {description && (
         <StyledDescription align="left">{description}</StyledDescription>
       )}
-      {divider ? (
-        <StyledDivider aria-hidden="true" />
-      ) : null }
+      {divider ? <StyledDivider aria-hidden="true" /> : null}
 
-      <List disablePadding>
-        {list}
-      </List>
+      <List disablePadding>{list}</List>
       {buttonMessageID && onButtonClick && !loading && (
         <SMButton
           id={buttonID}
@@ -79,7 +65,7 @@ const TitledList = ({
       )}
     </>
   );
-};
+}
 
 const StyledContainer = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -136,7 +122,6 @@ TitledList.propTypes = {
   onButtonClick: PropTypes.func,
   titleComponent: PropTypes.oneOf(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']),
   loading: PropTypes.bool,
-  id: PropTypes.string,
 };
 
 export default TitledList;

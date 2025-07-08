@@ -1,10 +1,11 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import { EventAvailable } from '@mui/icons-material';
-import SimpleListItem from '../SimpleListItem';
-import config from '../../../../config';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { useSelector } from 'react-redux';
+
+import config from '../../../../config';
 import { getLocale } from '../../../redux/selectors/user';
+import SimpleListItem from '../SimpleListItem';
 
 const getLocalizedText = (reservation, locale) => {
   switch (locale) {
@@ -19,12 +20,7 @@ const getLocalizedText = (reservation, locale) => {
   }
 };
 
-
-const ReservationItem = ({
-  reservation,
-  intl,
-  divider = true
-}) => {
+function ReservationItem({ reservation, intl, divider = true }) {
   const locale = useSelector(getLocale);
   const localizedText = getLocalizedText(reservation, locale);
 
@@ -37,11 +33,13 @@ const ReservationItem = ({
       text={`${localizedText} ${intl.formatMessage({ id: 'opens.new.tab' })}`}
       divider={divider}
       handleItemClick={() => {
-        window.open(`${config.reservationsAPI.root}/${locale}/reservation-unit/${reservation.pk}`);
+        window.open(
+          `${config.reservationsAPI.root}/${locale}/reservation-unit/${reservation.pk}`
+        );
       }}
     />
   );
-};
+}
 
 ReservationItem.propTypes = {
   intl: PropTypes.objectOf(PropTypes.any).isRequired,

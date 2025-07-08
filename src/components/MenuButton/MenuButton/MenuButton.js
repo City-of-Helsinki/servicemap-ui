@@ -1,12 +1,18 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import {
-  Button, ButtonBase, ClickAwayListener, Container, Divider, Typography,
-} from '@mui/material';
-import { FormattedMessage } from 'react-intl';
 import styled from '@emotion/styled';
-import { keyboardHandler } from '../../../utils';
+import {
+  Button,
+  ButtonBase,
+  ClickAwayListener,
+  Container,
+  Divider,
+  Typography,
+} from '@mui/material';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
+
 import config from '../../../../config';
+import { keyboardHandler } from '../../../utils';
 
 class MenuButton extends React.Component {
   constructor(props) {
@@ -18,7 +24,7 @@ class MenuButton extends React.Component {
   }
 
   handleToggle = () => {
-    this.setState(state => ({ open: !state.open }));
+    this.setState((state) => ({ open: !state.open }));
   };
 
   handleClose = (event, refocus = false) => {
@@ -35,21 +41,23 @@ class MenuButton extends React.Component {
   };
 
   // Menu should close if user leaves the selection area
-  closeMenuOnFocusExit = event => {
+  closeMenuOnFocusExit = (event) => {
     const { menuItems } = this.props;
-    const menuItemIds = menuItems.map(v => v.id);
+    const menuItemIds = menuItems.map((v) => v.id);
 
     const relatedTargetId = event?.relatedTarget.id || '';
     // TODO not good to have "-map-type-radio" here
-    if (!menuItemIds.includes(relatedTargetId) && !relatedTargetId.includes('-map-type-radio')) {
+    if (
+      !menuItemIds.includes(relatedTargetId) &&
+      !relatedTargetId.includes('-map-type-radio')
+    ) {
       this.handleClose(event);
     }
   };
 
   renderMenu = () => {
-    const {
-      panelID, children, menuHeader, menuItems, menuAriaLabel,
-    } = this.props;
+    const { panelID, children, menuHeader, menuItems, menuAriaLabel } =
+      this.props;
     return (
       <ClickAwayListener onClickAway={this.handleClose}>
         <StyledMenuPanel
@@ -57,42 +65,60 @@ class MenuButton extends React.Component {
           aria-label={menuAriaLabel}
           role="region"
           disableGutters
-          sx={{ overflowY: panelID === 'SettingsMenuPanel' ? 'visible' : 'auto' }}
+          sx={{
+            overflowY: panelID === 'SettingsMenuPanel' ? 'visible' : 'auto',
+          }}
         >
           <Typography
             component="h2"
             sx={{
-              textAlign: 'left', fontWeight: 700, fontSize: '1.03rem', pb: 1,
+              textAlign: 'left',
+              fontWeight: 700,
+              fontSize: '1.03rem',
+              pb: 1,
             }}
           >
             <FormattedMessage id={menuHeader} />
           </Typography>
-          {
-            menuItems.map((v, i) => (
-              <React.Fragment key={v.key}>
-                <StyledMenuItemButton
-                  id={v.id}
-                  key={v.key}
-                  role="link"
-                  onClick={e => this.handleItemClick(e, v)}
-                  onKeyDown={keyboardHandler(e => this.handleClose(e, true), ['esc'])}
-                  onKeyPress={keyboardHandler(this.handleItemClick, ['space', 'enter'])}
-                  onBlur={this.closeMenuOnFocusExit}
-                  component="span"
-                  tabIndex={0}
-                  aria-hidden={v.ariaHidden}
+          {menuItems.map((v, i) => (
+            <React.Fragment key={v.key}>
+              <StyledMenuItemButton
+                id={v.id}
+                key={v.key}
+                role="link"
+                onClick={(e) => this.handleItemClick(e, v)}
+                onKeyDown={keyboardHandler(
+                  (e) => this.handleClose(e, true),
+                  ['esc']
+                )}
+                onKeyPress={keyboardHandler(this.handleItemClick, [
+                  'space',
+                  'enter',
+                ])}
+                onBlur={this.closeMenuOnFocusExit}
+                component="span"
+                tabIndex={0}
+                aria-hidden={v.ariaHidden}
+              >
+                <span>{v.icon}</span>
+                <Typography
+                  component="h3"
+                  sx={{ pl: 3, fontWeight: 700 }}
+                  variant="subtitle1"
                 >
-                  <span>{v.icon}</span>
-                  <Typography component="h3" sx={{ pl: 3, fontWeight: 700 }} variant="subtitle1">{v.text}</Typography>
-                </StyledMenuItemButton>
-                {i !== menuItems.length - 1
-                  ? <Divider aria-hidden />
-                  : null}
-              </React.Fragment>
-            ))
-          }
+                  {v.text}
+                </Typography>
+              </StyledMenuItemButton>
+              {i !== menuItems.length - 1 ? <Divider aria-hidden /> : null}
+            </React.Fragment>
+          ))}
           {children}
-          <div aria-hidden role="button" tabIndex="0" onFocus={() => this.handleClose()} />
+          <div
+            aria-hidden
+            role="button"
+            tabIndex="0"
+            onFocus={() => this.handleClose()}
+          />
         </StyledMenuPanel>
       </ClickAwayListener>
     );
@@ -113,29 +139,25 @@ class MenuButton extends React.Component {
         <StyledButton
           id={id}
           data-sm={dataSm}
-          ref={node => {
+          ref={(node) => {
             this.anchorEl = node;
           }}
           aria-controls={open ? panelID : undefined}
           aria-haspopup="true"
           aria-expanded={open}
           onClick={this.handleToggle}
-          onKeyDown={e => {
+          onKeyDown={(e) => {
             if (open) {
               keyboardHandler(this.handleClose, ['esc'])(e);
             }
           }}
         >
-          {
-            buttonIcon && (
-              <StyledIcon>{buttonIcon}</StyledIcon>
-            )
-          }
-          <Typography component="p" variant="subtitle1">{buttonText}</Typography>
+          {buttonIcon && <StyledIcon>{buttonIcon}</StyledIcon>}
+          <Typography component="p" variant="subtitle1">
+            {buttonText}
+          </Typography>
         </StyledButton>
-        {
-          open && this.renderMenu()
-        }
+        {open && this.renderMenu()}
       </StyledContainer>
     );
   }
@@ -209,12 +231,14 @@ MenuButton.propTypes = {
   children: PropTypes.node.isRequired,
   menuHeader: PropTypes.string.isRequired,
   dataSm: PropTypes.string.isRequired,
-  menuItems: PropTypes.arrayOf(PropTypes.shape({
-    key: PropTypes.string.isRequired,
-    id: PropTypes.string,
-    text: PropTypes.string.isRequired,
-    onClick: PropTypes.func.isRequired,
-  })).isRequired,
+  menuItems: PropTypes.arrayOf(
+    PropTypes.shape({
+      key: PropTypes.string.isRequired,
+      id: PropTypes.string,
+      text: PropTypes.string.isRequired,
+      onClick: PropTypes.func.isRequired,
+    })
+  ).isRequired,
 };
 
 export default MenuButton;

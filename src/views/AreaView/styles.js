@@ -1,4 +1,4 @@
-const styles = theme => ({
+const styles = (theme) => ({
   listLevelTwo: {
     backgroundColor: 'rgb(250,250,250)',
   },

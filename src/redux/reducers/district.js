@@ -1,7 +1,7 @@
 import { parkingUnitCategoryIds } from '../../views/AreaView/utils/districtDataHelper';
 
-const parkingUnitsMap = { };
-parkingUnitCategoryIds.forEach(categoryId => {
+const parkingUnitsMap = {};
+parkingUnitCategoryIds.forEach((categoryId) => {
   parkingUnitsMap[categoryId] = [];
 });
 const initialState = {
@@ -28,7 +28,7 @@ const initialState = {
     districts: [],
   },
 };
-export default (state = initialState, action) => {
+const districtReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'SET_DISTRICT_HIGHLIGHT':
       if (!action.district) {
@@ -64,17 +64,18 @@ export default (state = initialState, action) => {
       if (action.period) {
         return {
           ...state,
-          districtData: state.districtData.map(obj => (
+          districtData: state.districtData.map((obj) =>
             obj.name === action.districtType && obj.period === action.period
               ? { ...obj, data: action.data }
-              : obj)),
+              : obj
+          ),
         };
       }
       return {
         ...state,
-        districtData: state.districtData.map(obj => (obj.name === action.districtType
-          ? { ...obj, data: action.data }
-          : obj)),
+        districtData: state.districtData.map((obj) =>
+          obj.name === action.districtType ? { ...obj, data: action.data } : obj
+        ),
       };
 
     case 'SET_DISTRICT_ADDRESS_DATA':
@@ -98,7 +99,10 @@ export default (state = initialState, action) => {
     case 'ADD_SELECTED_DISTRICT_SERVICE':
       return {
         ...state,
-        selectedDistrictServices: [...state.selectedDistrictServices, action.district],
+        selectedDistrictServices: [
+          ...state.selectedDistrictServices,
+          action.district,
+        ],
       };
 
     case 'REMOVE_SELECTED_DISTRICT_SERVICE':
@@ -129,14 +133,19 @@ export default (state = initialState, action) => {
     case 'ADD_SELECTED_PARKING_AREA':
       return {
         ...state,
-        selectedParkingAreaIds: [...state.selectedParkingAreaIds, action.areaID],
+        selectedParkingAreaIds: [
+          ...state.selectedParkingAreaIds,
+          action.areaID,
+        ],
       };
 
     case 'REMOVE_SELECTED_PARKING_AREA':
       return {
         ...state,
         selectedParkingAreaIds: [
-          ...state.selectedParkingAreaIds.filter(item => item !== action.areaID),
+          ...state.selectedParkingAreaIds.filter(
+            (item) => item !== action.areaID
+          ),
         ],
       };
 
@@ -149,7 +158,7 @@ export default (state = initialState, action) => {
     case 'REMOVE_OPEN_ITEM':
       return {
         ...state,
-        openItems: [...state.openItems.filter(id => id !== action.item)],
+        openItems: [...state.openItems.filter((id) => id !== action.item)],
       };
 
     case 'SET_MAP_STATE':
@@ -173,8 +182,12 @@ export default (state = initialState, action) => {
         ...state,
         unitFetch: {
           ...state.unitFetch,
-          count: action.count ? state.unitFetch.count + action.count : state.unitFetch.count,
-          max: action.max ? state.unitFetch.max + action.max : state.unitFetch.max,
+          count: action.count
+            ? state.unitFetch.count + action.count
+            : state.unitFetch.count,
+          max: action.max
+            ? state.unitFetch.max + action.max
+            : state.unitFetch.max,
         },
       };
 
@@ -184,7 +197,11 @@ export default (state = initialState, action) => {
         subdistrictUnits: [...state.subdistrictUnits, ...action.units],
         unitFetch: {
           ...state.unitFetch,
-          nodesFetching: [...state.unitFetch.nodesFetching.filter(item => item !== action.node)],
+          nodesFetching: [
+            ...state.unitFetch.nodesFetching.filter(
+              (item) => item !== action.node
+            ),
+          ],
           isFetching: !action.isLastFetch,
           max: action.isLastFetch ? 0 : state.unitFetch.max,
           count: action.isLastFetch ? 0 : state.unitFetch.count,
@@ -203,7 +220,9 @@ export default (state = initialState, action) => {
       return {
         ...state,
         districtsFetching: [
-          ...state.districtsFetching.filter(item => item !== action.districtType),
+          ...state.districtsFetching.filter(
+            (item) => item !== action.districtType
+          ),
         ],
       };
 
@@ -226,3 +245,5 @@ export default (state = initialState, action) => {
       return state;
   }
 };
+
+export default districtReducer;

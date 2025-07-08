@@ -2,7 +2,6 @@ import isClient from './index';
 
 const APP_KEY = 'SM';
 
-
 class LocalStorageUtility {
   storage = null;
 
@@ -44,7 +43,10 @@ class LocalStorageUtility {
     try {
       this.storage.setItem(this.generateKey(key), value);
     } catch (e) {
-      throw new Error(`Error saving data: key: ${key}, value: ${value}`, e.message);
+      throw new Error(
+        `Error saving data: key: ${key}, value: ${value}`,
+        e.message
+      );
     }
   }
 }

@@ -90,21 +90,23 @@ class MatomoTracker {
   }) {
     if (data.length) {
       if (
-        customDimensions
-        && Array.isArray(customDimensions)
-        && customDimensions.length
+        customDimensions &&
+        Array.isArray(customDimensions) &&
+        customDimensions.length
       ) {
-        customDimensions.map(customDimension => this.pushInstruction(
-          'setCustomDimension',
-          customDimension.id,
-          customDimension.value,
-        ));
+        customDimensions.map((customDimension) =>
+          this.pushInstruction(
+            'setCustomDimension',
+            customDimension.id,
+            customDimension.value
+          )
+        );
       }
 
       this.pushInstruction('setCustomUrl', href ?? window.location.href);
       this.pushInstruction('setDocumentTitle', documentTitle);
 
-      this.pushInstruction(...(data));
+      this.pushInstruction(...data);
     }
   }
 }

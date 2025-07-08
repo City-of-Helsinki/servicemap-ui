@@ -1,9 +1,10 @@
 // // Link.react.test.js
-import React from 'react';
 import { Search } from '@mui/icons-material';
 import { fireEvent } from '@testing-library/react';
-import SuggestionItem from '../index';
+import React from 'react';
+
 import { getRenderWithProviders } from '../../../../../jestUtils';
+import SuggestionItem from '../index';
 
 // Generic required props for SimpleListItem
 const mockProps = {
@@ -16,13 +17,17 @@ const renderWithProviders = getRenderWithProviders({});
 
 describe('<SuggestionItem />', () => {
   it('should work', () => {
-    const { container } = renderWithProviders(<SuggestionItem {...mockProps} />);
+    const { container } = renderWithProviders(
+      <SuggestionItem {...mockProps} />
+    );
     expect(container).toMatchSnapshot();
   });
 
   it('simulates mousedown event', () => {
     const mockCallBack = jest.fn();
-    const { getByRole } = renderWithProviders(<SuggestionItem {...mockProps} handleItemClick={mockCallBack} />);
+    const { getByRole } = renderWithProviders(
+      <SuggestionItem {...mockProps} handleItemClick={mockCallBack} />
+    );
 
     fireEvent.click(getByRole('link'));
 
@@ -31,7 +36,9 @@ describe('<SuggestionItem />', () => {
 
   it('simulates keyboard event', () => {
     const mockCallBack = jest.fn();
-    const { getByRole } = renderWithProviders(<SuggestionItem {...mockProps} handleItemClick={mockCallBack} />);
+    const { getByRole } = renderWithProviders(
+      <SuggestionItem {...mockProps} handleItemClick={mockCallBack} />
+    );
 
     fireEvent.keyDown(getByRole('link'), {
       key: 'Enter',
@@ -49,7 +56,9 @@ describe('<SuggestionItem />', () => {
   });
 
   it('does show text correctly', () => {
-    const { container } = renderWithProviders(<SuggestionItem {...mockProps} />);
+    const { container } = renderWithProviders(
+      <SuggestionItem {...mockProps} />
+    );
 
     const p = container.querySelectorAll('p');
     expect(p[0].textContent).toEqual(mockProps.text);
@@ -61,7 +70,7 @@ describe('<SuggestionItem />', () => {
       <>
         <SuggestionItem {...mockProps} />
         <SuggestionItem {...mockProps} selected />
-      </>,
+      </>
     );
     const listItems = getAllByRole('link');
     expect(listItems[0].classList.contains('Mui-selected')).toBeFalsy();
@@ -73,7 +82,7 @@ describe('<SuggestionItem />', () => {
       <>
         <SuggestionItem {...mockProps} />
         <SuggestionItem {...mockProps} divider />
-      </>,
+      </>
     );
 
     const listItems = getAllByRole('link');
@@ -82,18 +91,23 @@ describe('<SuggestionItem />', () => {
   });
 
   it('does bold query correctly', () => {
-    const { container } = renderWithProviders(<SuggestionItem {...mockProps} query="text" />);
+    const { container } = renderWithProviders(
+      <SuggestionItem {...mockProps} query="text" />
+    );
 
     expect(container.querySelector('b').textContent).toEqual('text');
   });
 
   it('does use default accessibility attributes correctly', () => {
-    const { container, getByRole } = renderWithProviders(<SuggestionItem {...mockProps} />);
+    const { container, getByRole } = renderWithProviders(
+      <SuggestionItem {...mockProps} />
+    );
 
     const srText = container.querySelectorAll('span')[1];
     const text = container.querySelectorAll('p')[0];
-    const containsText = srText.textContent.indexOf(mockProps.text) !== -1
-      && srText.textContent.indexOf(mockProps.subtitle) !== -1;
+    const containsText =
+      srText.textContent.indexOf(mockProps.text) !== -1 &&
+      srText.textContent.indexOf(mockProps.subtitle) !== -1;
 
     // Expect screen reader texts to render correctly
     expect(containsText).toBeTruthy();
@@ -106,16 +120,16 @@ describe('<SuggestionItem />', () => {
 
   it('does use given accessibility attributes correctly', () => {
     const { container } = renderWithProviders(
-      <SuggestionItem
-        {...mockProps}
-        role="button"
-        divider
-      />,
+      <SuggestionItem {...mockProps} role="button" divider />
     );
 
     // Expect role to be set
-    expect(container.querySelector('li').getAttribute('role')).toEqual('button');
+    expect(container.querySelector('li').getAttribute('role')).toEqual(
+      'button'
+    );
     // Expect divider element to be hidden from screen readers
-    expect(container.querySelectorAll('li')[1].getAttribute('aria-hidden')).toBeTruthy();
+    expect(
+      container.querySelectorAll('li')[1].getAttribute('aria-hidden')
+    ).toBeTruthy();
   });
 });

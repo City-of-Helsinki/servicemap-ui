@@ -1,9 +1,10 @@
 import React from 'react';
+
 import { getRenderWithProviders } from '../../../../../../jestUtils';
 import UnitDataList from '../UnitDataList';
 
-
-const mockData = { // Data for testing unit services
+const mockData = {
+  // Data for testing unit services
   max: 5,
   data: [
     {
@@ -33,7 +34,8 @@ const mockData = { // Data for testing unit services
   ],
 };
 
-const mockData2 = { // Data for testing educational unit services
+const mockData2 = {
+  // Data for testing educational unit services
   data: [
     {
       clarification: null,
@@ -104,14 +106,15 @@ const mockData2 = { // Data for testing educational unit services
   ],
 };
 
-
-const mockProps = { // Props for testing unit services
+const mockProps = {
+  // Props for testing unit services
   data: mockData,
   listLength: 3,
   type: 'events',
 };
 
-const mockProps2 = { // Props for testing educational unit services
+const mockProps2 = {
+  // Props for testing educational unit services
   data: mockData2,
   listLength: 3,
   type: 'educationServices',
@@ -123,7 +126,6 @@ const renderWithProviders = getRenderWithProviders({
   service: { current: null },
 });
 
-
 describe('<UnitDataList />', () => {
   it('should work', () => {
     const { container } = renderWithProviders(<UnitDataList {...mockProps} />);
@@ -131,7 +133,9 @@ describe('<UnitDataList />', () => {
   });
 
   it('does render events list with correct items', () => {
-    const { getAllByTestId } = renderWithProviders(<UnitDataList {...mockProps} />);
+    const { getAllByTestId } = renderWithProviders(
+      <UnitDataList {...mockProps} />
+    );
     const count = getAllByTestId('EventItem').length;
     expect(count === mockProps.listLength).toBeTruthy();
   });
@@ -139,16 +143,22 @@ describe('<UnitDataList />', () => {
   it('renders correct event count number in button', () => {
     const { getByText } = renderWithProviders(<UnitDataList {...mockProps} />);
     const moreButton = getByText('Show more events', { exact: false });
-    const numberInButtonText = parseInt(moreButton.textContent.match(/\d+/)[0], 10);
+    const numberInButtonText = parseInt(
+      moreButton.textContent.match(/\d+/)[0],
+      10
+    );
     const { data, listLength } = mockProps;
-    expect(numberInButtonText === (data.max - listLength)).toBeTruthy();
+    expect(numberInButtonText === data.max - listLength).toBeTruthy();
   });
 
   it('renders correct services count number in schoool services button', () => {
     const { getByText } = renderWithProviders(<UnitDataList {...mockProps2} />);
     const moreButton = getByText('Show more services', { exact: false });
-    const numberInButtonText = parseInt(moreButton.textContent.match(/\d+/)[0], 10);
+    const numberInButtonText = parseInt(
+      moreButton.textContent.match(/\d+/)[0],
+      10
+    );
     const { data, listLength } = mockProps2;
-    expect(numberInButtonText === (data.data.length - listLength)).toBeTruthy();
+    expect(numberInButtonText === data.data.length - listLength).toBeTruthy();
   });
 });

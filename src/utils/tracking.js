@@ -1,6 +1,6 @@
 /* eslint-disable import/prefer-default-export */
-import { isMobileDevice } from '.';
 import featureFlags from '../../config/featureFlags';
+import { isMobileDevice } from '.';
 import ServiceMapAPI from './newFetch/ServiceMapAPI';
 import { isEmbed } from './path';
 

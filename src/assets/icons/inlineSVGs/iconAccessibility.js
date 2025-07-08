@@ -1,7 +1,14 @@
+/* eslint-disable max-len */
 import React from 'react';
 
 const iconAccessibility = () => (
-  <svg width="18px" height="20px" viewBox="0 0 18 20" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <svg
+    width="18px"
+    height="20px"
+    viewBox="0 0 18 20"
+    version="1.1"
+    xmlns="http://www.w3.org/2000/svg"
+  >
     <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
       <g transform="translate(-59.000000, -553.000000)">
         <g transform="translate(56.000000, 551.000000)">

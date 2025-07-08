@@ -1,17 +1,22 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import {
-  Button, Divider, ListItemButton,
-  ListItemIcon, ListItemText, Typography
-} from '@mui/material';
 import { css } from '@emotion/css';
 import styled from '@emotion/styled';
+import {
+  Button,
+  Divider,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Typography,
+} from '@mui/material';
 import { useTheme } from '@mui/styles';
+import PropTypes from 'prop-types';
+import React, { useState } from 'react';
 import { FormattedMessage } from 'react-intl';
-import BoldedText from '../../BoldedText';
-import { keyboardHandler } from '../../../utils';
 
-const SuggestionItem = (props) => {
+import { keyboardHandler } from '../../../utils';
+import BoldedText from '../../BoldedText';
+
+function SuggestionItem(props) {
   const {
     className = null,
     divider = false,
@@ -30,12 +35,13 @@ const SuggestionItem = (props) => {
   const [mouseDown, setMouseDown] = useState(false);
   const onClick = handleItemClick
     ? (e) => {
-      e.preventDefault();
-      if (!mouseDown) {
-        handleItemClick();
-        setMouseDown(true);
+        e.preventDefault();
+        if (!mouseDown) {
+          handleItemClick();
+          setMouseDown(true);
+        }
       }
-    } : null;
+    : null;
   const textContainer = css({
     display: 'flex',
     padding: theme.spacing(1, 0),
@@ -86,39 +92,21 @@ const SuggestionItem = (props) => {
         id={id}
       >
         <StyledContainer>
-          <StyledListItemIcon aria-hidden>
-            {icon}
-          </StyledListItemIcon>
+          <StyledListItemIcon aria-hidden>{icon}</StyledListItemIcon>
 
           <StyledListItemText classes={{ root: textContainer }}>
-
             <StyledHistoryText
               aria-hidden
               handleremoveclick={handleRemoveClick ? 'true' : undefined}
               variant="body2"
             >
-              {
-                query
-                  ? (
-                    <BoldedText
-                      text={text}
-                      shouldBeBold={query}
-                    />
-                  ) : text
-              }
+              {query ? <BoldedText text={text} shouldBeBold={query} /> : text}
             </StyledHistoryText>
-            {
-            subtitle
-            && (
-              <StyledSubtitle
-                aria-hidden
-                variant="body2"
-              >
+            {subtitle && (
+              <StyledSubtitle aria-hidden variant="body2">
                 {subtitle}
               </StyledSubtitle>
-
-            )
-          }
+            )}
           </StyledListItemText>
         </StyledContainer>
         {handleRemoveClick && (
@@ -148,7 +136,7 @@ const SuggestionItem = (props) => {
       ) : null}
     </>
   );
-};
+}
 
 const StyledContainer = styled('span')(({ theme }) => ({
   display: 'flex',

@@ -1,4 +1,5 @@
-/* eslint-disable quote-props */
+/* eslint-disable import/no-anonymous-default-export */
+/* eslint-disable max-len */
 export default {
   'app.title': 'Servicekarta',
   'app.description': 'Alla tjänster i huvudstadsregionen inom räckhåll.',
@@ -9,7 +10,7 @@ export default {
   'app.navigation.settings': 'Inställningar',
 
   // Accessibility
-  'accessibility': 'Tillgänglighet',
+  accessibility: 'Tillgänglighet',
   'accessibility.info': 'Tillgänglighetsuppgifter',
   'accessibility.details': 'Noggrannare uppgifter',
   'accessibility.details.summary': 'Samlingssida (ny flik)',
@@ -22,7 +23,7 @@ export default {
                               }`,
 
   // Address
-  'address': 'Adress',
+  address: 'Adress',
   'address.description': 'Se tjänsterna i närheten av adressen',
   'address.search': 'Adresssök',
   'address.search.cleared': 'Sökfältet har tömts',
@@ -34,14 +35,18 @@ export default {
   'address.districts': 'Områden',
   'address.plural': 'Adresser',
   'address.services.header': 'Tjänstområde',
-  'address.services.info': 'Kommunala tjänster vars verksamhetsområde omfattar positionen',
+  'address.services.info':
+    'Kommunala tjänster vars verksamhetsområde omfattar positionen',
   'address.area.link': 'Bekanta dig med områdena på kartan.',
-  'address.emergency_care.common': 'När den egna hälsostationen är stängd och på natten kl. 22-8 är jour för barn och unga under 16 år på <a>Nya barnsjukhuset</a> [<a1>hemsidor</a1>], och jour för vuxna på',
+  'address.emergency_care.common':
+    'När den egna hälsostationen är stängd och på natten kl. 22-8 är jour för barn och unga under 16 år på <a>Nya barnsjukhuset</a> [<a1>hemsidor</a1>], och jour för vuxna på',
   'address.emergency_care.children_hospital.link': '/sv/unit/62976',
-  'address.emergency_care.common.link': 'https://www.hus.fi/sv/patienten/sjukhus/nya-barnsjukhuset',
+  'address.emergency_care.common.link':
+    'https://www.hus.fi/sv/patienten/sjukhus/nya-barnsjukhuset',
   'address.emergency_care.unit.26107': 'Malms sjukhuset',
   'address.emergency_care.unit.26104': 'Haartmanska sjukhuset',
-  'address.emergency_care.link': 'https://www.hel.fi/sv/social-och-halsovardstjanster/halsovard/bradskande-vard-och-halsocentralsjour',
+  'address.emergency_care.link':
+    'https://www.hel.fi/sv/social-och-halsovardstjanster/halsovard/bradskande-vard-och-halsocentralsjour',
   'address.emergency_care.link.text': '[<a>joursidor</a>]',
 
   // Area
@@ -55,39 +60,52 @@ export default {
   'area.services.local': 'Ditt eget skyddsdistrikt',
   'area.services.nearby': 'Lista över verksamhetsställen i närområden',
   'area.services.nearby.rescue_area': 'Skyddsdistrikt i närområdena',
-  'area.services.nearby.rescue_district': 'Lista över skyddsavsnitten i närområden',
-  'area.services.nearby.rescue_sub_district': 'Lista över skyddsunderavsnitten i närområden',
+  'area.services.nearby.rescue_district':
+    'Lista över skyddsavsnitten i närområden',
+  'area.services.nearby.rescue_sub_district':
+    'Lista över skyddsunderavsnitten i närområden',
   'area.services.all': 'Lista över verksamhetsställen',
   'area.services.all.rescue_area': 'Lista över skyddsdistrikten',
   'area.services.all.rescue_district': 'Lista över skyddsavsnitten',
   'area.services.all.rescue_sub_district': 'Lista över skyddsunderavsnitten',
-  'area.info': 'Välj ett område, vars tjänster du vill ha information om. Genom att skriva din hemadress i sökfältet öppnas en karta och under fliken Tjänster i området visas de områden och distrikt som du hör till',
+  'area.info':
+    'Välj ett område, vars tjänster du vill ha information om. Genom att skriva din hemadress i sökfältet öppnas en karta och under fliken Tjänster i området visas de områden och distrikt som du hör till',
   'area.choose.district': 'Väl område',
   'area.list': 'Val av område',
   'area.localAddress.title': 'Uppgifter enligt din adress',
   'area.localAddress.neighborhood': 'Stadsdel: {area}',
   'area.localAddress.postCode': 'Postnummer: {area}',
   'area.geographicalServices.neighborhood': 'Tjänster i stadsdelen ({length})',
-  'area.geographicalServices.postcode_area': 'Tjänster i postnummerområdet ({length})',
-  'area.geographicalServices.major_district': 'Tjänster i stordistriktet ({length})',
-  'area.geographicalServices.statistical_district': 'Välj först befolkningsdataområdet, varefter du kan bläddra bland regionens tjänster',
+  'area.geographicalServices.postcode_area':
+    'Tjänster i postnummerområdet ({length})',
+  'area.geographicalServices.major_district':
+    'Tjänster i stordistriktet ({length})',
+  'area.geographicalServices.statistical_district':
+    'Välj först befolkningsdataområdet, varefter du kan bläddra bland regionens tjänster',
   'area.neighborhood.title': 'Välj stadsdel',
   'area.postcode_area.title': 'Välj postnummer',
   'area.major_district.title': 'Välj stordistrikt',
   'area.service.filter': 'Filtrering av geografiska tjänster',
-  'area.statisticalDistrict.info': 'Välj först befolkningsdataområdet, varefter du kan bläddra bland regionens tjänster',
+  'area.statisticalDistrict.info':
+    'Välj först befolkningsdataområdet, varefter du kan bläddra bland regionens tjänster',
   'area.statisticalDistrict.title': 'Välj befolkningsdataområde',
   'area.statisticalDistrict.section': 'Beskärning: {text}',
   'area.statisticalDistrict.noData': 'Kunde inte hämta data',
-  'area.statisticalDistrict.label': '{count} personer, {percent}% av hela befolkningen i området',
+  'area.statisticalDistrict.label':
+    '{count} personer, {percent}% av hela befolkningen i området',
   'area.statisticalDistrict.label.total': '{count} personer',
   'area.statisticalDistrict.label.people': '{count} personer',
-  'area.statisticalDistrict.label.percent': '{percent}% av regionens totala befolkning',
-  'area.statisticalDistrict.label.noResults': 'Befolkningsuppgifter inte tillgängliga',
-  'area.statisticalDistrict.service.filter': 'Filtrering av demografiska tjänster',
+  'area.statisticalDistrict.label.percent':
+    '{percent}% av regionens totala befolkning',
+  'area.statisticalDistrict.label.noResults':
+    'Befolkningsuppgifter inte tillgängliga',
+  'area.statisticalDistrict.service.filter':
+    'Filtrering av demografiska tjänster',
   'area.statisticalDistrict.service.filter.button': 'Filtrera',
-  'area.statisticalDistrict.service.filter.button.aria': 'Filtrera tjänster i befolkningsdataområden',
-  'area.statisticalDistrict.service.filter.aria.notification': 'Befolkningsdatatjänster filtrerade med ordet {filterValue}',
+  'area.statisticalDistrict.service.filter.button.aria':
+    'Filtrera tjänster i befolkningsdataområden',
+  'area.statisticalDistrict.service.filter.aria.notification':
+    'Befolkningsdatatjänster filtrerade med ordet {filterValue}',
   'area.noSelection': 'Väl område under fliken Val av område',
   'area.noUnits': 'Det finns inga verksamhetsställen i ditt valda område',
   'area.popupLink': 'Visa uppgifterna för området (ny flik)',
@@ -112,10 +130,14 @@ export default {
   'area.list.rescue_sub_district': 'Skyddsunderavsnitt',
   'area.list.health_station_district': 'Hälsostationsområde',
   'area.list.maternity_clinic_district': 'Rådgivningsområde',
-  'area.list.lower_comprehensive_school_district_fi': 'Finskt grundskoleområde, lågklasserna',
-  'area.list.lower_comprehensive_school_district_sv': 'Svenskt grundskoleområde, lågklasserna',
-  'area.list.upper_comprehensive_school_district_fi': 'Finskt grundskoleområde, högklasserna',
-  'area.list.upper_comprehensive_school_district_sv': 'Svenskt grundskoleområde, högklasserna',
+  'area.list.lower_comprehensive_school_district_fi':
+    'Finskt grundskoleområde, lågklasserna',
+  'area.list.lower_comprehensive_school_district_sv':
+    'Svenskt grundskoleområde, lågklasserna',
+  'area.list.upper_comprehensive_school_district_fi':
+    'Finskt grundskoleområde, högklasserna',
+  'area.list.upper_comprehensive_school_district_sv':
+    'Svenskt grundskoleområde, högklasserna',
   'area.list.preschool_education_fi': 'Finskt förskoleundervisningsområde',
   'area.list.preschool_education_sv': 'Svenskt förskoleundervisningsområde',
   'area.list.nature_reserve': 'Naturskyddsområden',
@@ -128,18 +150,25 @@ export default {
   'area.list.rescue_sub_district.plural': 'Skyddsunderavsnitten',
   'area.list.health_station_district.plural': 'Hälsostationsområden',
   'area.list.maternity_clinic_district.plural': 'Rådgivningsområden',
-  'area.list.lower_comprehensive_school_district_fi.plural': 'Finskt grundskoleområden, lågklasserna',
-  'area.list.lower_comprehensive_school_district_sv.plural': 'Svenskt grundskoleområden, lågklasserna',
-  'area.list.upper_comprehensive_school_district_fi.plural': 'Finskt grundskoleområden, högklasserna',
-  'area.list.upper_comprehensive_school_district_sv.plural': 'Svenskt grundskoleområden, högklasserna',
-  'area.list.preschool_education_fi.plural': 'Finskt förskoleundervisningsområden',
-  'area.list.preschool_education_sv.plural': 'Svenskt förskoleundervisningsområden',
+  'area.list.lower_comprehensive_school_district_fi.plural':
+    'Finskt grundskoleområden, lågklasserna',
+  'area.list.lower_comprehensive_school_district_sv.plural':
+    'Svenskt grundskoleområden, lågklasserna',
+  'area.list.upper_comprehensive_school_district_fi.plural':
+    'Finskt grundskoleområden, högklasserna',
+  'area.list.upper_comprehensive_school_district_sv.plural':
+    'Svenskt grundskoleområden, högklasserna',
+  'area.list.preschool_education_fi.plural':
+    'Finskt förskoleundervisningsområden',
+  'area.list.preschool_education_sv.plural':
+    'Svenskt förskoleundervisningsområden',
   'area.list.nature_reserve.plural': 'Naturskyddsområden',
   'area.list.resident_parking_zone.plural': 'Invånarparkeringsområden',
   'area.list.parkingSpaces': 'Parkeringsplatser',
   'area.list.parkingGarages': 'Parkeringshus',
   'area.list.sharedCarParking': 'Bilpoolparkering',
-  'area.list.accessibleStreetParking': 'P-plats för personer med rörelsehinder bredvid gatan',
+  'area.list.accessibleStreetParking':
+    'P-plats för personer med rörelsehinder bredvid gatan',
   'area.list.passenger_car': 'Personbil',
   'area.list.heavy_traffic': 'Tung trafik',
   'area.list.statistic.byAge': 'Ålder',
@@ -158,7 +187,8 @@ export default {
   'area.list.hgv_no_parking_area': 'Förbjudna gatuparkeringsplatser',
   'area.list.park_and_ride_area': 'Pendelparkering',
   'area.parking.tooltip.park_and_ride_area': 'Pendelparkering',
-  'area.parking.tooltip.hgv_no_parking_area': 'Tung trafik - Förbjudna gatuparkeringsplatser',
+  'area.parking.tooltip.hgv_no_parking_area':
+    'Tung trafik - Förbjudna gatuparkeringsplatser',
   'cookies.matomo.description': 'Kaka för statistiksystemet Matomo.',
   'cookies.matomo.expiration': '{days} dagar',
 
@@ -177,19 +207,28 @@ export default {
   'parkingArea.popup.duration4': 'Parkering tillåten högst: {duration}',
   'parkingArea.popup.duration5': 'Parkering tillåten högst: 4 h',
   'parkingArea.popup.duration6': '',
-  'parkingArea.popup.validity1': 'Tidsbegränsning gäller för parkering: {validity}',
-  'parkingArea.popup.validity2': 'Tidsbegränsning gäller för parkering: {validity}',
+  'parkingArea.popup.validity1':
+    'Tidsbegränsning gäller för parkering: {validity}',
+  'parkingArea.popup.validity2':
+    'Tidsbegränsning gäller för parkering: {validity}',
   'parkingArea.popup.validity3': 'Parkering förbjuden: {validity}',
   'parkingArea.popup.validity4': 'Parkeringen är avgiftsbelagd: {validity}',
   'parkingArea.popup.validity5': 'Parkeringen är avgiftsbelagd: {validity}',
   'parkingArea.popup.validity6': 'Parkeringen är avgiftsbelagd: {validity}',
-  'parkingArea.popup.info': 'Uppgifterna är riktgivande. Kontrollera alltid uppgifterna på trafikmärket.',
-  'parkingArea.popup.info1': 'Begränsningarna gäller inte personer med boende- eller företagsparkeringstillstånd om parkeringsplatsen har markerats som boendeparkeringsplats.',
-  'parkingArea.popup.info2': 'Begränsningarna gäller inte personer med boende- eller företagsparkeringstillstånd om parkeringsplatsen har markerats som boendeparkeringsplats.',
-  'parkingArea.popup.info3': 'Begränsningarna gäller inte personer med boende- eller företagsparkeringstillstånd om parkeringsplatsen har markerats som boendeparkeringsplats.',
-  'parkingArea.popup.info4': 'Avgifterna och begränsningarna gäller inte personer med boende- eller företagsparkeringstillstånd om parkeringsplatsen har markerats som boendeparkeringsplats.',
-  'parkingArea.popup.info5': 'Avgifterna och begränsningarna gäller inte personer med boende- eller företagsparkeringstillstånd om parkeringsplatsen har markerats som boendeparkeringsplats.',
-  'parkingArea.popup.info6': 'Avgifterna och begränsningarna gäller inte personer med boende- eller företagsparkeringstillstånd om parkeringsplatsen har markerats som boendeparkeringsplats.',
+  'parkingArea.popup.info':
+    'Uppgifterna är riktgivande. Kontrollera alltid uppgifterna på trafikmärket.',
+  'parkingArea.popup.info1':
+    'Begränsningarna gäller inte personer med boende- eller företagsparkeringstillstånd om parkeringsplatsen har markerats som boendeparkeringsplats.',
+  'parkingArea.popup.info2':
+    'Begränsningarna gäller inte personer med boende- eller företagsparkeringstillstånd om parkeringsplatsen har markerats som boendeparkeringsplats.',
+  'parkingArea.popup.info3':
+    'Begränsningarna gäller inte personer med boende- eller företagsparkeringstillstånd om parkeringsplatsen har markerats som boendeparkeringsplats.',
+  'parkingArea.popup.info4':
+    'Avgifterna och begränsningarna gäller inte personer med boende- eller företagsparkeringstillstånd om parkeringsplatsen har markerats som boendeparkeringsplats.',
+  'parkingArea.popup.info5':
+    'Avgifterna och begränsningarna gäller inte personer med boende- eller företagsparkeringstillstånd om parkeringsplatsen har markerats som boendeparkeringsplats.',
+  'parkingArea.popup.info6':
+    'Avgifterna och begränsningarna gäller inte personer med boende- eller företagsparkeringstillstånd om parkeringsplatsen har markerats som boendeparkeringsplats.',
   'parkingArea.popup.info7': 'Parkering förbjuden',
 
   'parkingArea.popup.vantaa.neighbourhood': 'Stadsdelen: {value}',
@@ -207,12 +246,15 @@ export default {
   'download.cropText.service': 'Verksamhetsställena med valda tjänster:',
   'download.cropText.search': 'Verksamhetsställena utifrån textsökning:',
   'download.cropText.none': 'Inga filtervärden har valts',
-  'download.data.none': 'Plocka först fram verksamhetsställen på servicekartan med hjälp av bläddrings- eller sökfunktionen och kom sedan tillbaka till den här vyn för att spara verksamhetsställenas uppgifter.',
+  'download.data.none':
+    'Plocka först fram verksamhetsställen på servicekartan med hjälp av bläddrings- eller sökfunktionen och kom sedan tillbaka till den här vyn för att spara verksamhetsställenas uppgifter.',
   'download.download': 'Ladda ner uppgifter (ny flik)',
   'download.format': 'Filformat:',
-  'download.info': 'Spara uppgifterna om de verksamhetsställen som du har filtrerat i en fil som du kan ladda till exempel i applikationen Google Maps eller annars öppna för fortsatt behandling.',
+  'download.info':
+    'Spara uppgifterna om de verksamhetsställen som du har filtrerat i en fil som du kan ladda till exempel i applikationen Google Maps eller annars öppna för fortsatt behandling.',
   'download.title': 'Ladda ner verksamhetsställets uppgifter',
-  'download.coordinate': 'Servicekartans koordinatsystem är: ETRS89 / GK25FIN (EPSG:3879)',
+  'download.coordinate':
+    'Servicekartans koordinatsystem är: ETRS89 / GK25FIN (EPSG:3879)',
 
   // Event
   'event.description': 'Beskrivning',
@@ -231,42 +273,59 @@ export default {
   'embedder.code.title': 'Kopiera HTML-koden',
   'embedder.height.title': 'Inbäddningens höjd',
   'embedder.height.aria.label': 'Välj inbäddningens höjd',
-  'embedder.height.ratio.label': 'Relativ höjd. Inbäddningens höjd i förhållande till dess bredd har fastställts',
-  'embedder.height.fixed.label': 'Abslout höjd. Inbäddningens höjd har fastställts i pixlar',
+  'embedder.height.ratio.label':
+    'Relativ höjd. Inbäddningens höjd i förhållande till dess bredd har fastställts',
+  'embedder.height.fixed.label':
+    'Abslout höjd. Inbäddningens höjd har fastställts i pixlar',
   'embedder.height.input.aria.fixed': 'Inbäddningens höjd i pixlar',
-  'embedder.height.input.aria.ratio': 'Inbäddningens höjd som procent av bredden',
+  'embedder.height.input.aria.ratio':
+    'Inbäddningens höjd som procent av bredden',
   'embedder.iframe.title': 'Servicekartans inbäddningsfönster',
   'embedder.language.title': 'Inbäddningens språk',
   'embedder.language.aria.label': 'Välj inbäddningens språk',
-  'embedder.language.description.fi': 'Verksamhetsställenas information visas på finska. Bakgrundskartan är på finska.',
-  'embedder.language.description.sv': 'Verksamhetsställenas information visas på svenska. Bakgrundskartan är på svenska.',
-  'embedder.language.description.en': 'Verksamhetsställenas information visas på engelska. Bakgrundskartan är på finska.',
+  'embedder.language.description.fi':
+    'Verksamhetsställenas information visas på finska. Bakgrundskartan är på finska.',
+  'embedder.language.description.sv':
+    'Verksamhetsställenas information visas på svenska. Bakgrundskartan är på svenska.',
+  'embedder.language.description.en':
+    'Verksamhetsställenas information visas på engelska. Bakgrundskartan är på finska.',
   'embedder.map.title': 'Bakgrundskarta',
   'embedder.map.aria.label': 'Välj bakgrundskarta',
   'embedder.options.title': 'Visa på kartan',
   'embedder.options.list.title': 'Lista över verksamhetsställen',
   'embedder.options.label.list.none': 'Dölj listan över verksamhetsställen',
-  'embedder.options.label.list.side': 'Visa verksamhetsställen i en lista (vid kartan)',
-  'embedder.options.label.list.bottom': 'Visa verksamhetsställen i en lista (under kartan)',
+  'embedder.options.label.list.side':
+    'Visa verksamhetsställen i en lista (vid kartan)',
+  'embedder.options.label.list.bottom':
+    'Visa verksamhetsställen i en lista (under kartan)',
   'embedder.options.label.units': 'Visa verksamhetsställen',
-  'embedder.options.label.transit': 'Visa kollektivtrafikens hållplatser (Zooma in kartan för att se hållplatserna)',
-  'embedder.options.label.bbox': 'Begränsa den inbäddade kartan till området i förhandsgranskningsfönstret',
+  'embedder.options.label.transit':
+    'Visa kollektivtrafikens hållplatser (Zooma in kartan för att se hållplatserna)',
+  'embedder.options.label.bbox':
+    'Begränsa den inbäddade kartan till området i förhandsgranskningsfönstret',
   'embedder.preview.title': 'Map preview',
   'embedder.service.title': 'Tjänster',
   'embedder.service.aria.label': 'Välj tjänsterna som visas',
   'embedder.service.none': 'Kartan visas utan verksamhetsställen',
-  'embedder.service.common': 'På kartan visas de vanligaste verksamhetsställena i stadsbons vardag: skolor, daghem och hälsostationer.',
-  'embedder.service.all': 'Alla verksamhetsställen visas på kartan. För omfattande områdesgränser gör inbäddningen långsammare och otydligare.',
+  'embedder.service.common':
+    'På kartan visas de vanligaste verksamhetsställena i stadsbons vardag: skolor, daghem och hälsostationer.',
+  'embedder.service.all':
+    'Alla verksamhetsställen visas på kartan. För omfattande områdesgränser gör inbäddningen långsammare och otydligare.',
   'embedder.title': 'Inbäddningsverktyg',
-  'embedder.title.info': 'Med hjälp av Servicekartans inbäddningsverktyg kan du bädda in en vy av Servicekartan som en del av vilken webbsida som helst.',
-  'embedder.info.title': 'Anvisningar för hur du använder inbäddningsverktyget ',
-  'embedder.info.description': 'Välj bland urvalet nedan vilka funktioner du vill ha i kartvyn. Du kan kopiera URL-länken eller html-koden under kartan.\n\n Närmare anvisningar om hur du använder inbäddningsverktyget i olika situationer finns',
+  'embedder.title.info':
+    'Med hjälp av Servicekartans inbäddningsverktyg kan du bädda in en vy av Servicekartan som en del av vilken webbsida som helst.',
+  'embedder.info.title':
+    'Anvisningar för hur du använder inbäddningsverktyget ',
+  'embedder.info.description':
+    'Välj bland urvalet nedan vilka funktioner du vill ha i kartvyn. Du kan kopiera URL-länken eller html-koden under kartan.\n\n Närmare anvisningar om hur du använder inbäddningsverktyget i olika situationer finns',
   'embedder.info.link': 'här (ny flik).',
   'embedder.url.title': 'Kopiera URL',
   'embedder.width.title': 'Inbäddningens bredd',
   'embedder.width.aria.label': 'Välj inbäddningens bredd',
-  'embedder.width.auto.label': 'Automatisk bredd. Inbäddningen fyller bredden av elementet som den har placerats i. I den här förhandsgranskningen har inbäddningen placeats i ett element med standardbredd markerat med en streckad linje.',
-  'embedder.width.custom.label': 'Bredden har fastställts. Inbäddningens bredd har fastställs i pixlar.',
+  'embedder.width.auto.label':
+    'Automatisk bredd. Inbäddningen fyller bredden av elementet som den har placerats i. I den här förhandsgranskningen har inbäddningen placeats i ett element med standardbredd markerat med en streckad linje.',
+  'embedder.width.custom.label':
+    'Bredden har fastställts. Inbäddningens bredd har fastställs i pixlar.',
   'embedder.width.input.aria.auto': 'Inbäddningens bredd, procent',
   'embedder.width.input.aria.custom': 'Inbäddningens bredd, pixlar',
 
@@ -275,18 +334,24 @@ export default {
   'feedback.title': 'Ge respons om den här nättjänsten',
   'feedback.title.unit': 'Ge respons om verksamhetsstället {unit}',
   'feedback.email': 'Email',
-  'feedback.email.info': 'Om du vill att vi svarar på din respons, vänligen uppge din e-postadress.',
+  'feedback.email.info':
+    'Om du vill att vi svarar på din respons, vänligen uppge din e-postadress.',
   'feedback.feedback': 'Din respons (obligatorisk)',
-  'feedback.feedback.info': 'Berätta så detaljerat som möjligt hurdan respons du vill ge.',
-  'feedback.permission': 'Min respons får publiceras (efter kontroll). E-postadressen publiceras inte.',
-  'feedback.additionalInfo': 'Din respons skickas vidare till Helsingfors stads responssystem.',
-  'feedback.additionalInfo.link': 'Information och anvisningar om att ge respons (länken öppnas i en ny flik).',
+  'feedback.feedback.info':
+    'Berätta så detaljerat som möjligt hurdan respons du vill ge.',
+  'feedback.permission':
+    'Min respons får publiceras (efter kontroll). E-postadressen publiceras inte.',
+  'feedback.additionalInfo':
+    'Din respons skickas vidare till Helsingfors stads responssystem.',
+  'feedback.additionalInfo.link':
+    'Information och anvisningar om att ge respons (länken öppnas i en ny flik).',
   'feedback.send': 'Skicka respons',
   'feedback.sending': 'Sänder...',
   'feedback.send.error': 'Skicka respons. Obligatoriska fält måste fyllas i',
   'feedback.error.required': 'Obligatoriskt fält',
   'feedback.error.email.invalid': 'E-postadressen ska skrivas i rätt form.',
-  'feedback.srError.email.invalid': 'E-postadressen är felaktig. Korrigera adressen.',
+  'feedback.srError.email.invalid':
+    'E-postadressen är felaktig. Korrigera adressen.',
   'feedback.srError.feedback.required': 'Responsen fattas. Skriv din respons.',
   'feedback.modal.confirm': 'OK',
   'feedback.modal.leave': 'Är du säker på att du vill lämna den här sidan?',
@@ -334,7 +399,8 @@ export default {
   'general.closeSettings': 'Stäng inställningarna',
   'general.hideSettings': 'Stäng kartinställningar',
   'general.fetching': 'Laddar data...',
-  'general.fetchingTakesTime': 'Det finns många sökresultat, nedladdningen tar lite längre tid',
+  'general.fetchingTakesTime':
+    'Det finns många sökresultat, nedladdningen tar lite längre tid',
   'general.home': 'Hem',
   'general.home.logo.ariaLabel': 'Servicekarta - Gå till startsidan',
   'general.noData': 'Data finns inte',
@@ -354,7 +420,8 @@ export default {
   'general.pageTitles.unit': 'Vy med verksamhetsställen',
   'general.pageTitles.unit.services': 'Verksamhetsställets tjänster',
   'general.pageTitles.unit.events': 'Verksamhetsställets evenemang',
-  'general.pageTitles.unit.reservations': 'Verksamhetsställets platser som kan reserveras',
+  'general.pageTitles.unit.reservations':
+    'Verksamhetsställets platser som kan reserveras',
   'general.pageTitles.service': 'Tjänstesida',
   'general.pageTitles.serviceTree': 'Servicekatalogsida',
   'general.pageTitles.serviceTree.title': 'Servicekatalog',
@@ -396,12 +463,15 @@ export default {
   'general.readspeaker.title': 'Lyssna med ReadSpeaker webReader',
 
   // Home
-  'home.buttons.settings': 'Spara dina egna stads- och tillgänglighetsinställningar',
+  'home.buttons.settings':
+    'Spara dina egna stads- och tillgänglighetsinställningar',
   'home.buttons.services': 'Läs mer om tjänsterna i servicekatalogen',
-  'home.buttons.mobilityTree': 'Bekanta dig med de mångsidiga alternativen för rörelse',
+  'home.buttons.mobilityTree':
+    'Bekanta dig med de mångsidiga alternativen för rörelse',
   'home.buttons.closeByServices': 'Visa närtjänster',
   'home.buttons.instructions': 'Tips för användning av servicekartan',
-  'home.buttons.area': 'Se hälsovårds-, rådgivnings-, elevupptagnings-, förskole-, befolkningsskydds- och naturskyddsområdena samt stadsdelarna',
+  'home.buttons.area':
+    'Se hälsovårds-, rådgivnings-, elevupptagnings-, förskole-, befolkningsskydds- och naturskyddsområdena samt stadsdelarna',
   'home.example.search': 'Sök med sökord',
   'home.message': 'Hälsningar av servicekartans utvecklare',
   'home.send.feedback': 'Skicka respons',
@@ -421,16 +491,20 @@ export default {
   'link.settings.dialog.title': 'Dela länken till verksamhetsstället',
   'link.settings.dialog.tooltip': 'Kopierades till klippbordet',
   'link.settings.dialog.tooltip.aria': 'Kopiera sidans länk till klippbordet',
-  'link.settings.dialog.tooltip.aria.a11y': 'Kopiera sidans länk med tillgänglighetsinställningar till klippbordet',
+  'link.settings.dialog.tooltip.aria.a11y':
+    'Kopiera sidans länk med tillgänglighetsinställningar till klippbordet',
   'link.settings.dialog.buttons.action': 'Kopiera till klippbordet',
 
   // Map
-  'map': 'Karta',
+  map: 'Karta',
   'map.open': 'Öppna Karta',
   'map.close': 'Stäng Karta',
-  'map.ariaLabel': 'Kartvy. Kartans uppgifter kan i nuläget granskas endast visuellt.',
-  'map.attribution.osm': '&copy; <a href="http://osm.org/copyright">Upphovsmännen bakom OpenStreetMaps</a>',
-  'map.attribution.helsinki': '&copy; Helsingfors, Esbo, Vanda och Grankulla städer',
+  'map.ariaLabel':
+    'Kartvy. Kartans uppgifter kan i nuläget granskas endast visuellt.',
+  'map.attribution.osm':
+    '&copy; <a href="http://osm.org/copyright">Upphovsmännen bakom OpenStreetMaps</a>',
+  'map.attribution.helsinki':
+    '&copy; Helsingfors, Esbo, Vanda och Grankulla städer',
   'map.attribution.nls': '&copy; Lantmäteriverket',
   'map.transit.endStation': 'Ändhållplats',
   'map.address.coordinate': 'Skapa en länk till GPS-koordinaterna',
@@ -456,7 +530,7 @@ export default {
   'print.table.header.number': 'Nummer på kartan',
 
   // Units
-  'unit': 'Verksamhetsställe',
+  unit: 'Verksamhetsställe',
   'unit.showInformation': 'Visa uppgifterna för verksamhetsstället',
   'unit.accessibility.hearingMaps': 'Täckningskartor',
   'unit.accessibility.noInfo': 'Inga tillgänglighetsuppgifter',
@@ -470,7 +544,8 @@ export default {
   'unit.accessibility.unitNoInfo': 'Tillgänglighetsuppgifter saknas.',
   'unit.basicInfo': 'Grunduppgifter',
   'unit.data_source': 'Källa: {data_source}',
-  'unit.details.notFound': 'Verksamhetsställets uppgifter finns inte att tillgå.',
+  'unit.details.notFound':
+    'Verksamhetsställets uppgifter finns inte att tillgå.',
   'unit.plural': 'Verksamhetsställen',
   'unit.distance': 'Avstånd',
 
@@ -479,7 +554,8 @@ export default {
   'unit.eServices': 'E-tjänster',
   'unit.reservations': 'Objekt som kan reserveras',
   'unit.events': 'Evenemang',
-  'unit.events.description': 'Här hittar du information om evenemang som erbjuds av verksamhetsstället',
+  'unit.events.description':
+    'Här hittar du information om evenemang som erbjuds av verksamhetsstället',
   'unit.events.count': `{count, plural,
     =0 {}
     one {# evenemang}
@@ -509,7 +585,8 @@ export default {
   'unit.otherAddress.link': 'Se mer information (ny flik)',
   'unit.contact': 'Kontaktperson',
   'unit.school.year': 'Läsåret',
-  'unit.reservations.description': 'Här hittar du information om lokaler och redskap som kan bokas vid verksamhetsstället.',
+  'unit.reservations.description':
+    'Här hittar du information om lokaler och redskap som kan bokas vid verksamhetsstället.',
   'unit.reservations.count': `{count, plural,
     =0 {}
     one {# objekt som kan reserveras}
@@ -521,7 +598,8 @@ export default {
   'unit.list.events': 'Evenemang',
   'unit.list.reservations': 'Objekt som kan reserveras',
   'unit.services': 'Verksamhetsställets tjänster',
-  'unit.services.description': 'Utöver servicebeskrivningen hittar du information om olika kanaler för uträttning av ärenden som erbjuds av kommunen.',
+  'unit.services.description':
+    'Utöver servicebeskrivningen hittar du information om olika kanaler för uträttning av ärenden som erbjuds av kommunen.',
   'unit.services.more': 'Visa fler tjänster ({count})',
   'unit.services.count': `{count, plural,
     =0 {}
@@ -533,16 +611,20 @@ export default {
   'unit.educationServices.description': 'Läsåret {period}',
   'unit.educationServices.more': 'Visa fler tjänster ({count})',
   'unit.route': 'Se vägen till det här stället',
-  'unit.route.extra.hslRouteGuide': '(Ny flik. HRT-reseplaneraren är inte en tillgänglig tjänst)',
-  'unit.route.extra.routeGuide': '(Ny flik. Matka.fi-reseplaneraren är inte en tillgänglig tjänst)',
+  'unit.route.extra.hslRouteGuide':
+    '(Ny flik. HRT-reseplaneraren är inte en tillgänglig tjänst)',
+  'unit.route.extra.routeGuide':
+    '(Ny flik. Matka.fi-reseplaneraren är inte en tillgänglig tjänst)',
   'unit.socialMedia.title': 'Verksamhetsstället på sociala medier',
-  'unit.outdoorLink': 'Kolla skicket på en motionsplats i tjänsten ulkoliikunta.fi',
+  'unit.outdoorLink':
+    'Kolla skicket på en motionsplats i tjänsten ulkoliikunta.fi',
   'unit.seo.description': 'Se läget på kartan',
-  'unit.seo.description.accessibility': 'Se tillgänglighetsuppgifterna och läget på kartan',
+  'unit.seo.description.accessibility':
+    'Se tillgänglighetsuppgifterna och läget på kartan',
   'unit.readFeedbackLink': 'Se responsen',
 
   // Search
-  'search': 'Sök',
+  search: 'Sök',
   'search.arrowLabel': 'Precisera',
   'search.cancelText': 'Töm sökfältet',
   'search.removeSuggestion': 'Ta bort',
@@ -585,8 +667,10 @@ export default {
   'search.notFound': 'Inga sökresultat hittades med sökningen',
   'search.started': 'Sökningen har börjat',
   'search.infoText': '{count} sökresultat',
-  'search.searchbar.headerText': 'Alla tjänster i huvudstadsregionen inom räckhåll.',
-  'search.searchbar.infoText': 'Sök tjänster, verksamhetsställen eller adresser',
+  'search.searchbar.headerText':
+    'Alla tjänster i huvudstadsregionen inom räckhåll.',
+  'search.searchbar.infoText':
+    'Sök tjänster, verksamhetsställen eller adresser',
   'search.skipLink': 'Hoppa till sökresultaten',
   'search.suggestions.suggest': 'Menade du..?',
   'search.suggestions.expand': 'Sökförslag',
@@ -604,14 +688,16 @@ export default {
   'search.tryAgainBody.spelling': 'kontrollera stavningen',
   'search.tryAgainBody.city': 'kontrollera stadsvalen',
   'search.tryAgainBody.service': 'skriv tjänstens namn',
-  'search.tryAgainBody.address': 'skriv adressen i närheten av vilken du söker en tjänst',
-  'search.tryAgainBody.keyword': 'skriv nyckelord, t.ex. naturstig, svenskt daghem',
+  'search.tryAgainBody.address':
+    'skriv adressen i närheten av vilken du söker en tjänst',
+  'search.tryAgainBody.keyword':
+    'skriv nyckelord, t.ex. naturstig, svenskt daghem',
   'search.expand': 'Precisera sökningen',
   'search.closeExpand': 'Gå tillbaka till sökningen',
   'search.addText': 'Lägg till',
 
   // Service
-  'service': 'Tjänst',
+  service: 'Tjänst',
   'service.plural': 'Tjänster',
   'service.nearby': 'Närtjänster',
   'service.units.empty': 'Tjänsten har inga verksamhetsställen',
@@ -619,7 +705,7 @@ export default {
   'service.description': 'Se tjänsternas lägen och kontaktuppgifter',
 
   // Service tree
-  'services': 'Förteckning över tjänster',
+  services: 'Förteckning över tjänster',
   'services.selections': `{count, plural,
         one {Du har gjort (#) val}
         other {Du har gjort (#) val}
@@ -632,12 +718,14 @@ export default {
   'services.search.sr.selected': 'Sök med tjänsterna: {services}',
   'services.category.select': 'Alla',
   'services.category.open': 'Öppna kategori',
-  'services.info': 'Välj minst en tjänst från listan över tjänster nedan som du kan utföra sökningen.',
+  'services.info':
+    'Välj minst en tjänst från listan över tjänster nedan som du kan utföra sökningen.',
   'services.tree.level': 'Nivå',
-  'mobilityTree.info': 'Bekanta dig med de olika alternativen för att röra sig genom att välja minst en av alternativen nedan för att göra en sökning.',
+  'mobilityTree.info':
+    'Bekanta dig med de olika alternativen för att röra sig genom att välja minst en av alternativen nedan för att göra en sökning.',
 
   // Settings
-  'settings': 'Inställningar',
+  settings: 'Inställningar',
   'settings.open': 'Öppna inställningar',
   'settings.close': 'Dölj inställningar',
   'settings.change': 'Redigera dina inställningar',
@@ -663,9 +751,12 @@ export default {
   'settings.sense.colorblind': 'Jag har svårt att urskilja förger',
   'settings.info.heading': 'Inställningsuppgifter',
   'settings.info.title': 'Dina valda inställningar påverkar sökresultatet',
-  'settings.info.title.city': 'Stadsinställningarna påverkar områdesinformationen',
-  'settings.info.title.noSettings': 'Ändra sök- eller tillgänglighetsinställningar',
-  'settings.info.title.noSettings.city': 'Ändra stadsinställningarna för att begränsa antalet områden',
+  'settings.info.title.city':
+    'Stadsinställningarna påverkar områdesinformationen',
+  'settings.info.title.noSettings':
+    'Ändra sök- eller tillgänglighetsinställningar',
+  'settings.info.title.noSettings.city':
+    'Ändra stadsinställningarna för att begränsa antalet områden',
   'settings.mobility.title': 'Rörelsehinder',
   'settings.mobility.none': 'Inga rörelsehinder',
   'settings.mobility.wheelchair': 'Jag använder rullstol',
@@ -683,8 +774,10 @@ export default {
   'settings.city.vantaa': 'Vanda',
   'settings.city.kauniainen': 'Grankulla',
   'settings.city.kirkkonummi': 'Kyrkslätt',
-  'settings.city.länsi-uudenmaan hyvinvointialue': 'Västra Nylands välfärdsområde',
-  'settings.city.vantaan ja keravan hyvinvointialue': 'Vanda och Kervo välfärdsområde',
+  'settings.city.länsi-uudenmaan hyvinvointialue':
+    'Västra Nylands välfärdsområde',
+  'settings.city.vantaan ja keravan hyvinvointialue':
+    'Vanda och Kervo välfärdsområde',
   'settings.city.askola': 'Askola',
   'settings.city.hanko': 'Hangö',
   'settings.city.hyvinkää': 'Hyvinge',
@@ -713,7 +806,8 @@ export default {
   'settings.map.accessible_map': 'Karta med stor kontrast',
   'settings.map.plainmap': 'Lättlastkarta',
   'settings.3dmap.title': '3D-kartor',
-  'settings.3dmap.info': 'I stadsinformationsmodellen kan du förutom byggnader och uppgifter om dem även granska markytamodellen, dvs. terrängens former. Använd länken nedan för att titta på stadsmodellen.',
+  'settings.3dmap.info':
+    'I stadsinformationsmodellen kan du förutom byggnader och uppgifter om dem även granska markytamodellen, dvs. terrängens former. Använd länken nedan för att titta på stadsmodellen.',
   'settings.3dmap.link.helsinki': 'Helsinki 3D-stadsmodellen (ny flik)',
   'settings.3dmap.link.espoo': 'Espoo 3D-stadsmodellen (ny flik)',
   'settings.3dmap.link.vantaa': 'Vantaa 3D-stadsmodellen (ny flik)',
@@ -727,7 +821,8 @@ export default {
   'settings.choose.senses': 'Välj sensorisk funktionsnedsättning',
   'settings.choose.cities': 'Välj stadsinställningar',
   'settings.choose.organization': 'Välj tjänsteleverantör',
-  'settings.map.info': 'I kartinställningarna kan du välja det kartunderlag som passar dig bäst.',
+  'settings.map.info':
+    'I kartinställningarna kan du välja det kartunderlag som passar dig bäst.',
   'settings.reset_button.title': 'Rensa alla mina val',
   'settings.reset_button.ariaLive': 'Alla val har rensats.',
 

@@ -1,20 +1,21 @@
-import React, { useState } from 'react';
+import { css } from '@emotion/css';
+import styled from '@emotion/styled';
 import { Button, Typography } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
+import React, { useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
-import styled from '@emotion/styled';
-import { css } from '@emotion/css';
 import { useSelector } from 'react-redux';
+
 import { selectErrors } from '../../redux/selectors/alerts';
-import { getIcon } from '../SMIcon';
-import LocalStorageUtility from '../../utils/localStorage';
 import { focusToViewTitle } from '../../utils/accessibility';
+import LocalStorageUtility from '../../utils/localStorage';
 import useLocaleText from '../../utils/useLocaleText';
+import { getIcon } from '../SMIcon';
 
 // LocalStorage key for alert message
 const lsKey = 'alertMessage';
 
-const AlertBox = () => {
+function AlertBox() {
   const intl = useIntl();
   const getLocaleText = useLocaleText();
 
@@ -23,9 +24,9 @@ const AlertBox = () => {
   const savedMessage = LocalStorageUtility.getItem(lsKey);
 
   if (
-    !visible
-    || !abData?.length
-    || JSON.stringify(abData[0].title) === savedMessage
+    !visible ||
+    !abData?.length ||
+    JSON.stringify(abData[0].title) === savedMessage
   ) {
     return null;
   }
@@ -77,21 +78,15 @@ const AlertBox = () => {
       </StyledCloseButton>
       {icon}
       <StyledTextContent>
-        <StyledTitle
-          component="h3"
-          variant="subtitle1"
-          color="inherit"
-        >
+        <StyledTitle component="h3" variant="subtitle1" color="inherit">
           {tTitle}
         </StyledTitle>
-        <StyledMessageText color="inherit">
-          {tLeadParagraph}
-        </StyledMessageText>
+        <StyledMessageText color="inherit">{tLeadParagraph}</StyledMessageText>
       </StyledTextContent>
       <StyledPadder />
     </StyledSection>
   );
-};
+}
 
 const StyledSection = styled('section')(({ theme }) => ({
   padding: theme.spacing(3),

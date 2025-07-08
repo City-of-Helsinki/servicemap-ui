@@ -1,14 +1,12 @@
 import styled from '@emotion/styled';
-import {
-  Button, Divider, InputBase, Paper,
-} from '@mui/material';
+import { Button, Divider, InputBase, Paper } from '@mui/material';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 
 /**
  * CustomInput component
  */
-const CustomInput = ({
+function CustomInput({
   ariaLabel = null,
   buttonClick = null,
   buttonText = null,
@@ -16,7 +14,7 @@ const CustomInput = ({
   initialValue = null,
   onChange = null,
   preText = null,
-}) => {
+}) {
   const [value, setValue] = useState(initialValue);
   useEffect(() => {
     setValue(initialValue);
@@ -39,31 +37,27 @@ const CustomInput = ({
         onChange={inputOnChange}
         value={value}
       />
-      {
-        preText && (
-          <StyledPreIconButton aria-hidden>
-            {preText}
-          </StyledPreIconButton>
-        )
-      }
-      {
-        buttonClick && buttonText && (
-          <>
-            <StyledDivider />
-            <StyledIconButton
-              aria-label={buttonText}
-              color="primary"
-              onClick={(e) => { buttonClick(e, value); }}
-              variant="contained"
-            >
-              {buttonText}
-            </StyledIconButton>
-          </>
-        )
-      }
+      {preText && (
+        <StyledPreIconButton aria-hidden>{preText}</StyledPreIconButton>
+      )}
+      {buttonClick && buttonText && (
+        <>
+          <StyledDivider />
+          <StyledIconButton
+            aria-label={buttonText}
+            color="primary"
+            onClick={(e) => {
+              buttonClick(e, value);
+            }}
+            variant="contained"
+          >
+            {buttonText}
+          </StyledIconButton>
+        </>
+      )}
     </StyledPaper>
   );
-};
+}
 
 CustomInput.propTypes = {
   ariaLabel: PropTypes.string,

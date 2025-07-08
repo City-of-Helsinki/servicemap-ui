@@ -1,23 +1,35 @@
 export const parkingHelsinkiTypes = ['1', '2', '3', '4', '5', '6', '7'];
 export const parkingVantaaTypes = [
-  '12h-24h/passenger_car', '4h-11h/passenger_car', '2h-3h/passenger_car',
-  'Ei rajoitusta/passenger_car', 'Lyhytaikainen/passenger_car', 'Maksullinen/passenger_car',
-  'Muu/passenger_car', 'Varattu päivisin/passenger_car',
+  '12h-24h/passenger_car',
+  '4h-11h/passenger_car',
+  '2h-3h/passenger_car',
+  'Ei rajoitusta/passenger_car',
+  'Lyhytaikainen/passenger_car',
+  'Maksullinen/passenger_car',
+  'Muu/passenger_car',
+  'Varattu päivisin/passenger_car',
 ];
 export const parkingVantaaHeavyTrafficTypes = [
-  '12h-24h/heavy_traffic', '4h-11h/heavy_traffic', '2h-3h/heavy_traffic',
-  'Ei rajoitusta/heavy_traffic', 'Lyhytaikainen/heavy_traffic', 'Maksullinen/heavy_traffic',
-  'Muu/heavy_traffic', 'Varattu päivisin/heavy_traffic',
+  '12h-24h/heavy_traffic',
+  '4h-11h/heavy_traffic',
+  '2h-3h/heavy_traffic',
+  'Ei rajoitusta/heavy_traffic',
+  'Lyhytaikainen/heavy_traffic',
+  'Maksullinen/heavy_traffic',
+  'Muu/heavy_traffic',
+  'Varattu päivisin/heavy_traffic',
 ];
 // These two types do not overlap between heavy traffic and passenger car.
 export const heavyTrafficNoParking = 'hgv_no_parking_area';
 export const passengerCarParkAndRide = 'park_and_ride_area';
 export const parkingVantaaOtherTypes = [
-  heavyTrafficNoParking, passengerCarParkAndRide,
+  heavyTrafficNoParking,
+  passengerCarParkAndRide,
 ];
 
 const parkingVNTHeavyTrafficTypes = [
-  'hgv_street_parking_area', 'hgv_parking_area',
+  'hgv_street_parking_area',
+  'hgv_parking_area',
 ];
 
 const VNT = 'vantaa';
@@ -59,7 +71,10 @@ export function resolveParamsForParkingFetch(areaId) {
   }
   const [tyyppi, combinedType] = areaId.split('/');
   return {
-    type: combinedType === 'heavy_traffic' ? parkingVNTHeavyTrafficTypesParam : PARKING_AREA,
+    type:
+      combinedType === 'heavy_traffic'
+        ? parkingVNTHeavyTrafficTypesParam
+        : PARKING_AREA,
     extra__tyyppi: tyyppi,
     municipality: VNT,
   };

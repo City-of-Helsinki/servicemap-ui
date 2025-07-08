@@ -1,22 +1,20 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
+import PropTypes from 'prop-types';
+import React from 'react';
 
-const Link = ({
-  children,
-  className = null,
-  onClick,
-}) => (
-  <StyledLink
-    className={`${className || ''} link`}
-    role="link"
-    tabIndex={0}
-    onClick={onClick}
-    onKeyPress={onClick}
-  >
-    {children}
-  </StyledLink>
-);
+function Link({ children, className = null, onClick }) {
+  return (
+    <StyledLink
+      className={`${className || ''} link`}
+      role="link"
+      tabIndex={0}
+      onClick={onClick}
+      onKeyPress={onClick}
+    >
+      {children}
+    </StyledLink>
+  );
+}
 
 const StyledLink = styled('span')(() => ({
   cursor: 'pointer',

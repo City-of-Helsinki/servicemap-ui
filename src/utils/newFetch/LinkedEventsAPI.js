@@ -4,8 +4,8 @@ import HttpClient, { APIFetchError, LinkedEventsAPIName } from './HTTPClient';
 export default class LinkedEventsAPI extends HttpClient {
   constructor() {
     if (
-      typeof config?.eventsAPI?.root === 'string'
-      && config.eventsAPI.root.indexOf('undefined') !== -1
+      typeof config?.eventsAPI?.root === 'string' &&
+      config.eventsAPI.root.indexOf('undefined') !== -1
     ) {
       throw new APIFetchError('LindkedEventsAPIName baseURL missing');
     }
@@ -14,7 +14,9 @@ export default class LinkedEventsAPI extends HttpClient {
 
   eventsByKeyword = async (keyword) => {
     if (typeof keyword !== 'string') {
-      throw new APIFetchError('LinkedEventsAPI: Invalid keyword provided to events fetch method');
+      throw new APIFetchError(
+        'LinkedEventsAPI: Invalid keyword provided to events fetch method'
+      );
     }
     const options = {
       keyword,
@@ -26,5 +28,5 @@ export default class LinkedEventsAPI extends HttpClient {
     };
 
     return this.getConcurrent('event', options);
-  }
+  };
 }

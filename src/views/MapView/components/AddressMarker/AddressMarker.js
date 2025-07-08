@@ -5,15 +5,13 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { useSelector } from 'react-redux';
+
+import { getIcon } from '../../../../components';
 import { selectAddress } from '../../../../redux/selectors/address';
 import { getAddressText } from '../../../../utils/address';
 import useLocaleText from '../../../../utils/useLocaleText';
-import { getIcon } from '../../../../components';
 
-const AddressMarker = ({
-  embeded = false,
-  position = null,
-}) => {
+function AddressMarker({ embeded = false, position = null }) {
   const getLocaleText = useLocaleText();
   const theme = useTheme();
   const address = useSelector(selectAddress);
@@ -38,9 +36,7 @@ const AddressMarker = ({
   const addressIcon = divIcon({
     className: `${addressIconClass} AddressMarkerIcon`,
     'data-sm': 'AddressMarkerIcon',
-    html: renderToStaticMarkup(
-      getIcon('addresslocationMarker'),
-    ),
+    html: renderToStaticMarkup(getIcon('addresslocationMarker')),
   });
 
   const { addressCoordinates, addressData } = address;
@@ -53,24 +49,19 @@ const AddressMarker = ({
       icon={addressIcon}
       keyboard={false}
     >
-      {
-        embeded
-        && (
-          <Tooltip
-            className={tooltipClass}
-            direction="top"
-            offset={[0, -36]} // TODO: fix offset
-            permanent
-          >
-            <Typography variant="body2">
-              {tooltipText}
-            </Typography>
-          </Tooltip>
-        )
-      }
+      {embeded && (
+        <Tooltip
+          className={tooltipClass}
+          direction="top"
+          offset={[0, -36]} // TODO: fix offset
+          permanent
+        >
+          <Typography variant="body2">{tooltipText}</Typography>
+        </Tooltip>
+      )}
     </Marker>
   );
-};
+}
 
 AddressMarker.propTypes = {
   position: PropTypes.arrayOf(PropTypes.number),

@@ -1,21 +1,20 @@
 /* eslint-disable react/forbid-prop-types */
 /* eslint-disable react/no-multi-comp */
-import React, { useState, useEffect, useRef } from 'react';
-import PropTypes from 'prop-types';
-import {
-  Tabs, Tab, Typography,
-} from '@mui/material';
-import { visuallyHidden } from '@mui/utils';
 import { css } from '@emotion/css';
-import { useTheme } from '@mui/styles';
 import styled from '@emotion/styled';
+import { Tab, Tabs, Typography } from '@mui/material';
+import { useTheme } from '@mui/styles';
+import { visuallyHidden } from '@mui/utils';
+import PropTypes from 'prop-types';
+import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
+
+import config from '../../../config';
 import { selectNavigator } from '../../redux/selectors/general';
 import { parseSearchParams, stringifySearchParams } from '../../utils';
-import ResultOrderer from '../ResultOrderer';
-import config from '../../../config';
 import useMobileStatus from '../../utils/isMobile';
 import PaginatedList from '../Lists/PaginatedList';
+import ResultOrderer from '../ResultOrderer';
 
 function TabLists({
   location,
@@ -29,9 +28,11 @@ function TabLists({
   const theme = useTheme();
   const navigator = useSelector(selectNavigator);
   const searchParams = parseSearchParams(location.search);
-  const filteredData = data.filter(item => item.component || (item.data && item.data.length > 0));
+  const filteredData = data.filter(
+    (item) => item.component || (item.data && item.data.length > 0)
+  );
   const getTabfromUrl = () => {
-    let index = filteredData.findIndex(tab => tab.id === searchParams.t);
+    let index = filteredData.findIndex((tab) => tab.id === searchParams.t);
     if (index === -1) index = parseInt(searchParams.t, 10) || 0;
     if (filteredData.length <= index) {
       return 0;
@@ -55,7 +56,9 @@ function TabLists({
   const adjustScrollDistance = (scroll = null) => {
     let scrollDistanceFromTop = scrollDistance;
     const elem = document.getElementsByClassName(sidebarClass)[0];
-    const elemOverflow = window.getComputedStyle(elem, null).getPropertyValue('overflow');
+    const elemOverflow = window
+      .getComputedStyle(elem, null)
+      .getPropertyValue('overflow');
 
     // Adjust scroll to given number
     if (typeof scroll === 'number') {
@@ -115,7 +118,9 @@ function TabLists({
       return;
     }
     // Sticky relation is different on mobile (root relation) and desktop (current content relation)
-    const appBarHeight = isMobile ? config.topBarHeightMobile : config.topBarHeight;
+    const appBarHeight = isMobile
+      ? config.topBarHeightMobile
+      : config.topBarHeight;
 
     // Reset scroll to avoid scrolled sticky  elements having inconsistent offsetTop
     const elem = document.getElementsByClassName(sidebarClass)[0];
@@ -132,7 +137,10 @@ function TabLists({
     while (sibling.previousSibling) {
       sibling = sibling.previousSibling;
       const classes = sibling.className;
-      if (classes.indexOf('sticky') > -1 && typeof sibling.clientHeight === 'number') {
+      if (
+        classes.indexOf('sticky') > -1 &&
+        typeof sibling.clientHeight === 'number'
+      ) {
         // Calculate top padding by checking previous sticky siblings top value and height
         stickyElementPadding += sibling.clientHeight;
       }
@@ -142,9 +150,9 @@ function TabLists({
       stickyElementPadding += appBarHeight;
     }
     if (
-      typeof stickyElementPadding === 'number'
-      && typeof tabsDistanceFromTop === 'number'
-      && typeof tabsHeight === 'number'
+      typeof stickyElementPadding === 'number' &&
+      typeof tabsDistanceFromTop === 'number' &&
+      typeof tabsHeight === 'number'
     ) {
       // Set new styles and scrollDistance value to state
       setStyles({ top: stickyElementPadding });
@@ -155,7 +163,7 @@ function TabLists({
   const renderHeader = () => {
     let fullData = [];
 
-    data.forEach(element => {
+    data.forEach((element) => {
       if (element.data && !element.noOrderer) {
         fullData = [...fullData, ...element.data];
       }
@@ -212,23 +220,17 @@ function TabLists({
 
     return (
       <>
-        {
-          headerComponents
-        }
-        {
-          fullData.length > 0 && (
-            <ResultOrderer disabled={disabled} />
-          )
-        }
-        {
-          focusClass
-          && focusText
-          && (
-            <Typography style={visuallyHidden} className={focusClass} tabIndex={-1}>
-              {focusText}
-            </Typography>
-          )
-        }
+        {headerComponents}
+        {fullData.length > 0 && <ResultOrderer disabled={disabled} />}
+        {focusClass && focusText && (
+          <Typography
+            style={visuallyHidden}
+            className={focusClass}
+            tabIndex={-1}
+          >
+            {focusText}
+          </Typography>
+        )}
         <StyledTabs
           ref={tabsRef}
           className="sticky"
@@ -237,33 +239,16 @@ function TabLists({
           variant="fullWidth"
           style={styles}
         >
-          {
-            filteredData.map((item, index) => {
-              if (item.data && item.data.length > 0) {
-                const label = `${item.title} ${item.component ? '' : `(${item.data.length})`}`.trim();
-                const tabId = `${item.title}-${item.data.length}`;
+          {filteredData.map((item, index) => {
+            if (item.data && item.data.length > 0) {
+              const label =
+                `${item.title} ${item.component ? '' : `(${item.data.length})`}`.trim();
+              const tabId = `${item.title}-${item.data.length}`;
 
-                return (
-                  <StyledTab
-                    id={tabId}
-                    key={tabId}
-                    ref={item.ref}
-                    aria-controls={`tab-content-${index}`}
-                    aria-label={item.ariaLabel ? item.ariaLabel : null}
-                    classes={{
-                      root: tabRootClass,
-                      selected: selectedClass,
-                    }}
-                    label={label}
-                    onClick={item.onClick ? () => item.onClick(index) : null}
-                    focusVisibleClassName={tabFocusClass}
-                  />
-                );
-              }
               return (
-                <Tab
-                  id={`Tab${index}`}
-                  key={`${item.title}`}
+                <StyledTab
+                  id={tabId}
+                  key={tabId}
                   ref={item.ref}
                   aria-controls={`tab-content-${index}`}
                   aria-label={item.ariaLabel ? item.ariaLabel : null}
@@ -271,13 +256,29 @@ function TabLists({
                     root: tabRootClass,
                     selected: selectedClass,
                   }}
-                  label={`${item.title}`}
+                  label={label}
                   onClick={item.onClick ? () => item.onClick(index) : null}
                   focusVisibleClassName={tabFocusClass}
                 />
               );
-            })
-          }
+            }
+            return (
+              <Tab
+                id={`Tab${index}`}
+                key={`${item.title}`}
+                ref={item.ref}
+                aria-controls={`tab-content-${index}`}
+                aria-label={item.ariaLabel ? item.ariaLabel : null}
+                classes={{
+                  root: tabRootClass,
+                  selected: selectedClass,
+                }}
+                label={`${item.title}`}
+                onClick={item.onClick ? () => item.onClick(index) : null}
+                focusVisibleClassName={tabFocusClass}
+              />
+            );
+          })}
         </StyledTabs>
       </>
     );
@@ -299,9 +300,7 @@ function TabLists({
 
   const render = () => (
     <>
-      {
-        renderHeader()
-      }
+      {renderHeader()}
 
       {
         // Create tab views from data
@@ -317,9 +316,7 @@ function TabLists({
                   key={item.title}
                   style={{ display: 'none' }}
                 >
-                  {
-                    item.component
-                  }
+                  {item.component}
                 </div>
               );
             }
@@ -331,9 +328,7 @@ function TabLists({
                 role="tabpanel"
                 key={item.title}
               >
-                {
-                  item.component
-                }
+                {item.component}
               </div>
             );
           }
@@ -343,18 +338,15 @@ function TabLists({
               id={`tab-content-${index}`}
               key={item.title}
             >
-              {
-                index === tabIndex
-                && (
-                  <PaginatedList
-                    id={`${item.title}-results`}
-                    data={item.data}
-                    titleComponent="h3"
-                    beforePagination={item.beforePagination || null}
-                    srTitle={item.title}
-                  />
-                )
-              }
+              {index === tabIndex && (
+                <PaginatedList
+                  id={`${item.title}-results`}
+                  data={item.data}
+                  titleComponent="h3"
+                  beforePagination={item.beforePagination || null}
+                  srTitle={item.title}
+                />
+              )}
             </StyledResultListContainer>
           );
         })
@@ -393,14 +385,16 @@ const StyledResultListContainer = styled('div')(() => ({
 }));
 
 TabLists.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.shape({
-    ariaLabel: PropTypes.string,
-    beforePagination: PropTypes.node,
-    component: PropTypes.node,
-    title: PropTypes.string,
-    data: PropTypes.arrayOf(PropTypes.any),
-    itemsPerPage: PropTypes.number,
-  })).isRequired,
+  data: PropTypes.arrayOf(
+    PropTypes.shape({
+      ariaLabel: PropTypes.string,
+      beforePagination: PropTypes.node,
+      component: PropTypes.node,
+      title: PropTypes.string,
+      data: PropTypes.arrayOf(PropTypes.any),
+      itemsPerPage: PropTypes.number,
+    })
+  ).isRequired,
   headerComponents: PropTypes.objectOf(PropTypes.any),
   onTabChange: PropTypes.func,
   location: PropTypes.objectOf(PropTypes.any).isRequired,

@@ -6,6 +6,7 @@ import React, { useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { Route, Switch, useLocation } from 'react-router-dom';
+
 import { Dialog, HomeLogo, PaginatedList, SMButton } from '../components';
 import { selectMapRef, selectNavigator } from '../redux/selectors/general';
 import { parseSearchParams } from '../utils';
@@ -69,14 +70,15 @@ const createContentStyles = (theme, unitListPosition) => {
     },
     embedSidebarContainer: bottomList
       ? {
-        height: 300,
-        maxHeight: '40%',
-        minHeight: '25%',
-      } : {
-        minWidth: 220,
-        maxWidth: 'min(40%, 300px)',
-        flexGrow: 1,
-      },
+          height: 300,
+          maxHeight: '40%',
+          minHeight: '25%',
+        }
+      : {
+          minWidth: 220,
+          maxWidth: 'min(40%, 300px)',
+          flexGrow: 1,
+        },
     unitList: {
       paddingTop: bottomList ? 0 : 36,
       maxHeight: '100%',
@@ -88,14 +90,19 @@ const createContentStyles = (theme, unitListPosition) => {
   };
 };
 
-const EmbedLayout = () => {
+function EmbedLayout() {
   const intl = useIntl();
   const theme = useTheme();
   const location = useLocation();
   const navigator = useSelector(selectNavigator);
   const getLocaleText = useLocaleText();
   const mapUnits = useMapUnits();
-  const cityAndOrgFilter = resolveCityAndOrganizationFilter([], [], location, true);
+  const cityAndOrgFilter = resolveCityAndOrganizationFilter(
+    [],
+    [],
+    location,
+    true
+  );
   const units = mapUnits.filter(cityAndOrgFilter);
   const searchParams = parseSearchParams(location.search);
   const map = useSelector(selectMapRef);
@@ -107,10 +114,12 @@ const EmbedLayout = () => {
 
   const styles = createContentStyles(theme, showList);
 
-
-  useEffect(() => { // Handle shown embedded unit data
+  useEffect(() => {
+    // Handle shown embedded unit data
     if (selectedUnit && units.length) {
-      const unitData = units.find(unit => unit.id.toString() === selectedUnit);
+      const unitData = units.find(
+        (unit) => unit.id.toString() === selectedUnit
+      );
       setSelectedUnitData(unitData);
     }
     if (!selectedUnit && selectedUnitData) {
@@ -129,8 +138,8 @@ const EmbedLayout = () => {
       onClose={closeDialog}
       open={!!selectedUnitData}
       title={getLocaleText(selectedUnitData.name)}
-      content={(<ContactInfo unit={selectedUnitData} headingLevel="h3" />)}
-      actions={(
+      content={<ContactInfo unit={selectedUnitData} headingLevel="h3" />}
+      actions={
         <>
           <SMButton // Show on map button
             icon={<Map style={{ paddingRight: 8 }} />}
@@ -151,12 +160,16 @@ const EmbedLayout = () => {
             messageID="unit.showInformation"
             onClick={() => {
               const { origin } = window.location;
-              const path = navigator.generatePath('unit', { id: selectedUnitData.id }, false);
+              const path = navigator.generatePath(
+                'unit',
+                { id: selectedUnitData.id },
+                false
+              );
               window.open(`${origin}${path}`);
             }}
           />
         </>
-      )}
+      }
     />
   );
 
@@ -172,7 +185,9 @@ const EmbedLayout = () => {
         aria-label={intl.formatMessage({ id: 'embed.click_prompt_move' })}
         role="link"
       >
-        <MUITooltip title={intl.formatMessage({ id: 'embed.click_prompt_move' })}>
+        <MUITooltip
+          title={intl.formatMessage({ id: 'embed.click_prompt_move' })}
+        >
           <HomeLogo aria-hidden />
         </MUITooltip>
       </ButtonBase>
@@ -183,7 +198,12 @@ const EmbedLayout = () => {
     <>
       {renderEmbedOverlay()}
       <div style={styles.activeRoot}>
-        <div aria-hidden={!showList} style={styles.embedSidebarContainer} className={!showList ? 'sr-only' : ''} id="unitListContainer">
+        <div
+          aria-hidden={!showList}
+          style={styles.embedSidebarContainer}
+          className={!showList ? 'sr-only' : ''}
+          id="unitListContainer"
+        >
           <div style={styles.unitList}>
             <PaginatedList
               id="embeddedResults"
@@ -258,7 +278,9 @@ const EmbedLayout = () => {
             />
           </Switch>
         </div>
-        <Typography style={visuallyHidden}>{intl.formatMessage({ id: 'map.ariaLabel' })}</Typography>
+        <Typography style={visuallyHidden}>
+          {intl.formatMessage({ id: 'map.ariaLabel' })}
+        </Typography>
 
         {selectedUnitData ? renderEmbeddedUnitInfo() : null}
 
@@ -268,6 +290,6 @@ const EmbedLayout = () => {
       </div>
     </>
   );
-};
+}
 
 export default EmbedLayout;
