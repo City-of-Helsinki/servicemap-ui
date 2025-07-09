@@ -9,7 +9,6 @@
     "simple-import-sort"
   ],
   "rules": {
-    "react-hooks/exhaustive-deps": "off",
     "react/no-unused-prop-types": [
       "warn",
       {
