@@ -1,19 +1,23 @@
 /* eslint-disable camelcase */
-import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
+import styled from '@emotion/styled';
 import {
-  ListItemButton, ListItemIcon, Typography, Divider,
+  Divider,
+  ListItemButton,
+  ListItemIcon,
+  Typography,
 } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
+import PropTypes from 'prop-types';
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import styled from '@emotion/styled';
+
 import locationIcon from '../../../assets/icons/LocationDefault.svg';
-import locationIconHover from '../../../assets/icons/LocationHover.svg';
 import locationIconContrast from '../../../assets/icons/LocationDefaultContrast.svg';
+import locationIconHover from '../../../assets/icons/LocationHover.svg';
 import locationIconContrastHover from '../../../assets/icons/LocationHoverContrast.svg';
 import { selectThemeMode } from '../../../redux/selectors/user';
 
-const ResultItem = ({
+function ResultItem({
   bottomHighlight = false,
   bottomText = null,
   onClick = () => {},
@@ -30,7 +34,7 @@ const ResultItem = ({
   unitId = null,
   simpleItem = false,
   ...rest
-}) => {
+}) {
   const themeMode = useSelector(selectThemeMode);
 
   const resetMarkerHighlight = () => {
@@ -46,10 +50,13 @@ const ResultItem = ({
     }
   };
 
-  useEffect(() => () => {
-    // Remove highlights on unmount
-    resetMarkerHighlight();
-  }, []);
+  useEffect(
+    () => () => {
+      // Remove highlights on unmount
+      resetMarkerHighlight();
+    },
+    []
+  );
 
   const onMouseEnter = () => {
     // Handle marker highlighting
@@ -57,7 +64,8 @@ const ResultItem = ({
     if (marker) {
       marker.classList.add('markerHighlighted');
       if (marker.nodeName === 'IMG') {
-        const icon = themeMode === 'dark' ? locationIconContrastHover : locationIconHover;
+        const icon =
+          themeMode === 'dark' ? locationIconContrastHover : locationIconHover;
         marker.setAttribute('src', icon);
       }
     }
@@ -77,7 +85,8 @@ const ResultItem = ({
     ${srLabel || ''}
   `;
 
-  const typographyClasses = (extendedClasses && extendedClasses.typography) || {};
+  const typographyClasses =
+    (extendedClasses && extendedClasses.typography) || {};
 
   return (
     <>
@@ -94,14 +103,7 @@ const ResultItem = ({
         onMouseLeave={unitId ? onMouseLeave : null}
         {...rest}
       >
-        {
-          icon
-          && (
-          <StyledListItemIcon>
-            {icon}
-          </StyledListItemIcon>
-          )
-        }
+        {icon && <StyledListItemIcon>{icon}</StyledListItemIcon>}
         <StyledItemTextContainer simpleitem={+simpleItem}>
           <StyledTopRow data-sm="ResultItemTopRow">
             {
@@ -132,8 +134,7 @@ const ResultItem = ({
 
             {
               // Distance text
-              distance && distance.text
-              && (
+              distance && distance.text && (
                 <StyledRightColumn data-sm="ResultItemRightColumn">
                   <StyledText
                     variant="caption"
@@ -148,12 +149,10 @@ const ResultItem = ({
                 </StyledRightColumn>
               )
             }
-
           </StyledTopRow>
           {
             // Bottom row
-            (subtitle || bottomText)
-            && (
+            (subtitle || bottomText) && (
               <div>
                 <div>
                   <StyledText
@@ -166,10 +165,10 @@ const ResultItem = ({
                     {subtitle || ''}
                   </StyledText>
                 </div>
-                {
-                  bottomText
-                  && (
-                  <StyledBottomContainer bottomhighlight={bottomHighlight || undefined}>
+                {bottomText && (
+                  <StyledBottomContainer
+                    bottomhighlight={bottomHighlight || undefined}
+                  >
                     <Typography
                       className={`${typographyClasses.bottom || ''} ResultItem-bottom`}
                       color="inherit"
@@ -180,9 +179,7 @@ const ResultItem = ({
                       {bottomText}
                     </Typography>
                   </StyledBottomContainer>
-                  )
-                }
-
+                )}
               </div>
             )
           }
@@ -198,18 +195,18 @@ const ResultItem = ({
       )}
     </>
   );
-};
+}
 
-const StyledDivider = styled(Divider)(({ theme, simpleitem }) => (
+const StyledDivider = styled(Divider)(({ theme, simpleitem }) =>
   simpleitem
     ? {
-      marginLeft: theme.spacing(2),
-      marginRight: theme.spacing(-2),
-    }
+        marginLeft: theme.spacing(2),
+        marginRight: theme.spacing(-2),
+      }
     : {
-      marginRight: theme.spacing(-2),
-    }
-));
+        marginRight: theme.spacing(-2),
+      }
+);
 
 const StyledListItemButton = styled(ListItemButton)(({ theme }) => ({
   padding: theme.spacing(1),
@@ -264,10 +261,14 @@ const StyledRightColumn = styled('div')(() => ({
 }));
 
 const StyledText = styled(Typography)(({
-  theme, caption, marginleft, hidemargin,
+  theme,
+  caption,
+  marginleft,
+  hidemargin,
 }) => {
   const styles = {
-    color: '#000', fontWeight: 'normal',
+    color: '#000',
+    fontWeight: 'normal',
   };
   if (caption) {
     Object.assign(styles, {
@@ -312,14 +313,16 @@ export default ResultItem;
 ResultItem.propTypes = {
   bottomHighlight: PropTypes.bool,
   bottomText: PropTypes.string,
-  extendedClasses: PropTypes.objectOf(PropTypes.shape({
-    typography: PropTypes.shape({
-      bottom: PropTypes.string,
-      subtitle: PropTypes.string,
-      title: PropTypes.string,
-      topRight: PropTypes.string,
-    }),
-  })),
+  extendedClasses: PropTypes.objectOf(
+    PropTypes.shape({
+      typography: PropTypes.shape({
+        bottom: PropTypes.string,
+        subtitle: PropTypes.string,
+        title: PropTypes.string,
+        topRight: PropTypes.string,
+      }),
+    })
+  ),
   icon: PropTypes.node,
   onClick: PropTypes.func,
   subtitle: PropTypes.string,

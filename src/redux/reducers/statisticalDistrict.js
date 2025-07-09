@@ -1,5 +1,9 @@
 import { combineReducers } from 'redux';
-import { statisticalDistrictServices, statisticalDistrictUnits } from './fetchDataReducer';
+
+import {
+  statisticalDistrictServices,
+  statisticalDistrictUnits,
+} from './fetchDataReducer';
 
 const initialState = {
   isFetching: false,
@@ -27,7 +31,6 @@ export const statisticalDistrictActions = {
   REMOVE_SERVICE_SELECTION: 'STATISTICAL_DISTRICT_REMOVE_SERVICE_SELECTION',
   SET_SELECTED_CATEGORY: 'STATISTICAL_DISTRICT_SET_SELECTED_CATEGORY',
 };
-
 
 const statisticalDistrict = (state = initialState, action) => {
   switch (action.type) {

@@ -6,9 +6,23 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
-import { Container, DesktopComponent, getIcon, Loading, MobileComponent, PaginatedList, ResultOrderer, SearchBar, TitleBar } from '../../components';
+
+import {
+  Container,
+  DesktopComponent,
+  getIcon,
+  Loading,
+  MobileComponent,
+  PaginatedList,
+  ResultOrderer,
+  SearchBar,
+  TitleBar,
+} from '../../components';
 import { selectMapRef } from '../../redux/selectors/general';
-import { getServiceUnits, selectServiceDataSet } from '../../redux/selectors/service';
+import {
+  getServiceUnits,
+  selectServiceDataSet,
+} from '../../redux/selectors/service';
 import { selectCustomPositionCoordinates } from '../../redux/selectors/user';
 import { applyCityAndOrganizationFilter } from '../../utils/filters';
 import { coordinateIsActive } from '../../utils/mapUtility';
@@ -20,20 +34,21 @@ const StyledTitleBar = styled(TitleBar)(({ theme }) => ({
   background: theme.palette.primary.main,
 }));
 
-const ServiceView = (props) => {
-  const {
-    match = {},
-    fetchService,
-    embed = false,
-    location,
-  } = props;
+function ServiceView(props) {
+  const { match = {}, fetchService, embed = false, location } = props;
   const getLocaleText = useLocaleText();
   const map = useSelector(selectMapRef);
   const serviceReducer = useSelector(selectServiceDataSet);
   const unitData = applySortingParams(
-    applyCityAndOrganizationFilter(useSelector(getServiceUnits), location, embed),
+    applyCityAndOrganizationFilter(
+      useSelector(getServiceUnits),
+      location,
+      embed
+    )
   );
-  const customPositionCoordinates = useSelector(selectCustomPositionCoordinates);
+  const customPositionCoordinates = useSelector(
+    selectCustomPositionCoordinates
+  );
   const intl = useIntl();
   const [mapMoved, setMapMoved] = useState(false);
   const [icon, setIcon] = useState(null);
@@ -41,7 +56,9 @@ const ServiceView = (props) => {
   // Check if view will fetch data because search params has changed
   const shouldFetch = () => {
     const { current, isFetching } = serviceReducer;
-    return !isFetching && (!current || `${current.id}` !== match.params?.service);
+    return (
+      !isFetching && (!current || `${current.id}` !== match.params?.service)
+    );
   };
 
   const focusMap = (unit) => {
@@ -51,10 +68,10 @@ const ServiceView = (props) => {
 
     if (customPositionCoordinates) {
       setMapMoved(true);
-      focusToPosition(
-        map,
-        [customPositionCoordinates.longitude, customPositionCoordinates.latitude],
-      );
+      focusToPosition(map, [
+        customPositionCoordinates.longitude,
+        customPositionCoordinates.latitude,
+      ]);
       return;
     }
     if (unit?.length) {
@@ -80,7 +97,6 @@ const ServiceView = (props) => {
     }
   }, [unitData]);
 
-
   if (embed) {
     return null;
   }
@@ -102,30 +118,24 @@ const ServiceView = (props) => {
     <div>
       <DesktopComponent>
         <SearchBar margin />
-        {
-          showTitle
-          && (
-            <StyledTitleBar
-              icon={icon}
-              title={getLocaleText(current.name)}
-              titleComponent="h3"
-            />
-          )
-        }
+        {showTitle && (
+          <StyledTitleBar
+            icon={icon}
+            title={getLocaleText(current.name)}
+            titleComponent="h3"
+          />
+        )}
       </DesktopComponent>
-      {
-        showTitle
-        && (
-          <MobileComponent>
-            <StyledTitleBar
-              icon={icon}
-              title={getLocaleText(current.name)}
-              titleComponent="h3"
-              primary
-            />
-          </MobileComponent>
-        )
-      }
+      {showTitle && (
+        <MobileComponent>
+          <StyledTitleBar
+            icon={icon}
+            title={getLocaleText(current.name)}
+            titleComponent="h3"
+            primary
+          />
+        </MobileComponent>
+      )}
       <Loading reducer={serviceReducer}>
         <ResultOrderer initialOrder={initialOrder} />
         <PaginatedList
@@ -136,17 +146,16 @@ const ServiceView = (props) => {
           titleComponent="h4"
         />
       </Loading>
-      {
-          showServiceWithoutUnits
-          && (
-            <Container margin>
-              <Typography variant="body1" align="left"><FormattedMessage id="service.units.empty" /></Typography>
-            </Container>
-          )
-        }
+      {showServiceWithoutUnits && (
+        <Container margin>
+          <Typography variant="body1" align="left">
+            <FormattedMessage id="service.units.empty" />
+          </Typography>
+        </Container>
+      )}
     </div>
   );
-};
+}
 
 ServiceView.propTypes = {
   embed: PropTypes.bool,

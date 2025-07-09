@@ -1,14 +1,15 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { useSelector } from 'react-redux';
+
 import { selectNavigator } from '../../../redux/selectors/general';
-import SimpleListItem from '../SimpleListItem';
-import { AddressIcon } from '../../SMIcon';
 import { getAddressText, useNavigationParams } from '../../../utils/address';
 import useLocaleText from '../../../utils/useLocaleText';
+import { AddressIcon } from '../../SMIcon';
+import SimpleListItem from '../SimpleListItem';
 
-const AddressItem = (props) => {
+function AddressItem(props) {
   const {
     address,
     selected = false,
@@ -41,7 +42,7 @@ const AddressItem = (props) => {
       id={id}
     />
   );
-};
+}
 
 const StyledAddressIcon = styled(AddressIcon)(() => ({
   margin: 0,

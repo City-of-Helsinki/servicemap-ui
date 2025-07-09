@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { useSelector } from 'react-redux';
+
 import { getIcon } from '../../../../../components';
 import { selectMapType } from '../../../../../redux/selectors/settings';
 import useLocaleText from '../../../../../utils/useLocaleText';
@@ -80,19 +81,19 @@ const StyledBoldText = styled(Typography)(() => ({
   fontWeight: 'bold',
 }));
 
-const TransitStopInfo = ({
-  stop = {},
-  onCloseClick,
-  type = null,
-}) => {
+function TransitStopInfo({ stop = {}, onCloseClick, type = null }) {
   const useContrast = useSelector(selectMapType) === 'accessible_map';
   const getLocaleText = useLocaleText();
-  const [stopData, setStopData] = useState({ departureTimes: null, wheelchair: null });
+  const [stopData, setStopData] = useState({
+    departureTimes: null,
+    wheelchair: null,
+  });
   const infoIconCssClass = css(infoIconClass);
   const getAccessibilityIcon = (value) => {
     if (value === 'POSSIBLE') {
       return <Accessible className={infoIconCssClass} />;
-    } if (value === 'NOT_POSSIBLE') {
+    }
+    if (value === 'NOT_POSSIBLE') {
       return getIcon('noWheelchair', { className: infoIconCssClass });
     }
     return null;
@@ -100,30 +101,39 @@ const TransitStopInfo = ({
 
   useEffect(() => {
     if (type === 'bikeStation') return;
-    fetchStopData(stop)
-      .then((stopData) => {
-        if (stopData) {
-          let departureTimes = stopData.data.stop.stoptimesWithoutPatterns;
-          departureTimes.sort(
-            (a, b) => (a.realtimeDeparture + a.serviceDay) - (b.realtimeDeparture + b.serviceDay),
-          );
-          departureTimes = departureTimes.slice(0, 5);
+    fetchStopData(stop).then((stopData) => {
+      if (stopData) {
+        let departureTimes = stopData.data.stop.stoptimesWithoutPatterns;
+        departureTimes.sort(
+          (a, b) =>
+            a.realtimeDeparture +
+            a.serviceDay -
+            (b.realtimeDeparture + b.serviceDay)
+        );
+        departureTimes = departureTimes.slice(0, 5);
 
-          setStopData({
-            departureTimes,
-            wheelchair: stopData.data.stop.wheelchairBoarding,
-          });
-        }
-      });
+        setStopData({
+          departureTimes,
+          wheelchair: stopData.data.stop.wheelchairBoarding,
+        });
+      }
+    });
   }, []);
 
   const renderDepartureTimes = () => {
     const { color, className } = getTypeAndClass(stop.vehicleMode);
-    const icon = <TransitStopIcon color={useContrast ? '#000000' : color} className={className} />;
+    const icon = (
+      <TransitStopIcon
+        color={useContrast ? '#000000' : color}
+        className={className}
+      />
+    );
 
     if (stopData.departureTimes?.length) {
       return stopData.departureTimes.map((departure, index) => {
-        const time = new Date((departure.realtimeDeparture + departure.serviceDay) * 1000);
+        const time = new Date(
+          (departure.realtimeDeparture + departure.serviceDay) * 1000
+        );
         const hours = time.getHours();
         const minutes = time.getMinutes();
 
@@ -140,19 +150,26 @@ const TransitStopInfo = ({
               </StyledVehicleName>
             </StyledDepartureVehicle>
             <StyledRouteName>
-              {departure.pickupType === 'NONE' ? <FormattedMessage id="map.transit.endStation" /> : departure.headsign}
+              {departure.pickupType === 'NONE' ? (
+                <FormattedMessage id="map.transit.endStation" />
+              ) : (
+                departure.headsign
+              )}
             </StyledRouteName>
             {getAccessibilityIcon(departure.trip.wheelchairAccessible)}
           </DepartureItemContainer>
         );
       });
-    } return null;
+    }
+    return null;
   };
 
   return (
     <StyledTransitInfoContainer aria-hidden>
       <StyledCloseButton onClick={() => onCloseClick()}>
-        <StyledCloseText><FormattedMessage id="general.close" /></StyledCloseText>
+        <StyledCloseText>
+          <FormattedMessage id="general.close" />
+        </StyledCloseText>
         <Close className={infoIconCssClass} />
       </StyledCloseButton>
       <StyledTransitInfoTitle>
@@ -161,12 +178,10 @@ const TransitStopInfo = ({
         </StyledBoldText>
         {getAccessibilityIcon(stopData.wheelchair)}
       </StyledTransitInfoTitle>
-      {type === 'bikeStation'
-        ? null
-        : renderDepartureTimes()}
+      {type === 'bikeStation' ? null : renderDepartureTimes()}
     </StyledTransitInfoContainer>
   );
-};
+}
 
 TransitStopInfo.propTypes = {
   stop: PropTypes.objectOf(PropTypes.any),

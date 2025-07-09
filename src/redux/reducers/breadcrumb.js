@@ -1,12 +1,9 @@
 const initialState = [];
 
-export default (state = initialState, action) => {
+const breadcrumbReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'PUSH_ENTRY':
-      return [
-        ...state,
-        action.entry,
-      ];
+      return [...state, action.entry];
     case 'POP_ENTRY': {
       const newEntries = Array.from(state);
       newEntries.pop();
@@ -15,12 +12,11 @@ export default (state = initialState, action) => {
     case 'REPLACE_ENTRY': {
       const newEntries = Array.from(state);
       newEntries.pop();
-      return [
-        ...newEntries,
-        action.entry,
-      ];
+      return [...newEntries, action.entry];
     }
     default:
       return state;
   }
 };
+
+export default breadcrumbReducer;

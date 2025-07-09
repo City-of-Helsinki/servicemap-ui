@@ -1,6 +1,6 @@
 const initialState = null;
 
-export default (state = initialState, action) => {
+const eventReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'SET_SELECTED_EVENT':
       return action.event;
@@ -8,3 +8,5 @@ export default (state = initialState, action) => {
       return state;
   }
 };
+
+export default eventReducer;

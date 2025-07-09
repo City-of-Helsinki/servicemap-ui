@@ -1,6 +1,7 @@
 import { useRouteMatch } from 'react-router-dom/cjs/react-router-dom.min';
-import paths from '../../config/paths';
+
 import config from '../../config';
+import paths from '../../config/paths';
 import isClient from '.';
 
 export const isEmbed = (match) => {
@@ -45,7 +46,12 @@ export const getPathName = (location) => {
 };
 
 // Generate path for page
-export const generatePath = (path, locale = config.defaultLocale, data = null, embed = false) => {
+export const generatePath = (
+  path,
+  locale = config.defaultLocale,
+  data = null,
+  embed = false
+) => {
   if (Object.prototype.hasOwnProperty.call(paths, path)) {
     const pathString = paths[path].generate(data); // Create path string
     return `/${locale || config.defaultLocale}${embed ? '/embed' : ''}${pathString}`; // Return path with locale

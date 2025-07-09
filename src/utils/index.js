@@ -12,9 +12,11 @@ export const isRetina = () => {
   return false;
 };
 
-export const uppercaseFirst = val => val.charAt(0).toUpperCase() + val.slice(1);
+export const uppercaseFirst = (val) =>
+  val.charAt(0).toUpperCase() + val.slice(1);
 
-export const validateEmail = email => /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email);
+export const validateEmail = (email) =>
+  /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email);
 
 // Function for parsing react router search params
 export const parseSearchParams = (searchParams) => {
@@ -102,8 +104,13 @@ export const keyboardHandler = (callback, keys) => {
 };
 
 // Add event listener and return function to unlisten given event
-export const AddEventListener = (elem, event, handler) => {
-  if (!elem || !elem.addEventListener || typeof event !== 'string' || typeof handler !== 'function') {
+export function AddEventListener(elem, event, handler) {
+  if (
+    !elem ||
+    !elem.addEventListener ||
+    typeof event !== 'string' ||
+    typeof handler !== 'function'
+  ) {
     return null;
   }
 
@@ -115,7 +122,7 @@ export const AddEventListener = (elem, event, handler) => {
   } catch (e) {
     return null;
   }
-};
+}
 
 export const valuesHaveChanged = (obj1, obj2, keys = []) => {
   let hasChanged = false;
@@ -124,8 +131,8 @@ export const valuesHaveChanged = (obj1, obj2, keys = []) => {
     if (hasChanged) return;
 
     if (
-      Object.prototype.hasOwnProperty.call(obj1, key)
-      && Object.prototype.hasOwnProperty.call(obj2, key)
+      Object.prototype.hasOwnProperty.call(obj1, key) &&
+      Object.prototype.hasOwnProperty.call(obj2, key)
     ) {
       if (obj1[key] !== obj2[key]) {
         hasChanged = true;
@@ -171,7 +178,11 @@ export const formatDistanceObject = (intl, distance) => {
       adjustedDistance /= 1000; // Convert from m to km
       adjustedDistance = adjustedDistance.toFixed(1); // Show only one decimal
       adjustedDistance = intl.formatNumber(adjustedDistance); // Format distance according to locale
-      adjustedDistance = { distance: adjustedDistance, type: 'km', text: `${adjustedDistance} km` };
+      adjustedDistance = {
+        distance: adjustedDistance,
+        type: 'km',
+        text: `${adjustedDistance} km`,
+      };
     } else {
       adjustedDistance = { distance, type: 'm', text: `${adjustedDistance} m` };
     }
@@ -201,7 +212,6 @@ export const addSearchParametersToObject = (obj, params) => {
   return newObject;
 };
 
-
 export const isMobileDevice = () => {
   if (!window) {
     return false;
@@ -217,8 +227,7 @@ export const isMobileDevice = () => {
   ];
 
   const { userAgent } = navigator;
-  return toMatch.some(toMatchItem => userAgent.match(toMatchItem));
+  return toMatch.some((toMatchItem) => userAgent.match(toMatchItem));
 };
-
 
 export default isClient;

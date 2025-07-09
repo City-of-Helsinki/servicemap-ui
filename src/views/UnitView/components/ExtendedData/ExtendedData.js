@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import React, { useEffect } from 'react';
 import { useIntl } from 'react-intl';
-import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import useLocaleText from '../../../../utils/useLocaleText';
+import { useParams } from 'react-router-dom';
+
 import {
   EventItem,
   Loading,
@@ -12,8 +12,9 @@ import {
   ServiceItem,
   TitleBar,
 } from '../../../../components';
+import useLocaleText from '../../../../utils/useLocaleText';
 
-const ExtendedData = ({
+function ExtendedData({
   currentUnit = null,
   events,
   fetchSelectedUnit,
@@ -21,12 +22,13 @@ const ExtendedData = ({
   fetchUnitEvents,
   reservations,
   type,
-}) => {
+}) {
   const getLocaleText = useLocaleText();
-  const selectedUnit = useSelector(state => state.selectedUnit?.unit?.data);
+  const selectedUnit = useSelector((state) => state.selectedUnit?.unit?.data);
   const intl = useIntl();
   const { unit, period } = useParams();
-  const title = currentUnit && currentUnit.name ? getLocaleText(currentUnit.name) : '';
+  const title =
+    currentUnit && currentUnit.name ? getLocaleText(currentUnit.name) : '';
 
   useEffect(() => {
     if (!currentUnit || !currentUnit.id) {
@@ -52,16 +54,13 @@ const ExtendedData = ({
     }
   }, []);
 
-  const getTitleText = messageID => `${title} - ${intl.formatMessage({ id: messageID })}`;
+  const getTitleText = (messageID) =>
+    `${title} - ${intl.formatMessage({ id: messageID })}`;
 
-  const renderTitleBar = messageID => (
+  const renderTitleBar = (messageID) => (
     <TitleBar
       sticky
-      title={(
-        <>
-          {getTitleText(messageID)}
-        </>
-      )}
+      title={<>{getTitleText(messageID)}</>}
       titleComponent="h3"
       backButton
       className="ExtendedData-title"
@@ -74,13 +73,11 @@ const ExtendedData = ({
     const srTitle = `${title} ${titleText}`;
     return (
       <div>
-        {
-          renderTitleBar('unit.services')
-        }
+        {renderTitleBar('unit.services')}
         <PaginatedList
           id="services"
           data={data || []}
-          customComponent={service => (
+          customComponent={(service) => (
             <ServiceItem key={service.id} service={service} />
           )}
           srTitle={srTitle}
@@ -105,13 +102,11 @@ const ExtendedData = ({
     const srTitle = `${title} ${titleText}`;
     return (
       <div>
-        {
-          renderTitleBar('unit.educationServices')
-        }
+        {renderTitleBar('unit.educationServices')}
         <PaginatedList
           id="educationServices"
           data={data || []}
-          customComponent={service => (
+          customComponent={(service) => (
             <ServiceItem key={service.id} service={service} />
           )}
           srTitle={srTitle}
@@ -129,14 +124,12 @@ const ExtendedData = ({
 
     return (
       <div>
-        {
-          renderTitleBar('unit.events')
-        }
+        {renderTitleBar('unit.events')}
         <Loading reducer={events}>
           <PaginatedList
             id="events"
             data={data || []}
-            customComponent={event => (
+            customComponent={(event) => (
               <EventItem simpleItem key={event.id} event={event} />
             )}
             srTitle={srTitle}
@@ -155,14 +148,12 @@ const ExtendedData = ({
 
     return (
       <div>
-        {
-          renderTitleBar('unit.reservations')
-        }
+        {renderTitleBar('unit.reservations')}
         <Loading reducer={reservations}>
           <PaginatedList
             id="reservations"
             data={data || []}
-            customComponent={item => (
+            customComponent={(item) => (
               <ReservationItem key={item.pk} reservation={item} />
             )}
             srTitle={srTitle}
@@ -185,7 +176,7 @@ const ExtendedData = ({
     default:
   }
   return null;
-};
+}
 
 ExtendedData.propTypes = {
   events: PropTypes.objectOf(PropTypes.any).isRequired,

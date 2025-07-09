@@ -4,6 +4,7 @@ import { visuallyHidden } from '@mui/utils';
 import React, { useCallback, useEffect } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
+
 import { Loading, SMAccordion } from '../../../../components';
 import {
   addSelectedService,
@@ -35,7 +36,7 @@ import {
 } from '../styled/styled';
 import StatisticalDistrictListContent from './StatisticalDistrictListContent';
 
-const StatisticalDistrictListComponent = () => {
+function StatisticalDistrictListComponent() {
   const dispatch = useDispatch();
   const { formatMessage } = useIntl();
   const { section } = useSelector(getStatisticalDistrictSelection);
@@ -57,16 +58,19 @@ const StatisticalDistrictListComponent = () => {
     };
   }, []);
 
-  const handleUnitCheckboxChange = useCallback((event, id) => {
-    if (event.target.checked) {
-      if (typeof selectedServices[id] === 'undefined') {
-        dispatch(fetchStatisticalDistrictServiceUnits(id));
+  const handleUnitCheckboxChange = useCallback(
+    (event, id) => {
+      if (event.target.checked) {
+        if (typeof selectedServices[id] === 'undefined') {
+          dispatch(fetchStatisticalDistrictServiceUnits(id));
+        }
+        dispatch(addSelectedService(id));
+      } else {
+        dispatch(removeSelectedService(id));
       }
-      dispatch(addSelectedService(id));
-    } else {
-      dispatch(removeSelectedService(id));
-    }
-  }, [dispatch, selectedServices]);
+    },
+    [dispatch, selectedServices]
+  );
 
   const handleAccordionToggle = (districtCategory, opening, forecast) => {
     if (opening) {
@@ -88,80 +92,82 @@ const StatisticalDistrictListComponent = () => {
     let component = null;
     if (category?.layers) {
       const isForecast = category?.type === 'forecast';
-      component = (
-        category.layers.map((layer) => {
-          const selected = section === layer;
-          const serviceTitle = formatMessage({ id: 'area.statisticalDistrict.service.filter' });
-          const disableServicesAccordion = !Object.keys(selectedAreas).some(a => selectedAreas[a]);
-          return (
-            <StyledListItem
-              disableGutters
-              key={layer}
-              className={`${layer}`}
-            >
-              <StyledStatisticalLayerAccordion // Layers in top level category
-                defaultOpen={false}
-                onOpen={(e, open) => handleAccordionToggle(layer, !open, isForecast)}
-                isOpen={selected}
-                elevated={selected}
-                adornment={(
-                  <DistrictToggleButton
-                    selected={selected}
-                    district={{ id: layer }}
-                    onToggle={() => handleAccordionToggle(layer, section !== layer, isForecast)}
-                    aria-hidden
-                    inputProps={{
-                      tabIndex: '-1',
-                    }}
-                  />
-                )}
-                titleContent={(
-                  <Typography id={`${layer}Name`} component="p">
+      component = category.layers.map((layer) => {
+        const selected = section === layer;
+        const serviceTitle = formatMessage({
+          id: 'area.statisticalDistrict.service.filter',
+        });
+        const disableServicesAccordion = !Object.keys(selectedAreas).some(
+          (a) => selectedAreas[a]
+        );
+        return (
+          <StyledListItem disableGutters key={layer} className={`${layer}`}>
+            <StyledStatisticalLayerAccordion // Layers in top level category
+              defaultOpen={false}
+              onOpen={(e, open) =>
+                handleAccordionToggle(layer, !open, isForecast)
+              }
+              isOpen={selected}
+              elevated={selected}
+              adornment={
+                <DistrictToggleButton
+                  selected={selected}
+                  district={{ id: layer }}
+                  onToggle={() =>
+                    handleAccordionToggle(layer, section !== layer, isForecast)
+                  }
+                  aria-hidden
+                  inputProps={{
+                    tabIndex: '-1',
+                  }}
+                />
+              }
+              titleContent={
+                <Typography id={`${layer}Name`} component="p">
+                  <FormattedMessage id={`area.list.statistic.${layer}`} />
+                </Typography>
+              }
+              collapseContent={
+                <StyledDistrictServiceListLevelFour>
+                  <Typography component="h3" style={visuallyHidden}>
+                    <FormattedMessage id="area.tab.statisticalDistricts" />
+                    <FormattedMessage
+                      id={`area.list.statistic.${category.type}`}
+                    />
+                    {category.year}
                     <FormattedMessage id={`area.list.statistic.${layer}`} />
                   </Typography>
-                )}
-                collapseContent={(
-                  <StyledDistrictServiceListLevelFour>
-                    <Typography component="h3" style={visuallyHidden}>
-                      <FormattedMessage id="area.tab.statisticalDistricts" />
-                      <FormattedMessage id={`area.list.statistic.${category.type}`} />
-                      {category.year}
-                      <FormattedMessage id={`area.list.statistic.${layer}`} />
-                    </Typography>
-                    <StyledUnitsAccordion // Unit list accordion
-                      defaultOpen={false}
-                      disableUnmount
-                      disabled={!!disableServicesAccordion}
-                      adornment={<StyledFormatListBulleted />}
-                      titleContent={(
-                        <StyledCaptionText variant="caption">
-                          <FormattedMessage
-                            id="area.geographicalServices.statistical_district"
-                            values={{ length: filteredSubdistrictUnitsLength }}
-                          />
-                        </StyledCaptionText>
-                      )}
-                      collapseContent={(
-                        <StatisticalDistrictUnitList
-                          handleUnitCheckboxChange={handleUnitCheckboxChange}
-                          selectedServices={selectedServices}
-                          title={serviceTitle}
+                  <StyledUnitsAccordion // Unit list accordion
+                    defaultOpen={false}
+                    disableUnmount
+                    disabled={!!disableServicesAccordion}
+                    adornment={<StyledFormatListBulleted />}
+                    titleContent={
+                      <StyledCaptionText variant="caption">
+                        <FormattedMessage
+                          id="area.geographicalServices.statistical_district"
+                          values={{ length: filteredSubdistrictUnitsLength }}
                         />
-                      )}
-                    />
-                    <StyledStatisticalUnitInfo component="p" variant="caption">
-                      <FormattedMessage id="area.statisticalDistrict.info" />
-                    </StyledStatisticalUnitInfo>
-                    <StatisticalDistrictListContent
-                      shownLayer={layer}
-                    />
-                  </StyledDistrictServiceListLevelFour>
-                )}
-              />
-            </StyledListItem>
-          );
-        })
-      );
+                      </StyledCaptionText>
+                    }
+                    collapseContent={
+                      <StatisticalDistrictUnitList
+                        handleUnitCheckboxChange={handleUnitCheckboxChange}
+                        selectedServices={selectedServices}
+                        title={serviceTitle}
+                      />
+                    }
+                  />
+                  <StyledStatisticalUnitInfo component="p" variant="caption">
+                    <FormattedMessage id="area.statisticalDistrict.info" />
+                  </StyledStatisticalUnitInfo>
+                  <StatisticalDistrictListContent shownLayer={layer} />
+                </StyledDistrictServiceListLevelFour>
+              }
+            />
+          </StyledListItem>
+        );
+      });
     }
     return component;
   };
@@ -170,62 +176,66 @@ const StatisticalDistrictListComponent = () => {
     if (layerCategoryKeys.length) {
       return (
         <StyledListNoPaddingLevelTwo>
-          {
-            layerCategoryKeys.map((key) => {
-              const layerCategory = layerCategories[key];
-              const selected = layerCategory.type === selectedCategory;
-              const titleText = `${formatMessage({ id: `area.list.statistic.${layerCategory.type}` })} ${layerCategory.year}`;
-              return (
-                <StyledListItem
-                  divider
-                  disableGutters
-                  key={key}
-                  className={`${key}`}
-                >
-                  <StyledStatisticalCategoryAccordion // Top level categories
-                    defaultOpen={false}
-                    disableUnmount
-                    onOpen={(e, open) => handleCategoryAccoridonToggle(layerCategory.type, !open)}
-                    isOpen={selected}
-                    disabled={!!isFetchingDistricts}
-                    elevated={selected}
-                    titleContent={(
-                      <Typography id={`${key}Name`}>
-                        {titleText}
-                      </Typography>
-                    )}
-                    collapseContent={(
-                      <StyledListNoPaddingLevelThree>
-                        {renderLayers(layerCategory)}
-                      </StyledListNoPaddingLevelThree>
-                    )}
-                  />
-                </StyledListItem>
-              );
-            })
-          }
+          {layerCategoryKeys.map((key) => {
+            const layerCategory = layerCategories[key];
+            const selected = layerCategory.type === selectedCategory;
+            const titleText = `${formatMessage({
+              id: `area.list.statistic.${layerCategory.type}`,
+            })} ${layerCategory.year}`;
+            return (
+              <StyledListItem
+                divider
+                disableGutters
+                key={key}
+                className={`${key}`}
+              >
+                <StyledStatisticalCategoryAccordion // Top level categories
+                  defaultOpen={false}
+                  disableUnmount
+                  onOpen={(e, open) =>
+                    handleCategoryAccoridonToggle(layerCategory.type, !open)
+                  }
+                  isOpen={selected}
+                  disabled={!!isFetchingDistricts}
+                  elevated={selected}
+                  titleContent={
+                    <Typography id={`${key}Name`}>{titleText}</Typography>
+                  }
+                  collapseContent={
+                    <StyledListNoPaddingLevelThree>
+                      {renderLayers(layerCategory)}
+                    </StyledListNoPaddingLevelThree>
+                  }
+                />
+              </StyledListItem>
+            );
+          })}
         </StyledListNoPaddingLevelTwo>
       );
     }
-    return <StyledNoDataTypography aria-live="polite" variant="body2"><FormattedMessage id="area.statisticalDistrict.noData" /></StyledNoDataTypography>;
+    return (
+      <StyledNoDataTypography aria-live="polite" variant="body2">
+        <FormattedMessage id="area.statisticalDistrict.noData" />
+      </StyledNoDataTypography>
+    );
   };
 
   return (
     <>
-      { isFetchingDistricts
-        ? (
-          <StyledLoadingContainer>
-            <Loading
-              reducer={{
-                isFetching: isFetchingDistricts,
-              }}
-            />
-          </StyledLoadingContainer>
-        ) : renderLayerCategories()
-      }
+      {isFetchingDistricts ? (
+        <StyledLoadingContainer>
+          <Loading
+            reducer={{
+              isFetching: isFetchingDistricts,
+            }}
+          />
+        </StyledLoadingContainer>
+      ) : (
+        renderLayerCategories()
+      )}
     </>
   );
-};
+}
 
 export default StatisticalDistrictListComponent;
 

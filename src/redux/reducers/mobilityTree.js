@@ -4,7 +4,7 @@ const initialState = {
   opened: [],
 };
 
-export default (state = initialState, action) => {
+const mobilityTreeReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'SET_MOBILITY_TREE':
       return {
@@ -15,3 +15,5 @@ export default (state = initialState, action) => {
       return state;
   }
 };
+
+export default mobilityTreeReducer;

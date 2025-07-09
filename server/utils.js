@@ -7,7 +7,9 @@ const redirectables = [
       try {
         let queryString = null;
         if (req.query) {
-          queryString = Object.keys(req.query).map(key => `${key}=${req.query[key]}`).join('&');
+          queryString = Object.keys(req.query)
+            .map((key) => `${key}=${req.query[key]}`)
+            .join('&');
         }
 
         // Replace unit with search
@@ -15,31 +17,29 @@ const redirectables = [
         const index = pathArray.indexOf('unit');
         pathArray.splice(index, 1, 'search');
         const pathName = pathArray.join('/');
-  
-        return pathName + `${queryString ? `?${queryString}` : ''}`;
+
+        return `${pathName}${queryString ? `?${queryString}` : ''}`;
       } catch (e) {
         return null;
       }
     },
-  }
+  },
 ];
 
 const isValidLanguage = (path) => {
-  if(!path) {
+  if (!path) {
     return false;
   }
   const hasLanguage = path.match(/^\/(fi|sv|en)/);
   return hasLanguage && hasLanguage.index === 0;
-}
+};
 // Handle language change
 export const makeLanguageHandler = (req, res, next) => {
-
-  if(isValidLanguage(req.path)) {
+  if (isValidLanguage(req.path)) {
     next();
     return;
   }
   res.redirect('/fi/');
-  return;
 };
 
 // Redirect old language based domains to correct language
@@ -65,13 +65,12 @@ export const languageSubdomainRedirect = (req, res, next) => {
     }
   }
   next();
-  return;
-}
+};
 
 export const unitRedirect = (req, res, next) => {
   let redirecting = false;
-  redirectables.forEach(item => {
-    if(redirecting) {
+  redirectables.forEach((item) => {
+    if (redirecting) {
       return;
     }
 
@@ -80,7 +79,6 @@ export const unitRedirect = (req, res, next) => {
       if (redirectTo) {
         redirecting = true;
         res.redirect(redirectTo);
-        return;
       }
     }
   });
@@ -90,8 +88,7 @@ export const unitRedirect = (req, res, next) => {
   }
 
   next();
-  return;
-}
+};
 
 /**
  * Parse initial map position from environment variable
@@ -100,7 +97,8 @@ export const unitRedirect = (req, res, next) => {
  * @param {*} Sentry - Sentry object for sending error logs to sentry
  */
 export const parseInitialMapPositionFromHostname = (req, Sentry) => {
-  let initialMapPosition = process.env.INITIAL_MAP_POSITION || '60.170377597530016,24.941309323934886';
+  let initialMapPosition =
+    process.env.INITIAL_MAP_POSITION || '60.170377597530016,24.941309323934886';
   try {
     // Expecting DOMAIN_MAP_POSITIONS to be a string shaped like
     // hostname1,lat1,lon1;hostname2,lat2,lon2
@@ -109,13 +107,13 @@ export const parseInitialMapPositionFromHostname = (req, Sentry) => {
       const host = req.hostname;
       const domainArray = domainMapPos.split(';');
       if (host && domainArray.length) {
-        domainArray.forEach(h => {
+        domainArray.forEach((h) => {
           const values = h.split(',');
           // Change initialMapPosition if request host is same as given host
           if (
-            Array.isArray(values)
-            && values.length === 3
-            && host === values[0]
+            Array.isArray(values) &&
+            values.length === 3 &&
+            host === values[0]
           ) {
             initialMapPosition = `${values[1]},${values[2]}`;
           }
@@ -126,16 +124,19 @@ export const parseInitialMapPositionFromHostname = (req, Sentry) => {
     if (Sentry && Sentry.captureException) {
       Sentry.captureException(e);
     }
-    console.log('Error while handling parseInitialMapPositionFromHostname. Returning default value:', initialMapPosition);
+    console.log(
+      'Error while handling parseInitialMapPositionFromHostname. Returning default value:',
+      initialMapPosition
+    );
   }
   return initialMapPosition;
-}
-
-export const getRequestFullUrl = (req) => req.protocol + '://' + req.get('host') + req.originalUrl;
-
-export const sitemapActive = () => {
-  return config.production
-    && process.env.DOMAIN
-    && process.env.NODE_ENV === 'production'
-    && process.env.SERVER_TYPE === 'production';
 };
+
+export const getRequestFullUrl = (req) =>
+  `${req.protocol}://${req.get('host')}${req.originalUrl}`;
+
+export const sitemapActive = () =>
+  config.production &&
+  process.env.DOMAIN &&
+  process.env.NODE_ENV === 'production' &&
+  process.env.SERVER_TYPE === 'production';

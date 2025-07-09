@@ -1,14 +1,14 @@
-import styled from '@emotion/styled';
-import { useTheme } from '@mui/styles';
-import React from 'react';
 import { css } from '@emotion/css';
-import PropTypes from 'prop-types';
-import { ButtonBase, Typography } from '@mui/material';
+import styled from '@emotion/styled';
 import { ChevronLeft, ChevronRight } from '@mui/icons-material';
+import { ButtonBase, Typography } from '@mui/material';
+import { useTheme } from '@mui/styles';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { useMap } from 'react-leaflet';
 
-const HideSidebarButton = ({ sidebarHidden, toggleSidebar }) => {
+function HideSidebarButton({ sidebarHidden, toggleSidebar }) {
   const map = useMap();
   const theme = useTheme();
   const keyboardFocusClass = css({
@@ -20,7 +20,7 @@ const HideSidebarButton = ({ sidebarHidden, toggleSidebar }) => {
       display: 'block',
       maxWidth: 200,
     },
-  })
+  });
   return (
     <StyledHideButton
       aria-hidden
@@ -29,23 +29,24 @@ const HideSidebarButton = ({ sidebarHidden, toggleSidebar }) => {
       onClick={() => {
         toggleSidebar();
         // Update lealfet map size after sidebar has been hidden
-        setTimeout(() => (
-          map?.invalidateSize()
-        ), 1);
+        setTimeout(() => map?.invalidateSize(), 1);
       }}
     >
       <StyledButtonContainer sidebarhidden={+sidebarHidden}>
-        {sidebarHidden
-          ? <ChevronRight />
-          : <ChevronLeft />
-      }
+        {sidebarHidden ? <ChevronRight /> : <ChevronLeft />}
         <Typography>
-          <FormattedMessage id={sidebarHidden ? 'map.button.sidebar.show' : 'map.button.sidebar.hide'} />
+          <FormattedMessage
+            id={
+              sidebarHidden
+                ? 'map.button.sidebar.show'
+                : 'map.button.sidebar.hide'
+            }
+          />
         </Typography>
       </StyledButtonContainer>
     </StyledHideButton>
   );
-};
+}
 
 const StyledButtonContainer = styled.div(({ sidebarhidden }) => {
   const styles = {
@@ -85,7 +86,8 @@ const StyledHideButton = styled(ButtonBase)(({ theme, sidebarhidden }) => {
       color: '#fff',
       maxWidth: 200,
       '& p': {
-        display: 'block', maxWidth: 200,
+        display: 'block',
+        maxWidth: 200,
       },
     },
   };

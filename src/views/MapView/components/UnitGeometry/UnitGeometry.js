@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+
 import { selectNavigator } from '../../../../redux/selectors/general';
 import { getPage } from '../../../../redux/selectors/user';
-import swapCoordinates from '../../utils/swapCoordinates';
 import UnitHelper from '../../../../utils/unitHelper';
+import swapCoordinates from '../../utils/swapCoordinates';
 
-const UnitGeometry = ({ data }) => {
+function UnitGeometry({ data }) {
   const { Polyline, Polygon } = global.rL;
   const currentPage = useSelector(getPage);
   const navigator = useSelector(selectNavigator);
@@ -15,7 +16,12 @@ const UnitGeometry = ({ data }) => {
 
   useEffect(() => {
     const getUnitGeometry = (unit) => {
-      if ((currentPage === 'unit' || currentPage === 'search' || currentPage === 'fullList' || currentPage === 'event')) {
+      if (
+        currentPage === 'unit' ||
+        currentPage === 'search' ||
+        currentPage === 'fullList' ||
+        currentPage === 'event'
+      ) {
         const { geometry } = unit;
         if (geometry) {
           const { coordinates } = geometry;
@@ -26,7 +32,9 @@ const UnitGeometry = ({ data }) => {
               break;
             }
             case 'MultiPolygon': {
-              unitGeometry = coordinates.map(polygon => swapCoordinates(polygon));
+              unitGeometry = coordinates.map((polygon) =>
+                swapCoordinates(polygon)
+              );
               break;
             }
             default:
@@ -55,15 +63,16 @@ const UnitGeometry = ({ data }) => {
   };
 
   const renderPolyline = () => {
-    if (geometryData?.type !== 'MultiLineString' || !geometryData?.coordinates) {
+    if (
+      geometryData?.type !== 'MultiLineString' ||
+      !geometryData?.coordinates
+    ) {
       return null;
     }
 
     return (
       <Polyline
-        positions={[
-          geometryData.coordinates,
-        ]}
+        positions={[geometryData.coordinates]}
         color="#ff8400"
         onClick={geometryOnClick}
       />
@@ -89,21 +98,16 @@ const UnitGeometry = ({ data }) => {
 
   return (
     <>
-      {
-        renderPolyline()
-      }
-      {
-        renderPolygon()
-      }
+      {renderPolyline()}
+      {renderPolygon()}
     </>
   );
-};
+}
 
 UnitGeometry.propTypes = {
   data: PropTypes.shape({
     geometry: PropTypes.objectOf(PropTypes.any),
   }).isRequired,
 };
-
 
 export default UnitGeometry;

@@ -1,20 +1,33 @@
 import React from 'react';
+
+import { getRenderWithProviders } from '../../../../../jestUtils';
 import { initialState } from '../../../../redux/reducers/user';
 import UnitItem from '../index';
-import { getRenderWithProviders } from '../../../../../jestUtils';
 
 const mockData = {
   accessibility_properties: [],
   accessibility_shortcoming_count: {},
   contract_type: {
     id: 'municipal_service',
-    description: { fi: 'kunnallinen palvelu', sv: 'kommunal tjänst', en: 'municipal service' },
+    description: {
+      fi: 'kunnallinen palvelu',
+      sv: 'kommunal tjänst',
+      en: 'municipal service',
+    },
   },
   id: 63115,
   municipality: 'espoo',
-  name: { fi: 'Lippulaivan kirjasto', sv: 'Lippulaivabiblioteket', en: 'Lippulaiva library' },
+  name: {
+    fi: 'Lippulaivan kirjasto',
+    sv: 'Lippulaivabiblioteket',
+    en: 'Lippulaiva library',
+  },
   object_type: 'unit',
-  street_address: { fi: 'Merikarhunkuja 11', sv: 'Sjöbjörnsgränden 11', en: 'Merikarhunkuja 11' },
+  street_address: {
+    fi: 'Merikarhunkuja 11',
+    sv: 'Sjöbjörnsgränden 11',
+    en: 'Merikarhunkuja 11',
+  },
 };
 
 // Generic required props for SimpleListItem
@@ -44,11 +57,17 @@ describe('<UnitItem />', () => {
     const dividerItem = items[1];
 
     // List item's image should be aria-hidden
-    expect(firstItem.querySelector('img').getAttribute('aria-hidden')).toBeTruthy();
+    expect(
+      firstItem.querySelector('img').getAttribute('aria-hidden')
+    ).toBeTruthy();
     expect(firstItem.getAttribute('role')).toEqual('link');
     expect(firstItem.getAttribute('tabIndex')).toEqual('0');
-    expect(firstItemSRText.className.indexOf('ResultItem-title') > 0).toBeTruthy();
-    expect(firstItemResultTitle.className.indexOf('ResultItem-title') > 0).toBeTruthy();
+    expect(
+      firstItemSRText.className.indexOf('ResultItem-title') > 0
+    ).toBeTruthy();
+    expect(
+      firstItemResultTitle.className.indexOf('ResultItem-title') > 0
+    ).toBeTruthy();
     expect(firstItemResultTitle.getAttribute('aria-hidden')).toBeTruthy();
     expect(dividerItem.getAttribute('aria-hidden')).toBeTruthy();
   });

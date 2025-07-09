@@ -1,6 +1,6 @@
 const initialState = null;
 
-export default (state = initialState, action) => {
+const trackerReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'SET_TRACKER':
       return action.tracker;
@@ -8,3 +8,5 @@ export default (state = initialState, action) => {
       return state;
   }
 };
+
+export default trackerReducer;

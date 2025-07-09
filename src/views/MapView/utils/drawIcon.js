@@ -1,9 +1,9 @@
-import berryIcon from '../../../assets/icons/LocationDefault.svg';
-import berryIconContrast from '../../../assets/icons/LocationDefaultContrast.svg';
-import berryEventIcon from '../../../assets/icons/LocationEventDefault.svg';
-import berryEventIconContrast from '../../../assets/icons/LocationEventContrast.svg';
 import entranceIcon from '../../../assets/icons/doorIcon.svg';
 import entranceIconContrast from '../../../assets/icons/doorIconContrast.svg';
+import berryIcon from '../../../assets/icons/LocationDefault.svg';
+import berryIconContrast from '../../../assets/icons/LocationDefaultContrast.svg';
+import berryEventIconContrast from '../../../assets/icons/LocationEventContrast.svg';
+import berryEventIcon from '../../../assets/icons/LocationEventDefault.svg';
 
 // TODO: If berries are not used anymore, clean unused functionalities here
 
@@ -38,9 +38,12 @@ const CIRCLE_MARKER_PADDING = 15;
 
 const berryCenter = (value) => {
   let rotation = value;
-  rotation = Math.PI * rotation / 180;
-  const x = 0.8 * Math.cos(rotation) * ratio * stemDefaults.top + (size / 2);
-  const y = -Math.sin(rotation) * ratio * stemDefaults.top + size - ratio * stemDefaults.base;
+  rotation = (Math.PI * rotation) / 180;
+  const x = 0.8 * Math.cos(rotation) * ratio * stemDefaults.top + size / 2;
+  const y =
+    -Math.sin(rotation) * ratio * stemDefaults.top +
+    size -
+    ratio * stemDefaults.base;
   return [x, y];
 };
 
@@ -70,7 +73,7 @@ const drawStem = (
   ctx,
   berryCenter,
   lineWidth = ratio * stemDefaults.width,
-  color = stemDefaults.color,
+  color = stemDefaults.color
 ) => {
   ctx.strokeStyle = color;
   ctx.lineWidth = lineWidth;
@@ -109,7 +112,6 @@ export const drawUnitIcon = (berryColor, curve) => {
   canvas.height = canvasSize.height;
   canvas.width = canvasSize.width;
 
-
   // Berry calculation
   const berryCenterPoint = berryCenter(adjustCurve(curve));
 
@@ -121,7 +123,12 @@ export const drawUnitIcon = (berryColor, curve) => {
   return canvas.toDataURL();
 };
 
-export const drawMarkerIcon = (contrast = false, className = '', eventIcon, popupAnchor) => {
+export const drawMarkerIcon = (
+  contrast = false,
+  className = '',
+  eventIcon,
+  popupAnchor
+) => {
   const L = require('leaflet'); // eslint-disable-line global-require
 
   let icon;
@@ -174,24 +181,25 @@ export class NumberCircleMaker {
     callback(c);
     c.fill();
     return c.closePath();
-  }
+  };
 
   drawNumber = (ctx, num, width) => {
     const position = width / 2 + CIRCLE_MARKER_PADDING;
     return ctx.fillText(num, position, position);
-  }
+  };
 
-  drawCircle = (ctx, diameter) => this.stroke(ctx, (ctx) => {
-    const radius = diameter / 2 + CIRCLE_MARKER_PADDING;
-    return ctx.arc(radius, radius, radius, 0, 2 * Math.PI);
-  });
+  drawCircle = (ctx, diameter) =>
+    this.stroke(ctx, (ctx) => {
+      const radius = diameter / 2 + CIRCLE_MARKER_PADDING;
+      return ctx.arc(radius, radius, radius, 0, 2 * Math.PI);
+    });
 
   initContext = (ctx) => {
     ctx.font = `bold ${CIRCLE_MARKER_FONT_SIZE}px sans-serif`;
     ctx.textBaseline = 'middle';
     ctx.textAlign = 'center';
     return ctx;
-  }
+  };
 
   drawNumberedCircle = (ctx, num) => {
     let number = num;
@@ -208,7 +216,7 @@ export class NumberCircleMaker {
     ctx.fillStyle = '#000000';
     this.drawCircle(ctx, numberDimensions.width);
     return ctx.restore();
-  }
+  };
 }
 
 export default drawMarkerIcon;

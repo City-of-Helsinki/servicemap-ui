@@ -1,14 +1,21 @@
 import styled from '@emotion/styled';
 import DefaultIcon from '@mui/icons-material/Public';
-import { Divider, List, ListItem, ListItemButton, Typography } from '@mui/material';
+import {
+  Divider,
+  List,
+  ListItem,
+  ListItemButton,
+  Typography,
+} from '@mui/material';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
+
 import { getIcon } from '../../../../components';
 import useLocaleText from '../../../../utils/useLocaleText';
 import unitSectionFilter from '../../utils/unitSectionFilter';
 
-const SocialMediaLinks = ({ unit }) => {
+function SocialMediaLinks({ unit }) {
   const getLocaleText = useLocaleText();
   const links = unitSectionFilter(unit.connections, 'SOCIAL_MEDIA_LINK');
   const columns = 3;
@@ -16,7 +23,9 @@ const SocialMediaLinks = ({ unit }) => {
   if (links.length) {
     return (
       <SomeListContainer>
-        <SomeTitle><FormattedMessage id="unit.socialMedia.title" /></SomeTitle>
+        <SomeTitle>
+          <FormattedMessage id="unit.socialMedia.title" />
+        </SomeTitle>
         <SomeList>
           {links.map((link, i) => (
             <React.Fragment key={link.id}>
@@ -24,30 +33,32 @@ const SocialMediaLinks = ({ unit }) => {
                 disableGutters
                 role="link"
                 component="li"
-                onClick={() => link.value.www && window.open(getLocaleText(link.value.www))}
-              >
-                {getIcon(getLocaleText(link.value.name).toLowerCase())
-                  || <StyledDefaultIcon />
+                onClick={() =>
+                  link.value.www && window.open(getLocaleText(link.value.www))
                 }
+              >
+                {getIcon(getLocaleText(link.value.name).toLowerCase()) || (
+                  <StyledDefaultIcon />
+                )}
                 <StyledItemText>
                   {getLocaleText(link.value.name)}
                 </StyledItemText>
               </SomeItemButton>
-              {(i + 1 === links.length || (i + 1) % columns === 0)
-                ? null : ( // Dont draw divider if last of list or last of row
-                  <VerticalDividerContainer aria-hidden>
-                    <VerticalDivider />
-                  </VerticalDividerContainer>
-                )
-              }
+              {/* Dont draw divider if last of list or last of row */}
+              {i + 1 === links.length || (i + 1) % columns === 0 ? null : (
+                <VerticalDividerContainer aria-hidden>
+                  <VerticalDivider />
+                </VerticalDividerContainer>
+              )}
             </React.Fragment>
           ))}
         </SomeList>
         <SomeDivider aria-hidden />
       </SomeListContainer>
     );
-  } return null;
-};
+  }
+  return null;
+}
 
 const VerticalDividerContainer = styled(ListItem)(() => ({
   width: '12%',

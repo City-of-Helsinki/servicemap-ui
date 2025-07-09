@@ -1,22 +1,21 @@
 import styled from '@emotion/styled';
-import React, { useEffect, useState } from 'react';
-import {
-  ButtonBase, List, ListItem, Typography,
-} from '@mui/material';
-import { FormattedMessage, useIntl } from 'react-intl';
-import { useDispatch, useSelector } from 'react-redux';
 import { Close } from '@mui/icons-material';
-import { useLocation } from 'react-router-dom';
+import { ButtonBase, List, ListItem, Typography } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { useMap } from 'react-leaflet';
+import { useDispatch, useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
+
+import { changeSelectedEvent } from '../../../../redux/actions/event';
 import { selectNavigator } from '../../../../redux/selectors/general';
 import { selectThemeMode } from '../../../../redux/selectors/user';
-import useLocaleText from '../../../../utils/useLocaleText';
+import { parseSearchParams } from '../../../../utils';
 import { getAddressFromUnit } from '../../../../utils/address';
 import formatEventDate from '../../../../utils/events';
-import { changeSelectedEvent } from '../../../../redux/actions/event';
-import { drawMarkerIcon } from '../../utils/drawIcon';
 import { generatePath, isEmbed } from '../../../../utils/path';
-import { parseSearchParams } from '../../../../utils';
+import useLocaleText from '../../../../utils/useLocaleText';
+import { drawMarkerIcon } from '../../utils/drawIcon';
 import { StyledCloseText, StyledUnitTooltipTitle } from '../styled/styled';
 
 const EventMarkers = ({ searchData }) => {
@@ -37,7 +36,10 @@ const EventMarkers = ({ searchData }) => {
     if (embeded) {
       if (searchParams.callback === 'true') {
         // TODO: create domain whitelist and add this url to it
-        window.parent.postMessage({ eventId: event.id }, 'https://vapaaehtoistoiminta.hel.fi');
+        window.parent.postMessage(
+          { eventId: event.id },
+          'https://vapaaehtoistoiminta.hel.fi'
+        );
       } else {
         const url = generatePath('event', null, event.id);
         window.open(url);
@@ -58,12 +60,20 @@ const EventMarkers = ({ searchData }) => {
   };
 
   const initializeEventData = () => {
-    let events = searchData.filter(item => item.object_type === 'event' && item.location);
-    if (searchParams.neighborhood) { // Filter with neighborhood
+    let events = searchData.filter(
+      (item) => item.object_type === 'event' && item.location
+    );
+    if (searchParams.neighborhood) {
+      // Filter with neighborhood
       events = events.filter((event) => {
         if (event.location?.divisions?.length) {
-          const neighborhood = event.location.divisions.find(obj => obj.type === 'neighborhood');
-          if (neighborhood && neighborhood.ocd_id === searchParams.neighborhood) {
+          const neighborhood = event.location.divisions.find(
+            (obj) => obj.type === 'neighborhood'
+          );
+          if (
+            neighborhood &&
+            neighborhood.ocd_id === searchParams.neighborhood
+          ) {
             return true;
           }
         }
@@ -75,7 +85,7 @@ const EventMarkers = ({ searchData }) => {
     events.forEach((event) => {
       const { location } = event;
       if (!location) return;
-      const duplicate = units.find(unit => unit.id === location.id);
+      const duplicate = units.find((unit) => unit.id === location.id);
       if (!duplicate) {
         const newUnit = {
           id: location.id,
@@ -91,70 +101,74 @@ const EventMarkers = ({ searchData }) => {
       }
     });
 
-    setUnitData(units.filter(unit => unit.location));
+    setUnitData(units.filter((unit) => unit.location));
   };
-
 
   useEffect(() => {
     initializeEventData();
   }, [searchData]);
 
-
-  return (
-    unitData.map((unit) => {
-      if (!unit.events?.length) return null;
-      const streetAddress = getAddressFromUnit(unit, getLocaleText, intl);
-      const eventList = unit.events;
-      return (
-        <Marker
-          key={unit.id}
-          icon={drawMarkerIcon(useContrast, `unit-marker-${unit.id}`, null, [0, -15])}
-          onMouseOver={(e) => { e.target.openPopup(); }}
-          position={[
-            unit.location.coordinates[1],
-            unit.location.coordinates[0],
-          ]}
-        >
-          <Popup autoPan closeButton={false}>
-            <StyledPopupContainer>
-              <StyledPopupTopArea>
-                <StyledPopupTitleArea>
-                  <StyledUnitTooltipTitle>
-                    {getLocaleText(unit.name)}
-                  </StyledUnitTooltipTitle>
-                  <StyledPopupCloseButton onClick={() => closePopup()}>
-                    <StyledCloseText><FormattedMessage id="general.close" /></StyledCloseText>
-                    <StyledCloseIcon />
-                  </StyledPopupCloseButton>
-                </StyledPopupTitleArea>
-                <StyledAddressContainer>
-                  <StyledUnitTooltipSubtitle>
-                    {streetAddress}
-                  </StyledUnitTooltipSubtitle>
-                </StyledAddressContainer>
-              </StyledPopupTopArea>
-              <StyledPopupList disablePadding>
-                {eventList.map(event => (
-                  <StyledPopupListItem
-                    key={event.id}
-                    button
-                    role="link"
-                    disableGutters
-                    onClick={(e) => { handleEventClick(e, event); }}
-                  >
-                    <Typography>{getLocaleText(event.name)}</Typography>
-                    <StyledEventDateText>
-                      {formatEventDate(event, intl)}
-                    </StyledEventDateText>
-                  </StyledPopupListItem>
-                ))}
-              </StyledPopupList>
-            </StyledPopupContainer>
-          </Popup>
-        </Marker>
-      );
-    })
-  );
+  return unitData.map((unit) => {
+    if (!unit.events?.length) return null;
+    const streetAddress = getAddressFromUnit(unit, getLocaleText, intl);
+    const eventList = unit.events;
+    return (
+      <Marker
+        key={unit.id}
+        icon={drawMarkerIcon(
+          useContrast,
+          `unit-marker-${unit.id}`,
+          null,
+          [0, -15]
+        )}
+        onMouseOver={(e) => {
+          e.target.openPopup();
+        }}
+        position={[unit.location.coordinates[1], unit.location.coordinates[0]]}
+      >
+        <Popup autoPan closeButton={false}>
+          <StyledPopupContainer>
+            <StyledPopupTopArea>
+              <StyledPopupTitleArea>
+                <StyledUnitTooltipTitle>
+                  {getLocaleText(unit.name)}
+                </StyledUnitTooltipTitle>
+                <StyledPopupCloseButton onClick={() => closePopup()}>
+                  <StyledCloseText>
+                    <FormattedMessage id="general.close" />
+                  </StyledCloseText>
+                  <StyledCloseIcon />
+                </StyledPopupCloseButton>
+              </StyledPopupTitleArea>
+              <StyledAddressContainer>
+                <StyledUnitTooltipSubtitle>
+                  {streetAddress}
+                </StyledUnitTooltipSubtitle>
+              </StyledAddressContainer>
+            </StyledPopupTopArea>
+            <StyledPopupList disablePadding>
+              {eventList.map((event) => (
+                <StyledPopupListItem
+                  key={event.id}
+                  button
+                  role="link"
+                  disableGutters
+                  onClick={(e) => {
+                    handleEventClick(e, event);
+                  }}
+                >
+                  <Typography>{getLocaleText(event.name)}</Typography>
+                  <StyledEventDateText>
+                    {formatEventDate(event, intl)}
+                  </StyledEventDateText>
+                </StyledPopupListItem>
+              ))}
+            </StyledPopupList>
+          </StyledPopupContainer>
+        </Popup>
+      </Marker>
+    );
+  });
 };
 
 const StyledEventDateText = styled(Typography)(() => ({

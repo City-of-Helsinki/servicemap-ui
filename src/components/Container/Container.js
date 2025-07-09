@@ -1,14 +1,12 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Paper, Typography } from '@mui/material';
 import styled from '@emotion/styled';
+import { Paper, Typography } from '@mui/material';
+import PropTypes from 'prop-types';
+import React from 'react';
 
-const Title = (props) => {
+function Title(props) {
   const { text } = props;
-  return (
-    <Typography {...props}>{text}</Typography>
-  );
-};
+  return <Typography {...props}>{text}</Typography>;
+}
 
 Title.propTypes = {
   text: PropTypes.string.isRequired,
@@ -49,7 +47,7 @@ const containerStyles = ({ theme, nomargin, text, margin }) => {
 const StyledDiv = styled('div')(containerStyles);
 const StyledPaper = styled(Paper)(containerStyles);
 
-const Container = (props) => {
+function Container(props) {
   const {
     className = '',
     children,
@@ -71,14 +69,13 @@ const Container = (props) => {
       className={`${className}`}
       {...rest}
     >
-      {
-        title
-        && <StyledTitle component={titleComponent} text={title} variant="h6" />
-      }
+      {title && (
+        <StyledTitle component={titleComponent} text={title} variant="h6" />
+      )}
       {children}
     </ContainerComponent>
   );
-};
+}
 
 const StyledTitle = styled(Title)(() => ({
   textAlign: 'left',

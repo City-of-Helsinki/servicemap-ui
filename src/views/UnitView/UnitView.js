@@ -1,9 +1,7 @@
 /* eslint-disable react/forbid-prop-types */
 /* eslint-disable no-underscore-dangle */
 import styled from '@emotion/styled';
-import {
-  Hearing, Mail, OpenInFull, Share,
-} from '@mui/icons-material';
+import { Hearing, Mail, OpenInFull, Share } from '@mui/icons-material';
 import { Button, Typography } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
 import Watermark from '@uiw/react-watermark';
@@ -13,6 +11,7 @@ import { Helmet } from 'react-helmet';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
+
 import config from '../../../config';
 import paths from '../../../config/paths';
 import {
@@ -29,7 +28,11 @@ import {
   TitledList,
 } from '../../components';
 import { fetchServiceUnits } from '../../redux/actions/services';
-import { activateSetting, resetSenseSettings, setMapType } from '../../redux/actions/settings';
+import {
+  activateSetting,
+  resetSenseSettings,
+  setMapType,
+} from '../../redux/actions/settings';
 import { selectMapRef, selectNavigator } from '../../redux/selectors/general';
 import {
   getSelectedUnit,
@@ -74,16 +77,21 @@ function UnitView(props) {
   const hearingMaps = useSelector(selectHearingMapsData);
   const reservationsData = useSelector(selectReservations);
   const eventsData = useSelector(selectEvents);
-  const accessibilitySentences = useSelector(selectSelectedUnitAccessibilitySentencesData);
+  const accessibilitySentences = useSelector(
+    selectSelectedUnitAccessibilitySentencesData
+  );
   const unitFetching = useSelector(selectSelectedUnitIsFetching);
   const stateUnit = useSelector(getSelectedUnit);
   const map = useSelector(selectMapRef);
   const location = useLocation();
   const { unit: unitParam } = useParams();
 
-  const checkCorrectUnit = unit => unit && unit.id === parseInt(unitParam, 10);
+  const checkCorrectUnit = (unit) =>
+    unit && unit.id === parseInt(unitParam, 10);
 
-  const [unit, setUnit] = useState(checkCorrectUnit(stateUnit) ? stateUnit : null);
+  const [unit, setUnit] = useState(
+    checkCorrectUnit(stateUnit) ? stateUnit : null
+  );
   const viewPosition = useRef(null);
 
   const isMobile = useMobileStatus();
@@ -93,7 +101,8 @@ function UnitView(props) {
   const history = useHistory();
   const accessiblityTabRef = useRef();
 
-  const getImageAlt = () => `${intl.formatMessage({ id: 'unit.picture' })}${getLocaleText(unit.name)}`;
+  const getImageAlt = () =>
+    `${intl.formatMessage({ id: 'unit.picture' })}${getLocaleText(unit.name)}`;
 
   function resetUrlSearchParams() {
     const search = new URLSearchParams(location.search);
@@ -107,27 +116,33 @@ function UnitView(props) {
 
   useEffect(() => {
     const actions = parseUnitViewUrlParams(location.search);
-    actions.filter(({ setting }) => setting === 'mobility').forEach(({ setting, value }) => {
-      dispatch(activateSetting(setting, value));
-    });
+    actions
+      .filter(({ setting }) => setting === 'mobility')
+      .forEach(({ setting, value }) => {
+        dispatch(activateSetting(setting, value));
+      });
     const senses = actions.filter(({ setting }) => setting === 'senses');
     // if a { setting: 'senses', value: null} is returned then this will reset
     if (senses.length) {
       dispatch(resetSenseSettings());
     }
-    senses.filter(({ value }) => !!value).forEach(({ value }) => {
-      dispatch(activateSetting(value));
-    });
-    actions.filter(({ setting }) => setting === 'mapType').forEach(({ value }) => {
-      dispatch(setMapType(value));
-    });
+    senses
+      .filter(({ value }) => !!value)
+      .forEach(({ value }) => {
+        dispatch(activateSetting(value));
+      });
+    actions
+      .filter(({ setting }) => setting === 'mapType')
+      .forEach(({ value }) => {
+        dispatch(setMapType(value));
+      });
     resetUrlSearchParams();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const initializePTVAccessibilitySentences = () => {
     if (unit) {
-      unit.identifiers.forEach(element => {
+      unit.identifiers.forEach((element) => {
         if (element.namespace === 'ptv') {
           const ptvId = element.value;
           fetchAccessibilitySentences(ptvId);
@@ -140,10 +155,19 @@ function UnitView(props) {
     const unitId = unitParam;
 
     // If no selected unit data, or selected unit data is old, fetch new data
-    if (!stateUnit || !checkCorrectUnit(stateUnit) || !stateUnit.complete || !hearingMaps) {
-      fetchSelectedUnit(unitId, unit => {
+    if (
+      !stateUnit ||
+      !checkCorrectUnit(stateUnit) ||
+      !stateUnit.complete ||
+      !hearingMaps
+    ) {
+      fetchSelectedUnit(unitId, (unit) => {
         setUnit(unit);
-        if (unit?.keywords?.fi?.some(keyword => keyword.toLowerCase() === 'kuuluvuuskartta')) {
+        if (
+          unit?.keywords?.fi?.some(
+            (keyword) => keyword.toLowerCase() === 'kuuluvuuskartta'
+          )
+        ) {
           fetchHearingMaps(unitId);
         }
       });
@@ -208,11 +232,13 @@ function UnitView(props) {
     />
   );
 
-  useEffect(() => { // On mount
+  useEffect(() => {
+    // On mount
     intializeUnitData();
     handleServiceFetch();
     saveMapPosition();
-    return () => { // On unmount
+    return () => {
+      // On unmount
       // Return map to previous position if returning to search page or service page
       const isSearchPage = paths.search.regex.test(window.location.href);
       const isServicePage = paths.service.regex.test(window.location.href);
@@ -223,7 +249,8 @@ function UnitView(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => { // If unit changes without the component unmounting, update data
+  useEffect(() => {
+    // If unit changes without the component unmounting, update data
     if (unit) {
       intializeUnitData();
     }
@@ -245,13 +272,18 @@ function UnitView(props) {
   const renderTitleForRS = () => {
     const title = unit && unit.name ? getLocaleText(unit.name) : '';
     return (
-      <Typography style={visuallyHidden} aria-hidden>{title}</Typography>
+      <Typography style={visuallyHidden} aria-hidden>
+        {title}
+      </Typography>
     );
   };
 
   const getPictureUrlAndCaption = () => {
     if (unit.picture_url) {
-      return { pictureUrl: unit.picture_url, pictureCaption: unit.picture_caption };
+      return {
+        pictureUrl: unit.picture_url,
+        pictureCaption: unit.picture_caption,
+      };
     }
     const { extra } = unit;
     function splitLineBreakGetFirstItem(extraElement) {
@@ -259,7 +291,9 @@ function UnitView(props) {
     }
 
     if (extra) {
-      const pictureUrl = splitLineBreakGetFirstItem(extra?.['kaupunkialusta.photoUrl']);
+      const pictureUrl = splitLineBreakGetFirstItem(
+        extra?.['kaupunkialusta.photoUrl']
+      );
       const pictureCaption = {
         fi: splitLineBreakGetFirstItem(extra?.['kaupunkialusta.photoFi']),
         en: splitLineBreakGetFirstItem(extra?.['kaupunkialusta.photoEn']),
@@ -267,8 +301,12 @@ function UnitView(props) {
       };
 
       if (pictureUrl) {
-        const photoSource = splitLineBreakGetFirstItem(extra?.['kaupunkialusta.photoSource']);
-        const photoPermission = splitLineBreakGetFirstItem(extra?.['kaupunkialusta.photoPermission']);
+        const photoSource = splitLineBreakGetFirstItem(
+          extra?.['kaupunkialusta.photoSource']
+        );
+        const photoPermission = splitLineBreakGetFirstItem(
+          extra?.['kaupunkialusta.photoPermission']
+        );
         return {
           pictureUrl,
           pictureCaption,
@@ -281,39 +319,35 @@ function UnitView(props) {
   };
 
   const renderPicture = () => {
-    const {
-      pictureUrl, pictureCaption, photoSource, photoPermission,
-    } = getPictureUrlAndCaption();
+    const { pictureUrl, pictureCaption, photoSource, photoPermission } =
+      getPictureUrlAndCaption();
     if (!pictureUrl) {
       return null;
     }
     const styledImage = <StyledImage alt={getImageAlt()} src={pictureUrl} />;
     return (
       <StyledImageContainer>
-        {
-          !photoSource
-          && styledImage
-        }
-        {
-          photoSource
-          && (
-            <Watermark
-              content={`${photoSource} @ ${photoPermission}`}
-              fontWeight="1000"
-              fontColor="white"
-              rotate="0"
-              width="50"
-              offsetLeft="0"
-              offsetTop="20"
-              fontSize="8"
-              style={{ background: '#fff', height: '100%' }}
-            >
-              {styledImage}
-            </Watermark>
-          )
-        }
+        {!photoSource && styledImage}
+        {photoSource && (
+          <Watermark
+            content={`${photoSource} @ ${photoPermission}`}
+            fontWeight="1000"
+            fontColor="white"
+            rotate="0"
+            width="50"
+            offsetLeft="0"
+            offsetTop="20"
+            fontSize="8"
+            style={{ background: '#fff', height: '100%' }}
+          >
+            {styledImage}
+          </Watermark>
+        )}
         {pictureCaption && (
-          <StyledImageCaption variant="body2">{getLocaleText(pictureCaption)}</StyledImageCaption>)}
+          <StyledImageCaption variant="body2">
+            {getLocaleText(pictureCaption)}
+          </StyledImageCaption>
+        )}
       </StyledImageContainer>
     );
   };
@@ -328,9 +362,7 @@ function UnitView(props) {
 
     if (config.showReadSpeakerButton) {
       detailReadSpeakerButton = (
-        <StyledReadSpeakerButton
-          readID="rscontent-unitdetail"
-        />
+        <StyledReadSpeakerButton readID="rscontent-unitdetail" />
       );
     }
 
@@ -338,20 +370,19 @@ function UnitView(props) {
       <StyledContentContainer>
         {detailReadSpeakerButton}
         <div id="rscontent-unitdetail">
-          {
-            renderTitleForRS()
-          }
+          {renderTitleForRS()}
           {/* Contract type */}
           <Container margin text>
             <Typography variant="body2">
-              {
-                contractText
-                && `${contractText}. `
-              }
-              {
-                unit.data_source && unit.contract_type.id !== 'PRIVATE_SERVICE'
-                && <FormattedMessage id="unit.data_source" defaultMessage="Source: {data_source}" values={{ data_source: unit.data_source }} />
-              }
+              {contractText && `${contractText}. `}
+              {unit.data_source &&
+                unit.contract_type.id !== 'PRIVATE_SERVICE' && (
+                  <FormattedMessage
+                    id="unit.data_source"
+                    defaultMessage="Source: {data_source}"
+                    values={{ data_source: unit.data_source }}
+                  />
+                )}
             </Typography>
           </Container>
 
@@ -362,18 +393,16 @@ function UnitView(props) {
             accessiblityTabRef={accessiblityTabRef}
           />
           <SocialMediaLinks unit={unit} />
-          <UnitDataList
-            listLength={3}
-            data={eventsData}
-            type="events"
-          />
+          <UnitDataList listLength={3} data={eventsData} type="events" />
           <Highlights unit={unit} />
           <Description unit={unit} />
           <PriceInfo unit={unit} />
           <UnitLinks unit={unit} />
           <ElectronicServices unit={unit} />
           {!isMobile && feedbackButton()}
-          {!isMobile && (<ReadFeedbackLink unit={UnitHelper.setDefaults(unit)} />)}
+          {!isMobile && (
+            <ReadFeedbackLink unit={UnitHelper.setDefaults(unit)} />
+          )}
           {isMobile && renderPicture()}
         </div>
       </StyledContentContainer>
@@ -387,7 +416,9 @@ function UnitView(props) {
       accessibilityReadSpeakerButton = (
         <StyledReadSpeakerButton
           readID="rscontent"
-          encodedURL={encodeURI(`palvelukartta.test.hel.ninja${location.pathname}${location.search}`)}
+          encodedURL={encodeURI(
+            `palvelukartta.test.hel.ninja${location.pathname}${location.search}`
+          )}
         />
       );
     }
@@ -396,12 +427,15 @@ function UnitView(props) {
       <StyledContentContainer>
         {accessibilityReadSpeakerButton}
         <StyledTabAdjuster id="rscontent">
-          {
-            renderTitleForRS()
-          }
+          {renderTitleForRS()}
           {hearingMaps?.id === unit.id.toString(10) && (
-            <TitledList titleComponent="h4" title={intl.formatMessage({ id: 'unit.accessibility.hearingMaps' })}>
-              {hearingMaps.data.map(item => (
+            <TitledList
+              titleComponent="h4"
+              title={intl.formatMessage({
+                id: 'unit.accessibility.hearingMaps',
+              })}
+            >
+              {hearingMaps.data.map((item) => (
                 <SimpleListItem
                   role="link"
                   link
@@ -427,10 +461,7 @@ function UnitView(props) {
 
     return (
       <StyledContentContainer>
-        <UnitsServicesList
-          listLength={5}
-          unit={unit}
-        />
+        <UnitsServicesList listLength={5} unit={unit} />
         <UnitDataList
           listLength={5}
           data={reservationsData}
@@ -446,24 +477,18 @@ function UnitView(props) {
     }
     const title = unit && unit.name ? getLocaleText(unit.name) : '';
     const imageAlt = getImageAlt();
-    const description = unit.description ? getLocaleText(unit.description) : null;
+    const description = unit.description
+      ? getLocaleText(unit.description)
+      : null;
 
     const { pictureUrl } = getPictureUrlAndCaption();
     return (
       <Helmet>
         <meta property="og:title" content={title} />
-        {
-          description
-          && (
-            <meta property="og:description" content={description} />
-          )
-        }
-        {
-          pictureUrl
-          && (
-            <meta property="og:image" content={pictureUrl} />
-          )
-        }
+        {description && (
+          <meta property="og:description" content={description} />
+        )}
+        {pictureUrl && <meta property="og:image" content={pictureUrl} />}
         <meta name="twitter:card" content="summary" />
         <meta name="twitter:image:alt" content={imageAlt} />
       </Helmet>
@@ -477,7 +502,7 @@ function UnitView(props) {
         color="primary"
         aria-label={intl.formatMessage({ id: 'map.button.expand.aria' })}
         icon={<StyledMapIcon />}
-        onClick={e => {
+        onClick={(e) => {
           e.preventDefault();
           if (navigator) {
             navigator.openMap();
@@ -500,9 +525,7 @@ function UnitView(props) {
       setOpenLinkDialog(true);
     };
     const elem = (
-      <StyledLinkButton
-        onClick={onLinkOpenClick}
-      >
+      <StyledLinkButton onClick={onLinkOpenClick}>
         <Typography fontSize="0.773rem" color="inherit" variant="body2">
           <FormattedMessage id="general.share.link" />
         </Typography>
@@ -518,17 +541,11 @@ function UnitView(props) {
           ariaLabel={backButtonText}
           variant="topBackButton"
         />
-        {!isMobile && (
-          <SearchBar hideBackButton />
+        {!isMobile && <SearchBar hideBackButton />}
+        <TitleBar sticky title={title} titleComponent="h3" shareLink={elem} />
+        {unit?.location?.coordinates && (
+          <RouteBar unit={unit} userLocation={userLocation} />
         )}
-        <TitleBar
-          sticky
-          title={title}
-          titleComponent="h3"
-          shareLink={elem}
-        />
-        {unit?.location?.coordinates
-          && <RouteBar unit={unit} userLocation={userLocation} />}
       </>
     );
 
@@ -575,28 +592,17 @@ function UnitView(props) {
       ];
       return (
         <div>
-          {
-            openLinkDialog
-            && (
-              <LinkSettingsDialog setOpen={setOpenLinkDialog} />
-            )
-          }
-          {
-            renderHead()
-          }
+          {openLinkDialog && <LinkSettingsDialog setOpen={setOpenLinkDialog} />}
+          {renderHead()}
           <TabLists
             data={tabs}
-            headerComponents={(
+            headerComponents={
               <>
                 {TopArea}
                 {/* Unit image */}
-                {
-                  isMobile
-                    ? renderUnitLocation()
-                    : renderPicture()
-                }
+                {isMobile ? renderUnitLocation() : renderPicture()}
               </>
-            )}
+            }
           />
         </div>
       );

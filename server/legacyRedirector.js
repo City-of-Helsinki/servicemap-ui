@@ -1,22 +1,24 @@
 import https from 'https';
+
 import config from '../config';
 
-let languageMap = {
+const languageMap = {
   palvelukartta: 'fi',
   servicekarta: 'sv',
-  servicemap: 'en'
+  servicemap: 'en',
 };
 
-let languageIdMap = {};
-Object.keys(languageMap).forEach(key => {
+const languageIdMap = {};
+Object.keys(languageMap).forEach((key) => {
   if (Object.prototype.hasOwnProperty.call(languageMap, key)) {
     const current = languageMap[key];
     languageIdMap[current] = key;
   }
 });
 
-const extractLanguage = function(req, isEmbed) {
-  var language, value;
+const extractLanguage = function (req, isEmbed) {
+  let language;
+  let value;
   language = 'fi';
   value = req.query.lang;
   if (value == null) {
@@ -32,16 +34,19 @@ const extractLanguage = function(req, isEmbed) {
         break;
       case 'en':
         language = 'en';
+        break;
+      default:
+        break;
     }
   }
   return {
     id: language,
-    isAlias: false
+    isAlias: false,
   };
 };
 
-const extractServices = function(req) {
-  var services;
+const extractServices = function (req) {
+  let services;
   services = req.query.theme;
   if (!services || !(services instanceof String)) {
     return null;
@@ -53,8 +58,14 @@ const extractServices = function(req) {
   return services.join(',');
 };
 
-const extractStreetAddress = function(req, municipalityParameter) {
-  var addressParts, addressString, municipality, numberIndex, numberPart, street, streetPart;
+const extractStreetAddress = function (req, municipalityParameter) {
+  let addressParts;
+  let addressString;
+  let municipality;
+  let numberIndex;
+  let numberPart;
+  let street;
+  let streetPart;
   addressParts = void 0;
   addressString = req.query.address || req.query.addresslocation;
   if (addressString === void 0) {
@@ -78,12 +89,13 @@ const extractStreetAddress = function(req, municipalityParameter) {
   return {
     municipality: municipality != null ? municipality.toLowerCase() : void 0,
     street: street.toLowerCase().replace(/\s+/g, '+'),
-    number: numberPart.toLowerCase()
+    number: numberPart.toLowerCase(),
   };
 };
 
-const extractMunicipality = function(req) {
-  var municipality, region;
+const extractMunicipality = function (req) {
+  let municipality;
+  let region;
   municipality = req.query.city;
   region = req.query.region;
   if (region == null) {
@@ -120,20 +132,21 @@ const extractMunicipality = function(req) {
   }
 };
 
-const extractSpecification = function(req) {
-  var dig, language, specs;
-  language = void 0;
+const extractSpecification = function (req) {
+  let dig;
+  let specs;
   specs = {};
-  dig = function(key) {
+  dig = function (key) {
     return req.query[key] || null;
   };
-  specs.originalPath = req.url.split('/').filter(function(s) {
-    return s.length > 0;
-  });
+  specs.originalPath = req.url.split('/').filter((s) => s.length > 0);
   if (specs.originalPath.indexOf('embed') >= 0) {
     specs.isEmbed = true;
   }
-  if (specs.originalPath.indexOf('esteettomyys') >= 0 || specs.originalPath.indexOf('yllapito') >= 0) {
+  if (
+    specs.originalPath.indexOf('esteettomyys') >= 0 ||
+    specs.originalPath.indexOf('yllapito') >= 0
+  ) {
     specs.override = true;
     return specs;
   }
@@ -154,15 +167,15 @@ const extractSpecification = function(req) {
   return specs;
 };
 
-const encodeQueryComponent = function(value) {
+const encodeQueryComponent = function (value) {
   return encodeURIComponent(value).replace(/%20/g, '+').replace(/%2C/g, ',');
 };
 
-const generateQuery = function(specs, resource, originalUrl, path) {
-  var addQuery, query, queryParts;
-  query = '';
+const generateQuery = function (specs, resource, originalUrl, path) {
+  let addQuery;
+  let queryParts;
   queryParts = [];
-  addQuery = function(key, value) {
+  addQuery = function (key, value) {
     if (value === null || value === void 0) {
       return;
     }
@@ -182,23 +195,31 @@ const generateQuery = function(specs, resource, originalUrl, path) {
     // leave the _rdr parameter out.
     return '';
   }
-  queryParts.push('_rdr=' + encodeURIComponent(originalUrl));
-  return '?' + queryParts.join('&');
+  queryParts.push(`_rdr=${encodeURIComponent(originalUrl)}`);
+  return `?${queryParts.join('&')}`;
 };
 
-const getResource = function(specs) {
+const getResource = function (specs) {
   if (specs.unit || (specs.services && !specs.searchQuery)) {
     return 'unit';
-  } else if (specs.searchQuery) {
+  }
+  if (specs.searchQuery) {
     return 'search';
-  } else if (specs.address) {
+  }
+  if (specs.address) {
     return 'address';
   }
   return null;
 };
 
-const generateUrl = function(specs, originalUrl) {
-  var address, fragment, host, path, protocol, resource, subDomain;
+const generateUrl = function (specs, originalUrl) {
+  let address;
+  let fragment;
+  let host;
+  let path;
+  let protocol;
+  let resource;
+  let subDomain;
   protocol = 'https://';
   subDomain = 'palvelukartta';
   resource = getResource(specs);
@@ -221,36 +242,57 @@ const generateUrl = function(specs, originalUrl) {
   } else if (resource === 'unit' && specs.unit !== null) {
     path.push(specs.unit);
   }
-  return protocol + path.join('/') + generateQuery(specs, resource, originalUrl, path) + fragment;
+  return (
+    protocol +
+    path.join('/') +
+    generateQuery(specs, resource, originalUrl, path) +
+    fragment
+  );
 };
 
-const getMunicipalityFromGeocoder = function(address, language, callback) {
-  var municipality, request, timeout, url;
+const getMunicipalityFromGeocoder = function (address, language, callback) {
+  let municipality;
+  let request;
+  let timeout;
+  let url;
   municipality = address.municipality;
-  if ((municipality != null) && municipality.length) {
+  if (municipality != null && municipality.length) {
     callback(municipality);
     return;
   }
-  timeout = setTimeout((function() {
-    return callback(null);
-  }), 3000);
-  url = `${config.serviceMapAPI.root}${config.serviceMapAPI.version}/address/?language=${language}&number=${address.number}&street=${address.street}&page_size=1`;
-  request = https.get(url, function(apiResponse) {
-    var respData;
+  timeout = setTimeout(() => callback(null), 3000);
+  url =
+    `${config.serviceMapAPI.root}${config.serviceMapAPI.version}/address/` +
+    `?language=${language}` +
+    `&number=${address.number}` +
+    `&street=${address.street}` +
+    `&page_size=1`;
+  request = https.get(url, (apiResponse) => {
+    let respData;
     if (apiResponse.statusCode !== 200) {
       clearTimeout(timeout);
       callback(null);
       return;
     }
     respData = '';
-    apiResponse.on('data', function(data) {
-      return respData += data;
-    });
-    return apiResponse.on('end', function() {
-      var addressInfo, ref, ref1, ref2;
+    apiResponse.on('data', (data) => (respData += data));
+    return apiResponse.on('end', () => {
+      let addressInfo;
+      let ref;
+      let ref1;
+      let ref2;
       addressInfo = JSON.parse(respData);
       clearTimeout(timeout);
-      municipality = addressInfo != null ? (ref = addressInfo.results) != null ? (ref1 = ref[0]) != null ? (ref2 = ref1.street) != null ? ref2.municipality : void 0 : void 0 : void 0 : void 0;
+      municipality =
+        addressInfo != null
+          ? (ref = addressInfo.results) != null
+            ? (ref1 = ref[0]) != null
+              ? (ref2 = ref1.street) != null
+                ? ref2.municipality
+                : void 0
+              : void 0
+            : void 0
+          : void 0;
       callback(municipality);
     });
   });
@@ -260,25 +302,34 @@ const getMunicipalityFromGeocoder = function(address, language, callback) {
   });
 };
 
-const legacyRedirector = function(req, res) {
-  var resource, specs, url;
+const legacyRedirector = function (req, res) {
+  let resource;
+  let specs;
+  let url;
   specs = extractSpecification(req);
   if (specs.override === true) {
-    url = req.originalUrl.replace(/\/rdr\/?/, 'https://www.hel.fi/karttaupotus/');
+    url = req.originalUrl.replace(
+      /\/rdr\/?/,
+      'https://www.hel.fi/karttaupotus/'
+    );
     res.redirect(301, url);
     return;
   }
   resource = getResource(specs);
-  if (resource === 'address' && (specs.address.municipality == null)) {
-    getMunicipalityFromGeocoder(specs.address, specs.language.id, function(municipality) {
-      if (municipality != null) {
-        specs.address.municipality = municipality;
-      } else {
-        specs.address.municipality = 'helsinki';
+  if (resource === 'address' && specs.address.municipality == null) {
+    getMunicipalityFromGeocoder(
+      specs.address,
+      specs.language.id,
+      (municipality) => {
+        if (municipality != null) {
+          specs.address.municipality = municipality;
+        } else {
+          specs.address.municipality = 'helsinki';
+        }
+        url = generateUrl(specs, req.originalUrl);
+        return res.redirect(301, url);
       }
-      url = generateUrl(specs, req.originalUrl);
-      return res.redirect(301, url);
-    });
+    );
   } else {
     url = generateUrl(specs, req.originalUrl);
     res.redirect(301, url);

@@ -1,27 +1,24 @@
 import { Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
+import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import { useIntl } from 'react-intl';
+
 import {
-  getStatisticalDistrictAreaSelections,
   getSelectedStatisticalDistricts,
-  getStatisticalDistrictSelection,
+  getStatisticalDistrictAreaSelections,
   getStatisticalDistrictSelectedCategory,
+  getStatisticalDistrictSelection,
 } from '../../../../redux/selectors/statisticalDistrict';
 import { getPage, selectThemeMode } from '../../../../redux/selectors/user';
 import dataVisualization from '../../../../utils/dataVisualization';
 import useLocaleText from '../../../../utils/useLocaleText';
 import swapCoordinates from '../../utils/swapCoordinates';
 
-
-const StatisticalDistrictsComponent = () => {
-  const {
-    Polygon,
-    Tooltip,
-  } = global.rL;
+function StatisticalDistrictsComponent() {
+  const { Polygon, Tooltip } = global.rL;
 
   const data = useSelector(getSelectedStatisticalDistricts);
   const selections = useSelector(getStatisticalDistrictAreaSelections);
@@ -30,28 +27,34 @@ const StatisticalDistrictsComponent = () => {
   const useContrast = useSelector(selectThemeMode) === 'dark';
   const location = useLocation();
 
-  const hasSelections = Object.keys(selections).some(key => selections[key]);
-  const sortedData = hasSelections ? data.filter(d => selections[d.id]) : data;
+  const hasSelections = Object.keys(selections).some((key) => selections[key]);
+  const sortedData = hasSelections
+    ? data.filter((d) => selections[d.id])
+    : data;
   const searchParams = new URLSearchParams(location.search);
 
   if (
-    page !== 'area'
-    || searchParams.get('t') !== '2'
-    || typeof section === 'undefined'
+    page !== 'area' ||
+    searchParams.get('t') !== '2' ||
+    typeof section === 'undefined'
   ) {
     return null;
   }
 
   return sortedData.map((district) => {
     const selected = selections[`${district.id}`];
-    const fillColor = useContrast ? dataVisualization.COLOR_CONTRAST : dataVisualization.COLOR;
+    const fillColor = useContrast
+      ? dataVisualization.COLOR_CONTRAST
+      : dataVisualization.COLOR;
     const borderColor = fillColor;
-    const area = district.boundary.coordinates.map(
-      coords => swapCoordinates(coords),
+    const area = district.boundary.coordinates.map((coords) =>
+      swapCoordinates(coords)
     );
-    const styles = selected ? {
-      zIndex: 1000,
-    } : {};
+    const styles = selected
+      ? {
+          zIndex: 1000,
+        }
+      : {};
     return (
       <Polygon
         interactive
@@ -68,26 +71,17 @@ const StatisticalDistrictsComponent = () => {
         eventHandlers={{}}
         style={styles}
       >
-        <Tooltip
-          sticky
-          direction="top"
-          autoPan={false}
-        >
-          <StatisticalDistrictTooltip
-            district={district}
-          />
+        <Tooltip sticky direction="top" autoPan={false}>
+          <StatisticalDistrictTooltip district={district} />
         </Tooltip>
       </Polygon>
     );
   });
-};
+}
 
 export default StatisticalDistrictsComponent;
 
-
-const StatisticalDistrictTooltip = ({
-  district,
-}) => {
+function StatisticalDistrictTooltip({ district }) {
   const { section } = useSelector(getStatisticalDistrictSelection);
   const getLocaleText = useLocaleText();
   const { formatMessage } = useIntl();
@@ -98,44 +92,37 @@ const StatisticalDistrictTooltip = ({
     count: district.selectedValue,
     percent: dataVisualization.isTotal(section)
       ? district.selectedProportion
-      : (district.selectedProportion).toFixed(2),
+      : district.selectedProportion.toFixed(2),
   };
   const countText = formatMessage(
-    { id: `area.statisticalDistrict.label.${hasValue ? 'people' : 'noResults'}` },
-    values,
+    {
+      id: `area.statisticalDistrict.label.${hasValue ? 'people' : 'noResults'}`,
+    },
+    values
   );
   const percentText = formatMessage(
     { id: 'area.statisticalDistrict.label.percent' },
-    values,
+    values
   );
   const categoryText = formatMessage({ id: `area.list.statistic.${category}` });
   const sectionText = formatMessage({ id: `area.list.statistic.${section}` });
   const currentSectionText = formatMessage(
     { id: 'area.statisticalDistrict.section' },
-    { text: `${categoryText}, ${sectionText}` },
+    { text: `${categoryText}, ${sectionText}` }
   );
   return (
     <StyledContainer>
-      <StyledTitle variant="body1">
-        {getLocaleText(district.name)}
-      </StyledTitle>
-      <StyledText variant="body2">
-        {countText}
-      </StyledText>
-      {
-        (!isTotal && hasValue)
-        && (
-          <StyledText variant="body2">
-            {percentText}
-          </StyledText>
-        )
-      }
+      <StyledTitle variant="body1">{getLocaleText(district.name)}</StyledTitle>
+      <StyledText variant="body2">{countText}</StyledText>
+      {!isTotal && hasValue && (
+        <StyledText variant="body2">{percentText}</StyledText>
+      )}
       <StyledCurrentSelectionText variant="body2">
         {currentSectionText}
       </StyledCurrentSelectionText>
     </StyledContainer>
   );
-};
+}
 
 StatisticalDistrictTooltip.propTypes = {
   district: PropTypes.shape({
@@ -168,5 +155,5 @@ const StyledCurrentSelectionText = styled(Typography)`
   text-align: left;
   font-size: 0.875rem;
   font-weight: 400;
-  color: #4C4D4F;
+  color: #4c4d4f;
 `;

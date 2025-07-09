@@ -1,4 +1,5 @@
 import { useSelector } from 'react-redux';
+
 import { selectAddressUnits } from '../redux/selectors/address';
 import { getFilteredSearchResultData } from '../redux/selectors/results';
 import { getSelectedUnit } from '../redux/selectors/selectedUnit';

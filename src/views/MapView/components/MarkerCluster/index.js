@@ -1,5 +1,9 @@
 import { connect } from 'react-redux';
-import { getSelectedUnit, getSelectedUnitEvents } from '../../../../redux/selectors/selectedUnit';
+
+import {
+  getSelectedUnit,
+  getSelectedUnitEvents,
+} from '../../../../redux/selectors/selectedUnit';
 import MarkerCluster from './MarkerCluster';
 
 const mapStateToProps = (state) => {
@@ -15,6 +19,5 @@ const mapStateToProps = (state) => {
     highlightedUnitEvents,
   };
 };
-
 
 export default connect(mapStateToProps)(MarkerCluster);

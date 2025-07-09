@@ -1,8 +1,9 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
+
 import {
   EventItem,
   ReservationItem,
@@ -12,13 +13,13 @@ import {
 import { selectNavigator } from '../../../../redux/selectors/general';
 import { getSelectedUnit } from '../../../../redux/selectors/selectedUnit';
 
-const UnitDataList = ({
+function UnitDataList({
   data = null,
   listLength = 5,
   type,
   period = null,
   disableTitle = false,
-}) => {
+}) {
   const location = useLocation();
   const navigator = useSelector(selectNavigator);
   const unit = useSelector(getSelectedUnit);
@@ -37,7 +38,8 @@ const UnitDataList = ({
   if (!dataItems) {
     return null;
   }
-  const endIndex = listLength > dataItems.length ? dataItems.length : listLength;
+  const endIndex =
+    listLength > dataItems.length ? dataItems.length : listLength;
   const shownData = dataItems.length ? dataItems.slice(0, endIndex) : null;
   const showButton = fullDataLength > listLength;
 
@@ -53,28 +55,32 @@ const UnitDataList = ({
 
   const renderListItems = () => {
     if (type === 'events') {
-      return (
-        shownData.map((item, i) => (
-          <EventItem simpleItem key={item.id} event={item} divider={i !== shownData.length - 1} />
-        ))
-      );
-    } if (type === 'reservations') {
-      return (
-        shownData.map((item, i) => (
-          <ReservationItem key={item.pk} reservation={item} divider={i !== shownData.length - 1} />
-        ))
-      );
+      return shownData.map((item, i) => (
+        <EventItem
+          simpleItem
+          key={item.id}
+          event={item}
+          divider={i !== shownData.length - 1}
+        />
+      ));
+    }
+    if (type === 'reservations') {
+      return shownData.map((item, i) => (
+        <ReservationItem
+          key={item.pk}
+          reservation={item}
+          divider={i !== shownData.length - 1}
+        />
+      ));
     }
     if (type === 'services' || type === 'educationServices') {
-      return (
-        shownData.map((item, i) => (
-          <ServiceItem
-            key={item.id}
-            service={item}
-            divider={i !== shownData.length - 1}
-          />
-        ))
-      );
+      return shownData.map((item, i) => (
+        <ServiceItem
+          key={item.id}
+          service={item}
+          divider={i !== shownData.length - 1}
+        />
+      ));
     }
     return null;
   };
@@ -83,8 +89,15 @@ const UnitDataList = ({
     return (
       <div>
         <TitledList
-          title={!disableTitle ? <FormattedMessage id={`unit.${type}`} /> : null}
-          description={<FormattedMessage id={`unit.${type}.description`} values={period ? { period } : null} />}
+          title={
+            !disableTitle ? <FormattedMessage id={`unit.${type}`} /> : null
+          }
+          description={
+            <FormattedMessage
+              id={`unit.${type}.description`}
+              values={period ? { period } : null}
+            />
+          }
           detailedTitle
           divider={false}
           titleComponent="h4"
@@ -98,10 +111,9 @@ const UnitDataList = ({
         </TitledList>
       </div>
     );
-  } return (
-    null
-  );
-};
+  }
+  return null;
+}
 
 UnitDataList.propTypes = {
   data: PropTypes.objectOf(PropTypes.any),

@@ -45,14 +45,15 @@ const fetchAdministrativeDistricts = async (lnglat) => {
     page_size: 80,
     type: `${districts.join(',')}`,
     geometry: true,
-    unit_include: 'name,root_service_nodes,location,street_address,accessibility_shortcoming_count,municipality,address_zip',
+    unit_include:
+      'name,root_service_nodes,location,street_address,accessibility_shortcoming_count,municipality,address_zip',
   };
   const districtData = await districtFetch(options);
   const data = districtData.results.reduce((result, item) => {
     if (item.unit) {
       item.unit.object_type = 'unit';
     }
-    item.units?.forEach(u => {
+    item.units?.forEach((u) => {
       u.object_type = 'unit';
     });
     result.push(item);
@@ -80,8 +81,12 @@ const fetchAdministrativeDistricts = async (lnglat) => {
       }
 
       if (as) {
-        if (!bs) { return 1; }
-        if (as < bs) { return -1; }
+        if (!bs) {
+          return 1;
+        }
+        if (as < bs) {
+          return -1;
+        }
         return 1;
       }
       if (bs) {

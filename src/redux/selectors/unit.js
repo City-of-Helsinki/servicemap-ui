@@ -1,16 +1,35 @@
 import { createSelector } from 'reselect';
+
 import { selectAddress } from './address';
-import { getPage, selectCustomPositionCoordinates, selectUserPositionCoordinates } from './user';
+import {
+  getPage,
+  selectCustomPositionCoordinates,
+  selectUserPositionCoordinates,
+} from './user';
 
 export const getCurrentlyUsedPosition = createSelector(
-  [selectCustomPositionCoordinates, selectUserPositionCoordinates, selectAddress, getPage],
-  (customPositionCoordinates, userPositionCoordinates, address, currentPage) => {
-    const addressPosition = currentPage === 'address' && address?.addressCoordinates ? {
-      latitude: address.addressCoordinates[1],
-      longitude: address.addressCoordinates[0],
-    } : null;
+  [
+    selectCustomPositionCoordinates,
+    selectUserPositionCoordinates,
+    selectAddress,
+    getPage,
+  ],
+  (
+    customPositionCoordinates,
+    userPositionCoordinates,
+    address,
+    currentPage
+  ) => {
+    const addressPosition =
+      currentPage === 'address' && address?.addressCoordinates
+        ? {
+            latitude: address.addressCoordinates[1],
+            longitude: address.addressCoordinates[0],
+          }
+        : null;
 
-    const usedPosition = customPositionCoordinates || addressPosition || userPositionCoordinates;
+    const usedPosition =
+      customPositionCoordinates || addressPosition || userPositionCoordinates;
     if (usedPosition?.latitude && usedPosition?.longitude) {
       return usedPosition;
     }
@@ -18,9 +37,10 @@ export const getCurrentlyUsedPosition = createSelector(
   },
   {
     memoizeOptions: {
-      resultEqualityCheck: (a, b) => a?.latitude === b?.latitude && a?.longitude === b?.longitude,
+      resultEqualityCheck: (a, b) =>
+        a?.latitude === b?.latitude && a?.longitude === b?.longitude,
     },
-  },
+  }
 );
 
 export const calculateDistance = (unit, usedPosition) => {
@@ -44,12 +64,15 @@ export const calculateDistance = (unit, usedPosition) => {
   const lon1 = unit.location.coordinates[0];
   const lon2 = usedPosition.longitude;
 
-  const dLat = toRadians((lat2 - lat1));
-  const dLon = toRadians((lon2 - lon1));
+  const dLat = toRadians(lat2 - lat1);
+  const dLon = toRadians(lon2 - lon1);
 
-  const a = Math.sin(dLat / 2) * Math.sin(dLat / 2)
-      + Math.cos(toRadians(lat1)) * Math.cos(toRadians(lat2))
-      * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(toRadians(lat1)) *
+      Math.cos(toRadians(lat2)) *
+      Math.sin(dLon / 2) *
+      Math.sin(dLon / 2);
 
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 

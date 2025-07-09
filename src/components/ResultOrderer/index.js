@@ -1,5 +1,6 @@
-import { connect } from 'react-redux';
 import { injectIntl } from 'react-intl';
+import { connect } from 'react-redux';
+
 import { setDirection, setOrder } from '../../redux/actions/sort';
 import ResultOrderer from './ResultOrderer';
 
@@ -16,7 +17,6 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  { setDirection, setOrder },
-)(injectIntl(ResultOrderer));
+export default connect(mapStateToProps, { setDirection, setOrder })(
+  injectIntl(ResultOrderer)
+);

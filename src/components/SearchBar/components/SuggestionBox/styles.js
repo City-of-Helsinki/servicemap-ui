@@ -1,20 +1,23 @@
-import { Paper, Typography } from '@mui/material';
 import styled from '@emotion/styled';
+import { Paper, Typography } from '@mui/material';
+
 import { CloseSuggestionButton } from '../CloseSuggestionButton';
 
-const StyledCloseSuggestionButton = styled(CloseSuggestionButton)(({ theme }) => ({
-  backgroundColor: theme.palette.disabled.main,
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-  padding: theme.spacing(2),
-  '& p': {
-    marginLeft: theme.spacing(6),
-  },
-  '& svg': {
-    marginRight: theme.spacing(1.5),
-  },
-}));
+const StyledCloseSuggestionButton = styled(CloseSuggestionButton)(
+  ({ theme }) => ({
+    backgroundColor: theme.palette.disabled.main,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: theme.spacing(2),
+    '& p': {
+      marginLeft: theme.spacing(6),
+    },
+    '& svg': {
+      marginRight: theme.spacing(1.5),
+    },
+  })
+);
 
 const StyledInfoText = styled(Typography)(({ theme }) => ({
   padding: theme.spacing(1),

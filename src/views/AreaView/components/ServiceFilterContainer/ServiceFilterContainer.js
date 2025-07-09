@@ -1,20 +1,19 @@
-import React from 'react';
-import { useTheme } from '@mui/styles';
-import {
-  IconButton, Typography,
-} from '@mui/material';
 import { Clear } from '@mui/icons-material';
+import { IconButton, Typography } from '@mui/material';
+import { useTheme } from '@mui/styles';
+import React from 'react';
 import { FormattedMessage } from 'react-intl';
+
+import { createServiceFilterStyles } from '../../serviceFilterStyles';
 import {
-  StyledServiceFilterContainer,
-  StyledServiceFilterText,
   StyledRowContainer,
   StyledServiceFilter,
   StyledServiceFilterButton,
+  StyledServiceFilterContainer,
+  StyledServiceFilterText,
 } from '../styled/styled';
-import { createServiceFilterStyles } from '../../serviceFilterStyles';
 
-const ServiceFilterContainer = ({
+function ServiceFilterContainer({
   title,
   inputRef,
   keyboardHandler,
@@ -22,7 +21,7 @@ const ServiceFilterContainer = ({
   filterValue,
   setFilterValue,
   formatMessage,
-}) => {
+}) {
   const theme = useTheme();
   const {
     serviceFilterInputClass,
@@ -45,7 +44,10 @@ const ServiceFilterContainer = ({
             'aria-labelledby': 'ServiceListTitle',
           }}
           type="text"
-          onKeyPress={keyboardHandler(() => handlefilterButtonClick(), ['enter'])}
+          onKeyPress={keyboardHandler(
+            () => handlefilterButtonClick(),
+            ['enter']
+          )}
           endAdornment={
             filterValue ? (
               <IconButton
@@ -62,7 +64,9 @@ const ServiceFilterContainer = ({
         />
         <StyledServiceFilterButton
           id="ServiceListFilterButton"
-          aria-label={formatMessage({ id: 'area.statisticalDistrict.service.filter.button.aria' })}
+          aria-label={formatMessage({
+            id: 'area.statisticalDistrict.service.filter.button.aria',
+          })}
           disableRipple
           disableFocusRipple
           classes={{
@@ -80,6 +84,6 @@ const ServiceFilterContainer = ({
       </StyledRowContainer>
     </StyledServiceFilterContainer>
   );
-};
+}
 
 export default ServiceFilterContainer;

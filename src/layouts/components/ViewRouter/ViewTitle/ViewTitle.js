@@ -1,8 +1,9 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
-import { visuallyHidden } from '@mui/utils';
 import { Typography } from '@mui/material';
+import { visuallyHidden } from '@mui/utils';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
+
 import { viewTitleID } from '../../../../utils/accessibility';
 import { COOKIE_MODAL_ROOT_ID } from '../../../../utils/constants';
 
@@ -34,7 +35,9 @@ class ViewTitle extends React.Component {
         try {
           shouldFocus = !document.getElementById(COOKIE_MODAL_ROOT_ID);
         } catch (e) {
-          console.warn('Error while attempting to figure out if cookie modal exists');
+          console.warn(
+            'Error while attempting to figure out if cookie modal exists'
+          );
         }
 
         // Focus to site title on first load if cookihub banner is hidden
@@ -57,7 +60,13 @@ class ViewTitle extends React.Component {
     }
 
     return (
-      <Typography id={viewTitleID} style={visuallyHidden} component="h2" tabIndex={-1} ref={this.titleRef}>
+      <Typography
+        id={viewTitleID}
+        style={visuallyHidden}
+        component="h2"
+        tabIndex={-1}
+        ref={this.titleRef}
+      >
         <FormattedMessage id={message + type} />
       </Typography>
     );

@@ -1,13 +1,16 @@
 /* eslint-disable camelcase */
 import { parseSearchParams } from '../../utils';
 
-
 export const reverseBBoxCoordinates = (bbox) => {
   const bboxParts = bbox.split(',');
   return [bboxParts[1], bboxParts[0], bboxParts[3], bboxParts[2]];
 };
 
-export const searchParamFetchOptions = (location, redirectNode, includeService = false) => {
+export const searchParamFetchOptions = (
+  location,
+  redirectNode,
+  includeService = false
+) => {
   const searchParams = parseSearchParams(location.search);
 
   const {

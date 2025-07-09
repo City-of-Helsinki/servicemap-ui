@@ -1,14 +1,14 @@
 // Actions for fetching multiples
-const dataSet = prefix => ({
-  isFetching: search => ({
+const dataSet = (prefix) => ({
+  isFetching: (search) => ({
     type: `${prefix}_IS_FETCHING`,
     search,
   }),
-  fetchError: errorMessage => ({
+  fetchError: (errorMessage) => ({
     type: `${prefix}_FETCH_HAS_ERRORED`,
     errorMessage,
   }),
-  fetchSuccess: data => ({
+  fetchSuccess: (data) => ({
     type: `${prefix}_FETCH_DATA_SUCCESS`,
     data,
   }),
@@ -23,43 +23,43 @@ const dataSet = prefix => ({
     count,
     max,
   }),
-  fetchMoreSuccess: data => ({
+  fetchMoreSuccess: (data) => ({
     type: `${prefix}_FETCH_MORE_SUCCESS`,
     data,
   }),
-  setNewData: data => ({
+  setNewData: (data) => ({
     type: `${prefix}_SET_NEW_DATA`,
     data,
   }),
-  setNewCurrent: current => ({
+  setNewCurrent: (current) => ({
     type: `${prefix}_SET_NEW_CURRENT`,
     current,
   }),
-  isAdditiveFetching: search => ({
+  isAdditiveFetching: (search) => ({
     type: `${prefix}_ADDITIVE_IS_FETCHING`,
     search,
   }),
-  fetchAdditiveError: errorMessage => ({
+  fetchAdditiveError: (errorMessage) => ({
     type: `${prefix}_ADDITIVE_FETCH_HAS_ERRORED`,
     errorMessage,
   }),
-  fetchAdditiveProgressUpdate: data => ({
+  fetchAdditiveProgressUpdate: (data) => ({
     type: `${prefix}_ADDITIVE_FETCH_PROGRESS_UPDATE`,
     count: data.count,
     max: data.max,
   }),
-  fetchAdditiveSuccess: data => ({
+  fetchAdditiveSuccess: (data) => ({
     type: `${prefix}_ADDITIVE_FETCH_DATA_SUCCESS`,
     data,
   }),
 });
 
 // Actions for fetching singles
-const dataSingle = prefix => ({
+const dataSingle = (prefix) => ({
   isFetching: () => ({
     type: `${prefix}_IS_FETCHING`,
   }),
-  fetchError: errorMessage => ({
+  fetchError: (errorMessage) => ({
     type: `${prefix}_FETCH_HAS_ERRORED`,
     errorMessage,
   }),
@@ -74,7 +74,7 @@ const dataSingle = prefix => ({
     data,
     next: meta && meta.next,
   }),
-  setNewData: data => ({
+  setNewData: (data) => ({
     type: `${prefix}_SET_DATA`,
     data,
   }),
@@ -88,10 +88,14 @@ export const reservations = dataSet('SELECTED_UNIT_RESERVATIONS');
 export const alertNews = dataSet('ALERT_NEWS');
 export const alertErrors = dataSet('ALERT_ERRORS');
 export const statisticalDistrictUnits = dataSet('STATISTICAL_DISTRICT_UNITS');
-export const statisticalDistrictServices = dataSet('STATISTICAL_DISTRICT_SERVICES');
+export const statisticalDistrictServices = dataSet(
+  'STATISTICAL_DISTRICT_SERVICES'
+);
 
 // Data fetch single
 export const selectedUnit = dataSingle('SELECTED_UNIT');
-export const accessibilitySentences = dataSingle('SELECTED_UNIT_ACCESSIBILITY_SENTENCES');
+export const accessibilitySentences = dataSingle(
+  'SELECTED_UNIT_ACCESSIBILITY_SENTENCES'
+);
 export const hearingMaps = dataSingle('SELECTED_UNIT_HEARING_MAPS');
 export const redirectService = dataSingle('REDIRECT_SERVICE');

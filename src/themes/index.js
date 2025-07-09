@@ -121,7 +121,9 @@ export const paletteDark = {
 const focusIndicator = {
   outline: '2px solid transparent !important',
   borderRadius: '4px',
-  boxShadow: `0 0 0 2px rgb(255, 255, 255), 0 0 0 6px ${paletteDefault.primary.main}, 0 0 0 8px rgb(255, 255, 255) !important`,
+  boxShadow:
+    `0 0 0 2px rgb(255, 255, 255), 0 0 0 6px ${paletteDefault.primary.main}, ` +
+    '0 0 0 8px rgb(255, 255, 255) !important',
   zIndex: '1',
 };
 
@@ -132,7 +134,7 @@ const focusIndicatorDark = {
   zIndex: '1',
 };
 
-const components = theme => ({
+const components = (theme) => ({
   MuiListItem: {
     styleOverrides: {
       button: {
@@ -343,4 +345,5 @@ const SMThemeDark = createTheme({
   focusIndicator: focusIndicatorDark,
 });
 
-export default { SMTheme, SMThemeDark };
+const themes = { SMTheme, SMThemeDark };
+export default themes;

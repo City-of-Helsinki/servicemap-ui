@@ -1,8 +1,9 @@
 // Link.react.test.js
-import React from 'react';
 import { fireEvent } from '@testing-library/react';
-import SimpleListItem from '../index';
+import React from 'react';
+
 import { getRenderWithProviders } from '../../../../../jestUtils';
+import SimpleListItem from '../index';
 
 // Generic required props for SimpleListItem
 const mockProps = {
@@ -13,7 +14,9 @@ const renderWithProviders = getRenderWithProviders({});
 
 describe('<SimpleListItem />', () => {
   it('should work', () => {
-    const { container } = renderWithProviders(<SimpleListItem {...mockProps} />);
+    const { container } = renderWithProviders(
+      <SimpleListItem {...mockProps} />
+    );
     expect(container).toMatchSnapshot();
   });
 
@@ -31,7 +34,7 @@ describe('<SimpleListItem />', () => {
   it('simulates keyboard event', async () => {
     const mockCallBack = jest.fn();
     const { getByRole } = renderWithProviders(
-      <SimpleListItem {...mockProps} handleItemClick={mockCallBack} button />,
+      <SimpleListItem {...mockProps} handleItemClick={mockCallBack} button />
     );
 
     fireEvent.keyDown(getByRole('listitem'), {
@@ -52,7 +55,9 @@ describe('<SimpleListItem />', () => {
   });
 
   it('does show text correctly', () => {
-    const { getByText } = renderWithProviders(<SimpleListItem {...mockProps} />);
+    const { getByText } = renderWithProviders(
+      <SimpleListItem {...mockProps} />
+    );
 
     expect(getByText(mockProps.text)).toBeInTheDocument();
   });
@@ -62,11 +67,15 @@ describe('<SimpleListItem />', () => {
       <>
         <SimpleListItem {...mockProps} />
         <SimpleListItem {...mockProps} selected />
-      </>,
+      </>
     );
-    expect(getAllByRole('listitem')[0].classList.contains('Mui-selected')).toBeFalsy();
+    expect(
+      getAllByRole('listitem')[0].classList.contains('Mui-selected')
+    ).toBeFalsy();
 
-    expect(getAllByRole('listitem')[1].classList.contains('Mui-selected')).toBeTruthy();
+    expect(
+      getAllByRole('listitem')[1].classList.contains('Mui-selected')
+    ).toBeTruthy();
   });
 
   it('does set divider correctly', () => {
@@ -74,23 +83,27 @@ describe('<SimpleListItem />', () => {
       <>
         <SimpleListItem {...mockProps} />
         <SimpleListItem {...mockProps} divider />
-      </>,
+      </>
     );
 
-    expect(getAllByRole('listitem')[0].querySelector('hr')).not.toBeInTheDocument();
+    expect(
+      getAllByRole('listitem')[0].querySelector('hr')
+    ).not.toBeInTheDocument();
     expect(container.querySelector('hr')).toBeInTheDocument();
   });
 
   it('does use default accessibility attributes correctly', () => {
     const { container, getByText, getByRole } = renderWithProviders(
-      <SimpleListItem {...mockProps} />,
+      <SimpleListItem {...mockProps} />
     );
 
     const srText = container.querySelectorAll('p')[1];
     const text = getByText(mockProps.text, { selector: 'p' });
 
     // Expect screen reader texts to render correctly
-    expect(getByRole('listitem').textContent.indexOf(mockProps.text) !== -1).toBeTruthy();
+    expect(
+      getByRole('listitem').textContent.indexOf(mockProps.text) !== -1
+    ).toBeTruthy();
     // Expect aria-hidden attributes to be placed correctly
     expect(srText.getAttribute('aria-hidden')).toBeFalsy();
     expect(text.getAttribute('aria-hidden')).toBeFalsy();
@@ -108,13 +121,15 @@ describe('<SimpleListItem />', () => {
         srText="Screen reader text"
         divider
         button
-      />,
+      />
     );
 
     const srText = container.querySelectorAll('p')[1];
     const visibleText = container.querySelector('p');
-    const srTextContains = srText.textContent.indexOf('Screen reader text') !== -1;
-    const visibleTextContains = visibleText.textContent.indexOf(mockProps.text) !== -1;
+    const srTextContains =
+      srText.textContent.indexOf('Screen reader text') !== -1;
+    const visibleTextContains =
+      visibleText.textContent.indexOf(mockProps.text) !== -1;
 
     // Expect aria-hidden attributes to be placed correctly
     expect(srText.getAttribute('aria-hidden')).toBeFalsy();
@@ -126,7 +141,9 @@ describe('<SimpleListItem />', () => {
     // Expect role to be set
     expect(getByRole('button')).toBeInTheDocument();
     // Expect divider element to be hidden from screen readers
-    expect(container.querySelector('li[aria-hidden="true"')).toBeInTheDocument();
+    expect(
+      container.querySelector('li[aria-hidden="true"')
+    ).toBeInTheDocument();
     // Expect element to have tabIndex 0
     expect(getByRole('button').tabIndex).toEqual(0);
   });

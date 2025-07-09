@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-import { ButtonBase, Collapse } from '@mui/material';
-import { ArrowDropDown } from '@mui/icons-material';
 import styled from '@emotion/styled';
+import { ArrowDropDown } from '@mui/icons-material';
+import { ButtonBase, Collapse } from '@mui/material';
+import PropTypes from 'prop-types';
+import React, { useEffect, useState } from 'react';
 
-const SMAccordion = ({
+function SMAccordion({
   isOpen = null,
   defaultOpen = false,
   adornment = null,
@@ -17,7 +17,7 @@ const SMAccordion = ({
   openButtonSrText = null,
   className = '',
   elevated = false,
-}) => {
+}) {
   const [open, setOpen] = useState(defaultOpen);
   // This state makes sure that the component does not initially render closed accordion contents
   const [hasBeenOpened, setHasBeenOpened] = useState(defaultOpen);
@@ -56,23 +56,30 @@ const SMAccordion = ({
             disabled={disabled}
             aria-label={openButtonSrText}
             aria-expanded={openState}
-            onClick={e => handleOpen(e)}
+            onClick={(e) => handleOpen(e)}
           >
             {titleContent}
-            <StyledArrowDropDown open={openState || undefined} disabled={disabled || undefined} />
+            <StyledArrowDropDown
+              open={openState || undefined}
+              disabled={disabled || undefined}
+            />
           </StyledClickAreaButton>
-        ) : titleContent}
+        ) : (
+          titleContent
+        )}
       </StyledAccordion>
       <StyledCollapse elevated={+elevated} in={openState}>
-        {shouldRenderCollapse ? (
-          collapseContent
-        ) : null}
+        {shouldRenderCollapse ? collapseContent : null}
       </StyledCollapse>
     </StyledAccordionContainer>
   );
-};
+}
 
-const StyledArrowDropDown = styled(ArrowDropDown)(({ theme, open, disabled }) => {
+const StyledArrowDropDown = styled(ArrowDropDown)(({
+  theme,
+  open,
+  disabled,
+}) => {
   const styles = {
     fontSize: '1.5rem',
     transition: '0.3s',
@@ -129,14 +136,14 @@ const StyledCollapse = styled(Collapse)(({ elevated }) => {
   return styles;
 });
 
-
 SMAccordion.propTypes = {
   isOpen: PropTypes.bool,
   defaultOpen: PropTypes.bool,
   titleContent: PropTypes.objectOf(PropTypes.any).isRequired,
-  collapseContent: PropTypes.oneOfType(
-    [PropTypes.arrayOf(PropTypes.any), PropTypes.objectOf(PropTypes.any)],
-  ),
+  collapseContent: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.any),
+    PropTypes.objectOf(PropTypes.any),
+  ]),
   adornment: PropTypes.objectOf(PropTypes.any),
   onOpen: PropTypes.func,
   disabled: PropTypes.bool,

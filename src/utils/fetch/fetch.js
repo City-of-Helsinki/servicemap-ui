@@ -1,11 +1,10 @@
 import { APIHandlers } from './constants';
 
-
 // *****************
 // MIDDLEWARES
 // *****************
 
-const responseToJson = response => response.json();
+const responseToJson = (response) => response.json();
 
 /**
  * Middleware to handle fetch status check and json transform
@@ -13,8 +12,9 @@ const responseToJson = response => response.json();
  */
 const fetchHandler = (res) => {
   if (res.status !== 200) {
-    throw new Error(`Looks like there was a problem. Status Code: ${
-      res.status}`);
+    throw new Error(
+      `Looks like there was a problem. Status Code: ${res.status}`
+    );
   }
   return responseToJson(res);
 };
@@ -109,7 +109,13 @@ const optionsToURLParam = (options = null) => {
  * @param {AbortController} abortController
  */
 const handleFetch = async (
-  url, options, onSuccess, onError, onNext, handlerKey, abortController,
+  url,
+  options,
+  onSuccess,
+  onError,
+  onNext,
+  handlerKey,
+  abortController
 ) => {
   const optionsAsString = options ? `?${optionsToURLParam(options)}` : '';
   const signal = abortController ? abortController.signal : null;
@@ -136,9 +142,13 @@ const handleFetch = async (
     })
     .catch((err) => {
       if (err instanceof TypeError) {
-        console.warn(`TypeError while fetching data from ${url}${optionsAsString} - Message: ${err.message}`);
+        console.warn(
+          `TypeError while fetching data from ${url}${optionsAsString} - Message: ${err.message}`
+        );
       } else {
-        console.error(`Error while fetching data from ${url}${optionsAsString} - Message: ${err.message}`);
+        console.error(
+          `Error while fetching data from ${url}${optionsAsString} - Message: ${err.message}`
+        );
       }
       // eslint-disable-next-line no-param-reassign
       abortController = null;
@@ -161,30 +171,48 @@ const handleFetch = async (
  * @param {AbortController} abortController - AbortController for fetch
  */
 const fetchWrapper = async (
-  data, onStart, onSuccess, onError, onNext, key, id, abortController, overrideUrl,
+  data,
+  onStart,
+  onSuccess,
+  onError,
+  onNext,
+  key,
+  id,
+  abortController,
+  overrideUrl
 ) => {
   if (!Object.keys(APIHandlers).includes(key)) {
     throw new Error('Invalid key provided to fetchWrapper');
   }
 
   const { url, options, envName } = APIHandlers[key];
-  const functionWithID = typeof url === 'function' && (typeof id === 'number' || typeof id === 'string');
+  const functionWithID =
+    typeof url === 'function' &&
+    (typeof id === 'number' || typeof id === 'string');
 
   if (typeof url !== 'string' && !functionWithID) {
     throw new Error('Invalid data given to fetchWrapper');
   }
 
   if (typeof url === 'string' && url.indexOf('undefined') !== -1) {
-    throw new Error(`Invalid fetch URL: Missing ${envName} environment variable`);
+    throw new Error(
+      `Invalid fetch URL: Missing ${envName} environment variable`
+    );
   }
 
   const fetchURL = overrideUrl || (functionWithID ? url(id) : url);
-  const fetchOptions = overrideUrl ? null : (data || options);
+  const fetchOptions = overrideUrl ? null : data || options;
   if (onStart) {
     onStart();
   }
   const result = await handleFetch(
-    fetchURL, fetchOptions, onSuccess, onError, onNext, key, abortController,
+    fetchURL,
+    fetchOptions,
+    onSuccess,
+    onError,
+    onNext,
+    key,
+    abortController
   );
   return result;
 };

@@ -4,8 +4,12 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { useSelector } from 'react-redux';
+
 import { DivisionItem } from '../../../../components';
-import { getAddressDistrict, selectDistrictsFetching } from '../../../../redux/selectors/district';
+import {
+  getAddressDistrict,
+  selectDistrictsFetching,
+} from '../../../../redux/selectors/district';
 import { selectCities } from '../../../../redux/selectors/settings';
 import { getLocale } from '../../../../redux/selectors/user';
 import { formatDistanceObject } from '../../../../utils';
@@ -22,10 +26,8 @@ import {
   StyledServiceTabServiceList,
 } from '../styled/styled';
 
-const DistrictUnitList = (props) => {
-  const {
-    intl, selectedAddress = null, district,
-  } = props;
+function DistrictUnitList(props) {
+  const { intl, selectedAddress = null, district } = props;
 
   const citySettings = useSelector(selectCities);
   const addressDistrict = useSelector(getAddressDistrict);
@@ -39,11 +41,12 @@ const DistrictUnitList = (props) => {
 
   const distanceToAddress = (coord) => {
     if (coord && selectedAddress) {
-      return Math.round(distance(coord, selectedAddress.location.coordinates) * 1000);
+      return Math.round(
+        distance(coord, selectedAddress.location.coordinates) * 1000
+      );
     }
     return null;
   };
-
 
   const renderDistrictUnitItem = (unit) => {
     const streetAddress = getAddressFromUnit(unit, getLocaleText, intl);
@@ -58,23 +61,21 @@ const DistrictUnitList = (props) => {
           id: unit.id,
           street_address: streetAddress,
         }}
-        distance={unit.distance
-          ? formatDistanceObject(intl, unit.distance)
-          : null}
+        distance={
+          unit.distance ? formatDistanceObject(intl, unit.distance) : null
+        }
       />
     );
   };
-
 
   const renderServiceListAccordion = (title, unitList) => (
     <StyledServiceTabServiceList>
       <Typography data-sm="DistrictUnitsTitle">{`${title} (${unitList.length})`}</Typography>
       <List data-sm="DistrictUnits" disablePadding>
-        {unitList.map(unit => renderDistrictUnitItem(unit))}
+        {unitList.map((unit) => renderDistrictUnitItem(unit))}
       </List>
     </StyledServiceTabServiceList>
   );
-
 
   const render = () => {
     if (districtsFetching.length) {
@@ -87,7 +88,9 @@ const DistrictUnitList = (props) => {
       );
     }
 
-    const cityFilteredDistricts = district.data.filter(filterByCitySettings(citySettings));
+    const cityFilteredDistricts = district.data.filter(
+      filterByCitySettings(citySettings)
+    );
 
     if (district.id === 'rescue_area') {
       sortByOriginID(cityFilteredDistricts);
@@ -101,7 +104,7 @@ const DistrictUnitList = (props) => {
       }
       if (obj.units?.length) {
         obj.units
-          .filter(unit => typeof unit === 'object')
+          .filter((unit) => typeof unit === 'object')
           .forEach((unit) => {
             unit.localUnit = localArea;
           });
@@ -121,16 +124,22 @@ const DistrictUnitList = (props) => {
     });
 
     // Filter out non unit objects
-    unitList = unitList.filter(u => typeof u === 'object' && typeof u.id === 'number');
-    unitList = orderUnits(unitList, { locale, direction: 'desc', order: 'alphabetical' })
+    unitList = unitList.filter(
+      (u) => typeof u === 'object' && typeof u.id === 'number'
+    );
+    unitList = orderUnits(unitList, {
+      locale,
+      direction: 'desc',
+      order: 'alphabetical',
+    });
 
     if (selectedAddress && addressDistrict) {
       unitList.forEach((unit) => {
         unit.distance = distanceToAddress(unit.location?.coordinates);
       });
 
-      const localUnits = unitList.filter(unit => unit.localUnit);
-      const otherUnits = unitList.filter(unit => !unit.localUnit);
+      const localUnits = unitList.filter((unit) => unit.localUnit);
+      const otherUnits = unitList.filter((unit) => !unit.localUnit);
 
       if (!localUnits.length && !otherUnits.length) {
         return null;
@@ -150,19 +159,19 @@ const DistrictUnitList = (props) => {
                   <FormattedMessage id="area.services.local" />
                 </Typography>
                 <List disablePadding>
-                  {localUnits.map(unit => renderDistrictUnitItem(unit))}
+                  {localUnits.map((unit) => renderDistrictUnitItem(unit))}
                 </List>
               </StyledServiceList>
               <StyledDivider aria-hidden />
             </>
           ) : null}
 
-          {otherUnits.length ? (
-            renderServiceListAccordion(
-              intl.formatMessage({ id: 'area.services.nearby' }),
-              otherUnits,
-            )
-          ) : null}
+          {otherUnits.length
+            ? renderServiceListAccordion(
+                intl.formatMessage({ id: 'area.services.nearby' }),
+                otherUnits
+              )
+            : null}
         </div>
       );
     }
@@ -170,11 +179,9 @@ const DistrictUnitList = (props) => {
       return null;
     }
 
-    return (
-      renderServiceListAccordion(
-        intl.formatMessage({ id: 'area.services.all' }),
-        unitList,
-      )
+    return renderServiceListAccordion(
+      intl.formatMessage({ id: 'area.services.all' }),
+      unitList
     );
   };
 
@@ -184,7 +191,7 @@ const DistrictUnitList = (props) => {
       <StyledDivider aria-hidden />
     </StyledDistrictServiceListLevelFour>
   );
-};
+}
 
 DistrictUnitList.propTypes = {
   district: PropTypes.objectOf(PropTypes.any).isRequired,

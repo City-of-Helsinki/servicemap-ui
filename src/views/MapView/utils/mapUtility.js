@@ -1,5 +1,4 @@
-import { focusToPosition, focusDistrict } from './mapActions';
-
+import { focusDistrict, focusToPosition } from './mapActions';
 
 const panOptions = {
   padding: [200, 200],
@@ -36,10 +35,11 @@ class MapUtility {
     } else if (location) {
       const unitZoomLevel = this.leaflet.options.unitZoom;
       const currentZoom = this.leaflet.getZoom();
-      const targetZoom = currentZoom < unitZoomLevel ? unitZoomLevel : currentZoom;
+      const targetZoom =
+        currentZoom < unitZoomLevel ? unitZoomLevel : currentZoom;
       focusToPosition(this.leaflet, location.coordinates, targetZoom);
     }
-  }
+  };
 
   panInside = (unit) => {
     if (!unit) {
@@ -51,7 +51,7 @@ class MapUtility {
       // Pan to swapped coordinates
       this.leaflet.panInside([coords[1], coords[0]], panOptions);
     }
-  }
+  };
 }
 
 export default MapUtility;

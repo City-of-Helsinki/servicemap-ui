@@ -1,8 +1,9 @@
 import { useIntl } from 'react-intl';
+
 import config from '../../../../config';
 import useLocaleText from '../../../utils/useLocaleText';
 
-const routeDetails = (unit, userLocation) => {
+const useRouteDetails = (unit, userLocation) => {
   const intl = useIntl();
   const getLocaleText = useLocaleText();
 
@@ -28,10 +29,12 @@ const routeDetails = (unit, userLocation) => {
     extraText = intl.formatMessage({ id: 'unit.route.extra.routeGuide' });
   }
 
-  const destinationString = `${getLocaleText(unit.name)}, ${unit.municipality}::${unitLocation.coordinates[1]},${unitLocation.coordinates[0]}`;
+  const destinationString =
+    `${getLocaleText(unit.name)}, ${unit.municipality}::` +
+    `${unitLocation.coordinates[1]},${unitLocation.coordinates[0]}`;
   const routeUrl = `${url}${currentLocationString}/${destinationString}?locale=${intl.locale}`;
 
   return { routeUrl, extraText };
 };
 
-export default routeDetails;
+export default useRouteDetails;

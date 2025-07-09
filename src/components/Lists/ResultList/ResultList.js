@@ -1,21 +1,20 @@
 /* eslint-disable camelcase */
-import React from 'react';
-import PropTypes from 'prop-types';
-import {
-  List, Typography, Divider,
-} from '@mui/material';
-import { FormattedMessage } from 'react-intl';
 import styled from '@emotion/styled';
-import UnitItem from '../../ListItems/UnitItem';
-import ServiceItem from '../../ListItems/ServiceItem';
+import { Divider, List, Typography } from '@mui/material';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
+
 import AddressItem from '../../ListItems/AddressItem';
 import EventItem from '../../ListItems/EventItem';
+import ServiceItem from '../../ListItems/ServiceItem';
+import UnitItem from '../../ListItems/UnitItem';
 
 class ResultList extends React.Component {
   // Update only when data changes
   shouldComponentUpdate(nextProps) {
     const { data, title } = this.props;
-    return (data !== nextProps.data) || (title !== nextProps.title);
+    return data !== nextProps.data || title !== nextProps.title;
   }
 
   render() {
@@ -32,54 +31,69 @@ class ResultList extends React.Component {
 
     return (
       <StyledContainer data-sm="ResultListRoot">
-        {
-          title
-          && (
-            <StyledTitleRoot>
-              <StyledTitleContainer>
-                <StyledTitle
-                  id={`${listId}-result-title`}
-                  className="SearchResultTitle"
-                  component={titleComponent}
-                  variant="subtitle1"
-                  aria-labelledby={`${listId}-result-title ${listId}-result-title-info`}
-                  tabIndex={-1}
-                >
-                  {title}
-
-                </StyledTitle>
-                <StyledTitleInfo
-                  id={`${listId}-result-title-info`}
-                  component="p"
-                  variant="caption"
-                  aria-hidden="true"
-                >
-                  <FormattedMessage id="search.resultList" values={{ count: resultCount || data.length }} />
-                </StyledTitleInfo>
-              </StyledTitleContainer>
-            </StyledTitleRoot>
-          )
-        }
+        {title && (
+          <StyledTitleRoot>
+            <StyledTitleContainer>
+              <StyledTitle
+                id={`${listId}-result-title`}
+                className="SearchResultTitle"
+                component={titleComponent}
+                variant="subtitle1"
+                aria-labelledby={`${listId}-result-title ${listId}-result-title-info`}
+                tabIndex={-1}
+              >
+                {title}
+              </StyledTitle>
+              <StyledTitleInfo
+                id={`${listId}-result-title-info`}
+                component="p"
+                variant="caption"
+                aria-hidden="true"
+              >
+                <FormattedMessage
+                  id="search.resultList"
+                  values={{ count: resultCount || data.length }}
+                />
+              </StyledTitleInfo>
+            </StyledTitleContainer>
+          </StyledTitleRoot>
+        )}
         {!embeddedList ? <Divider aria-hidden="true" /> : null}
         {beforeList}
         <StyledList id={listId}>
-          {
-            data && data.length
-            && data.map((item) => {
+          {data &&
+            data.length &&
+            data.map((item) => {
               const { id, object_type } = item;
               let itemComponent = null;
               switch (object_type) {
                 case 'unit':
-                  itemComponent = <UnitItem simpleItem={embeddedList} key={`unit-${id}`} className={`unit-${id}`} unit={item} />;
+                  itemComponent = (
+                    <UnitItem
+                      simpleItem={embeddedList}
+                      key={`unit-${id}`}
+                      className={`unit-${id}`}
+                      unit={item}
+                    />
+                  );
                   break;
                 case 'service':
-                  itemComponent = <ServiceItem key={`service-${id}`} service={item} />;
+                  itemComponent = (
+                    <ServiceItem key={`service-${id}`} service={item} />
+                  );
                   break;
                 case 'address':
-                  itemComponent = <AddressItem key={`address-${item.municipality.id}-${item.name.fi}`} address={item} />;
+                  itemComponent = (
+                    <AddressItem
+                      key={`address-${item.municipality.id}-${item.name.fi}`}
+                      address={item}
+                    />
+                  );
                   break;
                 case 'event':
-                  itemComponent = <EventItem key={`event-${id}`} event={item} />;
+                  itemComponent = (
+                    <EventItem key={`event-${id}`} event={item} />
+                  );
                   break;
                 default:
                   if (customComponent && item) {
@@ -91,8 +105,7 @@ class ResultList extends React.Component {
                 return itemComponent;
               }
               return null;
-            })
-          }
+            })}
         </StyledList>
       </StyledContainer>
     );
@@ -150,6 +163,7 @@ ResultList.propTypes = {
   listId: PropTypes.string.isRequired,
   resultCount: PropTypes.number,
   title: PropTypes.string,
-  titleComponent: PropTypes.oneOf(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']).isRequired,
+  titleComponent: PropTypes.oneOf(['h1', 'h2', 'h3', 'h4', 'h5', 'h6'])
+    .isRequired,
   embeddedList: PropTypes.bool,
 };
