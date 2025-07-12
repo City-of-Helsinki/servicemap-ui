@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.5.1](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.5.0...servicemap-ui-v2.5.1) (2025-07-12)
+
+
+### Bug Fixes
+
+* Yarn install on docker PL-92 ([#1253](https://github.com/City-of-Helsinki/servicemap-ui/issues/1253)) ([9ef9414](https://github.com/City-of-Helsinki/servicemap-ui/commit/9ef9414ce4e677d45402ef88a95c9ae4473eee37))
+
 ## [2.5.0](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.4.0...servicemap-ui-v2.5.0) (2025-07-07)
 
 
