@@ -53,7 +53,14 @@ const fetchAdministrativeDistricts = async (lnglat) => {
       item.unit.object_type = 'unit';
     }
     item.units?.forEach(u => {
-      u.object_type = 'unit';
+      // Ensure that each unit is a valid object
+      if (typeof u === 'object' && u !== null) {
+        u.object_type = 'unit';
+      } else {
+        console.warn(
+          `Faulty data. Type of unit should be an object, but got ${typeof u} instead.`
+        );
+      }
     });
     result.push(item);
     return result;
