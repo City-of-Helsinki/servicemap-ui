@@ -1,3 +1,4 @@
+import * as Sentry from '@sentry/react';
 import { districtFetch } from '../../../utils/fetch';
 
 const SORTED_DIVISIONS = [
@@ -53,7 +54,32 @@ const fetchAdministrativeDistricts = async (lnglat) => {
       item.unit.object_type = 'unit';
     }
     item.units?.forEach(u => {
-      u.object_type = 'unit';
+      // Ensure that each unit is a valid object
+      if (typeof u === 'object' && u !== null) {
+        u.object_type = 'unit';
+      } else {
+        console.warn(
+          `Faulty data. Type of unit should be an object, but got ${typeof u} instead.`
+        );
+
+        // Report to Sentry with context
+        Sentry.captureMessage(
+          `Invalid unit data in administrative districts`,
+          {
+            level: 'warning',
+            tags: {
+              component: 'fetchAdministrativeDistricts',
+              data_validation: 'unit_type_check'
+            },
+            extra: {
+              unitType: typeof u,
+              unitValue: u,
+              itemType: item.type,
+              coordinates: lnglat
+            }
+          }
+        );
+      }
     });
     result.push(item);
     return result;
