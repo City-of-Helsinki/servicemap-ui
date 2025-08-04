@@ -282,6 +282,7 @@ function PrintView({ togglePrintView }) {
         console.warn(`Unable to focus to ToolMenuPanel ${e.message}`);
       }
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

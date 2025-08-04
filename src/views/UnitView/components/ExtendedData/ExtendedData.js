@@ -52,6 +52,7 @@ function ExtendedData({
     } catch (e) {
       console.error('ExtendedData component: Unable to focus to title button');
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getTitleText = (messageID) =>

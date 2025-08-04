@@ -49,6 +49,7 @@ function PanControl() {
     if (point) {
       map.panBy(point);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Handle keyboard arrow functionality for leaflet map
@@ -80,6 +81,7 @@ function PanControl() {
         break;
       default:
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Prevent rendering for server

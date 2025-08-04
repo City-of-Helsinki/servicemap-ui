@@ -33,6 +33,7 @@ function ElevationControl({ unit, isMobile }) {
 
   useEffect(() => {
     setGeometry(getUnitGeometry(unit));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [unit, geometryIndex, currentPage]);
 
   function constructProfileGeoJson(coordinates) {
@@ -183,6 +184,7 @@ function ElevationControl({ unit, isMobile }) {
       map.removeControl(control);
       map.removeLayer(displayGroup);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [geometry, geometryIndex]);
 
   return null;

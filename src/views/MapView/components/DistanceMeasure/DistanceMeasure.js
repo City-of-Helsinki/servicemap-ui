@@ -69,6 +69,7 @@ function DistanceMeasure(props) {
     return () => {
       mapElement.style.cursor = 'grab';
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -86,6 +87,7 @@ function DistanceMeasure(props) {
       ),
     });
     setIcon(icon);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (icon && markerArray.length) {

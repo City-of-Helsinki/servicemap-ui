@@ -310,6 +310,7 @@ function SuggestionBox(props) {
       setSuggestionQuery(searchQuery);
       generateSuggestions(searchQuery);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchQuery]);
 
   useEffect(() => {
@@ -331,6 +332,7 @@ function SuggestionBox(props) {
         app.style.height = null;
       }
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [visible]);
 
   /**

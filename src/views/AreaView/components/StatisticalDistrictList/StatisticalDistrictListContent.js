@@ -54,6 +54,7 @@ function StatisticalDistrictListContent() {
     if (districtsToFocus.length > 0) {
       focusDistricts(map, districtsToFocus);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [areaSelections, cityFilteredData]);
 
   const handleCheckboxChange = (e, district) => {

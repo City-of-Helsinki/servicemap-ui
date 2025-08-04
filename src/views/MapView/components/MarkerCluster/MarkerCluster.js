@@ -617,6 +617,7 @@ function MarkerCluster({
       return;
     }
     openHighlightUnitPopup();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [highlightedUnit, currentPage]);
 
   // Create and initialize marker cluster layer on mount
@@ -636,6 +637,7 @@ function MarkerCluster({
       mcg.clearLayers();
     };
     // this affects the distance calculation
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [distanceCoordinates]);
 
   /**
@@ -741,6 +743,7 @@ function MarkerCluster({
       if (measuringMode || disableInteraction)
         item.classList.remove('leaflet-interactive');
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cluster, data, isMobile, measuringMode]);
 
   const removeMarkerInteraction = useCallback(() => {
@@ -760,6 +763,7 @@ function MarkerCluster({
       // Remove event listener when measuring mode is closed
       cluster.off('animationend', removeMarkerInteraction);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [measuringMode]);
 
   return null;

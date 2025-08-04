@@ -106,6 +106,7 @@ const EventMarkers = ({ searchData }) => {
 
   useEffect(() => {
     initializeEventData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchData]);
 
   return unitData.map((unit) => {

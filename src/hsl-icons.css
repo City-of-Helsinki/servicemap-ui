@@ -1,18 +1,21 @@
 @font-face {
   font-family: 'hsl-piktoframe';
   src: url('./assets/fonts/hsl-pikto-frame-webfont.eot');
-  src: url('./assets/fonts/hsl-pikto-frame-webfont.eot?#iefix') format('embedded-opentype'),
-       url('./assets/fonts/hsl-pikto-frame-webfont.woff2') format('woff2'),
-       url('./assets/fonts/hsl-pikto-frame-webfont.woff') format('woff'),
-       url('./assets/fonts/hsl-pikto-frame-webfont.ttf') format('truetype');
+  src:
+    url('./assets/fonts/hsl-pikto-frame-webfont.eot?#iefix')
+      format('embedded-opentype'),
+    url('./assets/fonts/hsl-pikto-frame-webfont.woff2') format('woff2'),
+    url('./assets/fonts/hsl-pikto-frame-webfont.woff') format('woff'),
+    url('./assets/fonts/hsl-pikto-frame-webfont.ttf') format('truetype');
   font-style: normal;
   font-weight: normal;
 }
 
-[data-icon]:before { content: attr(data-icon); }
+[data-icon]:before {
+  content: attr(data-icon);
+}
 
 [data-icon]:before,
-
 .icon-icon-hsl-background:before,
 .icon-icon-hsl-bus:before,
 .icon-icon-hsl-tram:before,
@@ -21,7 +24,7 @@
 .icon-icon-hsl-bike:before,
 .icon-icon-hsl-ferry:before {
   display: inline-block;
-  font-family: "hsl-piktoframe";
+  font-family: 'hsl-piktoframe';
   font-style: normal;
   font-weight: normal;
   font-variant: normal;
@@ -34,31 +37,45 @@
   font-smoothing: antialiased;
 }
 
-.icon-icon-hsl-background:before { content: "0"; }
-.icon-icon-hsl-bus:before { content: "2"; }
-.icon-icon-hsl-tram:before { content: "3"; }
-.icon-icon-hsl-train:before { content: "4"; }
-.icon-icon-hsl-metro:before { content: "5"; }
-.icon-icon-hsl-ferry:before { content: "6"; }
-.icon-icon-hsl-bike:before { content: "7"; }
+.icon-icon-hsl-background:before {
+  content: '0';
+}
+.icon-icon-hsl-bus:before {
+  content: '2';
+}
+.icon-icon-hsl-tram:before {
+  content: '3';
+}
+.icon-icon-hsl-train:before {
+  content: '4';
+}
+.icon-icon-hsl-metro:before {
+  content: '5';
+}
+.icon-icon-hsl-ferry:before {
+  content: '6';
+}
+.icon-icon-hsl-bike:before {
+  content: '7';
+}
 
 .icon-icon-hsl-bus {
-  color: #007AC9;
+  color: #007ac9;
 }
 .icon-icon-hsl-tram {
-  color: #00985F;
+  color: #00985f;
 }
 .icon-icon-hsl-train {
-  color: #8C4799;
+  color: #8c4799;
 }
 .icon-icon-hsl-metro {
-  color: #FF6319;
+  color: #ff6319;
 }
 .icon-icon-hsl-ferry {
-  color: #00B9E4;
+  color: #00b9e4;
 }
 .icon-icon-hsl-bike {
-  color: #00985F;
+  color: #00985f;
 }
 
 .leaflet-marker-icon {

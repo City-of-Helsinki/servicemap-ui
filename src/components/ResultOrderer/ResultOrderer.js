@@ -59,12 +59,14 @@ function ResultOrderer({
         setOrder(order);
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     if (accessibiliySettingsLength) {
       setOrder('accessibility');
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [accessibiliySettingsLength]);
 
   const selectedOptionId = `${selectedOption.order}-${selectedOption.direction}`;

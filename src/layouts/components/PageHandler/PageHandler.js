@@ -29,6 +29,7 @@ function PageHandler(props) {
   useEffect(() => {
     // Save current page to redux
     dispatch(setCurrentPage(page));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
 
   // Modify html head

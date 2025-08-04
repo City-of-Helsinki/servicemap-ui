@@ -117,6 +117,7 @@ function TopBar(props) {
     if (savedTheme) {
       dispatch(changeTheme(savedTheme));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleNavigation = (target, data) => {

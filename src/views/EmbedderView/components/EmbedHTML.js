@@ -73,6 +73,7 @@ function EmbedHTML({ createEmbedHTML, url, setBoundsRef, restrictBounds }) {
     return () => {
       window.removeEventListener('message', handleEventMessage);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const htmlText = createEmbedHTML(embedUrl);

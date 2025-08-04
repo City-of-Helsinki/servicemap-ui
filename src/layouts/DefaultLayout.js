@@ -120,6 +120,7 @@ function DefaultLayout({ fetchErrors, fetchNews }) {
   useEffect(() => {
     fetchErrors();
     fetchNews();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const styles = createContentStyles(
@@ -153,6 +154,7 @@ function DefaultLayout({ fetchErrors, fetchNews }) {
 
   useEffect(() => {
     window.onbeforeprint = showAlert;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const printClass = `ǹo-print${showPrintView ? ' sr-only' : ''}`;

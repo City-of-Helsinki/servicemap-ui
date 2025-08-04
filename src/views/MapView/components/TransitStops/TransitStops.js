@@ -108,6 +108,7 @@ function TransitStops({ mapObject }) {
 
   useEffect(() => {
     loadBikeStations();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getTransitIcon = (type) => {

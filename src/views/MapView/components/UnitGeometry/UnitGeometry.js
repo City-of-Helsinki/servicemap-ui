@@ -50,6 +50,7 @@ function UnitGeometry({ data }) {
     };
 
     setGeometryData(getUnitGeometry(data));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
   const geometryOnClick = (e) => {

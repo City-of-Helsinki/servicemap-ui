@@ -81,6 +81,7 @@ function ServiceTab(props) {
       // Arriving to page first time
       dispatch(fetchDistricts());
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const renderDistrictItem = (district) => (

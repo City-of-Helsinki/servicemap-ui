@@ -104,6 +104,7 @@ function GeographicalTab({ initialOpenItems = [], clearRadioButtonValue }) {
       // Arriving to page first time
       dispatch(fetchDistricts());
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -115,6 +116,7 @@ function GeographicalTab({ initialOpenItems = [], clearRadioButtonValue }) {
       dispatch(setSelectedDistrictServices([]));
       setOpenCategory(null);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedDistrictType]);
 
   const render = () => {
