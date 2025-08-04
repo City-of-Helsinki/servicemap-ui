@@ -126,6 +126,7 @@ function ParkingAreaList({ variant }) {
     if (!areaDataInfo.length) {
       fetchParkingData();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function renderAreaName(area) {

@@ -67,6 +67,7 @@ function LinkSettingsDialogComponent({
       clearTimeout(timeout);
       clearTimeout(timeoutAriaAlert);
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   );
 

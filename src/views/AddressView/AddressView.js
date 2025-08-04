@@ -358,6 +358,7 @@ function AddressView({ embed = false }) {
     if (tabs[selectedTab].onClick) {
       tabs[selectedTab].onClick();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Update view data when match props (url) change
@@ -371,6 +372,7 @@ function AddressView({ embed = false }) {
         fetchData();
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [match.url, map]);
 
   if (embed || isFetchingAddress || !addressData) {

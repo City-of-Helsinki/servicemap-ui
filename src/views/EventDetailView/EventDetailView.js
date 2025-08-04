@@ -143,12 +143,14 @@ function EventDetailView(props) {
         }
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     if (map && !centered) {
       centerMap(event.location);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [map]);
 
   const renderEventDetails = () => {

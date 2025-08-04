@@ -56,6 +56,7 @@ function StatisticalDistrictListComponent() {
       // Clean up selections by setting selected category to undefined
       dispatch(selectCategory(undefined));
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleUnitCheckboxChange = useCallback(

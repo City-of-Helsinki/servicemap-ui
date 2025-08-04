@@ -26,6 +26,7 @@ function ServiceItem(props) {
 
   useEffect(() => {
     setIcon(getIcon('serviceDark', { className: iconClass }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   let text = getLocaleText(service.name);

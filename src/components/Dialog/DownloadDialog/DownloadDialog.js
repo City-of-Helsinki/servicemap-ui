@@ -57,6 +57,7 @@ function DownloadDialog({ open, ...rest }) {
       return;
     }
     setSnIDs(ids);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
 
   // Handle fetching on service node ID change

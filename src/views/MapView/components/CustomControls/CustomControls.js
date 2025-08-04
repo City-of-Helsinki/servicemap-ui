@@ -21,6 +21,7 @@ function CustomControls({ position, children = null }) {
       const div = global.L.DomUtil.get(`controlsContainer${position}`);
       global.L.DomEvent.disableClickPropagation(div);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (!controls.length) return null;

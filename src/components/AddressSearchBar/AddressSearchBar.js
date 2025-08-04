@@ -133,6 +133,7 @@ function AddressSearchBar({ title = null, handleAddressChange }) {
     } else if (addressResults.length) {
       setAddressResults([]);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedInputValue, isFetching]);
 
   const handleInputChange = (text) => {
@@ -155,6 +156,7 @@ function AddressSearchBar({ title = null, handleAddressChange }) {
       inputRef.current.value = '';
       setCurrentLocation(null);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [defaultAddress]);
 
   const showSuggestions =

@@ -86,6 +86,7 @@ function ServiceView(props) {
     if (shouldFetch()) {
       fetchService(match.params?.service);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [match.params.service]);
 
   useEffect(() => {
@@ -95,6 +96,7 @@ function ServiceView(props) {
     if (unitData.length) {
       focusMap(unitData);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [unitData]);
 
   if (embed) {

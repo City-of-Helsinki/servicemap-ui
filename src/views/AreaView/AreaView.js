@@ -125,6 +125,7 @@ function AreaView({ embed = false }) {
     if (selectedAddress && addressDistrict) {
       focusMapToDistrict(addressDistrict);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [addressDistrict, map]);
 
   useEffect(() => {
@@ -139,6 +140,7 @@ function AreaView({ embed = false }) {
     } else {
       dispatch(setDistrictAddressData(null));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedAddress]);
 
   useEffect(() => {
@@ -151,6 +153,7 @@ function AreaView({ embed = false }) {
         dispatch(fetchDistrictUnitList(district));
       }
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedSubdistricts]);
 
   const isPossibleToFocus = () => !!map && !mapFocusDisabled && geometryLoaded;
@@ -170,6 +173,7 @@ function AreaView({ embed = false }) {
         focusDistricts(map, filteredDistricts);
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedDistrictData, focusTo]);
 
   useEffect(() => {
@@ -185,6 +189,7 @@ function AreaView({ embed = false }) {
         }
       });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [parkingUnitsMap]);
 
   useEffect(() => {
@@ -196,6 +201,7 @@ function AreaView({ embed = false }) {
     ) {
       focusDistricts(map, [...selectedDistrictData, ...parkingAreas]);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedDistrictData, addressDistrict, parkingAreas]);
 
   useEffect(() => {
@@ -283,6 +289,7 @@ function AreaView({ embed = false }) {
         );
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (!map || embed) {

@@ -152,6 +152,7 @@ const StatisticalDistrictUnitListComponent = ({
         </List>
       </StyledUnitListArea>
     ),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [filteredServiceList, filterValue]
   );
 

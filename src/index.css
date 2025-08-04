@@ -5,37 +5,42 @@ body {
   height: 100%;
   margin: 0;
   padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  font-family:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
+    'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-a, .link {
+a,
+.link {
   color: #3344dd;
   text-decoration: underline;
 }
 
-a:hover, a:focus, a:active,
-.link:hover, .link:focus, .link:active {
+a:hover,
+a:focus,
+a:active,
+.link:hover,
+.link:focus,
+.link:active {
   color: #bb1122 !important;
   outline: auto !important;
   outline-color: rgb(71, 131, 235) !important;
 }
 
-a:visited, .link:visited {
+a:visited,
+.link:visited {
   color: #804180;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+  font-family:
+    source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
-
-input[type="search"]::-webkit-search-cancel-button{ 
-  -webkit-appearance:none;
+input[type='search']::-webkit-search-cancel-button {
+  -webkit-appearance: none;
 }
 
 .sr-only {
@@ -71,7 +76,7 @@ input[type="search"]::-webkit-search-cancel-button{
 .leaflet-popup-close-button {
   padding: 16px !important;
   font-size: 24px !important;
-  color: #4A4A4C !important;
+  color: #4a4a4c !important;
 }
 
 /* This allows clicks to go through control background to the map. Control buttons need style: pointer-events: auto */
@@ -89,7 +94,7 @@ input[type="search"]::-webkit-search-cancel-button{
 }
 
 .heightgraph-container {
-  background-color: rgba(250,250,250,.8);
+  background-color: rgba(250, 250, 250, 0.8);
   border-radius: 10px;
   margin-right: 110px;
   display: none;
@@ -142,7 +147,7 @@ input[type="search"]::-webkit-search-cancel-button{
 
 .heightgraph-toggle {
   cursor: pointer;
-  box-shadow: 0 1px 7px rgba(0, 0, 0, .4);
+  box-shadow: 0 1px 7px rgba(0, 0, 0, 0.4);
   border-radius: 5px;
   width: 28px;
   height: 28px;
@@ -189,7 +194,8 @@ input[type="search"]::-webkit-search-cancel-button{
   cursor: pointer;
 }
 
-.tick, .tick text {
+.tick,
+.tick text {
   fill: #000;
   pointer-events: none;
 }
@@ -248,11 +254,11 @@ input[type="search"]::-webkit-search-cancel-button{
 }
 
 .height-focus.circle {
-  stroke: #FFF;
+  stroke: #fff;
   stroke-width: 1px;
 }
 
-.mouse-height-box-text{
+.mouse-height-box-text {
   font-size: 12px;
 }
 
@@ -261,7 +267,7 @@ input[type="search"]::-webkit-search-cancel-button{
 }
 
 .grid .tick line {
-  stroke: #EEE;
+  stroke: #eee;
   stroke-width: 1px;
   shape-rendering: crispEdges;
 }

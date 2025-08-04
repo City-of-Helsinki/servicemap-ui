@@ -55,6 +55,7 @@ function ResultItem({
       // Remove highlights on unmount
       resetMarkerHighlight();
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   );
 

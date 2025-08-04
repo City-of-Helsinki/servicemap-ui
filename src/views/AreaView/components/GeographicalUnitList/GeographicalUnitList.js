@@ -83,6 +83,7 @@ const GeographicalUnitList = ({ initialOpenItems }) => {
     } else {
       dispatch(removeSelectedDistrictService(id));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const sortUnitCategories = (categories) =>
@@ -156,6 +157,7 @@ const GeographicalUnitList = ({ initialOpenItems }) => {
 
   useEffect(() => {
     createServiceCategories();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filteredSubdistrictUnits, filterValue]);
 
   // Render list of units for neighborhood and postcode-area subdistricts
@@ -215,6 +217,7 @@ const GeographicalUnitList = ({ initialOpenItems }) => {
         </List>
       </StyledUnitListArea>
     ),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [serviceList]
   );
 

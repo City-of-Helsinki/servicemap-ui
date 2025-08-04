@@ -118,6 +118,7 @@ function TransitStopInfo({ stop = {}, onCloseClick, type = null }) {
         });
       }
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const renderDepartureTimes = () => {

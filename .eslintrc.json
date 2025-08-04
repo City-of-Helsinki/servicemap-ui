@@ -1,7 +1,6 @@
 {
   "extends": [
     "react-app",
-    "plugin:prettier/recommended",
     "plugin:import/errors",
     "plugin:import/warnings"
   ],
@@ -40,4 +39,3 @@
     "import/named": "off"
   }
 }
-

@@ -193,6 +193,7 @@ function MapView(props) {
       // Clear map reference on unmount
       setMapRef(null);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -215,6 +216,7 @@ function MapView(props) {
       // In embed mode, map type is read from url.
       mapTypeChanged();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mapType]);
 
   useEffect(() => {
@@ -231,6 +233,7 @@ function MapView(props) {
         }
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mapElement]);
 
   useEffect(() => {

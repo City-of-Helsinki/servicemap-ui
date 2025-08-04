@@ -64,6 +64,7 @@ function UnitsServicesList({ unit, listLength = 5 }) {
     setServiceList(serviceList);
     setSubjectList(subjectList);
     setPeriodList([...periodData]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [unit.id]);
 
   const renderServices = () => (

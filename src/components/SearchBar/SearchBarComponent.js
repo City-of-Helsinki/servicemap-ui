@@ -119,6 +119,7 @@ function SearchBar({
         setSearchbarValue(uppercaseFirst(text));
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [queryParams]);
 
   const forceUpdate = () => {

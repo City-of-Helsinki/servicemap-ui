@@ -42,6 +42,7 @@ function EntranceMarker() {
     return () => {
       map.off('zoomend', checkMarkerVisibility);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (unit?.entrances?.length && showMarkers) {

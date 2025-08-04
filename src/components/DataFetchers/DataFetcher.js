@@ -57,6 +57,7 @@ function DataFetcher() {
         break;
       default:
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPage, map]);
 
   return null;
