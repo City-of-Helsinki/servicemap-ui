@@ -3,7 +3,7 @@
 import styled from '@emotion/styled';
 import { Divider, Link, NoSsr, Paper, Typography } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useRouteMatch } from 'react-router-dom';
@@ -48,7 +48,7 @@ import {
   selectSelectedOrganizationIds,
 } from '../../redux/selectors/settings';
 import { selectCustomPositionAddress } from '../../redux/selectors/user';
-import { keyboardHandler, parseSearchParams } from '../../utils';
+import { keyboardHandler } from '../../utils';
 import { viewTitleID } from '../../utils/accessibility';
 import {
   getAddressNavigatorParamsConnector,
@@ -96,6 +96,11 @@ function SearchView() {
   const intl = useIntl();
   const { trackPageView } = useMatomo();
 
+  const searchParams = useMemo(
+    () => new URLSearchParams(location.search),
+    [location.search]
+  );
+
   const searchResults = applyCityAndOrganizationFilter(
     orderedData,
     location,
@@ -122,19 +127,15 @@ function SearchView() {
   };
 
   const getSearchParamData = () => {
-    const searchParams = parseSearchParams(location.search);
-
-    const {
-      q,
-      category,
-      address,
-      service_id,
-      service_node,
-      mobility_node,
-      search_language,
-      events,
-      units,
-    } = searchParams;
+    const q = searchParams.get('q');
+    const category = searchParams.get('category');
+    const address = searchParams.get('address');
+    const service_id = searchParams.get('service_id');
+    const service_node = searchParams.get('service_node');
+    const mobility_node = searchParams.get('mobility_node');
+    const search_language = searchParams.get('search_language');
+    const events = searchParams.get('events');
+    const units = searchParams.get('units');
 
     const options = {};
     if (q) {
@@ -331,16 +332,15 @@ function SearchView() {
       // Do not mess with settings when embedded
       return;
     }
-    const searchParams = parseSearchParams(location.search);
-    const {
-      city,
-      organization,
-      municipality,
-      accessibility_setting,
-      hcity,
-      hstreet,
-      map,
-    } = searchParams;
+
+    const city = searchParams.get('city');
+    const organization = searchParams.get('organization');
+    const municipality = searchParams.get('municipality');
+    const accessibility_setting = searchParams.get('accessibility_setting');
+    const hcity = searchParams.get('hcity');
+    const hstreet = searchParams.get('hstreet');
+    const map = searchParams.get('map');
+
     if (map?.length && map !== mapType) {
       const mapTypeParam = map === 'guideMap' ? 'guidemap' : map; // keep alive old links with "guideMap"
       dispatch(setMapType(mapTypeParam));
@@ -574,8 +574,11 @@ function SearchView() {
     const { previousSearch, isFetching } = searchFetchState;
     const shouldRender = !isFetching && previousSearch && !searchResults.length;
     const messageIDs = ['spelling', 'city', 'service', 'address', 'keyword'];
-    // This was same as previousSearch, but the text was not user-friendly when searching by nodes.
-    const options = parseSearchParams(location.search);
+
+    const searchParamsObject = Object.fromEntries(searchParams.entries());
+
+    const options = searchParamsObject;
+
     delete options.mobility_node;
     delete options.service_node;
     const searchQuery = optionsToSearchQuery(options);
