@@ -2,30 +2,38 @@ import express from 'express';
 import path from 'path';
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
-import { createStore, applyMiddleware } from 'redux';
-import { Provider } from 'react-redux';
-import { StaticRouter } from 'react-router-dom';
+import {createStore, applyMiddleware} from 'redux';
+import {Provider} from 'react-redux';
+import {StaticRouter} from 'react-router-dom';
 import StyleContext from 'isomorphic-style-loader/StyleContext';
 import thunk from 'redux-thunk';
 import config from '../config';
 import rootReducer from '../src/redux/rootReducer';
 import App from '../src/App';
-import { makeLanguageHandler, languageSubdomainRedirect, unitRedirect, parseInitialMapPositionFromHostname, getRequestFullUrl, sitemapActive } from './utils';
-import { setLocale } from '../src/redux/actions/user';
-import { Helmet } from 'react-helmet';
-import { ServerStyleSheets } from '@mui/styles';
-import { CacheProvider } from '@emotion/react';
+import {
+  makeLanguageHandler,
+  languageSubdomainRedirect,
+  unitRedirect,
+  parseInitialMapPositionFromHostname,
+  getRequestFullUrl,
+  sitemapActive
+} from './utils';
+import {setLocale} from '../src/redux/actions/user';
+import {Helmet} from 'react-helmet';
+import {ServerStyleSheets} from '@mui/styles';
+import {CacheProvider} from '@emotion/react';
 import createEmotionServer from '@emotion/server/create-instance';
 import fetch from 'node-fetch';
-import { fetchEventData, fetchSelectedUnitData } from './dataFetcher';
+import {fetchEventData, fetchSelectedUnitData} from './dataFetcher';
 import IntlPolyfill from 'intl';
 import paths from '../config/paths';
 import legacyRedirector from './legacyRedirector';
 import ieHandler from './ieMiddleware';
 import schedule from 'node-schedule';
 import ogImage from '../src/assets/images/servicemap-meta-img.png';
-import { generateSitemap, getRobotsFile, getSitemap } from './sitemapMiddlewares';
+import {generateSitemap, getRobotsFile, getSitemap} from './sitemapMiddlewares';
 import createEmotionCache from './createEmotionCache';
+import crypto from 'crypto';
 
 // Get sentry dsn from environtment variables
 const sentryDSN = process.env.SENTRY_DSN_SERVER;
@@ -33,7 +41,7 @@ let Sentry = null;
 
 if (sentryDSN) {
   Sentry = require('@sentry/node');
-  Sentry.init({ dsn: sentryDSN });
+  Sentry.init({dsn: sentryDSN});
   console.log(`Initialized Sentry client with DSN ${sentryDSN}`);
 }
 
@@ -56,7 +64,7 @@ if (sitemapActive()) {
   // Generate sitemap on start
   generateSitemap();
   // Update sitemap every monday
-  schedule.scheduleJob({ hour: 8, minute: 0, dayOfWeek: 1 }, () => {
+  schedule.scheduleJob({hour: 8, minute: 0, dayOfWeek: 1}, () => {
     console.log('Updating sitemap...')
     generateSitemap();
   });
@@ -74,7 +82,7 @@ app.set('trust proxy', true);
 app.use(express.static(path.resolve(__dirname, 'src')));
 
 // Add middlewares
-app.use(`/*`, (req, res, next) => {
+app.use(`/*`, (req, res, next) => {
   const store = createStore(rootReducer, applyMiddleware(thunk));
   req._context = store;
   next();
@@ -99,8 +107,9 @@ app.use(paths.event.regex, fetchEventData);
 app.use(paths.unit.regex, fetchSelectedUnitData);
 
 app.get('/*', (req, res, next) => {
-  const cache = createEmotionCache();
-  const { extractCriticalToChunks, constructStyleTagsFromChunks } =
+  const [nonce, cspHeaders] = generateCSPHeaders();
+  const cache = createEmotionCache(nonce);
+  const {extractCriticalToChunks, constructStyleTagsFromChunks} =
     createEmotionServer(cache);
   // CSS for all rendered React components
   const css = new Set();
@@ -123,8 +132,8 @@ app.get('/*', (req, res, next) => {
       <Provider store={store}>
         <StaticRouter location={req.url} context={{}}>
           {/* Provider to help with isomorphic style loader */}
-          <StyleContext.Provider value={{ insertCss }}>
-            <App />
+          <StyleContext.Provider value={{insertCss}}>
+            <App/>
           </StyleContext.Provider>
         </StaticRouter>
       </Provider>
@@ -143,8 +152,9 @@ app.get('/*', (req, res, next) => {
   const emotionChunks = extractCriticalToChunks(reactDom);
   const emotionCss = constructStyleTagsFromChunks(emotionChunks);
 
-  res.writeHead(200, { 'Content-Type': 'text/html' });
-  res.end(htmlTemplate(req, reactDom, preloadedState, css, cssString, emotionCss, locale, helmet, customValues));
+  const headers = Object.assign({'Content-Type': 'text/html'}, cspHeaders)
+  res.writeHead(200, headers);
+  res.end(htmlTemplate(req, reactDom, preloadedState, css, cssString, emotionCss, locale, helmet, customValues, nonce));
 });
 
 // Setup Sentry error handler
@@ -155,9 +165,9 @@ console.log('Application version tag:', GIT_TAG, 'commit:', GIT_COMMIT);
 console.log(`Starting server on port ${process.env.PORT || 2048}`);
 app.listen(process.env.PORT || 2048);
 
-const htmlTemplate = (req, reactDom, preloadedState, css, cssString, emotionCss, locale, helmet, customValues) => `
+const htmlTemplate = (req, reactDom, preloadedState, css, cssString, emotionCss, locale, helmet, customValues, nonce) => `
 <!DOCTYPE html>
-<html lang="${locale || 'fi'}">
+<html lang="${locale || 'fi'}">
   <head>
     <meta charset="utf-8">
     ${helmet.title.toString()}
@@ -167,7 +177,7 @@ const htmlTemplate = (req, reactDom, preloadedState, css, cssString, emotionCss,
     <meta name="twitter:card" data-react-helmet="true" content="summary" />
     ${emotionCss}
     <!-- jss-insertion-point -->
-    <style id="jss-server-side">${cssString}</style>
+    <style id="jss-server-side" nonce="${nonce}">${cssString}</style>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
     crossorigin=""
@@ -177,14 +187,14 @@ const htmlTemplate = (req, reactDom, preloadedState, css, cssString, emotionCss,
       integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
       crossorigin="">
     </script>
-    <style>
+    <style nonce="${nonce}">
       @import url('https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i');
     </style>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#141823" />
     ${
-      process.env.READ_SPEAKER_URL
-      && process.env.READ_SPEAKER_URL !== 'false' ? `
+  process.env.READ_SPEAKER_URL
+  && process.env.READ_SPEAKER_URL !== 'false' ? `
         <script type="text/javascript">
           window.rsConf = {
             params: '${process.env.READ_SPEAKER_URL}',
@@ -197,8 +207,8 @@ const htmlTemplate = (req, reactDom, preloadedState, css, cssString, emotionCss,
 
   <body>
     <div id="app">${reactDom}</div>
-    <style>${[...css].join('')}</style>
-    <script>
+    <style nonce="${nonce}">${[...css].join('')}</style>
+    <script nonce="${nonce}">
         window.nodeEnvSettings = {};
         window.nodeEnvSettings.ACCESSIBILITY_SENTENCE_API = "${process.env.ACCESSIBILITY_SENTENCE_API}";
         window.nodeEnvSettings.SERVICEMAP_API = "${process.env.SERVICEMAP_API}";
@@ -261,7 +271,7 @@ const htmlTemplate = (req, reactDom, preloadedState, css, cssString, emotionCss,
         window.nodeEnvSettings.appVersion.tag = "${GIT_TAG}";
         window.nodeEnvSettings.appVersion.commit = "${GIT_COMMIT}";
     </script>
-    <script>
+    <script nonce="${nonce}">
       // WARNING: See the following for security issues around embedding JSON in HTML:
       // http://redux.js.org/recipes/ServerRendering.html#security-considerations
       window.PRELOADED_STATE = ${JSON.stringify(preloadedState).replace(/</g, '\\u003c')}
@@ -270,3 +280,34 @@ const htmlTemplate = (req, reactDom, preloadedState, css, cssString, emotionCss,
   </body>
 </html>
 `;
+
+
+const generateCSPHeaders = function addCSP() {
+  const nonce = crypto.randomBytes(16).toString('base64');
+
+  if (!config.cspEnabled) {
+    return [nonce, {}];
+  }
+  const headers = {};
+  const csp = {};
+  const reportUri = process.env.CSP_REPORT_URI;
+
+  if (reportUri) {
+    headers['Reporting-Endpoints'] = `csp-endpoint=\"${reportUri}\"`;
+    csp['report-to'] = `csp-endpoint`;
+    csp['report-uri'] = reportUri;
+  }
+
+  csp['base-uri'] = `'self'`;
+  csp['connect-src'] = `'self' ${config.cspConnectSrc} https://api.hel.fi https://www.hel.fi https://api.digitransit.fi https://tilavaraus.dev.hel.ninja https://varaamo.dev.hel.ninja`;
+  csp['default-src'] = `'self'`;
+  csp['font-src'] = `'self' https://fonts.gstatic.com`;
+  csp['form-action'] = `'self'`;
+  csp['img-src'] = `'self' data: https://www.hel.fi ${config.cspImgSrc}`;
+  csp['manifest-src'] = `'self'`;
+  csp['script-src'] = `'self' 'nonce-${nonce}' https://unpkg.com/leaflet@1.9.4/dist/leaflet.js`;
+  csp['style-src'] = `'self' 'unsafe-inline' https://unpkg.com/leaflet@1.9.4/dist/leaflet.css https://fonts.googleapis.com`;
+
+  headers[config.cspReportOnly ? 'Content-Security-Policy-Report-Only' : 'Content-Security-Policy'] = Object.entries(csp).map(e => `${e.join(' ')};`).join(' ');
+  return [nonce, headers];
+}
