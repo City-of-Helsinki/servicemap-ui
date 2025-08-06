@@ -168,6 +168,17 @@ if (typeof settings.SLOW_FETCH_MESSAGE_TIMEOUT === 'undefined') {
   settings.SLOW_FETCH_MESSAGE_TIMEOUT = 3000;
 }
 
+settings.CSP_ENABLED = settings.CSP_ENABLED === "true"
+settings.CSP_REPORT_ONLY = settings.CSP_ENABLED === "true"
+
+if (!settings.CSP_CONNECT_SRC) {
+  settings.CSP_CONNECT_SRC = ""
+}
+
+if (!settings.CSP_IMG_SRC) {
+  settings.CSP_IMG_SRC = ""
+}
+
 const municipalities = {
   fi: {
     espoo: 'Espoo',
@@ -314,7 +325,11 @@ const defaultConfig = {
   "matomoSiteId": settings.MATOMO_SITE_ID,
   "matomoEnabled": settings.MATOMO_ENABLED,
   "slowFetchMessageTimeout": Number(settings.SLOW_FETCH_MESSAGE_TIMEOUT),
-  "helsinkiMaptilesEnabled": settings.HELSINKI_MAPTILES_ENABLED
+  "helsinkiMaptilesEnabled": settings.HELSINKI_MAPTILES_ENABLED,
+  "cspEnabled": settings.CSP_ENABLED,
+  "cspReportOnly": settings.CSP_REPORT_ONLY,
+  "cspConnectSrc": settings.CSP_CONNECT_SRC,
+  "cspImgSrc": settings.CSP_IMG_SRC
 }
 
 export default defaultConfig;

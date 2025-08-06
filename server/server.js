@@ -1,6 +1,7 @@
 import { CacheProvider } from '@emotion/react';
 import createEmotionServer from '@emotion/server/create-instance';
 import { ServerStyleSheets } from '@mui/styles';
+import crypto from 'crypto';
 import express from 'express';
 import IntlPolyfill from 'intl';
 import StyleContext from 'isomorphic-style-loader/StyleContext';
@@ -114,7 +115,8 @@ app.use(paths.event.regex, fetchEventData);
 app.use(paths.unit.regex, fetchSelectedUnitData);
 
 app.get('/*', (req, res, next) => {
-  const cache = createEmotionCache();
+  const [nonce, cspHeaders] = generateCSPHeaders();
+  const cache = createEmotionCache(nonce);
   const { extractCriticalToChunks, constructStyleTagsFromChunks } =
     createEmotionServer(cache);
   // CSS for all rendered React components
@@ -161,7 +163,8 @@ app.get('/*', (req, res, next) => {
   const emotionChunks = extractCriticalToChunks(reactDom);
   const emotionCss = constructStyleTagsFromChunks(emotionChunks);
 
-  res.writeHead(200, { 'Content-Type': 'text/html' });
+  const headers = { 'Content-Type': 'text/html', ...cspHeaders };
+  res.writeHead(200, headers);
   res.end(
     htmlTemplate(
       req,
@@ -194,7 +197,8 @@ const htmlTemplate = (
   emotionCss,
   locale,
   helmet,
-  customValues
+  customValues,
+  nonce
 ) => `
 <!DOCTYPE html>
 <html lang="${locale || 'fi'}">
@@ -207,7 +211,7 @@ const htmlTemplate = (
     <meta name="twitter:card" data-react-helmet="true" content="summary" />
     ${emotionCss}
     <!-- jss-insertion-point -->
-    <style id="jss-server-side">${cssString}</style>
+    <style id="jss-server-side" nonce="${nonce}">${cssString}</style>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
     crossorigin=""
@@ -217,7 +221,7 @@ const htmlTemplate = (
       integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
       crossorigin="">
     </script>
-    <style>
+    <style nonce="${nonce}">
       @import url('https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i');
     </style>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -239,8 +243,8 @@ const htmlTemplate = (
 
   <body>
     <div id="app">${reactDom}</div>
-    <style>${[...css].join('')}</style>
-    <script>
+    <style nonce="${nonce}">${[...css].join('')}</style>
+    <script nonce="${nonce}">
         window.nodeEnvSettings = {};
         window.nodeEnvSettings.ACCESSIBILITY_SENTENCE_API = "${process.env.ACCESSIBILITY_SENTENCE_API}";
         window.nodeEnvSettings.SERVICEMAP_API = "${process.env.SERVICEMAP_API}";
@@ -305,7 +309,7 @@ const htmlTemplate = (
         window.nodeEnvSettings.appVersion.tag = "${GIT_TAG}";
         window.nodeEnvSettings.appVersion.commit = "${GIT_COMMIT}";
     </script>
-    <script>
+    <script nonce="${nonce}">
       // WARNING: See the following for security issues around embedding JSON in HTML:
       // http://redux.js.org/recipes/ServerRendering.html#security-considerations
       window.PRELOADED_STATE = ${JSON.stringify(preloadedState).replace(/</g, '\\u003c')}
@@ -314,3 +318,46 @@ const htmlTemplate = (
   </body>
 </html>
 `;
+
+const generateCSPHeaders = () => {
+  const nonce = crypto.randomBytes(16).toString('base64');
+
+  if (!config.cspEnabled) {
+    return [nonce, {}];
+  }
+  const headers = {};
+  const csp = {};
+  const reportUri = process.env.CSP_REPORT_URI;
+
+  if (reportUri) {
+    headers['Reporting-Endpoints'] = `csp-endpoint="${reportUri}"`;
+    csp['report-to'] = `csp-endpoint`;
+    csp['report-uri'] = reportUri;
+  }
+
+  csp['base-uri'] = `'self'`;
+  csp['connect-src'] = `'self' ${config.cspConnectSrc} \
+https://api.hel.fi \
+https://www.hel.fi \
+https://api.digitransit.fi \
+https://tilavaraus.dev.hel.ninja \
+https://varaamo.dev.hel.ninja`;
+  csp['default-src'] = `'self'`;
+  csp['font-src'] = `'self' https://fonts.gstatic.com`;
+  csp['form-action'] = `'self'`;
+  csp['img-src'] = `'self' data: https://www.hel.fi ${config.cspImgSrc}`;
+  csp['manifest-src'] = `'self'`;
+  csp['script-src'] =
+    `'self' 'nonce-${nonce}' https://unpkg.com/leaflet@1.9.4/dist/leaflet.js`;
+  csp['style-src'] =
+    `'self' 'unsafe-inline' https://unpkg.com/leaflet@1.9.4/dist/leaflet.css https://fonts.googleapis.com`;
+
+  headers[
+    config.cspReportOnly
+      ? 'Content-Security-Policy-Report-Only'
+      : 'Content-Security-Policy'
+  ] = Object.entries(csp)
+    .map((e) => `${e.join(' ')};`)
+    .join(' ');
+  return [nonce, headers];
+};
