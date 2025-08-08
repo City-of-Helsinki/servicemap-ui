@@ -1,5 +1,14 @@
 # Changelog
 
+## [2.5.2](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.5.1...servicemap-ui-v2.5.2) (2025-08-08)
+
+
+### Bug Fixes
+
+* Linter errors and warnings ([ba35155](https://github.com/City-of-Helsinki/servicemap-ui/commit/ba35155c1421c32af96cdca31f8ee667aa2d1b26))
+* Search view handle search params PL-119 ([c952290](https://github.com/City-of-Helsinki/servicemap-ui/commit/c9522905dc30d7b6e37523e826374344ae13ea21))
+* UseEffect dependency warnings on ([844d061](https://github.com/City-of-Helsinki/servicemap-ui/commit/844d061c800793b80d6b3ef7a79b96e4b611ad6a))
+
 ## [2.5.1](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.5.0...servicemap-ui-v2.5.1) (2025-07-21)
 
 
