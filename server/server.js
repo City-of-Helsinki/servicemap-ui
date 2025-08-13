@@ -175,7 +175,8 @@ app.get('/*', (req, res, next) => {
       emotionCss,
       locale,
       helmet,
-      customValues
+      customValues,
+      nonce
     )
   );
 });
@@ -336,12 +337,7 @@ const generateCSPHeaders = () => {
   }
 
   csp['base-uri'] = `'self'`;
-  csp['connect-src'] = `'self' ${config.cspConnectSrc} \
-https://api.hel.fi \
-https://www.hel.fi \
-https://api.digitransit.fi \
-https://tilavaraus.dev.hel.ninja \
-https://varaamo.dev.hel.ninja`;
+  csp['connect-src'] = `'self' ${config.cspConnectSrc}`;
   csp['default-src'] = `'self'`;
   csp['font-src'] = `'self' https://fonts.gstatic.com`;
   csp['form-action'] = `'self'`;
