@@ -323,9 +323,10 @@ const htmlTemplate = (
 const generateCSPHeaders = () => {
   const nonce = crypto.randomBytes(16).toString('base64');
 
-  if (!config.cspEnabled) {
+  if (process.env.CSP_ENABLED !== 'true') {
     return [nonce, {}];
   }
+
   const headers = {};
   const csp = {};
   const reportUri = process.env.CSP_REPORT_URI;
@@ -337,11 +338,11 @@ const generateCSPHeaders = () => {
   }
 
   csp['base-uri'] = `'self'`;
-  csp['connect-src'] = `'self' ${config.cspConnectSrc}`;
+  csp['connect-src'] = `'self' ${process.env.CSP_CONNECT_SRC}`;
   csp['default-src'] = `'self'`;
   csp['font-src'] = `'self' https://fonts.gstatic.com`;
   csp['form-action'] = `'self'`;
-  csp['img-src'] = `'self' data: https://www.hel.fi ${config.cspImgSrc}`;
+  csp['img-src'] = `'self' data: https://www.hel.fi ${process.env.CSP_IMG_SRC}`;
   csp['manifest-src'] = `'self'`;
   csp['script-src'] =
     `'self' 'nonce-${nonce}' https://unpkg.com/leaflet@1.9.4/dist/leaflet.js`;
@@ -349,7 +350,7 @@ const generateCSPHeaders = () => {
     `'self' 'unsafe-inline' https://unpkg.com/leaflet@1.9.4/dist/leaflet.css https://fonts.googleapis.com`;
 
   headers[
-    config.cspReportOnly
+    process.env.CSP_REPORT_ONLY === 'true'
       ? 'Content-Security-Policy-Report-Only'
       : 'Content-Security-Policy'
   ] = Object.entries(csp)
