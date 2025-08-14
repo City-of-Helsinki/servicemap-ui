@@ -344,8 +344,10 @@ const generateCSPHeaders = () => {
   csp['form-action'] = `'self'`;
   csp['img-src'] = `'self' data: https://www.hel.fi ${process.env.CSP_IMG_SRC}`;
   csp['manifest-src'] = `'self'`;
-  csp['script-src'] =
-    `'self' 'nonce-${nonce}' https://unpkg.com/leaflet@1.9.4/dist/leaflet.js`;
+  csp['script-src'] = `'self' \
+    'nonce-${nonce}' \
+    https://unpkg.com/leaflet@1.9.4/dist/leaflet.js \
+     ${process.env.CSP_SCRIPT_SRC}`;
   csp['style-src'] =
     `'self' 'unsafe-inline' https://unpkg.com/leaflet@1.9.4/dist/leaflet.css https://fonts.googleapis.com`;
 
