@@ -338,14 +338,17 @@ const generateCSPHeaders = () => {
   }
 
   csp['base-uri'] = `'self'`;
-  csp['connect-src'] = `'self' ${process.env.CSP_CONNECT_SRC}`;
+  csp['connect-src'] =
+    `'self' https://webanalytics.digiaiiris.com ${process.env.CSP_CONNECT_SRC}`;
   csp['default-src'] = `'self'`;
   csp['font-src'] = `'self' https://fonts.gstatic.com`;
   csp['form-action'] = `'self'`;
   csp['img-src'] = `'self' data: https://www.hel.fi ${process.env.CSP_IMG_SRC}`;
   csp['manifest-src'] = `'self'`;
-  csp['script-src'] =
-    `'self' 'nonce-${nonce}' https://unpkg.com/leaflet@1.9.4/dist/leaflet.js`;
+  csp['script-src'] = `'self' \
+    'nonce-${nonce}' \
+    https://unpkg.com/leaflet@1.9.4/dist/leaflet.js \
+    https://webanalytics.digiaiiris.com/js/piwik.min.js`;
   csp['style-src'] =
     `'self' 'unsafe-inline' https://unpkg.com/leaflet@1.9.4/dist/leaflet.css https://fonts.googleapis.com`;
 
