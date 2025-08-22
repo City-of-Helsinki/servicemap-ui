@@ -85,13 +85,12 @@ export const selectServiceUnitSearchResultLoadingReducer = createSelector(
 
 export function resolveCombinedReducerData(
   districtLoadingReducerData,
-  embedded,
   serviceUnitSearchResultReducerData
 ) {
   if (districtLoadingReducerData.showLoadingScreen) {
     return districtLoadingReducerData;
   }
-  if (embedded && serviceUnitSearchResultReducerData.showLoadingScreen) {
+  if (serviceUnitSearchResultReducerData.showLoadingScreen) {
     return serviceUnitSearchResultReducerData;
   }
   return {

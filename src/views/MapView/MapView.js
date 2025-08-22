@@ -125,10 +125,10 @@ function MapView(props) {
   const serviceUnitSearchResultReducerData = useSelector(
     selectServiceUnitSearchResultLoadingReducer
   );
+
   const { showLoadingScreen, loadingReducer, hideLoadingNumbers } =
     resolveCombinedReducerData(
       districtLoadingReducerData,
-      embedded,
       serviceUnitSearchResultReducerData
     );
   // This unassigned selector is used to trigger re-render after events are fetched
@@ -312,6 +312,7 @@ function MapView(props) {
       outline: '2px solid transparent',
       boxShadow: `0 0 0 3px ${theme.palette.primary.highContrast}, 0 0 0 4px ${theme.palette.focusBorder.main}`,
     });
+
     return (
       <MapContainer
         tap={false} // This should fix leaflet safari double click bug
