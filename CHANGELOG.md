@@ -1,5 +1,19 @@
 # Changelog
 
+## [2.6.0](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.5.2...servicemap-ui-v2.6.0) (2025-09-05)
+
+
+### Features
+
+* Add CSP support ([9e2bf90](https://github.com/City-of-Helsinki/servicemap-ui/commit/9e2bf90bb6b4304a967545cb690f01df2bfa0fac))
+* MapView enable loading indicator for service unit search PL-71 ([e506f2c](https://github.com/City-of-Helsinki/servicemap-ui/commit/e506f2cc8333271833b74f94b298e13c2811c5a1))
+
+
+### Bug Fixes
+
+* Add CSP_SCRIPT_SRC and include analytics ([8c59e79](https://github.com/City-of-Helsinki/servicemap-ui/commit/8c59e79b26484d3d5a49c8b8883e79650ba9e40b))
+* Add missing nonce param and remove hardcoded connect-src values ([9a3b5a4](https://github.com/City-of-Helsinki/servicemap-ui/commit/9a3b5a494dbbdeb90d0eeb57dc9ac4e095c6d223))
+
 ## [2.5.2](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.5.1...servicemap-ui-v2.5.2) (2025-08-08)
 
 
