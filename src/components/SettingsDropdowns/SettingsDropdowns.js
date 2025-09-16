@@ -2,6 +2,7 @@
 import styled from '@emotion/styled';
 import { Checkbox, ListItem, TextField, Typography } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
+import { Select } from 'hds-react';
 import PropTypes from 'prop-types';
 import React, { useRef, useState } from 'react';
 import { useIntl } from 'react-intl';
@@ -54,44 +55,44 @@ function SettingsDropdowns({ variant = 'default' }) {
   const senseSettingList = [
     {
       id: 'colorblind',
-      title: intl.formatMessage({ id: 'settings.sense.colorblind' }),
+      label: intl.formatMessage({ id: 'settings.sense.colorblind' }),
     },
     {
       id: 'hearingAid',
-      title: intl.formatMessage({ id: 'settings.sense.hearingAid' }),
+      label: intl.formatMessage({ id: 'settings.sense.hearingAid' }),
     },
     {
       id: 'visuallyImpaired',
-      title: intl.formatMessage({ id: 'settings.sense.visuallyImpaired' }),
+      label: intl.formatMessage({ id: 'settings.sense.visuallyImpaired' }),
     },
   ];
   const mobilitySettingList = [
-    { id: 'none', title: intl.formatMessage({ id: 'settings.mobility.none' }) },
+    { id: 'none', label: intl.formatMessage({ id: 'settings.mobility.none' }) },
     {
       id: 'wheelchair',
-      title: intl.formatMessage({ id: 'settings.mobility.wheelchair' }),
+      label: intl.formatMessage({ id: 'settings.mobility.wheelchair' }),
     },
     {
       id: 'reduced_mobility',
-      title: intl.formatMessage({ id: 'settings.mobility.reduced_mobility' }),
+      label: intl.formatMessage({ id: 'settings.mobility.reduced_mobility' }),
     },
     {
       id: 'rollator',
-      title: intl.formatMessage({ id: 'settings.mobility.rollator' }),
+      label: intl.formatMessage({ id: 'settings.mobility.rollator' }),
     },
     {
       id: 'stroller',
-      title: intl.formatMessage({ id: 'settings.mobility.stroller' }),
+      label: intl.formatMessage({ id: 'settings.mobility.stroller' }),
     },
   ];
   const citySettingsList = config.cities.map((city) => ({
     id: city,
-    title: intl.formatMessage({ id: `settings.city.${city}` }),
+    label: intl.formatMessage({ id: `settings.city.${city}` }),
   }));
   const organizationSettingsList = config.organizations?.map(
     (organization) => ({
       id: organization.id,
-      title: getLocaleText(organization.name),
+      label: getLocaleText(organization.name),
     })
   );
 
@@ -101,6 +102,8 @@ function SettingsDropdowns({ variant = 'default' }) {
   };
 
   const handleOptionSelecting = (id, category) => {
+    console.log(id);
+
     if (!id) {
       return;
     }
@@ -171,105 +174,136 @@ function SettingsDropdowns({ variant = 'default' }) {
     }
   };
 
+  // New handler for HDS Select that works with arrays
+  const handleHDSSelectChange = (selectedOptions, category) => {
+    console.log('what: ', selectedOptions);
+
+    if (!selectedOptions) return;
+
+    setResetText('');
+
+    if (category === 'mobility') {
+      // For single-select mobility, selectedOptions is a single object
+      dispatch(setMobility(selectedOptions.id));
+    } else {
+      // For multi-select categories, compare current vs new selections
+      handleMultiSelectChange(selectedOptions, category);
+    }
+  };
+
+  const handleMultiSelectChange = (newSelections, category) => {
+    const currentSelections = settingsValues[category] || [];
+
+    // Find what was added or removed
+    const newIds = newSelections.map((option) => option.id);
+
+    // Find the difference (what changed)
+    const added = newIds.filter((id) => !currentSelections.includes(id));
+    const removed = currentSelections.filter((id) => !newIds.includes(id));
+
+    // Handle additions
+    added.forEach((id) => {
+      handleSingleOptionChange(id, category, true);
+    });
+
+    // Handle removals
+    removed.forEach((id) => {
+      handleSingleOptionChange(id, category, false);
+    });
+  };
+
+  // Refactored version of handleOptionSelecting for individual changes
+  const handleSingleOptionChange = (id, category, isAdding = true) => {
+    if (category === 'cities') {
+      const settingObj = { ...settings.cities };
+      settingObj[id] = isAdding;
+      dispatch(toggleCity(settingObj));
+    }
+
+    if (category === 'organizations') {
+      const settingObj = { ...settings.organizations };
+      settingObj[id] = isAdding;
+      dispatch(toggleOrganization(settingObj));
+    }
+
+    if (category === 'senses') {
+      // For senses, we need to check the current state and toggle accordingly
+      const currentlySelected = settingsValues.senses.includes(id);
+
+      if (id === 'hearingAid' && currentlySelected !== isAdding) {
+        dispatch(toggleHearingAid());
+      }
+
+      if (id === 'colorblind' && currentlySelected !== isAdding) {
+        dispatch(toggleColorblind());
+        if (isAdding) {
+          dispatch(setMapType('accessible_map'));
+        } else if (!settingsValues.senses.includes('visuallyImpaired')) {
+          dispatch(setMapType(SettingsUtility.defaultMapType));
+        }
+      }
+
+      if (id === 'visuallyImpaired' && currentlySelected !== isAdding) {
+        dispatch(toggleVisuallyImpaired());
+        if (isAdding) {
+          dispatch(setMapType('accessible_map'));
+        } else if (!settingsValues.senses.includes('colorblind')) {
+          dispatch(setMapType(SettingsUtility.defaultMapType));
+        }
+      }
+    }
+  };
+
   const renderSettingsElement = (options, label, category, isSingleOption) => {
-    const getValue = () => {
+    const getValueP = () => {
       if (category === 'mobility') {
         const val = options.find(
           (option) => settingsValues.mobility === option.id
         );
-        return val?.title || null;
+        return val?.label || null;
       }
       const list = options.filter((option) =>
         settingsValues[category].includes(option.id)
       );
-      return list.map((item) => item.title);
+      return list.map((item) => item.label);
+    };
+
+    const getValue = () => {
+      if (category === 'mobility') {
+    return options.find(
+      (option) => settingsValues.mobility === option.id
+    );
+      }
+      return options.filter((option) =>
+        settingsValues[category].includes(option.id)
+      );
     };
 
     return (
-      <StyledAutocomplete
-        open={openSettings === label}
-        data-sm={`${category}-setting-dropdown`}
-        size="small"
-        disablePortal
-        disableClearable
-        ownsettings={+ownSettingsVariant}
-        colormode={themeMode}
-        multiple={!isSingleOption}
-        openText={intl.formatMessage({ id: 'settings.open' })}
-        closeText={intl.formatMessage({ id: 'settings.close' })}
-        options={options}
-        value={getValue()}
-        isOptionEqualToValue={(option) =>
-          category === 'mobility'
-            ? settingsValues[category] === option.id
-            : settingsValues[category].includes(option.id)
-        }
-        disableCloseOnSelect={!isSingleOption}
-        getOptionLabel={(option) => option.title || option}
-        onKeyDown={keyboardHandler(
-          (e) => handleKeyboardSelect(label, category, e),
-          ['space', 'enter', 'up', 'down']
-        )}
-        onHighlightChange={(e, option) => {
-          highlightedOption.current = option;
-        }}
-        onBlur={() => setOpenSettings(null)}
-        ChipProps={{
-          clickable: true,
-          onDelete: null,
-          variant: ownSettingsVariant ? 'outlined' : 'filled',
-        }}
-        slotProps={{
-          // eslint-disable-next-line max-len
-          popper: { sx: { pb: 1 } }, // This padding fixes the listBox position on small screens where the list is renderend to top of input
-        }}
-        renderOption={(props, option) =>
-          isSingleOption ? (
-            // Single option options box
-            <ListItem
-              {...props}
-              onClick={() => handleOptionSelecting(option.id, category)}
-              data-sm={`${category}-${option.id}`}
-            >
-              <Typography>{option.title}</Typography>
-            </ListItem>
-          ) : (
-            // Checkbox options box
-            <ListItem
-              {...props}
-              onClick={() => handleOptionSelecting(option.id, category)}
-              data-sm={`${category}-${option.id}`}
-            >
-              <Checkbox
-                sx={{ mr: 1 }}
-                checked={settingsValues[category].includes(option.id)}
-              />
-              <Typography>{option.title}</Typography>
-            </ListItem>
-          )
-        }
-        renderInput={({ inputProps, ...rest }) => (
-          <TextField
-            label={label}
-            onClick={(e) => {
-              e?.stopPropagation();
-              toggleSettingsBox(label);
-            }}
-            {...rest}
-            sx={{
-              fieldset: {
-                border: 1,
-                boxShadow: 0,
-              },
-            }}
-            inputProps={{
-              ...inputProps,
-              readOnly: true,
-              sx: { cursor: 'pointer' },
-            }}
-          />
-        )}
-      />
+      
+        <Select
+          multiselect={!isSingleOption}
+          label={label}
+          assistive={'Assistive text'}
+          language={'en'}
+          clearable={false}
+          noTags
+          options={options}
+          value={getValue()} // This should return an array for HDS Select
+          style={{
+            paddingLeft: 12,
+            paddingRight: 12,
+          }}
+          onChange={(selectedOptions) => {
+            console.log('HDS Select onChange:', selectedOptions);
+            handleHDSSelectChange(selectedOptions, category);
+          }}
+          onClose={(selectedOptions) => {
+            console.log('HDS Select onClose:', selectedOptions);
+            // Optional: Handle close event if needed
+          }}
+        />
+
     );
   };
 
