@@ -10,6 +10,10 @@ import ThemeWrapper from '../src/themes/ThemeWrapper';
 
 // Check if user agent is Internet Explorer
 function isIE(userAgent) {
+  if (!userAgent) {
+    return false;
+  }
+
   const ua = userAgent;
   const msie = ua.indexOf('MSIE ');
 

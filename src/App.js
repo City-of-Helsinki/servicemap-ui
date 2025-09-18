@@ -14,12 +14,11 @@ import { StyledEngineProvider } from '@mui/material';
 // To add css variables for hds components
 import hdsStyle from 'hds-design-tokens';
 import withStyles from 'isomorphic-style-loader/withStyles';
-import PropTypes from 'prop-types';
 import React, { useEffect, useMemo } from 'react';
 import { Helmet } from 'react-helmet';
 import { IntlProvider, useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
-import { BrowserRouter, Route, Switch, useLocation } from 'react-router-dom';
+import { RouterProvider, useLocation } from 'react-router-dom';
 
 import config from '../config';
 import appStyles from './App.css';
@@ -31,11 +30,11 @@ import MatomoTracker from './components/Matomo/MatomoTracker';
 import SMCookies from './components/SMCookies/SMCookies';
 import HSLFonts from './hsl-icons.css';
 import styles from './index.css';
-import DefaultLayout from './layouts';
-import EmbedLayout from './layouts/EmbedLayout';
+import DefaultLayout from './layouts/DefaultLayout';
 import printCSS from './print.css';
 import { selectMobility, selectSenses } from './redux/selectors/settings';
 import { getLocale } from './redux/selectors/user';
+import { createRouter } from './router';
 import SMFonts from './service-map-icons.css';
 import ThemeWrapper from './themes/ThemeWrapper';
 import isClient from './utils';
@@ -44,7 +43,6 @@ import useMobileStatus from './utils/isMobile';
 import LocaleUtility from './utils/locale';
 import { isEmbed } from './utils/path';
 import { servicemapTrackPageView } from './utils/tracking';
-import EmbedderView from './views/EmbedderView';
 
 // General meta tags for app
 function MetaTags() {
@@ -71,7 +69,7 @@ function MetaTags() {
   );
 }
 
-function App() {
+function App({ component: Component }) {
   const locale = useSelector(getLocale);
   const intlData = LocaleUtility.intlData(locale);
   const { trackPageView } = useMatomo();
@@ -128,11 +126,7 @@ function App() {
           {/* <StylesProvider generateClassName={generateClassName}> */}
           <SMCookies />
           <div className="App">
-            <Switch>
-              <Route path="*/embedder" component={EmbedderView} />
-              <Route path="*/embed" component={EmbedLayout} />
-              <Route render={() => <DefaultLayout />} />
-            </Switch>
+            {Component ? <Component /> : <DefaultLayout />}
             <Navigator />
             <DataFetcher />
           </div>
@@ -163,22 +157,20 @@ function LanguageWrapper() {
     return null;
   }, []);
 
+  // Only create router on client side
   if (isClient()) {
+    const router = createRouter(App);
     return (
       <MatomoContext.Provider value={matomoTracker}>
-        <BrowserRouter>
-          <Switch>
-            <Route path="/:lng" component={App} />
-          </Switch>
-        </BrowserRouter>
+        <RouterProvider router={router} />
       </MatomoContext.Provider>
     );
   }
 
   return (
-    <Switch>
-      <Route path="/:lng" component={App} />
-    </Switch>
+    <MatomoContext.Provider value={matomoTracker}>
+      <App />
+    </MatomoContext.Provider>
   );
 }
 
@@ -191,10 +183,3 @@ export default withStyles(
   printCSS,
   hdsStyle
 )(LanguageWrapper);
-
-// Typechecking
-App.propTypes = {
-  match: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired,
-  history: PropTypes.object.isRequired,
-};

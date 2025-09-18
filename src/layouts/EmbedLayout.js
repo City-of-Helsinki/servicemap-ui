@@ -5,25 +5,17 @@ import { visuallyHidden } from '@mui/utils';
 import React, { useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
-import { Route, Switch, useLocation } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router';
 
 import { Dialog, HomeLogo, PaginatedList, SMButton } from '../components';
 import { selectMapRef, selectNavigator } from '../redux/selectors/general';
 import { parseSearchParams } from '../utils';
 import { resolveCityAndOrganizationFilter } from '../utils/filters';
 import useLocaleText from '../utils/useLocaleText';
-import AddressView from '../views/AddressView';
-import AreaView from '../views/AreaView';
-import DivisionView from '../views/DivisionView';
-import EventDetailView from '../views/EventDetailView';
 import MapView from '../views/MapView';
 import { focusToPosition } from '../views/MapView/utils/mapActions';
 import useMapUnits from '../views/MapView/utils/useMapUnits';
-import SearchView from '../views/SearchView';
-import ServiceView from '../views/ServiceView';
-import UnitView from '../views/UnitView';
 import ContactInfo from '../views/UnitView/components/ContactInfo';
-import PageHandler from './components/PageHandler';
 
 const createContentStyles = (theme, unitListPosition) => {
   const bottomList = unitListPosition === 'bottom';
@@ -212,71 +204,7 @@ function EmbedLayout() {
               embeddedList={showList}
             />
           </div>
-          <Switch>
-            <Route
-              path="*/embed/unit/:unit"
-              render={() => (
-                <>
-                  <PageHandler embed page="unit" />
-                  <UnitView embed />
-                </>
-              )}
-            />
-            <Route
-              path="*/embed/event/:event"
-              render={() => (
-                <>
-                  <PageHandler embed page="event" />
-                  <EventDetailView embed />
-                </>
-              )}
-            />
-            <Route
-              path="*/embed/search"
-              render={() => (
-                <>
-                  <PageHandler embed page="search" />
-                  <SearchView embed />
-                </>
-              )}
-            />
-            <Route
-              path="*/embed/service/:service"
-              render={() => (
-                <>
-                  <PageHandler embed page="service" />
-                  <ServiceView embed />
-                </>
-              )}
-            />
-            <Route
-              path="*/embed/address/:municipality/:street"
-              render={() => (
-                <>
-                  <PageHandler embed page="address" />
-                  <AddressView embed />
-                </>
-              )}
-            />
-            <Route
-              path="*/embed/division/:city?/:area?"
-              render={() => (
-                <>
-                  <PageHandler embed page="division" />
-                  <DivisionView />
-                </>
-              )}
-            />
-            <Route
-              path="*/embed/area/"
-              render={() => (
-                <>
-                  <PageHandler embed page="area" />
-                  <AreaView embed />
-                </>
-              )}
-            />
-          </Switch>
+          <Outlet />
         </div>
         <Typography style={visuallyHidden}>
           {intl.formatMessage({ id: 'map.ariaLabel' })}

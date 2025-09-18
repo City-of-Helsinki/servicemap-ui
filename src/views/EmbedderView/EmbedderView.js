@@ -6,7 +6,6 @@ import {
   Link,
   Typography,
 } from '@mui/material';
-import PropTypes from 'prop-types';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { FormattedMessage, useIntl } from 'react-intl';
@@ -775,12 +774,5 @@ const StyledButton = styled(SMButton)(({ theme }) => ({
   marginTop: 'auto',
   marginBottom: theme.spacing(2),
 }));
-EmbedderView.propTypes = {
-  location: PropTypes.shape({
-    hash: PropTypes.string,
-    pathname: PropTypes.string,
-    search: PropTypes.string,
-  }).isRequired,
-};
 
 export default EmbedderView;

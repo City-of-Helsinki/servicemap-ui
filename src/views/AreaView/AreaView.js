@@ -2,7 +2,7 @@
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router';
 
 import {
   fetchAccessibleStreetParking,
@@ -61,7 +61,7 @@ function getAreaPeriod(selectedArea) {
 function AreaView({ embed = false }) {
   const dispatch = useDispatch();
   const location = useLocation();
-  const history = useHistory();
+  const navigate = useNavigate();
   const districtAddressData = useSelector(selectDistrictAddressData);
   const subdistrictUnits = useSelector(selectSubdistrictUnits);
   const selectedSubdistricts = useSelector(selectSelectedSubdistricts);
@@ -216,7 +216,7 @@ function AreaView({ embed = false }) {
       if (!embed) {
         /* Remove selected area parameter from url, otherwise it will override
         user area selection when returning to area view */
-        history.replace();
+        navigate(location.pathname, { replace: true });
         dispatch(setSelectedDistrictType(null));
         // Switch to geographical tab if geographical area
         if (geographicalDistricts.includes(selectedAreaType)) {

@@ -8,7 +8,7 @@ import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation, useRouteMatch } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 
 import config from '../../../config';
 import {
@@ -83,7 +83,7 @@ function AddressView({ embed = false }) {
   const [isFetchingUnits, setIsFetchingUnits] = useState(false);
   const [isFetchingDistricts, setIsFetchingDistricts] = useState(false);
   const getLocaleText = useLocaleText();
-  const match = useRouteMatch();
+  const { municipality, street } = useParams();
   const location = useLocation();
   const dispatch = useDispatch();
   const searchResults = useSelector(selectResultsData);
@@ -140,8 +140,6 @@ function AddressView({ embed = false }) {
   };
 
   const fetchData = () => {
-    const { municipality, street } = match.params;
-
     dispatch(setAddressUnits([]));
 
     setIsFetchingAddress(true);
@@ -156,8 +154,8 @@ function AddressView({ embed = false }) {
   // Gets address data from previously fetched search results
   const getAddressFromSearch = () => {
     if (!searchResults.length) return null;
-    const addressNameFromParams = match.params.street;
-    const municipalityFromParams = match.params.municipality.toLowerCase();
+    const addressNameFromParams = street;
+    const municipalityFromParams = municipality.toLowerCase();
     return searchResults.find(
       (item) =>
         addressNameFromParams === getLocaleText(item.name) &&
@@ -373,7 +371,7 @@ function AddressView({ embed = false }) {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [match.url, map]);
+  }, [location.pathname, map]);
 
   if (embed || isFetchingAddress || !addressData) {
     return null;

@@ -1,5 +1,5 @@
 import pointOnFeature from '@turf/point-on-feature';
-import { useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router';
 
 import { parseSearchParams } from '../../../utils';
 import { isEmbed } from '../../../utils/path';

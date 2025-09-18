@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router';
 
 import config from '../../config';
 import {
@@ -24,7 +24,6 @@ import { viewTitleID } from '../utils/accessibility';
 import useMobileStatus from '../utils/isMobile';
 import MapView from '../views/MapView';
 import PrintView from '../views/PrintView';
-import ViewRouter from './components/ViewRouter';
 
 const { smallScreenBreakpoint } = config;
 
@@ -185,7 +184,7 @@ function DefaultLayout({ fetchErrors, fetchNews }) {
             <main className="SidebarWrapper" style={styles.sidebar}>
               <AlertBox />
               <div style={styles.sidebarContent} aria-hidden={false}>
-                <ViewRouter />
+                <Outlet />
               </div>
             </main>
             <Typography style={visuallyHidden}>

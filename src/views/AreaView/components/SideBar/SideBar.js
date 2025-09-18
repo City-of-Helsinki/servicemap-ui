@@ -12,7 +12,7 @@ import PropTypes from 'prop-types';
 import React, { useCallback, useEffect, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router';
 
 import {
   AddressSearchBar,
