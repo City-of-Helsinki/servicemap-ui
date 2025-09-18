@@ -218,64 +218,30 @@ class ViewRouter extends React.Component {
   render() {
     return (
       <Routes>
-        <Route exact path="/:lng/unit/:unit/feedback">
-          <UnitFeedback />
-        </Route>
-        <Route exact path="/:lng/unit/:unit/events">
-          <UnitEvents />
-        </Route>
-        <Route exact path="/:lng/unit/:unit/reservations">
-          <UnitReservations />
-        </Route>
-        <Route exact path="/:lng/unit/:unit/services">
-          <UnitServices />
-        </Route>
-        <Route exact path="/:lng/unit/:unit/educationServices/:period?">
-          <UnitEducationServices />
-        </Route>
-        <Route exact path="/:lng/unit/:unit">
-          <Unit />
-        </Route>
-        <Route path="/:lng/search">
-          <Search />
-        </Route>
-        <Route path="/:lng/services">
-          <ServiceTree />
-        </Route>
-        <Route path="/:lng/mobility">
-          <MobilityTree />
-        </Route>
-        <Route path="/:lng/service/:service">
-          <Service />
-        </Route>
-        <Route path="/:lng/event/:event">
-          <Event />
-        </Route>
-        <Route path="/:lng/address/:municipality/:street">
-          <Address />
-        </Route>
-        <Route exact path="/:lng/feedback/">
-          <Feedback />
-        </Route>
-        <Route exact path="/:lng/area/">
-          <Area />
-        </Route>
-        <Route path="/:lng/division/:city?/:area?">
+        <Route path="/:lng/unit/:unit/feedback" element={<UnitFeedback />} />
+        <Route path="/:lng/unit/:unit/events" element={<UnitEvents />} />
+        <Route path="/:lng/unit/:unit/reservations" element={<UnitReservations />} />
+        <Route path="/:lng/unit/:unit/services" element={<UnitServices />} />
+        <Route path="/:lng/unit/:unit/educationServices/:period?" element={<UnitEducationServices />} />
+        <Route path="/:lng/unit/:unit" element={<Unit />} />
+        <Route path="/:lng/search" element={<Search />} />
+        <Route path="/:lng/services" element={<ServiceTree />} />
+        <Route path="/:lng/mobility" element={<MobilityTree />} />
+        <Route path="/:lng/service/:service" element={<Service />} />
+        <Route path="/:lng/event/:event" element={<Event />} />
+        <Route path="/:lng/address/:municipality/:street" element={<Address />} />
+        <Route path="/:lng/feedback/" element={<Feedback />} />
+        <Route path="/:lng/area/" element={<Area />} />
+        <Route path="/:lng/division/:city?/:area?" element={
           <>
             <PageHandler page="division" />
             <DivisionView />
             <HomeView />
           </>
-        </Route>
-        <Route path="/:lng/info/:page?">
-          <Info />
-        </Route>
-        <Route exact path="/:lng/">
-          <Home />
-        </Route>
-        <Route>
-          <ErrorTrigger error="badUrl" />
-        </Route>
+        } />
+        <Route path="/:lng/info/:page?" element={<Info />} />
+        <Route path="/:lng/" element={<Home />} />
+        <Route path="*" element={<ErrorTrigger error="badUrl" />} />
       </Routes>
     );
   }

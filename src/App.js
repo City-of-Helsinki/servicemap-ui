@@ -98,11 +98,11 @@ function App() {
         href: window.location.href,
         ...(config.matomoMobilityDimensionID &&
           config.matomoSensesDimensionID && {
-            customDimensions: [
-              { id: config.matomoMobilityDimensionID, value: mobility || '' },
-              { id: config.matomoSensesDimensionID, value: senses?.join(',') },
-            ],
-          }),
+          customDimensions: [
+            { id: config.matomoMobilityDimensionID, value: mobility || '' },
+            { id: config.matomoSensesDimensionID, value: senses?.join(',') },
+          ],
+        }),
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -130,15 +130,9 @@ function App() {
           <SMCookies />
           <div className="App">
             <Routes>
-              <Route path="*/embedder">
-                <EmbedderView />
-              </Route>
-              <Route path="*/embed">
-                <EmbedLayout />
-              </Route>
-              <Route>
-                <DefaultLayout />
-              </Route>
+              <Route path="*/embedder" element={<EmbedderView />} />
+              <Route path="*/embed" element={<EmbedLayout />} />
+              <Route path="*" element={<DefaultLayout />} />
             </Routes>
             <Navigator />
             <DataFetcher />
@@ -175,9 +169,7 @@ function LanguageWrapper() {
       <MatomoContext.Provider value={matomoTracker}>
         <BrowserRouter>
           <Routes>
-            <Route path="/:lng">
-              <App />
-            </Route>
+            <Route path="/:lng" element={<App />} />
           </Routes>
         </BrowserRouter>
       </MatomoContext.Provider>
@@ -186,9 +178,7 @@ function LanguageWrapper() {
 
   return (
     <Routes>
-      <Route path="/:lng">
-        <App />
-      </Route>
+      <Route path="/:lng" element={<App />} />
     </Routes>
   );
 }

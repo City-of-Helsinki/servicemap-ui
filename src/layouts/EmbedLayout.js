@@ -70,15 +70,15 @@ const createContentStyles = (theme, unitListPosition) => {
     },
     embedSidebarContainer: bottomList
       ? {
-          height: 300,
-          maxHeight: '40%',
-          minHeight: '25%',
-        }
+        height: 300,
+        maxHeight: '40%',
+        minHeight: '25%',
+      }
       : {
-          minWidth: 220,
-          maxWidth: 'min(40%, 300px)',
-          flexGrow: 1,
-        },
+        minWidth: 220,
+        maxWidth: 'min(40%, 300px)',
+        flexGrow: 1,
+      },
     unitList: {
       paddingTop: bottomList ? 0 : 36,
       maxHeight: '100%',
@@ -213,48 +213,48 @@ function EmbedLayout() {
             />
           </div>
           <Routes>
-            <Route path="*/embed/unit/:unit">
+            <Route path="*/embed/unit/:unit" element={
               <>
                 <PageHandler embed page="unit" />
                 <UnitView embed />
               </>
-            </Route>
-            <Route path="*/embed/event/:event">
+            } />
+            <Route path="*/embed/event/:event" element={
               <>
                 <PageHandler embed page="event" />
                 <EventDetailView embed />
               </>
-            </Route>
-            <Route path="*/embed/search">
+            } />
+            <Route path="*/embed/search" element={
               <>
                 <PageHandler embed page="search" />
                 <SearchView embed />
               </>
-            </Route>
-            <Route path="*/embed/service/:service">
+            } />
+            <Route path="*/embed/service/:service" element={
               <>
                 <PageHandler embed page="service" />
                 <ServiceView embed />
               </>
-            </Route>
-            <Route path="*/embed/address/:municipality/:street">
+            } />
+            <Route path="*/embed/address/:municipality/:street" element={
               <>
                 <PageHandler embed page="address" />
                 <AddressView embed />
               </>
-            </Route>
-            <Route path="*/embed/division/:city?/:area?">
+            } />
+            <Route path="*/embed/division/:city?/:area?" element={
               <>
                 <PageHandler embed page="division" />
                 <DivisionView />
               </>
-            </Route>
-            <Route path="*/embed/area/">
+            } />
+            <Route path="*/embed/area/" element={
               <>
                 <PageHandler embed page="area" />
                 <AreaView embed />
               </>
-            </Route>
+            } />
           </Routes>
         </div>
         <Typography style={visuallyHidden}>
