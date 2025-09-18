@@ -16,11 +16,11 @@ import { visuallyHidden } from '@mui/utils';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
-import { Prompt } from 'react-router';
 import { useLocation } from 'react-router-dom';
 
 import config from '../../../config';
 import { DesktopComponent, SMButton, TitleBar } from '../../components';
+import RouterPrompt from '../../components/RouterPrompt/RouterPrompt';
 import { validateEmail } from '../../utils';
 import { focusToViewTitle } from '../../utils/accessibility';
 import useMobileStatus from '../../utils/isMobile';
@@ -269,9 +269,16 @@ function FeedbackView({ navigator = null, intl, selectedUnit = null }) {
     <>
       {/* Exit dialog */}
       <DesktopComponent>
-        <Prompt
+        <RouterPrompt
           when={!!(!modalOpen && (email || feedback || permission))}
-          message={intl.formatMessage({ id: 'feedback.modal.leave' })}
+          onOK={() => {
+            return true;
+          }}
+          onCancel={() => {
+            return false;
+          }}
+          title={intl.formatMessage({ id: 'feedback.modal.leave' })}
+          content={intl.formatMessage({ id: 'feedback.modal.leave' })}
         />
       </DesktopComponent>
       {/* Confirm dialog */}
