@@ -1,5 +1,4 @@
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
 
 import { actionSetInitialLoad } from '../../../../redux/actions/user';
 import { selectInitialLoad } from '../../../../redux/selectors/user';
@@ -10,6 +9,4 @@ const mapStateToProps = (state) => ({
   initialLoad: selectInitialLoad(state),
 });
 
-export default withRouter(
-  connect(mapStateToProps, { actionSetInitialLoad })(ViewTitle)
-);
+export default connect(mapStateToProps, { actionSetInitialLoad })(ViewTitle);
