@@ -8,6 +8,7 @@ import { visuallyHidden } from '@mui/utils';
 import PropTypes from 'prop-types';
 import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 
 import config from '../../../config';
 import { selectNavigator } from '../../redux/selectors/general';
@@ -17,13 +18,13 @@ import PaginatedList from '../Lists/PaginatedList';
 import ResultOrderer from '../ResultOrderer';
 
 function TabLists({
-  location,
   data,
   onTabChange = null,
   focusClass = null,
   focusText = null,
   headerComponents = null,
 }) {
+  const location = useLocation();
   const isMobile = useMobileStatus();
   const theme = useTheme();
   const navigator = useSelector(selectNavigator);
@@ -397,7 +398,6 @@ TabLists.propTypes = {
   ).isRequired,
   headerComponents: PropTypes.objectOf(PropTypes.any),
   onTabChange: PropTypes.func,
-  location: PropTypes.objectOf(PropTypes.any).isRequired,
   focusClass: PropTypes.string,
   focusText: PropTypes.string,
 };
