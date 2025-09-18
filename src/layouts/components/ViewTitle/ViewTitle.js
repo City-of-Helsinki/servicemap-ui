@@ -1,20 +1,19 @@
 import { Typography } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { FormattedMessage } from 'react-intl';
+import { useLocation, useParams } from 'react-router-dom';
 
-import { viewTitleID } from '../../../../utils/accessibility';
-import { COOKIE_MODAL_ROOT_ID } from '../../../../utils/constants';
+import { viewTitleID } from '../../../utils/accessibility';
+import { COOKIE_MODAL_ROOT_ID } from '../../../utils/constants';
 
-class ViewTitle extends React.Component {
-  constructor(props) {
-    super(props);
-    this.titleRef = React.createRef();
-  }
+const ViewTitle = ({ initialLoad, messageId, actionSetInitialLoad }) => {
+  const titleRef = useRef(null);
+  const location = useLocation();
+  const params = useParams();
 
-  componentDidMount() {
-    const { initialLoad, actionSetInitialLoad, location } = this.props;
+  useEffect(() => {
     if (location.hash && location.hash !== '') {
       const elem = document.querySelector(location.hash);
       if (elem) {
@@ -23,8 +22,8 @@ class ViewTitle extends React.Component {
       }
     }
     if (initialLoad) {
-      if (this.titleRef.current) {
-        this.titleRef.current.focus();
+      if (titleRef.current) {
+        titleRef.current.focus();
       }
     } else {
       actionSetInitialLoad();
@@ -47,38 +46,32 @@ class ViewTitle extends React.Component {
         }
       }, 800);
     }
+  }, [initialLoad, actionSetInitialLoad, location.hash]);
+
+  const type = params.type || '';
+  let message = messageId;
+
+  if (location.search.includes('feedback=true')) {
+    message = 'general.pageTitles.feedback';
   }
 
-  render() {
-    const { messageId, match, location } = this.props;
-    const type = match.params.type || '';
-
-    let message = messageId;
-
-    if (location.search.includes('feedback=true')) {
-      message = 'general.pageTitles.feedback';
-    }
-
-    return (
-      <Typography
-        id={viewTitleID}
-        style={visuallyHidden}
-        component="h2"
-        tabIndex={-1}
-        ref={this.titleRef}
-      >
-        <FormattedMessage id={message + type} />
-      </Typography>
-    );
-  }
-}
+  return (
+    <Typography
+      id={viewTitleID}
+      style={visuallyHidden}
+      component="h2"
+      tabIndex={-1}
+      ref={titleRef}
+    >
+      <FormattedMessage id={message + type} />
+    </Typography>
+  );
+};
 
 ViewTitle.propTypes = {
   initialLoad: PropTypes.bool.isRequired,
-  location: PropTypes.objectOf(PropTypes.any).isRequired,
   messageId: PropTypes.string.isRequired,
   actionSetInitialLoad: PropTypes.func.isRequired,
-  match: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 export default ViewTitle;

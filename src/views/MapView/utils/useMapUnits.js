@@ -1,7 +1,7 @@
 import distance from '@turf/distance';
 import flip from '@turf/flip';
 import { useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
+import { useLocation } from 'react-router';
 
 import {
   selectAddressAdminDistricts,

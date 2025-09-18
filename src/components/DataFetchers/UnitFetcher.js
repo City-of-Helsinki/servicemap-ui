@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import { useCallback, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import {
   changeSelectedUnit,
@@ -13,17 +13,24 @@ import { fetchReservations } from '../../redux/actions/selectedUnitReservations'
 import { getSelectedUnit } from '../../redux/selectors/selectedUnit';
 import { focusToPosition } from '../../views/MapView/utils/mapActions';
 
-class UnitFetcher extends React.Component {
-  componentDidMount() {
-    const {
-      match = {},
-      fetchSelectedUnit,
-      fetchReservations,
-      unit = null,
-      fetchAccessibilitySentences,
-    } = this.props;
-    const { params } = match;
+const UnitFetcher = ({
+  children,
+  fetchSelectedUnit,
+  fetchReservations,
+  unit = null,
+  fetchAccessibilitySentences,
+  map = null,
+}) => {
+  const params = useParams();
 
+  const centerMap = useCallback(() => {
+    const { location } = unit || {};
+    if (location && location.coordinates && map) {
+      focusToPosition(map, location.coordinates);
+    }
+  }, [unit, map]);
+
+  useEffect(() => {
     if (params && params.unit) {
       const unitId = params.unit;
       fetchReservations(unitId);
@@ -31,28 +38,25 @@ class UnitFetcher extends React.Component {
 
       if (unit && unit.complete && unitId === `${unit.id}`) {
         fetchAccessibilitySentences(unitId);
-        this.centerMap();
+        centerMap();
         return;
       }
       fetchSelectedUnit(unitId, () => {
         fetchAccessibilitySentences(unitId);
-        this.centerMap();
+        centerMap();
       });
     }
-  }
+  }, [
+    params,
+    fetchSelectedUnit,
+    fetchReservations,
+    unit,
+    fetchAccessibilitySentences,
+    centerMap,
+  ]);
 
-  centerMap = () => {
-    const { map = null, unit = null } = this.props;
-    const { location } = unit;
-    if (location && location.coordinates && map) {
-      focusToPosition(map, location.coordinates);
-    }
-  };
-
-  render() {
-    return null;
-  }
-}
+  return children;
+};
 
 // Listen to redux state
 const mapStateToProps = (state) => {
@@ -66,22 +70,20 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default withRouter(
-  connect(mapStateToProps, {
-    changeSelectedUnit,
-    fetchSelectedUnit,
-    fetchUnitEvents,
-    fetchAccessibilitySentences,
-    fetchReservations,
-  })(UnitFetcher)
-);
+export default connect(mapStateToProps, {
+  changeSelectedUnit,
+  fetchSelectedUnit,
+  fetchUnitEvents,
+  fetchAccessibilitySentences,
+  fetchReservations,
+})(UnitFetcher);
 
 // Typechecking
 UnitFetcher.propTypes = {
+  children: PropTypes.node.isRequired,
   unit: PropTypes.objectOf(PropTypes.any),
   fetchAccessibilitySentences: PropTypes.func.isRequired,
   fetchReservations: PropTypes.func.isRequired,
   fetchSelectedUnit: PropTypes.func.isRequired,
   map: PropTypes.objectOf(PropTypes.any),
-  match: PropTypes.objectOf(PropTypes.any),
 };

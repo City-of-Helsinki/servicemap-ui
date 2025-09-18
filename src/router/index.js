@@ -1,23 +1,28 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { createBrowserRouter } from 'react-router-dom';
 
-import { ErrorTrigger } from '../../../components';
-import AddressView from '../../../views/AddressView';
-import AreaView from '../../../views/AreaView';
-import DivisionView from '../../../views/DivisionView';
-import EventDetailView from '../../../views/EventDetailView';
-import FeedbackView from '../../../views/FeedbackView';
-import HomeView from '../../../views/HomeView';
-import InfoView from '../../../views/InfoView';
-import SearchView from '../../../views/SearchView';
-import ServiceTreeView from '../../../views/ServiceTreeView';
-import ServiceView from '../../../views/ServiceView';
-import UnitView from '../../../views/UnitView';
-import ExtendedData from '../../../views/UnitView/components/ExtendedData';
-import PageHandler from '../PageHandler';
-import ViewTitle from './ViewTitle';
+import { ErrorTrigger } from '../components';
+import UnitFetcher from '../components/DataFetchers/UnitFetcher';
+import DefaultLayout from '../layouts';
+import PageHandler from '../layouts/components/PageHandler';
+import ViewTitle from '../layouts/components/ViewTitle';
+import EmbedLayout from '../layouts/EmbedLayout';
+import AddressView from '../views/AddressView';
+import AreaView from '../views/AreaView';
+import DivisionView from '../views/DivisionView';
+import EmbedderView from '../views/EmbedderView';
+import EventDetailView from '../views/EventDetailView';
+import FeedbackView from '../views/FeedbackView';
+import HomeView from '../views/HomeView';
+import InfoView from '../views/InfoView';
+import SearchView from '../views/SearchView';
+import ServiceTreeView from '../views/ServiceTreeView';
+import ServiceView from '../views/ServiceView';
+import UnitView from '../views/UnitView';
+import ExtendedData from '../views/UnitView/components/ExtendedData';
 
+// Route element helper functions
 function TitleWrapper({ children, messageId }) {
   return (
     <>
@@ -47,6 +52,7 @@ PageWrapper.propTypes = {
   page: PropTypes.string,
 };
 
+// Default layout route elements
 function Home() {
   return (
     <TitleWrapper messageId="general.pageTitles.home">
@@ -86,6 +92,7 @@ function UnitServices() {
     </TitleWrapper>
   );
 }
+
 function UnitEducationServices() {
   return (
     <TitleWrapper messageId="general.pageTitles.unit.services">
@@ -95,6 +102,7 @@ function UnitEducationServices() {
     </TitleWrapper>
   );
 }
+
 function UnitEvents() {
   return (
     <TitleWrapper messageId="general.pageTitles.unit.events">
@@ -104,6 +112,7 @@ function UnitEvents() {
     </TitleWrapper>
   );
 }
+
 function UnitReservations() {
   return (
     <TitleWrapper messageId="general.pageTitles.unit.reservations">
@@ -113,11 +122,14 @@ function UnitReservations() {
     </TitleWrapper>
   );
 }
+
 function UnitFeedback() {
   return (
     <TitleWrapper messageId="general.pageTitles.feedback">
       <PageWrapper headMsgId="general.pageTitles.feedback" page="unit">
-        <FeedbackView />
+        <UnitFetcher>
+          <FeedbackView />
+        </UnitFetcher>
       </PageWrapper>
     </TitleWrapper>
   );
@@ -182,7 +194,7 @@ function MobilityTree() {
 function Info() {
   return (
     <TitleWrapper messageId="general.pageTitles.info">
-      <PageWrapper headMsgId="general.pageTitles.info" page="info">
+      <PageWrapper headMsgId="" page="info">
         <InfoView />
       </PageWrapper>
     </TitleWrapper>
@@ -209,61 +221,128 @@ function Area() {
   );
 }
 
-class ViewRouter extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
-  render() {
-    return (
-      <Switch>
-        <Route
-          exact
-          path="/:lng/unit/:unit/feedback"
-          component={UnitFeedback}
-        />
-        <Route exact path="/:lng/unit/:unit/events" component={UnitEvents} />
-        <Route
-          exact
-          path="/:lng/unit/:unit/reservations"
-          component={UnitReservations}
-        />
-        <Route
-          exact
-          path="/:lng/unit/:unit/services"
-          component={UnitServices}
-        />
-        <Route
-          exact
-          path="/:lng/unit/:unit/educationServices/:period?"
-          component={UnitEducationServices}
-        />
-        <Route exact path="/:lng/unit/:unit" component={Unit} />
-        <Route path="/:lng/search" component={Search} />
-        <Route path="/:lng/services" component={ServiceTree} />
-        <Route path="/:lng/mobility" component={MobilityTree} />
-        <Route path="/:lng/service/:service" component={Service} />
-        <Route path="/:lng/event/:event" component={Event} />
-        <Route path="/:lng/address/:municipality/:street" component={Address} />
-        <Route exact path="/:lng/feedback/" component={Feedback} />
-        <Route exact path="/:lng/area/" component={Area} />
-        <Route
-          path="/:lng/division/:city?/:area?"
-          render={() => (
-            <>
-              <PageHandler page="division" />
-              <DivisionView />
-              <HomeView />
-            </>
-          )}
-        />
-        <Route path="/:lng/info/:page?" component={Info} />
-        <Route exact path="/:lng/" component={Home} />
-        <Route render={(props) => <ErrorTrigger error="badUrl" />} />
-      </Switch>
-    );
-  }
+function Division() {
+  return (
+    <>
+      <PageHandler page="division" />
+      <DivisionView />
+      <HomeView />
+    </>
+  );
 }
 
-export default ViewRouter;
+function ErrorRoute() {
+  return <ErrorTrigger error="badUrl" />;
+}
+
+// Embed layout route elements
+function UnitEmbed() {
+  return (
+    <>
+      <PageHandler embed page="unit" />
+      <UnitView embed />
+    </>
+  );
+}
+
+function EventEmbed() {
+  return (
+    <>
+      <PageHandler embed page="event" />
+      <EventDetailView embed />
+    </>
+  );
+}
+
+function SearchEmbed() {
+  return (
+    <>
+      <PageHandler embed page="search" />
+      <SearchView embed />
+    </>
+  );
+}
+
+function ServiceEmbed() {
+  return (
+    <>
+      <PageHandler embed page="service" />
+      <ServiceView embed />
+    </>
+  );
+}
+
+function AddressEmbed() {
+  return (
+    <>
+      <PageHandler embed page="address" />
+      <AddressView embed />
+    </>
+  );
+}
+
+function DivisionEmbed() {
+  return (
+    <>
+      <PageHandler embed page="division" />
+      <DivisionView />
+    </>
+  );
+}
+
+function AreaEmbed() {
+  return (
+    <>
+      <PageHandler embed page="area" />
+      <AreaView embed />
+    </>
+  );
+}
+
+export const createRouter = (App) =>
+  createBrowserRouter([
+    {
+      path: '/:lng/embedder/*',
+      element: <App component={EmbedderView} />,
+    },
+    {
+      path: '/:lng/embed',
+      element: <App component={EmbedLayout} />,
+      children: [
+        { path: 'unit/:unit', element: <UnitEmbed /> },
+        { path: 'event/:event', element: <EventEmbed /> },
+        { path: 'search', element: <SearchEmbed /> },
+        { path: 'service/:service', element: <ServiceEmbed /> },
+        { path: 'address/:municipality/:street', element: <AddressEmbed /> },
+        { path: 'division/:city?/:area?', element: <DivisionEmbed /> },
+        { path: 'area', element: <AreaEmbed /> },
+      ],
+    },
+    {
+      path: '/:lng',
+      element: <App component={DefaultLayout} />,
+      children: [
+        { path: 'unit/:unit/feedback', element: <UnitFeedback /> },
+        { path: 'unit/:unit/events', element: <UnitEvents /> },
+        { path: 'unit/:unit/reservations', element: <UnitReservations /> },
+        { path: 'unit/:unit/services', element: <UnitServices /> },
+        {
+          path: 'unit/:unit/educationServices/:period?',
+          element: <UnitEducationServices />,
+        },
+        { path: 'unit/:unit', element: <Unit /> },
+        { path: 'service/:service', element: <Service /> },
+        { path: 'event/:event', element: <Event /> },
+        { path: 'address/:municipality/:street', element: <Address /> },
+        { path: 'division/:city?/:area?', element: <Division /> },
+        { path: 'info/:page?', element: <Info /> },
+        { path: 'search', element: <Search /> },
+        { path: 'services', element: <ServiceTree /> },
+        { path: 'mobility', element: <MobilityTree /> },
+        { path: 'feedback', element: <Feedback /> },
+        { path: 'area', element: <Area /> },
+        { path: '', element: <Home /> },
+        { path: '*', element: <ErrorRoute /> },
+      ],
+    },
+  ]);

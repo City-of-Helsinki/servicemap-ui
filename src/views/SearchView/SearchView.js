@@ -6,7 +6,7 @@ import { visuallyHidden } from '@mui/utils';
 import React, { useEffect, useMemo, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation, useRouteMatch } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router';
 
 import config from '../../../config';
 import {
@@ -54,7 +54,7 @@ import {
   getAddressNavigatorParamsConnector,
   useNavigationParams,
 } from '../../utils/address';
-import { applyCityAndOrganizationFilter } from '../../utils/filters';
+import { resolveCityAndOrganizationFilter } from '../../utils/filters';
 import useMobileStatus from '../../utils/isMobile';
 import {
   getBboxFromBounds,
@@ -92,7 +92,7 @@ function SearchView() {
   const embed = isEmbed();
   const isMobile = useMobileStatus();
   const location = useLocation();
-  const match = useRouteMatch();
+  const params = useParams();
   const intl = useIntl();
   const { trackPageView } = useMatomo();
 
@@ -101,10 +101,20 @@ function SearchView() {
     [location.search]
   );
 
-  const searchResults = applyCityAndOrganizationFilter(
-    orderedData,
-    location,
-    embed
+  const cityAndOrgFilter = useMemo(
+    () =>
+      resolveCityAndOrganizationFilter(
+        selectedCities,
+        selectedOrganizationIds,
+        location,
+        embed
+      ),
+    [selectedCities, selectedOrganizationIds, location, embed]
+  );
+
+  const searchResults = useMemo(
+    () => orderedData.filter(cityAndOrgFilter),
+    [orderedData, cityAndOrgFilter]
   );
 
   const getResultsByType = (type) =>
@@ -364,7 +374,7 @@ function SearchView() {
       dispatch(fetchSearchResults(options));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [match.params]);
+  }, [params]);
 
   useEffect(() => {
     if (searchResults.length) {
@@ -411,10 +421,18 @@ function SearchView() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [JSON.stringify(unorderedSearchResults), searchResults]);
 
+  const navigatorAvailable = !!navigator;
+
   useEffect(() => {
-    if (embed || !navigator) {
+    if (embed) {
       return;
     }
+
+    // Wait for navigator to be available
+    if (!navigatorAvailable) {
+      return;
+    }
+
     navigator.setParameter('city', selectedCities);
     navigator.setParameter('organization', selectedOrganizationIds);
     navigator.setParameter(
@@ -435,8 +453,8 @@ function SearchView() {
       navigator.removeParameter('hstreet');
     }
     navigator.setParameter('map', mapType);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
-    navigator,
     embed,
     selectedCities,
     selectedOrganizationIds,
@@ -444,7 +462,36 @@ function SearchView() {
     bounds,
     customPositionAddress,
     mapType,
+    navigatorAvailable,
   ]);
+
+  useEffect(() => {
+    if (embed || !navigatorAvailable) {
+      return;
+    }
+
+    // Set URL parameters when navigator first becomes available
+    // This handles the case where navigator wasn't available during initial render
+    const hasExistingParams =
+      location.search.includes('city=') ||
+      location.search.includes('organization=') ||
+      location.search.includes('accessibility_setting=');
+
+    const hasSettings =
+      selectedCities.length > 0 ||
+      selectedOrganizationIds.length > 0 ||
+      selectedAccessibilitySettings.length > 0;
+
+    if (!hasExistingParams && hasSettings) {
+      navigator.setParameter('city', selectedCities);
+      navigator.setParameter('organization', selectedOrganizationIds);
+      navigator.setParameter(
+        'accessibility_setting',
+        selectedAccessibilitySettings
+      );
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [navigatorAvailable]);
 
   const renderSearchBar = () => <StyledSearchBar expand />;
 

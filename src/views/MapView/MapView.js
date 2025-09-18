@@ -9,7 +9,7 @@ import React, { useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useMapEvents } from 'react-leaflet';
 import { useDispatch, useSelector } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 import { Loading } from '../../components';
 import { setBounds } from '../../redux/actions/map';
@@ -86,7 +86,6 @@ function EmbeddedActions() {
 
 function MapView(props) {
   const {
-    location,
     hideUserMarker = false,
     highlightedUnit = null,
     highlightedDistrict = null,
@@ -99,6 +98,8 @@ function MapView(props) {
     sidebarHidden = false,
     disableInteraction = false,
   } = props;
+
+  const location = useLocation();
 
   // State
   const [mapObject, setMapObject] = useState(null);
@@ -458,7 +459,7 @@ function MapView(props) {
   return null;
 }
 
-export default withRouter(MapView);
+export default MapView;
 
 const StyledLoadingScreenContainer = styled.div(({ theme }) => ({
   height: '100%',
@@ -507,7 +508,6 @@ MapView.propTypes = {
   highlightedDistrict: PropTypes.objectOf(PropTypes.any),
   highlightedUnit: PropTypes.objectOf(PropTypes.any),
   isMobile: PropTypes.bool,
-  location: PropTypes.objectOf(PropTypes.any).isRequired,
   findUserLocation: PropTypes.func.isRequired,
   setMapRef: PropTypes.func.isRequired,
   userLocation: PropTypes.objectOf(PropTypes.any),

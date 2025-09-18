@@ -1,6 +1,6 @@
-import PropTypes from 'prop-types';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useLocation, useParams } from 'react-router-dom';
 
 import { setHighlightedDistrict } from '../../redux/actions/district';
 import fetchSearchResults from '../../redux/actions/search';
@@ -10,12 +10,15 @@ import { parseSearchParams } from '../../utils';
 import { focusDistrict } from '../MapView/utils/mapActions';
 import fetchDivisionDistrict from './fetchDivisionDistrict';
 
-function DivisionView({ location, match }) {
+function DivisionView() {
   const dispatch = useDispatch();
+  const location = useLocation();
+  const params = useParams();
   const highlightedDistrict = useSelector(getHighlightedDistrict);
   const map = useSelector(selectMapRef);
+
   useEffect(() => {
-    const { area, city } = match.params;
+    const { area, city } = params;
 
     const searchParams = parseSearchParams(location.search);
     let options = null;
@@ -60,9 +63,3 @@ function DivisionView({ location, match }) {
 }
 
 export default DivisionView;
-
-// Typechecking
-DivisionView.propTypes = {
-  location: PropTypes.objectOf(PropTypes.any).isRequired,
-  match: PropTypes.objectOf(PropTypes.any).isRequired,
-};

@@ -1,6 +1,5 @@
 import { injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
 
 import { changeSelectedEvent } from '../../redux/actions/event';
 import { fetchSelectedUnit } from '../../redux/actions/selectedUnit';
@@ -18,10 +17,8 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default withRouter(
-  injectIntl(
-    connect(mapStateToProps, { changeSelectedEvent, fetchSelectedUnit })(
-      EventDetailView
-    )
+export default injectIntl(
+  connect(mapStateToProps, { changeSelectedEvent, fetchSelectedUnit })(
+    EventDetailView
   )
 );

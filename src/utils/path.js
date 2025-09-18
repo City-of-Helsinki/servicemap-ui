@@ -1,4 +1,4 @@
-import { useRouteMatch } from 'react-router-dom/cjs/react-router-dom.min';
+import { useLocation } from 'react-router-dom';
 
 import config from '../../config';
 import paths from '../../config/paths';
@@ -13,8 +13,8 @@ export const isEmbed = (match) => {
 
 // This is a hook implementation of isEmbed functionality
 export const useEmbedStatus = () => {
-  const match = useRouteMatch();
-  return match.url && !!paths.embed.regex.exec(match.url);
+  const location = useLocation();
+  return !!paths.embed.regex.exec(location.pathname);
 };
 
 export const comparePath = (path, location) => {
