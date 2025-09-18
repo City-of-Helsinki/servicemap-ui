@@ -17,6 +17,7 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Prompt } from 'react-router';
+import { useLocation } from 'react-router-dom';
 
 import config from '../../../config';
 import { DesktopComponent, SMButton, TitleBar } from '../../components';
@@ -38,12 +39,8 @@ const formFieldInitialState = {
   },
 };
 
-function FeedbackView({
-  navigator = null,
-  intl,
-  location,
-  selectedUnit = null,
-}) {
+function FeedbackView({ navigator = null, intl, selectedUnit = null }) {
+  const location = useLocation();
   const getLocaleText = useLocaleText();
   const isMobile = useMobileStatus();
   const theme = useTheme();
@@ -562,7 +559,6 @@ const StyledCheckboxIcon = styled('span')(({ theme }) => ({
 FeedbackView.propTypes = {
   navigator: PropTypes.objectOf(PropTypes.any),
   intl: PropTypes.objectOf(PropTypes.any).isRequired,
-  location: PropTypes.objectOf(PropTypes.any).isRequired,
   selectedUnit: PropTypes.objectOf(PropTypes.any),
 };
 
