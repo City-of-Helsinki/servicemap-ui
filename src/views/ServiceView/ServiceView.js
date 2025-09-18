@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
+import { useLocation, useParams } from 'react-router-dom';
 
 import {
   Container,
@@ -35,7 +36,9 @@ const StyledTitleBar = styled(TitleBar)(({ theme }) => ({
 }));
 
 function ServiceView(props) {
-  const { match = {}, fetchService, embed = false, location } = props;
+  const { fetchService, embed = false } = props;
+  const params = useParams();
+  const location = useLocation();
   const getLocaleText = useLocaleText();
   const map = useSelector(selectMapRef);
   const serviceReducer = useSelector(selectServiceDataSet);
@@ -56,9 +59,7 @@ function ServiceView(props) {
   // Check if view will fetch data because search params has changed
   const shouldFetch = () => {
     const { current, isFetching } = serviceReducer;
-    return (
-      !isFetching && (!current || `${current.id}` !== match.params?.service)
-    );
+    return !isFetching && (!current || `${current.id}` !== params?.service);
   };
 
   const focusMap = (unit) => {
@@ -84,10 +85,10 @@ function ServiceView(props) {
   useEffect(() => {
     setIcon(getIcon('service', { className: iconClass }));
     if (shouldFetch()) {
-      fetchService(match.params?.service);
+      fetchService(params?.service);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [match.params.service]);
+  }, [params.service]);
 
   useEffect(() => {
     if (coordinateIsActive(location)) {
@@ -161,9 +162,7 @@ function ServiceView(props) {
 
 ServiceView.propTypes = {
   embed: PropTypes.bool,
-  match: PropTypes.objectOf(PropTypes.any),
   fetchService: PropTypes.func.isRequired,
-  location: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 export default ServiceView;
