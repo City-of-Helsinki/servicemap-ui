@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router';
 
 import { fetchSelectedUnit } from '../../redux/actions/selectedUnit';
 import { fetchAccessibilitySentences } from '../../redux/actions/selectedUnitAccessibility';

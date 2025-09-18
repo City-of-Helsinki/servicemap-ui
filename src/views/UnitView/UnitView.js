@@ -10,7 +10,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory, useLocation, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router';
 
 import config from '../../../config';
 import paths from '../../../config/paths';
@@ -98,7 +98,7 @@ function UnitView(props) {
   const [openLinkDialog, setOpenLinkDialog] = useState(false);
   const getLocaleText = useLocaleText();
   const dispatch = useDispatch();
-  const history = useHistory();
+  const navigate = useNavigate();
   const accessiblityTabRef = useRef();
 
   const getImageAlt = () =>
@@ -109,9 +109,8 @@ function UnitView(props) {
     search.delete('mobility');
     search.delete('senses');
     search.delete('map');
-    history.replace({
-      search: search.toString(),
-    });
+
+    navigate({ search: search.toString() }, { replace: true });
   }
 
   useEffect(() => {

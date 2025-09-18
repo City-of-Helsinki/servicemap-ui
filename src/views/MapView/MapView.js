@@ -9,7 +9,7 @@ import React, { useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useMapEvents } from 'react-leaflet';
 import { useDispatch, useSelector } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router';
 
 import { Loading } from '../../components';
 import { setBounds } from '../../redux/actions/map';

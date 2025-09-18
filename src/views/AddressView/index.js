@@ -1,4 +1,4 @@
-import { withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router';
 
 import AddressView from './AddressView';
 

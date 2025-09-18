@@ -16,7 +16,7 @@ import { visuallyHidden } from '@mui/utils';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
-import { Prompt } from 'react-router-dom';
+import { Prompt } from 'react-router';
 
 import config from '../../../config';
 import { DesktopComponent, SMButton, TitleBar } from '../../components';

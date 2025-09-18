@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router';
 
 import { setNavigatorRef } from '../../redux/actions/navigator';
 import Navigator from './Navigator';

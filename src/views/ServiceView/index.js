@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router';
 
 import { fetchService } from '../../redux/actions/services';
 import ServiceView from './ServiceView';

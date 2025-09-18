@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router';
 
 import { setMapRef } from '../../redux/actions/map';
 import { findUserLocation } from '../../redux/actions/user';

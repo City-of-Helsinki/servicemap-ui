@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Routes } from 'react-router';
 
 import { ErrorTrigger } from '../../../components';
 import AddressView from '../../../views/AddressView';
@@ -217,51 +217,66 @@ class ViewRouter extends React.Component {
 
   render() {
     return (
-      <Switch>
-        <Route
-          exact
-          path="/:lng/unit/:unit/feedback"
-          component={UnitFeedback}
-        />
-        <Route exact path="/:lng/unit/:unit/events" component={UnitEvents} />
-        <Route
-          exact
-          path="/:lng/unit/:unit/reservations"
-          component={UnitReservations}
-        />
-        <Route
-          exact
-          path="/:lng/unit/:unit/services"
-          component={UnitServices}
-        />
-        <Route
-          exact
-          path="/:lng/unit/:unit/educationServices/:period?"
-          component={UnitEducationServices}
-        />
-        <Route exact path="/:lng/unit/:unit" component={Unit} />
-        <Route path="/:lng/search" component={Search} />
-        <Route path="/:lng/services" component={ServiceTree} />
-        <Route path="/:lng/mobility" component={MobilityTree} />
-        <Route path="/:lng/service/:service" component={Service} />
-        <Route path="/:lng/event/:event" component={Event} />
-        <Route path="/:lng/address/:municipality/:street" component={Address} />
-        <Route exact path="/:lng/feedback/" component={Feedback} />
-        <Route exact path="/:lng/area/" component={Area} />
-        <Route
-          path="/:lng/division/:city?/:area?"
-          render={() => (
-            <>
-              <PageHandler page="division" />
-              <DivisionView />
-              <HomeView />
-            </>
-          )}
-        />
-        <Route path="/:lng/info/:page?" component={Info} />
-        <Route exact path="/:lng/" component={Home} />
-        <Route render={(props) => <ErrorTrigger error="badUrl" />} />
-      </Switch>
+      <Routes>
+        <Route exact path="/:lng/unit/:unit/feedback">
+          <UnitFeedback />
+        </Route>
+        <Route exact path="/:lng/unit/:unit/events">
+          <UnitEvents />
+        </Route>
+        <Route exact path="/:lng/unit/:unit/reservations">
+          <UnitReservations />
+        </Route>
+        <Route exact path="/:lng/unit/:unit/services">
+          <UnitServices />
+        </Route>
+        <Route exact path="/:lng/unit/:unit/educationServices/:period?">
+          <UnitEducationServices />
+        </Route>
+        <Route exact path="/:lng/unit/:unit">
+          <Unit />
+        </Route>
+        <Route path="/:lng/search">
+          <Search />
+        </Route>
+        <Route path="/:lng/services">
+          <ServiceTree />
+        </Route>
+        <Route path="/:lng/mobility">
+          <MobilityTree />
+        </Route>
+        <Route path="/:lng/service/:service">
+          <Service />
+        </Route>
+        <Route path="/:lng/event/:event">
+          <Event />
+        </Route>
+        <Route path="/:lng/address/:municipality/:street">
+          <Address />
+        </Route>
+        <Route exact path="/:lng/feedback/">
+          <Feedback />
+        </Route>
+        <Route exact path="/:lng/area/">
+          <Area />
+        </Route>
+        <Route path="/:lng/division/:city?/:area?">
+          <>
+            <PageHandler page="division" />
+            <DivisionView />
+            <HomeView />
+          </>
+        </Route>
+        <Route path="/:lng/info/:page?">
+          <Info />
+        </Route>
+        <Route exact path="/:lng/">
+          <Home />
+        </Route>
+        <Route>
+          <ErrorTrigger error="badUrl" />
+        </Route>
+      </Routes>
     );
   }
 }

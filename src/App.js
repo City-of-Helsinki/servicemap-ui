@@ -19,7 +19,8 @@ import React, { useEffect, useMemo } from 'react';
 import { Helmet } from 'react-helmet';
 import { IntlProvider, useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
-import { BrowserRouter, Route, Switch, useLocation } from 'react-router-dom';
+import { Route, Routes, useLocation } from 'react-router';
+import { BrowserRouter } from 'react-router-dom';
 
 import config from '../config';
 import appStyles from './App.css';
@@ -128,11 +129,17 @@ function App() {
           {/* <StylesProvider generateClassName={generateClassName}> */}
           <SMCookies />
           <div className="App">
-            <Switch>
-              <Route path="*/embedder" component={EmbedderView} />
-              <Route path="*/embed" component={EmbedLayout} />
-              <Route render={() => <DefaultLayout />} />
-            </Switch>
+            <Routes>
+              <Route path="*/embedder">
+                <EmbedderView />
+              </Route>
+              <Route path="*/embed">
+                <EmbedLayout />
+              </Route>
+              <Route>
+                <DefaultLayout />
+              </Route>
+            </Routes>
             <Navigator />
             <DataFetcher />
           </div>
@@ -167,18 +174,22 @@ function LanguageWrapper() {
     return (
       <MatomoContext.Provider value={matomoTracker}>
         <BrowserRouter>
-          <Switch>
-            <Route path="/:lng" component={App} />
-          </Switch>
+          <Routes>
+            <Route path="/:lng">
+              <App />
+            </Route>
+          </Routes>
         </BrowserRouter>
       </MatomoContext.Provider>
     );
   }
 
   return (
-    <Switch>
-      <Route path="/:lng" component={App} />
-    </Switch>
+    <Routes>
+      <Route path="/:lng">
+        <App />
+      </Route>
+    </Routes>
   );
 }
 

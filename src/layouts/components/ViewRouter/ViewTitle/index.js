@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router';
 
 import { actionSetInitialLoad } from '../../../../redux/actions/user';
 import { selectInitialLoad } from '../../../../redux/selectors/user';
