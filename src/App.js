@@ -14,7 +14,6 @@ import { StyledEngineProvider } from '@mui/material';
 // To add css variables for hds components
 import hdsStyle from 'hds-design-tokens';
 import withStyles from 'isomorphic-style-loader/withStyles';
-import PropTypes from 'prop-types';
 import React, { useEffect, useMemo } from 'react';
 import { Helmet } from 'react-helmet';
 import { IntlProvider, useIntl } from 'react-intl';
@@ -169,7 +168,7 @@ function LanguageWrapper() {
       <MatomoContext.Provider value={matomoTracker}>
         <BrowserRouter>
           <Routes>
-            <Route path="/:lng" element={<App />} />
+            <Route path="/:lng/*" element={<App />} />
           </Routes>
         </BrowserRouter>
       </MatomoContext.Provider>
@@ -178,7 +177,7 @@ function LanguageWrapper() {
 
   return (
     <Routes>
-      <Route path="/:lng" element={<App />} />
+      <Route path="/:lng/*" element={<App />} />
     </Routes>
   );
 }
@@ -192,10 +191,3 @@ export default withStyles(
   printCSS,
   hdsStyle
 )(LanguageWrapper);
-
-// Typechecking
-App.propTypes = {
-  match: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired,
-  history: PropTypes.object.isRequired,
-};
