@@ -1,10 +1,10 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import styled from '@emotion/styled';
-import { Checkbox, ListItem, TextField, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
 import { Select } from 'hds-react';
 import PropTypes from 'prop-types';
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -30,13 +30,11 @@ import {
 } from '../../redux/actions/user';
 import { selectSettings } from '../../redux/selectors/settings';
 import { getLocale } from '../../redux/selectors/user';
-import { selectThemeMode } from '../../redux/selectors/user';
-import { keyboardHandler } from '../../utils';
 import SettingsUtility from '../../utils/settings';
 import useLocaleText from '../../utils/useLocaleText';
 import SMButton from '../ServiceMapButton';
 import constants from '../SettingsComponent/constants';
-import SMAutocomplete from '../SMAutocomplete';
+// import SMAutocomplete from '../SMAutocomplete';
 
 function SettingsDropdowns({ variant = 'default' }) {
   const intl = useIntl();
@@ -46,11 +44,11 @@ function SettingsDropdowns({ variant = 'default' }) {
   const settings = useSelector(selectSettings);
   // Format settings from redux to easier structure
   const settingsValues = constants.convertToSettingsValues(settings);
-  const [openSettings, setOpenSettings] = useState(null);
+  //const [openSettings, setOpenSettings] = useState(null);
   const [resetText, setResetText] = useState('');
 
-  const highlightedOption = useRef(null);
-  const themeMode = useSelector(selectThemeMode);
+  //const highlightedOption = useRef(null);
+  // const themeMode = useSelector(selectThemeMode);
   const ownSettingsVariant = variant === 'ownSettings';
 
   // Configure rendered settings items
@@ -101,11 +99,14 @@ function SettingsDropdowns({ variant = 'default' }) {
     })
   );
 
+  /*
   const toggleSettingsBox = (value) => {
     if (openSettings === value) setOpenSettings(null);
     else setOpenSettings(value);
   };
 
+  */
+  /*
   const handleOptionSelecting = (value, category) => {
     console.log(value);
 
@@ -157,6 +158,8 @@ function SettingsDropdowns({ variant = 'default' }) {
     }
   };
 
+  */
+
   const resetSettings = () => {
     dispatch(resetAccessibilitySettings());
     dispatch(resetCitySettings());
@@ -169,14 +172,6 @@ function SettingsDropdowns({ variant = 'default' }) {
     dispatch(resetUserPosition());
 
     setResetText(intl.formatMessage({ id: 'settings.reset_button.ariaLive' }));
-  };
-
-  const handleKeyboardSelect = (value, category, event) => {
-    if (openSettings !== value) setOpenSettings(value);
-    else if (event?.which === 13 || event?.which === 32) {
-      const highlightedItemId = highlightedOption?.current?.value;
-      handleOptionSelecting(highlightedItemId, category);
-    }
   };
 
   // New handler for HDS Select that works with arrays
@@ -264,7 +259,7 @@ function SettingsDropdowns({ variant = 'default' }) {
   };
 
   const renderSettingsElement = (options, label, category, isSingleOption) => {
-    const getValueP = () => {
+    /*  const getValueP = () => {
       if (category === 'mobility') {
         const val = options.find(
           (option) => settingsValues.mobility === option.value
@@ -275,7 +270,7 @@ function SettingsDropdowns({ variant = 'default' }) {
         settingsValues[category].includes(option.value)
       );
       return list.map((item) => item.label);
-    };
+    }; */
 
     const getValue = () => {
       if (category === 'mobility') {
@@ -289,29 +284,6 @@ function SettingsDropdowns({ variant = 'default' }) {
         settingsValues[category].includes(option.value)
       );
     };
-
-    const StyledSelectWrapper = styled.div`
-      ${({ ownsettings, theme }) =>
-        ownsettings &&
-        `
-    /* Target the main dropdown container */
-    .hds-select > div {
-      border: 2px solid var(--color-bus) !important;
-      border-radius: 5px !important;
-    }
-    
-    /* Target the dropdown menu */
-    .hds-select [role="listbox"] {
-      border: 2px solid var(--color-bus) !important;
-      border-radius: 5px !important;
-    }
-    
-    /* Target specific child divs - inspect DOM to find exact selectors */
-    .hds-select__dropdown {
-      border: 2px solid pink !important;
-    }
-  `}
-    `;
 
     const SimpleWrapper = styled.div`
       /* This styles the wrapper itself */
@@ -428,6 +400,7 @@ function SettingsDropdowns({ variant = 'default' }) {
 
 const StyledButton = styled(SMButton)(() => ({ marginRight: 0 }));
 
+/*
 const StyledAutocomplete = styled(SMAutocomplete)(({
   theme,
   ownsettings,
@@ -479,6 +452,8 @@ const StyledAutocomplete = styled(SMAutocomplete)(({
   };
   return { ...styles, ...ownSettingsStyles };
 });
+
+*/
 
 SettingsDropdowns.propTypes = {
   variant: PropTypes.oneOf(['default', 'ownSettings']),

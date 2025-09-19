@@ -9,7 +9,6 @@ import '@formatjs/intl-relativetimeformat/dist/locale-data/fi';
 import '@formatjs/intl-relativetimeformat/dist/locale-data/sv';
 import '@formatjs/intl-relativetimeformat/polyfill';
 
-import { css, Global } from '@emotion/react';
 import { StyledEngineProvider } from '@mui/material';
 // To add css variables for hds components
 import hdsStyle from 'hds-design-tokens';
@@ -40,8 +39,6 @@ import { getLocale } from './redux/selectors/user';
 import SMFonts from './service-map-icons.css';
 import ThemeWrapper from './themes/ThemeWrapper';
 import isClient from './utils';
-import { COOKIE_MODAL_ROOT_ID } from './utils/constants';
-import useMobileStatus from './utils/isMobile';
 import LocaleUtility from './utils/locale';
 import { isEmbed } from './utils/path';
 import { servicemapTrackPageView } from './utils/tracking';
@@ -113,7 +110,7 @@ function App() {
 
   return (
     <StyledEngineProvider>
-   {/*   <Global
+      {/*   <Global
         styles={css({
           // hide language selector in hds cookie modal
           '#cookie-consent-language-selector-button': {
@@ -153,9 +150,6 @@ function App() {
 // Wrapper to get language route
 function LanguageWrapper() {
   const matomoTracker = useMemo(() => {
-
-console.log(config);
-
     if (config.matomoUrl && config.matomoSiteId && config.matomoEnabled) {
       return new MatomoTracker({
         urlBase: `//${config.matomoUrl}/`,
@@ -174,7 +168,6 @@ console.log(config);
   }, []);
 
   if (isClient()) {
-
     console.log('matomo app');
     return (
       <MatomoContext.Provider value={matomoTracker}>

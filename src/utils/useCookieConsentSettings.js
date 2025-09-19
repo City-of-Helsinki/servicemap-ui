@@ -1,13 +1,7 @@
-import { CookieConsentChangeEvent, CookieConsentReactProps } from 'hds-react';
-// import { useTranslation } from 'react-i18next';
-import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 
 import config from '../../config';
-import featureFlags from '../../config/featureFlags';
-// import getLanguageCode from '../common/helpers/getLanguageCode';
 import { getLocale } from '../redux/selectors/user';
-import { COOKIE_MODAL_ROOT_ID } from '../utils/constants';
 import siteSettings from './siteSettings.json';
 
 // import { PAGE_HEADER_ID } from '../common/constants';
@@ -24,8 +18,7 @@ const useCookieConsentSettings = () => {
 
       const hasStatisticsConsent = acceptedGroups.indexOf('statistics') > -1;
       if (window._paq) {
-
-         console.log(' kookies cnsent');
+        console.log(' kookies cnsent');
 
         if (hasStatisticsConsent) {
           // never enable tracking in non-prod
