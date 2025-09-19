@@ -13,6 +13,7 @@ import { css, Global } from '@emotion/react';
 import { StyledEngineProvider } from '@mui/material';
 // To add css variables for hds components
 import hdsStyle from 'hds-design-tokens';
+import { CookieBanner, CookieConsentContextProvider } from 'hds-react';
 import withStyles from 'isomorphic-style-loader/withStyles';
 import PropTypes from 'prop-types';
 import React, { useEffect, useMemo } from 'react';
@@ -28,7 +29,7 @@ import { DataFetcher, Navigator } from './components';
 import useMatomo from './components/Matomo/hooks/useMatomo';
 import MatomoContext from './components/Matomo/matomo-context';
 import MatomoTracker from './components/Matomo/MatomoTracker';
-import SMCookies from './components/SMCookies/SMCookies';
+//import SMCookies from './components/SMCookies/SMCookies';
 import HSLFonts from './hsl-icons.css';
 import styles from './index.css';
 import DefaultLayout from './layouts';
@@ -44,6 +45,7 @@ import useMobileStatus from './utils/isMobile';
 import LocaleUtility from './utils/locale';
 import { isEmbed } from './utils/path';
 import { servicemapTrackPageView } from './utils/tracking';
+import useCookieConsentSettings from './utils/useCookieConsentSettings';
 import EmbedderView from './views/EmbedderView';
 
 // General meta tags for app
@@ -87,7 +89,7 @@ function App() {
     }
   }, []);
 
-  const isMobile = useMobileStatus();
+  //const isMobile = useMobileStatus();
   useEffect(() => {
     // Simple custom servicemap page view tracking
     servicemapTrackPageView();
@@ -107,9 +109,11 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.pathname, location.search, mobility, senses]);
 
+  const cookieConsentProps = useCookieConsentSettings();
+
   return (
     <StyledEngineProvider>
-      <Global
+   {/*   <Global
         styles={css({
           // hide language selector in hds cookie modal
           '#cookie-consent-language-selector-button': {
@@ -121,21 +125,24 @@ function App() {
             },
           }),
         })}
-      />
+      /> */}
+
       <ThemeWrapper>
         <IntlProvider {...intlData}>
           <MetaTags />
           {/* <StylesProvider generateClassName={generateClassName}> */}
-          <SMCookies />
-          <div className="App">
-            <Switch>
-              <Route path="*/embedder" component={EmbedderView} />
-              <Route path="*/embed" component={EmbedLayout} />
-              <Route render={() => <DefaultLayout />} />
-            </Switch>
-            <Navigator />
-            <DataFetcher />
-          </div>
+          <CookieConsentContextProvider {...cookieConsentProps}>
+            <div className="App">
+              <Switch>
+                <Route path="*/embedder" component={EmbedderView} />
+                <Route path="*/embed" component={EmbedLayout} />
+                <Route render={() => <DefaultLayout />} />
+              </Switch>
+              <Navigator />
+              <DataFetcher />
+              {!isEmbed() && <CookieBanner />}
+            </div>
+          </CookieConsentContextProvider>
           {/* </StylesProvider> */}
         </IntlProvider>
       </ThemeWrapper>
@@ -146,6 +153,9 @@ function App() {
 // Wrapper to get language route
 function LanguageWrapper() {
   const matomoTracker = useMemo(() => {
+
+console.log(config);
+
     if (config.matomoUrl && config.matomoSiteId && config.matomoEnabled) {
       return new MatomoTracker({
         urlBase: `//${config.matomoUrl}/`,
@@ -164,6 +174,8 @@ function LanguageWrapper() {
   }, []);
 
   if (isClient()) {
+
+    console.log('matomo app');
     return (
       <MatomoContext.Provider value={matomoTracker}>
         <BrowserRouter>

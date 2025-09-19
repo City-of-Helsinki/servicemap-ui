@@ -29,6 +29,7 @@ import {
   resetUserPosition,
 } from '../../redux/actions/user';
 import { selectSettings } from '../../redux/selectors/settings';
+import { getLocale } from '../../redux/selectors/user';
 import { selectThemeMode } from '../../redux/selectors/user';
 import { keyboardHandler } from '../../utils';
 import SettingsUtility from '../../utils/settings';
@@ -41,6 +42,7 @@ function SettingsDropdowns({ variant = 'default' }) {
   const intl = useIntl();
   const dispatch = useDispatch();
   const getLocaleText = useLocaleText();
+  const locale = useSelector(getLocale);
   const settings = useSelector(selectSettings);
   // Format settings from redux to easier structure
   const settingsValues = constants.convertToSettingsValues(settings);
@@ -54,86 +56,89 @@ function SettingsDropdowns({ variant = 'default' }) {
   // Configure rendered settings items
   const senseSettingList = [
     {
-      id: 'colorblind',
+      value: 'colorblind',
       label: intl.formatMessage({ id: 'settings.sense.colorblind' }),
     },
     {
-      id: 'hearingAid',
+      value: 'hearingAid',
       label: intl.formatMessage({ id: 'settings.sense.hearingAid' }),
     },
     {
-      id: 'visuallyImpaired',
+      value: 'visuallyImpaired',
       label: intl.formatMessage({ id: 'settings.sense.visuallyImpaired' }),
     },
   ];
   const mobilitySettingList = [
-    { id: 'none', label: intl.formatMessage({ id: 'settings.mobility.none' }) },
     {
-      id: 'wheelchair',
+      value: 'none',
+      label: intl.formatMessage({ id: 'settings.mobility.none' }),
+    },
+    {
+      value: 'wheelchair',
       label: intl.formatMessage({ id: 'settings.mobility.wheelchair' }),
     },
     {
-      id: 'reduced_mobility',
+      value: 'reduced_mobility',
       label: intl.formatMessage({ id: 'settings.mobility.reduced_mobility' }),
     },
     {
-      id: 'rollator',
+      value: 'rollator',
       label: intl.formatMessage({ id: 'settings.mobility.rollator' }),
     },
     {
-      id: 'stroller',
+      value: 'stroller',
       label: intl.formatMessage({ id: 'settings.mobility.stroller' }),
     },
   ];
   const citySettingsList = config.cities.map((city) => ({
-    id: city,
+    value: city,
     label: intl.formatMessage({ id: `settings.city.${city}` }),
   }));
   const organizationSettingsList = config.organizations?.map(
     (organization) => ({
-      id: organization.id,
+      value: organization.id,
       label: getLocaleText(organization.name),
     })
   );
 
-  const toggleSettingsBox = (id) => {
-    if (openSettings === id) setOpenSettings(null);
-    else setOpenSettings(id);
+  const toggleSettingsBox = (value) => {
+    if (openSettings === value) setOpenSettings(null);
+    else setOpenSettings(value);
   };
 
-  const handleOptionSelecting = (id, category) => {
-    console.log(id);
+  const handleOptionSelecting = (value, category) => {
+    console.log(value);
 
-    if (!id) {
+    if (!value) {
       return;
     }
 
     setResetText('');
 
     if (category === 'mobility') {
-      dispatch(setMobility(id));
+      dispatch(setMobility(value));
       setOpenSettings(null);
     }
     if (category === 'cities') {
       const settingObj = settings.cities;
-      settingObj[id] = !settingObj[id];
+      settingObj[value] = !settingObj[value];
       dispatch(toggleCity(settingObj));
     }
 
     if (category === 'organizations') {
       const settingObj = settings.organizations;
-      settingObj[id] = !settingObj[id];
+      settingObj[value] = !settingObj[value];
       dispatch(toggleOrganization(settingObj));
     }
 
     if (category === 'senses') {
-      if (id === 'hearingAid') {
+      if (value === 'hearingAid') {
         dispatch(toggleHearingAid());
       }
       // settingsValues.senses contains all previous sense settings. So now if it does not include
-      // "id" then it was turned on just now.
-      const settingTurnedOn = !settingsValues.senses.includes(id);
-      if (id === 'colorblind') {
+      // "value" then it was turned on just now.
+      const settingTurnedOn = !settingsValues.senses.includes(value);
+      if (value === 'colorblind') {
         dispatch(toggleColorblind());
         if (settingTurnedOn) {
           dispatch(setMapType('accessible_map'));
@@ -141,7 +146,7 @@ function SettingsDropdowns({ variant = 'default' }) {
           dispatch(setMapType(SettingsUtility.defaultMapType));
         }
       }
-      if (id === 'visuallyImpaired') {
+      if (value === 'visuallyImpaired') {
         dispatch(toggleVisuallyImpaired());
         if (settingTurnedOn) {
           dispatch(setMapType('accessible_map'));
@@ -166,17 +171,17 @@ function SettingsDropdowns({ variant = 'default' }) {
     setResetText(intl.formatMessage({ id: 'settings.reset_button.ariaLive' }));
   };
 
-  const handleKeyboardSelect = (id, category, event) => {
-    if (openSettings !== id) setOpenSettings(id);
+  const handleKeyboardSelect = (value, category, event) => {
+    if (openSettings !== value) setOpenSettings(value);
     else if (event?.which === 13 || event?.which === 32) {
-      const highlightedItemId = highlightedOption?.current?.id;
+      const highlightedItemId = highlightedOption?.current?.value;
       handleOptionSelecting(highlightedItemId, category);
     }
   };
 
   // New handler for HDS Select that works with arrays
   const handleHDSSelectChange = (selectedOptions, category) => {
-    console.log('what: ', selectedOptions);
+    console.log('oppions: ', selectedOptions, 'katgori: ', category);
 
     if (!selectedOptions) return;
 
@@ -184,7 +189,7 @@ function SettingsDropdowns({ variant = 'default' }) {
 
     if (category === 'mobility') {
       // For single-select mobility, selectedOptions is a single object
-      dispatch(setMobility(selectedOptions.id));
+      dispatch(setMobility(selectedOptions[0].value));
     } else {
       // For multi-select categories, compare current vs new selections
       handleMultiSelectChange(selectedOptions, category);
@@ -195,46 +200,50 @@ function SettingsDropdowns({ variant = 'default' }) {
     const currentSelections = settingsValues[category] || [];
 
     // Find what was added or removed
-    const newIds = newSelections.map((option) => option.id);
+    const newIds = newSelections.map((option) => option.value);
 
     // Find the difference (what changed)
-    const added = newIds.filter((id) => !currentSelections.includes(id));
-    const removed = currentSelections.filter((id) => !newIds.includes(id));
+    const added = newIds.filter((value) => !currentSelections.includes(value));
+    const removed = currentSelections.filter(
+      (value) => !newIds.includes(value)
+    );
 
     // Handle additions
-    added.forEach((id) => {
-      handleSingleOptionChange(id, category, true);
+    added.forEach((value) => {
+      handleSingleOptionChange(value, category, true);
     });
 
     // Handle removals
-    removed.forEach((id) => {
-      handleSingleOptionChange(id, category, false);
+    removed.forEach((value) => {
+      handleSingleOptionChange(value, category, false);
     });
   };
 
   // Refactored version of handleOptionSelecting for individual changes
-  const handleSingleOptionChange = (id, category, isAdding = true) => {
+  const handleSingleOptionChange = (value, category, isAdding = true) => {
+    console.log(value, category, isAdding);
+
     if (category === 'cities') {
       const settingObj = { ...settings.cities };
-      settingObj[id] = isAdding;
+      settingObj[value] = isAdding;
       dispatch(toggleCity(settingObj));
     }
 
     if (category === 'organizations') {
       const settingObj = { ...settings.organizations };
-      settingObj[id] = isAdding;
+      settingObj[value] = isAdding;
       dispatch(toggleOrganization(settingObj));
     }
 
     if (category === 'senses') {
       // For senses, we need to check the current state and toggle accordingly
-      const currentlySelected = settingsValues.senses.includes(id);
+      const currentlySelected = settingsValues.senses.includes(value);
 
-      if (id === 'hearingAid' && currentlySelected !== isAdding) {
+      if (value === 'hearingAid' && currentlySelected !== isAdding) {
         dispatch(toggleHearingAid());
       }
 
-      if (id === 'colorblind' && currentlySelected !== isAdding) {
+      if (value === 'colorblind' && currentlySelected !== isAdding) {
         dispatch(toggleColorblind());
         if (isAdding) {
           dispatch(setMapType('accessible_map'));
@@ -243,7 +252,7 @@ function SettingsDropdowns({ variant = 'default' }) {
         }
       }
 
-      if (id === 'visuallyImpaired' && currentlySelected !== isAdding) {
+      if (value === 'visuallyImpaired' && currentlySelected !== isAdding) {
         dispatch(toggleVisuallyImpaired());
         if (isAdding) {
           dispatch(setMapType('accessible_map'));
@@ -258,41 +267,110 @@ function SettingsDropdowns({ variant = 'default' }) {
     const getValueP = () => {
       if (category === 'mobility') {
         const val = options.find(
-          (option) => settingsValues.mobility === option.id
+          (option) => settingsValues.mobility === option.value
         );
         return val?.label || null;
       }
       const list = options.filter((option) =>
-        settingsValues[category].includes(option.id)
+        settingsValues[category].includes(option.value)
       );
       return list.map((item) => item.label);
     };
 
     const getValue = () => {
       if (category === 'mobility') {
-    return options.find(
-      (option) => settingsValues.mobility === option.id
-    );
+        const option = options.find(
+          (option) => settingsValues.mobility === option.value
+        );
+        return option ? [option] : [];
+        // return options.find((option) => settingsValues.mobility === option.value);
       }
       return options.filter((option) =>
-        settingsValues[category].includes(option.id)
+        settingsValues[category].includes(option.value)
       );
     };
 
+    const StyledSelectWrapper = styled.div`
+      ${({ ownsettings, theme }) =>
+        ownsettings &&
+        `
+    /* Target the main dropdown container */
+    .hds-select > div {
+      border: 2px solid var(--color-bus) !important;
+      border-radius: 5px !important;
+    }
+    
+    /* Target the dropdown menu */
+    .hds-select [role="listbox"] {
+      border: 2px solid var(--color-bus) !important;
+      border-radius: 5px !important;
+    }
+    
+    /* Target specific child divs - inspect DOM to find exact selectors */
+    .hds-select__dropdown {
+      border: 2px solid pink !important;
+    }
+  `}
+    `;
+
+    const SimpleWrapper = styled.div`
+      /* This styles the wrapper itself */
+      //  padding: 10px;
+
+      /* This styles child elements inside the wrapper */
+      div {
+      }
+
+      /* Target DIRECT child divs only */
+      > div > div {
+        color: white;
+        border-radius: 6px;
+        line-height: 1.5;
+      }
+
+      /* Additional styling when ownSettingsVariant is true */
+      ${({ ownsettings }) =>
+        !ownsettings &&
+        `
+     > div > label {
+        color: white;
+      }
+  `}
+    `;
+
+    const hdsTheme = ownSettingsVariant
+      ? {}
+      : {
+          // Focus outline
+          '--focus-outline-color': 'white',
+          '--dropdown-background-default': 'var(--color-bus)',
+          '--dropdown-color-default': 'var(--color-white)',
+          '--dropdown-icon-color': 'var(--color-white)',
+          '--menu-divider-color': 'var(--color-white)',
+          '--dropdown-border-color-default': 'var(--color-white)',
+          '--menu-item-background-color-selected': 'gray',
+          '--text-input-background-default': 'var(--color-black)',
+        };
+
     return (
-      
+      <SimpleWrapper ownsettings={ownSettingsVariant}>
         <Select
-          multiselect={!isSingleOption}
-          label={label}
-          assistive={'Assistive text'}
-          language={'en'}
+          multiSelect={!isSingleOption}
+          texts={{
+            label: label,
+
+            language: locale,
+          }}
           clearable={false}
           noTags
           options={options}
-          value={getValue()} // This should return an array for HDS Select
+          value={getValue()}
+          theme={hdsTheme}
           style={{
             paddingLeft: 12,
             paddingRight: 12,
+            textAlign: 'left',
+            // borderRadius: '5px',
           }}
           onChange={(selectedOptions) => {
             console.log('HDS Select onChange:', selectedOptions);
@@ -303,7 +381,7 @@ function SettingsDropdowns({ variant = 'default' }) {
             // Optional: Handle close event if needed
           }}
         />
-
+      </SimpleWrapper>
     );
   };
 
