@@ -9,9 +9,12 @@ import Navigator from './Navigator';
  * Wrapper component for Navigator for saving ref to redux state
  */
 const NavigatorWrapper = ({ setNavigatorRef }) => {
-  const saveNavigatorRef = useCallback((ref) => {
-    setNavigatorRef(ref);
-  }, [setNavigatorRef]);
+  const saveNavigatorRef = useCallback(
+    (ref) => {
+      setNavigatorRef(ref);
+    },
+    [setNavigatorRef]
+  );
 
   return <Navigator ref={saveNavigatorRef} />;
 };

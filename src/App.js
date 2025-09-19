@@ -18,8 +18,14 @@ import React, { useEffect, useMemo } from 'react';
 import { Helmet } from 'react-helmet';
 import { IntlProvider, useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
-import { Route, Routes, useLocation } from 'react-router';
-import { BrowserRouter } from 'react-router-dom';
+import {
+  createRoutesFromElements,
+  Route,
+  RouterProvider,
+  Routes,
+  useLocation,
+} from 'react-router';
+import { createBrowserRouter } from 'react-router-dom';
 
 import config from '../config';
 import appStyles from './App.css';
@@ -97,11 +103,11 @@ function App() {
         href: window.location.href,
         ...(config.matomoMobilityDimensionID &&
           config.matomoSensesDimensionID && {
-          customDimensions: [
-            { id: config.matomoMobilityDimensionID, value: mobility || '' },
-            { id: config.matomoSensesDimensionID, value: senses?.join(',') },
-          ],
-        }),
+            customDimensions: [
+              { id: config.matomoMobilityDimensionID, value: mobility || '' },
+              { id: config.matomoSensesDimensionID, value: senses?.join(',') },
+            ],
+          }),
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -164,13 +170,13 @@ function LanguageWrapper() {
   }, []);
 
   if (isClient()) {
+    const router = createBrowserRouter(
+      createRoutesFromElements(<Route path="/:lng/*" element={<App />} />)
+    );
+
     return (
       <MatomoContext.Provider value={matomoTracker}>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/:lng/*" element={<App />} />
-          </Routes>
-        </BrowserRouter>
+        <RouterProvider router={router} />
       </MatomoContext.Provider>
     );
   }

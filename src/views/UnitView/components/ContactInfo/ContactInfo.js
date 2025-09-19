@@ -64,9 +64,9 @@ function ContactInfo({
     type: 'LINK',
     value: unit.www
       ? {
-        www: unit.www,
-        name: intl.formatMessage({ id: 'unit.homepage' }),
-      }
+          www: unit.www,
+          name: intl.formatMessage({ id: 'unit.homepage' }),
+        }
       : intl.formatMessage({ id: 'unit.homepage.missing' }),
   };
 
@@ -264,11 +264,11 @@ function ContactInfo({
     ...(openingHours.length
       ? openingHours
       : [
-        {
-          type: 'OPENING_HOURS',
-          value: intl.formatMessage({ id: 'unit.opening.hours.missing' }),
-        },
-      ]),
+          {
+            type: 'OPENING_HOURS',
+            value: intl.formatMessage({ id: 'unit.opening.hours.missing' }),
+          },
+        ]),
   ];
 
   // Get route details (hooks must be called at top level)

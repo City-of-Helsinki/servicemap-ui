@@ -70,15 +70,15 @@ const createContentStyles = (theme, unitListPosition) => {
     },
     embedSidebarContainer: bottomList
       ? {
-        height: 300,
-        maxHeight: '40%',
-        minHeight: '25%',
-      }
+          height: 300,
+          maxHeight: '40%',
+          minHeight: '25%',
+        }
       : {
-        minWidth: 220,
-        maxWidth: 'min(40%, 300px)',
-        flexGrow: 1,
-      },
+          minWidth: 220,
+          maxWidth: 'min(40%, 300px)',
+          flexGrow: 1,
+        },
     unitList: {
       paddingTop: bottomList ? 0 : 36,
       maxHeight: '100%',
@@ -213,48 +213,69 @@ function EmbedLayout() {
             />
           </div>
           <Routes>
-            <Route path="/unit/:unit" element={
-              <>
-                <PageHandler embed page="unit" />
-                <UnitView embed />
-              </>
-            } />
-            <Route path="/event/:event" element={
-              <>
-                <PageHandler embed page="event" />
-                <EventDetailView embed />
-              </>
-            } />
-            <Route path="/search" element={
-              <>
-                <PageHandler embed page="search" />
-                <SearchView embed />
-              </>
-            } />
-            <Route path="/service/:service" element={
-              <>
-                <PageHandler embed page="service" />
-                <ServiceView embed />
-              </>
-            } />
-            <Route path="/address/:municipality/:street" element={
-              <>
-                <PageHandler embed page="address" />
-                <AddressView embed />
-              </>
-            } />
-            <Route path="/division/:city?/:area?" element={
-              <>
-                <PageHandler embed page="division" />
-                <DivisionView />
-              </>
-            } />
-            <Route path="/area/" element={
-              <>
-                <PageHandler embed page="area" />
-                <AreaView embed />
-              </>
-            } />
+            <Route
+              path="/unit/:unit"
+              element={
+                <>
+                  <PageHandler embed page="unit" />
+                  <UnitView embed />
+                </>
+              }
+            />
+            <Route
+              path="/event/:event"
+              element={
+                <>
+                  <PageHandler embed page="event" />
+                  <EventDetailView embed />
+                </>
+              }
+            />
+            <Route
+              path="/search"
+              element={
+                <>
+                  <PageHandler embed page="search" />
+                  <SearchView embed />
+                </>
+              }
+            />
+            <Route
+              path="/service/:service"
+              element={
+                <>
+                  <PageHandler embed page="service" />
+                  <ServiceView embed />
+                </>
+              }
+            />
+            <Route
+              path="/address/:municipality/:street"
+              element={
+                <>
+                  <PageHandler embed page="address" />
+                  <AddressView embed />
+                </>
+              }
+            />
+            <Route
+              path="/division/:city?/:area?"
+              element={
+                <>
+                  <PageHandler embed page="division" />
+                  <DivisionView />
+                </>
+              }
+            />
+            <Route
+              path="/area/"
+              element={
+                <>
+                  <PageHandler embed page="area" />
+                  <AreaView embed />
+                </>
+              }
+            />
           </Routes>
         </div>
         <Typography style={visuallyHidden}>

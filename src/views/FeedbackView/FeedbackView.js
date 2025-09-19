@@ -20,7 +20,7 @@ import { useLocation } from 'react-router-dom';
 
 import config from '../../../config';
 import { DesktopComponent, SMButton, TitleBar } from '../../components';
-import RouterPrompt from '../../components/RouterPrompt/RouterPrompt';
+import ClientOnlyRouterPrompt from '../../components/RouterPrompt/ClientOnlyRouterPrompt';
 import { validateEmail } from '../../utils';
 import { focusToViewTitle } from '../../utils/accessibility';
 import useMobileStatus from '../../utils/isMobile';
@@ -269,7 +269,7 @@ function FeedbackView({ navigator = null, intl, selectedUnit = null }) {
     <>
       {/* Exit dialog */}
       <DesktopComponent>
-        <RouterPrompt
+        <ClientOnlyRouterPrompt
           when={!!(!modalOpen && (email || feedback || permission))}
           onOK={() => {
             return true;

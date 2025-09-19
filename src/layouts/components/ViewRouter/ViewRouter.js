@@ -216,18 +216,24 @@ function ViewRouter() {
       <Route path="unit/:unit/events" element={<UnitEvents />} />
       <Route path="unit/:unit/reservations" element={<UnitReservations />} />
       <Route path="unit/:unit/services" element={<UnitServices />} />
-      <Route path="unit/:unit/educationServices/:period?" element={<UnitEducationServices />} />
+      <Route
+        path="unit/:unit/educationServices/:period?"
+        element={<UnitEducationServices />}
+      />
       <Route path="unit/:unit" element={<Unit />} />
       <Route path="service/:service" element={<Service />} />
       <Route path="event/:event" element={<Event />} />
       <Route path="address/:municipality/:street" element={<Address />} />
-      <Route path="division/:city?/:area?" element={
-        <>
-          <PageHandler page="division" />
-          <DivisionView />
-          <HomeView />
-        </>
-      } />
+      <Route
+        path="division/:city?/:area?"
+        element={
+          <>
+            <PageHandler page="division" />
+            <DivisionView />
+            <HomeView />
+          </>
+        }
+      />
       <Route path="info/:page?" element={<Info />} />
       <Route path="search" element={<Search />} />
       <Route path="services" element={<ServiceTree />} />

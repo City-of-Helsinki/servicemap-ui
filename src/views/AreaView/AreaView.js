@@ -133,7 +133,7 @@ function AreaView({ embed = false }) {
       if (
         !selectedAddress.districts ||
         getAddressText(districtAddressData.address, getLocaleText) !==
-        getAddressText(selectedAddress, getLocaleText)
+          getAddressText(selectedAddress, getLocaleText)
       ) {
         fetchAddressDistricts();
       }
@@ -216,7 +216,7 @@ function AreaView({ embed = false }) {
       if (!embed) {
         /* Remove selected area parameter from url, otherwise it will override
         user area selection when returning to area view */
-        navigate(location.pathname, { replace: true })
+        navigate(location.pathname, { replace: true });
         dispatch(setSelectedDistrictType(null));
         // Switch to geographical tab if geographical area
         if (geographicalDistricts.includes(selectedAreaType)) {

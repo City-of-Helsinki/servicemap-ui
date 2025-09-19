@@ -23,4 +23,6 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { setMapRef, findUserLocation })(MapView);
+export default connect(mapStateToProps, { setMapRef, findUserLocation })(
+  MapView
+);
