@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Routes } from 'react-router';
 
 import { ErrorTrigger } from '../../../components';
 import AddressView from '../../../views/AddressView';
@@ -209,61 +209,41 @@ function Area() {
   );
 }
 
-class ViewRouter extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
-  render() {
-    return (
-      <Switch>
-        <Route
-          exact
-          path="/:lng/unit/:unit/feedback"
-          component={UnitFeedback}
-        />
-        <Route exact path="/:lng/unit/:unit/events" component={UnitEvents} />
-        <Route
-          exact
-          path="/:lng/unit/:unit/reservations"
-          component={UnitReservations}
-        />
-        <Route
-          exact
-          path="/:lng/unit/:unit/services"
-          component={UnitServices}
-        />
-        <Route
-          exact
-          path="/:lng/unit/:unit/educationServices/:period?"
-          component={UnitEducationServices}
-        />
-        <Route exact path="/:lng/unit/:unit" component={Unit} />
-        <Route path="/:lng/search" component={Search} />
-        <Route path="/:lng/services" component={ServiceTree} />
-        <Route path="/:lng/mobility" component={MobilityTree} />
-        <Route path="/:lng/service/:service" component={Service} />
-        <Route path="/:lng/event/:event" component={Event} />
-        <Route path="/:lng/address/:municipality/:street" component={Address} />
-        <Route exact path="/:lng/feedback/" component={Feedback} />
-        <Route exact path="/:lng/area/" component={Area} />
-        <Route
-          path="/:lng/division/:city?/:area?"
-          render={() => (
-            <>
-              <PageHandler page="division" />
-              <DivisionView />
-              <HomeView />
-            </>
-          )}
-        />
-        <Route path="/:lng/info/:page?" component={Info} />
-        <Route exact path="/:lng/" component={Home} />
-        <Route render={(props) => <ErrorTrigger error="badUrl" />} />
-      </Switch>
-    );
-  }
+function ViewRouter() {
+  return (
+    <Routes>
+      <Route path="unit/:unit/feedback" element={<UnitFeedback />} />
+      <Route path="unit/:unit/events" element={<UnitEvents />} />
+      <Route path="unit/:unit/reservations" element={<UnitReservations />} />
+      <Route path="unit/:unit/services" element={<UnitServices />} />
+      <Route
+        path="unit/:unit/educationServices/:period?"
+        element={<UnitEducationServices />}
+      />
+      <Route path="unit/:unit" element={<Unit />} />
+      <Route path="service/:service" element={<Service />} />
+      <Route path="event/:event" element={<Event />} />
+      <Route path="address/:municipality/:street" element={<Address />} />
+      <Route
+        path="division/:city?/:area?"
+        element={
+          <>
+            <PageHandler page="division" />
+            <DivisionView />
+            <HomeView />
+          </>
+        }
+      />
+      <Route path="info/:page?" element={<Info />} />
+      <Route path="search" element={<Search />} />
+      <Route path="services" element={<ServiceTree />} />
+      <Route path="mobility" element={<MobilityTree />} />
+      <Route path="feedback" element={<Feedback />} />
+      <Route path="area" element={<Area />} />
+      <Route path="" element={<Home />} />
+      <Route path="*" element={<ErrorTrigger error="badUrl" />} />
+    </Routes>
+  );
 }
 
 export default ViewRouter;

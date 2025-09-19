@@ -1,5 +1,4 @@
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
 
 import { setMapRef } from '../../redux/actions/map';
 import { findUserLocation } from '../../redux/actions/user';
@@ -24,6 +23,6 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default withRouter(
-  connect(mapStateToProps, { setMapRef, findUserLocation })(MapView)
+export default connect(mapStateToProps, { setMapRef, findUserLocation })(
+  MapView
 );

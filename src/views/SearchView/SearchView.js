@@ -6,7 +6,7 @@ import { visuallyHidden } from '@mui/utils';
 import React, { useEffect, useMemo, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation, useRouteMatch } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router';
 
 import config from '../../../config';
 import {
@@ -92,7 +92,7 @@ function SearchView() {
   const embed = isEmbed();
   const isMobile = useMobileStatus();
   const location = useLocation();
-  const match = useRouteMatch();
+  const params = useParams();
   const intl = useIntl();
   const { trackPageView } = useMatomo();
 
@@ -364,7 +364,7 @@ function SearchView() {
       dispatch(fetchSearchResults(options));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [match.params]);
+  }, [params]);
 
   useEffect(() => {
     if (searchResults.length) {

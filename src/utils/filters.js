@@ -126,7 +126,7 @@ export const filterResultTypes = () => (obj) => {
  * Helper that resolves the city settings that should be used for filtering. If embedded then use
  * cities from location ('city' url param). If not embed then use usual city settings
  * @param citySettings from state.settings.cities
- * @param location object given by react-router-dom
+ * @param location object given by react-router
  * @param embed state of embedding
  * @returns citySettings type of object
  */
@@ -147,7 +147,7 @@ export const resolveCitySettings = (citySettings, location, embed) => {
  * ids are parsed from location.
  * @param cities from state.settings.cities
  * @param organizationIds from state.settings.cities
- * @param location object given by react-router-dom
+ * @param location object given by react-router
  * @param embed state of embedding
  * @returns filter predicate
  */

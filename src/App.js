@@ -14,12 +14,18 @@ import { StyledEngineProvider } from '@mui/material';
 // To add css variables for hds components
 import hdsStyle from 'hds-design-tokens';
 import withStyles from 'isomorphic-style-loader/withStyles';
-import PropTypes from 'prop-types';
 import React, { useEffect, useMemo } from 'react';
 import { Helmet } from 'react-helmet';
 import { IntlProvider, useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
-import { BrowserRouter, Route, Switch, useLocation } from 'react-router-dom';
+import {
+  createRoutesFromElements,
+  Route,
+  RouterProvider,
+  Routes,
+  useLocation,
+} from 'react-router';
+import { createBrowserRouter } from 'react-router-dom';
 
 import config from '../config';
 import appStyles from './App.css';
@@ -128,11 +134,11 @@ function App() {
           {/* <StylesProvider generateClassName={generateClassName}> */}
           <SMCookies />
           <div className="App">
-            <Switch>
-              <Route path="*/embedder" component={EmbedderView} />
-              <Route path="*/embed" component={EmbedLayout} />
-              <Route render={() => <DefaultLayout />} />
-            </Switch>
+            <Routes>
+              <Route path="embedder/*" element={<EmbedderView />} />
+              <Route path="embed/*" element={<EmbedLayout />} />
+              <Route path="*" element={<DefaultLayout />} />
+            </Routes>
             <Navigator />
             <DataFetcher />
           </div>
@@ -164,21 +170,21 @@ function LanguageWrapper() {
   }, []);
 
   if (isClient()) {
+    const router = createBrowserRouter(
+      createRoutesFromElements(<Route path="/:lng/*" element={<App />} />)
+    );
+
     return (
       <MatomoContext.Provider value={matomoTracker}>
-        <BrowserRouter>
-          <Switch>
-            <Route path="/:lng" component={App} />
-          </Switch>
-        </BrowserRouter>
+        <RouterProvider router={router} />
       </MatomoContext.Provider>
     );
   }
 
   return (
-    <Switch>
-      <Route path="/:lng" component={App} />
-    </Switch>
+    <Routes>
+      <Route path="/:lng/*" element={<App />} />
+    </Routes>
   );
 }
 
@@ -191,10 +197,3 @@ export default withStyles(
   printCSS,
   hdsStyle
 )(LanguageWrapper);
-
-// Typechecking
-App.propTypes = {
-  match: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired,
-  history: PropTypes.object.isRequired,
-};

@@ -16,10 +16,11 @@ import { visuallyHidden } from '@mui/utils';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
-import { Prompt } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 import config from '../../../config';
 import { DesktopComponent, SMButton, TitleBar } from '../../components';
+import ClientOnlyRouterPrompt from '../../components/RouterPrompt/ClientOnlyRouterPrompt';
 import { validateEmail } from '../../utils';
 import { focusToViewTitle } from '../../utils/accessibility';
 import useMobileStatus from '../../utils/isMobile';
@@ -38,12 +39,8 @@ const formFieldInitialState = {
   },
 };
 
-function FeedbackView({
-  navigator = null,
-  intl,
-  location,
-  selectedUnit = null,
-}) {
+function FeedbackView({ navigator = null, intl, selectedUnit = null }) {
+  const location = useLocation();
   const getLocaleText = useLocaleText();
   const isMobile = useMobileStatus();
   const theme = useTheme();
@@ -272,9 +269,16 @@ function FeedbackView({
     <>
       {/* Exit dialog */}
       <DesktopComponent>
-        <Prompt
+        <ClientOnlyRouterPrompt
           when={!!(!modalOpen && (email || feedback || permission))}
-          message={intl.formatMessage({ id: 'feedback.modal.leave' })}
+          onOK={() => {
+            return true;
+          }}
+          onCancel={() => {
+            return false;
+          }}
+          title={intl.formatMessage({ id: 'feedback.modal.leave' })}
+          content={intl.formatMessage({ id: 'feedback.modal.leave' })}
         />
       </DesktopComponent>
       {/* Confirm dialog */}
@@ -562,7 +566,6 @@ const StyledCheckboxIcon = styled('span')(({ theme }) => ({
 FeedbackView.propTypes = {
   navigator: PropTypes.objectOf(PropTypes.any),
   intl: PropTypes.objectOf(PropTypes.any).isRequired,
-  location: PropTypes.objectOf(PropTypes.any).isRequired,
   selectedUnit: PropTypes.objectOf(PropTypes.any),
 };
 
