@@ -129,8 +129,8 @@ function App() {
           <SMCookies />
           <div className="App">
             <Routes>
-              <Route path="*/embedder" element={<EmbedderView />} />
-              <Route path="*/embed" element={<EmbedLayout />} />
+              <Route path="embedder/*" element={<EmbedderView />} />
+              <Route path="embed/*" element={<EmbedLayout />} />
               <Route path="*" element={<DefaultLayout />} />
             </Routes>
             <Navigator />

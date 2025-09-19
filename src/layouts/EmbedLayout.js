@@ -213,43 +213,43 @@ function EmbedLayout() {
             />
           </div>
           <Routes>
-            <Route path="unit/:unit" element={
+            <Route path="/unit/:unit" element={
               <>
                 <PageHandler embed page="unit" />
                 <UnitView embed />
               </>
             } />
-            <Route path="event/:event" element={
+            <Route path="/event/:event" element={
               <>
                 <PageHandler embed page="event" />
                 <EventDetailView embed />
               </>
             } />
-            <Route path="search" element={
+            <Route path="/search" element={
               <>
                 <PageHandler embed page="search" />
                 <SearchView embed />
               </>
             } />
-            <Route path="service/:service" element={
+            <Route path="/service/:service" element={
               <>
                 <PageHandler embed page="service" />
                 <ServiceView embed />
               </>
             } />
-            <Route path="address/:municipality/:street" element={
+            <Route path="/address/:municipality/:street" element={
               <>
                 <PageHandler embed page="address" />
                 <AddressView embed />
               </>
             } />
-            <Route path="division/:city?/:area?" element={
+            <Route path="/division/:city?/:area?" element={
               <>
                 <PageHandler embed page="division" />
                 <DivisionView />
               </>
             } />
-            <Route path="area" element={
+            <Route path="/area/" element={
               <>
                 <PageHandler embed page="area" />
                 <AreaView embed />
