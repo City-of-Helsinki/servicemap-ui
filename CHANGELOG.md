@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.6.1](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.6.0...servicemap-ui-v2.6.1) (2025-09-20)
+
+
+### Bug Fixes
+
+* Stricter yarn configuration ([b0d9044](https://github.com/City-of-Helsinki/servicemap-ui/commit/b0d904410a4e0bdfc59053cb7a2ed90ea118533f))
+
 ## [2.6.0](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.5.2...servicemap-ui-v2.6.0) (2025-09-05)
 
 
