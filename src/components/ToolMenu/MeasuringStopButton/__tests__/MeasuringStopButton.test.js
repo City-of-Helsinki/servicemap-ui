@@ -1,5 +1,5 @@
 // Link.react.test.js
-import { fireEvent } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import { getRenderWithProviders } from '../../../../../jestUtils';
@@ -16,12 +16,14 @@ describe('<MeasuringStopButton />', () => {
     expect(container).toMatchSnapshot();
   });
 
-  it('simulates click event', () => {
+  it('simulates click event', async () => {
     const mockCallBack = jest.fn();
     const { getByRole } = renderWithProviders(
       <MeasuringStopButton onClick={mockCallBack} />
     );
-    fireEvent.click(getByRole('button'));
+    const user = userEvent.setup();
+
+    await user.click(getByRole('button'));
     expect(mockCallBack.mock.calls.length).toEqual(1);
   });
 

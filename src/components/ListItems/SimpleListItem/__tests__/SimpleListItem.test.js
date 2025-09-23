@@ -1,5 +1,5 @@
 // Link.react.test.js
-import { fireEvent } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import { getRenderWithProviders } from '../../../../../jestUtils';
@@ -20,13 +20,15 @@ describe('<SimpleListItem />', () => {
     expect(container).toMatchSnapshot();
   });
 
-  it('simulates click event', () => {
+  it('simulates click event', async () => {
     const mockCallBack = jest.fn();
     const { getByRole } = renderWithProviders(
       <SimpleListItem {...mockProps} handleItemClick={mockCallBack} button />
     );
 
-    fireEvent.click(getByRole('listitem'));
+    const user = userEvent.setup();
+
+    await user.click(getByRole('listitem'));
 
     expect(mockCallBack.mock.calls.length).toEqual(1);
   });
@@ -37,18 +39,13 @@ describe('<SimpleListItem />', () => {
       <SimpleListItem {...mockProps} handleItemClick={mockCallBack} button />
     );
 
-    fireEvent.keyDown(getByRole('listitem'), {
-      key: 'Enter',
-      code: 'Enter',
-      keyCode: 13,
-      charCode: 13,
-    });
-    fireEvent.keyDown(getByRole('listitem'), {
-      key: 'Space',
-      code: 'Space',
-      keyCode: 32,
-      charCode: 32,
-    });
+    const user = userEvent.setup();
+    const listItem = getByRole('listitem');
+
+    await user.click(listItem);
+
+    await user.keyboard('{Enter}');
+    await user.keyboard(' ');
 
     // One of the events in fired twice for some reason
     expect(mockCallBack.mock.calls.length).toEqual(3);
