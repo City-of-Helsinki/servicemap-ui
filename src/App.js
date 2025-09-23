@@ -9,10 +9,10 @@ import '@formatjs/intl-relativetimeformat/dist/locale-data/fi';
 import '@formatjs/intl-relativetimeformat/dist/locale-data/sv';
 import '@formatjs/intl-relativetimeformat/polyfill';
 
-import { css, Global } from '@emotion/react';
 import { StyledEngineProvider } from '@mui/material';
 // To add css variables for hds components
 import hdsStyle from 'hds-design-tokens';
+import { CookieBanner, CookieConsentContextProvider } from 'hds-react';
 import withStyles from 'isomorphic-style-loader/withStyles';
 import PropTypes from 'prop-types';
 import React, { useEffect, useMemo } from 'react';
@@ -28,7 +28,7 @@ import { DataFetcher, Navigator } from './components';
 import useMatomo from './components/Matomo/hooks/useMatomo';
 import MatomoContext from './components/Matomo/matomo-context';
 import MatomoTracker from './components/Matomo/MatomoTracker';
-import SMCookies from './components/SMCookies/SMCookies';
+//import SMCookies from './components/SMCookies/SMCookies';
 import HSLFonts from './hsl-icons.css';
 import styles from './index.css';
 import DefaultLayout from './layouts';
@@ -39,11 +39,12 @@ import { getLocale } from './redux/selectors/user';
 import SMFonts from './service-map-icons.css';
 import ThemeWrapper from './themes/ThemeWrapper';
 import isClient from './utils';
-import { COOKIE_MODAL_ROOT_ID } from './utils/constants';
 import useMobileStatus from './utils/isMobile';
 import LocaleUtility from './utils/locale';
 import { isEmbed } from './utils/path';
+import siteSettings from './utils/siteSettings.json';
 import { servicemapTrackPageView } from './utils/tracking';
+// import useCookieConsentSettings from './utils/useCookieConsentSettings';
 import EmbedderView from './views/EmbedderView';
 
 // General meta tags for app
@@ -78,6 +79,7 @@ function App() {
   const location = useLocation();
   const senses = useSelector(selectSenses);
   const mobility = useSelector(selectMobility);
+  const isMobile = useMobileStatus();
 
   // Remove the server-side injected CSS.
   useEffect(() => {
@@ -87,7 +89,6 @@ function App() {
     }
   }, []);
 
-  const isMobile = useMobileStatus();
   useEffect(() => {
     // Simple custom servicemap page view tracking
     servicemapTrackPageView();
@@ -107,35 +108,55 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.pathname, location.search, mobility, senses]);
 
+  // Override cookie modal styling in shadow root
+  useEffect(() => {
+    if (!isMobile) return; // Only run on mobile devices
+
+    const observer = new MutationObserver(() => {
+      const host = document.querySelector('.hds-cc__target');
+      if (host && host.shadowRoot) {
+        // inject once and stop observing
+        const shadow = host.shadowRoot;
+        const style = document.createElement('style');
+        style.textContent = `
+        .hds-cc__container {
+          bottom: 4.875rem !important;
+        }
+      `;
+        shadow.appendChild(style);
+        observer.disconnect();
+      }
+    });
+
+    observer.observe(document.body, { childList: true, subtree: true });
+
+    return () => observer.disconnect();
+  }, [isMobile]);
+
+  // const cookieConsentProps = useCookieConsentSettings();
+
   return (
     <StyledEngineProvider>
-      <Global
-        styles={css({
-          // hide language selector in hds cookie modal
-          '#cookie-consent-language-selector-button': {
-            display: 'none',
-          },
-          ...(isMobile && {
-            [`#${COOKIE_MODAL_ROOT_ID} > div > div`]: {
-              bottom: '4.875rem',
-            },
-          }),
-        })}
-      />
       <ThemeWrapper>
         <IntlProvider {...intlData}>
           <MetaTags />
           {/* <StylesProvider generateClassName={generateClassName}> */}
-          <SMCookies />
-          <div className="App">
-            <Switch>
-              <Route path="*/embedder" component={EmbedderView} />
-              <Route path="*/embed" component={EmbedLayout} />
-              <Route render={() => <DefaultLayout />} />
-            </Switch>
-            <Navigator />
-            <DataFetcher />
-          </div>
+          {/* <CookieConsentContextProvider {...cookieConsentProps}> */}
+          <CookieConsentContextProvider
+            siteSettings={siteSettings}
+            options={{ language: locale }}
+          >
+            <div className="App">
+              <Switch>
+                <Route path="*/embedder" component={EmbedderView} />
+                <Route path="*/embed" component={EmbedLayout} />
+                <Route render={() => <DefaultLayout />} />
+              </Switch>
+              <Navigator />
+              <DataFetcher />
+              {!isEmbed() && <CookieBanner />}
+            </div>
+          </CookieConsentContextProvider>
           {/* </StylesProvider> */}
         </IntlProvider>
       </ThemeWrapper>
@@ -164,6 +185,7 @@ function LanguageWrapper() {
   }, []);
 
   if (isClient()) {
+    console.log('matomo app');
     return (
       <MatomoContext.Provider value={matomoTracker}>
         <BrowserRouter>
