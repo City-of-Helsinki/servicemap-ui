@@ -39,10 +39,12 @@ import { getLocale } from './redux/selectors/user';
 import SMFonts from './service-map-icons.css';
 import ThemeWrapper from './themes/ThemeWrapper';
 import isClient from './utils';
+import useMobileStatus from './utils/isMobile';
 import LocaleUtility from './utils/locale';
 import { isEmbed } from './utils/path';
+import siteSettings from './utils/siteSettings.json';
 import { servicemapTrackPageView } from './utils/tracking';
-import useCookieConsentSettings from './utils/useCookieConsentSettings';
+// import useCookieConsentSettings from './utils/useCookieConsentSettings';
 import EmbedderView from './views/EmbedderView';
 
 // General meta tags for app
@@ -77,6 +79,7 @@ function App() {
   const location = useLocation();
   const senses = useSelector(selectSenses);
   const mobility = useSelector(selectMobility);
+  const isMobile = useMobileStatus();
 
   // Remove the server-side injected CSS.
   useEffect(() => {
@@ -86,7 +89,6 @@ function App() {
     }
   }, []);
 
-  //const isMobile = useMobileStatus();
   useEffect(() => {
     // Simple custom servicemap page view tracking
     servicemapTrackPageView();
@@ -106,29 +108,47 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.pathname, location.search, mobility, senses]);
 
-  const cookieConsentProps = useCookieConsentSettings();
+
+  // Override cookie modal styling in shadow root
+  useEffect(() => {
+    if (!isMobile) return; // Only run on mobile devices
+
+    const observer = new MutationObserver(() => {
+      const host = document.querySelector('.hds-cc__target');
+      if (host && host.shadowRoot) {
+        // inject once and stop observing
+        const shadow = host.shadowRoot;
+        const style = document.createElement('style');
+        style.textContent = `
+        .hds-cc__container {
+          bottom: 4.875rem !important;
+        }
+      `;
+        shadow.appendChild(style);
+        observer.disconnect();
+      }
+    });
+
+    observer.observe(document.body, { childList: true, subtree: true });
+
+    return () => observer.disconnect();
+  }, [isMobile]);
+
+ 
+
+  // const cookieConsentProps = useCookieConsentSettings();
 
   return (
     <StyledEngineProvider>
-      {/*   <Global
-        styles={css({
-          // hide language selector in hds cookie modal
-          '#cookie-consent-language-selector-button': {
-            display: 'none',
-          },
-          ...(isMobile && {
-            [`#${COOKIE_MODAL_ROOT_ID} > div > div`]: {
-              bottom: '4.875rem',
-            },
-          }),
-        })}
-      /> */}
-
       <ThemeWrapper>
         <IntlProvider {...intlData}>
           <MetaTags />
           {/* <StylesProvider generateClassName={generateClassName}> */}
-          <CookieConsentContextProvider {...cookieConsentProps}>
+           {/* <CookieConsentContextProvider {...cookieConsentProps}> */}
+          <CookieConsentContextProvider
+            siteSettings={siteSettings}
+            options={{ language: locale }}
+          >
             <div className="App">
               <Switch>
                 <Route path="*/embedder" component={EmbedderView} />
