@@ -5,7 +5,7 @@ import { ButtonBase, Divider, List, Typography } from '@mui/material';
 import PropTypes from 'prop-types';
 /* eslint-disable camelcase */
 import React, { useEffect, useState } from 'react';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useParams } from 'react-router-dom';

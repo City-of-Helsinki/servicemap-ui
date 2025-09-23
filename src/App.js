@@ -15,7 +15,7 @@ import { StyledEngineProvider } from '@mui/material';
 import hdsStyle from 'hds-design-tokens';
 import withStyles from 'isomorphic-style-loader/withStyles';
 import React, { useEffect, useMemo } from 'react';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import { IntlProvider, useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { RouterProvider, useLocation } from 'react-router-dom';
