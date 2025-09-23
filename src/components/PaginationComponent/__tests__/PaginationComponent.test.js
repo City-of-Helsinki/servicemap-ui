@@ -1,5 +1,5 @@
 // Link.react.test.js
-import { fireEvent } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import { getRenderWithProviders } from '../../../../jestUtils';
@@ -24,7 +24,7 @@ describe('<PaginationComponent />', () => {
     expect(container).toMatchSnapshot();
   });
 
-  it('simulates handlePageChange on click event', () => {
+  it('simulates handlePageChange on click event', async () => {
     const mockCallBack = jest.fn((newCurrent, totalCount) => ({
       newCurrent,
       totalCount,
@@ -34,7 +34,9 @@ describe('<PaginationComponent />', () => {
     );
 
     // component.find('PageElement ForwardRef(ButtonBase)').at(2).simulate('click');
-    fireEvent.click(getAllByRole('link')[1]);
+    const user = userEvent.setup();
+
+    await user.click(getAllByRole('link')[1]);
     expect(mockCallBack.mock.calls.length).toEqual(1);
 
     // Expect handlePageChange to get first argument (newCurrent) correctly

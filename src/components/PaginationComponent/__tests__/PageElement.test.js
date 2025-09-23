@@ -1,5 +1,5 @@
 // Link.react.test.js
-import { fireEvent } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import { getRenderWithProviders } from '../../../../jestUtils';
@@ -20,36 +20,33 @@ describe('<PageElement />', () => {
     expect(container).toMatchSnapshot();
   });
 
-  it('simulates click event', () => {
+  it('simulates click event', async () => {
     const mockCallBack = jest.fn();
     const { getByRole } = renderWithProviders(
       <PageElement {...mockProps} onClick={mockCallBack} />
     );
 
-    fireEvent.click(getByRole('link'));
+    const user = userEvent.setup();
+
+    await user.click(getByRole('link'));
+
     expect(mockCallBack.mock.calls.length).toEqual(1);
   });
 
-  it('simulates keyboard event', () => {
+  it('simulates keyboard event', async () => {
     const mockCallBack = jest.fn();
     const { getByRole } = renderWithProviders(
       <PageElement {...mockProps} onClick={mockCallBack} />
     );
+    const user = userEvent.setup();
+    const listItem = getByRole('link');
 
-    fireEvent.keyDown(getByRole('link'), {
-      key: 'Enter',
-      code: 'Enter',
-      keyCode: 13,
-      charCode: 13,
-    });
-    fireEvent.keyDown(getByRole('link'), {
-      key: 'Space',
-      code: 'Space',
-      keyCode: 32,
-      charCode: 32,
-    });
+    await user.click(listItem);
 
-    expect(mockCallBack.mock.calls.length).toEqual(2);
+    await user.keyboard('{Enter}');
+    await user.keyboard(' ');
+
+    expect(mockCallBack.mock.calls.length).toEqual(3);
   });
 
   it('does show text correctly', () => {

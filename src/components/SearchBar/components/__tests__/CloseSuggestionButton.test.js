@@ -1,6 +1,6 @@
 // CloseSuggestionButton.test.js
 import { ArrowDownward } from '@mui/icons-material';
-import { fireEvent } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import { getRenderWithProviders } from '../../../../../jestUtils';
@@ -26,17 +26,19 @@ describe('<CloseSuggestionButton />', () => {
     expect(container).toMatchSnapshot();
   });
 
-  it('simulates click event', () => {
+  it('simulates click event', async () => {
     const mockCallBack = jest.fn();
     const { getByRole } = renderWithProviders(
       <CloseSuggestionButton {...mockProps} onClick={mockCallBack} />
     );
 
-    fireEvent.click(getByRole('button'));
+    const user = userEvent.setup();
+
+    await user.click(getByRole('button'));
     expect(mockCallBack.mock.calls.length).toEqual(1);
   });
 
-  it('simulates keyboard event', () => {
+  it('simulates keyboard event', async () => {
     const mockCallBack = jest.fn();
     const { getAllByRole } = renderWithProviders(
       <>
@@ -49,34 +51,21 @@ describe('<CloseSuggestionButton />', () => {
       </>
     );
 
-    fireEvent.keyDown(getAllByRole('button')[0], {
-      key: 'Enter',
-      code: 'Enter',
-      keyCode: 13,
-      charCode: 13,
-    });
-    fireEvent.keyDown(getAllByRole('button')[0], {
-      key: 'Space',
-      code: 'Space',
-      keyCode: 32,
-      charCode: 32,
-    });
+    const user = userEvent.setup();
+
+    await user.click(getAllByRole('button')[0]);
+
+    await user.keyboard('{Enter}');
+    await user.keyboard(' ');
 
     expect(mockCallBack.mock.calls.length).toEqual(2);
 
+    await user.click(getAllByRole('button', { selector: 'p' })[1]);
+
     // Sr only element
-    fireEvent.keyPress(getAllByRole('button', { selector: 'p' })[1], {
-      key: 'Enter',
-      code: 'Enter',
-      keyCode: 13,
-      charCode: 13,
-    });
-    fireEvent.keyPress(getAllByRole('button', { selector: 'p' })[1], {
-      key: 'Space',
-      code: 'Space',
-      keyCode: 32,
-      charCode: 32,
-    });
+    await user.keyboard('{Enter}');
+    await user.keyboard(' ');
+
     expect(mockCallBack.mock.calls.length).toEqual(4);
   });
 

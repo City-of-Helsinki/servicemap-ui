@@ -1,5 +1,5 @@
 // Link.react.test.js
-import { fireEvent } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import { getRenderWithProviders } from '../../../../../jestUtils';
@@ -18,12 +18,15 @@ describe('<SMLogo />', () => {
     expect(container).toMatchSnapshot();
   });
 
-  it('simulates click event', () => {
+  it('simulates click event', async () => {
     const mockCallBack = jest.fn();
     const { container } = renderWithProviders(
       <SMLogo onClick={mockCallBack} />
     );
-    fireEvent.click(container.querySelector('button'));
+    const user = userEvent.setup();
+
+    await user.click(container.querySelector('button'));
+
     expect(mockCallBack.mock.calls.length).toEqual(1);
   });
 

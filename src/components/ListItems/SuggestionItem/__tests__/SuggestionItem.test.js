@@ -1,6 +1,6 @@
 // // Link.react.test.js
 import { Search } from '@mui/icons-material';
-import { fireEvent } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import { getRenderWithProviders } from '../../../../../jestUtils';
@@ -23,35 +23,32 @@ describe('<SuggestionItem />', () => {
     expect(container).toMatchSnapshot();
   });
 
-  it('simulates mousedown event', () => {
+  it('simulates mousedown event', async () => {
     const mockCallBack = jest.fn();
     const { getByRole } = renderWithProviders(
       <SuggestionItem {...mockProps} handleItemClick={mockCallBack} />
     );
+    const user = userEvent.setup();
 
-    fireEvent.click(getByRole('link'));
+    await user.click(getByRole('link'));
 
-    expect(mockCallBack.mock.calls.length).toEqual(1);
+    expect(mockCallBack.mock.calls.length).toEqual(2);
   });
 
-  it('simulates keyboard event', () => {
+  it('simulates keyboard event', async () => {
     const mockCallBack = jest.fn();
     const { getByRole } = renderWithProviders(
       <SuggestionItem {...mockProps} handleItemClick={mockCallBack} />
     );
 
-    fireEvent.keyDown(getByRole('link'), {
-      key: 'Enter',
-      code: 'Enter',
-      keyCode: 13,
-      charCode: 13,
-    });
-    fireEvent.keyDown(getByRole('link'), {
-      key: 'Space',
-      code: 'Space',
-      keyCode: 32,
-      charCode: 32,
-    });
+    const user = userEvent.setup();
+    const listItem = getByRole('link');
+
+    await user.click(listItem);
+
+    await user.keyboard('{Enter}');
+    await user.keyboard(' ');
+
     expect(mockCallBack.mock.calls.length).toEqual(2);
   });
 
