@@ -8,7 +8,7 @@ import * as Sentry from '@sentry/react';
 import StyleContext from 'isomorphic-style-loader/StyleContext';
 import React from 'react';
 import { hydrateRoot } from 'react-dom/client';
-import { Helmet } from 'react-helmet';
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { Provider } from 'react-redux';
 import { applyMiddleware, createStore } from 'redux';
 import thunk from 'redux-thunk';
@@ -77,20 +77,22 @@ function Main() {
   }, []);
 
   return (
-    <CacheProvider value={cache}>
-      <Provider store={store}>
-        {/* Provider to help with isomorphic style loader */}
-        <StyleContext.Provider value={{ insertCss }}>
-          {
-            // HTML head tags
-          }
-          <Helmet>
-            <link rel="shortcut icon" href={favicon} />
-          </Helmet>
-          <App />
-        </StyleContext.Provider>
-      </Provider>
-    </CacheProvider>
+    <HelmetProvider>
+      <CacheProvider value={cache}>
+        <Provider store={store}>
+          {/* Provider to help with isomorphic style loader */}
+          <StyleContext.Provider value={{ insertCss }}>
+            {
+              // HTML head tags
+            }
+            <Helmet>
+              <link rel="shortcut icon" href={favicon} />
+            </Helmet>
+            <App />
+          </StyleContext.Provider>
+        </Provider>
+      </CacheProvider>
+    </HelmetProvider>
   );
 }
 

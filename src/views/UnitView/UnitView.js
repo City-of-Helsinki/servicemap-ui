@@ -7,7 +7,7 @@ import { visuallyHidden } from '@mui/utils';
 import Watermark from '@uiw/react-watermark';
 import PropTypes from 'prop-types';
 import React, { useEffect, useRef, useState } from 'react';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate, useParams } from 'react-router';

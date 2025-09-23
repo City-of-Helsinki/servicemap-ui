@@ -10,7 +10,7 @@ import schedule from 'node-schedule';
 import path from 'path';
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
-import { Helmet } from 'react-helmet';
+import { HelmetProvider } from 'react-helmet-async';
 import { Provider } from 'react-redux';
 import { StaticRouter } from 'react-router-dom/server';
 import { applyMiddleware, createStore } from 'redux';
@@ -138,21 +138,26 @@ app.get('/*', (req, res, next) => {
   // Create server style sheets
   const sheets = new ServerStyleSheets();
 
+  // Create helmet context for SSR
+  const helmetContext = {};
+
   const jsx = sheets.collect(
-    <CacheProvider value={cache}>
-      <Provider store={store}>
-        <StaticRouter location={req.url} context={{}}>
-          {/* Provider to help with isomorphic style loader */}
-          <StyleContext.Provider value={{ insertCss }}>
-            <App />
-          </StyleContext.Provider>
-        </StaticRouter>
-      </Provider>
-    </CacheProvider>
+    <HelmetProvider context={helmetContext}>
+      <CacheProvider value={cache}>
+        <Provider store={store}>
+          <StaticRouter location={req.url} context={{}}>
+            {/* Provider to help with isomorphic style loader */}
+            <StyleContext.Provider value={{ insertCss }}>
+              <App />
+            </StyleContext.Provider>
+          </StaticRouter>
+        </Provider>
+      </CacheProvider>
+    </HelmetProvider>
   );
   const reactDom = ReactDOMServer.renderToString(jsx);
   const cssString = sheets.toString();
-  const helmet = Helmet.renderStatic();
+  const { helmet } = helmetContext;
 
   const preloadedState = store.getState();
 
