@@ -5,7 +5,6 @@ import config from '../../config';
 
 const mobileBreakpoint = config.mobileUiBreakpoint;
 
-
 /*
 const useMobileStatus = () => {
   const [isClientSide, setIsClientSide] = useState(false);
@@ -29,18 +28,18 @@ const useMobileStatus = () => {
 };*/
 const useMobileStatus = () => {
   const [isMobile, setIsMobile] = useState(false);
-  
+
   useEffect(() => {
     const mediaQuery = window.matchMedia(`(max-width:${mobileBreakpoint}px)`);
-    
+
     const handleChange = (e) => setIsMobile(e.matches);
-    
+
     // Set initial value
     setIsMobile(mediaQuery.matches);
-    
+
     // Listen for changes
     mediaQuery.addEventListener('change', handleChange);
-    
+
     return () => mediaQuery.removeEventListener('change', handleChange);
   }, []);
 

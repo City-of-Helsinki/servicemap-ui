@@ -108,7 +108,6 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.pathname, location.search, mobility, senses]);
 
-
   // Override cookie modal styling in shadow root
   useEffect(() => {
     if (!isMobile) return; // Only run on mobile devices
@@ -134,8 +133,6 @@ function App() {
     return () => observer.disconnect();
   }, [isMobile]);
 
- 
-
   // const cookieConsentProps = useCookieConsentSettings();
 
   return (
@@ -144,7 +141,7 @@ function App() {
         <IntlProvider {...intlData}>
           <MetaTags />
           {/* <StylesProvider generateClassName={generateClassName}> */}
-           {/* <CookieConsentContextProvider {...cookieConsentProps}> */}
+          {/* <CookieConsentContextProvider {...cookieConsentProps}> */}
           <CookieConsentContextProvider
             siteSettings={siteSettings}
             options={{ language: locale }}
