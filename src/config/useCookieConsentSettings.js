@@ -4,9 +4,7 @@ import config from '../../config';
 import { getLocale } from '../redux/selectors/user';
 import siteSettings from './siteSettings.json';
 
-
 const useCookieConsentSettings = () => {
-
   const locale = useSelector(getLocale);
 
   const cookieConsentProps = {
