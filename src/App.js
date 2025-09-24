@@ -9,10 +9,10 @@ import '@formatjs/intl-relativetimeformat/dist/locale-data/fi';
 import '@formatjs/intl-relativetimeformat/dist/locale-data/sv';
 import '@formatjs/intl-relativetimeformat/polyfill';
 
-import { css, Global } from '@emotion/react';
 import { StyledEngineProvider } from '@mui/material';
 // To add css variables for hds components
 import hdsStyle from 'hds-design-tokens';
+import { CookieBanner, CookieConsentContextProvider } from 'hds-react';
 import withStyles from 'isomorphic-style-loader/withStyles';
 import React, { useEffect, useMemo, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
@@ -33,7 +33,7 @@ import { DataFetcher, Navigator } from './components';
 import useMatomo from './components/Matomo/hooks/useMatomo';
 import MatomoContext from './components/Matomo/matomo-context';
 import MatomoTracker from './components/Matomo/MatomoTracker';
-import SMCookies from './components/SMCookies/SMCookies';
+import useCookieConsentSettings from './config/useCookieConsentSettings';
 import HSLFonts from './hsl-icons.css';
 import styles from './index.css';
 import DefaultLayout from './layouts';
@@ -44,8 +44,6 @@ import { getLocale } from './redux/selectors/user';
 import SMFonts from './service-map-icons.css';
 import ThemeWrapper from './themes/ThemeWrapper';
 import isClient from './utils';
-import { COOKIE_MODAL_ROOT_ID } from './utils/constants';
-import useMobileStatus from './utils/isMobile';
 import LocaleUtility from './utils/locale';
 import { isEmbed } from './utils/path';
 import { servicemapTrackPageView } from './utils/tracking';
@@ -98,7 +96,6 @@ function App() {
     }
   }, []);
 
-  const isMobile = useMobileStatus();
   useEffect(() => {
     // Simple custom servicemap page view tracking
     servicemapTrackPageView();
@@ -118,40 +115,31 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.pathname, location.search, mobility, senses]);
 
+  const cookieConsentProps = useCookieConsentSettings();
+
   return (
     mounted && (
-      <StyledEngineProvider>
-        <Global
-          styles={css({
-            // hide language selector in hds cookie modal
-            '#cookie-consent-language-selector-button': {
-              display: 'none',
-            },
-            ...(isMobile && {
-              [`#${COOKIE_MODAL_ROOT_ID} > div > div`]: {
-                bottom: '4.875rem',
-              },
-            }),
-          })}
-        />
-        <ThemeWrapper>
-          <IntlProvider {...intlData}>
-            <MetaTags />
-            {/* <StylesProvider generateClassName={generateClassName}> */}
-            <SMCookies />
-            <div className="App">
-              <Routes>
-                <Route path="embedder/*" element={<EmbedderView />} />
-                <Route path="embed/*" element={<EmbedLayout />} />
-                <Route path="*" element={<DefaultLayout />} />
-              </Routes>
-              <Navigator />
-              <DataFetcher />
-            </div>
-            {/* </StylesProvider> */}
-          </IntlProvider>
-        </ThemeWrapper>
-      </StyledEngineProvider>
+      <CookieConsentContextProvider {...cookieConsentProps}>
+        <StyledEngineProvider>
+          <ThemeWrapper>
+            <IntlProvider {...intlData}>
+              <MetaTags />
+              {/* <StylesProvider generateClassName={generateClassName}> */}
+              <div className="App">
+                <Routes>
+                  <Route path="embedder/*" element={<EmbedderView />} />
+                  <Route path="embed/*" element={<EmbedLayout />} />
+                  <Route path="*" element={<DefaultLayout />} />
+                </Routes>
+                <Navigator />
+                <DataFetcher />
+                {!isEmbed() && <CookieBanner />}
+              </div>
+              {/* </StylesProvider> */}
+            </IntlProvider>
+          </ThemeWrapper>
+        </StyledEngineProvider>
+      </CookieConsentContextProvider>
     )
   );
 }
