@@ -159,7 +159,6 @@ class WrappedTemplate extends React.Component {
     if (jssStyles && jssStyles.parentNode) {
       jssStyles.parentNode.removeChild(jssStyles);
     }
-    console.log(jssStyles);
   }
 
   render() {

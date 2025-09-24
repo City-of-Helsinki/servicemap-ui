@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`<SimpleListItem /> should work 1`] = `
+exports[`<SimpleListItem /> > should work 1`] = `
 <div>
   <li
     class="MuiButtonBase-root MuiListItemButton-root css-1ls6ttt MuiListItemButton-gutters MuiListItemButton-root css-1ls6ttt MuiListItemButton-gutters null css-367pw5-MuiButtonBase-root-MuiListItemButton-root"
@@ -19,7 +19,7 @@ exports[`<SimpleListItem /> should work 1`] = `
         </p>
         <p
           class="MuiTypography-root MuiTypography-body2 css-5rfmx0-MuiTypography-root"
-          style="border: 0px; height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 1px;"
+          style="border: 0px; clip: rect(0px); height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 1px;"
         />
       </span>
     </div>

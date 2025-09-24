@@ -2,21 +2,29 @@ import { Map, OpenInNew } from '@mui/icons-material';
 import { ButtonBase, Tooltip as MUITooltip, Typography } from '@mui/material';
 import { useTheme } from '@mui/styles';
 import { visuallyHidden } from '@mui/utils';
-import React, { useEffect, useState } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router';
 
-import { Dialog, HomeLogo, PaginatedList, SMButton } from '../components';
+import {
+  Dialog,
+  HomeLogo,
+  Loading,
+  PaginatedList,
+  SMButton,
+} from '../components';
 import { selectMapRef, selectNavigator } from '../redux/selectors/general';
 import { EmbedRoutes } from '../routes';
 import { parseSearchParams } from '../utils';
 import { resolveCityAndOrganizationFilter } from '../utils/filters';
 import useLocaleText from '../utils/useLocaleText';
-import MapView from '../views/MapView';
 import { focusToPosition } from '../views/MapView/utils/mapActions';
 import useMapUnits from '../views/MapView/utils/useMapUnits';
 import ContactInfo from '../views/UnitView/components/ContactInfo';
+
+// Lazy load MapView to avoid server-side loading issues with react-leaflet
+const MapView = React.lazy(() => import('../views/MapView'));
 
 const createContentStyles = (theme, unitListPosition) => {
   const bottomList = unitListPosition === 'bottom';
@@ -214,7 +222,9 @@ function EmbedLayout() {
         {selectedUnitData ? renderEmbeddedUnitInfo() : null}
 
         <div aria-hidden tabIndex="-1" style={styles.map}>
-          <MapView />
+          <Suspense fallback={<Loading />}>
+            <MapView />
+          </Suspense>
         </div>
       </div>
     </>

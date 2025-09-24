@@ -98,7 +98,8 @@ export const unitRedirect = (req, res, next) => {
  */
 export const parseInitialMapPositionFromHostname = (req, Sentry) => {
   let initialMapPosition =
-    process.env.INITIAL_MAP_POSITION || '60.170377597530016,24.941309323934886';
+    process.env.REACT_APP_INITIAL_MAP_POSITION ||
+    '60.170377597530016,24.941309323934886';
   try {
     // Expecting DOMAIN_MAP_POSITIONS to be a string shaped like
     // hostname1,lat1,lon1;hostname2,lat2,lon2

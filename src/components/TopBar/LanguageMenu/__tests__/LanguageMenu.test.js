@@ -1,8 +1,8 @@
 // Link.react.test.js
 import React from 'react';
 
-import { getRenderWithProviders } from '../../../../../jestUtils';
 import { initialState } from '../../../../redux/reducers/user';
+import { getRenderWithProviders } from '../../../../testUtils';
 import LanguageMenu from '../index';
 
 const renderWithProviders = getRenderWithProviders({

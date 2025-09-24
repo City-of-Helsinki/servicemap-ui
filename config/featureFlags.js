@@ -2,15 +2,19 @@ import { getSettings } from "./default";
 
 const settings = getSettings();
 
-if (typeof settings.FEATURE_SERVICEMAP_PAGE_TRACKING === 'undefined') {
-  settings.FEATURE_SERVICEMAP_PAGE_TRACKING = false; // Default to false
+// Helper function to get feature flag value with defaults
+function getFeatureFlag(key, defaultValue) {
+  const value = settings[key];
+  // Return default if value is undefined, null, empty string, or just whitespace
+  if (!value || value.trim() === '') {
+    return defaultValue;
+  }
+  return value;
 }
 
-if (typeof settings.FEATURE_SM_COOKIES === 'undefined') {
-  settings.FEATURE_SM_COOKIES = true; // Default to true
-}
+const featureFlags = {
+  servicemapPageTracking: getFeatureFlag('REACT_APP_FEATURE_SERVICEMAP_PAGE_TRACKING', 'false') === 'true',
+  smCookies: getFeatureFlag('REACT_APP_FEATURE_SM_COOKIES', 'true') === 'true',
+};
 
-export default {
-  servicemapPageTracking: settings.FEATURE_SERVICEMAP_PAGE_TRACKING === 'true',
-  smCookies: settings.FEATURE_SM_COOKIES === 'true',
-}
+export default featureFlags;

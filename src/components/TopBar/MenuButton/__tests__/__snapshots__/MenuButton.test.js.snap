@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`<MenuButton /> should work 1`] = `
+exports[`<MenuButton /> > should work 1`] = `
 <div>
   <button
     aria-expanded="false"

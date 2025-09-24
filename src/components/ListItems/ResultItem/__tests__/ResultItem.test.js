@@ -3,8 +3,8 @@
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
-import { getRenderWithProviders } from '../../../../../jestUtils';
 import { initialState } from '../../../../redux/reducers/user';
+import { getRenderWithProviders } from '../../../../testUtils';
 import ResultItem from '../index';
 
 // Generic required props for ResultItem
@@ -29,7 +29,7 @@ describe('<ResultItem />', () => {
   });
 
   it('simulates click event', async () => {
-    const mockCallBack = jest.fn();
+    const mockCallBack = vi.fn();
     const { getByRole } = renderWithProviders(
       <ResultItem {...mockProps} onClick={mockCallBack} />
     );
@@ -42,7 +42,7 @@ describe('<ResultItem />', () => {
   });
 
   // it('simulates keyboard event', () => {
-  //   const mockCallBack = jest.fn();
+  //   const mockCallBack = vi.fn();
   //   const component = renderWithProviders(<ResultItem {...mockProps} onClick={mockCallBack} />);
 
   //   component.find('ForwardRef(ListItem)').simulate('keyDown', { which: 13 });

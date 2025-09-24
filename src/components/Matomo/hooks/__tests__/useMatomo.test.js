@@ -9,7 +9,7 @@ const MOCK_URL = 'https://www.hel.fi';
 
 describe('useMatomo', () => {
   it('should return trackPageView function', () => {
-    const trackPageView = jest.fn();
+    const trackPageView = vi.fn();
     const instance = { trackPageView };
 
     const wrapper = ({ children }) => (
@@ -34,9 +34,9 @@ describe('useMatomo', () => {
   }
 
   it('should trackPageView', () => {
-    const trackPageViewMock = jest.fn();
+    const trackPageViewMock = vi.fn();
 
-    jest.spyOn(MatomoTracker, 'default').mockImplementation(() => ({
+    vi.spyOn(MatomoTracker, 'default').mockImplementation(() => ({
       trackPageView: trackPageViewMock,
     }));
 

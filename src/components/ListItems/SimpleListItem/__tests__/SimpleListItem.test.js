@@ -2,7 +2,7 @@
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
-import { getRenderWithProviders } from '../../../../../jestUtils';
+import { getRenderWithProviders } from '../../../../testUtils';
 import SimpleListItem from '../index';
 
 // Generic required props for SimpleListItem
@@ -21,7 +21,7 @@ describe('<SimpleListItem />', () => {
   });
 
   it('simulates click event', async () => {
-    const mockCallBack = jest.fn();
+    const mockCallBack = vi.fn();
     const { getByRole } = renderWithProviders(
       <SimpleListItem {...mockProps} handleItemClick={mockCallBack} button />
     );
@@ -34,7 +34,7 @@ describe('<SimpleListItem />', () => {
   });
 
   it('simulates keyboard event', async () => {
-    const mockCallBack = jest.fn();
+    const mockCallBack = vi.fn();
     const { getByRole } = renderWithProviders(
       <SimpleListItem {...mockProps} handleItemClick={mockCallBack} button />
     );

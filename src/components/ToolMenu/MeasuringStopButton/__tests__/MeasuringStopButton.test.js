@@ -2,8 +2,8 @@
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
-import { getRenderWithProviders } from '../../../../../jestUtils';
 import englishTranslations from '../../../../i18n/en';
+import { getRenderWithProviders } from '../../../../testUtils';
 import MeasuringStopButton from '../index';
 
 const renderWithProviders = getRenderWithProviders({});
@@ -17,7 +17,7 @@ describe('<MeasuringStopButton />', () => {
   });
 
   it('simulates click event', async () => {
-    const mockCallBack = jest.fn();
+    const mockCallBack = vi.fn();
     const { getByRole } = renderWithProviders(
       <MeasuringStopButton onClick={mockCallBack} />
     );

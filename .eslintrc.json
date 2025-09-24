@@ -2,11 +2,15 @@
   "extends": [
     "react-app",
     "plugin:import/errors",
-    "plugin:import/warnings"
+    "plugin:import/warnings",
+    "plugin:vitest-globals/recommended"
   ],
   "plugins": [
     "simple-import-sort"
   ],
+  "env": {
+    "vitest-globals/env": true
+  },
   "rules": {
     "react/no-unused-prop-types": [
       "warn",

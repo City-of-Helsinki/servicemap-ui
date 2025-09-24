@@ -2,13 +2,13 @@
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
-import { getRenderWithProviders } from '../../../../jestUtils';
+import { getRenderWithProviders } from '../../../testUtils';
 import PageElement from '../PageElement';
 
 // Generic required props for ResultItem
 const mockProps = {
   number: 2,
-  onClick: jest.fn(),
+  onClick: vi.fn(),
   isActive: false,
 };
 
@@ -21,7 +21,7 @@ describe('<PageElement />', () => {
   });
 
   it('simulates click event', async () => {
-    const mockCallBack = jest.fn();
+    const mockCallBack = vi.fn();
     const { getByRole } = renderWithProviders(
       <PageElement {...mockProps} onClick={mockCallBack} />
     );
@@ -34,7 +34,7 @@ describe('<PageElement />', () => {
   });
 
   it('simulates keyboard event', async () => {
-    const mockCallBack = jest.fn();
+    const mockCallBack = vi.fn();
     const { getByRole } = renderWithProviders(
       <PageElement {...mockProps} onClick={mockCallBack} />
     );

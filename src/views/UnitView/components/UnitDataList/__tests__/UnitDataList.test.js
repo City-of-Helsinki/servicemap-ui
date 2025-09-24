@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { getRenderWithProviders } from '../../../../../../jestUtils';
+import { getRenderWithProviders } from '../../../../../testUtils';
 import UnitDataList from '../UnitDataList';
 
 const mockData = {

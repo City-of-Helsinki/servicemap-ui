@@ -2,14 +2,14 @@
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
-import { getRenderWithProviders } from '../../../../jestUtils';
 import englishTranslations from '../../../i18n/en';
+import { getRenderWithProviders } from '../../../testUtils';
 import PaginationComponent from '../index';
 
 // Generic required props for ResultItem
 const mockProps = {
   current: 2,
-  handlePageChange: jest.fn(),
+  handlePageChange: vi.fn(),
   maxShownPages: 5,
   pageCount: 8,
 };
@@ -25,7 +25,7 @@ describe('<PaginationComponent />', () => {
   });
 
   it('simulates handlePageChange on click event', async () => {
-    const mockCallBack = jest.fn((newCurrent, totalCount) => ({
+    const mockCallBack = vi.fn((newCurrent, totalCount) => ({
       newCurrent,
       totalCount,
     }));

@@ -1,7 +1,7 @@
 // // Link.react.test.js
 import React from 'react';
 
-import { getRenderWithProviders } from '../../../../jestUtils';
+import { getRenderWithProviders } from '../../../testUtils';
 import SMRadio from '../index';
 
 // Generic required props for SimpleListItem
@@ -25,7 +25,7 @@ describe('<SMRadio />', () => {
   });
 
   // it('simulates onChange event correctly', () => {
-  //   const mockCallBack = jest.fn();
+  //   const mockCallBack = vi.fn();
   //   const component = mount(<SMRadio {...mockProps} onChange={mockCallBack} />);
 
   //   component.find(RadioGroup).simulate('change', { value: 'common' });

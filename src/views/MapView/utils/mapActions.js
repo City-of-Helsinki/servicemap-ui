@@ -14,6 +14,11 @@ const useMapFocusDisabled = () => {
 };
 
 const fitUnitsToMap = (units, map) => {
+  // Return early on server side
+  if (typeof window === 'undefined') {
+    return;
+  }
+
   const L = require('leaflet');
 
   const corner1 = map.options.maxBounds.getNorthWest();
@@ -76,6 +81,12 @@ const focusDistricts = (map, districts) => {
 
 const getBoundsFromBbox = (bbox) => {
   if (!bbox) return null;
+
+  // Return null on server side
+  if (typeof window === 'undefined') {
+    return null;
+  }
+
   const L = require('leaflet');
   const sw = L.latLng(bbox.slice(0, 2));
   const ne = L.latLng(bbox.slice(2, 4));
