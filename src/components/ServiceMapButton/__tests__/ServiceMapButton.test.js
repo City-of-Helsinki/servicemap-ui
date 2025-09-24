@@ -2,8 +2,8 @@
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
-import { getRenderWithProviders } from '../../../../jestUtils';
 import englishTranslations from '../../../i18n/en';
+import { getRenderWithProviders } from '../../../testUtils';
 import ServiceMapButton from '../index';
 
 // Generic required props for ServiceMapButton
@@ -39,7 +39,7 @@ describe('<ServiceMapButton />', () => {
   });
 
   it('simulates click event', async () => {
-    const mockCallBack = jest.fn();
+    const mockCallBack = vi.fn();
     const { getByRole } = renderWithProviders(
       <ServiceMapButton {...buttonMockProps} onClick={mockCallBack} />
     );

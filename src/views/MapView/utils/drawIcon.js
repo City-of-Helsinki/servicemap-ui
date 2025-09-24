@@ -129,6 +129,11 @@ export const drawMarkerIcon = (
   eventIcon,
   popupAnchor
 ) => {
+  // Return null on server side
+  if (typeof window === 'undefined') {
+    return null;
+  }
+
   const L = require('leaflet'); // eslint-disable-line global-require
 
   let icon;
@@ -157,6 +162,11 @@ export const drawMarkerIcon = (
 };
 
 export const drawEntranceMarkreIcon = (contrast = false, className = '') => {
+  // Return null on server side
+  if (typeof window === 'undefined') {
+    return null;
+  }
+
   const L = require('leaflet'); // eslint-disable-line global-require
 
   // Generate marker icon

@@ -6,7 +6,7 @@ import { Button, Typography } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
 import Watermark from '@uiw/react-watermark';
 import PropTypes from 'prop-types';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { Suspense, useEffect, useRef, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
@@ -18,6 +18,7 @@ import {
   BackButton,
   Container,
   LinkSettingsDialog,
+  Loading,
   ReadSpeakerButton,
   RouteBar,
   SearchBar,
@@ -48,7 +49,6 @@ import useMobileStatus from '../../utils/isMobile';
 import { mapHasMapPane } from '../../utils/mapUtility';
 import UnitHelper from '../../utils/unitHelper';
 import useLocaleText from '../../utils/useLocaleText';
-import MapView from '../MapView';
 import AccessibilityInfo from './components/AccessibilityInfo';
 import ContactInfo from './components/ContactInfo';
 import Description from './components/Description';
@@ -61,6 +61,9 @@ import UnitDataList from './components/UnitDataList';
 import UnitLinks from './components/UnitLinks';
 import UnitsServicesList from './components/UnitsServicesList';
 import { parseUnitViewUrlParams } from './utils/unitViewUrlParamAndSettingsHandler';
+
+// Lazy load MapView to avoid server-side loading issues with react-leaflet
+const MapView = React.lazy(() => import('../MapView'));
 
 function UnitView(props) {
   const {
@@ -513,7 +516,9 @@ function UnitView(props) {
         </Typography>
       </StyledMapButton>
       <StyledMapContainer>
-        <MapView disableInteraction />
+        <Suspense fallback={<Loading />}>
+          <MapView disableInteraction />
+        </Suspense>
       </StyledMapContainer>
     </StyledUnitLocationContainer>
   );

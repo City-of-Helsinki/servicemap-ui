@@ -2,9 +2,9 @@
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
-import { getRenderWithProviders } from '../../../../../jestUtils';
 import englishTranslations from '../../../../i18n/en';
 import { initialState } from '../../../../redux/reducers/user';
+import { getRenderWithProviders } from '../../../../testUtils';
 import SMLogo from '../index';
 
 const renderWithProviders = getRenderWithProviders({
@@ -19,7 +19,7 @@ describe('<SMLogo />', () => {
   });
 
   it('simulates click event', async () => {
-    const mockCallBack = jest.fn();
+    const mockCallBack = vi.fn();
     const { container } = renderWithProviders(
       <SMLogo onClick={mockCallBack} />
     );

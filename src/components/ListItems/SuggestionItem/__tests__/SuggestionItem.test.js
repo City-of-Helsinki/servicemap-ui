@@ -3,7 +3,7 @@ import { Search } from '@mui/icons-material';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
-import { getRenderWithProviders } from '../../../../../jestUtils';
+import { getRenderWithProviders } from '../../../../testUtils';
 import SuggestionItem from '../index';
 
 // Generic required props for SimpleListItem
@@ -24,7 +24,7 @@ describe('<SuggestionItem />', () => {
   });
 
   it('simulates mousedown event', async () => {
-    const mockCallBack = jest.fn();
+    const mockCallBack = vi.fn();
     const { getByRole } = renderWithProviders(
       <SuggestionItem {...mockProps} handleItemClick={mockCallBack} />
     );
@@ -36,7 +36,7 @@ describe('<SuggestionItem />', () => {
   });
 
   it('simulates keyboard event', async () => {
-    const mockCallBack = jest.fn();
+    const mockCallBack = vi.fn();
     const { getByRole } = renderWithProviders(
       <SuggestionItem {...mockProps} handleItemClick={mockCallBack} />
     );

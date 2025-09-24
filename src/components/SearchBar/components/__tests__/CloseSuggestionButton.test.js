@@ -3,8 +3,8 @@ import { ArrowDownward } from '@mui/icons-material';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
-import { getRenderWithProviders } from '../../../../../jestUtils';
 import englishTranslations from '../../../../i18n/en';
+import { getRenderWithProviders } from '../../../../testUtils';
 import { CloseSuggestionButton } from '../CloseSuggestionButton';
 
 // Generic required props for ResultItem
@@ -27,7 +27,7 @@ describe('<CloseSuggestionButton />', () => {
   });
 
   it('simulates click event', async () => {
-    const mockCallBack = jest.fn();
+    const mockCallBack = vi.fn();
     const { getByRole } = renderWithProviders(
       <CloseSuggestionButton {...mockProps} onClick={mockCallBack} />
     );
@@ -39,7 +39,7 @@ describe('<CloseSuggestionButton />', () => {
   });
 
   it('simulates keyboard event', async () => {
-    const mockCallBack = jest.fn();
+    const mockCallBack = vi.fn();
     const { getAllByRole } = renderWithProviders(
       <>
         <CloseSuggestionButton {...mockProps} onKeyDown={mockCallBack} />

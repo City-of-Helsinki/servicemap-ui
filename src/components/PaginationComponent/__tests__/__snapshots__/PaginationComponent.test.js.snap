@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`<PaginationComponent /> should work 1`] = `
+exports[`<PaginationComponent /> > should work 1`] = `
 <div>
   <div
     class="css-fvjx4"
@@ -78,7 +78,7 @@ exports[`<PaginationComponent /> should work 1`] = `
             </p>
             <p
               class="MuiTypography-root MuiTypography-body2 css-5rfmx0-MuiTypography-root"
-              style="border: 0px; height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 1px;"
+              style="border: 0px; clip: rect(0px); height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 1px;"
             >
               Open page 1
             </p>
@@ -103,7 +103,7 @@ exports[`<PaginationComponent /> should work 1`] = `
             </p>
             <p
               class="MuiTypography-root MuiTypography-body2 css-5rfmx0-MuiTypography-root"
-              style="border: 0px; height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 1px;"
+              style="border: 0px; clip: rect(0px); height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 1px;"
             >
               Page 2 currently opened
             </p>
@@ -127,7 +127,7 @@ exports[`<PaginationComponent /> should work 1`] = `
             </p>
             <p
               class="MuiTypography-root MuiTypography-body2 css-5rfmx0-MuiTypography-root"
-              style="border: 0px; height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 1px;"
+              style="border: 0px; clip: rect(0px); height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 1px;"
             >
               Open page 3
             </p>
@@ -151,7 +151,7 @@ exports[`<PaginationComponent /> should work 1`] = `
             </p>
             <p
               class="MuiTypography-root MuiTypography-body2 css-5rfmx0-MuiTypography-root"
-              style="border: 0px; height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 1px;"
+              style="border: 0px; clip: rect(0px); height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 1px;"
             >
               Open page 4
             </p>
@@ -175,7 +175,7 @@ exports[`<PaginationComponent /> should work 1`] = `
             </p>
             <p
               class="MuiTypography-root MuiTypography-body2 css-5rfmx0-MuiTypography-root"
-              style="border: 0px; height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 1px;"
+              style="border: 0px; clip: rect(0px); height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 1px;"
             >
               Open page 5
             </p>

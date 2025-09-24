@@ -2,8 +2,8 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
-import { getRenderWithProviders } from '../../../../jestUtils';
 import englishTranslations from '../../../i18n/en';
+import { getRenderWithProviders } from '../../../testUtils';
 import FocusableSRLinks from '../index';
 
 // Generic required props for SimpleListItem
@@ -55,7 +55,7 @@ describe('<FocusableSRLinks />', () => {
     );
 
     expect(getByText(mockProps.items[0].text).href).toEqual(
-      `http://localhost/${mockProps.items[0].href}`
+      `http://localhost:3000/${mockProps.items[0].href}`
     );
   });
 });

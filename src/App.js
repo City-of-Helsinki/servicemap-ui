@@ -8,12 +8,15 @@ import '@formatjs/intl-relativetimeformat/dist/locale-data/en';
 import '@formatjs/intl-relativetimeformat/dist/locale-data/fi';
 import '@formatjs/intl-relativetimeformat/dist/locale-data/sv';
 import '@formatjs/intl-relativetimeformat/polyfill';
+import './hsl-icons.css';
+import './index.css';
+import './print.css';
+import './service-map-icons.css';
+import './App.css';
 
 import { StyledEngineProvider } from '@mui/material';
 // To add css variables for hds components
-import hdsStyle from 'hds-design-tokens';
 import { CookieBanner, CookieConsentContextProvider } from 'hds-react';
-import withStyles from 'isomorphic-style-loader/withStyles';
 import React, { useEffect, useMemo, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { IntlProvider, useIntl } from 'react-intl';
@@ -28,21 +31,16 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import config from '../config';
 import featureFlags from '../config/featureFlags';
-import appStyles from './App.css';
 import ogImage from './assets/images/servicemap-meta-img.png';
 import { DataFetcher, Navigator } from './components';
 import useMatomo from './components/Matomo/hooks/useMatomo';
 import MatomoContext from './components/Matomo/matomo-context';
 import MatomoTracker from './components/Matomo/MatomoTracker';
 import useCookieConsentSettings from './config/useCookieConsentSettings';
-import HSLFonts from './hsl-icons.css';
-import styles from './index.css';
 import DefaultLayout from './layouts';
 import EmbedLayout from './layouts/EmbedLayout';
-import printCSS from './print.css';
 import { selectMobility, selectSenses } from './redux/selectors/settings';
 import { getLocale } from './redux/selectors/user';
-import SMFonts from './service-map-icons.css';
 import ThemeWrapper from './themes/ThemeWrapper';
 import isClient from './utils';
 import LocaleUtility from './utils/locale';
@@ -185,12 +183,4 @@ function LanguageWrapper() {
   );
 }
 
-// eslint-disable-next-line max-len
-export default withStyles(
-  styles,
-  appStyles,
-  SMFonts,
-  HSLFonts,
-  printCSS,
-  hdsStyle
-)(LanguageWrapper);
+export default LanguageWrapper;

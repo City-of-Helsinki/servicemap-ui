@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`<SMLogo /> should work 1`] = `
+exports[`<SMLogo /> > should work 1`] = `
 <div>
   <button
     aria-current="page"
@@ -19,7 +19,7 @@ exports[`<SMLogo /> should work 1`] = `
       <img
         alt=""
         class="css-o3ihhy"
-        src="test-file-stub"
+        src="/src/assets/images/service-map-logo-fi-dev.svg"
       />
     </div>
   </button>

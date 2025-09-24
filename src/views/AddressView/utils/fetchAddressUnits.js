@@ -1,7 +1,6 @@
 import { unitsFetch } from '../../../utils/fetch';
 
 const fetchAddressUnits = async (lnglat, distance) => {
-  console.log('fetchAddressUnits');
   const options = {
     lat: `${lnglat[1]}`,
     lon: `${lnglat[0]}`,

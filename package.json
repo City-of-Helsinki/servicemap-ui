@@ -25,9 +25,11 @@
     "@turf/flip": "^6.5.0",
     "@turf/point-on-feature": "^6.5.0",
     "@uiw/react-watermark": "1.0.0",
+    "@vitejs/plugin-react": "^5.0.3",
+    "@vitest/coverage-istanbul": "^3.2.4",
     "core-js": "^3.25.1",
     "d3": "^7.9.0",
-    "dotenv": "^8.2.0",
+    "dotenv": "^16.6.1",
     "express": "^4.21.2",
     "express-sitemap": "^1.8.0",
     "hds-design-tokens": "4.7.1",
@@ -50,28 +52,34 @@
     "react-redux": "^8.0.5",
     "react-router": "^6.30.1",
     "react-router-dom": "^6.30.1",
-    "react-scripts": "^5.0.1",
     "redux": "^4.2.1",
     "redux-thunk": "^2.4.2",
     "regenerator-runtime": "^0.13.7",
     "reselect": "^4.1.6",
     "sitemap": "^6.4.0",
     "urijs": "^1.19.11",
+    "vite": "^7.1.7",
+    "vitest": "^3.2.4",
     "whatwg-fetch": "^3.5.0"
   },
   "scripts": {
-    "start": "node dist",
-    "build": "NODE_ENV=production BABEL_ENV=production webpack --mode production ",
-    "build:test": "NODE_ENV=development BABEL_ENV=development webpack --mode development",
-    "test": "jest test",
-    "test:coverage": "jest test --coverage",
-    "test:e2e:install": "playwright install",
-    "test:e2e": "playwright test",
+    "build": "rm -rf dist && yarn build:client && yarn build:server",
+    "build:test": "rm -rf dist && yarn build:client --mode development && yarn build:server --mode development",
+    "build:client": "vite build",
+    "build:server": "BUILD_TARGET=server vite build --ssr",
+    "build:client:clean": "rm -rf dist/src && yarn build:client",
+    "build:server:clean": "rm -f dist/server.js dist/server.js.map && yarn build:server",
+    "dev": "yarn dev:client:watch & yarn dev:server:watch & sleep 5 && nodemon dist --watch dist",
+    "dev:client:watch": "vite build --watch",
+    "dev:server:watch": "BUILD_TARGET=server vite build --ssr --watch",
     "lint": "eslint src/ server/ --ext .js,.jsx && prettier src/ server/ --check",
     "lint:fix": "eslint src/ server/ --ext .js,.jsx --fix && prettier src/ server/ --write",
-    "eject": "react-scripts eject",
-    "dev": "NODE_ENV=development BABEL_ENV=development webpack --watch --progress & nodemon dist",
-    "production": "NODE_ENV=production BABEL_ENV=production webpack --progress --mode production && node dist"
+    "preview": "vite preview",
+    "start": "node dist",
+    "test": "vitest --config vitest.config.js",
+    "test:coverage": "yarn test --coverage",
+    "test:e2e:install": "playwright install",
+    "test:e2e": "playwright test"
   },
   "browserslist": [
     ">0.2%",
@@ -94,37 +102,17 @@
     "@testing-library/react": "^16.0.1",
     "@testing-library/user-event": "^14.5.2",
     "axe-html-reporter": "^2.2.11",
-    "css-loader": "^7.1.1",
     "eslint": "8.43.0",
     "eslint-config-react-app": "^7.0.1",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-simple-import-sort": "^12.1.1",
+    "eslint-plugin-vitest-globals": "^1.5.0",
     "identity-obj-proxy": "^3.0.0",
-    "jest": "^29.5.0",
-    "jest-canvas-mock": "^2.5.1",
-    "jest-environment-jsdom": "^29.5.0",
+    "jsdom": "^27.0.0",
     "nodemon": "^2.0.20",
     "prettier": "^3.6.2",
     "redux-mock-store": "^1.5.4",
-    "webpack": "^5.94.0",
-    "webpack-cli": "^5.1.4"
-  },
-  "jest": {
-    "moduleNameMapper": {
-      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
-      "\\.(css|less)$": "identity-obj-proxy",
-      "isomorphic-style-loader/withStyles": "<rootDir>/__mocks__/withStyles.js"
-    },
-    "setupFiles": [
-      "jest-canvas-mock",
-      "./jestSetup.js"
-    ],
-    "setupFilesAfterEnv": [
-      "./setupTests.js"
-    ],
-    "testEnvironment": "jsdom",
-    "testPathIgnorePatterns": [
-      "<rootDir>/e2e/"
-    ]
+    "vite-plugin-commonjs": "^0.10.4",
+    "vite-plugin-node-polyfills": "^0.24.0"
   }
 }

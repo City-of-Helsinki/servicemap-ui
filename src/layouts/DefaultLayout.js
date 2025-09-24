@@ -1,10 +1,8 @@
-import { Typography } from '@mui/material';
-import useMediaQuery from '@mui/material/useMediaQuery';
+import { Typography, useMediaQuery } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
-import PropTypes from 'prop-types';
-import React, { useEffect, useState } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router';
 
 import config from '../../config';
@@ -15,16 +13,20 @@ import {
   ErrorBoundary,
   ErrorComponent,
   FocusableSRLinks,
+  Loading,
   TopBar,
 } from '../components';
 import { ErrorProvider } from '../context/ErrorContext';
 import { PrintProvider } from '../context/PrintContext';
+import { fetchErrors, fetchNews } from '../redux/actions/alerts';
 import { getPage } from '../redux/selectors/user';
 import { DefaultRoutes } from '../routes';
 import { viewTitleID } from '../utils/accessibility';
 import useMobileStatus from '../utils/isMobile';
-import MapView from '../views/MapView';
 import PrintView from '../views/PrintView';
+
+// Lazy load MapView to avoid server-side loading issues with react-leaflet
+const MapView = React.lazy(() => import('../views/MapView'));
 
 const { smallScreenBreakpoint } = config;
 
@@ -104,7 +106,8 @@ const createContentStyles = (
 // (showAlert did not use updated showPrintView value)
 const valueStore = {};
 
-function DefaultLayout({ fetchErrors, fetchNews }) {
+function DefaultLayout() {
+  const dispatch = useDispatch();
   const currentPage = useSelector(getPage);
   const [showPrintView, togglePrintView] = useState(false);
   const [sidebarHidden, toggleSidebarHidden] = useState(false);
@@ -118,10 +121,12 @@ function DefaultLayout({ fetchErrors, fetchNews }) {
   const landscape = useMediaQuery('(min-device-aspect-ratio: 1/1)');
 
   useEffect(() => {
-    fetchErrors();
-    fetchNews();
+    if (dispatch) {
+      dispatch(fetchErrors());
+      dispatch(fetchNews());
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [dispatch]);
 
   /*
     This is for customising cookie consent modal styling. That is separated with shadow-root
@@ -260,11 +265,13 @@ function DefaultLayout({ fetchErrors, fetchNews }) {
               {intl.formatMessage({ id: 'map.ariaLabel' })}
             </Typography>
             <div aria-hidden tabIndex={-1} style={styles.map}>
-              <MapView
-                sidebarHidden={sidebarHidden}
-                toggleSidebar={toggleSidebar}
-                isMobile={!!isMobile}
-              />
+              <Suspense fallback={<Loading />}>
+                <MapView
+                  sidebarHidden={sidebarHidden}
+                  toggleSidebar={toggleSidebar}
+                  isMobile={!!isMobile}
+                />
+              </Suspense>
             </div>
           </div>
 
@@ -287,11 +294,5 @@ function DefaultLayout({ fetchErrors, fetchNews }) {
     </ErrorProvider>
   );
 }
-
-// Typechecking
-DefaultLayout.propTypes = {
-  fetchErrors: PropTypes.func.isRequired,
-  fetchNews: PropTypes.func.isRequired,
-};
 
 export default DefaultLayout;

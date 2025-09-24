@@ -1,6 +1,11 @@
 /* eslint-disable global-require */
 // This changes list of coordinates from lng-lat to lat-lng
 const swapCoordinates = (data) => {
+  // Return early on server side
+  if (typeof window === 'undefined') {
+    return data;
+  }
+
   const L = require('leaflet');
   const coordinates = data;
   for (let i = 0; i < data.length; i += 1) {

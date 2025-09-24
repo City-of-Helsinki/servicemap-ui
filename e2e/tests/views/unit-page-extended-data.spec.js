@@ -1,5 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { UnitExtendedPage } from '../utils/pageObjects';
+import { acceptCookieConcent } from '../utils';
 
 const pages = [
   `/fi/unit/51342/events`,
@@ -13,6 +14,7 @@ for (const pageUrl of pages) {
   test.describe(`Page: ${pageUrl}`, () => {
     test.beforeEach(async ({ page }) => {
       await page.goto(pageUrl);
+      await acceptCookieConcent(page);
     });
 
     /**

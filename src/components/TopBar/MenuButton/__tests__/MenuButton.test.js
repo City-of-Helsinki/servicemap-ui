@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { getRenderWithProviders } from '../../../../../jestUtils';
 import englishTranslations from '../../../../i18n/en';
+import { getRenderWithProviders } from '../../../../testUtils';
 import MenuButton from '../MenuButton';
 
 const mockProps = {

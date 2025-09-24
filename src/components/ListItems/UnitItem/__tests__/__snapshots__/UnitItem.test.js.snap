@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`<UnitItem /> should work 1`] = `
+exports[`<UnitItem /> > should work 1`] = `
 <div>
   <li
     class="MuiButtonBase-root MuiListItemButton-root MuiListItemButton-gutters MuiListItemButton-root MuiListItemButton-gutters css-oga50u-MuiButtonBase-root-MuiListItemButton-root"
@@ -27,7 +27,7 @@ exports[`<UnitItem /> should work 1`] = `
       >
         <p
           class="MuiTypography-root MuiTypography-body2 ResultItem-srOnly ResultItem-title css-8goqxi-MuiTypography-root"
-          style="border: 0px; height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 1px;"
+          style="border: 0px; clip: rect(0px); height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 1px;"
         >
           
     Lippulaivan kirjasto 

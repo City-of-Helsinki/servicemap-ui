@@ -2,6 +2,7 @@ import { CacheProvider } from '@emotion/react';
 import createEmotionServer from '@emotion/server/create-instance';
 import { ServerStyleSheets } from '@mui/styles';
 import crypto from 'crypto';
+import dotenv from 'dotenv';
 import express from 'express';
 import IntlPolyfill from 'intl';
 import StyleContext from 'isomorphic-style-loader/StyleContext';
@@ -39,6 +40,8 @@ import {
   sitemapActive,
   unitRedirect,
 } from './utils';
+
+dotenv.config();
 
 // Get sentry dsn from environtment variables
 const sentryDSN = process.env.SENTRY_DSN_SERVER;
@@ -233,15 +236,16 @@ const htmlTemplate = (
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#141823" />
     ${
-      process.env.READ_SPEAKER_URL && process.env.READ_SPEAKER_URL !== 'false'
+      process.env.REACT_APP_READ_SPEAKER_URL &&
+      process.env.REACT_APP_READ_SPEAKER_URL !== 'false'
         ? `
         <script type="text/javascript">
           window.rsConf = {
-            params: '${process.env.READ_SPEAKER_URL}',
+            params: '${process.env.REACT_APP_READ_SPEAKER_URL}',
             general: {usePost:true}
           };
         </script>
-        <script src="${process.env.READ_SPEAKER_URL}" type="text/javascript"></script>
+        <script src="${process.env.REACT_APP_READ_SPEAKER_URL}" type="text/javascript"></script>
       `
         : ''
     }
@@ -250,71 +254,7 @@ const htmlTemplate = (
   <body>
     <div id="app">${reactDom}</div>
     <style nonce="${nonce}">${[...css].join('')}</style>
-    <script nonce="${nonce}">
-        window.nodeEnvSettings = {};
-        window.nodeEnvSettings.ACCESSIBILITY_SENTENCE_API = "${process.env.ACCESSIBILITY_SENTENCE_API}";
-        window.nodeEnvSettings.SERVICEMAP_API = "${process.env.SERVICEMAP_API}";
-        window.nodeEnvSettings.SERVICEMAP_API_VERSION = "${process.env.SERVICEMAP_API_VERSION}";
-        window.nodeEnvSettings.EVENTS_API = "${process.env.EVENTS_API}";
-        window.nodeEnvSettings.RESERVATIONS_API = "${process.env.RESERVATIONS_API}";
-        window.nodeEnvSettings.PRODUCTION_PREFIX = "${process.env.PRODUCTION_PREFIX}";
-        window.nodeEnvSettings.DIGITRANSIT_API = "${process.env.DIGITRANSIT_API}";
-        window.nodeEnvSettings.FEEDBACK_URL = "${process.env.FEEDBACK_URL}";
-        window.nodeEnvSettings.HEARING_MAP_API = "${process.env.HEARING_MAP_API}";
-        window.nodeEnvSettings.HSL_ROUTE_GUIDE_URL = "${process.env.HSL_ROUTE_GUIDE_URL}";
-        window.nodeEnvSettings.HSL_ROUTE_GUIDE_CITIES = "${process.env.HSL_ROUTE_GUIDE_CITIES}";
-        window.nodeEnvSettings.MATOMO_MOBILITY_DIMENSION_ID = "${process.env.MATOMO_MOBILITY_DIMENSION_ID}";
-        window.nodeEnvSettings.MATOMO_SENSES_DIMENSION_ID = "${process.env.MATOMO_SENSES_DIMENSION_ID}";
-        window.nodeEnvSettings.MATOMO_NO_RESULTS_DIMENSION_ID = "${process.env.MATOMO_NO_RESULTS_DIMENSION_ID}";
-        window.nodeEnvSettings.MATOMO_URL = "${process.env.MATOMO_URL}";
-        window.nodeEnvSettings.MATOMO_SITE_ID = "${process.env.MATOMO_SITE_ID}";
-        window.nodeEnvSettings.MATOMO_ENABLED = "${process.env.MATOMO_ENABLED}";
-        window.nodeEnvSettings.MODE = "${process.env.MODE}";
-        window.nodeEnvSettings.INITIAL_MAP_POSITION = "${customValues.initialMapPosition}";
-        window.nodeEnvSettings.SERVICE_MAP_URL = "${process.env.SERVICE_MAP_URL}";
-        window.nodeEnvSettings.ACCESSIBLE_MAP_URL = "${process.env.ACCESSIBLE_MAP_URL}";
-        window.nodeEnvSettings.ORTOGRAPHIC_MAP_URL = "${process.env.ORTOGRAPHIC_MAP_URL}";
-        window.nodeEnvSettings.ORTOGRAPHIC_WMS_URL = "${process.env.ORTOGRAPHIC_WMS_URL}";
-        window.nodeEnvSettings.ORTOGRAPHIC_WMS_LAYER = "${process.env.ORTOGRAPHIC_WMS_LAYER}";
-        window.nodeEnvSettings.GUIDE_MAP_URL = "${process.env.GUIDE_MAP_URL}";
-        window.nodeEnvSettings.PLAIN_MAP_URL = "${process.env.PLAIN_MAP_URL}";
-        window.nodeEnvSettings.REITTIOPAS_URL = "${process.env.REITTIOPAS_URL}";
-        window.nodeEnvSettings.OUTDOOR_EXERCISE_URL = "${process.env.OUTDOOR_EXERCISE_URL}";
-        window.nodeEnvSettings.NATURE_AREA_URL = "${process.env.NATURE_AREA_URL}";
-        window.nodeEnvSettings.VANTAA_NATURE_AREA_URL = "${process.env.VANTAA_NATURE_AREA_URL}";
-        window.nodeEnvSettings.EMBEDDER_DOCUMENTATION_URL = "${process.env.EMBEDDER_DOCUMENTATION_URL}";
-        window.nodeEnvSettings.CITIES = "${process.env.CITIES}";
-        window.nodeEnvSettings.ORGANIZATIONS = '${process.env.ORGANIZATIONS}';
-        window.nodeEnvSettings.MAPS = "${process.env.MAPS}";
-        window.nodeEnvSettings.ACCESSIBILITY_STATEMENT_URL_FI = "${process.env.ACCESSIBILITY_STATEMENT_URL_FI}";
-        window.nodeEnvSettings.ACCESSIBILITY_STATEMENT_URL_SV = "${process.env.ACCESSIBILITY_STATEMENT_URL_SV}";
-        window.nodeEnvSettings.ACCESSIBILITY_STATEMENT_URL_EN = "${process.env.ACCESSIBILITY_STATEMENT_URL_EN}";
-        window.nodeEnvSettings.SHOW_AREA_SELECTION = "${process.env.SHOW_AREA_SELECTION}";
-        window.nodeEnvSettings.READ_SPEAKER_URL = "${process.env.READ_SPEAKER_URL}";
-        window.nodeEnvSettings.FEEDBACK_ADDITIONAL_INFO_LINK = "${process.env.FEEDBACK_ADDITIONAL_INFO_LINK}";
-        window.nodeEnvSettings.FEEDBACK_IS_PUBLISHED = "${process.env.FEEDBACK_IS_PUBLISHED}";
-        window.nodeEnvSettings.USE_PTV_ACCESSIBILITY_API = "${process.env.USE_PTV_ACCESSIBILITY_API}";
-        window.nodeEnvSettings.SENTRY_DSN_CLIENT = "${process.env.SENTRY_DSN_CLIENT}";
-        window.nodeEnvSettings.FEEDBACK_ADDITIONAL_INFO_LINK_FI = "${process.env.FEEDBACK_ADDITIONAL_INFO_LINK_FI}";
-        window.nodeEnvSettings.FEEDBACK_ADDITIONAL_INFO_LINK_SV = "${process.env.FEEDBACK_ADDITIONAL_INFO_LINK_SV}";
-        window.nodeEnvSettings.FEEDBACK_ADDITIONAL_INFO_LINK_EN = "${process.env.FEEDBACK_ADDITIONAL_INFO_LINK_EN}";
-        window.nodeEnvSettings.ADDITIONAL_FEEDBACK_URLS_VANTAA = "${process.env.ADDITIONAL_FEEDBACK_URLS_VANTAA}";
-        window.nodeEnvSettings.ADDITIONAL_FEEDBACK_URLS_ESPOO = "${process.env.ADDITIONAL_FEEDBACK_URLS_ESPOO}";
-        window.nodeEnvSettings.ADDITIONAL_FEEDBACK_URLS_KIRKKONUMMI =
-          "${process.env.ADDITIONAL_FEEDBACK_URLS_KIRKKONUMMI}";
-        window.nodeEnvSettings.ADDITIONAL_FEEDBACK_URLS_KAUNIAINEN =
-          "${process.env.ADDITIONAL_FEEDBACK_URLS_KAUNIAINEN}";
-        window.nodeEnvSettings.READ_FEEDBACK_URLS_HELSINKI = "${process.env.READ_FEEDBACK_URLS_HELSINKI}";
-        window.nodeEnvSettings.SLOW_FETCH_MESSAGE_TIMEOUT = "${process.env.SLOW_FETCH_MESSAGE_TIMEOUT}";
-        window.nodeEnvSettings.HELSINKI_MAPTILES_ENABLED = "${process.env.HELSINKI_MAPTILES_ENABLED}";
 
-        window.nodeEnvSettings.FEATURE_SERVICEMAP_PAGE_TRACKING = "${process.env.FEATURE_SERVICEMAP_PAGE_TRACKING}";
-        window.nodeEnvSettings.FEATURE_SM_COOKIES = "${process.env.FEATURE_SM_COOKIES}";
-
-        window.nodeEnvSettings.appVersion = {};
-        window.nodeEnvSettings.appVersion.tag = "${GIT_TAG}";
-        window.nodeEnvSettings.appVersion.commit = "${GIT_COMMIT}";
-    </script>
     <script nonce="${nonce}">
       // WARNING: See the following for security issues around embedding JSON in HTML:
       // http://redux.js.org/recipes/ServerRendering.html#security-considerations
