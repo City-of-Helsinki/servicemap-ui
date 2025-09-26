@@ -378,12 +378,10 @@ const StyledToolbarBlue = styled(Toolbar)(({ theme, mobile }) => {
     // override breakpoints
     [theme.breakpoints.up('xs')]: {
       minHeight: 32,
-      height: 32,
       paddingLeft: theme.spacing(3),
       paddingRight: theme.spacing(3),
     },
     minHeight: 32,
-    height: 32,
     backgroundColor: theme.palette.primary.main,
     padding: 0,
     paddingLeft: theme.spacing(3),
@@ -402,7 +400,7 @@ const StyledToolbarWhite = styled(Toolbar)(({ theme, mobile }) =>
     ? {
         boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
         paddingLeft: theme.spacing(1.5),
-        height: 78,
+        minHeight: 78,
         backgroundColor: '#fff',
       }
     : {
@@ -411,7 +409,7 @@ const StyledToolbarWhite = styled(Toolbar)(({ theme, mobile }) =>
         flexDirection: 'row',
         alignItems: 'center',
         paddingLeft: theme.spacing(3),
-        height: 60,
+        minHeight: 60,
         backgroundColor: '#fff',
         zIndex: theme.zIndex.infront,
       }
