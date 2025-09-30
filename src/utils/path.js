@@ -1,4 +1,4 @@
-import { useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router';
 
 import config from '../../config';
 import paths from '../../config/paths';

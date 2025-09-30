@@ -5,10 +5,11 @@ import { visuallyHidden } from '@mui/utils';
 import React, { useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
-import { Outlet, useLocation } from 'react-router';
+import { useLocation } from 'react-router';
 
 import { Dialog, HomeLogo, PaginatedList, SMButton } from '../components';
 import { selectMapRef, selectNavigator } from '../redux/selectors/general';
+import { EmbedRoutes } from '../routes';
 import { parseSearchParams } from '../utils';
 import { resolveCityAndOrganizationFilter } from '../utils/filters';
 import useLocaleText from '../utils/useLocaleText';
@@ -204,7 +205,7 @@ function EmbedLayout() {
               embeddedList={showList}
             />
           </div>
-          <Outlet />
+          <EmbedRoutes />
         </div>
         <Typography style={visuallyHidden}>
           {intl.formatMessage({ id: 'map.ariaLabel' })}

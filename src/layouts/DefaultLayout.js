@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
-import { Outlet, useLocation } from 'react-router';
+import { useLocation } from 'react-router';
 
 import config from '../../config';
 import {
@@ -20,6 +20,7 @@ import {
 import { ErrorProvider } from '../context/ErrorContext';
 import { PrintProvider } from '../context/PrintContext';
 import { getPage } from '../redux/selectors/user';
+import { DefaultRoutes } from '../routes';
 import { viewTitleID } from '../utils/accessibility';
 import useMobileStatus from '../utils/isMobile';
 import MapView from '../views/MapView';
@@ -184,7 +185,7 @@ function DefaultLayout({ fetchErrors, fetchNews }) {
             <main className="SidebarWrapper" style={styles.sidebar}>
               <AlertBox />
               <div style={styles.sidebarContent} aria-hidden={false}>
-                <Outlet />
+                <DefaultRoutes />
               </div>
             </main>
             <Typography style={visuallyHidden}>

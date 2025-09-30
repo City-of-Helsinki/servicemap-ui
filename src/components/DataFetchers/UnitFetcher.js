@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { useCallback, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router';
 
 import {
   changeSelectedUnit,

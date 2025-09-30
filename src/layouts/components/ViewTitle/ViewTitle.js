@@ -3,7 +3,7 @@ import { visuallyHidden } from '@mui/utils';
 import PropTypes from 'prop-types';
 import React, { useEffect, useRef } from 'react';
 import { FormattedMessage } from 'react-intl';
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router';
 
 import { viewTitleID } from '../../../utils/accessibility';
 import { COOKIE_MODAL_ROOT_ID } from '../../../utils/constants';
