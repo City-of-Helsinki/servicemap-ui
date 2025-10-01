@@ -27,6 +27,7 @@ import {
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import config from '../config';
+import featureFlags from '../config/featureFlags';
 import appStyles from './App.css';
 import ogImage from './assets/images/servicemap-meta-img.png';
 import { DataFetcher, Navigator } from './components';
@@ -133,7 +134,7 @@ function App() {
                 </Routes>
                 <Navigator />
                 <DataFetcher />
-                {!isEmbed() && <CookieBanner />}
+                {!isEmbed() && featureFlags.smCookies && <CookieBanner />}
               </div>
               {/* </StylesProvider> */}
             </IntlProvider>
