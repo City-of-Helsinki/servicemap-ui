@@ -1,5 +1,22 @@
 # Changelog
 
+## [2.7.0](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.6.0...servicemap-ui-v2.7.0) (2025-10-02)
+
+
+### Features
+
+* Migrate react-helment to react-helmet-async Ref: PL-89 ([13b3915](https://github.com/City-of-Helsinki/servicemap-ui/commit/13b39156d5635c18812b320c9bcb108bbc880f0c))
+* Update HDS to version 4.7.1 PL-145 ([#1273](https://github.com/City-of-Helsinki/servicemap-ui/issues/1273)) ([ac4c3b8](https://github.com/City-of-Helsinki/servicemap-ui/commit/ac4c3b88cffab26b3a0c6f39036320b4ec130c4e))
+* Upgrade @testing-library/react to 16.0.1 Ref: PL-89 ([c8a834c](https://github.com/City-of-Helsinki/servicemap-ui/commit/c8a834cd1358caa91c48031d3521401ee7783e10))
+* Upgrade react-router to 6.30.1 Ref: PL-89 ([19ce6db](https://github.com/City-of-Helsinki/servicemap-ui/commit/19ce6db19a715746976475e4a5b049a755a39ccc))
+
+
+### Bug Fixes
+
+* Hydration and router migration fixes Ref: PL-89 ([65c75ce](https://github.com/City-of-Helsinki/servicemap-ui/commit/65c75ce0655a1ca40e16ed66608e3add2badb72f))
+* Lineheight ([#1274](https://github.com/City-of-Helsinki/servicemap-ui/issues/1274)) ([40e0a27](https://github.com/City-of-Helsinki/servicemap-ui/commit/40e0a270836e73828718fcec2eae51121d93d297))
+* Stricter yarn configuration ([b0d9044](https://github.com/City-of-Helsinki/servicemap-ui/commit/b0d904410a4e0bdfc59053cb7a2ed90ea118533f))
+
 ## [2.6.0](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.5.2...servicemap-ui-v2.6.0) (2025-09-05)
 
 
