@@ -7184,20 +7184,20 @@ hasown@^2.0.2:
   dependencies:
     function-bind "^1.1.2"
 
-hds-core@3.10.1:
-  version "3.10.1"
-  resolved "https://registry.yarnpkg.com/hds-core/-/hds-core-3.10.1.tgz#84fd3129adf52d5d9cf0ba126cfec7b1e98e2da6"
-  integrity sha512-UJKYX8ivRMWFiPmqMFN0wWnXI2qslhLA9bX8ap7caQ4icbeALfqgPtGcO9ccGghUExNXbt3s3JsDD+Tmkt4VLw==
+hds-core@4.7.1:
+  version "4.7.1"
+  resolved "https://registry.yarnpkg.com/hds-core/-/hds-core-4.7.1.tgz#2f04b7e5f6a971401d91b7c74dfceb92c49fc641"
+  integrity sha512-3TTsU4gZvGRnhAHJ0bXc0hW2UKRKkHbykJRiOIMCQqpTEluO7baRluvVUl1mXHIm6Cw3gotEUhw2nXLlV4t6oA==
 
-hds-design-tokens@3.10.1:
-  version "3.10.1"
-  resolved "https://registry.yarnpkg.com/hds-design-tokens/-/hds-design-tokens-3.10.1.tgz#b1f623d0d60f25a5487ab87957bbf98b4c92d827"
-  integrity sha512-v20N0GQFk6S/94LQnJofdEa/M1xP0lZXAfxFasGGYiMMx60wq9j/D12e8lBJ6BKvb2hLYNGL1KfT16Du5MigYQ==
+hds-design-tokens@4.7.1:
+  version "4.7.1"
+  resolved "https://registry.yarnpkg.com/hds-design-tokens/-/hds-design-tokens-4.7.1.tgz#17f2c8b37103b663da39d1b3f0a5e523e9ffbb8e"
+  integrity sha512-nqkQm4I7wobLBuUvlpvLg6X3wbMU6s3syCqcVEnAhWhVJhrfMFcFOvMrkFXXfxTOr5Jn2U449wY5/Th81H0hzQ==
 
-hds-react@3.10.1:
-  version "3.10.1"
-  resolved "https://registry.yarnpkg.com/hds-react/-/hds-react-3.10.1.tgz#f69d5909cf38816f278e38ec41656d4ae870c966"
-  integrity sha512-X8Zx5DfzWnB9Sb3AJFtusH/gSDSYtt6WgHFYcea+mTnS4Pf3ISAsey3nmczcL1vBS0eavACn4TVGfQ/X/gUIWA==
+hds-react@4.7.1:
+  version "4.7.1"
+  resolved "https://registry.yarnpkg.com/hds-react/-/hds-react-4.7.1.tgz#9bc0aa475f3a2fd9c6286056b7c2cb2e47467209"
+  integrity sha512-68I+lQ8QBkQrlbJe87JCngEnT/Jzd9OtpzpNk/wpUyG00oar6+ovoZGSYAzutdHI/qUg/Jbp4SnI2gMG4y/PDg==
   dependencies:
     "@apollo/client" "^3.10.1"
     "@babel/runtime" "7.17.9"
@@ -7215,8 +7215,7 @@ hds-react@3.10.1:
     date-fns "2.16.1"
     downshift "6.0.6"
     graphql "^16.8.1"
-    hds-core "3.10.1"
-    http-status-typed "^1.0.1"
+    hds-core "4.7.1"
     jwt-decode "^3.1.2"
     kashe "1.0.4"
     lodash "^4.17.21"
@@ -7395,11 +7394,6 @@ http-proxy@^1.18.1:
     eventemitter3 "^4.0.0"
     follow-redirects "^1.0.0"
     requires-port "^1.0.0"
-
-http-status-typed@^1.0.1:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/http-status-typed/-/http-status-typed-1.0.2.tgz#d3da6aa224727964a0d4f383bdd78a2f8eea4bfc"
-  integrity sha512-61FPm9Ke6DAdlEW69YqL+4koFsYGB3TaqYI63G9PkgfjWJL4+6tC75ZMHfWkb7IgqEPxs1DwN5YW9jdpXmF68A==
 
 http-status-typed@^2.0.1:
   version "2.0.1"

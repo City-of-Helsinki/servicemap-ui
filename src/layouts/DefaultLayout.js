@@ -123,6 +123,74 @@ function DefaultLayout({ fetchErrors, fetchNews }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  /*
+    This is for customising cookie consent modal styling. That is separated with shadow-root
+    and needs to be accessed in this way.
+    - Add bottom value when mobile nav bar is visible so cookie modal is not under it
+    - Remove that styling on normal desktop mode
+    This logic can not be in the App.js level with the cookie components, because isMobile
+    hook causes rendering issues with current HDS version 4.7.1
+  */
+  useEffect(() => {
+    let observer = null;
+    let injectedStyle = null;
+
+    const injectMobileStyle = () => {
+      const host = document.querySelector('.hds-cc__target');
+      if (host && host.shadowRoot && !injectedStyle) {
+        const shadow = host.shadowRoot;
+        const style = document.createElement('style');
+        style.setAttribute('data-mobile-cookie-style', 'true');
+        style.textContent = `
+        .hds-cc__container {
+          bottom: 4.875rem !important;
+        }
+      `;
+        shadow.appendChild(style);
+        injectedStyle = style;
+        if (observer) {
+          observer.disconnect();
+        }
+      }
+    };
+
+    const removeMobileStyle = () => {
+      const host = document.querySelector('.hds-cc__target');
+      if (host && host.shadowRoot) {
+        const existingStyle = host.shadowRoot.querySelector(
+          '[data-mobile-cookie-style="true"]'
+        );
+        if (existingStyle) {
+          existingStyle.remove();
+        }
+      }
+    };
+
+    if (isMobile) {
+      // Try to inject immediately if element exists
+      injectMobileStyle();
+
+      // If not found, observe for it
+      if (!injectedStyle) {
+        observer = new MutationObserver(injectMobileStyle);
+        observer.observe(document.body, { childList: true, subtree: true });
+      }
+    } else {
+      // Remove style when not mobile
+      removeMobileStyle();
+    }
+
+    return () => {
+      if (observer) {
+        observer.disconnect();
+      }
+      // Clean up injected style on unmount
+      if (injectedStyle && injectedStyle.parentNode) {
+        injectedStyle.remove();
+      }
+    };
+  }, [isMobile]);
+
   const styles = createContentStyles(
     isMobile,
     isSmallScreen,

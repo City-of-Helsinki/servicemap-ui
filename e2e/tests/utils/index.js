@@ -12,15 +12,14 @@ export const getLocation = async (page) => {
  * @param {import('@playwright/test').Page} page - Playwright page object
  */
 export const acceptCookieConcent = async (page) => {
-  await page.waitForSelector('button[data-testid="cookie-consent-approve-button"]', { state: 'visible' });
+  await page.waitForSelector('.hds-cc__all-cookies-button', { state: 'visible' });
   
   // Wait for the button to be stable before clicking
-  const cookieButton = page.locator('button[data-testid="cookie-consent-approve-button"]');
+  const cookieButton = page.locator('.hds-cc__all-cookies-button');
   
   // Wait for element to be stable and ready to interact
   await cookieButton.waitFor({ state: 'visible' });
   await page.waitForTimeout(500); // Give extra time for any animations/transitions
-  
   // Try clicking with force since Firefox has stability issues
   try {
     await cookieButton.click({ timeout: 10000 });
@@ -28,7 +27,6 @@ export const acceptCookieConcent = async (page) => {
     // Fallback: try with force click for stubborn elements
     await cookieButton.click({ force: true, timeout: 5000 });
   }
-  
   // Wait for page to settle after cookie consent
   await page.waitForTimeout(2000);
 };
