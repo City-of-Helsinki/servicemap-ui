@@ -135,28 +135,26 @@ function DefaultLayout({ fetchErrors, fetchNews }) {
     let observer = null;
     let injectedStyle = null;
 
-    if (isMobile) {
-      // Create observer to inject style when mobile
-      observer = new MutationObserver(() => {
-        const host = document.querySelector('.hds-cc__target');
-        if (host && host.shadowRoot && !injectedStyle) {
-          const shadow = host.shadowRoot;
-          const style = document.createElement('style');
-          style.setAttribute('data-mobile-cookie-style', 'true'); // Add identifier
-          style.textContent = `
+    const injectMobileStyle = () => {
+      const host = document.querySelector('.hds-cc__target');
+      if (host && host.shadowRoot && !injectedStyle) {
+        const shadow = host.shadowRoot;
+        const style = document.createElement('style');
+        style.setAttribute('data-mobile-cookie-style', 'true');
+        style.textContent = `
         .hds-cc__container {
           bottom: 4.875rem !important;
         }
       `;
-          shadow.appendChild(style);
-          injectedStyle = style;
+        shadow.appendChild(style);
+        injectedStyle = style;
+        if (observer) {
           observer.disconnect();
         }
-      });
+      }
+    };
 
-      observer.observe(document.body, { childList: true, subtree: true });
-    } else {
-      // Remove style when not mobile
+    const removeMobileStyle = () => {
       const host = document.querySelector('.hds-cc__target');
       if (host && host.shadowRoot) {
         const existingStyle = host.shadowRoot.querySelector(
@@ -166,6 +164,20 @@ function DefaultLayout({ fetchErrors, fetchNews }) {
           existingStyle.remove();
         }
       }
+    };
+
+    if (isMobile) {
+      // Try to inject immediately if element exists
+      injectMobileStyle();
+
+      // If not found, observe for it
+      if (!injectedStyle) {
+        observer = new MutationObserver(injectMobileStyle);
+        observer.observe(document.body, { childList: true, subtree: true });
+      }
+    } else {
+      // Remove style when not mobile
+      removeMobileStyle();
     }
 
     return () => {
