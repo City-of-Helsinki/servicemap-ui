@@ -35,25 +35,26 @@ if (config.sentryDSN) {
 }
 
 const getPreloadedState = () => {
-  const state = window.PRELOADED_STATE || {};
+  const state = window.PRELOADED_STATE;
 
   // Allow the passed state to be garbage-collected
   delete window.PRELOADED_STATE;
 
-  // Handle settings fetch from localStorage
-  const settings = SettingsUtility.getSettingsFromLocalStorage();
+  if (state) {
+    // Handle settings fetch from localStorage
+    const settings = SettingsUtility.getSettingsFromLocalStorage();
+    state.settings = settings;
 
-  state.settings = settings;
-
-  // Set correct theme from localStorage
-  // TODO dark mode is broken after refresh
-  // const theme = LocalStorageUtility.getItem('theme');
-  const theme = 'default';
-  if (theme) {
-    if (!state.user) {
-      state.user = {};
+    // Set correct theme from localStorage
+    // TODO dark mode is broken after refresh
+    // const theme = LocalStorageUtility.getItem('theme');
+    const theme = 'default';
+    if (theme) {
+      if (!state.user) {
+        state.user = {};
+      }
+      state.user.theme = theme;
     }
-    state.user.theme = theme;
   }
 
   return state;
