@@ -75,7 +75,7 @@ function applyDefaults(envObj) {
 
   // Override defaults with actual env values
   Object.keys(envObj).forEach(key => {
-    if (envObj[key] !== undefined && envObj[key] !== null && envObj[key] !== '') {
+    if (envObj[key] !== undefined && envObj[key] !== null && envObj[key] !== '' && envObj[key] !== 'undefined') {
       result[key] = envObj[key];
     }
   });
@@ -84,7 +84,12 @@ function applyDefaults(envObj) {
 }
 
 export function getSettings() {
-  // Use Vite's import.meta.env for client-side
+  // Check for server-injected environment variables first (for runtime env overrides)
+  if (typeof window !== 'undefined' && typeof window.nodeEnvSettings !== 'undefined') {
+    return applyDefaults(window.nodeEnvSettings);
+  }
+  
+  // Use Vite's import.meta.env for client-side (build-time variables)
   if (typeof window !== 'undefined' && typeof import.meta !== 'undefined' && import.meta.env) {
     return applyDefaults(import.meta.env);
   }

@@ -88,6 +88,9 @@ app.set('trust proxy', true);
 
 // Add static folder
 app.use(express.static(path.resolve(__dirname, 'src')));
+// Also serve files from the root dist directory for index.js and other assets
+app.use(express.static(path.resolve(__dirname)));
+app.use('/assets', express.static(path.resolve(__dirname, 'assets')));
 
 // Add middlewares
 app.use('/*', (req, res, next) => {
@@ -256,6 +259,35 @@ const htmlTemplate = (
     <style nonce="${nonce}">${[...css].join('')}</style>
 
     <script nonce="${nonce}">
+      // Inject environment variables for client-side access
+      window.nodeEnvSettings = {};
+      ${Object.keys(process.env)
+        .filter((key) => key.startsWith('REACT_APP_'))
+        .map((key) => {
+          const value = process.env[key];
+          if (
+            value !== undefined &&
+            value !== null &&
+            value !== '' &&
+            value !== 'undefined'
+          ) {
+            // Properly escape the value for JavaScript string literal
+            const escapedValue = JSON.stringify(value);
+            return `window.nodeEnvSettings.${key} = ${escapedValue};`;
+          }
+          return '';
+        })
+        .filter((line) => line !== '')
+        .join('\n      ')}
+      // Special cases for MODE and version info
+      ${process.env.MODE !== undefined ? `window.nodeEnvSettings.MODE = ${JSON.stringify(process.env.MODE)};` : ''}
+      window.nodeEnvSettings.REACT_APP_INITIAL_MAP_POSITION = ${JSON.stringify(customValues.initialMapPosition)};
+      
+      // Add version information like the old implementation
+      window.nodeEnvSettings.appVersion = {};
+      window.nodeEnvSettings.appVersion.tag = ${JSON.stringify(GIT_TAG)};
+      window.nodeEnvSettings.appVersion.commit = ${JSON.stringify(GIT_COMMIT)};
+
       // WARNING: See the following for security issues around embedding JSON in HTML:
       // http://redux.js.org/recipes/ServerRendering.html#security-considerations
       window.PRELOADED_STATE = ${JSON.stringify(preloadedState).replace(/</g, '\\u003c')}
