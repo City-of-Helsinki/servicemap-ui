@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.8.0](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.7.0...servicemap-ui-v2.8.0) (2025-10-07)
+
+
+### Features
+
+* Migrate CRA + webpack to vite Ref: PL-89 ([efec884](https://github.com/City-of-Helsinki/servicemap-ui/commit/efec884608596389110b97e4c29f1bf591153bf4))
+
+
+### Bug Fixes
+
+* Inject client env variables correctly Ref: PL-89 ([40933f4](https://github.com/City-of-Helsinki/servicemap-ui/commit/40933f40f41df5f91c7c99610821738da4e6a278))
+
 ## [2.7.0](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.6.0...servicemap-ui-v2.7.0) (2025-10-02)
 
 
