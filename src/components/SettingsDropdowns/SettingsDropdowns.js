@@ -29,7 +29,7 @@ import {
 } from '../../redux/actions/user';
 import { selectSettings } from '../../redux/selectors/settings';
 import { selectThemeMode } from '../../redux/selectors/user';
-import { keyboardHandler } from '../../utils';
+// import { keyboardHandler } from '../../utils';
 import SettingsUtility from '../../utils/settings';
 import useLocaleText from '../../utils/useLocaleText';
 import SMButton from '../ServiceMapButton';
@@ -43,7 +43,7 @@ function SettingsDropdowns({ variant = 'default' }) {
   const settings = useSelector(selectSettings);
   // Format settings from redux to easier structure
   const settingsValues = constants.convertToSettingsValues(settings);
-  const [openSettings, setOpenSettings] = useState(null);
+  // const [openSettings, setOpenSettings] = useState(null);
   const [resetText, setResetText] = useState('');
 
   const highlightedOption = useRef(null);
@@ -95,11 +95,6 @@ function SettingsDropdowns({ variant = 'default' }) {
     })
   );
 
-  const toggleSettingsBox = (id) => {
-    if (openSettings === id) setOpenSettings(null);
-    else setOpenSettings(id);
-  };
-
   const handleOptionSelecting = (id, category) => {
     if (!id) {
       return;
@@ -109,7 +104,7 @@ function SettingsDropdowns({ variant = 'default' }) {
 
     if (category === 'mobility') {
       dispatch(setMobility(id));
-      setOpenSettings(null);
+      // setOpenSettings(null);
     }
     if (category === 'cities') {
       const settingObj = settings.cities;
@@ -161,59 +156,6 @@ function SettingsDropdowns({ variant = 'default' }) {
     dispatch(resetUserPosition());
 
     setResetText(intl.formatMessage({ id: 'settings.reset_button.ariaLive' }));
-  };
-
-  const top100Films = [
-  { title: 'The Shawshank Redemption', year: 1994 },
-  { title: 'The Godfather', year: 1972 },
-  { title: 'The Godfather: Part II', year: 1974 },
-  { title: 'The Dark Knight', year: 2008 },
-  { title: '12 Angry Men', year: 1957 },
-  { title: "Schindler's List", year: 1993 },
-  { title: 'Pulp Fiction', year: 1994 },
-  {
-    title: 'The Lord of the Rings: The Return of the King',
-    year: 2003,
-  },
-  { title: 'The Good, the Bad and the Ugly', year: 1966 },
-  { title: 'Fight Club', year: 1999 },
-  {
-    title: 'The Lord of the Rings: The Fellowship of the Ring',
-    year: 2001,
-  },
-  {
-    title: 'Star Wars: Episode V - The Empire Strikes Back',
-    year: 1980,
-  },
- 
-  { title: 'The Great Dictator', year: 1940 },
-  { title: 'Cinema Paradiso', year: 1988 },
-  { title: 'The Lives of Others', year: 2006 },
-  { title: 'Grave of the Fireflies', year: 1988 },
-  { title: 'Paths of Glory', year: 1957 },
-  { title: 'Django Unchained', year: 2012 },
-  { title: 'The Shining', year: 1980 },
-  { title: 'WALL·E', year: 2008 },
-  { title: 'American Beauty', year: 1999 },
-  { title: 'The Dark Knight Rises', year: 2012 },
-  { title: 'Princess Mononoke', year: 1997 },
-  { title: 'Aliens', year: 1986 },
-  { title: 'Oldboy', year: 2003 },
-  { title: 'Once Upon a Time in America', year: 1984 },
-  { title: 'Witness for the Prosecution', year: 1957 },
-  { title: 'Das Boot', year: 1981 },
-  { title: 'Citizen Kane', year: 1941 },
-  { title: 'North by Northwest', year: 1959 },
-  { title: 'Vertigo', year: 1958 },
-
-];
-
-  const handleKeyboardSelect = (id, category, event) => {
-    if (openSettings !== id) setOpenSettings(id);
-    else if (event?.which === 13 || event?.which === 32) {
-      const highlightedItemId = highlightedOption?.current?.id;
-      handleOptionSelecting(highlightedItemId, category);
-    }
   };
 
   const renderSettingsElement = (options, label, category, isSingleOption) => {
