@@ -1,11 +1,11 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import styled from '@emotion/styled';
-import { Checkbox, ListItem, TextField, Typography } from '@mui/material';
+import { Autocomplete, TextField, Typography } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
 import PropTypes from 'prop-types';
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { useIntl } from 'react-intl';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import config from '../../../config';
 import { resetMobilityTreeSelections } from '../../redux/actions/mobilityTree';
@@ -15,122 +15,242 @@ import {
   resetCitySettings,
   resetOrganizationSettings,
   setMapType,
-  setMobility,
-  toggleCity,
-  toggleColorblind,
-  toggleHearingAid,
-  toggleOrganization,
-  toggleVisuallyImpaired,
 } from '../../redux/actions/settings';
 import {
   changeTheme,
   resetCustomPosition,
   resetUserPosition,
 } from '../../redux/actions/user';
-import { selectSettings } from '../../redux/selectors/settings';
-import { selectThemeMode } from '../../redux/selectors/user';
-import { keyboardHandler } from '../../utils';
+//import { selectSettings } from '../../redux/selectors/settings';
 import SettingsUtility from '../../utils/settings';
-import useLocaleText from '../../utils/useLocaleText';
+//import useLocaleText from '../../utils/useLocaleText';
 import SMButton from '../ServiceMapButton';
-import constants from '../SettingsComponent/constants';
-import SMAutocomplete from '../SMAutocomplete';
+//import constants from '../SettingsComponent/constants';
+// import SMAutocomplete from '../SMAutocomplete';
 
 function SettingsDropdowns({ variant = 'default' }) {
   const intl = useIntl();
   const dispatch = useDispatch();
-  const getLocaleText = useLocaleText();
-  const settings = useSelector(selectSettings);
   // Format settings from redux to easier structure
-  const settingsValues = constants.convertToSettingsValues(settings);
-  const [openSettings, setOpenSettings] = useState(null);
+  //const [openSettings, setOpenSettings] = useState(null);
   const [resetText, setResetText] = useState('');
 
-  const highlightedOption = useRef(null);
-  const themeMode = useSelector(selectThemeMode);
+  //const highlightedOption = useRef(null);
+  // const themeMode = useSelector(selectThemeMode);
   const ownSettingsVariant = variant === 'ownSettings';
 
   // Configure rendered settings items
   const senseSettingList = [
     {
-      id: 'colorblind',
-      title: intl.formatMessage({ id: 'settings.sense.colorblind' }),
+      value: 'colorblind',
+      label: intl.formatMessage({ id: 'settings.sense.colorblind' }),
     },
     {
-      id: 'hearingAid',
-      title: intl.formatMessage({ id: 'settings.sense.hearingAid' }),
+      value: 'hearingAid',
+      label: intl.formatMessage({ id: 'settings.sense.hearingAid' }),
     },
     {
-      id: 'visuallyImpaired',
-      title: intl.formatMessage({ id: 'settings.sense.visuallyImpaired' }),
+      value: 'visuallyImpaired',
+      label: intl.formatMessage({ id: 'settings.sense.visuallyImpaired' }),
     },
   ];
   const mobilitySettingList = [
-    { id: 'none', title: intl.formatMessage({ id: 'settings.mobility.none' }) },
     {
-      id: 'wheelchair',
-      title: intl.formatMessage({ id: 'settings.mobility.wheelchair' }),
+      value: 'none',
+      label: intl.formatMessage({ id: 'settings.mobility.none' }),
     },
     {
-      id: 'reduced_mobility',
-      title: intl.formatMessage({ id: 'settings.mobility.reduced_mobility' }),
+      value: 'wheelchair',
+      label: intl.formatMessage({ id: 'settings.mobility.wheelchair' }),
     },
     {
-      id: 'rollator',
-      title: intl.formatMessage({ id: 'settings.mobility.rollator' }),
+      value: 'reduced_mobility',
+      label: intl.formatMessage({ id: 'settings.mobility.reduced_mobility' }),
     },
     {
-      id: 'stroller',
-      title: intl.formatMessage({ id: 'settings.mobility.stroller' }),
+      value: 'rollator',
+      label: intl.formatMessage({ id: 'settings.mobility.rollator' }),
+    },
+    {
+      value: 'stroller',
+      label: intl.formatMessage({ id: 'settings.mobility.stroller' }),
     },
   ];
   const citySettingsList = config.cities.map((city) => ({
-    id: city,
-    title: intl.formatMessage({ id: `settings.city.${city}` }),
+    value: city,
+    label: intl.formatMessage({ id: `settings.city.${city}` }),
   }));
-  const organizationSettingsList = config.organizations?.map(
-    (organization) => ({
-      id: organization.id,
-      title: getLocaleText(organization.name),
-    })
-  );
 
-  const toggleSettingsBox = (id) => {
-    if (openSettings === id) setOpenSettings(null);
-    else setOpenSettings(id);
+  // Top 100 films as rated by IMDb users. http://www.imdb.com/chart/top
+  const top100Films = [
+    { title: 'The Shawshank Redemption', year: 1994 },
+    { title: 'The Godfather', year: 1972 },
+    { title: 'The Godfather: Part II', year: 1974 },
+    { title: 'The Dark Knight', year: 2008 },
+    { title: '12 Angry Men', year: 1957 },
+    { title: "Schindler's List", year: 1993 },
+    { title: 'Pulp Fiction', year: 1994 },
+    {
+      title: 'The Lord of the Rings: The Return of the King',
+      year: 2003,
+    },
+    { title: 'The Good, the Bad and the Ugly', year: 1966 },
+    { title: 'Fight Club', year: 1999 },
+    {
+      title: 'The Lord of the Rings: The Fellowship of the Ring',
+      year: 2001,
+    },
+    {
+      title: 'Star Wars: Episode V - The Empire Strikes Back',
+      year: 1980,
+    },
+    { title: 'Forrest Gump', year: 1994 },
+    { title: 'Inception', year: 2010 },
+    {
+      title: 'The Lord of the Rings: The Two Towers',
+      year: 2002,
+    },
+    { title: "One Flew Over the Cuckoo's Nest", year: 1975 },
+    { title: 'Goodfellas', year: 1990 },
+    { title: 'The Matrix', year: 1999 },
+    { title: 'Seven Samurai', year: 1954 },
+    {
+      title: 'Star Wars: Episode IV - A New Hope',
+      year: 1977,
+    },
+    { title: 'City of God', year: 2002 },
+    { title: 'Se7en', year: 1995 },
+    { title: 'The Silence of the Lambs', year: 1991 },
+    { title: "It's a Wonderful Life", year: 1946 },
+    { title: 'Life Is Beautiful', year: 1997 },
+    { title: 'The Usual Suspects', year: 1995 },
+    { title: 'Léon: The Professional', year: 1994 },
+    { title: 'Spirited Away', year: 2001 },
+    { title: 'Saving Private Ryan', year: 1998 },
+    { title: 'Once Upon a Time in the West', year: 1968 },
+    { title: 'American History X', year: 1998 },
+    { title: 'Interstellar', year: 2014 },
+    { title: 'Casablanca', year: 1942 },
+    { title: 'City Lights', year: 1931 },
+    { title: 'Psycho', year: 1960 },
+    { title: 'The Green Mile', year: 1999 },
+    { title: 'The Intouchables', year: 2011 },
+    { title: 'Modern Times', year: 1936 },
+    { title: 'Raiders of the Lost Ark', year: 1981 },
+    { title: 'Rear Window', year: 1954 },
+    { title: 'The Pianist', year: 2002 },
+    { title: 'The Departed', year: 2006 },
+    { title: 'Terminator 2: Judgment Day', year: 1991 },
+    { title: 'Back to the Future', year: 1985 },
+    { title: 'Whiplash', year: 2014 },
+    { title: 'Gladiator', year: 2000 },
+    { title: 'Memento', year: 2000 },
+    { title: 'The Prestige', year: 2006 },
+    { title: 'The Lion King', year: 1994 },
+    { title: 'Apocalypse Now', year: 1979 },
+    { title: 'Alien', year: 1979 },
+    { title: 'Sunset Boulevard', year: 1950 },
+    {
+      title:
+        'Dr. Strangelove or: How I Learned to Stop Worrying and Love the Bomb',
+      year: 1964,
+    },
+    { title: 'The Great Dictator', year: 1940 },
+    { title: 'Cinema Paradiso', year: 1988 },
+    { title: 'The Lives of Others', year: 2006 },
+    { title: 'Grave of the Fireflies', year: 1988 },
+    { title: 'Paths of Glory', year: 1957 },
+    { title: 'Django Unchained', year: 2012 },
+    { title: 'The Shining', year: 1980 },
+    { title: 'WALL·E', year: 2008 },
+    { title: 'American Beauty', year: 1999 },
+    { title: 'The Dark Knight Rises', year: 2012 },
+    { title: 'Princess Mononoke', year: 1997 },
+    { title: 'Aliens', year: 1986 },
+    { title: 'Oldboy', year: 2003 },
+    { title: 'Once Upon a Time in America', year: 1984 },
+    { title: 'Witness for the Prosecution', year: 1957 },
+    { title: 'Das Boot', year: 1981 },
+    { title: 'Citizen Kane', year: 1941 },
+    { title: 'North by Northwest', year: 1959 },
+    { title: 'Vertigo', year: 1958 },
+    {
+      title: 'Star Wars: Episode VI - Return of the Jedi',
+      year: 1983,
+    },
+    { title: 'Reservoir Dogs', year: 1992 },
+    { title: 'Braveheart', year: 1995 },
+    { title: 'M', year: 1931 },
+    { title: 'Requiem for a Dream', year: 2000 },
+    { title: 'Amélie', year: 2001 },
+    { title: 'A Clockwork Orange', year: 1971 },
+    { title: 'Like Stars on Earth', year: 2007 },
+    { title: 'Taxi Driver', year: 1976 },
+    { title: 'Lawrence of Arabia', year: 1962 },
+    { title: 'Double Indemnity', year: 1944 },
+    {
+      title: 'Eternal Sunshine of the Spotless Mind',
+      year: 2004,
+    },
+    { title: 'Amadeus', year: 1984 },
+    { title: 'To Kill a Mockingbird', year: 1962 },
+    { title: 'Toy Story 3', year: 2010 },
+    { title: 'Logan', year: 2017 },
+    { title: 'Full Metal Jacket', year: 1987 },
+    { title: 'Dangal', year: 2016 },
+    { title: 'The Sting', year: 1973 },
+    { title: '2001: A Space Odyssey', year: 1968 },
+    { title: "Singin' in the Rain", year: 1952 },
+    { title: 'Toy Story', year: 1995 },
+    { title: 'Bicycle Thieves', year: 1948 },
+    { title: 'The Kid', year: 1921 },
+    { title: 'Inglourious Basterds', year: 2009 },
+    { title: 'Snatch', year: 2000 },
+    { title: '3 Idiots', year: 2009 },
+    { title: 'Monty Python and the Holy Grail', year: 1975 },
+  ];
+
+  /*
+  const toggleSettingsBox = (value) => {
+    if (openSettings === value) setOpenSettings(null);
+    else setOpenSettings(value);
   };
 
-  const handleOptionSelecting = (id, category) => {
-    if (!id) {
+  */
+  /*
+  const handleOptionSelecting = (value, category) => {
+    console.log(value);
+
+    if (!value) {
       return;
     }
 
     setResetText('');
 
     if (category === 'mobility') {
-      dispatch(setMobility(id));
+      dispatch(setMobility(value));
       setOpenSettings(null);
     }
     if (category === 'cities') {
       const settingObj = settings.cities;
-      settingObj[id] = !settingObj[id];
+      settingObj[value] = !settingObj[value];
       dispatch(toggleCity(settingObj));
     }
 
     if (category === 'organizations') {
       const settingObj = settings.organizations;
-      settingObj[id] = !settingObj[id];
+      settingObj[value] = !settingObj[value];
       dispatch(toggleOrganization(settingObj));
     }
 
     if (category === 'senses') {
-      if (id === 'hearingAid') {
+      if (value === 'hearingAid') {
         dispatch(toggleHearingAid());
       }
       // settingsValues.senses contains all previous sense settings. So now if it does not include
-      // "id" then it was turned on just now.
-      const settingTurnedOn = !settingsValues.senses.includes(id);
-      if (id === 'colorblind') {
+      // "value" then it was turned on just now.
+      const settingTurnedOn = !settingsValues.senses.includes(value);
+      if (value === 'colorblind') {
         dispatch(toggleColorblind());
         if (settingTurnedOn) {
           dispatch(setMapType('accessible_map'));
@@ -138,7 +258,7 @@ function SettingsDropdowns({ variant = 'default' }) {
           dispatch(setMapType(SettingsUtility.defaultMapType));
         }
       }
-      if (id === 'visuallyImpaired') {
+      if (value === 'visuallyImpaired') {
         dispatch(toggleVisuallyImpaired());
         if (settingTurnedOn) {
           dispatch(setMapType('accessible_map'));
@@ -148,6 +268,8 @@ function SettingsDropdowns({ variant = 'default' }) {
       }
     }
   };
+
+  */
 
   const resetSettings = () => {
     dispatch(resetAccessibilitySettings());
@@ -163,108 +285,31 @@ function SettingsDropdowns({ variant = 'default' }) {
     setResetText(intl.formatMessage({ id: 'settings.reset_button.ariaLive' }));
   };
 
-  const handleKeyboardSelect = (id, category, event) => {
-    if (openSettings !== id) setOpenSettings(id);
-    else if (event?.which === 13 || event?.which === 32) {
-      const highlightedItemId = highlightedOption?.current?.id;
-      handleOptionSelecting(highlightedItemId, category);
-    }
-  };
-
   const renderSettingsElement = (options, label, category, isSingleOption) => {
-    const getValue = () => {
+    /*  const getValueP = () => {
       if (category === 'mobility') {
         const val = options.find(
-          (option) => settingsValues.mobility === option.id
+          (option) => settingsValues.mobility === option.value
         );
-        return val?.title || null;
+        return val?.label || null;
       }
       const list = options.filter((option) =>
-        settingsValues[category].includes(option.id)
+        settingsValues[category].includes(option.value)
       );
-      return list.map((item) => item.title);
-    };
+      return list.map((item) => item.label);
+    }; */
 
     return (
-      <StyledAutocomplete
-        open={openSettings === label}
-        data-sm={`${category}-setting-dropdown`}
-        size="small"
-        disablePortal
-        disableClearable
-        ownsettings={+ownSettingsVariant}
-        colormode={themeMode}
-        multiple={!isSingleOption}
-        openText={intl.formatMessage({ id: 'settings.open' })}
-        closeText={intl.formatMessage({ id: 'settings.close' })}
-        options={options}
-        value={getValue()}
-        isOptionEqualToValue={(option) =>
-          category === 'mobility'
-            ? settingsValues[category] === option.id
-            : settingsValues[category].includes(option.id)
-        }
-        disableCloseOnSelect={!isSingleOption}
-        getOptionLabel={(option) => option.title || option}
-        onHighlightChange={(e, option) => {
-          highlightedOption.current = option;
-        }}
-        onBlur={() => setOpenSettings(null)}
-        ChipProps={{
-          clickable: true,
-          onDelete: null,
-          variant: ownSettingsVariant ? 'outlined' : 'filled',
-        }}
-        slotProps={{
-          // eslint-disable-next-line max-len
-          popper: { sx: { pb: 1 } }, // This padding fixes the listBox position on small screens where the list is renderend to top of input
-        }}
-        renderOption={(props, option) =>
-          isSingleOption ? (
-            // Single option options box
-            <ListItem
-              {...props}
-              onClick={() => handleOptionSelecting(option.id, category)}
-              data-sm={`${category}-${option.id}`}
-            >
-              <Typography>{option.title}</Typography>
-            </ListItem>
-          ) : (
-            // Checkbox options box
-            <ListItem
-              {...props}
-              onClick={() => handleOptionSelecting(option.id, category)}
-              data-sm={`${category}-${option.id}`}
-            >
-              <Checkbox
-                sx={{ mr: 1 }}
-                checked={settingsValues[category].includes(option.id)}
-              />
-              <Typography>{option.title}</Typography>
-            </ListItem>
-          )
-        }
-        renderInput={({ inputProps, ...rest }) => (
-          <TextField
-            label={label}
-            onClick={(e) => {
-              e?.stopPropagation();
-              toggleSettingsBox(label);
-            }}
-            {...rest}
-            sx={{
-              fieldset: {
-                border: 1,
-                boxShadow: 0,
-              },
-            }}
-            inputProps={{
-              ...inputProps,
-              readOnly: true,
-              sx: { cursor: 'pointer' },
-              onBlur: undefined,
-            }}
-          />
+      <Autocomplete
+        multiple
+        limitTags={2}
+        id={label}
+        options={top100Films}
+        disableCloseOnSelect
+        getOptionLabel={(option) => option.title}
+        defaultValue={[top100Films[13], top100Films[12], top100Films[11]]}
+        renderInput={(params) => (
+          <TextField {...params} label="limitTags" placeholder="Favorites" />
         )}
       />
     );
@@ -288,11 +333,6 @@ function SettingsDropdowns({ variant = 'default' }) {
         intl.formatMessage({ id: 'settings.choose.cities' }),
         'cities'
       )}
-      {renderSettingsElement(
-        organizationSettingsList,
-        intl.formatMessage({ id: 'settings.choose.organization' }),
-        'organizations'
-      )}
       <div>
         <Typography aria-live="polite" style={visuallyHidden}>
           {resetText}
@@ -313,6 +353,7 @@ function SettingsDropdowns({ variant = 'default' }) {
 
 const StyledButton = styled(SMButton)(() => ({ marginRight: 0 }));
 
+/*
 const StyledAutocomplete = styled(SMAutocomplete)(({
   theme,
   ownsettings,
@@ -364,6 +405,8 @@ const StyledAutocomplete = styled(SMAutocomplete)(({
   };
   return { ...styles, ...ownSettingsStyles };
 });
+
+*/
 
 SettingsDropdowns.propTypes = {
   variant: PropTypes.oneOf(['default', 'ownSettings']),
