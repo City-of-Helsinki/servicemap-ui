@@ -1,9 +1,10 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import styled from '@emotion/styled';
-import { Checkbox, ListItem, TextField, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
+import { Select } from 'hds-react';
 import PropTypes from 'prop-types';
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -28,104 +29,117 @@ import {
   resetUserPosition,
 } from '../../redux/actions/user';
 import { selectSettings } from '../../redux/selectors/settings';
-import { selectThemeMode } from '../../redux/selectors/user';
-// import { keyboardHandler } from '../../utils';
+import { getLocale } from '../../redux/selectors/user';
 import SettingsUtility from '../../utils/settings';
 import useLocaleText from '../../utils/useLocaleText';
 import SMButton from '../ServiceMapButton';
 import constants from '../SettingsComponent/constants';
-import SMAutocomplete from '../SMAutocomplete';
+// import SMAutocomplete from '../SMAutocomplete';
 
 function SettingsDropdowns({ variant = 'default' }) {
   const intl = useIntl();
   const dispatch = useDispatch();
   const getLocaleText = useLocaleText();
+  const locale = useSelector(getLocale);
   const settings = useSelector(selectSettings);
   // Format settings from redux to easier structure
   const settingsValues = constants.convertToSettingsValues(settings);
-  // const [openSettings, setOpenSettings] = useState(null);
+  //const [openSettings, setOpenSettings] = useState(null);
   const [resetText, setResetText] = useState('');
 
-  const highlightedOption = useRef(null);
-  const themeMode = useSelector(selectThemeMode);
+  //const highlightedOption = useRef(null);
+  // const themeMode = useSelector(selectThemeMode);
   const ownSettingsVariant = variant === 'ownSettings';
 
   // Configure rendered settings items
   const senseSettingList = [
     {
-      id: 'colorblind',
-      title: intl.formatMessage({ id: 'settings.sense.colorblind' }),
+      value: 'colorblind',
+      label: intl.formatMessage({ id: 'settings.sense.colorblind' }),
     },
     {
-      id: 'hearingAid',
-      title: intl.formatMessage({ id: 'settings.sense.hearingAid' }),
+      value: 'hearingAid',
+      label: intl.formatMessage({ id: 'settings.sense.hearingAid' }),
     },
     {
-      id: 'visuallyImpaired',
-      title: intl.formatMessage({ id: 'settings.sense.visuallyImpaired' }),
+      value: 'visuallyImpaired',
+      label: intl.formatMessage({ id: 'settings.sense.visuallyImpaired' }),
     },
   ];
   const mobilitySettingList = [
-    { id: 'none', title: intl.formatMessage({ id: 'settings.mobility.none' }) },
     {
-      id: 'wheelchair',
-      title: intl.formatMessage({ id: 'settings.mobility.wheelchair' }),
+      value: 'none',
+      label: intl.formatMessage({ id: 'settings.mobility.none' }),
     },
     {
-      id: 'reduced_mobility',
-      title: intl.formatMessage({ id: 'settings.mobility.reduced_mobility' }),
+      value: 'wheelchair',
+      label: intl.formatMessage({ id: 'settings.mobility.wheelchair' }),
     },
     {
-      id: 'rollator',
-      title: intl.formatMessage({ id: 'settings.mobility.rollator' }),
+      value: 'reduced_mobility',
+      label: intl.formatMessage({ id: 'settings.mobility.reduced_mobility' }),
     },
     {
-      id: 'stroller',
-      title: intl.formatMessage({ id: 'settings.mobility.stroller' }),
+      value: 'rollator',
+      label: intl.formatMessage({ id: 'settings.mobility.rollator' }),
+    },
+    {
+      value: 'stroller',
+      label: intl.formatMessage({ id: 'settings.mobility.stroller' }),
     },
   ];
   const citySettingsList = config.cities.map((city) => ({
-    id: city,
-    title: intl.formatMessage({ id: `settings.city.${city}` }),
+    value: city,
+    label: intl.formatMessage({ id: `settings.city.${city}` }),
   }));
   const organizationSettingsList = config.organizations?.map(
     (organization) => ({
-      id: organization.id,
-      title: getLocaleText(organization.name),
+      value: organization.id,
+      label: getLocaleText(organization.name),
     })
   );
 
-  const handleOptionSelecting = (id, category) => {
-    if (!id) {
+  /*
+  const toggleSettingsBox = (value) => {
+    if (openSettings === value) setOpenSettings(null);
+    else setOpenSettings(value);
+  };
+
+  */
+  /*
+  const handleOptionSelecting = (value, category) => {
+    console.log(value);
+
+    if (!value) {
       return;
     }
 
     setResetText('');
 
     if (category === 'mobility') {
-      dispatch(setMobility(id));
-      // setOpenSettings(null);
+      dispatch(setMobility(value));
+      setOpenSettings(null);
     }
     if (category === 'cities') {
       const settingObj = settings.cities;
-      settingObj[id] = !settingObj[id];
+      settingObj[value] = !settingObj[value];
       dispatch(toggleCity(settingObj));
     }
 
     if (category === 'organizations') {
       const settingObj = settings.organizations;
-      settingObj[id] = !settingObj[id];
+      settingObj[value] = !settingObj[value];
       dispatch(toggleOrganization(settingObj));
     }
 
     if (category === 'senses') {
-      if (id === 'hearingAid') {
+      if (value === 'hearingAid') {
         dispatch(toggleHearingAid());
       }
       // settingsValues.senses contains all previous sense settings. So now if it does not include
-      // "id" then it was turned on just now.
-      const settingTurnedOn = !settingsValues.senses.includes(id);
-      if (id === 'colorblind') {
+      // "value" then it was turned on just now.
+      const settingTurnedOn = !settingsValues.senses.includes(value);
+      if (value === 'colorblind') {
         dispatch(toggleColorblind());
         if (settingTurnedOn) {
           dispatch(setMapType('accessible_map'));
@@ -133,7 +147,7 @@ function SettingsDropdowns({ variant = 'default' }) {
           dispatch(setMapType(SettingsUtility.defaultMapType));
         }
       }
-      if (id === 'visuallyImpaired') {
+      if (value === 'visuallyImpaired') {
         dispatch(toggleVisuallyImpaired());
         if (settingTurnedOn) {
           dispatch(setMapType('accessible_map'));
@@ -143,6 +157,8 @@ function SettingsDropdowns({ variant = 'default' }) {
       }
     }
   };
+
+  */
 
   const resetSettings = () => {
     dispatch(resetAccessibilitySettings());
@@ -158,95 +174,187 @@ function SettingsDropdowns({ variant = 'default' }) {
     setResetText(intl.formatMessage({ id: 'settings.reset_button.ariaLive' }));
   };
 
+  // New handler for HDS Select that works with arrays
+  const handleHDSSelectChange = (selectedOptions, category) => {
+    console.log('oppions: ', selectedOptions, 'katgori: ', category);
+
+    if (!selectedOptions) return;
+
+    setResetText('');
+
+    if (category === 'mobility') {
+      // For single-select mobility, selectedOptions is a single object
+      dispatch(setMobility(selectedOptions[0].value));
+    } else {
+      // For multi-select categories, compare current vs new selections
+      handleMultiSelectChange(selectedOptions, category);
+    }
+  };
+
+  const handleMultiSelectChange = (newSelections, category) => {
+    const currentSelections = settingsValues[category] || [];
+
+    // Find what was added or removed
+    const newIds = newSelections.map((option) => option.value);
+
+    // Find the difference (what changed)
+    const added = newIds.filter((value) => !currentSelections.includes(value));
+    const removed = currentSelections.filter(
+      (value) => !newIds.includes(value)
+    );
+
+    // Handle additions
+    added.forEach((value) => {
+      handleSingleOptionChange(value, category, true);
+    });
+
+    // Handle removals
+    removed.forEach((value) => {
+      handleSingleOptionChange(value, category, false);
+    });
+  };
+
+  // Refactored version of handleOptionSelecting for individual changes
+  const handleSingleOptionChange = (value, category, isAdding = true) => {
+    console.log(value, category, isAdding);
+
+    if (category === 'cities') {
+      const settingObj = { ...settings.cities };
+      settingObj[value] = isAdding;
+      dispatch(toggleCity(settingObj));
+    }
+
+    if (category === 'organizations') {
+      const settingObj = { ...settings.organizations };
+      settingObj[value] = isAdding;
+      dispatch(toggleOrganization(settingObj));
+    }
+
+    if (category === 'senses') {
+      // For senses, we need to check the current state and toggle accordingly
+      const currentlySelected = settingsValues.senses.includes(value);
+
+      if (value === 'hearingAid' && currentlySelected !== isAdding) {
+        dispatch(toggleHearingAid());
+      }
+
+      if (value === 'colorblind' && currentlySelected !== isAdding) {
+        dispatch(toggleColorblind());
+        if (isAdding) {
+          dispatch(setMapType('accessible_map'));
+        } else if (!settingsValues.senses.includes('visuallyImpaired')) {
+          dispatch(setMapType(SettingsUtility.defaultMapType));
+        }
+      }
+
+      if (value === 'visuallyImpaired' && currentlySelected !== isAdding) {
+        dispatch(toggleVisuallyImpaired());
+        if (isAdding) {
+          dispatch(setMapType('accessible_map'));
+        } else if (!settingsValues.senses.includes('colorblind')) {
+          dispatch(setMapType(SettingsUtility.defaultMapType));
+        }
+      } 
+    }
+  };
+
   const renderSettingsElement = (options, label, category, isSingleOption) => {
-    const getValue = () => {
+    /*  const getValueP = () => {
       if (category === 'mobility') {
         const val = options.find(
-          (option) => settingsValues.mobility === option.id
+          (option) => settingsValues.mobility === option.value
         );
-        return val?.title || null;
+        return val?.label || null;
       }
       const list = options.filter((option) =>
-        settingsValues[category].includes(option.id)
+        settingsValues[category].includes(option.value)
       );
-      return list.map((item) => item.title);
+      return list.map((item) => item.label);
+    }; */
+
+    const getValue = () => {
+      if (category === 'mobility') {
+        const option = options.find(
+          (option) => settingsValues.mobility === option.value
+        );
+        return option ? [option] : [];
+        // return options.find((option) => settingsValues.mobility === option.value);
+      }
+      return options.filter((option) =>
+        settingsValues[category].includes(option.value)
+      );
     };
 
+    const SimpleWrapper = styled.div`
+      /* This styles the wrapper itself */
+      //  padding: 10px;
+
+      /* This styles child elements inside the wrapper */
+      div {
+      }
+
+      /* Target DIRECT child divs only */
+      > div > div {
+        color: white;
+        border-radius: 6px;
+        line-height: 1.5;
+      }
+
+      /* Additional styling when ownSettingsVariant is true */
+      ${({ ownsettings }) =>
+        !ownsettings &&
+        `
+     > div > label {
+        color: white;
+      }
+  `}
+    `;
+
+    const hdsTheme = ownSettingsVariant
+      ? {}
+      : {
+          // Focus outline
+          '--focus-outline-color': 'white',
+          '--dropdown-background-default': 'var(--color-bus)',
+          '--dropdown-color-default': 'var(--color-white)',
+          '--dropdown-icon-color': 'var(--color-white)',
+          '--menu-divider-color': 'var(--color-white)',
+          '--dropdown-border-color-default': 'var(--color-white)',
+          '--menu-item-background-color-selected': 'gray',
+          '--text-input-background-default': 'var(--color-black)',
+        };
+
     return (
-      <StyledAutocomplete
-        data-sm={`${category}-setting-dropdown`}
-        size="small"
-        disablePortal
-        disableClearable
-        ownsettings={+ownSettingsVariant}
-        colormode={themeMode}
-        multiple={!isSingleOption}
-        openText={intl.formatMessage({ id: 'settings.open' })}
-        closeText={intl.formatMessage({ id: 'settings.close' })}
-        options={options}
-        value={getValue()}
-        isOptionEqualToValue={(option) =>
-          category === 'mobility'
-            ? settingsValues[category] === option.id
-            : settingsValues[category].includes(option.id)
-        }
-        disableCloseOnSelect={!isSingleOption}
-        getOptionLabel={(option) => option.title || option}
-        onHighlightChange={(e, option) => {
-          highlightedOption.current = option;
-        }}
-        ChipProps={{
-          clickable: true,
-          onDelete: null,
-          variant: ownSettingsVariant ? 'outlined' : 'filled',
-        }}
-        slotProps={{
-          // eslint-disable-next-line max-len
-          popper: { sx: { pb: 1 } }, // This padding fixes the listBox position on small screens where the list is renderend to top of input
-        }}
-        renderOption={(props, option) =>
-          isSingleOption ? (
-            // Single option options box
-            <ListItem
-              {...props}
-              onClick={() => handleOptionSelecting(option.id, category)}
-              data-sm={`${category}-${option.id}`}
-            >
-              <Typography>{option.title}</Typography>
-            </ListItem>
-          ) : (
-            // Checkbox options box
-            <ListItem
-              {...props}
-              onClick={() => handleOptionSelecting(option.id, category)}
-              data-sm={`${category}-${option.id}`}
-            >
-              <Checkbox
-                sx={{ mr: 1 }}
-                checked={settingsValues[category].includes(option.id)}
-              />
-              <Typography>{option.title}</Typography>
-            </ListItem>
-          )
-        }
-        renderInput={({ inputProps, ...rest }) => (
-          <TextField
-            label={label}
-            {...rest}
-            sx={{
-              fieldset: {
-                border: 1,
-                boxShadow: 0,
-              },
-            }}
-            inputProps={{
-              ...inputProps,
-              readOnly: true,
-              sx: { cursor: 'pointer' },
-            }}
-          />
-        )}
-      />
+      <SimpleWrapper ownsettings={ownSettingsVariant}>
+        <Select
+          multiSelect={!isSingleOption}
+          texts={{
+            label: label,
+
+            language: locale,
+          }}
+          clearable={false}
+          noTags
+          options={options}
+          value={getValue()}
+          theme={hdsTheme}
+          style={{
+            paddingLeft: 12,
+            paddingRight: 12,
+            textAlign: 'left',
+            // borderRadius: '5px',
+          }}
+          onChange={(selectedOptions) => {
+            console.log('HDS Select onChange:', selectedOptions);
+
+          }}
+          onClose={(selectedOptions) => {
+            console.log('HDS Select onClose:', selectedOptions);
+            // Optional: Handle close event if needed
+            handleHDSSelectChange(selectedOptions, category);
+          }}
+        />
+      </SimpleWrapper>
     );
   };
 
@@ -293,6 +401,7 @@ function SettingsDropdowns({ variant = 'default' }) {
 
 const StyledButton = styled(SMButton)(() => ({ marginRight: 0 }));
 
+/*
 const StyledAutocomplete = styled(SMAutocomplete)(({
   theme,
   ownsettings,
@@ -344,6 +453,8 @@ const StyledAutocomplete = styled(SMAutocomplete)(({
   };
   return { ...styles, ...ownSettingsStyles };
 });
+
+*/
 
 SettingsDropdowns.propTypes = {
   variant: PropTypes.oneOf(['default', 'ownSettings']),
