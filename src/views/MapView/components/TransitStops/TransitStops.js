@@ -8,6 +8,10 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import { useMapEvents } from 'react-leaflet';
 import { useSelector } from 'react-redux';
 
+import {
+  selectSelectedDistrictType,
+  selectSelectedSubdistricts,
+} from '../../../../redux/selectors/district';
 import { selectMapType } from '../../../../redux/selectors/settings';
 import useMobileStatus from '../../../../utils/isMobile';
 import { isEmbed } from '../../../../utils/path';
@@ -29,6 +33,8 @@ const StyledTransitIconMap = styled.span(({ color, className }) => ({
 function TransitStops({ mapObject }) {
   const isMobile = useMobileStatus();
   const useContrast = useSelector(selectMapType) === 'accessible_map';
+  const selectedSubdistricts = useSelector(selectSelectedSubdistricts);
+  const selectedDistrictType = useSelector(selectSelectedDistrictType);
   const { Marker, Popup } = global.rL;
   const theme = useTheme();
 
@@ -36,6 +42,7 @@ function TransitStops({ mapObject }) {
   const [rentalBikeStations, setRentalBikeStations] = useState([]);
   const [visibleBikeStations, setVisibleBikeStations] = useState([]);
   const [bikeStationsLoaded, setBikeStationsLoaded] = useState(false);
+  const [currentZoom, setCurrentZoom] = useState(0);
   // Theme was undefined inside styled component for some reason
   const transitBackgroundClass = css({
     fontFamily: 'hsl-piktoframe',
@@ -48,23 +55,33 @@ function TransitStops({ mapObject }) {
   });
 
   const map = useMapEvents({
-    moveend() {
-      handleTransit();
-    },
+    moveend: handleMapChange,
+    zoomend: handleMapChange,
   });
+
+  function handleMapChange() {
+    const newZoom = map.getZoom();
+
+    // ALWAYS update zoom state to trigger re-render
+    setCurrentZoom(newZoom);
+
+    // Always handle transit changes - let zoom-based logic determine visibility
+    handleTransit();
+  }
 
   // Check if transit stops should be shown
   const showTransitStops = () => {
     const transitZoom = isMobile
       ? mapObject.options.detailZoom - 1
       : mapObject.options.detailZoom;
-    const currentZoom = map.getZoom();
+
+    const zoomToCheck = currentZoom || (map ? map.getZoom() : 0);
 
     const url = new URL(window.location);
     const embeded = isEmbed({ url: url.toString() });
     const showTransit = !embeded || url.searchParams.get('transit') === '1';
 
-    return currentZoom >= transitZoom && showTransit;
+    return zoomToCheck >= transitZoom && showTransit;
   };
 
   const fetchTransitStops = () => {
@@ -78,38 +95,43 @@ function TransitStops({ mapObject }) {
   const loadBikeStations = () => {
     if (!bikeStationsLoaded && showTransitStops()) {
       setBikeStationsLoaded(true);
-      // Load bike stations only once as all the bike stations are fetched.
       fetchBikeStations().then((stations) => {
         const list = stations?.data?.bikeRentalStations || [];
         setRentalBikeStations(list);
-        setVisibleBikeStations(showTransitStops() ? list : []);
+        setVisibleBikeStations(list);
       });
     }
-  };
-
-  const clearTransitStops = () => {
-    setTransitStops([]);
   };
 
   const handleTransit = () => {
     if (showTransitStops()) {
       fetchTransitStops();
       loadBikeStations();
+
       setVisibleBikeStations(rentalBikeStations);
     } else {
-      if (transitStops.length) {
-        clearTransitStops();
-      }
-      if (visibleBikeStations.length) {
-        setVisibleBikeStations([]);
-      }
+      setTransitStops([]);
+      setVisibleBikeStations([]);
     }
   };
 
   useEffect(() => {
     loadBikeStations();
+    handleTransit();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (map) {
+      setCurrentZoom(map.getZoom());
+    }
+  }, [map]);
+
+  // Clear transit stops when district selection changes
+  useEffect(() => {
+    setTransitStops([]);
+    setVisibleBikeStations([]);
+  }, [selectedSubdistricts, selectedDistrictType]);
 
   const getTransitIcon = (type) => {
     const { divIcon } = global.L;
@@ -137,7 +159,9 @@ function TransitStops({ mapObject }) {
     map.closePopup();
   };
 
-  if (!showTransitStops()) return null;
+  if (!showTransitStops()) {
+    return null;
+  }
 
   return (
     <>
@@ -161,7 +185,7 @@ function TransitStops({ mapObject }) {
           </Marker>
         );
       })}
-      {rentalBikeStations.map((station) => {
+      {visibleBikeStations.map((station) => {
         const icon = getTransitIcon(7);
         return (
           <Marker
