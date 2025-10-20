@@ -37,6 +37,13 @@ const defaults = {
   REACT_APP_FEEDBACK_IS_PUBLISHED: 'true',
   REACT_APP_USE_PTV_ACCESSIBILITY_API: 'false',
   REACT_APP_SENTRY_DSN_CLIENT: 'false',
+  REACT_APP_SENTRY_ENVIRONMENT: 'false',
+  REACT_APP_SENTRY_RELEASE: 'false',
+  REACT_APP_SENTRY_TRACES_SAMPLE_RATE: 0,
+  REACT_APP_SENTRY_TRACE_PROPAGATION_TARGETS: 0,
+  REACT_APP_SENTRY_REPLAYS_SESSION_SAMPLE_RATE: 0,
+  REACT_APP_SENTRY_REPLAYS_ON_ERROR_SAMPLE_RATE: 0,
+
   REACT_APP_SLOW_FETCH_MESSAGE_TIMEOUT: '3000',
   REACT_APP_FEATURE_SERVICEMAP_PAGE_TRACKING: 'false',
   REACT_APP_FEATURE_SM_COOKIES: 'true',
@@ -244,6 +251,13 @@ const defaultConfig = {
     "sv": 'sv_se',
   },
   "sentryDSN": (settings.REACT_APP_SENTRY_DSN_CLIENT !== 'false') ? settings.REACT_APP_SENTRY_DSN_CLIENT : false,
+  "sentryEnvironment": settings.REACT_APP_SENTRY_ENVIRONMENT,
+  "sentryRelease": settings.REACT_APP_SENTRY_RELEASE,
+  "sentryTracesSampleRate": settings.REACT_APP_SENTRY_TRACES_SAMPLE_RATE,
+  "sentryTracePropagationTargets": settings.REACT_APP_SENTRY_TRACE_PROPAGATION_TARGETS,
+  "sentrySeplaysSessionSampleRate": settings.REACT_APP_SENTRY_REPLAYS_SESSION_SAMPLE_RATE,
+  "sentryReplaysOnErrorSampleRate": settings.REACT_APP_SENTRY_REPLAYS_ON_ERROR_SAMPLE_RATE,
+ 
   "showAreaSelection": (settings.REACT_APP_SHOW_AREA_SELECTION === 'true'),
   // eslint-disable-next-line max-len
   "showReadSpeakerButton": (settings.REACT_APP_READ_SPEAKER_URL !== 'false' && settings.REACT_APP_READ_SPEAKER_URL !== false),
