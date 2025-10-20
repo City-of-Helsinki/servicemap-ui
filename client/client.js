@@ -41,6 +41,12 @@ if (config.sentryDSN) {
     tracePropagationTargets: (config.sentryTracePropagationTargets || '').split(','),
     replaysSessionSampleRate: parseFloat(config.sentryReplaysSessionSampleRate || '0'),
     replaysOnErrorSampleRate: parseFloat(config.sentryReplaysOnErrorSampleRate || '0'),
+    initialScope: {
+      tags: {
+        context: 'client',
+        runtime: 'browser',
+      },
+    },
   });
 }
 

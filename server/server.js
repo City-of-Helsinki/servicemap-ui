@@ -51,6 +51,12 @@ if (process.env.SENTRY_DSN_SERVER) {
     environment: process.env.SENTRY_ENVIRONMENT || process.env.NODE_ENV,
     release: process.env.SENTRY_RELEASE,
     tracesSampleRate: parseFloat(process.env.SENTRY_TRACES_SAMPLE_RATE || '0'),
+    initialScope: {
+      tags: {
+        context: 'server',
+        runtime: 'node',
+      },
+    },
   });
   console.log(`Initialized Sentry server with DSN ${process.env.SENTRY_DSN_SERVER}`);
 }
