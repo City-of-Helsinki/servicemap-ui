@@ -58,7 +58,9 @@ if (process.env.SENTRY_DSN_SERVER) {
       },
     },
   });
-  console.log(`Initialized Sentry server with DSN ${process.env.SENTRY_DSN_SERVER}`);
+  console.log(
+    `Initialized Sentry server with DSN ${process.env.SENTRY_DSN_SERVER}`
+  );
 }
 
 const setupTests = () => {
