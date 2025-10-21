@@ -84,7 +84,6 @@ const mapTypes = {
   servicemap: {
     name: 'servicemap',
     attribution: 'map.attribution.osm',
-    generateUrl: (suffix = '') => `${config.servicemapURL}${suffix}.png`,
     urlTemplate: config.servicemapURL,
     minZoom: 9,
     maxZoom: 18,
@@ -97,7 +96,6 @@ const mapTypes = {
   accessible_map: {
     name: 'accessible_map',
     attribution: 'map.attribution.osm',
-    generateUrl: (suffix = '') => `${config.accessibleMapURL}${suffix}.png`,
     urlTemplate: config.accessibleMapURL,
     minZoom: 9,
     maxZoom: 18,
@@ -192,23 +190,10 @@ const getMapOptions = (type, locale) => {
       if (isRetina) {
         suffix += '@2x';
       }
-      if (config.helsinkiMaptilesEnabled) {
-        return setHelsinkiMaptilesUrl(mapOptions, suffix, locale);
-      }
-      if (locale === 'sv') {
-        suffix += '@sv';
-      }
-      break;
+      return setHelsinkiMaptilesUrl(mapOptions, suffix, locale);
     }
     case 'accessible_map': {
-      if (config.helsinkiMaptilesEnabled) {
-        return setHelsinkiMaptilesUrl(mapOptions, suffix, locale);
-      }
-
-      if (locale === 'sv') {
-        suffix += '@sv';
-      }
-      break;
+      return setHelsinkiMaptilesUrl(mapOptions, suffix, locale);
     }
     default:
   }

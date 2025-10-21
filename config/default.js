@@ -38,7 +38,6 @@ const defaults = {
   REACT_APP_USE_PTV_ACCESSIBILITY_API: 'false',
   REACT_APP_SENTRY_DSN_CLIENT: 'false',
   REACT_APP_SLOW_FETCH_MESSAGE_TIMEOUT: '3000',
-  REACT_APP_HELSINKI_MAPTILES_ENABLED: 'false',
   REACT_APP_FEATURE_SERVICEMAP_PAGE_TRACKING: 'false',
   REACT_APP_FEATURE_SM_COOKIES: 'true',
   // eslint-disable-next-line max-len
@@ -262,7 +261,6 @@ const defaultConfig = {
   "matomoSiteId": settings.REACT_APP_MATOMO_SITE_ID,
   "matomoEnabled": settings.REACT_APP_MATOMO_ENABLED,
   "slowFetchMessageTimeout": Number(settings.REACT_APP_SLOW_FETCH_MESSAGE_TIMEOUT),
-  "helsinkiMaptilesEnabled": settings.REACT_APP_HELSINKI_MAPTILES_ENABLED === "true",
 }
 
 export default defaultConfig;
