@@ -1,0 +1,1125 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`<InfoView /> > should render content 1`] = `
+<div>
+  <div>
+    <div
+      class="css-1g4yje1"
+    >
+      <div
+        class="sticky css-1y7awi0"
+        data-sm="TitleBar"
+      >
+        <div
+          class="css-aly0ju"
+        >
+          <button
+            aria-hidden="false"
+            aria-label="Go to home page"
+            class="MuiButtonBase-root SMBackButton css-28cnn6-MuiButtonBase-root"
+            data-sm="BackButton"
+            role="link"
+            tabindex="0"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit css-1hb4agc-MuiSvgIcon-root"
+              data-testid="ArrowBackIcon"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20z"
+              />
+            </svg>
+            <p
+              aria-hidden="true"
+              class="MuiTypography-root MuiTypography-body2 css-1d2e18r-MuiTypography-root"
+            >
+              Go to home page
+            </p>
+          </button>
+        </div>
+        <div
+          class="css-1mostsy"
+          data-sm="TitleContainer"
+        >
+          <h3
+            aria-hidden="true"
+            class="MuiTypography-root MuiTypography-body2 TitleText css-1nl8r5k-MuiTypography-root"
+            large="1"
+            tabindex="-1"
+          >
+            About the service and accessibility statement
+          </h3>
+        </div>
+      </div>
+      <div
+        class="css-1oeji3b"
+      >
+        <h3
+          class="MuiTypography-root MuiTypography-body2 css-5rfmx0-MuiTypography-root"
+        >
+          Palvelukartan saavutettavuus
+        </h3>
+        <button
+          class="MuiButtonBase-root css-krk796-MuiButtonBase-root"
+          role="link"
+          tabindex="0"
+          type="button"
+        >
+          <p
+            class="MuiTypography-root MuiTypography-body2 css-qhuq40-MuiTypography-root"
+          >
+            Accessibility statement (new tab)
+          </p>
+        </button>
+        <h3
+          class="MuiTypography-root MuiTypography-body2 css-5rfmx0-MuiTypography-root"
+        >
+          Service map
+        </h3>
+        <p
+          class="MuiTypography-root MuiTypography-body2 css-nnmmdo-MuiTypography-root"
+        >
+          Palvelukartalta löytyy Espoon, Helsingin, Kauniaisten, Vantaan, Länsi-Uudenmaan sekä Vantaan ja Keravan hyvinvointialueiden julkiset toimipisteet ja niiden palvelut. Esimerkiksi koulut, päiväkodit sekä terveysasemat.
+        </p>
+        
+
+        <p
+          class="MuiTypography-root MuiTypography-body2 css-nnmmdo-MuiTypography-root"
+        >
+          Palvelukartalta löytyy lisäksi muitakin palveluja, kuten HUSin röntgenit, Kirkkonummen liikuntapalvelut, HSY:n kierrätyspisteet, Aalto-yliopiston ja muita valtion palveluja. Lisäksi kartalta löytyy yksityisiä palveluita, jotka tulevat Kaupunki alustana palvelun kautta.
+        </p>
+        
+
+        <h3
+          class="MuiTypography-root MuiTypography-body2 css-5rfmx0-MuiTypography-root"
+        >
+          Haku
+        </h3>
+        
+
+        <h4
+          class="MuiTypography-root MuiTypography-body2 css-5rfmx0-MuiTypography-root"
+        >
+          Palvelukartalta voit hakea esimerkiksi:
+        </h4>
+        
+
+        <ul>
+          
+
+          <li>
+            <p
+              class="MuiTypography-root MuiTypography-body2 css-5rfmx0-MuiTypography-root"
+            >
+              terveysasemia
+            </p>
+          </li>
+          
+
+          <li>
+            <p
+              class="MuiTypography-root MuiTypography-body2 css-5rfmx0-MuiTypography-root"
+            >
+              kouluja
+            </p>
+          </li>
+          
+
+          <li>
+            <p
+              class="MuiTypography-root MuiTypography-body2 css-5rfmx0-MuiTypography-root"
+            >
+              päiväkoteja
+            </p>
+          </li>
+          
+
+          <li>
+            <p
+              class="MuiTypography-root MuiTypography-body2 css-5rfmx0-MuiTypography-root"
+            >
+              uimahalleja
+            </p>
+          </li>
+          
+
+          <li>
+            <p
+              class="MuiTypography-root MuiTypography-body2 css-5rfmx0-MuiTypography-root"
+            >
+              pallokenttiä
+            </p>
+          </li>
+          
+
+          <li>
+            <p
+              class="MuiTypography-root MuiTypography-body2 css-5rfmx0-MuiTypography-root"
+            >
+              kirjastoja
+            </p>
+          </li>
+          
+
+          <li>
+            <p
+              class="MuiTypography-root MuiTypography-body2 css-5rfmx0-MuiTypography-root"
+            >
+              nuorisotaloja
+            </p>
+          </li>
+          
+
+          <li>
+            <p
+              class="MuiTypography-root MuiTypography-body2 css-5rfmx0-MuiTypography-root"
+            >
+              iltapäivätoiminnan toimipisteitä
+            </p>
+          </li>
+          
+
+          <li>
+            <p
+              class="MuiTypography-root MuiTypography-body2 css-5rfmx0-MuiTypography-root"
+            >
+              kierrätyspisteitä
+            </p>
+          </li>
+          
+
+          <li>
+            <p
+              class="MuiTypography-root MuiTypography-body2 css-5rfmx0-MuiTypography-root"
+            >
+              röntgen pisteitä
+            </p>
+          </li>
+          
+
+          <li>
+            <p
+              class="MuiTypography-root MuiTypography-body2 css-5rfmx0-MuiTypography-root"
+            >
+              pysäköintilippuautomaatteja
+            </p>
+          </li>
+          
+
+          <li>
+            <p
+              class="MuiTypography-root MuiTypography-body2 css-5rfmx0-MuiTypography-root"
+            >
+              veistoksia
+            </p>
+          </li>
+          
+
+          <li>
+            <p
+              class="MuiTypography-root MuiTypography-body2 css-5rfmx0-MuiTypography-root"
+            >
+              tapahtumia
+            </p>
+          </li>
+          
+
+          <li>
+            <p
+              class="MuiTypography-root MuiTypography-body2 css-5rfmx0-MuiTypography-root"
+            >
+              osoitteita
+            </p>
+          </li>
+          
+
+          <li>
+            <p
+              class="MuiTypography-root MuiTypography-body2 css-5rfmx0-MuiTypography-root"
+            >
+              väestönsuojia
+            </p>
+          </li>
+          
+
+        </ul>
+        
+
+        <h4
+          class="MuiTypography-root MuiTypography-body2 css-5rfmx0-MuiTypography-root"
+        >
+          Vaihtoehtoisia hakutapoja:
+        </h4>
+        
+
+        <ul>
+          
+
+          <li>
+            <p
+              class="MuiTypography-root MuiTypography-body2 css-5rfmx0-MuiTypography-root"
+            >
+              Aloita kirjoittamaan hakukenttään hakemaasi sanaa, jolloin saat hakuehdotuksia, joista voit valita itsellesi sopivimman. Esimerkiksi "päiväko"
+            </p>
+          </li>
+          
+
+          <li>
+            <p
+              class="MuiTypography-root MuiTypography-body2 css-5rfmx0-MuiTypography-root"
+            >
+              Voit myös kirjoittaa hakemasi sanan kokonaisuudessaan ja painaa tämän jälkeen Hae –painiketta tai Enter näppäimistöltä. Esimerkiksi "luontopolku".
+            </p>
+          </li>
+          
+
+          <li>
+            <p
+              class="MuiTypography-root MuiTypography-body2 css-5rfmx0-MuiTypography-root"
+            >
+              Jos hakutulos ei ollut hyvä, voit tarkentaa hakua Tarkenna–painikkeella.
+            </p>
+          </li>
+          
+
+          <li>
+            <p
+              class="MuiTypography-root MuiTypography-body2 css-5rfmx0-MuiTypography-root"
+            >
+              Voit hakea myös usean sanan yhdistelmällä, esimerkiksi "koulu espanja".
+            </p>
+          </li>
+          
+
+          <li>
+            <p
+              class="MuiTypography-root MuiTypography-body2 css-5rfmx0-MuiTypography-root"
+            >
+              Hae osoitteella: kirjoita osoite, minkä läheltä etsit palvelua. Hae osoitteella: kirjoita osoite, minkä läheltä etsit palvelua.
+            </p>
+          </li>
+          
+
+        </ul>
+        
+
+        <p
+          class="MuiTypography-root MuiTypography-body2 css-nnmmdo-MuiTypography-root"
+        >
+          Hakukentässä on ruksi, jota painamalla voit tyhjentää haun. Palvelukartan hakukentän nuolipainikkeella voit palata edelliseen näkymään. Jos hakutulos on tyhjä, tarkista kirjoitusasu ja aluevalinnat.
+        </p>
+        
+
+        <h4
+          class="MuiTypography-root MuiTypography-body2 css-5rfmx0-MuiTypography-root"
+        >
+          Voit järjestää hakutulokset:
+        </h4>
+        
+
+        <ul>
+          
+
+          <li>
+            <p
+              class="MuiTypography-root MuiTypography-body2 css-5rfmx0-MuiTypography-root"
+            >
+              aakkosjärjestys, A-Ö
+            </p>
+          </li>
+          
+
+          <li>
+            <p
+              class="MuiTypography-root MuiTypography-body2 css-5rfmx0-MuiTypography-root"
+            >
+              käänteinen aakkosjärjestys Ö-A
+            </p>
+          </li>
+          
+
+          <li>
+            <p
+              class="MuiTypography-root MuiTypography-body2 css-5rfmx0-MuiTypography-root"
+            >
+              esteettömin ensin
+            </p>
+          </li>
+          
+
+          <li>
+            <p
+              class="MuiTypography-root MuiTypography-body2 css-5rfmx0-MuiTypography-root"
+            >
+              lähin ensin (anna palvelukartalle lupa paikantaa sinut)
+            </p>
+          </li>
+          
+
+        </ul>
+        
+
+        <p
+          class="MuiTypography-root MuiTypography-body2 css-nnmmdo-MuiTypography-root"
+        >
+          Jos olet valinnut jonkin esteettömyysasetuksen (esim. käytän kuulolaitetta), hakutulos järjestyy esteettömin palvelu ensin (palvelussa on induktiosilmukka). Jos vaihdat esteettömyysasetusta, järjestys voi muuttua.
+        </p>
+        
+
+        <p
+          class="MuiTypography-root MuiTypography-body2 css-nnmmdo-MuiTypography-root"
+        >
+          Jos annat luvan Palvelukartan paikantaa sinut, hakutulos järjestyy sinua lähin palvelu ensin. Osoitteen voi myös kirjoittaa käsin.
+        </p>
+        
+
+        <h3
+          class="MuiTypography-root MuiTypography-body2 css-5rfmx0-MuiTypography-root"
+        >
+          Osoitehaku
+        </h3>
+        
+
+        <p
+          class="MuiTypography-root MuiTypography-body2 css-nnmmdo-MuiTypography-root"
+        >
+          Voit kirjoittaa hakukenttään kadun nimen, josta haluat etsiä palveluja. Haku antaa sinulle valittavaksi kadun nimen, valittuasi tulee osoite-ehdotukset. Helsingin kohdalla tulee myös alue-ehdotuksia (esim. oppilaaksiotto-alueet).
+        </p>
+        
+
+        <h4
+          class="MuiTypography-root MuiTypography-body2 css-5rfmx0-MuiTypography-root"
+        >
+          Kohdasta "Alueesi palvelut" löydät mm. seuraavat palvelut:
+        </h4>
+        
+
+        <ul>
+          
+
+          <li>
+            <p
+              class="MuiTypography-root MuiTypography-body2 css-5rfmx0-MuiTypography-root"
+            >
+              terveyskeskus
+            </p>
+          </li>
+          
+
+          <li>
+            <p
+              class="MuiTypography-root MuiTypography-body2 css-5rfmx0-MuiTypography-root"
+            >
+              neuvola
+            </p>
+          </li>
+          
+
+          <li>
+            <p
+              class="MuiTypography-root MuiTypography-body2 css-5rfmx0-MuiTypography-root"
+            >
+              suomen- ja ruotsinkielinen esiopetus
+            </p>
+          </li>
+          
+
+          <li>
+            <p
+              class="MuiTypography-root MuiTypography-body2 css-5rfmx0-MuiTypography-root"
+            >
+              suomen- ja ruotsinkielinen ala-aste
+            </p>
+          </li>
+          
+
+          <li>
+            <p
+              class="MuiTypography-root MuiTypography-body2 css-5rfmx0-MuiTypography-root"
+            >
+              suomen- ja ruotsinkielinen ylä-aste
+            </p>
+          </li>
+          
+
+          <li>
+            <p
+              class="MuiTypography-root MuiTypography-body2 css-5rfmx0-MuiTypography-root"
+            >
+              pysäköintialueet
+            </p>
+          </li>
+          
+
+          <li>
+            <p
+              class="MuiTypography-root MuiTypography-body2 css-5rfmx0-MuiTypography-root"
+            >
+              postinumeroalue
+            </p>
+          </li>
+          
+
+          <li>
+            <p
+              class="MuiTypography-root MuiTypography-body2 css-5rfmx0-MuiTypography-root"
+            >
+              kaupunginosa
+            </p>
+          </li>
+          
+
+          <li>
+            <p
+              class="MuiTypography-root MuiTypography-body2 css-5rfmx0-MuiTypography-root"
+            >
+              suojelupiiri
+            </p>
+          </li>
+          
+
+          <li>
+            <p
+              class="MuiTypography-root MuiTypography-body2 css-5rfmx0-MuiTypography-root"
+            >
+              suojelulohko
+            </p>
+          </li>
+          
+
+          <li>
+            <p
+              class="MuiTypography-root MuiTypography-body2 css-5rfmx0-MuiTypography-root"
+            >
+              suojelu alalohko
+            </p>
+          </li>
+          
+
+          <li>
+            <p
+              class="MuiTypography-root MuiTypography-body2 css-5rfmx0-MuiTypography-root"
+            >
+              luonnonsuojelu-alueet
+            </p>
+          </li>
+          
+
+        </ul>
+        
+
+        <h3
+          class="MuiTypography-root MuiTypography-body2 css-5rfmx0-MuiTypography-root"
+        >
+          Palveluluettelo
+        </h3>
+        
+
+        <p
+          class="MuiTypography-root MuiTypography-body2 css-nnmmdo-MuiTypography-root"
+        >
+          Palveluluettelo löytyy Palvelukartan ylä-osioista. Voit etsiä palvelupuun avulla yhtä tai useampaa palvelukokonaisuutta. Esim. lähiliikunta, liikuntapuistot ja päiväkoti. Muista painaa lopuksi "Tee haku" painiketta.
+        </p>
+        
+
+        <h3
+          class="MuiTypography-root MuiTypography-body2 css-5rfmx0-MuiTypography-root"
+        >
+          Omat asetukset
+        </h3>
+        
+
+        <p
+          class="MuiTypography-root MuiTypography-body2 css-nnmmdo-MuiTypography-root"
+        >
+          Sivun ylälaidasta sekä hakuruudun alapuolelta löydät omat asetukset. Täältä voit valita seuraavista itsellesi sopivat asetukset:
+        </p>
+        
+
+        <ul>
+          
+
+          <li>
+            <p
+              class="MuiTypography-root MuiTypography-body2 css-5rfmx0-MuiTypography-root"
+            >
+              
+
+              <p
+                class="MuiTypography-root MuiTypography-body2 css-nnmmdo-MuiTypography-root"
+              >
+                <strong>
+                  Aistirajoitteet:
+                </strong>
+              </p>
+              
+
+              <ul>
+                
+
+                <li>
+                  <p
+                    class="MuiTypography-root MuiTypography-body2 css-5rfmx0-MuiTypography-root"
+                  >
+                    käytän kuulolaitetta
+                  </p>
+                </li>
+                
+
+                <li>
+                  <p
+                    class="MuiTypography-root MuiTypography-body2 css-5rfmx0-MuiTypography-root"
+                  >
+                    olen näkövammainen
+                  </p>
+                </li>
+                
+
+                <li>
+                  <p
+                    class="MuiTypography-root MuiTypography-body2 css-5rfmx0-MuiTypography-root"
+                  >
+                    minun on vaikea erottaa värejä
+                  </p>
+                </li>
+                
+
+              </ul>
+              
+
+            </p>
+          </li>
+          
+
+          <li>
+            <p
+              class="MuiTypography-root MuiTypography-body2 css-5rfmx0-MuiTypography-root"
+            >
+              
+
+              <p
+                class="MuiTypography-root MuiTypography-body2 css-nnmmdo-MuiTypography-root"
+              >
+                <strong>
+                  Liikkumisrajoitteet:
+                </strong>
+              </p>
+              
+
+              <ul>
+                
+
+                <li>
+                  <p
+                    class="MuiTypography-root MuiTypography-body2 css-5rfmx0-MuiTypography-root"
+                  >
+                    käytän pyörätuolia
+                  </p>
+                </li>
+                
+
+                <li>
+                  <p
+                    class="MuiTypography-root MuiTypography-body2 css-5rfmx0-MuiTypography-root"
+                  >
+                    olen liikkumisesteinen
+                  </p>
+                </li>
+                
+
+                <li>
+                  <p
+                    class="MuiTypography-root MuiTypography-body2 css-5rfmx0-MuiTypography-root"
+                  >
+                    käytän rollaattoria
+                  </p>
+                </li>
+                
+
+                <li>
+                  <p
+                    class="MuiTypography-root MuiTypography-body2 css-5rfmx0-MuiTypography-root"
+                  >
+                    työnnän rattaita
+                  </p>
+                </li>
+                
+
+              </ul>
+              
+
+            </p>
+          </li>
+          
+
+          <li>
+            <p
+              class="MuiTypography-root MuiTypography-body2 css-5rfmx0-MuiTypography-root"
+            >
+              
+
+              <p
+                class="MuiTypography-root MuiTypography-body2 css-nnmmdo-MuiTypography-root"
+              >
+                <strong>
+                  Kaupunkiasetuksesi:
+                </strong>
+              </p>
+              
+
+              <ul>
+                
+
+                <li>
+                  <p
+                    class="MuiTypography-root MuiTypography-body2 css-5rfmx0-MuiTypography-root"
+                  >
+                    Helsinki
+                  </p>
+                </li>
+                
+
+                <li>
+                  <p
+                    class="MuiTypography-root MuiTypography-body2 css-5rfmx0-MuiTypography-root"
+                  >
+                    Espoo
+                  </p>
+                </li>
+                
+
+                <li>
+                  <p
+                    class="MuiTypography-root MuiTypography-body2 css-5rfmx0-MuiTypography-root"
+                  >
+                    Vantaa
+                  </p>
+                </li>
+                
+
+                <li>
+                  <p
+                    class="MuiTypography-root MuiTypography-body2 css-5rfmx0-MuiTypography-root"
+                  >
+                    Kauniainen
+                  </p>
+                </li>
+                
+
+                <li>
+                  <p
+                    class="MuiTypography-root MuiTypography-body2 css-5rfmx0-MuiTypography-root"
+                  >
+                    Kirkkonummi
+                  </p>
+                </li>
+                
+
+              </ul>
+              
+
+            </p>
+          </li>
+          
+
+        </ul>
+        
+
+        <p
+          class="MuiTypography-root MuiTypography-body2 css-nnmmdo-MuiTypography-root"
+        >
+          Jos valitset jonkin esteettömyysasetuksen, hakemasi toimipistesivu näyttää sinulle esimerkiksi, miten pääset rollaattorilla toimipisteeseen ja mitkä ovat mahdolliset esteet siellä.
+        </p>
+        
+
+        <p
+          class="MuiTypography-root MuiTypography-body2 css-nnmmdo-MuiTypography-root"
+        >
+          Kun valitset jonkin kaupungin, hakutulokset kohdistuvat ainoastaan tämän kaupungin tietoihin. Jos et ole valinnut yhtäkään kaupunkia, haku kohdistuu kaikkiin kaupunkeihin.
+        </p>
+        
+
+        <h4
+          class="MuiTypography-root MuiTypography-body2 css-5rfmx0-MuiTypography-root"
+        >
+          Karttatyökalut
+        </h4>
+        
+
+        <p
+          class="MuiTypography-root MuiTypography-body2 css-nnmmdo-MuiTypography-root"
+        >
+          Karttatyökaluista löydät mahdollisuuksia hyödyntää Palvelukarttaa seuraavien työkalujen avulla:
+        </p>
+        
+
+        <ul>
+          
+
+          <li>
+            <p
+              class="MuiTypography-root MuiTypography-body2 css-5rfmx0-MuiTypography-root"
+            >
+              Palvelukartan upotustyökalu
+            </p>
+          </li>
+          
+
+          <li>
+            <p
+              class="MuiTypography-root MuiTypography-body2 css-5rfmx0-MuiTypography-root"
+            >
+              Lataa tiedot
+            </p>
+          </li>
+          
+
+          <li>
+            <p
+              class="MuiTypography-root MuiTypography-body2 css-5rfmx0-MuiTypography-root"
+            >
+              Tulosta
+            </p>
+          </li>
+          
+
+          <li>
+            <p
+              class="MuiTypography-root MuiTypography-body2 css-5rfmx0-MuiTypography-root"
+            >
+              Mittaa etäisyys hiirellä
+            </p>
+          </li>
+          
+
+        </ul>
+        
+
+        <h4
+          class="MuiTypography-root MuiTypography-body2 css-5rfmx0-MuiTypography-root"
+        >
+          Karttapohjan asetukset
+        </h4>
+        
+
+        <p
+          class="MuiTypography-root MuiTypography-body2 css-nnmmdo-MuiTypography-root"
+        >
+          Löydät halutun karttapohjan karttatyökaluista. Voit valita karttapohjaksi seuraavat:
+        </p>
+        
+
+        <ul>
+          
+
+          <li>
+            <p
+              class="MuiTypography-root MuiTypography-body2 css-5rfmx0-MuiTypography-root"
+            >
+              palvelukartta/oletuskartta
+            </p>
+          </li>
+          
+
+          <li>
+            <p
+              class="MuiTypography-root MuiTypography-body2 css-5rfmx0-MuiTypography-root"
+            >
+              ilmakuva
+            </p>
+          </li>
+          
+
+          <li>
+            <p
+              class="MuiTypography-root MuiTypography-body2 css-5rfmx0-MuiTypography-root"
+            >
+              opaskartta
+            </p>
+          </li>
+          
+
+          <li>
+            <p
+              class="MuiTypography-root MuiTypography-body2 css-5rfmx0-MuiTypography-root"
+            >
+              korkeakontrastinen kartta
+            </p>
+          </li>
+          
+
+        </ul>
+        
+
+        <h3
+          class="MuiTypography-root MuiTypography-body2 css-5rfmx0-MuiTypography-root"
+        >
+          Palaute
+        </h3>
+        
+
+        <p
+          class="MuiTypography-root MuiTypography-body2 css-nnmmdo-MuiTypography-root"
+        >
+          Kiitämme kaikesta palautteesta, jotta voimme kehittää Palvelukarttaa yhä paremmaksi. Voit lähettää Palvelukartasta yleistä palautetta kartan kehittäjille: 
+          <a
+            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-kawbi1-MuiTypography-root-MuiLink-root"
+            href="https://palvelukartta.hel.fi/fi/feedback"
+            target="_blank"
+          >
+            <span
+              class="MuiTypography-root MuiTypography-string css-z2uw0f-MuiTypography-root"
+            >
+              https://palvelukartta.hel.fi/fi/feedback
+            </span>
+          </a>
+           (linkki, avautuu uudella välilehdellä).
+        </p>
+        
+
+        <p
+          class="MuiTypography-root MuiTypography-body2 css-nnmmdo-MuiTypography-root"
+        >
+          Voit lähettää toimipisteeseen liittyvää palautetta suoraan palvelukartan toimipistesivulta. Hae haluamasi toimipiste, niin löydät palautelomakkeen toimipisteen tiedoista perustiedot –välilehdeltä.
+        </p>
+        
+
+        <h3
+          class="MuiTypography-root MuiTypography-body2 css-5rfmx0-MuiTypography-root"
+        >
+          Tiedot ja tekijänoikeudet
+        </h3>
+        
+
+        <p
+          class="MuiTypography-root MuiTypography-body2 css-nnmmdo-MuiTypography-root"
+        >
+          Palvelukartta on rakennettu mahdollisimman täydellisesti avointa dataa ja avointa lähdekoodia käyttäen. Kartan lähdekoodi löytyy GitHubista ja sen kehittämiseen rohkaistaan.
+        </p>
+        
+
+        <ul>
+          
+
+          <li>
+            <p
+              class="MuiTypography-root MuiTypography-body2 css-5rfmx0-MuiTypography-root"
+            >
+              <a
+                class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-kawbi1-MuiTypography-root-MuiLink-root"
+                href="https://github.com/City-of-Helsinki/servicemap-ui/"
+                target="_blank"
+              >
+                <span
+                  class="MuiTypography-root MuiTypography-string css-z2uw0f-MuiTypography-root"
+                >
+                  Sovelluksen lähdekoodi
+                </span>
+              </a>
+            </p>
+          </li>
+          
+
+          <li>
+            <p
+              class="MuiTypography-root MuiTypography-body2 css-5rfmx0-MuiTypography-root"
+            >
+              <a
+                class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-kawbi1-MuiTypography-root-MuiLink-root"
+                href="https://github.com/City-of-Helsinki/smbackend/"
+                target="_blank"
+              >
+                <span
+                  class="MuiTypography-root MuiTypography-string css-z2uw0f-MuiTypography-root"
+                >
+                  Palvelinsovelluksen lähdekoodi
+                </span>
+              </a>
+            </p>
+          </li>
+          
+
+        </ul>
+        
+
+        <p
+          class="MuiTypography-root MuiTypography-body2 css-nnmmdo-MuiTypography-root"
+        >
+          Karttatiedot haetaan avoimesta OpenStreetMapista ja niiden tekijänoikeus kuuluu OpenStreetMapin tekijöille. Reittitiedot tuodaan palveluumme HSL:n reittioppaasta.
+        </p>
+        
+
+        <p
+          class="MuiTypography-root MuiTypography-body2 css-nnmmdo-MuiTypography-root"
+        >
+          Palvelukartan tietoja voit käyttää vapaasti. Tietoja käytettäessä mainittava Palvelukartta ja eli käytetään 
+          <a
+            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-kawbi1-MuiTypography-root-MuiLink-root"
+            href="https://creativecommons.org/licenses/by/4.0/deed.fi"
+            target="_blank"
+          >
+            <span
+              class="MuiTypography-root MuiTypography-string css-z2uw0f-MuiTypography-root"
+            >
+              Creative Commons 4.0 BY lisenssiä
+            </span>
+          </a>
+          .
+        </p>
+        
+
+        <p
+          class="MuiTypography-root MuiTypography-body2 css-nnmmdo-MuiTypography-root"
+        >
+          Osa yksityisten palvelujen sekä veistosten ja julkisen taiteen pisteiden valokuvat ovat tekijänoikeussuojattuja, eikä niitä voi käyttää kaupallisiin tarkoituksiin.
+        </p>
+        
+
+        <p
+          class="MuiTypography-root MuiTypography-body2 css-nnmmdo-MuiTypography-root"
+        >
+          <a
+            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-kawbi1-MuiTypography-root-MuiLink-root"
+            href="https://kaupunkialustana.hel.fi/ohjeet-2/palvelukartta/palvelukartan-ohjeita/"
+            target="_blank"
+          >
+            <span
+              class="MuiTypography-root MuiTypography-string css-z2uw0f-MuiTypography-root"
+            >
+              Lisätiedot ja ohjeet
+            </span>
+          </a>
+          .
+        </p>
+        
+
+        <p
+          class="MuiTypography-root MuiTypography-body2 css-nnmmdo-MuiTypography-root"
+        >
+          Rekisteriselosteet ovat listattu 
+          <a
+            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-kawbi1-MuiTypography-root-MuiLink-root"
+            href="https://www.hel.fi/fi/paatoksenteko-ja-hallinto/tietoa-helsingista/tietosuoja-ja-tiedonhallinta/tietosuoja/tietosuojaselosteet-integritetspolicyer-data-protection-notices"
+            target="_blank"
+          >
+            <span
+              class="MuiTypography-root MuiTypography-string css-z2uw0f-MuiTypography-root"
+            >
+              Helsingin kaupungin omille sivuille
+            </span>
+          </a>
+          .
+        </p>
+        
+
+        <h3
+          class="MuiTypography-root MuiTypography-body2 css-5rfmx0-MuiTypography-root"
+        >
+          Evästeet
+        </h3>
+        
+
+        <p
+          class="MuiTypography-root MuiTypography-body2 css-nnmmdo-MuiTypography-root"
+        >
+          Käytämme sivustollamme evästeitä parantaaksemme sivuston suorituskykyä. Sivustolla kerätään alla kuvatut tiedot kävijöistä. Näitä tietoja käytetään sivuston käyttöliittymän ja käyttökokemuksen parantamiseen sekä kävijämäärien tilastolliseen seurantaan. Tietoja ei luovuteta ulkopuolisille tahoille.
+        </p>
+        
+
+        <p
+          class="MuiTypography-root MuiTypography-body2 css-nnmmdo-MuiTypography-root"
+        >
+          Sivustolla käytetään evästeitä (cookies) käyttäjäistunnon ylläpitämiseksi. Teknisiin evästeisiin ei kerätä eikä tallenneta käyttäjän yksilöiviä henkilötietoja.
+        </p>
+        
+
+        <p
+          class="MuiTypography-root MuiTypography-body2 css-nnmmdo-MuiTypography-root"
+        >
+          Käyttäjällä on mahdollisuus estää evästeiden käyttö muuttamalla selaimensa asetuksia. Sivuston käyttäminen ilman evästeitä saattaa kuitenkin vaikuttaa sivujen toiminnallisuuteen.
+        </p>
+        
+
+        <p
+          class="MuiTypography-root MuiTypography-body2 css-nnmmdo-MuiTypography-root"
+        >
+          Palvelun kävijätilastointia varten kerätyt tiedot anonymisoidaan, joten niitä ei voida liittää yksittäiseen henkilöön. Tällaisia tietoja ovat:
+        </p>
+        
+
+        <ul>
+          
+
+          <li>
+            <p
+              class="MuiTypography-root MuiTypography-body2 css-5rfmx0-MuiTypography-root"
+            >
+              IP-osoite, josta verkkosivuille on siirrytty
+            </p>
+          </li>
+          
+
+          <li>
+            <p
+              class="MuiTypography-root MuiTypography-body2 css-5rfmx0-MuiTypography-root"
+            >
+              ajankohta
+            </p>
+          </li>
+          
+
+          <li>
+            <p
+              class="MuiTypography-root MuiTypography-body2 css-5rfmx0-MuiTypography-root"
+            >
+              palvelussa käytetyt sivut
+            </p>
+          </li>
+          
+
+          <li>
+            <p
+              class="MuiTypography-root MuiTypography-body2 css-5rfmx0-MuiTypography-root"
+            >
+              selaintyyppi
+            </p>
+          </li>
+          
+
+          <li>
+            <p
+              class="MuiTypography-root MuiTypography-body2 css-5rfmx0-MuiTypography-root"
+            >
+              alueellinen sijaintitieto, josta käyttäjää ei voi yksilöidä.
+            </p>
+          </li>
+          
+
+        </ul>
+        
+
+        <p
+          class="MuiTypography-root MuiTypography-body2 css-nnmmdo-MuiTypography-root"
+        >
+          Lisää tietoa palvelun evästeistä: 
+          <a
+            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-kawbi1-MuiTypography-root-MuiLink-root"
+            href="https://www.hel.fi/helsinki/fi/kaupunki-ja-hallinto/tietoa-helsingista/tietoa-hel-fista/turvallisuus"
+            target="_blank"
+          >
+            <span
+              class="MuiTypography-root MuiTypography-string css-z2uw0f-MuiTypography-root"
+            >
+              Verkkopalvelun tietosuoja ja evästeet | Helsingin kaupunki
+            </span>
+          </a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+`;
