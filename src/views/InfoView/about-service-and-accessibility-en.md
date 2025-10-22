@@ -123,9 +123,13 @@ The Service Map has been developed as extensively as possible by using open data
 - [Source code for the application](https://github.com/City-of-Helsinki/servicemap-ui/)
 - [Source code for the server application](https://github.com/City-of-Helsinki/smbackend/)
 
-The data provided by the service is compiled from OpenStreetMap, whose copyright belongs to its makers. Information on public transport journeys is compiled from Helsinki Region Transport's Journey Planner service. Service Map data can be used freely, with the exception of photos of public artworks, which are protected by copyright and cannot be used for commercial purposes.
+Map data is retrieved from the open OpenStreetMap, and the copyright belongs to the creators of OpenStreetMap. Route information is imported into our service from the HSL route guide.
 
-File descriptions can be found on the City of Helsinki website at: [https://www.hel.fi/fi/paatoksenteko-ja-hallinto/tietoa-helsingista/tietosuoja-ja-tiedonhallinta/tietosuoja/tietosuojaselosteet](https://www.hel.fi/fi/paatoksenteko-ja-hallinto/tietoa-helsingista/tietosuoja-ja-tiedonhallinta/tietosuoja/tietosuojaselosteet)
+You can use the information on the service map freely. When using the information, please mention the service map and that the [Creative Commons 4.0 BY license](https://creativecommons.org/licenses/by/4.0/deed.en) is used.
+
+Some of the photos of private services, sculptures, and public art are copyrighted and may not be used for commercial purposes.
+
+The register descriptions are listed on the [City of Helsinki's own website](https://www.hel.fi/fi/paatoksenteko-ja-hallinto/tietoa-helsingista/tietosuoja-ja-tiedonhallinta/tietosuoja/tietosuojaselosteet-integritetspolicyer-data-protection-notices).
 
 ## Cookies
 

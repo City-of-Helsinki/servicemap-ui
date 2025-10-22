@@ -123,7 +123,15 @@ Palvelukartta on rakennettu mahdollisimman täydellisesti avointa dataa ja avoin
 - [Sovelluksen lähdekoodi](https://github.com/City-of-Helsinki/servicemap-ui/)
 - [Palvelinsovelluksen lähdekoodi](https://github.com/City-of-Helsinki/smbackend/)
 
-Karttatiedot haetaan avoimesta OpenStreetMapista ja niiden tekijänoikeus kuuluu OpenStreetMapin tekijöille. Reittitiedot tuodaan palveluumme HSL:n reittioppaasta. Palvelukartan tietoja voit käyttää vapaasti, paitsi veistosten ja julkisen taiteen pisteiden valokuvat, jotka ovat tekijänoikeussuojattuja, eikä niitä voi käyttää kaupallisiin tarkoituksiin. Rekisteriselosteet löydät kootusti hel.fi sivuilta: [https://www.hel.fi/fi/paatoksenteko-ja-hallinto/tietoa-helsingista/tietosuoja-ja-tiedonhallinta/tietosuoja/tietosuojaselosteet](https://www.hel.fi/fi/paatoksenteko-ja-hallinto/tietoa-helsingista/tietosuoja-ja-tiedonhallinta/tietosuoja/tietosuojaselosteet)
+Karttatiedot haetaan avoimesta OpenStreetMapista ja niiden tekijänoikeus kuuluu OpenStreetMapin tekijöille. Reittitiedot tuodaan palveluumme HSL:n reittioppaasta.
+
+Palvelukartan tietoja voit käyttää vapaasti. Tietoja käytettäessä mainittava Palvelukartta ja eli käytetään [Creative Commons 4.0 BY lisenssiä](https://creativecommons.org/licenses/by/4.0/deed.fi).
+
+Osa yksityisten palvelujen sekä veistosten ja julkisen taiteen pisteiden valokuvat ovat tekijänoikeussuojattuja, eikä niitä voi käyttää kaupallisiin tarkoituksiin.
+
+[Lisätiedot ja ohjeet](https://kaupunkialustana.hel.fi/ohjeet-2/palvelukartta/palvelukartan-ohjeita/).
+
+Rekisteriselosteet ovat listattu [Helsingin kaupungin omille sivuille](https://www.hel.fi/fi/paatoksenteko-ja-hallinto/tietoa-helsingista/tietosuoja-ja-tiedonhallinta/tietosuoja/tietosuojaselosteet-integritetspolicyer-data-protection-notices).
 
 ## Evästeet
 
