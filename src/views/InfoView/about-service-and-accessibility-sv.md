@@ -123,9 +123,13 @@ Servicekartan är uppbyggd genom att använda så mycket öppna data och öppen 
 - [Applikationens källkod](https://github.com/City-of-Helsinki/servicemap-ui/)
 - [Serverapplikationens källkod](https://github.com/City-of-Helsinki/smbackend/)
 
-Kartuppgifterna söks från öppna OpenStreetMap och uppgifternas upphovsrätt tillhör tillverkarna av OpenStreetMap. Ruttinformationen hämtas till vår tjänst från HSL: s reseplanerare. Du kan fritt använda servicekartans uppgifter, förutom fotografier på skulpturer och offentlig konst som skyddas av upphovsrätten och inte får användas för kommersiella syften.
+Kartuppgifterna hämtas från OpenStreetMap och deras upphovsrätt tillhör OpenStreetMaps upphovsmän. Ruttuppgifterna hämtas till vår tjänst HRT: s reseplanerare.
 
-Registerbeskrivningarna finns samlade på hel.fi sidan: [https://www.hel.fi/fi/paatoksenteko-ja-hallinto/tietoa-helsingista/tietosuoja-ja-tiedonhallinta/tietosuoja/tietosuojaselosteet](https://www.hel.fi/fi/paatoksenteko-ja-hallinto/tietoa-helsingista/tietosuoja-ja-tiedonhallinta/tietosuoja/tietosuojaselosteet)
+Uppgifterna på servicekartan kan du använda fritt. Vid användning av informationen, ange en servicekarta och använda [Creative Commons 4.0 BY licens](https://creativecommons.org/licenses/by/4.0/deed.sv).
+
+En del av fotografierna av privata tjänster samt skulpturer och offentliga konstpunkter är upphovsrättsskyddade och kan inte användas för kommersiella ändamål.
+
+Registerbeskrivningarna är listade på [Helsingfors stads egna sidor](https://www.hel.fi/fi/paatoksenteko-ja-hallinto/tietoa-helsingista/tietosuoja-ja-tiedonhallinta/tietosuoja/tietosuojaselosteet-integritetspolicyer-data-protection-notices).
 
 ## Kakor
 
