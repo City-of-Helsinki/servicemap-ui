@@ -52,6 +52,14 @@ const HomeLogo = React.forwardRef((props, ref) => {
   return (
     <div ref={ref} role="img" {...rest}>
       <StyledImage src={logo} alt="" />
+
+      <button
+        onClick={() => {
+          throw new Error('Mikko testing setry error!');
+        }}
+      >
+        Break the world
+      </button>
     </div>
   );
 });
