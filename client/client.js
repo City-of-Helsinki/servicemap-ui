@@ -31,6 +31,22 @@ if (config.sentryDSN) {
       'TypeError: NetworkError when attempting to fetch resource.',
       /adrum/,
     ],
+    environment: config.sentryEnvironment,
+    release: config.sentryRelease,
+    integrations: [
+      Sentry.browserTracingIntegration(),
+      Sentry.replayIntegration(),
+    ],
+    tracesSampleRate: parseFloat(config.sentryTracesSampleRate || '0'),
+    tracePropagationTargets: (config.sentryTracePropagationTargets || '').split(','),
+    replaysSessionSampleRate: parseFloat(config.sentryReplaysSessionSampleRate || '0'),
+    replaysOnErrorSampleRate: parseFloat(config.sentryReplaysOnErrorSampleRate || '0'),
+    initialScope: {
+      tags: {
+        context: 'client',
+        runtime: 'browser',
+      },
+    },
   });
 }
 

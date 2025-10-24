@@ -1,6 +1,7 @@
 import { CacheProvider } from '@emotion/react';
 import createEmotionServer from '@emotion/server/create-instance';
 import { ServerStyleSheets } from '@mui/styles';
+import * as Sentry from '@sentry/node';
 import crypto from 'crypto';
 import dotenv from 'dotenv';
 import express from 'express';
@@ -43,14 +44,23 @@ import {
 
 dotenv.config();
 
-// Get sentry dsn from environtment variables
-const sentryDSN = process.env.SENTRY_DSN_SERVER;
-let Sentry = null;
-
-if (sentryDSN) {
-  Sentry = require('@sentry/node');
-  Sentry.init({ dsn: sentryDSN });
-  console.log(`Initialized Sentry client with DSN ${sentryDSN}`);
+// Initialize Sentry
+if (process.env.SENTRY_DSN_SERVER) {
+  Sentry.init({
+    dsn: process.env.SENTRY_DSN_SERVER,
+    environment: process.env.SENTRY_ENVIRONMENT || process.env.NODE_ENV,
+    release: process.env.SENTRY_RELEASE,
+    tracesSampleRate: parseFloat(process.env.SENTRY_TRACES_SAMPLE_RATE || '0'),
+    initialScope: {
+      tags: {
+        context: 'server',
+        runtime: 'node',
+      },
+    },
+  });
+  console.log(
+    `Initialized Sentry server with DSN ${process.env.SENTRY_DSN_SERVER}`
+  );
 }
 
 const setupTests = () => {
@@ -193,7 +203,7 @@ app.get('/*', (req, res, next) => {
 });
 
 // Setup Sentry error handler
-if (Sentry) {
+if (process.env.SENTRY_DSN_SERVER) {
   Sentry.setupExpressErrorHandler(app);
 }
 console.log('Application version tag:', GIT_TAG, 'commit:', GIT_COMMIT);
