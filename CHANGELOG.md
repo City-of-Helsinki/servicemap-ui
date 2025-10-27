@@ -1,5 +1,20 @@
 # Changelog
 
+## [2.9.0](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.8.0...servicemap-ui-v2.9.0) (2025-10-27)
+
+
+### Features
+
+* About service add Creative Commons license Ref: PL-154 ([b60a623](https://github.com/City-of-Helsinki/servicemap-ui/commit/b60a623c7f9e965d81fabdbd49b6f927a238171e))
+* Add InfoView unit tests Ref: PL-154 ([65c4a22](https://github.com/City-of-Helsinki/servicemap-ui/commit/65c4a22be7ac6ee9ace50b030d480b69515ea4f9))
+* Cloud sentry PL-143  ([#1284](https://github.com/City-of-Helsinki/servicemap-ui/issues/1284)) ([198d446](https://github.com/City-of-Helsinki/servicemap-ui/commit/198d446502775b72f909557d1120d7d2837ec38d))
+* Remove helsinki maptiles feature flag ([2e25d54](https://github.com/City-of-Helsinki/servicemap-ui/commit/2e25d548ee3d875e83284f4df8b011933acc191b))
+
+
+### Bug Fixes
+
+* TransitStops clear when page changes Ref: PL-136 ([7b53421](https://github.com/City-of-Helsinki/servicemap-ui/commit/7b534218d63ae1bce202fa2b3a9e818cf2524b19))
+
 ## [2.8.0](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.7.0...servicemap-ui-v2.8.0) (2025-10-07)
 
 
