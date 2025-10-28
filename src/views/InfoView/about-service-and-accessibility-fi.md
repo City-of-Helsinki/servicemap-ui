@@ -125,7 +125,7 @@ Palvelukartta on rakennettu mahdollisimman täydellisesti avointa dataa ja avoin
 
 Karttatiedot haetaan avoimesta OpenStreetMapista ja niiden tekijänoikeus kuuluu OpenStreetMapin tekijöille. Reittitiedot tuodaan palveluumme HSL:n reittioppaasta.
 
-Palvelukartan tietoja voit käyttää vapaasti. Tietoja käytettäessä mainittava Palvelukartta ja eli käytetään [Creative Commons 4.0 BY lisenssiä](https://creativecommons.org/licenses/by/4.0/deed.fi).
+Palvelukartan tietoja voit käyttää vapaasti. Tietoja käytettäessä mainittava Palvelukartta eli käytetään [Creative Commons 4.0 BY lisenssiä](https://creativecommons.org/licenses/by/4.0/deed.fi).
 
 Osa yksityisten palvelujen sekä veistosten ja julkisen taiteen pisteiden valokuvat ovat tekijänoikeussuojattuja, eikä niitä voi käyttää kaupallisiin tarkoituksiin.
 
