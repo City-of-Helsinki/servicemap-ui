@@ -956,7 +956,7 @@ exports[`<InfoView /> > should render content 1`] = `
         <p
           class="MuiTypography-root MuiTypography-body2 css-nnmmdo-MuiTypography-root"
         >
-          Palvelukartan tietoja voit käyttää vapaasti. Tietoja käytettäessä mainittava Palvelukartta ja eli käytetään 
+          Palvelukartan tietoja voit käyttää vapaasti. Tietoja käytettäessä mainittava Palvelukartta eli käytetään 
           <a
             class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-kawbi1-MuiTypography-root-MuiLink-root"
             href="https://creativecommons.org/licenses/by/4.0/deed.fi"
