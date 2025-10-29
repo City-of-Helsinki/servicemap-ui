@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.9.1](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.9.0...servicemap-ui-v2.9.1) (2025-10-29)
+
+
+### Bug Fixes
+
+* Remove typo in creative commons text ([#1286](https://github.com/City-of-Helsinki/servicemap-ui/issues/1286)) ([b31b017](https://github.com/City-of-Helsinki/servicemap-ui/commit/b31b0177d37a8a714a1b538d9a77171131ab7b89))
+
 ## [2.9.0](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.8.0...servicemap-ui-v2.9.0) (2025-10-27)
 
 
