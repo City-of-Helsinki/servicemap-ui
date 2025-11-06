@@ -5,7 +5,7 @@ import { Close } from '@mui/icons-material';
 import Accessible from '@mui/icons-material/Accessible';
 import { ButtonBase, Typography } from '@mui/material';
 import PropTypes from 'prop-types';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { useSelector } from 'react-redux';
 
@@ -101,23 +101,31 @@ function TransitStopInfo({ stop = {}, onCloseClick, type = null }) {
 
   useEffect(() => {
     if (type === 'bikeStation') return;
-    fetchStopData(stop).then((stopData) => {
-      if (stopData) {
-        let departureTimes = stopData.data.stop.stoptimesWithoutPatterns;
-        departureTimes.sort(
-          (a, b) =>
-            a.realtimeDeparture +
-            a.serviceDay -
-            (b.realtimeDeparture + b.serviceDay)
-        );
-        departureTimes = departureTimes.slice(0, 5);
+    fetchStopData(stop)
+      .then((stopData) => {
+        if (stopData) {
+          let departureTimes = stopData.data.stop.stoptimesWithoutPatterns;
+          departureTimes.sort(
+            (a, b) =>
+              a.realtimeDeparture +
+              a.serviceDay -
+              (b.realtimeDeparture + b.serviceDay)
+          );
+          departureTimes = departureTimes.slice(0, 5);
 
+          setStopData({
+            departureTimes,
+            wheelchair: stopData.data.stop.wheelchairBoarding,
+          });
+        }
+      })
+      .catch(() => {
+        // Set empty state so UI doesn't break
         setStopData({
-          departureTimes,
-          wheelchair: stopData.data.stop.wheelchairBoarding,
+          departureTimes: [],
+          wheelchair: 'UNKNOWN',
         });
-      }
-    });
+      });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
