@@ -228,7 +228,7 @@ const defaultConfig = {
   "topBarHeight": 90,
   "topBarHeightMobile": 78,
   "bottomNavHeight": 78,
-  "searchTimeout": 15000,
+  "searchTimeout": 30000,
   // locales
   "defaultLocale": 'fi',
   "streetAddressLanguages": ["fi", "sv"],

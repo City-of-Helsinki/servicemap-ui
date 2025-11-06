@@ -1,9 +1,5 @@
 import config from '../../../config';
 
-export const hearingMapAPIName = 'hearingmap';
-export const serviceMapAPIName = 'servicemap';
-export const LinkedEventsAPIName = 'linkedEvens';
-
 export class APIFetchError extends Error {
   constructor(props) {
     super(props);
@@ -23,22 +19,17 @@ export default class HttpClient {
 
   status = '';
 
-  abortController;
-
-  timeout;
-
   onError;
 
   onProgressUpdate;
 
-  constructor(baseURL, apiName) {
+  constructor(baseURL) {
     this.baseURL = baseURL;
-    this.apiName = apiName;
   }
 
   optionsToSearchParams = (options) => {
     if (typeof options !== 'object') {
-      throw APIFetchError(
+      this.throwAPIError(
         'Invalid options provided for HttpClient optionsToSearchParams method'
       );
     }
@@ -56,123 +47,106 @@ export default class HttpClient {
     return params.toString();
   };
 
-  fetchNext = async (query, results) => {
-    const signal = this.abortController?.signal || null;
-    // Clear old timeout
-    this.clearTimeout();
-    // Create new timeout for next fetch
-    this.createTimeout();
+  fetchNext = async (query, results, depth = 0) => {
+    // Prevent infinite recursion
+    if (depth > 100) {
+      this.throwAPIError('Maximum pagination depth exceeded (100 pages)');
+    }
 
-    return fetch(query, { signal })
-      .then((response) => response.json())
-      .then(async (response) => {
-        const combinedResults = [...results, ...response.results];
-        if (this.onProgressUpdate) {
-          this.onProgressUpdate(combinedResults.length, response.count);
-        }
-        if (response.next) {
-          return this.fetchNext(response.next, combinedResults);
-        }
-        return combinedResults;
-      });
-  };
+    // Create per-request abort controller and timeout
+    const abortController = new AbortController();
+    const timeoutId = setTimeout(() => {
+      abortController.abort();
+    }, this.timeoutTimer);
 
-  handleServiceMapResults = async (response, type) => {
-    if (type && type === 'post') {
-      if (response.status >= 200 && response.status <= 299) {
-        return response.statusText;
+    try {
+      const response = await fetch(query, { signal: abortController.signal });
+      clearTimeout(timeoutId);
+
+      let jsonResponse;
+      try {
+        jsonResponse = await response.json();
+      } catch (parseError) {
+        this.throwAPIError(`Failed to parse JSON response: ${parseError.message}`);
       }
-      return false;
+
+      const combinedResults = [...results, ...jsonResponse.results];
+      if (this.onProgressUpdate) {
+        this.onProgressUpdate(combinedResults.length, jsonResponse.count);
+      }
+      
+      if (jsonResponse.next) {
+        return this.fetchNext(jsonResponse.next, combinedResults, depth + 1);
+      }
+      return combinedResults;
+    } catch (error) {
+      clearTimeout(timeoutId);
+      if (error.name === 'AbortError') {
+        this.throwAPIError(`Pagination request timed out after ${this.timeoutTimer}ms`);
+      }
+      throw error;
     }
-    if (type && type === 'count') {
-      return response.count;
-    }
-    if (this.onProgressUpdate) {
-      this.onProgressUpdate(response.results.length, response.count);
-    }
-    if (type && type === 'single') {
-      return response.results;
-    }
-    if (response.next) {
-      return this.fetchNext(response.next, response.results);
-    }
-    return response.results;
   };
 
-  handleLinkedEventsResults = async (response, type) => {
-    if (type && type === 'count') {
-      return response.meta.count;
-    }
-    if (this.onProgressUpdate) {
-      this.onProgressUpdate(response.data.length, response.meta.count);
-    }
-    if (type && type === 'single') {
-      return response.data;
-    }
-    if (response.next) {
-      return this.fetchNext(response.meta.next, response.data);
-    }
-
-    return response.data;
-  };
-
+  // Generic result handler - can be overridden by subclasses
   handleResults = async (response, type) => {
-    if (this.apiName === serviceMapAPIName) {
-      return this.handleServiceMapResults(response, type);
-    }
-    if (this.apiName === LinkedEventsAPIName) {
-      return this.handleLinkedEventsResults(response, type);
-    }
-
-    // Default to given response
     return response;
   };
 
   handleFetch = async (endpoint, url, options = {}, type) => {
-    if (!this.abortController) {
-      this.abortController = new AbortController();
-    }
-    this.status = 'fetching';
-
-    const signal = this.abortController?.signal || null;
-
-    // Since we do not send any POST data to server we expect all fetches to be GET
-    // and utilize search parameters for sending required data
-    if (typeof options !== 'object') {
+    // Validate options
+    if (typeof options !== 'object' || options === null) {
       this.throwAPIError(
         "Invalid options given to HTTPClient's handleFetch method"
       );
     }
-    // Create fetch promise
-    const promise = fetch(`${url}`, { ...options, signal });
 
-    // Create timeout for aborting fetch
-    if (!this.timeout) {
-      this.createTimeout();
-    }
+    // Create per-request abort controller and timeout
+    const abortController = new AbortController();
+    this.status = 'fetching';
 
-    // Preform fetch
-    return promise
-      .then((response) => {
-        if (type === 'post') return response;
-        return response.json();
-      })
-      .then(async (data) => {
-        const results = await this.handleResults(data, type);
-        this.clearTimeout();
-        this.status = 'done';
-        return results;
-      })
-      .catch((e) => {
-        if (e.name === 'AbortError') {
-          this.throwAPIError(`Error ${endpoint} fetch aborted`, e);
-        } else {
-          this.throwAPIError(
-            `Error while fetching ${endpoint}: ${e.message}`,
-            e
-          );
-        }
+    const timeoutId = setTimeout(() => {
+      abortController.abort();
+    }, this.timeoutTimer);
+
+    try {
+      // Perform fetch with per-request abort signal
+      const response = await fetch(url, { 
+        ...options, 
+        signal: abortController.signal 
       });
+
+      clearTimeout(timeoutId);
+
+      let data;
+      if (type === 'post') {
+        data = response;
+      } else {
+        try {
+          data = await response.json();
+        } catch (parseError) {
+          this.throwAPIError(`Failed to parse JSON response from ${endpoint}: ${parseError.message}`);
+        }
+      }
+
+      const results = await this.handleResults(data, type);
+      this.status = 'done';
+      return results;
+
+    } catch (error) {
+      clearTimeout(timeoutId);
+      this.status = 'error';
+
+      if (this.onError) {
+        this.onError(error);
+      }
+
+      if (error.name === 'AbortError') {
+        throw new APIFetchError(`Request to ${endpoint} timed out after ${this.timeoutTimer}ms`);
+      } else {
+        throw new APIFetchError(`Error while fetching ${endpoint}: ${error.message}`, error);
+      }
+    }
   };
 
   // Create a POST fetch request to given endpoint with given data.
@@ -241,9 +215,9 @@ export default class HttpClient {
     );
   };
 
-  getConcurrent = async (endpoint, options) => {
+  getConcurrent = async (endpoint, options, concurrencyLimit = 10) => {
     if (!options?.page_size) {
-      throw APIFetchError(
+      this.throwAPIError(
         'Invalid page_size provided for concurrent search method'
       );
     }
@@ -257,59 +231,75 @@ export default class HttpClient {
       this.onProgressUpdate(null, totalCount);
     }
 
-    // Create promises for each search page
-    const promises = [];
-    for (let i = 1; i <= numberOfPages; i += 1) {
-      options.page = i;
-      const promise = this.getSinglePage(endpoint, options);
-      promises.push(
-        promise.then((results) => {
-          this.clearTimeout();
-          return results;
-        })
-      );
+    // Prevent excessive concurrent requests - increased limit for batched processing
+    if (numberOfPages > 200) {
+      this.throwAPIError(`Too many pages requested (${numberOfPages}). Consider increasing page_size or using pagination.`);
     }
 
-    const results = await Promise.all(promises);
-    return results.flat();
+    // Process pages in batches to limit concurrent requests
+    const BATCH_SIZE = concurrencyLimit;
+    const successfulResults = [];
+    const failedPages = [];
+
+    for (let batchStart = 1; batchStart <= numberOfPages; batchStart += BATCH_SIZE) {
+      const batchEnd = Math.min(batchStart + BATCH_SIZE - 1, numberOfPages);
+      const batchPromises = [];
+
+      // Create batch of promises
+      for (let pageNum = batchStart; pageNum <= batchEnd; pageNum++) {
+        const pageOptions = { ...options, page: pageNum };
+        
+        const pagePromise = this.getSinglePage(endpoint, pageOptions)
+          .then(result => {
+            if (result) {
+              successfulResults.push(...result);
+            }
+            // Update progress as individual pages complete
+            if (this.onProgressUpdate) {
+              this.onProgressUpdate(successfulResults.length, totalCount);
+            }
+            return { status: 'fulfilled', value: result, page: pageNum };
+          })
+          .catch(error => {
+            failedPages.push(pageNum);
+            console.warn(`Page ${pageNum} failed:`, error.message);
+            return { status: 'rejected', reason: error, page: pageNum };
+          });
+        
+        batchPromises.push(pagePromise);
+      }
+
+      // Wait for current batch to complete before starting next batch
+      await Promise.allSettled(batchPromises);
+    }
+
+    // If some pages failed but we got some results, log warning but continue
+    if (failedPages.length > 0 && successfulResults.length > 0) {
+      console.warn(`${failedPages.length} out of ${numberOfPages} pages failed. Returning ${successfulResults.length} results from successful pages.`);
+    }
+
+    // If all pages failed, throw error
+    if (successfulResults.length === 0) {
+      this.throwAPIError(`All ${numberOfPages} pages failed to load`);
+    }
+
+    return successfulResults;
   };
 
-  throwAPIError = (msg, e) => {
+  // Sequential processing method for performance comparison
+  throwAPIError = (msg, originalError) => {
     this.status = 'error';
-    this.clearTimeout();
     if (this.onError) {
-      this.onError(e);
+      this.onError(originalError);
     }
-    throw new APIFetchError(msg, e);
+    throw new APIFetchError(msg, originalError);
   };
 
   getStatus = () => this.status;
 
-  abort = () => {
-    if (!this.abortController?.abort) {
-      throw new APIFetchError(
-        'Invalid AbortController when attempting to abort fetch'
-      );
-    }
-    this.clearTimeout();
-    this.abortController.abort();
-  };
-
-  createTimeout = () => {
-    this.timeout = setTimeout(() => {
-      this.abort();
-    }, this.timeoutTimer);
-  };
-
-  clearTimeout = () => {
-    if (this.timeout) {
-      clearTimeout(this.timeout);
-    }
-  };
-
   setOnProgressUpdate = (onProgressUpdate) => {
     if (typeof onProgressUpdate !== 'function') {
-      throw new APIFetchError(
+      this.throwAPIError(
         'Invalid onProgressUpdate provided for HTTPClient'
       );
     }
@@ -318,18 +308,9 @@ export default class HttpClient {
 
   setOnError = (onError) => {
     if (typeof onError !== 'function') {
-      throw new APIFetchError('Invalid onError provided for HTTPClient');
+      this.throwAPIError('Invalid onError provided for HTTPClient');
     }
     this.onError = onError;
-  };
-
-  setAbortController = (controller) => {
-    if (typeof controller !== 'object') {
-      throw new APIFetchError(
-        'Invalid abort controller provided for HTTPClient'
-      );
-    }
-    this.abortController = controller;
   };
 
   isFetching = () => this.status === 'fetching';
