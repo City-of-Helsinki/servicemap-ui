@@ -33,39 +33,50 @@ const fetchStops = async (map) => {
 
   let stopData = null;
 
-  await Promise.all([
-    // Fetch for transit stops
-    fetch(`${config.digitransitAPI.root}`, {
-      method: 'post',
-      headers: digitransitApiHeaders(),
-      body: `{
-        stopsByBbox(
-          minLat: ${wideBounds.getSouthWest().lat},
-          minLon: ${wideBounds.getSouthWest().lng},
-          maxLat: ${wideBounds.getNorthEast().lat},
-          maxLon: ${wideBounds.getNorthEast().lng}
-        ) {
-          vehicleMode
-          gtfsId
-          name
-          lat
-          lon
-          patterns {
-            headsign
-            route {
-              shortName
+  try {
+    const [transitResponse, subwayResponse] = await Promise.all([
+      // Fetch for transit stops
+      fetch(`${config.digitransitAPI.root}`, {
+        method: 'post',
+        headers: digitransitApiHeaders(),
+        body: `{
+          stopsByBbox(
+            minLat: ${wideBounds.getSouthWest().lat},
+            minLon: ${wideBounds.getSouthWest().lng},
+            maxLat: ${wideBounds.getNorthEast().lat},
+            maxLon: ${wideBounds.getNorthEast().lng}
+          ) {
+            vehicleMode
+            gtfsId
+            name
+            lat
+            lon
+            patterns {
+              headsign
+              route {
+                shortName
+              }
             }
           }
+        }`,
+      }).then((response) => {
+        if (!response.ok) {
+          throw new Error(
+            `API error: ${response.status} ${response.statusText}`
+          );
         }
-      }`,
-    }).then((response) => response.json()),
-    // Fetch for subway entrances
-    unitsFetch({
-      service: 437,
-      page_size: 50,
-      bbox: `${fetchBox}`,
-    }),
-  ]).then((data) => {
+        return response.json();
+      }),
+      // Fetch for subway entrances
+      unitsFetch({
+        service: 437,
+        page_size: 50,
+        bbox: `${fetchBox}`,
+      }),
+    ]);
+
+    const data = [transitResponse, subwayResponse];
+
     // Handle subwaystops and return list of all stops
     const stops = data[0].data.stopsByBbox;
     const subwayStations = stops.filter(
@@ -117,7 +128,11 @@ const fetchStops = async (map) => {
       }
     });
     stopData = filteredStops;
-  });
+  } catch (error) {
+    console.error(error);
+
+    throw error;
+  }
   return stopData;
 };
 
@@ -145,37 +160,54 @@ const fetchStopData = async (stop) => {
     }
   }`;
 
-  const response = await fetch(`${config.digitransitAPI.root}`, {
-    method: 'post',
-    headers: digitransitApiHeaders(),
-    body: requestBody(stop.gtfsId),
-  });
-  const data = await response.json();
-
-  if (stop.secondaryId) {
+  try {
     const response = await fetch(`${config.digitransitAPI.root}`, {
       method: 'post',
       headers: digitransitApiHeaders(),
-      body: requestBody(stop.secondaryId),
+      body: requestBody(stop.gtfsId),
     });
-    const secondData = await response.json();
-    // Combine both timetables into one.
-    const combinedData = data;
-    combinedData.data.stop.stoptimesWithoutPatterns = [
-      ...combinedData.data.stop.stoptimesWithoutPatterns,
-      ...secondData.data.stop.stoptimesWithoutPatterns,
-    ];
-    return combinedData;
-  }
 
-  return data;
+    if (!response.ok) {
+      throw new Error(`API error: ${response.status} ${response.statusText}`);
+    }
+
+    const data = await response.json();
+
+    if (stop.secondaryId) {
+      const response2 = await fetch(`${config.digitransitAPI.root}`, {
+        method: 'post',
+        headers: digitransitApiHeaders(),
+        body: requestBody(stop.secondaryId),
+      });
+
+      if (!response2.ok) {
+        return data; // Return primary data only
+      }
+
+      const secondData = await response2.json();
+      // Combine both timetables into one.
+      const combinedData = data;
+      combinedData.data.stop.stoptimesWithoutPatterns = [
+        ...combinedData.data.stop.stoptimesWithoutPatterns,
+        ...secondData.data.stop.stoptimesWithoutPatterns,
+      ];
+      return combinedData;
+    }
+
+    return data;
+  } catch (error) {
+    console.error(error);
+
+    throw error;
+  }
 };
 
-const fetchBikeStations = async () =>
-  fetch(`${config.digitransitAPI.root}`, {
-    method: 'post',
-    headers: digitransitApiHeaders(),
-    body: `{
+const fetchBikeStations = async () => {
+  try {
+    const response = await fetch(`${config.digitransitAPI.root}`, {
+      method: 'post',
+      headers: digitransitApiHeaders(),
+      body: `{
       bikeRentalStations {
         name
         stationId
@@ -183,6 +215,20 @@ const fetchBikeStations = async () =>
         lon
       }
     }`,
-  }).then((response) => response.json());
+    });
+
+    if (!response.ok) {
+      throw new Error(`API error: ${response.status} ${response.statusText}`);
+    }
+
+    const json = await response.json();
+
+    return json;
+  } catch (error) {
+    console.error(error);
+
+    throw error;
+  }
+};
 
 export { fetchBikeStations, fetchStopData, fetchStops };
