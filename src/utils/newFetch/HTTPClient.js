@@ -74,7 +74,7 @@ export default class HttpClient {
 
       const combinedResults = [...results, ...jsonResponse.results];
       if (this.onProgressUpdate) {
-        this.onProgressUpdate(combinedResults.length, jsonResponse.count);
+        this.onProgressUpdate(combinedResults?.length, jsonResponse.count);
       }
 
       if (jsonResponse.next) {
@@ -272,7 +272,7 @@ export default class HttpClient {
             }
             // Update progress as individual paZges complete
             if (this.onProgressUpdate) {
-              this.onProgressUpdate(successfulResults.length, totalCount);
+              this.onProgressUpdate(successfulResults?.length, totalCount);
             }
             return { status: 'fulfilled', value: result, page: pageNum };
           })
