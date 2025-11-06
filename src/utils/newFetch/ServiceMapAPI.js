@@ -23,7 +23,9 @@ export default class ServiceMapAPI extends HttpClient {
       if (response.status >= 200 && response.status <= 299) {
         return response.statusText;
       }
-      throw new APIFetchError(`POST request failed with status ${response.status}: ${response.statusText}`);
+      throw new APIFetchError(
+        `POST request failed with status ${response.status}: ${response.statusText}`
+      );
     }
     if (type && type === 'count') {
       return response.count;

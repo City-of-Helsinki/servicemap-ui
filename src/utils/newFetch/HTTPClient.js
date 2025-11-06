@@ -67,14 +67,16 @@ export default class HttpClient {
       try {
         jsonResponse = await response.json();
       } catch (parseError) {
-        this.throwAPIError(`Failed to parse JSON response: ${parseError.message}`);
+        this.throwAPIError(
+          `Failed to parse JSON response: ${parseError.message}`
+        );
       }
 
       const combinedResults = [...results, ...jsonResponse.results];
       if (this.onProgressUpdate) {
         this.onProgressUpdate(combinedResults.length, jsonResponse.count);
       }
-      
+
       if (jsonResponse.next) {
         return this.fetchNext(jsonResponse.next, combinedResults, depth + 1);
       }
@@ -82,7 +84,9 @@ export default class HttpClient {
     } catch (error) {
       clearTimeout(timeoutId);
       if (error.name === 'AbortError') {
-        this.throwAPIError(`Pagination request timed out after ${this.timeoutTimer}ms`);
+        this.throwAPIError(
+          `Pagination request timed out after ${this.timeoutTimer}ms`
+        );
       }
       throw error;
     }
@@ -111,9 +115,9 @@ export default class HttpClient {
 
     try {
       // Perform fetch with per-request abort signal
-      const response = await fetch(url, { 
-        ...options, 
-        signal: abortController.signal 
+      const response = await fetch(url, {
+        ...options,
+        signal: abortController.signal,
       });
 
       clearTimeout(timeoutId);
@@ -125,14 +129,15 @@ export default class HttpClient {
         try {
           data = await response.json();
         } catch (parseError) {
-          this.throwAPIError(`Failed to parse JSON response from ${endpoint}: ${parseError.message}`);
+          this.throwAPIError(
+            `Failed to parse JSON response from ${endpoint}: ${parseError.message}`
+          );
         }
       }
 
       const results = await this.handleResults(data, type);
       this.status = 'done';
       return results;
-
     } catch (error) {
       clearTimeout(timeoutId);
       this.status = 'error';
@@ -142,9 +147,14 @@ export default class HttpClient {
       }
 
       if (error.name === 'AbortError') {
-        throw new APIFetchError(`Request to ${endpoint} timed out after ${this.timeoutTimer}ms`);
+        throw new APIFetchError(
+          `Request to ${endpoint} timed out after ${this.timeoutTimer}ms`
+        );
       } else {
-        throw new APIFetchError(`Error while fetching ${endpoint}: ${error.message}`, error);
+        throw new APIFetchError(
+          `Error while fetching ${endpoint}: ${error.message}`,
+          error
+        );
       }
     }
   };
@@ -233,7 +243,9 @@ export default class HttpClient {
 
     // Prevent excessive concurrent requests - increased limit for batched processing
     if (numberOfPages > 200) {
-      this.throwAPIError(`Too many pages requested (${numberOfPages}). Consider increasing page_size or using pagination.`);
+      this.throwAPIError(
+        `Too many pages requested (${numberOfPages}). Consider increasing page_size or using pagination.`
+      );
     }
 
     // Process pages in batches to limit concurrent requests
@@ -241,16 +253,20 @@ export default class HttpClient {
     const successfulResults = [];
     const failedPages = [];
 
-    for (let batchStart = 1; batchStart <= numberOfPages; batchStart += BATCH_SIZE) {
+    for (
+      let batchStart = 1;
+      batchStart <= numberOfPages;
+      batchStart += BATCH_SIZE
+    ) {
       const batchEnd = Math.min(batchStart + BATCH_SIZE - 1, numberOfPages);
       const batchPromises = [];
 
       // Create batch of promises
-      for (let pageNum = batchStart; pageNum <= batchEnd; pageNum++) {
+      for (let pageNum = batchStart; pageNum <= batchEnd; pageNum += 1) {
         const pageOptions = { ...options, page: pageNum };
-        
+
         const pagePromise = this.getSinglePage(endpoint, pageOptions)
-          .then(result => {
+          .then((result) => {
             if (result) {
               successfulResults.push(...result);
             }
@@ -260,12 +276,12 @@ export default class HttpClient {
             }
             return { status: 'fulfilled', value: result, page: pageNum };
           })
-          .catch(error => {
+          .catch((error) => {
             failedPages.push(pageNum);
             console.warn(`Page ${pageNum} failed:`, error.message);
             return { status: 'rejected', reason: error, page: pageNum };
           });
-        
+
         batchPromises.push(pagePromise);
       }
 
@@ -275,7 +291,10 @@ export default class HttpClient {
 
     // If some pages failed but we got some results, log warning but continue
     if (failedPages.length > 0 && successfulResults.length > 0) {
-      console.warn(`${failedPages.length} out of ${numberOfPages} pages failed. Returning ${successfulResults.length} results from successful pages.`);
+      console.warn(
+        `${failedPages.length} out of ${numberOfPages} pages failed. ` +
+          `Returning ${successfulResults.length} results from successful pages.`
+      );
     }
 
     // If all pages failed, throw error
@@ -299,9 +318,7 @@ export default class HttpClient {
 
   setOnProgressUpdate = (onProgressUpdate) => {
     if (typeof onProgressUpdate !== 'function') {
-      this.throwAPIError(
-        'Invalid onProgressUpdate provided for HTTPClient'
-      );
+      this.throwAPIError('Invalid onProgressUpdate provided for HTTPClient');
     }
     this.onProgressUpdate = onProgressUpdate;
   };
