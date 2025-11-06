@@ -270,7 +270,7 @@ export default class HttpClient {
             if (result) {
               successfulResults.push(...result);
             }
-            // Update progress as individual pages complete
+            // Update progress as individual paZges complete
             if (this.onProgressUpdate) {
               this.onProgressUpdate(successfulResults.length, totalCount);
             }
