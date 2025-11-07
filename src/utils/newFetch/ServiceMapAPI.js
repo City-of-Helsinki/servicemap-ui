@@ -68,7 +68,6 @@ export default class ServiceMapAPI extends HttpClient {
       );
     }
     const options = {
-      // TODO: adjust these values for best results and performance
       q: query,
       page_size: 400,
       limit: 2500,
@@ -81,7 +80,7 @@ export default class ServiceMapAPI extends HttpClient {
     };
 
     // Use lower concurrency for searches due to potentially large result sets
-    return this.getConcurrent('search', options, 10);
+    return this.getConcurrent('search', options);
   };
 
   searchSuggestions = async (query, additionalOptions) => {
