@@ -225,7 +225,7 @@ export default class HttpClient {
     );
   };
 
-  getConcurrent = async (endpoint, options, concurrencyLimit = 10) => {
+  getConcurrent = async (endpoint, options, concurrencyLimit = 30) => {
     if (!options?.page_size) {
       this.throwAPIError(
         'Invalid page_size provided for concurrent search method'
