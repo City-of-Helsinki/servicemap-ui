@@ -236,6 +236,15 @@ export default class HttpClient {
 
     // Get amount of search pages
     const totalCount = await this.getCount(endpoint, options);
+
+    // Handle empty results case early
+    if (totalCount === 0) {
+      if (this.onProgressUpdate) {
+        this.onProgressUpdate(0, 0);
+      }
+      return [];
+    }
+
     const numberOfPages = Math.ceil(totalCount / options.page_size);
 
     // Start progress bar
