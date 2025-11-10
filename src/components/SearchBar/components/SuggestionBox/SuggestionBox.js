@@ -6,7 +6,7 @@ import {
 } from '@mui/icons-material';
 import { List } from '@mui/material';
 import PropTypes from 'prop-types';
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -61,6 +61,7 @@ function SuggestionBox(props) {
   const getLocaleText = useLocaleText();
   const getAddressNavigatorParams = useNavigationParams();
   const listRef = useRef(null);
+  const fetchController = useRef(null);
   const selectedCities = useSelector(selectSelectedCities);
   const selectedOrganizations = useSelector(selectSelectedOrganizations);
   const intl = useIntl();
@@ -71,6 +72,18 @@ function SuggestionBox(props) {
     }
     return `${getLocaleText(item.name)}, ${intl.formatMessage({ id: 'search.suggestions.addresses' })}`;
   };
+
+  // Component mount action
+  useEffect(
+    () =>
+      // Component unmount actions
+      () => {
+        if (fetchController && fetchController.current) {
+          fetchController.current.abort();
+        }
+      },
+    []
+  );
 
   const resetSuggestions = () => {
     setSuggestions(null);
@@ -87,9 +100,16 @@ function SuggestionBox(props) {
 
     if (query && query.length > 1) {
       setLoading('suggestions');
+
+      if (fetchController.current) {
+        fetchController.current.abort();
+      }
+      fetchController.current = new AbortController();
+
       dispatch(
         createSuggestions(
           query,
+          fetchController.current,
           getLocaleText,
           selectedCities,
           selectedOrganizations,
@@ -100,6 +120,7 @@ function SuggestionBox(props) {
           if (data === 'error') {
             return;
           }
+          fetchController.current = null;
           if (data.length) {
             setSuggestions(data);
           } else {
@@ -113,6 +134,9 @@ function SuggestionBox(props) {
     } else {
       setSuggestions(null);
       setLoading(false);
+      if (fetchController.current) {
+        fetchController.current.abort();
+      }
     }
   };
 

@@ -3,8 +3,11 @@ import ServiceMapAPI from '../../utils/newFetch/ServiceMapAPI';
 import { getUnitCount } from '../../utils/units';
 
 const createSuggestions =
-  (query, getLocaleText, cities, organizations, locale) => async () => {
+  (query, abortController, getLocaleText, cities, organizations, locale) =>
+  async () => {
     const smAPI = new ServiceMapAPI();
+    smAPI.setAbortController(abortController);
+
     const unitLimit = 10;
     const serviceLimit = 10;
     const addressLimit = 1;

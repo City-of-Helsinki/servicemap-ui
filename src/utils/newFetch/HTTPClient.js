@@ -19,6 +19,8 @@ export default class HttpClient {
 
   status = '';
 
+  abortController;
+
   onError;
 
   onProgressUpdate;
@@ -53,8 +55,8 @@ export default class HttpClient {
       this.throwAPIError('Maximum pagination depth exceeded (100 pages)');
     }
 
-    // Create per-request abort controller and timeout
-    const abortController = new AbortController();
+    // Use external abort controller if provided, otherwise create per-request controller
+    const abortController = this.abortController || new AbortController();
     const timeoutId = setTimeout(() => {
       abortController.abort();
     }, this.timeoutTimer);
@@ -105,8 +107,8 @@ export default class HttpClient {
       );
     }
 
-    // Create per-request abort controller and timeout
-    const abortController = new AbortController();
+    // Use external abort controller if provided, otherwise create per-request controller
+    const abortController = this.abortController || new AbortController();
     this.status = 'fetching';
 
     const timeoutId = setTimeout(() => {
@@ -114,7 +116,7 @@ export default class HttpClient {
     }, this.timeoutTimer);
 
     try {
-      // Perform fetch with per-request abort signal
+      // Perform fetch with abort signal
       const response = await fetch(url, {
         ...options,
         signal: abortController.signal,
@@ -328,6 +330,13 @@ export default class HttpClient {
       this.throwAPIError('Invalid onError provided for HTTPClient');
     }
     this.onError = onError;
+  };
+
+  setAbortController = (controller) => {
+    if (typeof controller !== 'object') {
+      this.throwAPIError('Invalid abort controller provided for HTTPClient');
+    }
+    this.abortController = controller;
   };
 
   isFetching = () => this.status === 'fetching';
