@@ -109,6 +109,13 @@ function UnitView(props) {
 
   function resetUrlSearchParams() {
     const search = new URLSearchParams(location.search);
+    const hasParams =
+      search.has('mobility') || search.has('senses') || search.has('map');
+
+    if (!hasParams) {
+      return; // No need to navigate if no parameters to remove
+    }
+
     search.delete('mobility');
     search.delete('senses');
     search.delete('map');
