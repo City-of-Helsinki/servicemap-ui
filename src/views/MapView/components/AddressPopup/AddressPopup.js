@@ -25,18 +25,24 @@ function AddressPopup({ navigator }) {
 
   const updatePopupText = (type) => {
     if (type === 'addressFound') {
-      addressTextRef.current.innerText = intl.formatMessage({
-        id: 'map.address.info',
-      });
-      addressButtonRef.current.innerText = getAddressText(
-        addressData.current,
-        getLocaleText
-      );
+      if (addressTextRef.current) {
+        addressTextRef.current.innerText = intl.formatMessage({
+          id: 'map.address.info',
+        });
+      }
+      if (addressButtonRef.current) {
+        addressButtonRef.current.innerText = getAddressText(
+          addressData.current,
+          getLocaleText
+        );
+      }
     }
     if (type === 'noAddress') {
-      addressTextRef.current.innerText = intl.formatMessage({
-        id: 'map.address.notFound',
-      });
+      if (addressTextRef.current) {
+        addressTextRef.current.innerText = intl.formatMessage({
+          id: 'map.address.notFound',
+        });
+      }
     }
   };
 
