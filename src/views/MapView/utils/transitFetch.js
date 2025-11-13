@@ -75,10 +75,14 @@ const fetchStops = async (map) => {
       }),
     ]);
 
-    const data = [transitResponse, subwayResponse];
+    // If the subway units fetch failed (the fetch wrapper may swallow errors
+    // and return undefined), treat this as an explicit failure and throw
+    if (!subwayResponse) {
+      throw new Error('API error: unitsFetch failed to fetch subway entrances');
+    }
 
     // Handle subwaystops and return list of all stops
-    const stops = data[0].data.stopsByBbox;
+    const stops = transitResponse.data.stopsByBbox;
     const subwayStations = stops.filter(
       (stop) => stop.vehicleMode === 'SUBWAY'
     );
@@ -86,7 +90,9 @@ const fetchStops = async (map) => {
     // Remove subwaystations from stops list since they will be replaced with subway entrances
     const filteredStops = stops.filter((stop) => stop.vehicleMode !== 'SUBWAY');
 
-    const entrances = data[1].results;
+    // Defensive: if for some reason subwayResponse results is missing,
+    // fall back to an empty array to avoid runtime TypeErrors.
+    const entrances = subwayResponse.results ?? [];
 
     // Add subway entrances to the list of stops
     entrances.forEach((entrance) => {
