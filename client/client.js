@@ -36,11 +36,21 @@ if (config.sentryDSN) {
     integrations: [
       Sentry.browserTracingIntegration(),
       Sentry.replayIntegration(),
+      Sentry.thirdPartyErrorFilterIntegration({
+        filterKeys: [config.sentryApplicationKey],
+        behaviour: 'drop-error-if-contains-third-party-frames',
+      }),
     ],
     tracesSampleRate: parseFloat(config.sentryTracesSampleRate || '0'),
-    tracePropagationTargets: (config.sentryTracePropagationTargets || '').split(','),
-    replaysSessionSampleRate: parseFloat(config.sentryReplaysSessionSampleRate || '0'),
-    replaysOnErrorSampleRate: parseFloat(config.sentryReplaysOnErrorSampleRate || '0'),
+    tracePropagationTargets: (config.sentryTracePropagationTargets || '').split(
+      ','
+    ),
+    replaysSessionSampleRate: parseFloat(
+      config.sentryReplaysSessionSampleRate || '0'
+    ),
+    replaysOnErrorSampleRate: parseFloat(
+      config.sentryReplaysOnErrorSampleRate || '0'
+    ),
     initialScope: {
       tags: {
         context: 'client',
