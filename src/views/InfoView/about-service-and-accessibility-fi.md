@@ -131,7 +131,7 @@ Osa yksityisten palvelujen sekä veistosten ja julkisen taiteen pisteiden valoku
 
 [Lisätiedot ja ohjeet](https://kaupunkialustana.hel.fi/ohjeet-2/palvelukartta/palvelukartan-ohjeita/).
 
-Rekisteriselosteet ovat listattu [Helsingin kaupungin omille sivuille](https://www.hel.fi/fi/paatoksenteko-ja-hallinto/tietoa-helsingista/tietosuoja-ja-tiedonhallinta/tietosuoja/tietosuojaselosteet-integritetspolicyer-data-protection-notices).
+Rekisteriselosteet ovat listattu [Helsingin kaupungin tietosuojaselosteet sivulle](https://www.hel.fi/fi/paatoksenteko-ja-hallinto/tietoa-helsingista/tietosuoja-ja-tiedonhallinta/tietosuoja/tietosuojaselosteet-integritetspolicyer-data-protection-notices).
 
 ## Evästeet
 
@@ -149,4 +149,4 @@ Palvelun kävijätilastointia varten kerätyt tiedot anonymisoidaan, joten niit�
 - selaintyyppi
 - alueellinen sijaintitieto, josta käyttäjää ei voi yksilöidä.
 
-Lisää tietoa palvelun evästeistä: [Verkkopalvelun tietosuoja ja evästeet | Helsingin kaupunki](https://www.hel.fi/helsinki/fi/kaupunki-ja-hallinto/tietoa-helsingista/tietoa-hel-fista/turvallisuus)
+Lisää tietoa palvelun evästeistä: [Verkkopalvelun tietosuoja ja evästeet | Helsingin kaupunki](https://www.hel.fi/fi/evasteasetukset)
