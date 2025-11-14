@@ -1009,7 +1009,7 @@ exports[`<InfoView /> > should render content 1`] = `
             <span
               class="MuiTypography-root MuiTypography-string css-z2uw0f-MuiTypography-root"
             >
-              Helsingin kaupungin omille sivuille
+              Helsingin kaupungin tietosuojaselosteet sivulle
             </span>
           </a>
           .
@@ -1108,7 +1108,7 @@ exports[`<InfoView /> > should render content 1`] = `
           Lisää tietoa palvelun evästeistä: 
           <a
             class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-kawbi1-MuiTypography-root-MuiLink-root"
-            href="https://www.hel.fi/helsinki/fi/kaupunki-ja-hallinto/tietoa-helsingista/tietoa-hel-fista/turvallisuus"
+            href="https://www.hel.fi/fi/evasteasetukset"
             target="_blank"
           >
             <span
