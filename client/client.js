@@ -14,6 +14,7 @@ import { applyMiddleware, createStore } from 'redux';
 import thunk from 'redux-thunk';
 
 import config from '../config';
+import { name } from '../package.json';
 import createEmotionCache from '../server/createEmotionCache';
 import App from '../src/App';
 import favicon from '../src/assets/icons/favicon.ico';
@@ -36,11 +37,21 @@ if (config.sentryDSN) {
     integrations: [
       Sentry.browserTracingIntegration(),
       Sentry.replayIntegration(),
+      Sentry.thirdPartyErrorFilterIntegration({
+        filterKeys: [name],
+        behaviour: 'drop-error-if-contains-third-party-frames',
+      }),
     ],
     tracesSampleRate: parseFloat(config.sentryTracesSampleRate || '0'),
-    tracePropagationTargets: (config.sentryTracePropagationTargets || '').split(','),
-    replaysSessionSampleRate: parseFloat(config.sentryReplaysSessionSampleRate || '0'),
-    replaysOnErrorSampleRate: parseFloat(config.sentryReplaysOnErrorSampleRate || '0'),
+    tracePropagationTargets: (config.sentryTracePropagationTargets || '').split(
+      ','
+    ),
+    replaysSessionSampleRate: parseFloat(
+      config.sentryReplaysSessionSampleRate || '0'
+    ),
+    replaysOnErrorSampleRate: parseFloat(
+      config.sentryReplaysOnErrorSampleRate || '0'
+    ),
     initialScope: {
       tags: {
         context: 'client',
