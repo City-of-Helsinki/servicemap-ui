@@ -129,7 +129,7 @@ Uppgifterna på servicekartan kan du använda fritt. Vid användning av informat
 
 En del av fotografierna av privata tjänster samt skulpturer och offentliga konstpunkter är upphovsrättsskyddade och kan inte användas för kommersiella ändamål.
 
-Registerbeskrivningarna är listade på [Helsingfors stads egna sidor](https://www.hel.fi/fi/paatoksenteko-ja-hallinto/tietoa-helsingista/tietosuoja-ja-tiedonhallinta/tietosuoja/tietosuojaselosteet-integritetspolicyer-data-protection-notices).
+Registerbeskrivningarna är listade på sidan [Helsingfors stads dataskyddsbeskrivningar](https://www.hel.fi/fi/paatoksenteko-ja-hallinto/tietoa-helsingista/tietosuoja-ja-tiedonhallinta/tietosuoja/tietosuojaselosteet-integritetspolicyer-data-protection-notices).
 
 ## Kakor
 
@@ -147,4 +147,4 @@ Uppgifterna som samlats in för besökarstatistiken över tjänsten anonymiseras
 - typ av webbläsare
 - lokala positionsdata som inte kan identifiera användaren
 
-Mer information om kakor: [Webbtjänstens dataskydd | Helsingfors stad](https://www.hel.fi/helsinki/sv/stad-och-forvaltning/information/information/sakerhet)
+Mer information om kakor: [Webbtjänstens dataskydd | Helsingfors stad](https://www.hel.fi/sv/cookie-installningar)

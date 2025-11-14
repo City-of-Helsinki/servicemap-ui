@@ -129,7 +129,7 @@ You can use the information on the service map freely. When using the informatio
 
 Some of the photos of private services, sculptures, and public art are copyrighted and may not be used for commercial purposes.
 
-The register descriptions are listed on the [City of Helsinki's own website](https://www.hel.fi/fi/paatoksenteko-ja-hallinto/tietoa-helsingista/tietosuoja-ja-tiedonhallinta/tietosuoja/tietosuojaselosteet-integritetspolicyer-data-protection-notices).
+The registration statements are listed on [the city of Helsinki's privacy statements page](https://www.hel.fi/fi/paatoksenteko-ja-hallinto/tietoa-helsingista/tietosuoja-ja-tiedonhallinta/tietosuoja/tietosuojaselosteet-integritetspolicyer-data-protection-notices).
 
 ## Cookies
 
@@ -147,4 +147,4 @@ Data collected for visitor statistics is made anonymous, so it cannot be traced 
 - the type of browser
 - regional location data, which cannot be used to identify the user
 
-Read more about the service cookies on the [City of Helsinki website pages on Data protection.](https://www.hel.fi/en/decision-making/information-on-helsinki/data-protection-and-information-management/data-protection)
+Read more about the service cookies on the [City of Helsinki website pages on Data protection.](https://www.hel.fi/en/cookie-settings)
