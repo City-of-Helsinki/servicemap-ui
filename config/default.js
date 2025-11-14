@@ -43,6 +43,7 @@ const defaults = {
   REACT_APP_SENTRY_TRACE_PROPAGATION_TARGETS: 0,
   REACT_APP_SENTRY_REPLAYS_SESSION_SAMPLE_RATE: 0,
   REACT_APP_SENTRY_REPLAYS_ON_ERROR_SAMPLE_RATE: 0,
+  REACT_APP_SENTRY_APPLICATION_KEY: 'servicemap-ui',
 
   REACT_APP_SLOW_FETCH_MESSAGE_TIMEOUT: '3000',
   REACT_APP_FEATURE_SERVICEMAP_PAGE_TRACKING: 'false',
@@ -257,6 +258,7 @@ const defaultConfig = {
   "sentryTracePropagationTargets": settings.REACT_APP_SENTRY_TRACE_PROPAGATION_TARGETS,
   "sentrySeplaysSessionSampleRate": settings.REACT_APP_SENTRY_REPLAYS_SESSION_SAMPLE_RATE,
   "sentryReplaysOnErrorSampleRate": settings.REACT_APP_SENTRY_REPLAYS_ON_ERROR_SAMPLE_RATE,
+  "sentryApplicationKey": settings.REACT_APP_SENTRY_APPLICATION_KEY,
  
   "showAreaSelection": (settings.REACT_APP_SHOW_AREA_SELECTION === 'true'),
   // eslint-disable-next-line max-len
