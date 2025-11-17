@@ -28,6 +28,7 @@
     "@vitejs/plugin-react": "^5.0.3",
     "@vitest/coverage-istanbul": "^3.2.4",
     "core-js": "^3.25.1",
+    "cross-env": "^10.1.0",
     "d3": "^7.9.0",
     "dotenv": "^16.6.1",
     "express": "^4.21.2",
@@ -67,8 +68,8 @@
   "scripts": {
     "build": "rm -rf dist && yarn build:client && yarn build:server",
     "build:test": "rm -rf dist && yarn build:client --mode development && yarn build:server --mode development",
-    "build:client": "vite build",
-    "build:server": "BUILD_TARGET=server vite build --ssr",
+    "build:client": "cross-env ${NODE_MEMORY_LIMIT:+NODE_OPTIONS=--max-old-space-size=$NODE_MEMORY_LIMIT} vite build",
+    "build:server": "cross-env ${NODE_MEMORY_LIMIT:+NODE_OPTIONS=--max-old-space-size=$NODE_MEMORY_LIMIT} BUILD_TARGET=server vite build --ssr",
     "build:client:clean": "rm -rf dist/src && yarn build:client",
     "build:server:clean": "rm -f dist/server.js dist/server.js.map && yarn build:server",
     "dev": "yarn dev:client:watch & yarn dev:server:watch & sleep 5 && nodemon dist --watch dist",

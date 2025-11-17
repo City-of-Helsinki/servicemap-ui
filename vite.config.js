@@ -61,7 +61,8 @@ export default defineConfig(({ command, mode, ssrBuild }) => {
         output: {
           dir: 'dist',
           entryFileNames: 'index.js',
-          format: 'cjs'
+          format: 'cjs',
+          manualChunks: undefined
         },
         external: [
           'leaflet',
@@ -71,7 +72,7 @@ export default defineConfig(({ command, mode, ssrBuild }) => {
         ]
       },
       outDir: 'dist',
-      emptyOutDir: false  // Handle directory clearing at script level for better control
+      emptyOutDir: false,  // Handle directory clearing at script level for better control
     } : {
       rollupOptions: {
         input: resolve(__dirname, 'client/client.js'),
