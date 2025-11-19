@@ -21,7 +21,7 @@ COPY --chown=default:root . /servicemap-ui/
 
 USER default
 
-RUN echo "NODE_MEMORY_LIMIT: $NODE_MEMORY_LIMIT"
+RUN echo "NODE_OPTIONS: $NODE_OPTIONS"
 
 RUN yarn build
 
