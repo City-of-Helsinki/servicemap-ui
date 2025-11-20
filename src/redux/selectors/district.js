@@ -4,7 +4,6 @@ import {
   filterByCitySettings,
   getCityAndOrgFilteredData,
 } from '../../utils/filters';
-import { resolveParkingAreaId } from '../../utils/parking';
 import {
   selectCities,
   selectSelectedCities,
@@ -28,7 +27,9 @@ export const selectSelectedSubdistricts = (state) =>
 export const selectSelectedDistrictServices = (state) =>
   state.districts.selectedDistrictServices;
 export const selectParkingUnitsMap = (state) => state.districts.parkingUnitsMap;
-export const selectParkingAreas = (state) => state.districts.parkingAreas;
+export const selectParkingAreas = (state) =>
+  Object.values(state.districts.parkingAreasMap || {});
+export const selectParkingAreasMap = (state) => state.districts.parkingAreasMap;
 export const selectSelectedParkingAreaIds = (state) =>
   state.districts.selectedParkingAreaIds;
 export const selectDistrictsFetching = (state) =>
@@ -133,14 +134,25 @@ export const getFilteredSubDistrictUnits = createMemoizedArraySelector(
  * Filter parking areas by selected parking area ids
  */
 export const selectSelectedParkingAreas = createMemoizedArraySelector(
-  [selectParkingAreas, selectSelectedParkingAreaIds],
-  (parkingAreas, selectedParkingAreaIds) => {
-    const parkingIdsMap = {};
-    selectedParkingAreaIds.forEach((id) => {
-      parkingIdsMap[id] = true;
+  [selectParkingAreasMap, selectSelectedParkingAreaIds],
+  (parkingAreasMap, selectedParkingAreaIds) => {
+    if (!parkingAreasMap) {
+      return [];
+    }
+    // parkingAreasMap[id] is an array of areas, flatten and remove
+    // duplicates based on id
+    const areas = selectedParkingAreaIds
+      .map((id) => parkingAreasMap[id])
+      .filter(Boolean)
+      .flat();
+    const uniqueAreas = [];
+    const uniqueAreaIds = new Set();
+    areas.forEach((area) => {
+      if (area?.id && !uniqueAreaIds.has(area.id)) {
+        uniqueAreas.push(area);
+        uniqueAreaIds.add(area.id);
+      }
     });
-    return parkingAreas.filter(
-      (parkingArea) => parkingIdsMap[resolveParkingAreaId(parkingArea)]
-    );
+    return uniqueAreas;
   }
 );
