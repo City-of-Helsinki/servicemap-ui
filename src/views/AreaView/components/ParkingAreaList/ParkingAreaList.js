@@ -14,7 +14,7 @@ import {
   setSelectedDistrictType,
 } from '../../../../redux/actions/district';
 import {
-  selectParkingAreas,
+  selectParkingAreasMap,
   selectParkingUnitsMap,
   selectSelectedDistrictType,
   selectSelectedParkingAreaIds,
@@ -55,10 +55,10 @@ function ParkingAreaList({ variant }) {
   const getLocaleText = useLocaleText();
   const selectedDistrictType = useSelector(selectSelectedDistrictType);
   const selectedParkingAreaIds = useSelector(selectSelectedParkingAreaIds);
-  const parkingAreas = useSelector(selectParkingAreas);
+  const parkingAreasMap = useSelector(selectParkingAreasMap);
   const parkingUnitsMap = useSelector(selectParkingUnitsMap);
 
-  const [areaDataInfo, setAreaDataInfo] = useState([]);
+  const [areaDataInfoMap, setAreaDataInfoMap] = useState({});
   const initialState = constructInitialSelectedParkingUnits(parkingUnitsMap);
   const [parkingUnitsSelectedMap, setParkingUnitsSelectedMap] =
     useState(initialState);
@@ -94,7 +94,7 @@ function ParkingAreaList({ variant }) {
     } else {
       dispatch(addSelectedParkingArea(id));
     }
-    if (!parkingAreas.some((obj) => resolveParkingAreaId(obj) === id)) {
+    if (!parkingAreasMap[id]) {
       dispatch(fetchParkingAreaGeometry(id));
     }
   };
@@ -119,11 +119,19 @@ function ParkingAreaList({ variant }) {
       .map((parkingType) => resolveParamsForParkingFetch(parkingType))
       .map(async (params) => smAPI.parkingAreaInfo(params));
     const parkingAreaObjects = await Promise.all(promises);
-    setAreaDataInfo(parkingAreaObjects.flat());
+    setAreaDataInfoMap(
+      parkingAreaObjects.flat().reduce(
+        (acc, area) => ({
+          ...acc,
+          [resolveParkingAreaId(area)]: area,
+        }),
+        {}
+      )
+    );
   };
 
   useEffect(() => {
-    if (!areaDataInfo.length) {
+    if (!Object.keys(areaDataInfoMap).length) {
       fetchParkingData();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -185,22 +193,21 @@ function ParkingAreaList({ variant }) {
   })();
   return (
     <StyledListLevelThree data-sm="ParkingList" disablePadding>
-      {areaDataInfo.map((area) => {
-        const fullId = resolveParkingAreaId(area);
+      {Object.entries(areaDataInfoMap).map(([key, area]) => {
         return (
-          <Fragment key={fullId}>
-            <StyledAreaListItem key={fullId} divider className={fullId}>
+          <Fragment key={key}>
+            <StyledAreaListItem key={key} divider className={key}>
               <StyledFormControlLabel
                 control={
                   <Checkbox
                     color="primary"
                     icon={<StyledCheckBoxIcon />}
-                    checked={selectedParkingAreaIds.includes(fullId)}
-                    onChange={() => handleParkingCheckboxChange(fullId)}
+                    checked={selectedParkingAreaIds.includes(key)}
+                    onChange={() => handleParkingCheckboxChange(key)}
                   />
                 }
                 label={
-                  <Typography id={`${fullId}Name`} aria-hidden>
+                  <Typography id={`${key}Name`} aria-hidden>
                     {renderAreaName(area)}
                   </Typography>
                 }

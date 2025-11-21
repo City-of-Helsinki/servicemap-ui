@@ -1,3 +1,4 @@
+import { resolveParkingAreaId } from '../../utils/parking';
 import { parkingUnitCategoryIds } from '../../views/AreaView/utils/districtDataHelper';
 
 const parkingUnitsMap = {};
@@ -15,7 +16,7 @@ const initialState = {
     isFetching: false,
     nodesFetching: [],
   },
-  parkingAreas: [],
+  parkingAreasMap: {},
   parkingUnitsMap,
   subdistrictUnits: [],
   selectedSubdistricts: [],
@@ -226,11 +227,31 @@ const districtReducer = (state = initialState, action) => {
         ],
       };
 
-    case 'UPDATE_PARKING_AREAS':
+    case 'UPDATE_PARKING_AREAS': {
+      // Refactored to store parking areas as an object where the key
+      // is resolveParkingAreaId(area) and the value is an array of areas
+      const newParkingAreasMap = { ...state.parkingAreasMap };
+      (action.areas ?? []).forEach((area) => {
+        const key = resolveParkingAreaId(area);
+        if (key) {
+          if (newParkingAreasMap[key]) {
+            // Avoid duplicates if the same area already exists
+            const exists = newParkingAreasMap[key].some(
+              ({ id }) => id === area.id
+            );
+            if (!exists) {
+              newParkingAreasMap[key].push(area);
+            }
+          } else {
+            newParkingAreasMap[key] = [area];
+          }
+        }
+      });
       return {
         ...state,
-        parkingAreas: [...state.parkingAreas, ...action.areas],
+        parkingAreasMap: newParkingAreasMap,
       };
+    }
 
     case 'SET_PARKING_UNITS':
       return {
