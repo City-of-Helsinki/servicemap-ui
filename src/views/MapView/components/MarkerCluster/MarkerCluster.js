@@ -699,14 +699,18 @@ function MarkerCluster({
         ).bindPopup(popupContent, popupOptions(isMobile));
 
         if (isMobile) {
-          markerElem.on('popupopen', (e) => {
-            // Bind click event to popup when popup is opened
-            e.popup
-              .getElement()
-              .addEventListener('click', () =>
-                UnitHelper.unitElementClick(navigator, unit)
-              );
-          });
+          const popupClickHandler = (e) => {
+            // Only handle clicks on the popup content wrapper (not the close button)
+            if (e.target.closest(`.${unitTooltipWrapperClass}`)) {
+              UnitHelper.unitElementClick(navigator, unit);
+            }
+          };
+          markerElem.on('popupopen', (e) =>
+            e.popup.getElement().addEventListener('click', popupClickHandler)
+          );
+          markerElem.on('popupclose', (e) =>
+            e.popup.getElement().removeEventListener('click', popupClickHandler)
+          );
         }
 
         // If not highlighted marker add tooltip
