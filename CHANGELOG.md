@@ -1,5 +1,29 @@
 # Changelog
 
+## [2.9.2](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.9.1...servicemap-ui-v2.9.2) (2025-11-25)
+
+
+### Bug Fixes
+
+* Add null checks for address text and button references in AddressPopup PL-172 ([6b221fa](https://github.com/City-of-Helsinki/servicemap-ui/commit/6b221fa47ddaa5c3bbf3bc95f784f2cd587068ab))
+* Add Sentry Vite plugin  and update dependencies ([9a51327](https://github.com/City-of-Helsinki/servicemap-ui/commit/9a513273a1fb99377e1e1bb2aeac2f1fea06db04))
+* Added missing commit lint configurations ([#1300](https://github.com/City-of-Helsinki/servicemap-ui/issues/1300)) ([3b3353d](https://github.com/City-of-Helsinki/servicemap-ui/commit/3b3353deb8e0947f4dbcae3c8f99c271676f9e8f))
+* Adjust ssr external deps Ref: PL-190 ([6fcc783](https://github.com/City-of-Helsinki/servicemap-ui/commit/6fcc7830fa1ef8e4e5d04007f914c431d36fe142))
+* Handle subwayResponse errors in fetchStops function PL-178 ([72d43a5](https://github.com/City-of-Helsinki/servicemap-ui/commit/72d43a5280d25dc47fff7a9eaa32f8cdfa8d22e2))
+* Info page links ([28eba22](https://github.com/City-of-Helsinki/servicemap-ui/commit/28eba224d60630ee1e28f515f80f2d6db2b2775c))
+* Minify distributed code and enable compression Ref: PL-190 ([6c0184f](https://github.com/City-of-Helsinki/servicemap-ui/commit/6c0184fe3920f65c4eddf1c2d9b7e4efad62a5ed))
+* Remove unused redirect ([#1292](https://github.com/City-of-Helsinki/servicemap-ui/issues/1292)) ([3cef1fc](https://github.com/City-of-Helsinki/servicemap-ui/commit/3cef1fc8c34ad4365898460685c4d9ac3787875e))
+* ResetUrlSearchParams don't call if no params Ref: PL-175 ([d04d133](https://github.com/City-of-Helsinki/servicemap-ui/commit/d04d1339870348bb328c667f350d5b7c013d2de6))
+* Revert white nav buttons height ([#1290](https://github.com/City-of-Helsinki/servicemap-ui/issues/1290)) ([9059342](https://github.com/City-of-Helsinki/servicemap-ui/commit/9059342ddd354f66340bbe911791d23bf724fbdd))
+* TransitFetch add error handling Ref: PL-168 ([d2242e3](https://github.com/City-of-Helsinki/servicemap-ui/commit/d2242e37c80162669d259a1a22f92ffc704991cd))
+* TransitStops delay when moving map Ref: PL-168 ([d2242e3](https://github.com/City-of-Helsinki/servicemap-ui/commit/d2242e37c80162669d259a1a22f92ffc704991cd))
+* TransitStops digitransitAPI logic fixes Ref: PL-168 ([d2242e3](https://github.com/City-of-Helsinki/servicemap-ui/commit/d2242e37c80162669d259a1a22f92ffc704991cd))
+
+
+### Dependencies
+
+* Bump js-yaml from 4.1.0 to 4.1.1 ([#1298](https://github.com/City-of-Helsinki/servicemap-ui/issues/1298)) ([5941a50](https://github.com/City-of-Helsinki/servicemap-ui/commit/5941a50d2d1991e80d6a51040f6c6f8645698223))
+
 ## [2.9.1](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.9.0...servicemap-ui-v2.9.1) (2025-10-29)
 
 
