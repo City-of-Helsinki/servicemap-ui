@@ -2,6 +2,7 @@ import { CacheProvider } from '@emotion/react';
 import createEmotionServer from '@emotion/server/create-instance';
 import { ServerStyleSheets } from '@mui/styles';
 import * as Sentry from '@sentry/node';
+import compression from 'compression';
 import crypto from 'crypto';
 import dotenv from 'dotenv';
 import express from 'express';
@@ -91,6 +92,9 @@ if (sitemapActive()) {
 const app = express();
 app.disable('x-powered-by');
 const { supportedLanguages } = config;
+
+// Enable compression for all responses
+app.use(compression());
 
 // This is required for proxy setups to work in production
 app.set('trust proxy', true);
