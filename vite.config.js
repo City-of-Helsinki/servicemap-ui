@@ -89,19 +89,13 @@ export default defineConfig(({ command, mode, ssrBuild }) => {
               entryFileNames: 'index.js',
               format: 'cjs',
             },
+            // Keep external minimal - only truly external dependencies
             external: [
-              'leaflet',
-              'fs',
-              'path',
-              'os',
-              'crypto',
-              'http',
-              'https',
-              'url',
-              'util',
+              /^node:/,
               'react',
               'react-dom',
-              'http-status-typed',
+              'react-dom/server',
+              'react/jsx-runtime',
             ],
           },
           outDir: 'dist',
@@ -128,17 +122,7 @@ export default defineConfig(({ command, mode, ssrBuild }) => {
       middlewareMode: true,
     },
     ssr: {
-      noExternal: true, // Bundle all dependencies except those explicitly externalized
-      external: [
-        'http-status-typed',
-        'leaflet',
-        'react-leaflet',
-        '@mui/styles',
-        'jss',
-        'jss-preset-default',
-        'react',
-        'react-dom',
-      ],
+      noExternal: true, // Bundle everything except what's in rollupOptions.external
     },
     optimizeDeps: {
       include: ['leaflet', 'react-leaflet'],
