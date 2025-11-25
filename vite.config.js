@@ -81,6 +81,7 @@ export default defineConfig(({ command, mode, ssrBuild }) => {
     build: isSsrBuild
       ? {
           ssr: true,
+          minify: 'esbuild',
           rollupOptions: {
             input: resolve(__dirname, 'server/server.js'),
             output: {
