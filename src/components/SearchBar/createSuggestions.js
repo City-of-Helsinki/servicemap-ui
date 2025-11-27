@@ -31,7 +31,6 @@ const createSuggestions =
     };
 
     const results = await smAPI.searchSuggestions(query, additionalOptions);
-
     let filteredResults = results;
 
     // Filter services with city settings

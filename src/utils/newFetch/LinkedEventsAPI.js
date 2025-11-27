@@ -1,5 +1,5 @@
 import config from '../../../config';
-import HttpClient, { APIFetchError, LinkedEventsAPIName } from './HTTPClient';
+import HttpClient, { APIFetchError } from './HTTPClient';
 
 export default class LinkedEventsAPI extends HttpClient {
   constructor() {
@@ -7,10 +7,27 @@ export default class LinkedEventsAPI extends HttpClient {
       typeof config?.eventsAPI?.root === 'string' &&
       config.eventsAPI.root.indexOf('undefined') !== -1
     ) {
-      throw new APIFetchError('LindkedEventsAPIName baseURL missing');
+      throw new APIFetchError('LinkedEventsAPI baseURL missing');
     }
-    super(config.eventsAPI.root, LinkedEventsAPIName);
+    super(config.eventsAPI.root);
   }
+
+  // LinkedEvents-specific result handling
+  handleResults = async (response, type) => {
+    if (type && type === 'count') {
+      return response.meta.count;
+    }
+    if (this.onProgressUpdate) {
+      this.onProgressUpdate(response.data.length, response.meta.count);
+    }
+    if (type && type === 'single') {
+      return response.data;
+    }
+    if (response.meta && response.meta.next) {
+      return this.fetchNext(response.meta.next, response.data);
+    }
+    return response.data;
+  };
 
   eventsByKeyword = async (keyword) => {
     if (typeof keyword !== 'string') {

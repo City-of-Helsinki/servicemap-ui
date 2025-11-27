@@ -1,6 +1,6 @@
 import config from '../../../config';
 import { isEmbed } from '../path';
-import HttpClient, { APIFetchError, serviceMapAPIName } from './HTTPClient';
+import HttpClient, { APIFetchError } from './HTTPClient';
 
 export default class ServiceMapAPI extends HttpClient {
   constructor() {
@@ -14,11 +14,33 @@ export default class ServiceMapAPI extends HttpClient {
     ) {
       throw new APIFetchError('ServicemapAPI baseURL missing');
     }
-    super(
-      `${config.serviceMapAPI.root}${config.serviceMapAPI.version}`,
-      serviceMapAPIName
-    );
+    super(`${config.serviceMapAPI.root}${config.serviceMapAPI.version}`);
   }
+
+  // ServiceMap-specific result handling
+  handleResults = async (response, type) => {
+    if (type && type === 'post') {
+      if (response.status >= 200 && response.status <= 299) {
+        return response.statusText;
+      }
+      throw new APIFetchError(
+        `POST request failed with status ${response.status}: ${response.statusText}`
+      );
+    }
+    if (type && type === 'count') {
+      return response.count;
+    }
+    if (this.onProgressUpdate) {
+      this.onProgressUpdate(response.results.length, response.count);
+    }
+    if (type && type === 'single') {
+      return response.results;
+    }
+    if (response.next) {
+      return this.fetchNext(response.next, response.results);
+    }
+    return response.results;
+  };
 
   /**
    * Searches by coordinates and returns the closest by distance.
@@ -46,7 +68,6 @@ export default class ServiceMapAPI extends HttpClient {
       );
     }
     const options = {
-      // TODO: adjust these values for best results and performance
       q: query,
       page_size: 400,
       limit: 2500,
@@ -58,6 +79,7 @@ export default class ServiceMapAPI extends HttpClient {
       ...additionalOptions,
     };
 
+    // Use lower concurrency for searches due to potentially large result sets
     return this.getConcurrent('search', options);
   };
 
@@ -169,6 +191,7 @@ export default class ServiceMapAPI extends HttpClient {
       ...additionalOptions,
     };
 
+    // Use lower concurrency for service unit searches due to potentially large result sets
     return this.getConcurrent('unit', options);
   };
 

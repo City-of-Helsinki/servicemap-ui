@@ -1,5 +1,5 @@
 import config from '../../../config';
-import HttpClient, { APIFetchError, hearingMapAPIName } from './HTTPClient';
+import HttpClient, { APIFetchError } from './HTTPClient';
 
 export default class HearingMapAPI extends HttpClient {
   constructor() {
@@ -9,7 +9,7 @@ export default class HearingMapAPI extends HttpClient {
     ) {
       throw new APIFetchError('HearingMapAPI baseURL missing');
     }
-    super(config.hearingMapAPI.root, hearingMapAPIName);
+    super(config.hearingMapAPI.root);
   }
 
   hearingMaps = async (unitID) => {
