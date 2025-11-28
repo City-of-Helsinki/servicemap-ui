@@ -27,15 +27,13 @@ export default class ServiceMapAPI extends HttpClient {
    * @returns {Promise<void>}
    */
   addressByCoordinates = async (lat, lon) => {
-    const results = await this.getSinglePage('address', {
+    const res = await this.getSinglePage('address', {
       lat,
       lon,
       page: 1,
       page_size: 5,
     });
-    const ordered = results
-      .map((x) => x)
-      .sort((x, y) => x.distance - y.distance);
+    const ordered = (res?.data ?? []).sort((x, y) => x.distance - y.distance);
     return ordered.find((x) => x); // first
   };
 
@@ -74,7 +72,8 @@ export default class ServiceMapAPI extends HttpClient {
       ...additionalOptions,
     };
 
-    return this.getSinglePage('search', options);
+    const res = await this.getSinglePage('search', options);
+    return res?.data ?? [];
   };
 
   serviceNodeSearch = async (variant, idList, additionalOptions, onlyCount) => {
@@ -322,7 +321,8 @@ export default class ServiceMapAPI extends HttpClient {
       ...params,
     };
 
-    return this.getSinglePage('administrative_division', options);
+    const res = await this.getSinglePage('administrative_division', options);
+    return res?.data ?? [];
   };
 
   units = async (additionalOptions) => {
