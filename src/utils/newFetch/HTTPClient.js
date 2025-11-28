@@ -91,7 +91,7 @@ export default class HttpClient {
       this.onProgressUpdate(response.results.length, response.count);
     }
     if (type && type === 'single') {
-      return response.results;
+      return { count: response.count, data: response.results };
     }
     if (response.next) {
       return this.fetchNext(response.next, response.results);
@@ -107,7 +107,7 @@ export default class HttpClient {
       this.onProgressUpdate(response.data.length, response.meta.count);
     }
     if (type && type === 'single') {
-      return response.data;
+      return { count: response.meta.count, data: response.data };
     }
     if (response.next) {
       return this.fetchNext(response.meta.next, response.data);
@@ -248,30 +248,37 @@ export default class HttpClient {
       );
     }
 
-    // Get amount of search pages
-    const totalCount = await this.getCount(endpoint, options);
+    // Fetch first page to get its data and also total count
+    const firstPage = await this.getSinglePage(endpoint, {
+      ...options,
+      page: 1,
+    });
+    const totalCount = firstPage?.count ?? 0;
     const numberOfPages = Math.ceil(totalCount / options.page_size);
 
-    // Start progress bar
-    if (this.onProgressUpdate) {
-      this.onProgressUpdate(null, totalCount);
+    if (totalCount === 0) {
+      return [];
     }
 
-    // Create promises for each search page
+    // Start progress with first page data and total count
+    if (this.onProgressUpdate) {
+      this.onProgressUpdate(firstPage.data.length, totalCount);
+    }
+
+    // Create promises for remaining pages (2..N)
     const promises = [];
-    for (let i = 1; i <= numberOfPages; i += 1) {
-      options.page = i;
-      const promise = this.getSinglePage(endpoint, options);
+    for (let i = 2; i <= numberOfPages; i += 1) {
+      const promise = this.getSinglePage(endpoint, { ...options, page: i });
       promises.push(
-        promise.then((results) => {
+        promise.then((res) => {
           this.clearTimeout();
-          return results;
+          return res?.data ?? [];
         })
       );
     }
 
-    const results = await Promise.all(promises);
-    return results.flat();
+    const otherPagesData = await Promise.all(promises);
+    return [...firstPage.data, ...otherPagesData.flat()];
   };
 
   throwAPIError = (msg, e) => {
