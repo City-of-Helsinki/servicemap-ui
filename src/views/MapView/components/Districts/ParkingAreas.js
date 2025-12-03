@@ -1,14 +1,18 @@
 import { css } from '@emotion/css';
 import { List, ListItem, Typography } from '@mui/material';
 import { useTheme } from '@mui/styles';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useIntl } from 'react-intl';
+import { useMapEvents } from 'react-leaflet';
 import { useSelector } from 'react-redux';
 
 import { selectSelectedParkingAreas } from '../../../../redux/selectors/district';
+import useMobileStatus from '../../../../utils/isMobile';
 import useLocaleText from '../../../../utils/useLocaleText';
 import swapCoordinates from '../../utils/swapCoordinates';
 import { StyledAreaPopup } from '../styled/styled';
+
+const PARKING_AREA_ID_PREFIX = 'parking-area-';
 
 // This component renders parking areas to map
 function ParkingAreas() {
@@ -17,11 +21,26 @@ function ParkingAreas() {
   const getLocaleText = useLocaleText();
   const intl = useIntl();
   const theme = useTheme();
-  const [areaPopup, setAreaPopup] = useState(null);
+  const isMobile = useMobileStatus();
   const selectedAreas = useSelector(selectSelectedParkingAreas);
+  const [activeAreaId, setActiveAreaId] = useState(null); // ID of the area with an open popup
 
-  const createPopup = (area, e) => {
-    e.originalEvent.view.L.DomEvent.stopPropagation(e);
+  useMapEvents({
+    popupopen(e) {
+      const id = e.popup?._source?.options?.id;
+      if (id?.startsWith(PARKING_AREA_ID_PREFIX)) {
+        setActiveAreaId(Number(id.replace(PARKING_AREA_ID_PREFIX, '')));
+      }
+    },
+    popupclose(e) {
+      const id = e.popup?._source?.options?.id;
+      if (id?.startsWith(PARKING_AREA_ID_PREFIX)) {
+        setActiveAreaId(null);
+      }
+    },
+  });
+
+  const resolvePopupText = (area) => {
     const extraData = area.extra;
     const generateTextContent = (texts) => (
       <List>
@@ -99,14 +118,9 @@ function ParkingAreas() {
       ];
     }
 
-    const textContent = generateTextContent(
+    return generateTextContent(
       area.municipality === 'vantaa' ? vantaaTexts() : helsinkiTexts()
     );
-
-    setAreaPopup({
-      position: e.latlng,
-      textContent,
-    });
   };
 
   const getColor = (area) => {
@@ -217,42 +231,41 @@ function ParkingAreas() {
           swapCoordinates(coords)
         );
         const tooltipText = resolveTooltipText(area);
+        const popupText = resolvePopupText(area);
         return (
           <Polygon
             key={area.id}
+            id={`${PARKING_AREA_ID_PREFIX}${area.id}`}
             positions={boundary}
             className={parkingLayerClass}
             color={mainColor}
             pathOptions={{
-              fillOpacity: '0',
+              fillOpacity: area.id === activeAreaId ? 0.5 : 0,
               fillColor: mainColor,
             }}
             eventHandlers={{
-              click: (e) => {
-                createPopup(area, e);
-              },
               mouseover: (e) => {
-                e.target.openTooltip();
-                e.target.setStyle({ fillOpacity: '0.2' });
+                e.target.setStyle({ fillOpacity: 0.5 });
               },
               mouseout: (e) => {
-                e.target.setStyle({ fillOpacity: '0' });
+                if (area.id !== activeAreaId) {
+                  e.target.setStyle({ fillOpacity: 0 });
+                }
               },
             }}
           >
-            {tooltipText && (
+            {/* Do not show tooltip on mobile or when the area is active */}
+            {tooltipText && !isMobile && area.id !== activeAreaId && (
               <Tooltip sticky direction="top" autoPan={false}>
                 {tooltipText}
               </Tooltip>
             )}
+            <Popup>
+              <StyledAreaPopup>{popupText}</StyledAreaPopup>
+            </Popup>
           </Polygon>
         );
       })}
-      {areaPopup?.textContent ? (
-        <Popup onClose={() => setAreaPopup(null)} position={areaPopup.position}>
-          <StyledAreaPopup>{areaPopup.textContent}</StyledAreaPopup>
-        </Popup>
-      ) : null}
     </>
   );
 }
