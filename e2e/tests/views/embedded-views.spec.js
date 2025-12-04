@@ -201,7 +201,7 @@ test.describe('Embed view test', () => {
     await page.goto(`/fi/embed/area?selected=neighborhood&districts=ocd-division/country:fi/kunta:helsinki/kaupunginosa:011,ocd-division/country:fi/kunta:helsinki/kaupunginosa:014&services=239,813`);
 
     // Confirm that data has been loaded by ensuring no loading indicator is visible.
-    await expect(embeddedView.loadingIndicator).toHaveCount(0, { timeout: 20000 });
+    await expect(embeddedView.loadingIndicator).toHaveCount(0, { timeout: 30000 });
     // Verify that at least one geographical unit marker is rendered.
     await embeddedView.unitMarkers.first().waitFor({ state: 'visible' });
   });

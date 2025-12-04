@@ -15,7 +15,7 @@ const homePage = `/fi`;
  */
 test.describe('Search view test', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto(searchPageUrl);
+    await page.goto(searchPageUrl, { waitUntil: 'networkidle' });
     await acceptCookieConcent(page);
   });
 

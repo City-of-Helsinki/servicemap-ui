@@ -90,15 +90,15 @@ async function testPaginationDefault(page) {
  */
 export default async function paginationTest(page, servicePage) {
 
-  await page.goto(servicePage);
+  await page.goto(servicePage, { waitUntil: 'networkidle' });
   await testKeyboardNavigation(page);
 
-  await page.goto(servicePage);
+  await page.goto(servicePage, { waitUntil: 'networkidle' });
   await testPaginationAttributes(page);
 
-  await page.goto(servicePage);
+  await page.goto(servicePage, { waitUntil: 'networkidle' });
   await testPageChangeFocus(page);
 
-  await page.goto(servicePage);
+  await page.goto(servicePage, { waitUntil: 'networkidle' });
   await testPaginationDefault(page);
 }
