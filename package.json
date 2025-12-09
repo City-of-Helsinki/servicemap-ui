@@ -15,7 +15,7 @@
     "@mui/material": "^6.1.4",
     "@mui/styles": "^6.1.4",
     "@mui/utils": "^6.1.4",
-    "@sentry/node": "^10.20.0",
+    "@sentry/node": "^10.27.0",
     "@sentry/react": "^10.20.0",
     "@turf/area": "^6.5.0",
     "@turf/boolean-equal": "^6.5.0",
