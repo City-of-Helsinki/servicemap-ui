@@ -40,9 +40,9 @@ import ElevationControl from './components/ElevationControl';
 import EntranceMarker from './components/EntranceMarker';
 import EventMarkers from './components/EventMarkers';
 import HideSidebarButton from './components/HideSidebarButton';
+import MapLegend from './components/MapLegend';
 import MarkerCluster from './components/MarkerCluster';
 import PanControl from './components/PanControl';
-import SimpleStatisticalComponent from './components/StatisticalDataMapInfo';
 import StatisticalDistricts from './components/StatisticalDistricts';
 import TransitStops from './components/TransitStops';
 import UnitGeometry from './components/UnitGeometry';
@@ -424,7 +424,7 @@ function MapView(props) {
         </CustomControls>
 
         <CustomControls position="topright">
-          <SimpleStatisticalComponent />
+          <MapLegend data={unitData} userLocation={userLocation} />
         </CustomControls>
 
         {!disableInteraction ? (

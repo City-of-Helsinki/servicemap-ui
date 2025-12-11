@@ -225,7 +225,7 @@ const defaultConfig = {
   "municipality": municipalities,
   "smallScreenBreakpoint": 919,
   "smallWidthForTopBarBreakpoint": 1079,
-  "topBarHeight": 90,
+  "topBarHeight": 96,
   "topBarHeightMobile": 78,
   "bottomNavHeight": 78,
   "searchTimeout": 15000,
