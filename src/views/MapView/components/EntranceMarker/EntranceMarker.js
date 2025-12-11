@@ -10,7 +10,7 @@ import { useSelector } from 'react-redux';
 import { getSelectedUnit } from '../../../../redux/selectors/selectedUnit';
 import { selectThemeMode } from '../../../../redux/selectors/user';
 import useLocaleText from '../../../../utils/useLocaleText';
-import { drawEntranceMarkreIcon } from '../../utils/drawIcon';
+import { drawEntranceMarkerIcon } from '../../utils/drawIcon';
 import {
   StyledUnitTooltipTitle,
   StyledUnitTooltipWrapper,
@@ -60,7 +60,7 @@ function EntranceMarker() {
       return (
         <Marker
           key={`${coordinates[0]},${coordinates[1]}`}
-          icon={drawEntranceMarkreIcon(useContrast)}
+          icon={drawEntranceMarkerIcon(useContrast)}
           position={coordinates}
         >
           <Popup>
