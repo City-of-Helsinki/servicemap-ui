@@ -1,5 +1,22 @@
 # Changelog
 
+## [2.9.3](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.9.2...servicemap-ui-v2.9.3) (2025-12-11)
+
+
+### Bug Fixes
+
+* Enhance parking area interaction with popups and tooltips ([59449c6](https://github.com/City-of-Helsinki/servicemap-ui/commit/59449c62471a6ac5709562d761e0654dfc17a393))
+* Mobile popup close button triggering navigation ([a65495a](https://github.com/City-of-Helsinki/servicemap-ui/commit/a65495acd3ae8881ede78a7f2281bf52837f5b33))
+* Parking areas as an object for improved efficiency ([21ddfff](https://github.com/City-of-Helsinki/servicemap-ui/commit/21ddfffacc38065878a71adbc0ea0884df9bce49))
+* Reduce the number of api calls ([cff2139](https://github.com/City-of-Helsinki/servicemap-ui/commit/cff2139e96ca1ab4ad2646c16ae49596a4de54e0))
+
+
+### Dependencies
+
+* Bump @sentry/node from 10.22.0 to 10.27.0 ([b14bf72](https://github.com/City-of-Helsinki/servicemap-ui/commit/b14bf728acc6699bd427403a73520ee04a22f044))
+* Bump mdast-util-to-hast from 13.2.0 to 13.2.1 ([68e75e7](https://github.com/City-of-Helsinki/servicemap-ui/commit/68e75e7885d0e4dd6069a94e0c41480187c5e827))
+* Bump vite from 7.1.7 to 7.1.11 ([e9b5045](https://github.com/City-of-Helsinki/servicemap-ui/commit/e9b5045e98916753bf3d62fe006f0dd8f0dc9350))
+
 ## [2.9.2](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.9.1...servicemap-ui-v2.9.2) (2025-11-25)
 
 
