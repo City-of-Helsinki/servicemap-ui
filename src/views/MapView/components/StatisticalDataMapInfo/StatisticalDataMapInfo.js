@@ -29,13 +29,12 @@ function StatisticalDataMapInfoComponent() {
   }
 
   return (
-    <StyledContainer aria-hidden>
-      <StyledTitle variant="body1">
+    <>
+      <StyledTitle variant="body2">
         <FormattedMessage id={`area.list.statistic.${category}`} />
-      </StyledTitle>
-      <StyledText variant="body2">
+        {': '}
         <FormattedMessage id={`area.list.statistic.${section}`} />
-      </StyledText>
+      </StyledTitle>
       {proportionsExist && (
         <ColorIndicator
           gradientColor={
@@ -68,30 +67,19 @@ function StatisticalDataMapInfoComponent() {
           />
         </StyledBottomText>
       )}
-    </StyledContainer>
+    </>
   );
 }
 
 export default StatisticalDataMapInfoComponent;
 
-const StyledContainer = styled('div')(({ theme }) => ({
-  backgroundColor: theme.palette.white.main,
-  padding: `${theme.spacing(1)} ${theme.spacing(2)}`,
-}));
-
-const StyledText = styled(Typography)(({ theme }) => ({
-  textAlign: 'left',
-  marginLeft: theme.spacing(0.5),
-}));
-
 const StyledTitle = styled(Typography)(({ theme }) => ({
-  fontWeight: 'bold',
   textAlign: 'left',
-  marginLeft: theme.spacing(0.5),
+  margin: theme.spacing(1.5, 0, 0.5, 0),
 }));
 
 const StyledBottomText = styled(Typography)(({ theme }) => ({
   color: '#000',
   fontWeight: 'normal',
-  margin: `${theme.spacing(0.5)} ${theme.spacing(1)}`,
+  margin: theme.spacing(0.5, 1),
 }));

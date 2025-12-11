@@ -35,6 +35,7 @@ import SettingsUtility from '../../../../utils/settings';
 import UnitHelper from '../../../../utils/unitHelper';
 import useLocaleText from '../../../../utils/useLocaleText';
 import { mapTypes } from '../../config/mapConfig';
+import { getClusterStyles } from '../../utils/clusterStyles';
 import { drawMarkerIcon } from '../../utils/drawIcon';
 
 const tooltipOptions = (permanent, className) => ({
@@ -87,6 +88,10 @@ function MarkerCluster({
   const getDistance = (unit) =>
     formatDistanceObject(intl, calculateDistance(unit, distanceCoordinates));
   const [cluster, setCluster] = useState(null);
+
+  // Get shared cluster styles
+  const clusterStyles = getClusterStyles(theme, useContrast);
+
   // for some reason theme was empty in emotion styled so the emotion/css is used here
   // to access theme
   const unitTooltipTitleClass = css({
@@ -141,34 +146,22 @@ function MarkerCluster({
   });
 
   const outerCircleClass = css({
-    background: 'rgba(0, 22, 183, 0.25)',
+    ...clusterStyles.outer,
     width: 40,
     height: 40,
-    '&.dark': {
-      background: theme.palette.white.main,
-    },
   });
 
   const midCircleClass = css({
-    background: 'rgba(0, 22, 183, 0.50)',
+    ...clusterStyles.mid,
     width: 35,
     height: 35,
-    '&.dark': {
-      background: theme.palette.white.dark,
-    },
   });
 
   const innerCircleClass = css({
-    fontFamily: 'Lato',
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#fff',
-    background: 'rgba(0, 22, 183)',
+    ...clusterStyles.inner,
     width: 30,
     height: 30,
-    '&.dark': {
-      background: theme.palette.primary.main,
-    },
+    fontSize: 20,
   });
   const unitTooltipContainerClass = css({
     padding: theme.spacing(2),
@@ -432,17 +425,17 @@ function MarkerCluster({
       html: `
         <div class="${bgCircleClass} ${markerCircleClass} ${iconClasses}" aria-hidden="true" tabindex="-1">
           <div
-            class="${outerCircleClass} ${markerCircleClass} ${useContrast ? 'dark' : ''}"
+            class="${outerCircleClass} ${markerCircleClass}"
             aria-hidden="true"
             tabindex="-1"
           >
             <div
-              class="${midCircleClass} ${markerCircleClass} ${useContrast ? 'dark' : ''}"
+              class="${midCircleClass} ${markerCircleClass}"
               aria-hidden="true"
               tabindex="-1"
             >
               <div
-                class="${innerCircleClass} ${markerCircleClass} ${useContrast ? 'dark' : ''}"
+                class="${innerCircleClass} ${markerCircleClass}"
                 aria-hidden="true"
                 tabindex="-1"
               >
