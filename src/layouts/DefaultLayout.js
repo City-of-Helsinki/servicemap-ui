@@ -49,6 +49,13 @@ const createContentStyles = (
     : `${config.topBarHeight}px`;
   const bottomNavHeight = isMobile ? `${config.bottomNavHeight}px` : 0;
 
+  let sidebarOverflow;
+  if (isMobile) {
+    sidebarOverflow = fullMobileMap ? 'hidden' : 'visible';
+  } else {
+    sidebarOverflow = 'auto';
+  }
+
   const styles = {
     activeRoot: {
       margin: 0,
@@ -60,26 +67,23 @@ const createContentStyles = (
     },
     map: {
       position: isMobile ? 'fixed' : null,
-      bottom: 0,
+      top: isMobile ? topBarHeight : null,
+      bottom: isMobile ? bottomNavHeight : null,
       margin: 0,
-      marginBottom: bottomNavHeight,
       flex: !isMobile || fullMobileMap ? 1 : 0,
       display: 'flex',
       visibility: isMobile && !fullMobileMap ? 'hidden' : 'visible',
-      height: isMobile ? `calc(100% - ${topBarHeight})` : '100%',
+      height: isMobile ? null : '100%',
       width: '100%',
       zIndex: 900,
     },
     sidebar: {
-      height: '100%',
+      height: isMobile && fullMobileMap ? 0 : '100%',
       position: 'relative',
-      top: 0,
-      bottom: 0,
       width,
       margin: 0,
-      // eslint-disable-next-line no-nested-ternary
-      overflow: isMobile ? 'visible' : 'auto',
-      visibility: fullMobileMap ? 'hidden' : null,
+      overflow: sidebarOverflow,
+      visibility: isMobile && fullMobileMap ? 'hidden' : 'visible',
       flex: '0 1 auto',
     },
     sidebarContent: {

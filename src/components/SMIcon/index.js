@@ -5,6 +5,8 @@ import closeIcon from '../../assets/icons/closeIcon.svg';
 import coordinateMarker from '../../assets/icons/CoordinateMarker.svg';
 import coordinateMarkerContrast from '../../assets/icons/CoordinateMarkerContrast.svg';
 import facebookIcon from '../../assets/icons/facebook_icon.svg';
+import arrowNextIcon from '../../assets/icons/icon-arrow-next.svg';
+import arrowPreviousIcon from '../../assets/icons/icon-arrow-previous.svg';
 import aerialMapIcon from '../../assets/icons/iconAerialMap.svg';
 import defaulMapIcon from '../../assets/icons/iconDefaultMap.svg';
 import guideMapIcon from '../../assets/icons/iconGuideMap.svg';
@@ -169,6 +171,11 @@ export const getIcon = (key, props) => {
 
     case 'kirkkonummiIcon':
       return <img aria-hidden alt="" src={kirkkonummiIcon} {...props} />;
+
+    case 'iconArrowPrevious':
+      return <img aria-hidden alt="" src={arrowPreviousIcon} {...props} />;
+    case 'iconArrowNext':
+      return <img aria-hidden alt="" src={arrowNextIcon} {...props} />;
 
     default:
       return null;

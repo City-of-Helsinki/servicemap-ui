@@ -161,7 +161,7 @@ export const drawMarkerIcon = (
   return markerIcon;
 };
 
-export const drawEntranceMarkreIcon = (contrast = false, className = '') => {
+export const drawEntranceMarkerIcon = (contrast = false, className = '') => {
   // Return null on server side
   if (typeof window === 'undefined') {
     return null;

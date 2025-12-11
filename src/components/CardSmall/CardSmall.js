@@ -13,7 +13,7 @@ import { FormattedMessage } from 'react-intl';
 
 function CardSmall({ headerMessageID, messageID, onClick, image }) {
   return (
-    <ButtonBase onClick={onClick} role="link">
+    <StyledButtonBase onClick={onClick} role="link">
       <StyledCard>
         <StyledCardMedia
           component="img"
@@ -33,9 +33,13 @@ function CardSmall({ headerMessageID, messageID, onClick, image }) {
           <StyledArrowForward />
         </StyledCardContent>
       </StyledCard>
-    </ButtonBase>
+    </StyledButtonBase>
   );
 }
+
+const StyledButtonBase = styled(ButtonBase)(() => ({
+  width: '100%',
+}));
 
 const StyledCard = styled(Card)(({ theme }) => ({
   display: 'flex',
