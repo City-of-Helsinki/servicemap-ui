@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.10.0](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.9.3...servicemap-ui-v2.10.0) (2025-12-12)
+
+
+### Features
+
+* Replace mml-tiles url with maps-proxy ([4c59f7b](https://github.com/City-of-Helsinki/servicemap-ui/commit/4c59f7bacedee060e0a3bf77e23abb3a7496e6cb))
+
 ## [2.9.3](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.9.2...servicemap-ui-v2.9.3) (2025-12-11)
 
 
