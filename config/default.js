@@ -15,7 +15,7 @@ const defaults = {
   // eslint-disable-next-line max-len
   REACT_APP_GUIDE_MAP_URL: 'https://kartta.hel.fi/ws/geoserver/avoindata/gwc/service/wmts?layer=avoindata:Karttasarja_PKS&tilematrixset=ETRS-GK25&Service=WMTS&Request=GetTile&Version=1.0.0&TileMatrix=ETRS-GK25:{z}&TileCol={x}&TileRow={y}&Format=image%2Fpng',
   // eslint-disable-next-line max-len
-  REACT_APP_PLAIN_MAP_URL: 'https://mml-tiles.hel.ninja/avoin/wmts/1.0.0/selkokartta/default/ETRS-TM35FIN/{z}/{y}/{x}.png',
+  REACT_APP_PLAIN_MAP_URL: 'https://maps-proxy.api.hel.ninja/avoin/wmts/1.0.0/selkokartta/default/ETRS-TM35FIN/{z}/{y}/{x}.png',
   REACT_APP_REITTIOPAS_URL: 'https://opas.matka.fi/reitti/',
   REACT_APP_HSL_ROUTE_GUIDE_URL: 'https://reittiopas.hsl.fi/reitti/',
   REACT_APP_HSL_ROUTE_GUIDE_CITIES: 'helsinki,espoo,vantaa,kauniainen,kerava',
