@@ -337,6 +337,7 @@ const generateCSPHeaders = () => {
     'nonce-${nonce}' \
     https://unpkg.com/leaflet@1.9.4/dist/leaflet.js \
      ${process.env.CSP_SCRIPT_SRC}`;
+  csp['script-src-attr'] = `'unsafe-hashes' 'sha256-7Hm4kDnuwRKq0GkRVBPz6YL9PvbRT9e9rAqI5RnLzBQ='`;
   csp['style-src'] =
     `'self' 'unsafe-inline' https://unpkg.com/leaflet@1.9.4/dist/leaflet.css https://fonts.googleapis.com`;
 
