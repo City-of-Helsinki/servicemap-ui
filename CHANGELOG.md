@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.10.1](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.10.0...servicemap-ui-v2.10.1) (2025-12-17)
+
+
+### Bug Fixes
+
+* Csp error from cookie modal PL-199 ([#1312](https://github.com/City-of-Helsinki/servicemap-ui/issues/1312)) ([7bd6186](https://github.com/City-of-Helsinki/servicemap-ui/commit/7bd61869e8d0fdeb57689b42849ba95064926dce))
+
 ## [2.10.0](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.9.3...servicemap-ui-v2.10.0) (2025-12-12)
 
 
