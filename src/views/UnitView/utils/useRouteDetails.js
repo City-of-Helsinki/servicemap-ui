@@ -29,9 +29,10 @@ const useRouteDetails = (unit, userLocation) => {
     extraText = intl.formatMessage({ id: 'unit.route.extra.routeGuide' });
   }
 
-  const destinationString =
-    `${getLocaleText(unit.name)}, ${unit.municipality}::` +
-    `${unitLocation.coordinates[1]},${unitLocation.coordinates[0]}`;
+  let destinationString = `${getLocaleText(unit.name)}, ${unit.municipality}`;
+  if (unitLocation) {
+    destinationString += `::${unitLocation.coordinates[1]},${unitLocation.coordinates[0]}`;
+  }
   const routeUrl = `${url}${currentLocationString}/${destinationString}?locale=${intl.locale}`;
 
   return { routeUrl, extraText };
