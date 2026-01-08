@@ -15,7 +15,7 @@ RUN chown -R default:root /servicemap-ui
 COPY --chown=default:root --chmod=444 package.json yarn.lock /servicemap-ui/
 
 # Install dependencies
-RUN yarn && yarn cache clean --force
+RUN yarn install --frozen-lockfile --ignore-scripts && yarn cache clean --force
 
 COPY --chown=default:root . /servicemap-ui/
 
