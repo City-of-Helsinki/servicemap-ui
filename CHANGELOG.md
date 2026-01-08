@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.10.2](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.10.1...servicemap-ui-v2.10.2) (2026-01-08)
+
+
+### Bug Fixes
+
+* Support route details without unit location ([0b22f1b](https://github.com/City-of-Helsinki/servicemap-ui/commit/0b22f1bd29574a94023bef3263a607a267a20ebb))
+
 ## [2.10.1](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.10.0...servicemap-ui-v2.10.1) (2025-12-17)
 
 
