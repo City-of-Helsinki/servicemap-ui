@@ -2,7 +2,7 @@ import { Button, Dialog } from 'hds-react';
 import PropTypes from 'prop-types';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useIntl } from 'react-intl';
-import { useBlocker } from 'react-router';
+import { useBlocker } from 'react-router-dom';
 
 const RouterPrompt = ({ when, onOK, onCancel, title, content }) => {
   const [showPrompt, setShowPrompt] = useState(false);

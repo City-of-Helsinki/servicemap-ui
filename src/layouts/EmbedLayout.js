@@ -5,7 +5,7 @@ import { visuallyHidden } from '@mui/utils';
 import React, { Suspense, useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
-import { useLocation } from 'react-router';
+import { useLocation } from 'react-router-dom';
 
 import {
   Dialog,

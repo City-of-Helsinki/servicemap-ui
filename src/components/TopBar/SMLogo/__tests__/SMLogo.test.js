@@ -1,11 +1,20 @@
 // Link.react.test.js
 import userEvent from '@testing-library/user-event';
 import React from 'react';
+import * as reactRouterDom from 'react-router-dom';
 
 import englishTranslations from '../../../../i18n/en';
 import { initialState } from '../../../../redux/reducers/user';
 import { getRenderWithProviders } from '../../../../testUtils';
 import SMLogo from '../index';
+
+const mockUseLocation = {
+  pathname: '/fi/',
+  search: '',
+  hash: '',
+  state: null,
+  key: 'default',
+};
 
 const renderWithProviders = getRenderWithProviders({
   user: initialState,
@@ -13,6 +22,14 @@ const renderWithProviders = getRenderWithProviders({
 });
 
 describe('<SMLogo />', () => {
+  beforeEach(() => {
+    vi.spyOn(reactRouterDom, 'useLocation').mockReturnValue(mockUseLocation);
+  });
+
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
   it('should work', () => {
     const { container } = renderWithProviders(<SMLogo />);
     expect(container).toMatchSnapshot();

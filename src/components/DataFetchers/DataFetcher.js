@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation } from 'react-router';
+import { useLocation } from 'react-router-dom';
 
 import fetchSearchResults from '../../redux/actions/search';
 import { selectMapRef } from '../../redux/selectors/general';

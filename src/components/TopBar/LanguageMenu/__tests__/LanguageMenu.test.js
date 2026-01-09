@@ -1,9 +1,18 @@
 // Link.react.test.js
 import React from 'react';
+import * as reactRouterDom from 'react-router-dom';
 
 import { initialState } from '../../../../redux/reducers/user';
 import { getRenderWithProviders } from '../../../../testUtils';
 import LanguageMenu from '../index';
+
+const mockUseLocation = {
+  pathname: '/fi/',
+  search: '',
+  hash: '',
+  state: null,
+  key: 'default',
+};
 
 const renderWithProviders = getRenderWithProviders({
   user: initialState,
@@ -11,6 +20,14 @@ const renderWithProviders = getRenderWithProviders({
 });
 
 describe('<LanguageMenu />', () => {
+  beforeEach(() => {
+    vi.spyOn(reactRouterDom, 'useLocation').mockReturnValue(mockUseLocation);
+  });
+
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
   it('does render default accessibility attributes correctly', () => {
     const { container } = renderWithProviders(
       <LanguageMenu onClick={() => {}} />

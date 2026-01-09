@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import React, { useRef, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useMapEvents } from 'react-leaflet';
-import { useLocation } from 'react-router';
+import { useLocation } from 'react-router-dom';
 
 import { SMButton } from '../../../../components';
 import { getAddressText, useNavigationParams } from '../../../../utils/address';

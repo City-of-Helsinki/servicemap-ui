@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useMap } from 'react-leaflet';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation } from 'react-router';
+import { useLocation } from 'react-router-dom';
 
 import { changeSelectedEvent } from '../../../../redux/actions/event';
 import { selectNavigator } from '../../../../redux/selectors/general';
