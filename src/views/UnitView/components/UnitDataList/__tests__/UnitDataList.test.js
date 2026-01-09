@@ -1,4 +1,5 @@
 import React from 'react';
+import * as reactRouterDom from 'react-router-dom';
 
 import { getRenderWithProviders } from '../../../../../testUtils';
 import UnitDataList from '../UnitDataList';
@@ -120,6 +121,14 @@ const mockProps2 = {
   type: 'educationServices',
 };
 
+const mockUseLocation = {
+  pathname: '/unit/51342',
+  search: '',
+  hash: '',
+  state: null,
+  key: 'default',
+};
+
 const renderWithProviders = getRenderWithProviders({
   selectedUnit: { unit: { data: { id: 51342 } } },
   user: { locale: 'en' },
@@ -127,6 +136,13 @@ const renderWithProviders = getRenderWithProviders({
 });
 
 describe('<UnitDataList />', () => {
+  beforeEach(() => {
+    vi.spyOn(reactRouterDom, 'useLocation').mockReturnValue(mockUseLocation);
+  });
+
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
   it('should work', () => {
     const { container } = renderWithProviders(<UnitDataList {...mockProps} />);
     expect(container).toMatchSnapshot();

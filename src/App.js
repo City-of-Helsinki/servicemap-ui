@@ -22,12 +22,13 @@ import { Helmet } from 'react-helmet-async';
 import { IntlProvider, useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import {
+  createBrowserRouter,
   createRoutesFromElements,
   Route,
+  RouterProvider,
   Routes,
   useLocation,
-} from 'react-router';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+} from 'react-router-dom';
 
 import config from '../config';
 import featureFlags from '../config/featureFlags';

@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation, useParams } from 'react-router';
+import { useLocation, useParams } from 'react-router-dom';
 
 import { setHighlightedDistrict } from '../../redux/actions/district';
 import fetchSearchResults from '../../redux/actions/search';

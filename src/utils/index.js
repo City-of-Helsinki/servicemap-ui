@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 import { useMemo } from 'react';
-import { useLocation } from 'react-router';
+import { useLocation } from 'react-router-dom';
 import URI from 'urijs';
 
 const isClient = () => typeof window !== 'undefined';

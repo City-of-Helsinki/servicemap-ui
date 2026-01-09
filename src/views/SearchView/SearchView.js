@@ -6,7 +6,7 @@ import { visuallyHidden } from '@mui/utils';
 import React, { useEffect, useMemo, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation, useParams } from 'react-router';
+import { useLocation, useParams } from 'react-router-dom';
 
 import config from '../../../config';
 import {
