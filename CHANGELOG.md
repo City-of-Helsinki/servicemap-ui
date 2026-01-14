@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.11.0](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.10.2...servicemap-ui-v2.11.0) (2026-01-14)
+
+
+### Features
+
+* Yarn install hardening RATY-280 ([f0e4a06](https://github.com/City-of-Helsinki/servicemap-ui/commit/f0e4a06b50b4b26559299e951b32e88f09a82e6a))
+
 ## [2.10.2](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.10.1...servicemap-ui-v2.10.2) (2026-01-08)
 
 
