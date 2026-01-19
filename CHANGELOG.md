@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.11.1](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.11.0...servicemap-ui-v2.11.1) (2026-01-19)
+
+
+### Dependencies
+
+* Bump react-router from 6.30.1 to 6.30.2 ([cff01bf](https://github.com/City-of-Helsinki/servicemap-ui/commit/cff01bfc8fa17f30d5bdf3a3ebbcfcff6f5f40aa))
+
 ## [2.11.0](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.10.2...servicemap-ui-v2.11.0) (2026-01-14)
 
 
