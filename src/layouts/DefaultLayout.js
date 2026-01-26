@@ -60,13 +60,16 @@ const createContentStyles = (
     },
     map: {
       position: isMobile ? 'fixed' : null,
+      top: isMobile ? topBarHeight : null,
       bottom: 0,
       margin: 0,
       marginBottom: bottomNavHeight,
       flex: !isMobile || fullMobileMap ? 1 : 0,
       display: 'flex',
       visibility: isMobile && !fullMobileMap ? 'hidden' : 'visible',
-      height: isMobile ? `calc(100% - ${topBarHeight})` : '100%',
+      height: isMobile
+        ? `calc(100% - ${topBarHeight} - ${bottomNavHeight})`
+        : '100%',
       width: '100%',
       zIndex: 900,
     },
@@ -79,7 +82,7 @@ const createContentStyles = (
       margin: 0,
       // eslint-disable-next-line no-nested-ternary
       overflow: isMobile ? 'visible' : 'auto',
-      visibility: fullMobileMap ? 'hidden' : null,
+      display: isMobile && fullMobileMap ? 'none' : null,
       flex: '0 1 auto',
     },
     sidebarContent: {
