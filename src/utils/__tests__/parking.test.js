@@ -358,7 +358,7 @@ describe('parking', () => {
           extra: { tyyppi: '12h-24h' },
         },
         output: {
-          type: 'parking_area',
+          type: 'parking_area,street_parking_area,park_and_ride_area',
           extra__tyyppi: '12h-24h',
           municipality: 'vantaa',
         },
@@ -370,7 +370,7 @@ describe('parking', () => {
           extra: { tyyppi: '2h-3h' },
         },
         output: {
-          type: 'parking_area',
+          type: 'parking_area,street_parking_area,park_and_ride_area',
           extra__tyyppi: '2h-3h',
           municipality: 'vantaa',
         },
@@ -382,7 +382,7 @@ describe('parking', () => {
           extra: { tyyppi: '4h-11h' },
         },
         output: {
-          type: 'parking_area',
+          type: 'parking_area,street_parking_area,park_and_ride_area',
           extra__tyyppi: '4h-11h',
           municipality: 'vantaa',
         },
@@ -394,7 +394,7 @@ describe('parking', () => {
           extra: { tyyppi: 'Ei rajoitusta' },
         },
         output: {
-          type: 'parking_area',
+          type: 'parking_area,street_parking_area,park_and_ride_area',
           extra__tyyppi: 'Ei rajoitusta',
           municipality: 'vantaa',
         },
@@ -406,7 +406,7 @@ describe('parking', () => {
           extra: { tyyppi: 'Lyhytaikainen' },
         },
         output: {
-          type: 'parking_area',
+          type: 'parking_area,street_parking_area,park_and_ride_area',
           extra__tyyppi: 'Lyhytaikainen',
           municipality: 'vantaa',
         },
@@ -418,7 +418,7 @@ describe('parking', () => {
           extra: { tyyppi: 'Maksullinen' },
         },
         output: {
-          type: 'parking_area',
+          type: 'parking_area,street_parking_area,park_and_ride_area',
           extra__tyyppi: 'Maksullinen',
           municipality: 'vantaa',
         },
@@ -430,7 +430,7 @@ describe('parking', () => {
           extra: { tyyppi: 'Muu' },
         },
         output: {
-          type: 'parking_area',
+          type: 'parking_area,street_parking_area,park_and_ride_area',
           extra__tyyppi: 'Muu',
           municipality: 'vantaa',
         },
@@ -442,7 +442,7 @@ describe('parking', () => {
           extra: { tyyppi: 'Varattu päivisin' },
         },
         output: {
-          type: 'parking_area',
+          type: 'parking_area,street_parking_area,park_and_ride_area',
           extra__tyyppi: 'Varattu päivisin',
           municipality: 'vantaa',
         },
@@ -455,7 +455,7 @@ describe('parking', () => {
           extra: { tyyppi: '12h-24h' },
         },
         output: {
-          type: 'hgv_street_parking_area,hgv_parking_area',
+          type: 'hgv_parking_area,hgv_street_parking_area,hgv_no_parking_area',
           extra__tyyppi: '12h-24h',
           municipality: 'vantaa',
         },
@@ -467,7 +467,7 @@ describe('parking', () => {
           extra: { tyyppi: '4h-11h' },
         },
         output: {
-          type: 'hgv_street_parking_area,hgv_parking_area',
+          type: 'hgv_parking_area,hgv_street_parking_area,hgv_no_parking_area',
           extra__tyyppi: '4h-11h',
           municipality: 'vantaa',
         },
@@ -479,7 +479,7 @@ describe('parking', () => {
           extra: { tyyppi: '2h-3h' },
         },
         output: {
-          type: 'hgv_street_parking_area,hgv_parking_area',
+          type: 'hgv_parking_area,hgv_street_parking_area,hgv_no_parking_area',
           extra__tyyppi: '2h-3h',
           municipality: 'vantaa',
         },
@@ -491,7 +491,7 @@ describe('parking', () => {
           extra: { tyyppi: 'Ei rajoitusta' },
         },
         output: {
-          type: 'hgv_street_parking_area,hgv_parking_area',
+          type: 'hgv_parking_area,hgv_street_parking_area,hgv_no_parking_area',
           extra__tyyppi: 'Ei rajoitusta',
           municipality: 'vantaa',
         },
@@ -503,7 +503,7 @@ describe('parking', () => {
           extra: { tyyppi: 'Lyhytaikainen' },
         },
         output: {
-          type: 'hgv_street_parking_area,hgv_parking_area',
+          type: 'hgv_parking_area,hgv_street_parking_area,hgv_no_parking_area',
           extra__tyyppi: 'Lyhytaikainen',
           municipality: 'vantaa',
         },
@@ -515,7 +515,7 @@ describe('parking', () => {
           extra: { tyyppi: 'Maksullinen' },
         },
         output: {
-          type: 'hgv_street_parking_area,hgv_parking_area',
+          type: 'hgv_parking_area,hgv_street_parking_area,hgv_no_parking_area',
           extra__tyyppi: 'Maksullinen',
           municipality: 'vantaa',
         },
@@ -527,7 +527,7 @@ describe('parking', () => {
           extra: { tyyppi: 'Muu' },
         },
         output: {
-          type: 'hgv_street_parking_area,hgv_parking_area',
+          type: 'hgv_parking_area,hgv_street_parking_area,hgv_no_parking_area',
           extra__tyyppi: 'Muu',
           municipality: 'vantaa',
         },
@@ -539,7 +539,7 @@ describe('parking', () => {
           extra: { tyyppi: 'Varattu päivisin' },
         },
         output: {
-          type: 'hgv_street_parking_area,hgv_parking_area',
+          type: 'hgv_parking_area,hgv_street_parking_area,hgv_no_parking_area',
           extra__tyyppi: 'Varattu päivisin',
           municipality: 'vantaa',
         },
@@ -552,7 +552,7 @@ describe('parking', () => {
           extra: { tyyppi: '12h-24h' },
         },
         output: {
-          type: 'hgv_street_parking_area,hgv_parking_area',
+          type: 'hgv_parking_area,hgv_street_parking_area,hgv_no_parking_area',
           extra__tyyppi: '12h-24h',
           municipality: 'vantaa',
         },
@@ -564,7 +564,7 @@ describe('parking', () => {
           extra: { tyyppi: '4h-11h' },
         },
         output: {
-          type: 'hgv_street_parking_area,hgv_parking_area',
+          type: 'hgv_parking_area,hgv_street_parking_area,hgv_no_parking_area',
           extra__tyyppi: '4h-11h',
           municipality: 'vantaa',
         },
@@ -576,7 +576,7 @@ describe('parking', () => {
           extra: { tyyppi: '2h-3h' },
         },
         output: {
-          type: 'hgv_street_parking_area,hgv_parking_area',
+          type: 'hgv_parking_area,hgv_street_parking_area,hgv_no_parking_area',
           extra__tyyppi: '2h-3h',
           municipality: 'vantaa',
         },
@@ -588,7 +588,7 @@ describe('parking', () => {
           extra: { tyyppi: 'Ei rajoitusta' },
         },
         output: {
-          type: 'hgv_street_parking_area,hgv_parking_area',
+          type: 'hgv_parking_area,hgv_street_parking_area,hgv_no_parking_area',
           extra__tyyppi: 'Ei rajoitusta',
           municipality: 'vantaa',
         },
@@ -600,7 +600,7 @@ describe('parking', () => {
           extra: { tyyppi: 'Lyhytaikainen' },
         },
         output: {
-          type: 'hgv_street_parking_area,hgv_parking_area',
+          type: 'hgv_parking_area,hgv_street_parking_area,hgv_no_parking_area',
           extra__tyyppi: 'Lyhytaikainen',
           municipality: 'vantaa',
         },
@@ -612,7 +612,7 @@ describe('parking', () => {
           extra: { tyyppi: 'Maksullinen' },
         },
         output: {
-          type: 'hgv_street_parking_area,hgv_parking_area',
+          type: 'hgv_parking_area,hgv_street_parking_area,hgv_no_parking_area',
           extra__tyyppi: 'Maksullinen',
           municipality: 'vantaa',
         },
@@ -624,7 +624,7 @@ describe('parking', () => {
           extra: { tyyppi: 'Muu' },
         },
         output: {
-          type: 'hgv_street_parking_area,hgv_parking_area',
+          type: 'hgv_parking_area,hgv_street_parking_area,hgv_no_parking_area',
           extra__tyyppi: 'Muu',
           municipality: 'vantaa',
         },
@@ -636,7 +636,7 @@ describe('parking', () => {
           extra: { tyyppi: 'Varattu päivisin' },
         },
         output: {
-          type: 'hgv_street_parking_area,hgv_parking_area',
+          type: 'hgv_parking_area,hgv_street_parking_area,hgv_no_parking_area',
           extra__tyyppi: 'Varattu päivisin',
           municipality: 'vantaa',
         },

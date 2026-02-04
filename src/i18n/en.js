@@ -118,6 +118,7 @@ export default {
   'area.list.natureConservation': 'Nature conservation',
   'area.list.parking': 'Parking',
   'area.list.parking_area': 'Parking areas',
+  'area.list.street_parking_area': 'Street parking',
   'area.list.parking_payzone': 'Parking payment zones',
   'area.list.parking_payzone.plural': 'Parking payment zones',
   'area.list.education.finnish': 'Finnish school areas',

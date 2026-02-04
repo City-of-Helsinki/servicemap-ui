@@ -116,6 +116,7 @@ export default {
   'area.list.natureConservation': 'Naturskydd',
   'area.list.parking': 'Parkering',
   'area.list.parking_area': 'Parkeringsområden',
+  'area.list.street_parking_area': 'Gatuparkering',
   'area.list.parking_payzone': 'Avgiftszoner',
   'area.list.parking_payzone.plural': 'Avgiftszoner',
   'area.list.education.finnish': 'Finska skolområden',

@@ -114,6 +114,7 @@ export default {
   'area.list.natureConservation': 'Luonnonsuojelu',
   'area.list.parking': 'Pysäköinti',
   'area.list.parking_area': 'Pysäköintialueet',
+  'area.list.street_parking_area': 'Kadunvarsipysäköinti',
   'area.list.parking_payzone': 'Maksuvyöhykkeet',
   'area.list.parking_payzone.plural': 'Maksuvyöhykkeet',
   'area.list.education.finnish': 'Suomenkieliset koulualueet',
