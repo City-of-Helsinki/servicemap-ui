@@ -27,15 +27,22 @@ export const parkingVantaaOtherTypes = [
   passengerCarParkAndRide,
 ];
 
+// Vantaa API type parameters
+const parkingVNTPassengerCarTypes = [
+  'parking_area',
+  'street_parking_area',
+  'park_and_ride_area',
+];
 const parkingVNTHeavyTrafficTypes = [
-  'hgv_street_parking_area',
   'hgv_parking_area',
+  'hgv_street_parking_area',
+  'hgv_no_parking_area',
 ];
 
 const VNT = 'vantaa';
 const HKI = 'helsinki';
-const PARKING_AREA = 'parking_area';
 const parkingVNTHeavyTrafficTypesParam = parkingVNTHeavyTrafficTypes.join(',');
+const parkingVNTPassengerCarTypesParam = parkingVNTPassengerCarTypes.join(',');
 
 /**
  * This "area id" is a local (in frontend) invention used to identificate different areas. In other
@@ -55,7 +62,9 @@ export function resolveParkingAreaId(area) {
   if (parkingVantaaOtherTypes.includes(area.type)) {
     return area.type;
   }
-  const suffix = area.type === PARKING_AREA ? 'passenger_car' : 'heavy_traffic';
+  const suffix = parkingVNTPassengerCarTypes.includes(area.type)
+    ? 'passenger_car'
+    : 'heavy_traffic';
   return `${area.extra.tyyppi}/${suffix}`;
 }
 
@@ -64,7 +73,7 @@ export function resolveParamsForParkingFetch(areaId) {
     return { type: areaId, municipality: VNT };
   }
   if (parkingHelsinkiTypes.includes(areaId)) {
-    return { type: PARKING_AREA, extra__class: areaId, municipality: HKI };
+    return { type: 'parking_area', extra__class: areaId, municipality: HKI };
   }
   if (!areaId?.includes('/')) {
     return null;
@@ -74,7 +83,7 @@ export function resolveParamsForParkingFetch(areaId) {
     type:
       combinedType === 'heavy_traffic'
         ? parkingVNTHeavyTrafficTypesParam
-        : PARKING_AREA,
+        : parkingVNTPassengerCarTypesParam,
     extra__tyyppi: tyyppi,
     municipality: VNT,
   };
