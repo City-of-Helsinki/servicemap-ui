@@ -1,6 +1,6 @@
 {
   "name": "servicemap-ui",
-  "version": "2.11.2",
+  "version": "2.11.3",
   "private": true,
   "engines": {
     "node": ">=22.13.1"

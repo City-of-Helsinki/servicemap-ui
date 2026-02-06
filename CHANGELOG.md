@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.11.3](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.11.2...servicemap-ui-v2.11.3) (2026-02-06)
+
+
+### Bug Fixes
+
+* Fix Vantaa parking area display ([8b1e264](https://github.com/City-of-Helsinki/servicemap-ui/commit/8b1e264e358736b05a16988ee282f1baea3043e6))
+
 ## [2.11.2](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.11.1...servicemap-ui-v2.11.2) (2026-01-28)
 
 
