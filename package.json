@@ -31,7 +31,7 @@
     "core-js": "^3.25.1",
     "d3": "^7.9.0",
     "dotenv": "^16.6.1",
-    "express": "^4.21.2",
+    "express": "^4.21.3",
     "express-sitemap": "^1.8.0",
     "hds-design-tokens": "4.7.1",
     "hds-react": "4.7.1",
@@ -108,6 +108,7 @@
     "@testing-library/react": "^16.0.1",
     "@testing-library/user-event": "^14.5.2",
     "axe-html-reporter": "^2.2.11",
+    "buffer": "^6.0.3",
     "eslint": "8.43.0",
     "eslint-config-react-app": "^7.0.1",
     "eslint-plugin-import": "^2.22.1",
@@ -116,9 +117,11 @@
     "identity-obj-proxy": "^3.0.0",
     "jsdom": "^27.0.0",
     "nodemon": "^2.0.20",
+    "path-browserify": "^1.0.1",
     "prettier": "^3.6.2",
+    "process": "^0.11.10",
     "redux-mock-store": "^1.5.4",
-    "vite-plugin-commonjs": "^0.10.4",
-    "vite-plugin-node-polyfills": "^0.24.0"
+    "util": "^0.12.5",
+    "vite-plugin-commonjs": "^0.10.4"
   }
 }
