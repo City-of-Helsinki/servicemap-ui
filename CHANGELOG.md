@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.12.0](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.11.3...servicemap-ui-v2.12.0) (2026-02-11)
+
+
+### Features
+
+* Add map legend component ([f7f9429](https://github.com/City-of-Helsinki/servicemap-ui/commit/f7f9429ffa16d1b832789568e061c7dd4480f428))
+
 ## [2.11.3](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.11.2...servicemap-ui-v2.11.3) (2026-02-06)
 
 
