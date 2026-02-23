@@ -1,5 +1,18 @@
 services:
-  app:
-    build: .
+  nginx:
+    build:
+      context: .
+      target: nginx
     ports:
-      - "2048:2048"
+      - "2048:8080"
+    depends_on:
+      - express
+
+  express:
+    build:
+      context: .
+      target: production
+    expose:
+      - "2048"
+    environment:
+      - SERVE_STATIC=false

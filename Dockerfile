@@ -1,7 +1,8 @@
-FROM registry.access.redhat.com/ubi9/nodejs-22:9.5
+# ===============================================
+FROM registry.access.redhat.com/ubi9/nodejs-22 AS appbase
+# ===============================================
 
-# Create app directory
-WORKDIR /servicemap-ui
+WORKDIR /app
 
 USER root
 
@@ -9,29 +10,72 @@ RUN curl --fail --silent --proto '=https' --tlsv1.2 https://dl.yarnpkg.com/rpm/y
   --output /etc/yum.repos.d/yarn.repo
 RUN yum -y install yarn
 
-RUN chown -R default:root /servicemap-ui
+# Official image has npm log verbosity as info. More info - https://github.com/nodejs/docker-node#verbosity
+ENV NPM_CONFIG_LOGLEVEL=warn
 
-# Install app dependencies
-COPY --chown=default:root --chmod=444 package.json yarn.lock /servicemap-ui/
+ENV YARN_VERSION=1.22.19
+RUN yarn policies set-version $YARN_VERSION
 
-# Install dependencies
-RUN yarn install --frozen-lockfile --ignore-scripts && yarn cache clean --force
-
-COPY --chown=default:root . /servicemap-ui/
+RUN chown -R default:root /app
 
 USER default
+
+COPY --chown=default:root package.json yarn.lock /app/
+
+RUN yarn config set network-timeout 300000
+RUN yarn install --frozen-lockfile --ignore-scripts && yarn cache clean --force
+
+ARG NODE_ENV=production
+ENV NODE_ENV=$NODE_ENV
+
+COPY --chown=default:root . /app/
+
+# =============================
+FROM appbase AS development
+# =============================
+
+ARG NODE_ENV=development
+ENV NODE_ENV=$NODE_ENV
+
+CMD ["yarn", "start"]
+
+# ===================================
+FROM appbase AS staticbuilder
+# ===================================
+
+ARG NODE_OPTIONS=--max-old-space-size=4096
+ENV NODE_OPTIONS=$NODE_OPTIONS
 
 RUN yarn build
 
+# =============================
+FROM appbase AS production
+# =============================
+
+# Copy only the built server output
+COPY --from=staticbuilder --chown=default:root /app/dist /app/dist
+
+EXPOSE 2048
+CMD ["node", "dist/index.js"]
+
+# =============================
+FROM registry.access.redhat.com/ubi9/nginx-122 AS nginx
+# =============================
+
 USER root
 
-RUN chown root:root -R /servicemap-ui  && chmod -R 755 /servicemap-ui
+RUN chgrp -R 0 /usr/share/nginx/html && \
+    chmod -R g=u /usr/share/nginx/html
 
-USER default
+# Copy static assets from the build for Nginx to serve directly
+COPY --from=staticbuilder /app/dist/src /usr/share/nginx/html
+COPY --from=staticbuilder /app/dist/assets /usr/share/nginx/html/assets
 
-# If you are building your code for production
-# RUN npm ci --only=production
+# Copy nginx config
+COPY .prod/nginx.conf /etc/nginx/nginx.conf
 
-# Bundle app source
-EXPOSE 2048
-CMD [ "node", "dist/index.js" ]
+USER 1001
+
+CMD ["nginx", "-g", "daemon off;"]
+
+EXPOSE 8080

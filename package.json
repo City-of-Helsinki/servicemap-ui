@@ -8,6 +8,7 @@
   "dependencies": {
     "@emotion/css": "^11.11.2",
     "@emotion/react": "^11.10.8",
+    "@emotion/server": "^11.10.0",
     "@emotion/styled": "^11.10.8",
     "@formatjs/intl-pluralrules": "^1.5.9",
     "@formatjs/intl-relativetimeformat": "^4.5.16",
@@ -27,7 +28,6 @@
     "@uiw/react-watermark": "1.0.0",
     "@vitejs/plugin-react": "^5.0.3",
     "@vitest/coverage-istanbul": "^3.2.4",
-    "compression": "^1.8.1",
     "core-js": "^3.25.1",
     "d3": "^7.9.0",
     "dotenv": "^16.6.1",
@@ -100,7 +100,6 @@
     "@babel/preset-react": "^7.26.3",
     "@commitlint/cli": "^20.1.0",
     "@commitlint/config-conventional": "^20.0.0",
-    "@emotion/server": "^11.10.0",
     "@playwright/test": "^1.50.1",
     "@sentry/vite-plugin": "^4.6.0",
     "@testing-library/dom": "^10.4.0",

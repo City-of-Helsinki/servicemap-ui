@@ -2,7 +2,6 @@ import { CacheProvider } from '@emotion/react';
 import createEmotionServer from '@emotion/server/create-instance';
 import { ServerStyleSheets } from '@mui/styles';
 import * as Sentry from '@sentry/node';
-import compression from 'compression';
 import crypto from 'crypto';
 import dotenv from 'dotenv';
 import express from 'express';
@@ -93,17 +92,15 @@ const app = express();
 app.disable('x-powered-by');
 const { supportedLanguages } = config;
 
-// Enable compression for all responses
-app.use(compression());
-
 // This is required for proxy setups to work in production
 app.set('trust proxy', true);
 
-// Add static folder
-app.use(express.static(path.resolve(__dirname, 'src')));
-// Also serve files from the root dist directory for index.js and other assets
-app.use(express.static(path.resolve(__dirname)));
-app.use('/assets', express.static(path.resolve(__dirname, 'assets')));
+// Serve static files when running without Nginx (local development)
+if (process.env.SERVE_STATIC !== 'false') {
+  app.use(express.static(path.resolve(__dirname, 'src')));
+  app.use(express.static(path.resolve(__dirname)));
+  app.use('/assets', express.static(path.resolve(__dirname, 'assets')));
+}
 
 // Add middlewares
 app.use('/*', (req, res, next) => {
