@@ -2,7 +2,7 @@
 FROM registry.access.redhat.com/ubi9/nodejs-22 AS appbase
 # ===============================================
 
-WORKDIR /app
+WORKDIR /servicemap-ui
 
 USER root
 
@@ -16,11 +16,11 @@ ENV NPM_CONFIG_LOGLEVEL=warn
 ENV YARN_VERSION=1.22.19
 RUN yarn policies set-version $YARN_VERSION
 
-RUN chown -R default:root /app
+RUN chown -R default:root /servicemap-ui
 
 USER default
 
-COPY --chown=default:root package.json yarn.lock /app/
+COPY --chown=default:root package.json yarn.lock /servicemap-ui/
 
 RUN yarn config set network-timeout 300000
 RUN yarn install --frozen-lockfile --ignore-scripts && yarn cache clean --force
@@ -28,7 +28,7 @@ RUN yarn install --frozen-lockfile --ignore-scripts && yarn cache clean --force
 ARG NODE_ENV=production
 ENV NODE_ENV=$NODE_ENV
 
-COPY --chown=default:root . /app/
+COPY --chown=default:root . /servicemap-ui/
 
 # =============================
 FROM appbase AS development
@@ -53,7 +53,7 @@ FROM appbase AS production
 # =============================
 
 # Copy only the built server output
-COPY --from=staticbuilder --chown=default:root /app/dist /app/dist
+COPY --from=staticbuilder --chown=default:root /servicemap-ui/dist /servicemap-ui/dist
 
 EXPOSE 2048
 CMD ["node", "dist/index.js"]
@@ -68,8 +68,8 @@ RUN chgrp -R 0 /usr/share/nginx/html && \
     chmod -R g=u /usr/share/nginx/html
 
 # Copy static assets from the build for Nginx to serve directly
-COPY --from=staticbuilder /app/dist/src /usr/share/nginx/html
-COPY --from=staticbuilder /app/dist/assets /usr/share/nginx/html/assets
+COPY --from=staticbuilder /servicemap-ui/dist/src /usr/share/nginx/html
+COPY --from=staticbuilder /servicemap-ui/dist/assets /usr/share/nginx/html/assets
 
 # Copy nginx config
 COPY .prod/nginx.conf /etc/nginx/nginx.conf
