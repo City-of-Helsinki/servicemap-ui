@@ -28,6 +28,7 @@ import rootReducer from '../src/redux/rootReducer';
 import createEmotionCache from './createEmotionCache';
 import { fetchEventData, fetchSelectedUnitData } from './dataFetcher';
 import ieHandler from './ieMiddleware';
+import getReadiness from './readiness';
 import {
   generateSitemap,
   getRobotsFile,
@@ -114,6 +115,7 @@ app.use('/*', (req, res, next) => {
 app.use('/*', ieHandler);
 app.use('/sitemap.xml', getSitemap);
 app.get('/robots.txt', getRobotsFile);
+app.get('/readiness', getReadiness);
 app.use('/', languageSubdomainRedirect);
 app.use('/', makeLanguageHandler);
 app.use('/', unitRedirect);
