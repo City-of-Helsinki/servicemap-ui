@@ -21,6 +21,9 @@ COPY --chown=default:root . /servicemap-ui/
 
 USER default
 
+ARG NODE_OPTIONS=--max-old-space-size=4096
+ENV NODE_OPTIONS=$NODE_OPTIONS
+
 RUN yarn build
 
 USER root
