@@ -71,6 +71,9 @@ RUN chgrp -R 0 /usr/share/nginx/html && \
 COPY --from=staticbuilder /servicemap-ui/dist/src /usr/share/nginx/html
 COPY --from=staticbuilder /servicemap-ui/dist/assets /usr/share/nginx/html/assets
 
+# Keep sourcemaps at the original path for the Sentry CI init container
+COPY --from=staticbuilder /servicemap-ui/dist/src /servicemap-ui/dist/src
+
 # Copy nginx config
 COPY .prod/nginx.conf /etc/nginx/nginx.conf
 
