@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.13.0](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.12.0...servicemap-ui-v2.13.0) (2026-02-25)
+
+
+### Features
+
+* Readiness endpoint KEH-228 ([c142279](https://github.com/City-of-Helsinki/servicemap-ui/commit/c142279f502f59be1b6f671076ea88dc577b0b6a))
+
+
+### Dependencies
+
+* Upgrade react-router to latest Refs: RATY-299 ([da9c6e6](https://github.com/City-of-Helsinki/servicemap-ui/commit/da9c6e62c9e18d7515149ebcf1afe7d94577fb16))
+
 ## [2.12.0](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.11.3...servicemap-ui-v2.12.0) (2026-02-11)
 
 
