@@ -1043,14 +1043,7 @@
     "@babel/plugin-transform-modules-commonjs" "^7.27.1"
     "@babel/plugin-transform-typescript" "^7.28.5"
 
-"@babel/runtime@7.17.9":
-  version "7.17.9"
-  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.17.9.tgz#d19fbf802d01a8cb6cf053a64e472d42c434ba72"
-  integrity sha512-lSiBBvodq29uShpWGNbgFdKYNiFDo5/HIYsaCEY9ff4sb10x9jizo2+pRrSyF4jKZCXqgzuqBOQKbUm90gQwJg==
-  dependencies:
-    regenerator-runtime "^0.13.4"
-
-"@babel/runtime@^7.11.2", "@babel/runtime@^7.12.1", "@babel/runtime@^7.12.5", "@babel/runtime@^7.16.3", "@babel/runtime@^7.18.3", "@babel/runtime@^7.26.0", "@babel/runtime@^7.3.1", "@babel/runtime@^7.5.5", "@babel/runtime@^7.8.3", "@babel/runtime@^7.8.7", "@babel/runtime@^7.9.2":
+"@babel/runtime@^7.12.1", "@babel/runtime@^7.12.5", "@babel/runtime@^7.16.3", "@babel/runtime@^7.18.3", "@babel/runtime@^7.26.0", "@babel/runtime@^7.26.10", "@babel/runtime@^7.3.1", "@babel/runtime@^7.5.5", "@babel/runtime@^7.8.3", "@babel/runtime@^7.8.7", "@babel/runtime@^7.9.2":
   version "7.29.2"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.29.2.tgz#9a6e2d05f4b6692e1801cd4fb176ad823930ed5e"
   integrity sha512-JiDShH45zKHWyGe4ZNVRrCjBz8Nh9TMmZG1kh4QTK8hCBTWBi8Da+i7s1fJw7/lYpM4ccepSNfqzZ/QvABBi5g==
@@ -2223,11 +2216,6 @@
   integrity sha512-r9JfchJF1Ae6yAxcaLu/V1TGqBhAuSDe3mRNOssBfx1rMzfZ4fdNvrgUBwyb/TNTGXFxlH9AZix5P257x07nrg==
   dependencies:
     "@opentelemetry/instrumentation" "^0.207.0"
-
-"@reach/observe-rect@^1.1.0":
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/@reach/observe-rect/-/observe-rect-1.2.0.tgz#d7a6013b8aafcc64c778a0ccb83355a11204d3b2"
-  integrity sha512-Ba7HmkFgfQxZqqaeIWWkNK0rEhpxVQHIoVyW1YDSkGsGIXzcaW4deC8B0pZrNSSyLTdIk7y+5olKt5+g0GmFIQ==
 
 "@react-aria/interactions@^3.22.3":
   version "3.27.1"
@@ -4133,11 +4121,6 @@ compression@^1.8.1:
     safe-buffer "5.2.1"
     vary "~1.1.2"
 
-compute-scroll-into-view@^1.0.14:
-  version "1.0.20"
-  resolved "https://registry.yarnpkg.com/compute-scroll-into-view/-/compute-scroll-into-view-1.0.20.tgz#1768b5522d1172754f5d0c9b02de3af6be506a43"
-  integrity sha512-UCB0ioiyj8CRjtrvaceBLqqhZCVP+1B8+NWQhmdsm0VXOJtobBCf1dBQmebCCo34qZmUwZfIH2MZLqNHazrfjg==
-
 concat-map@0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/concat-map/-/concat-map-0.0.1.tgz#d8a96bd77fd68df7793a73036a3ba0d5405d477b"
@@ -4849,16 +4832,6 @@ dotenv@^16.3.1, dotenv@^16.6.1:
   version "16.6.1"
   resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-16.6.1.tgz#773f0e69527a8315c7285d5ee73c4459d20a8020"
   integrity sha512-uBq4egWHTcTt33a72vpSG0z3HnPuIl6NqYcTrKEg2azoEyl2hpW0zqlxysq2pK9HlDIHyHyakeYaYnSAwd8bow==
-
-downshift@6.0.6:
-  version "6.0.6"
-  resolved "https://registry.yarnpkg.com/downshift/-/downshift-6.0.6.tgz#82aee8e2e260d7ad99df8a0969bd002dd523abe8"
-  integrity sha512-tmLab3cXCn6PtZYl9V8r/nB2m+7/nCNrwo0B3kTHo/2lRBHr+1en1VNOQt2wIt0ajanAnxquZ00WPCyxe6cNFQ==
-  dependencies:
-    "@babel/runtime" "^7.11.2"
-    compute-scroll-into-view "^1.0.14"
-    prop-types "^15.7.2"
-    react-is "^16.13.1"
 
 dunder-proto@^1.0.0, dunder-proto@^1.0.1:
   version "1.0.1"
@@ -5905,23 +5878,23 @@ hast-util-whitespace@^3.0.0:
   dependencies:
     "@types/hast" "^3.0.0"
 
-hds-core@4.7.1:
-  version "4.7.1"
-  resolved "https://registry.yarnpkg.com/hds-core/-/hds-core-4.7.1.tgz#2f04b7e5f6a971401d91b7c74dfceb92c49fc641"
-  integrity sha512-3TTsU4gZvGRnhAHJ0bXc0hW2UKRKkHbykJRiOIMCQqpTEluO7baRluvVUl1mXHIm6Cw3gotEUhw2nXLlV4t6oA==
+hds-core@5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/hds-core/-/hds-core-5.0.0.tgz#3937375efddf715002c3c109ab508b61b2cefdba"
+  integrity sha512-pzx9gsg1zH6U8hmRrdGybw9NjKaJ5XjIf8hbr9cw320QxwkklvDgDYgad4U9B/TdX8cM16k1IZWyd/ellO5hEQ==
 
-hds-design-tokens@4.7.1:
-  version "4.7.1"
-  resolved "https://registry.yarnpkg.com/hds-design-tokens/-/hds-design-tokens-4.7.1.tgz#17f2c8b37103b663da39d1b3f0a5e523e9ffbb8e"
-  integrity sha512-nqkQm4I7wobLBuUvlpvLg6X3wbMU6s3syCqcVEnAhWhVJhrfMFcFOvMrkFXXfxTOr5Jn2U449wY5/Th81H0hzQ==
+hds-design-tokens@5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/hds-design-tokens/-/hds-design-tokens-5.0.0.tgz#1e05b4da09a49fd617b6a47df5669b07864e9616"
+  integrity sha512-1TzW9Mzr60L67AIntqWO171Gi34jjyf1QPs8lBD07NAHtaYO9QFBmyFsKdiZkacVsLNvsMShiTpEjpTDTicrLA==
 
-hds-react@4.7.1:
-  version "4.7.1"
-  resolved "https://registry.yarnpkg.com/hds-react/-/hds-react-4.7.1.tgz#9bc0aa475f3a2fd9c6286056b7c2cb2e47467209"
-  integrity sha512-68I+lQ8QBkQrlbJe87JCngEnT/Jzd9OtpzpNk/wpUyG00oar6+ovoZGSYAzutdHI/qUg/Jbp4SnI2gMG4y/PDg==
+hds-react@5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/hds-react/-/hds-react-5.0.0.tgz#5501958c8409738c481546b1fbc070b33a5f785a"
+  integrity sha512-MM9SLA5mlQVvbxrmTmkG+0NoBW7QArX+FttNdauptD8Qj+fAW5gOVpA9Ay2fKbMq643t7DAGWdYtCWy/n/N7tw==
   dependencies:
     "@apollo/client" "^3.10.1"
-    "@babel/runtime" "7.17.9"
+    "@babel/runtime" "^7.26.10"
     "@emotion/styled-base" "^11.0.0"
     "@hookform/resolvers" "^2.9.11"
     "@juggle/resize-observer" "3.2.0"
@@ -5934,9 +5907,8 @@ hds-react@4.7.1:
     cookie "^0.4.1"
     crc-32 "1.2.0"
     date-fns "2.16.1"
-    downshift "6.0.6"
     graphql "^16.8.1"
-    hds-core "4.7.1"
+    hds-core "5.0.0"
     jwt-decode "^3.1.2"
     kashe "1.0.4"
     lodash "^4.17.21"
@@ -5947,7 +5919,6 @@ hds-react@4.7.1:
     react-merge-refs "1.1.0"
     react-popper "2.2.5"
     react-use-measure "2.0.1"
-    react-virtual "2.10.4"
     uuid "^9.0.0"
     yup "^1.0.2"
 
@@ -8360,13 +8331,6 @@ react-use-measure@2.0.1:
   dependencies:
     debounce "^1.2.0"
 
-react-virtual@2.10.4:
-  version "2.10.4"
-  resolved "https://registry.yarnpkg.com/react-virtual/-/react-virtual-2.10.4.tgz#08712f0acd79d7d6f7c4726f05651a13b24d8704"
-  integrity sha512-Ir6+oPQZTVHfa6+JL9M7cvMILstFZH/H3jqeYeKI4MSUX+rIruVwFC6nGVXw9wqAw8L0Kg2KvfXxI85OvYQdpQ==
-  dependencies:
-    "@reach/observe-rect" "^1.1.0"
-
 react@^18.3.1:
   version "18.3.1"
   resolved "https://registry.yarnpkg.com/react/-/react-18.3.1.tgz#49ab892009c53933625bd16b2533fc754cab2891"
@@ -8466,7 +8430,7 @@ regenerate@^1.4.2:
   resolved "https://registry.yarnpkg.com/regenerate/-/regenerate-1.4.2.tgz#b9346d8827e8f5a32f7ba29637d398b69014848a"
   integrity sha512-zrceR/XhGYU/d/opr2EKO7aRHUeiBI8qjtfHqADTwZd6Szfy16la6kqD0MIUs5z5hx6AaKa+PixpPrR289+I0A==
 
-regenerator-runtime@^0.13.4, regenerator-runtime@^0.13.7:
+regenerator-runtime@^0.13.7:
   version "0.13.11"
   resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.13.11.tgz#f6dca3e7ceec20590d07ada785636a90cdca17f9"
   integrity sha512-kY1AZVr2Ra+t+piVaJ4gxaFaReZVH40AKNo7UCX6W+dEwBo/2oZJzqfuN1qLq1oL45o56cPaTXELwrTh8Fpggg==
