@@ -1,5 +1,14 @@
 # Changelog
 
+## [2.13.1](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.13.0...servicemap-ui-v2.13.1) (2026-03-26)
+
+
+### Dependencies
+
+* Bump eslint and plugins Refs: RATY-299 ([9c85a23](https://github.com/City-of-Helsinki/servicemap-ui/commit/9c85a2382f173c750180008a94595fa07a9af093))
+* Bump flatted from 3.3.3 to 3.4.2 ([afd8578](https://github.com/City-of-Helsinki/servicemap-ui/commit/afd8578fe25e7a2d2f06fc12b055f5c11078f7fd))
+* Bump rollup from 4.52.3 to 4.59.0 ([6544d92](https://github.com/City-of-Helsinki/servicemap-ui/commit/6544d926a15b76dd0a7e2363d6cd411581adbb63))
+
 ## [2.13.0](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.12.0...servicemap-ui-v2.13.0) (2026-02-25)
 
 
