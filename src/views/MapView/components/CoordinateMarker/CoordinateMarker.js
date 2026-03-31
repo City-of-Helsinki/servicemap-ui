@@ -7,8 +7,8 @@ import { getIcon } from '../../../../components';
 import { selectThemeMode } from '../../../../redux/selectors/user';
 
 function CoordinateMarker({ position = null }) {
-  const { Marker } = global.rL;
-  const { divIcon } = global.L;
+  const { Marker } = globalThis.rL;
+  const { divIcon } = globalThis.L;
   const useContrast = useSelector(selectThemeMode) === 'dark';
 
   if (!position) return null;

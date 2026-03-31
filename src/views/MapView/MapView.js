@@ -7,6 +7,7 @@ import { useTheme } from '@mui/styles';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
+import * as ReactLeaflet from 'react-leaflet';
 import { useMapEvents } from 'react-leaflet';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
@@ -60,11 +61,11 @@ import { focusToPosition, getBoundsFromBbox } from './utils/mapActions';
 import MapUtility from './utils/mapUtility';
 import useMapUnits from './utils/useMapUnits';
 
-if (global.window) {
+if (globalThis.window) {
   require('leaflet');
   require('leaflet.markercluster');
   require('leaflet.heightgraph');
-  global.rL = require('react-leaflet');
+  globalThis.rL = ReactLeaflet;
 }
 
 function EmbeddedActions() {
@@ -264,8 +265,8 @@ function MapView(props) {
     return null;
   };
 
-  if (global.rL && mapObject) {
-    const { MapContainer, TileLayer, WMSTileLayer } = global.rL || {};
+  if (globalThis.rL && mapObject) {
+    const { MapContainer, TileLayer, WMSTileLayer } = globalThis.rL || {};
     let center = mapOptions.initialPosition;
     let zoom = isMobile ? mapObject.options.mobileZoom : mapObject.options.zoom;
     // If changing map type, use viewport values of previous map

@@ -118,8 +118,8 @@ function PrintView({ togglePrintView }) {
       const cl = current?._icon?.classList; // Class list for icon
 
       if (
-        (current instanceof global.L.MarkerCluster ||
-          current instanceof global.L.Marker) &&
+        (current instanceof globalThis.L.MarkerCluster ||
+          current instanceof globalThis.L.Marker) &&
         // Only unit markers and clusters
         cl &&
         (cl.contains('unitMarker') || cl.contains('unitClusterMarker'))
@@ -146,7 +146,7 @@ function PrintView({ togglePrintView }) {
 
   const isInvalidUnitPageMarker = (marker) => {
     let isInvalid = false;
-    if (marker instanceof global.L.MarkerCluster) {
+    if (marker instanceof globalThis.L.MarkerCluster) {
       const units = getClusteredUnits(marker);
       isInvalid = !units.find((v) => v.id === unitID);
     } else if (marker?.options?.customUnitData?.id !== unitID) {
@@ -160,7 +160,7 @@ function PrintView({ togglePrintView }) {
     if (isUnitPage() && !isInvalidUnitPageMarker(marker)) {
       let unit;
 
-      if (marker instanceof global.L.MarkerCluster) {
+      if (marker instanceof globalThis.L.MarkerCluster) {
         const units = getClusteredUnits(marker);
         unit = units.find((v) => v.id === unitID);
       } else {
@@ -181,7 +181,7 @@ function PrintView({ togglePrintView }) {
     const drawer = new NumberCircleMaker(iconSize);
     drawer.drawNumberedCircle(ctx, number);
 
-    return new global.L.Icon({
+    return new globalThis.L.Icon({
       iconUrl: canvasIcon.toDataURL(),
       iconSize: [iconSize, iconSize],
     });
@@ -192,15 +192,15 @@ function PrintView({ togglePrintView }) {
     const { crs, options } = mapOptions;
     const mapCenter = map.getCenter();
     const mapZoom = map.getZoom();
-    const mymap = global.L.map('print-map').setView(mapCenter, mapZoom);
+    const mymap = globalThis.L.map('print-map').setView(mapCenter, mapZoom);
 
-    global.L.tileLayer(options.url, {
+    globalThis.L.tileLayer(options.url, {
       maxZoom: options.maxZoom,
       crs,
     }).addTo(mymap);
 
     // Layer for markers
-    const layer = global.L.featureGroup();
+    const layer = globalThis.L.featureGroup();
     layer.on('add', () => {
       // Hide all markers from screen readers
       document.querySelectorAll('.leaflet-marker-icon').forEach((item) => {
@@ -233,7 +233,7 @@ function PrintView({ togglePrintView }) {
         const description = {};
         if (unitPageUnit) {
           description.units = [unitPageUnit];
-        } else if (marker instanceof global.L.MarkerCluster) {
+        } else if (marker instanceof globalThis.L.MarkerCluster) {
           const units = getClusteredUnits(marker);
           description.units = units;
         } else {
@@ -247,7 +247,7 @@ function PrintView({ togglePrintView }) {
         }
 
         vid += 1;
-        const customMarker = global.L.marker(
+        const customMarker = globalThis.L.marker(
           coordinates ? [coordinates[1], coordinates[0]] : marker.getLatLng(),
           {
             icon: createCustomIcon(vid),

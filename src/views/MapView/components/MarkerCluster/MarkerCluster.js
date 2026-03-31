@@ -242,7 +242,7 @@ function MarkerCluster({
     if (layers && highlightedUnit?.id) {
       const mIndex = Object.keys(layers).find((m) => {
         const current = layers[m];
-        if (current instanceof global.L.MarkerCluster) {
+        if (current instanceof globalThis.L.MarkerCluster) {
           const clusterMarkers = current.getAllChildMarkers();
           return clusterMarkers.some(
             (marker) =>
@@ -312,7 +312,7 @@ function MarkerCluster({
       map.eachLayer((layer) => {
         layer.closePopup();
       });
-      if (highlightedMarker instanceof global.L.MarkerCluster) {
+      if (highlightedMarker instanceof globalThis.L.MarkerCluster) {
         const tooltipContent = getUnitPopupContent(clusterData.highlightedUnit);
         highlightedMarker.bindPopup(tooltipContent, popupOptions()).openPopup();
       } else {
@@ -332,7 +332,7 @@ function MarkerCluster({
       return null;
     }
 
-    const clusterLayer = global.L.markerClusterGroup({
+    const clusterLayer = globalThis.L.markerClusterGroup({
       animate: true,
       spiderfyOnMaxZoom: false,
       showCoverageOnHover: false,
@@ -396,7 +396,7 @@ function MarkerCluster({
 
   // Parse unitData from clusterMarker
   const parseUnitData = (marker) => {
-    if (!(marker instanceof global.L.MarkerCluster)) {
+    if (!(marker instanceof globalThis.L.MarkerCluster)) {
       return null;
     }
     return marker
@@ -421,7 +421,7 @@ function MarkerCluster({
       )
       .filter((v) => !!v);
     const iconClasses = unitClasses.join(' ');
-    const icon = global.L.divIcon({
+    const icon = globalThis.L.divIcon({
       html: `
         <div class="${bgCircleClass} ${markerCircleClass} ${iconClasses}" aria-hidden="true" tabindex="-1">
           <div
@@ -446,7 +446,7 @@ function MarkerCluster({
         </div>
       `,
       className: 'unitClusterMarker',
-      iconSize: global.L.point(iconSize, iconSize, true),
+      iconSize: globalThis.L.point(iconSize, iconSize, true),
     });
     return icon;
   };
@@ -678,7 +678,7 @@ function MarkerCluster({
           unitHasEvents ? unitMarkerEventClass : '',
           useContrast ? ' dark' : '',
         ].join(' ');
-        const markerElem = global.L.marker(
+        const markerElem = globalThis.L.marker(
           [unit.location.coordinates[1], unit.location.coordinates[0]],
           {
             icon: drawMarkerIcon(

@@ -120,5 +120,8 @@
     "redux-mock-store": "^1.5.4",
     "vite-plugin-commonjs": "^0.10.4",
     "vite-plugin-node-polyfills": "^0.24.0"
+  },
+  "resolutions": {
+    "**/@typescript-eslint/typescript-estree/minimatch": "9.0.7"
   }
 }

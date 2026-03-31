@@ -18,8 +18,8 @@ function CustomControls({ position, children = null }) {
   useEffect(() => {
     if (controls.length) {
       // This prevents control button click propagation
-      const div = global.L.DomUtil.get(`controlsContainer${position}`);
-      global.L.DomEvent.disableClickPropagation(div);
+      const div = globalThis.L.DomUtil.get(`controlsContainer${position}`);
+      globalThis.L.DomEvent.disableClickPropagation(div);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

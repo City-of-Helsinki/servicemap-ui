@@ -11,6 +11,9 @@
   "env": {
     "vitest-globals/env": true
   },
+  "globals": {
+    "globalThis": "readonly"
+  },
   "rules": {
     "react/no-unused-prop-types": [
       "warn",
