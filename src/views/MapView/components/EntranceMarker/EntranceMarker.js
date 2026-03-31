@@ -46,7 +46,7 @@ function EntranceMarker() {
   }, []);
 
   if (unit?.entrances?.length && showMarkers) {
-    const { Marker, Popup } = global.rL || {};
+    const { Marker, Popup } = globalThis.rL || {};
     return unit.entrances.map((entrance) => {
       if (!entrance.location) return null;
       const position = flip(entrance.location);

@@ -3,11 +3,11 @@ import { css } from '@emotion/css';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
+import { Marker } from 'react-leaflet';
 
 import { getIcon } from '../../../../components';
 
 function UserMarker({ position, onClick }) {
-  const { Marker } = require('react-leaflet');
   const { divIcon } = require('leaflet');
   const userMarkerClass = css({
     display: 'flex',

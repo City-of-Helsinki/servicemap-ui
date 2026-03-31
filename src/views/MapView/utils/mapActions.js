@@ -106,7 +106,7 @@ const panViewToBounds = (map, selectedGeometry, geometryGroup) => {
   const mapBounds = map.getBounds();
   // Get point inside geometry
   const geometryPoint = pointOnFeature(selectedGeometry).geometry.coordinates;
-  const pointLatLng = global.L.latLng(geometryPoint);
+  const pointLatLng = globalThis.L.latLng(geometryPoint);
   // If point is outside of map bounds, move map to area
   if (!mapBounds.contains(pointLatLng)) {
     try {

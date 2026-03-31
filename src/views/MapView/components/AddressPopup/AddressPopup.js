@@ -12,7 +12,7 @@ import useLocaleText from '../../../../utils/useLocaleText';
 import fetchAddress from '../../utils/fetchAddress';
 
 function AddressPopup({ navigator }) {
-  const { Popup } = global.rL;
+  const { Popup } = globalThis.rL;
   const intl = useIntl();
   const getLocaleText = useLocaleText();
   const getAddressNavigatorParams = useNavigationParams();

@@ -27,7 +27,7 @@ const EventMarkers = ({ searchData }) => {
   const useContrast = useSelector(selectThemeMode) === 'dark';
   const intl = useIntl();
   const map = useMap();
-  const { Marker, Popup } = global.rL;
+  const { Marker, Popup } = globalThis.rL;
   const searchParams = parseSearchParams(location.search);
 
   const [unitData, setUnitData] = useState([]);

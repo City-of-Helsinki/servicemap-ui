@@ -8,7 +8,7 @@ import UnitHelper from '../../../../utils/unitHelper';
 import swapCoordinates from '../../utils/swapCoordinates';
 
 function UnitGeometry({ data }) {
-  const { Polyline, Polygon } = global.rL;
+  const { Polyline, Polygon } = globalThis.rL;
   const currentPage = useSelector(getPage);
   const navigator = useSelector(selectNavigator);
 

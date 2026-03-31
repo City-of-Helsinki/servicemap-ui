@@ -19,7 +19,7 @@ function AddressMarker({ embeded = false, position = null }) {
     return null;
   }
 
-  const { Marker, Tooltip } = global.rL;
+  const { Marker, Tooltip } = globalThis.rL;
   const tooltipClass = css({
     padding: theme.spacing(2),
     textAlign: 'left',

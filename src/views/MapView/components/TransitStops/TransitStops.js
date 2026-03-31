@@ -35,7 +35,7 @@ function TransitStops({ mapObject }) {
   const useContrast = useSelector(selectMapType) === 'accessible_map';
   const selectedSubdistricts = useSelector(selectSelectedSubdistricts);
   const selectedDistrictType = useSelector(selectSelectedDistrictType);
-  const { Marker, Popup } = global.rL;
+  const { Marker, Popup } = globalThis.rL;
   const theme = useTheme();
 
   const [transitStops, setTransitStops] = useState([]);
@@ -157,7 +157,7 @@ function TransitStops({ mapObject }) {
   }, [selectedSubdistricts, selectedDistrictType]);
 
   const getTransitIcon = (type) => {
-    const { divIcon } = global.L;
+    const { divIcon } = globalThis.L;
     const { color, className } = getTypeAndClass(type);
     return divIcon({
       html: renderToStaticMarkup(

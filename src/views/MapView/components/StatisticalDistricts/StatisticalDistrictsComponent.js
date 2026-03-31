@@ -18,7 +18,7 @@ import useLocaleText from '../../../../utils/useLocaleText';
 import swapCoordinates from '../../utils/swapCoordinates';
 
 function StatisticalDistrictsComponent() {
-  const { Polygon, Tooltip } = global.rL;
+  const { Polygon, Tooltip } = globalThis.rL;
 
   const data = useSelector(getSelectedStatisticalDistricts);
   const selections = useSelector(getStatisticalDistrictAreaSelections);

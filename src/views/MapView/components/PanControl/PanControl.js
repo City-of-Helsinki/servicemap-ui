@@ -26,16 +26,16 @@ function PanControl() {
     let point;
     switch (direction) {
       case 'up':
-        point = new global.L.Point(0, -panOffset);
+        point = new globalThis.L.Point(0, -panOffset);
         break;
       case 'down':
-        point = new global.L.Point(0, panOffset);
+        point = new globalThis.L.Point(0, panOffset);
         break;
       case 'left':
-        point = new global.L.Point(-panOffset, 0);
+        point = new globalThis.L.Point(-panOffset, 0);
         break;
       case 'right':
-        point = new global.L.Point(panOffset, 0);
+        point = new globalThis.L.Point(panOffset, 0);
         break;
       case 'in':
         map.zoomIn(1);

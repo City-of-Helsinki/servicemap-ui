@@ -187,7 +187,7 @@ const getMapOptions = (type, locale) => {
   switch (type) {
     // For servicemap, use retina and/or swedish url if needed
     case 'servicemap': {
-      if (isRetina) {
+      if (isRetina()) {
         suffix += '@2x';
       }
       return setHelsinkiMaptilesUrl(mapOptions, suffix, locale);

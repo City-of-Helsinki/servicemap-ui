@@ -11,7 +11,7 @@ import { StyledHslIcon } from '../styled/styled';
 function DistanceMeasure(props) {
   const { markerArray, setMarkerArray, lineArray, setLineArray } = props;
 
-  const { Marker, Polyline, Tooltip, Popup } = global.rL;
+  const { Marker, Polyline, Tooltip, Popup } = globalThis.rL;
 
   const theme = useTheme();
   const [icon, setIcon] = useState(null);
@@ -74,10 +74,10 @@ function DistanceMeasure(props) {
 
   useEffect(() => {
     // Create marker icon on component mount
-    const icon = global.L.divIcon({
-      iconSize: global.L.point([50, 50]),
-      iconAnchor: global.L.point([25, 56]),
-      popupAnchor: global.L.point([0, -40]),
+    const icon = globalThis.L.divIcon({
+      iconSize: globalThis.L.point([50, 50]),
+      iconAnchor: globalThis.L.point([25, 56]),
+      popupAnchor: globalThis.L.point([0, -40]),
       className: addressIconClass,
       html: renderToStaticMarkup(
         <>

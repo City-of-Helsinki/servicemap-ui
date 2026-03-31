@@ -16,7 +16,7 @@ const PARKING_AREA_ID_PREFIX = 'parking-area-';
 
 // This component renders parking areas to map
 function ParkingAreas() {
-  const { Polygon, Tooltip, Popup } = global.rL;
+  const { Polygon, Tooltip, Popup } = globalThis.rL;
 
   const getLocaleText = useLocaleText();
   const intl = useIntl();

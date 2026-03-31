@@ -46,7 +46,7 @@ function Districts({
   setSelectedDistrictServices,
   embedded,
 }) {
-  const { Polygon, Marker, Tooltip, Popup } = global.rL;
+  const { Polygon, Marker, Tooltip, Popup } = globalThis.rL;
   const intl = useIntl();
   const useContrast = useSelector(selectThemeMode) === 'dark';
   const navigator = useSelector(selectNavigator);
