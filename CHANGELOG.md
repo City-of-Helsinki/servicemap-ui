@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.13.2](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.13.1...servicemap-ui-v2.13.2) (2026-04-02)
+
+
+### Dependencies
+
+* Bump yaml from 1.10.2 to 1.10.3 ([7b18bc3](https://github.com/City-of-Helsinki/servicemap-ui/commit/7b18bc3c787016c6876a08fc7af996b08e10ee24))
+* Update vulnerable packages ([d2847b0](https://github.com/City-of-Helsinki/servicemap-ui/commit/d2847b0f9bbd5d4beb48b44d9b721b7fec1707c2))
+
 ## [2.13.1](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.13.0...servicemap-ui-v2.13.1) (2026-03-26)
 
 
