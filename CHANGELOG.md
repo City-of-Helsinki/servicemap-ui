@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.13.3](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.13.2...servicemap-ui-v2.13.3) (2026-04-05)
+
+
+### Dependencies
+
+* Bump lodash from 4.17.23 to 4.18.1 ([36d2a6e](https://github.com/City-of-Helsinki/servicemap-ui/commit/36d2a6ef44c03a64922b29ff3fffb02b5e901e48))
+
 ## [2.13.2](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.13.1...servicemap-ui-v2.13.2) (2026-04-02)
 
 
