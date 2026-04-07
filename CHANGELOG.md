@@ -1,5 +1,14 @@
 # Changelog
 
+## [2.13.3](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.13.2...servicemap-ui-v2.13.3) (2026-04-07)
+
+
+### Dependencies
+
+* Bump lodash from 4.17.23 to 4.18.1 ([36d2a6e](https://github.com/City-of-Helsinki/servicemap-ui/commit/36d2a6ef44c03a64922b29ff3fffb02b5e901e48))
+* Bump vite from 7.3.1 to 7.3.2 ([577234c](https://github.com/City-of-Helsinki/servicemap-ui/commit/577234c154400d012c5ff4d4b781938310f3fe8e))
+* Upgrade Helsinki Design System to v5.0.0 ([a254e1a](https://github.com/City-of-Helsinki/servicemap-ui/commit/a254e1a534222bb5468f68c824a6f49ff467f20c))
+
 ## [2.13.2](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.13.1...servicemap-ui-v2.13.2) (2026-04-02)
 
 
