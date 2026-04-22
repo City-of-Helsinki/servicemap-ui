@@ -9,7 +9,7 @@ import { getLocale } from '../selectors/user';
 import { searchResults } from './fetchDataActions';
 
 // Actions
-const { isFetching, fetchSuccess, fetchProgressUpdateConcurrent } =
+const { isFetching, fetchSuccess, fetchProgressUpdateConcurrent, fetchError } =
   searchResults;
 
 const smFetch = (dispatch, options) => {
@@ -104,9 +104,12 @@ const fetchSearchResults =
     try {
       results = await smFetch(dispatch, fetchOptions);
     } catch (e) {
-      // Abort errors (APIFetchError) are expected when navigating away mid-fetch;
-      // re-throw anything unexpected so it is still visible.
-      if (e.name !== 'APIFetchError') throw e;
+      // Only silently handle genuine abort errors (user navigated away or 10s timeout
+      // fired). Other APIFetchErrors — missing base URL, invalid input, etc. — should
+      // still surface so they are visible in Sentry.
+      if (!(e.name === 'APIFetchError' && e.cause?.name === 'AbortError')) throw e;
+      // Reset isFetching so subsequent searches are not permanently blocked.
+      dispatch(fetchError(null));
       return;
     }
 
