@@ -86,6 +86,14 @@ describe('UnitFetcher — invalid unit ID guard', () => {
     expect(mockFetchSelectedUnit).not.toHaveBeenCalled();
   });
 
+  it('does not fetch when unit param has a numeric prefix followed by letters ("123abc")', () => {
+    useParams.mockReturnValue({ unit: '123abc' });
+    renderComponent();
+
+    expect(mockFetchReservations).not.toHaveBeenCalled();
+    expect(mockFetchSelectedUnit).not.toHaveBeenCalled();
+  });
+
   it('does not fetch when unit param is missing', () => {
     useParams.mockReturnValue({});
     renderComponent();

@@ -14,9 +14,16 @@ export const servicemapTrackPageView = () => {
       .sendStats({
         embed: isEmbed() ? 1 : 0,
         mobile_device: isMobileDevice() ? 1 : 0,
-        // Swallow errors silently — aborted stats POSTs (e.g. user navigates away)
-        // would otherwise surface as unhandled rejections in Sentry.
       })
-      .catch(() => {});
+      .catch((e) => {
+        // Silently ignore aborted POSTs (user navigated away or 10s timeout).
+        // Log anything else so genuine regressions remain visible.
+        if (!(e.name === 'APIFetchError' && e.cause?.name === 'AbortError')) {
+          console.error(
+            'servicemapTrackPageView: unexpected stats POST error',
+            e
+          );
+        }
+      });
   }
 };

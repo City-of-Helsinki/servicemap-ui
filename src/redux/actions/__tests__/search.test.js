@@ -21,14 +21,19 @@ describe('fetchSearchResults', () => {
   });
 
   describe('when smFetch throws an APIFetchError (aborted request)', () => {
-    const abortCause = new DOMException('The operation was aborted.', 'AbortError');
+    const abortCause = new DOMException(
+      'The operation was aborted.',
+      'AbortError'
+    );
 
-    it('does not dispatch fetchSuccess and does not rethrow', async () => {
+    it('does not dispatch fetchSuccess, dispatches fetchError to reset isFetching, and does not rethrow', async () => {
       const { default: ServiceMapAPI } =
         await import('../../../utils/newFetch/ServiceMapAPI');
       ServiceMapAPI.mockImplementation(() => ({
         setOnProgressUpdate: vi.fn(),
-        search: vi.fn().mockRejectedValue(new APIFetchError('fetch aborted', abortCause)),
+        search: vi
+          .fn()
+          .mockRejectedValue(new APIFetchError('fetch aborted', abortCause)),
       }));
 
       // Should resolve without throwing
@@ -36,26 +41,15 @@ describe('fetchSearchResults', () => {
         fetchSearchResults({ q: 'kirjasto' })(mockDispatch, mockGetState)
       ).resolves.toBeUndefined();
 
-      // fetchSuccess should never have been dispatched
       const dispatchedTypes = mockDispatch.mock.calls
         .filter((call) => typeof call[0] === 'object')
         .map((call) => call[0]?.type);
-      expect(dispatchedTypes).not.toContain('FETCH_SUCCESS');
-    });
 
-    it('dispatches fetchError to reset isFetching so subsequent searches are not blocked', async () => {
-      const { default: ServiceMapAPI } =
-        await import('../../../utils/newFetch/ServiceMapAPI');
-      ServiceMapAPI.mockImplementation(() => ({
-        setOnProgressUpdate: vi.fn(),
-        search: vi.fn().mockRejectedValue(new APIFetchError('fetch aborted', abortCause)),
-      }));
-
-      await fetchSearchResults({ q: 'kirjasto' })(mockDispatch, mockGetState);
-
-      const dispatchedTypes = mockDispatch.mock.calls
-        .filter((call) => typeof call[0] === 'object')
-        .map((call) => call[0]?.type);
+      // Success action must not be dispatched on abort
+      expect(dispatchedTypes).not.toContain(
+        'SEARCH_RESULTS_FETCH_DATA_SUCCESS'
+      );
+      // fetchError must be dispatched to reset isFetching, preventing subsequent searches from being blocked
       expect(dispatchedTypes).toContain('SEARCH_RESULTS_FETCH_HAS_ERRORED');
     });
 
@@ -64,7 +58,11 @@ describe('fetchSearchResults', () => {
         await import('../../../utils/newFetch/ServiceMapAPI');
       ServiceMapAPI.mockImplementation(() => ({
         setOnProgressUpdate: vi.fn(),
-        search: vi.fn().mockRejectedValue(new APIFetchError('ServicemapAPI baseURL missing')),
+        search: vi
+          .fn()
+          .mockRejectedValue(
+            new APIFetchError('ServicemapAPI baseURL missing')
+          ),
       }));
 
       await expect(
