@@ -33,6 +33,11 @@ const UnitFetcher = ({
   useEffect(() => {
     if (params && params.unit) {
       const unitId = params.unit;
+      // Guard against invalid route params (e.g. "undefined", "123abc")
+      // that would trigger fetches against a broken URL like /unit/undefined.
+      if (!unitId || !/^\d+$/.test(unitId)) {
+        return;
+      }
       fetchReservations(unitId);
       fetchUnitEvents(unitId);
 

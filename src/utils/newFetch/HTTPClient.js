@@ -5,8 +5,8 @@ export const serviceMapAPIName = 'servicemap';
 export const LinkedEventsAPIName = 'linkedEvens';
 
 export class APIFetchError extends Error {
-  constructor(props) {
-    super(props);
+  constructor(message, cause) {
+    super(message);
     // Maintains proper stack trace for where our error was thrown (only available on V8)
     if (Error.captureStackTrace) {
       Error.captureStackTrace(this, APIFetchError);
@@ -15,6 +15,8 @@ export class APIFetchError extends Error {
     this.name = 'APIFetchError';
     // Custom debugging information
     this.date = new Date();
+    // Preserve the original error so callers can distinguish abort from other failures
+    this.cause = cause || null;
   }
 }
 
