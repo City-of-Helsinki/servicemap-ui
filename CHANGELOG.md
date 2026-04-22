@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.13.4](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.13.3...servicemap-ui-v2.13.4) (2026-04-22)
+
+
+### Bug Fixes
+
+* Apifetcherror sentry spam PL-239 ([#1343](https://github.com/City-of-Helsinki/servicemap-ui/issues/1343)) ([8384d98](https://github.com/City-of-Helsinki/servicemap-ui/commit/8384d988bb93a986994d36632825531ea31b3a70))
+
 ## [2.13.3](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.13.2...servicemap-ui-v2.13.3) (2026-04-07)
 
 
