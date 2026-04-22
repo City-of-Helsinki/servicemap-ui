@@ -100,7 +100,15 @@ const fetchSearchResults =
       language: locale,
       ...(isEmbed() ? { include: extraFields } : {}),
     };
-    let results = await smFetch(dispatch, fetchOptions);
+    let results;
+    try {
+      results = await smFetch(dispatch, fetchOptions);
+    } catch (e) {
+      // Abort errors (APIFetchError) are expected when navigating away mid-fetch;
+      // re-throw anything unexpected so it is still visible.
+      if (e.name !== 'APIFetchError') throw e;
+      return;
+    }
 
     /* Handle search results */
 

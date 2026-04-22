@@ -10,9 +10,13 @@ import { isEmbed } from './path';
 export const servicemapTrackPageView = () => {
   if (featureFlags.servicemapPageTracking) {
     const smAPI = new ServiceMapAPI();
-    smAPI.sendStats({
-      embed: isEmbed() ? 1 : 0,
-      mobile_device: isMobileDevice() ? 1 : 0,
-    });
+    smAPI
+      .sendStats({
+        embed: isEmbed() ? 1 : 0,
+        mobile_device: isMobileDevice() ? 1 : 0,
+        // Swallow errors silently — aborted stats POSTs (e.g. user navigates away)
+        // would otherwise surface as unhandled rejections in Sentry.
+      })
+      .catch(() => {});
   }
 };
