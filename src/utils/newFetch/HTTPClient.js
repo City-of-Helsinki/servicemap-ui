@@ -20,6 +20,17 @@ export class APIFetchError extends Error {
   }
 }
 
+// Distinct subclass for fetches that were aborted (user navigated away,
+// iOS backgrounded the tab, explicit abort(), or the 10s timeout fired).
+// Call sites can filter these with `instanceof AbortAPIError`, and Sentry
+// drops them via `ignoreErrors` so they don't pollute error reporting.
+export class AbortAPIError extends APIFetchError {
+  constructor(message, cause) {
+    super(message, cause);
+    this.name = 'AbortAPIError';
+  }
+}
+
 export default class HttpClient {
   timeoutTimer = config?.searchTimeout || 10000;
 
@@ -40,7 +51,7 @@ export default class HttpClient {
 
   optionsToSearchParams = (options) => {
     if (typeof options !== 'object') {
-      throw APIFetchError(
+      throw new APIFetchError(
         'Invalid options provided for HttpClient optionsToSearchParams method'
       );
     }
@@ -157,6 +168,13 @@ export default class HttpClient {
     return promise
       .then((response) => {
         if (type === 'post') return response;
+        // Surface HTTP errors with a clean message instead of letting
+        // response.json() produce a misleading SyntaxError on error pages.
+        if (!response.ok) {
+          throw new APIFetchError(
+            `Error while fetching ${endpoint}: HTTP ${response.status} ${response.statusText}`
+          );
+        }
         return response.json();
       })
       .then(async (data) => {
@@ -166,8 +184,19 @@ export default class HttpClient {
         return results;
       })
       .catch((e) => {
+        // Already classified upstream (e.g. non-ok response) — don't rewrap.
+        if (e instanceof APIFetchError) {
+          this.status = 'error';
+          this.clearTimeout();
+          if (this.onError) this.onError(e);
+          throw e;
+        }
         if (e.name === 'AbortError') {
-          this.throwAPIError(`Error ${endpoint} fetch aborted`, e);
+          this.throwAPIError(
+            `Error ${endpoint} fetch aborted`,
+            e,
+            AbortAPIError
+          );
         } else {
           this.throwAPIError(
             `Error while fetching ${endpoint}: ${e.message}`,
@@ -245,7 +274,7 @@ export default class HttpClient {
 
   getConcurrent = async (endpoint, options) => {
     if (!options?.page_size) {
-      throw APIFetchError(
+      throw new APIFetchError(
         'Invalid page_size provided for concurrent search method'
       );
     }
@@ -283,13 +312,13 @@ export default class HttpClient {
     return [...firstPage.data, ...otherPagesData.flat()];
   };
 
-  throwAPIError = (msg, e) => {
+  throwAPIError = (msg, e, ErrorClass = APIFetchError) => {
     this.status = 'error';
     this.clearTimeout();
     if (this.onError) {
       this.onError(e);
     }
-    throw new APIFetchError(msg, e);
+    throw new ErrorClass(msg, e);
   };
 
   getStatus = () => this.status;
@@ -313,6 +342,7 @@ export default class HttpClient {
   clearTimeout = () => {
     if (this.timeout) {
       clearTimeout(this.timeout);
+      this.timeout = null;
     }
   };
 

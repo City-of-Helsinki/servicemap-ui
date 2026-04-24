@@ -1,4 +1,5 @@
 import { saveSearchToHistory } from '../../components/SearchBar/previousSearchData';
+import { AbortAPIError } from '../../utils/newFetch/HTTPClient';
 import LinkedEventsAPI from '../../utils/newFetch/LinkedEventsAPI';
 import ServiceMapAPI from '../../utils/newFetch/ServiceMapAPI';
 import { isEmbed } from '../../utils/path';
@@ -107,8 +108,7 @@ const fetchSearchResults =
       // Only silently handle genuine abort errors (user navigated away or 10s timeout
       // fired). Other APIFetchErrors — missing base URL, invalid input, etc. — should
       // still surface so they are visible in Sentry.
-      if (!(e.name === 'APIFetchError' && e.cause?.name === 'AbortError'))
-        throw e;
+      if (!(e instanceof AbortAPIError)) throw e;
       // Reset isFetching so subsequent searches are not permanently blocked.
       dispatch(fetchError(null));
       return;
