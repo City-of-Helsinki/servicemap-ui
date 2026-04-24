@@ -1,4 +1,7 @@
-import { APIFetchError } from '../../../utils/newFetch/HTTPClient';
+import {
+  AbortAPIError,
+  APIFetchError,
+} from '../../../utils/newFetch/HTTPClient';
 import fetchSearchResults from '../search';
 
 // Mock modules that fetchSearchResults depends on
@@ -33,7 +36,7 @@ describe('fetchSearchResults', () => {
         setOnProgressUpdate: vi.fn(),
         search: vi
           .fn()
-          .mockRejectedValue(new APIFetchError('fetch aborted', abortCause)),
+          .mockRejectedValue(new AbortAPIError('fetch aborted', abortCause)),
       }));
 
       // Should resolve without throwing
