@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.13.5](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.13.4...servicemap-ui-v2.13.5) (2026-04-27)
+
+
+### Bug Fixes
+
+* New apifetcherrors ([264db5c](https://github.com/City-of-Helsinki/servicemap-ui/commit/264db5c82f8e3c46df2d9516e034262d977b6067))
+
 ## [2.13.4](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.13.3...servicemap-ui-v2.13.4) (2026-04-22)
 
 
