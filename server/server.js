@@ -2,6 +2,11 @@ import { CacheProvider } from '@emotion/react';
 import createEmotionServer from '@emotion/server/create-instance';
 import { ServerStyleSheets } from '@mui/styles';
 import * as Sentry from '@sentry/node';
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClientProvider,
+} from '@tanstack/react-query';
 import compression from 'compression';
 import crypto from 'crypto';
 import dotenv from 'dotenv';
@@ -21,6 +26,7 @@ import thunk from 'redux-thunk';
 
 import config from '../config';
 import paths from '../config/paths';
+import { makeQueryClient } from '../src/api/queryClient';
 import App from '../src/App';
 import ogImage from '../src/assets/images/servicemap-meta-img.png';
 import { setLocale } from '../src/redux/actions/user';
@@ -110,6 +116,10 @@ app.use('/assets', express.static(path.resolve(__dirname, 'assets')));
 app.use('/*', (req, res, next) => {
   const store = createStore(rootReducer, applyMiddleware(thunk));
   req._context = store;
+  // Fresh QueryClient per request so cached data never leaks between users.
+  // Placed here (alongside the store) so SSR data fetchers downstream can
+  // prefetch into it before the render handler runs.
+  req._queryClient = makeQueryClient();
   next();
 });
 app.use('/*', ieHandler);
@@ -155,6 +165,8 @@ app.get('/*', (req, res, next) => {
     store.dispatch(setLocale(locale));
   }
 
+  const queryClient = req._queryClient;
+
   // Create server style sheets
   const sheets = new ServerStyleSheets();
 
@@ -165,12 +177,16 @@ app.get('/*', (req, res, next) => {
     <HelmetProvider context={helmetContext}>
       <CacheProvider value={cache}>
         <Provider store={store}>
-          <StaticRouter location={req.url} context={{}}>
-            {/* Provider to help with isomorphic style loader */}
-            <StyleContext.Provider value={{ insertCss }}>
-              <App />
-            </StyleContext.Provider>
-          </StaticRouter>
+          <QueryClientProvider client={queryClient}>
+            <HydrationBoundary state={dehydrate(queryClient)}>
+              <StaticRouter location={req.url} context={{}}>
+                {/* Provider to help with isomorphic style loader */}
+                <StyleContext.Provider value={{ insertCss }}>
+                  <App />
+                </StyleContext.Provider>
+              </StaticRouter>
+            </HydrationBoundary>
+          </QueryClientProvider>
         </Provider>
       </CacheProvider>
     </HelmetProvider>
@@ -180,6 +196,7 @@ app.get('/*', (req, res, next) => {
   const { helmet } = helmetContext;
 
   const preloadedState = store.getState();
+  const dehydratedQueryState = dehydrate(queryClient);
 
   const customValues = {
     initialMapPosition: parseInitialMapPositionFromHostname(req, Sentry),
@@ -195,6 +212,7 @@ app.get('/*', (req, res, next) => {
       req,
       reactDom,
       preloadedState,
+      dehydratedQueryState,
       css,
       cssString,
       emotionCss,
@@ -218,6 +236,7 @@ const htmlTemplate = (
   req,
   reactDom,
   preloadedState,
+  dehydratedQueryState,
   css,
   cssString,
   emotionCss,
@@ -305,6 +324,7 @@ const htmlTemplate = (
       // WARNING: See the following for security issues around embedding JSON in HTML:
       // http://redux.js.org/recipes/ServerRendering.html#security-considerations
       window.PRELOADED_STATE = ${JSON.stringify(preloadedState).replace(/</g, '\\u003c')}
+      window.REACT_QUERY_STATE = ${JSON.stringify(dehydratedQueryState).replace(/</g, '\\u003c')}
     </script>
     <script src="/index.js"></script>
   </body>

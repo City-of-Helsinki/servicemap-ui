@@ -1,6 +1,5 @@
 import config from '../../../config';
 
-export const hearingMapAPIName = 'hearingmap';
 export const serviceMapAPIName = 'servicemap';
 export const LinkedEventsAPIName = 'linkedEvens';
 

@@ -5,6 +5,10 @@ import 'whatwg-fetch';
 
 import { CacheProvider } from '@emotion/react';
 import * as Sentry from '@sentry/react';
+import {
+  HydrationBoundary,
+  QueryClientProvider,
+} from '@tanstack/react-query';
 import StyleContext from 'isomorphic-style-loader/StyleContext';
 import React from 'react';
 import { hydrateRoot } from 'react-dom/client';
@@ -16,6 +20,7 @@ import thunk from 'redux-thunk';
 import config from '../config';
 import { name } from '../package.json';
 import createEmotionCache from '../server/createEmotionCache';
+import { makeQueryClient } from '../src/api/queryClient';
 import App from '../src/App';
 import favicon from '../src/assets/icons/favicon.ico';
 import rootReducer from '../src/redux/rootReducer';
@@ -96,6 +101,13 @@ const preloadedState = getPreloadedState();
 // Create Redux store with initial state
 const store = createStore(rootReducer, preloadedState, applyMiddleware(thunk));
 
+// Read dehydrated React Query state from SSR and release the global so it can
+// be garbage-collected, mirroring the PRELOADED_STATE pattern above.
+const dehydratedQueryState = window.REACT_QUERY_STATE;
+delete window.REACT_QUERY_STATE;
+
+const queryClient = makeQueryClient();
+
 const insertCss = (...styles) => {
   const removeCss = styles.map((style) => style._insertCss());
   return () => removeCss.forEach((dispose) => dispose());
@@ -117,16 +129,20 @@ function Main() {
     <HelmetProvider>
       <CacheProvider value={cache}>
         <Provider store={store}>
-          {/* Provider to help with isomorphic style loader */}
-          <StyleContext.Provider value={{ insertCss }}>
-            {
-              // HTML head tags
-            }
-            <Helmet>
-              <link rel="shortcut icon" href={favicon} />
-            </Helmet>
-            <App />
-          </StyleContext.Provider>
+          <QueryClientProvider client={queryClient}>
+            <HydrationBoundary state={dehydratedQueryState}>
+              {/* Provider to help with isomorphic style loader */}
+              <StyleContext.Provider value={{ insertCss }}>
+                {
+                  // HTML head tags
+                }
+                <Helmet>
+                  <link rel="shortcut icon" href={favicon} />
+                </Helmet>
+                <App />
+              </StyleContext.Provider>
+            </HydrationBoundary>
+          </QueryClientProvider>
         </Provider>
       </CacheProvider>
     </HelmetProvider>

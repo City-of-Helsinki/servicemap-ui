@@ -1,8 +1,8 @@
 import paths from '../config/paths';
+import { fetchHearingMaps, hearingMapsKey } from '../src/api/hearingMaps';
 import { changeSelectedEvent } from '../src/redux/actions/event';
 import {
   events,
-  hearingMaps,
   reservations,
 } from '../src/redux/actions/fetchDataActions';
 import { changeSelectedUnit } from '../src/redux/actions/selectedUnit';
@@ -15,7 +15,6 @@ import {
   selectedUnitFetch,
   unitEventsFetch,
 } from '../src/utils/fetch';
-import HearingMapAPI from '../src/utils/newFetch/HearingMapAPI';
 
 const timeoutTimer = process.env.SSR_FETCH_TIMEOUT;
 
@@ -142,13 +141,16 @@ export const fetchSelectedUnitData = (req, res, next) => {
           (keyword) => keyword.toLowerCase() === 'kuuluvuuskartta'
         )
       ) {
-        const hearingMapAPI = new HearingMapAPI();
-        const { fetchSuccess, fetchError } = hearingMaps;
+        // Prefetch into the request-scoped React Query cache so the data
+        // flows through dehydrate() → HydrationBoundary on the client and
+        // is available on first paint without a client refetch.
         try {
-          const data = await hearingMapAPI.hearingMaps(id);
-          store.dispatch(fetchSuccess({ id, data }));
+          await req._queryClient.prefetchQuery({
+            queryKey: hearingMapsKey(id),
+            queryFn: () => fetchHearingMaps(id),
+          });
         } catch (e) {
-          store.dispatch(fetchError(e.message));
+          console.log('SSR hearingMaps prefetch failed', e.message);
         }
       }
       response();

@@ -14,6 +14,7 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import config from '../../../config';
 import paths from '../../../config/paths';
+import { useHearingMaps } from '../../api/hearingMaps';
 import {
   BackButton,
   Container,
@@ -38,7 +39,6 @@ import { selectMapRef, selectNavigator } from '../../redux/selectors/general';
 import {
   getSelectedUnit,
   selectEvents,
-  selectHearingMapsData,
   selectReservations,
   selectSelectedUnitAccessibilitySentencesData,
   selectSelectedUnitIsFetching,
@@ -72,12 +72,10 @@ function UnitView(props) {
     fetchUnitEvents,
     fetchReservations,
     fetchAccessibilitySentences,
-    fetchHearingMaps,
   } = props;
   const intl = useIntl();
   const navigator = useSelector(selectNavigator);
   const userLocation = useSelector(selectUserPosition);
-  const hearingMaps = useSelector(selectHearingMapsData);
   const reservationsData = useSelector(selectReservations);
   const eventsData = useSelector(selectEvents);
   const accessibilitySentences = useSelector(
@@ -95,6 +93,12 @@ function UnitView(props) {
   const [unit, setUnit] = useState(
     checkCorrectUnit(stateUnit) ? stateUnit : null
   );
+  const hasHearingMapKeyword = unit?.keywords?.fi?.some(
+    (keyword) => keyword.toLowerCase() === 'kuuluvuuskartta'
+  );
+  const { data: hearingMaps } = useHearingMaps(unitParam, {
+    enabled: Boolean(hasHearingMapKeyword),
+  });
   const viewPosition = useRef(null);
 
   const isMobile = useMobileStatus();
@@ -167,18 +171,10 @@ function UnitView(props) {
     if (
       !stateUnit ||
       !checkCorrectUnit(stateUnit) ||
-      !stateUnit.complete ||
-      !hearingMaps
+      !stateUnit.complete
     ) {
       fetchSelectedUnit(unitId, (unit) => {
         setUnit(unit);
-        if (
-          unit?.keywords?.fi?.some(
-            (keyword) => keyword.toLowerCase() === 'kuuluvuuskartta'
-          )
-        ) {
-          fetchHearingMaps(unitId);
-        }
       });
       fetchAccessibilitySentences(unitId);
       fetchReservations(unitId);
@@ -437,14 +433,14 @@ function UnitView(props) {
         {accessibilityReadSpeakerButton}
         <StyledTabAdjuster id="rscontent">
           {renderTitleForRS()}
-          {hearingMaps?.id === unit.id.toString(10) && (
+          {hearingMaps?.length > 0 && (
             <TitledList
               titleComponent="h4"
               title={intl.formatMessage({
                 id: 'unit.accessibility.hearingMaps',
               })}
             >
-              {hearingMaps.data.map((item) => (
+              {hearingMaps.map((item) => (
                 <SimpleListItem
                   role="link"
                   link
@@ -751,5 +747,4 @@ UnitView.propTypes = {
   fetchReservations: PropTypes.func.isRequired,
   fetchSelectedUnit: PropTypes.func.isRequired,
   fetchUnitEvents: PropTypes.func.isRequired,
-  fetchHearingMaps: PropTypes.func.isRequired,
 };

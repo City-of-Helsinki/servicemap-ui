@@ -200,7 +200,5 @@ export const accessibilitySentences = (
   state = dataSingleInitialState,
   action
 ) => dataSingle(state, action, 'SELECTED_UNIT_ACCESSIBILITY_SENTENCES');
-export const hearingMaps = (state = dataSingleInitialState, action) =>
-  dataSingle(state, action, 'SELECTED_UNIT_HEARING_MAPS');
 export const redirectService = (state = dataSetInitialState, action) =>
   dataSingle(state, action, 'REDIRECT_SERVICE');
