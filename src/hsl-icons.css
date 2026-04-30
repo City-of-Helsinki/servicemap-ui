@@ -24,7 +24,7 @@
 .icon-icon-hsl-bike:before,
 .icon-icon-hsl-ferry:before {
   display: inline-block;
-  font-family: 'hsl-piktoframe';
+  font-family: 'hsl-piktoframe', sans-serif;
   font-style: normal;
   font-weight: normal;
   font-variant: normal;

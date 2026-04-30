@@ -501,9 +501,7 @@ function SearchView() {
         role="link"
         tabIndex={-1}
         onClick={() => skipToContent()}
-        onKeyPress={() => {
-          keyboardHandler(() => skipToContent(), ['space', 'enter']);
-        }}
+        onKeyPress={keyboardHandler(skipToContent, ['space', 'enter'])}
         style={visuallyHidden}
       >
         <FormattedMessage id="search.skipLink" />
