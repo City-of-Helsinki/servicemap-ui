@@ -261,9 +261,10 @@ function SearchBar({
           />
           <CloseSuggestionButton
             onClick={closeMobileSuggestions}
-            onKeyPress={() => {
-              keyboardHandler(closeMobileSuggestions, ['space', 'enter']);
-            }}
+            onKeyPress={keyboardHandler(closeMobileSuggestions, [
+              'space',
+              'enter',
+            ])}
             srOnly
           />
         </MobileComponent>
@@ -334,7 +335,7 @@ function SearchBar({
             }
           }}
           onFocus={activateSearch}
-          onKeyDown={(e) => keyboardHandler(keyHandler(e), ['up, down'])}
+          onKeyDown={keyboardHandler(keyHandler, ['up', 'down'])}
           onBlur={isMobile ? () => {} : handleBlur}
           endAdornment={
             inputHasValue ? (
@@ -440,7 +441,7 @@ function SearchBar({
           {renderText()}
           <StyledPaper elevation={1} square>
             {renderInput()}
-            {renderSuggestionBox(true)}
+            {renderSuggestionBox()}
           </StyledPaper>
         </StyledDesktopContainer>
       </DesktopComponent>

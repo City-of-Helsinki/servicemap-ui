@@ -94,7 +94,8 @@
 .icon-icon-zoom-in:before,
 .icon-icon-zoom-out:before {
   display: inline-block;
-  font-family: 'service-map-icons';
+  font-family:
+    'service-map-icons', sans-serif; /* icon font - sans-serif fallback to satisfy sonar only */
   font-style: normal;
   font-weight: normal;
   font-variant: normal;
