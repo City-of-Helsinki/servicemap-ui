@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.13.6](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.13.5...servicemap-ui-v2.13.6) (2026-05-03)
+
+
+### Dependencies
+
+* Bump postcss from 8.5.8 to 8.5.12 ([b7c9184](https://github.com/City-of-Helsinki/servicemap-ui/commit/b7c9184e576eddda279a3898aee88875e9072f05))
+
 ## [2.13.5](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.13.4...servicemap-ui-v2.13.5) (2026-04-27)
 
 
