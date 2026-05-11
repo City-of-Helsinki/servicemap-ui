@@ -1,3 +1,4 @@
+import { AbortAPIError } from '../../utils/newFetch/HTTPClient';
 import ServiceMapAPI from '../../utils/newFetch/ServiceMapAPI';
 import { resolveParamsForParkingFetch } from '../../utils/parking';
 import {
@@ -127,28 +128,34 @@ const endDistrictFetch = (districtType) => ({
 export const fetchDistrictGeometry = (type, period) => async (dispatch) => {
   dispatch(startDistrictFetch(type));
   const smAPI = new ServiceMapAPI();
-  const boundaries = await smAPI.areaGeometry(type);
-  let filteredData = parseDistrictGeometry(boundaries);
-  if (period) {
-    // Filter with start and end year
-    const start = period.slice(0, 4);
-    const end = period.slice(-4);
-    const yearFilteredData = filteredData.filter((item) => {
-      if (item.extra?.schoolyear) {
-        if (item.extra?.schoolyear === period) {
+  try {
+    const boundaries = await smAPI.areaGeometry(type);
+    let filteredData = parseDistrictGeometry(boundaries);
+    if (period) {
+      // Filter with start and end year
+      const start = period.slice(0, 4);
+      const end = period.slice(-4);
+      const yearFilteredData = filteredData.filter((item) => {
+        if (item.extra?.schoolyear) {
+          if (item.extra?.schoolyear === period) {
+            return true;
+          }
+          return false;
+        }
+        if (item.start.slice(0, 4) === start && item.end.slice(0, 4) === end) {
           return true;
         }
         return false;
-      }
-      if (item.start.slice(0, 4) === start && item.end.slice(0, 4) === end) {
-        return true;
-      }
-      return false;
-    });
-    filteredData = yearFilteredData;
+      });
+      filteredData = yearFilteredData;
+    }
+    dispatch(updateDistrictData(type, filteredData, period));
+  } catch (e) {
+    if (!(e instanceof AbortAPIError))
+      console.warn('fetchDistrictGeometry error:', e);
+  } finally {
+    dispatch(endDistrictFetch(type));
   }
-  dispatch(updateDistrictData(type, filteredData, period));
-  dispatch(endDistrictFetch(type));
 };
 
 export const fetchDistricts =
@@ -160,13 +167,20 @@ export const fetchDistricts =
           .flat()
           .join(',');
 
-    dispatch(startDistrictFetch(single ? selected : 'all'));
+    const fetchKey = single ? selected : 'all';
+    dispatch(startDistrictFetch(fetchKey));
     const smAPI = new ServiceMapAPI();
-    const areas = await smAPI.areas(categories);
-    const groupedData = groupDistrictData(areas);
-    dispatch(setDistrictData(groupedData));
-    dispatch(endDistrictFetch(single ? selected : 'all'));
-    if (selected) dispatch(fetchDistrictGeometry(selected, period));
+    try {
+      const areas = await smAPI.areas(categories);
+      const groupedData = groupDistrictData(areas);
+      dispatch(setDistrictData(groupedData));
+      if (selected) dispatch(fetchDistrictGeometry(selected, period));
+    } catch (e) {
+      if (!(e instanceof AbortAPIError))
+        console.warn('fetchDistricts error:', e);
+    } finally {
+      dispatch(endDistrictFetch(fetchKey));
+    }
   };
 
 export const fetchDistrictUnitList = (nodeID) => async (dispatch, getState) => {
@@ -207,9 +221,15 @@ export const fetchParkingAreaGeometry = (areaId) => async (dispatch) => {
 
   dispatch(startDistrictFetch(areaId));
   const smAPI = new ServiceMapAPI();
-  const areas = await smAPI.areaGeometry(type, options);
-  dispatch(endDistrictFetch(areaId));
-  dispatch(updateParkingAreas(areas));
+  try {
+    const areas = await smAPI.areaGeometry(type, options);
+    dispatch(updateParkingAreas(areas));
+  } catch (e) {
+    if (!(e instanceof AbortAPIError))
+      console.warn('fetchParkingAreaGeometry error:', e);
+  } finally {
+    dispatch(endDistrictFetch(areaId));
+  }
 };
 
 export const fetchParkingUnits = (parkingCategoryId) => async (dispatch) => {
@@ -221,15 +241,21 @@ export const fetchParkingUnits = (parkingCategoryId) => async (dispatch) => {
   const districtType = `parkingUnits-${parkingCategoryId}`;
   dispatch(startDistrictFetch(districtType));
   const smAPI = new ServiceMapAPI();
-  const units = await smAPI.serviceNodeSearch('ServiceTree', id, {
-    language: 'fi',
-    municipality,
-  });
-  units.forEach((item) => {
-    item.object_type = 'unit';
-  });
-  dispatch(setParkingUnits(parkingCategoryId, units));
-  dispatch(endDistrictFetch(districtType));
+  try {
+    const units = await smAPI.serviceNodeSearch('ServiceTree', id, {
+      language: 'fi',
+      municipality,
+    });
+    units.forEach((item) => {
+      item.object_type = 'unit';
+    });
+    dispatch(setParkingUnits(parkingCategoryId, units));
+  } catch (e) {
+    if (!(e instanceof AbortAPIError))
+      console.warn('fetchParkingUnits error:', e);
+  } finally {
+    dispatch(endDistrictFetch(districtType));
+  }
 };
 
 export const fetchParkingGarages = () => fetchParkingUnits('helsinki-531');
