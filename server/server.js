@@ -21,6 +21,7 @@ import thunk from 'redux-thunk';
 
 import config from '../config';
 import paths from '../config/paths';
+import { sharedIgnoreErrors } from '../config/sentry';
 import App from '../src/App';
 import ogImage from '../src/assets/images/servicemap-meta-img.png';
 import { setLocale } from '../src/redux/actions/user';
@@ -52,6 +53,7 @@ if (process.env.SENTRY_DSN_SERVER) {
     environment: process.env.SENTRY_ENVIRONMENT || process.env.NODE_ENV,
     release: process.env.SENTRY_RELEASE,
     tracesSampleRate: parseFloat(process.env.SENTRY_TRACES_SAMPLE_RATE || '0'),
+    ignoreErrors: sharedIgnoreErrors,
     initialScope: {
       tags: {
         context: 'server',

@@ -14,6 +14,7 @@ import { applyMiddleware, createStore } from 'redux';
 import thunk from 'redux-thunk';
 
 import config from '../config';
+import { sharedIgnoreErrors } from '../config/sentry';
 import { name } from '../package.json';
 import createEmotionCache from '../server/createEmotionCache';
 import App from '../src/App';
@@ -25,16 +26,12 @@ if (config.sentryDSN) {
   Sentry.init({
     dsn: config.sentryDSN,
     ignoreErrors: [
-      'AbortError',
-      // HTTPClient wraps aborted fetches in this typed subclass. iOS Safari
-      // aggressively aborts in-flight requests on backgrounding / bfcache /
-      // radio switches, so these are navigation noise rather than real errors.
-      'AbortAPIError',
-      // Ignore fetch related common errors
-      /TypeError: (Kumottu|cancelled)/,
-      'TypeError: Failed to fetch',
-      'TypeError: NetworkError when attempting to fetch resource.',
+      ...sharedIgnoreErrors,
       /adrum/,
+      // Browser extension noise.
+      /runtime\.sendMessage/,
+      // Browser-imposed rate limit on history.replaceState, not actionable.
+      /history\.replaceState\(\).*100 times/,
     ],
     environment: config.sentryEnvironment,
     release: config.sentryRelease,
@@ -42,7 +39,7 @@ if (config.sentryDSN) {
       Sentry.browserTracingIntegration(),
       Sentry.replayIntegration(),
       Sentry.thirdPartyErrorFilterIntegration({
-        filterKeys: [name],
+        filterKeys: [ name ],
         behaviour: 'drop-error-if-contains-third-party-frames',
       }),
     ],
