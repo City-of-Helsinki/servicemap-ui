@@ -192,7 +192,10 @@ export default class HttpClient {
           throw e;
         }
 
-        if (e.name === 'AbortError') {
+        // iOS/Safari throws TypeError("Load failed") instead of DOMException("AbortError")
+        // when a fetch is cancelled via AbortSignal. Check signal.aborted as the
+        // authoritative source of truth so both browsers are handled uniformly.
+        if (e.name === 'AbortError' || signal?.aborted) {
           this.throwAPIError(
             `Error ${endpoint} fetch aborted`,
             e,
