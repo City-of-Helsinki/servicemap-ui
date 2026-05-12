@@ -1,5 +1,25 @@
 # Changelog
 
+## [2.14.0](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.13.5...servicemap-ui-v2.14.0) (2026-05-12)
+
+
+### Features
+
+* Add sentry ignoreErrors patterns Refs: PL-256 ([fe708f1](https://github.com/City-of-Helsinki/servicemap-ui/commit/fe708f1615383d4199510527887893047316ac91))
+
+
+### Bug Fixes
+
+* Error catching enhancements Refs: PL-256 ([db37e12](https://github.com/City-of-Helsinki/servicemap-ui/commit/db37e12f77a9da88b0b289cd37e20996654af509))
+* Sonar warnings ([3b3a33e](https://github.com/City-of-Helsinki/servicemap-ui/commit/3b3a33ece88b60b0885b9b246fb0ba4a2b7181b6))
+
+
+### Dependencies
+
+* Bump @babel/plugin-transform-modules-systemjs ([b3debde](https://github.com/City-of-Helsinki/servicemap-ui/commit/b3debde3c3bd4307daca3fcb106ba2e5e0a53ab4))
+* Bump fast-uri from 3.1.0 to 3.1.2 ([2d7ed14](https://github.com/City-of-Helsinki/servicemap-ui/commit/2d7ed14ca7cabc571c96cdb14065a325b560a9f2))
+* Bump postcss from 8.5.8 to 8.5.12 ([b7c9184](https://github.com/City-of-Helsinki/servicemap-ui/commit/b7c9184e576eddda279a3898aee88875e9072f05))
+
 ## [2.13.5](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.13.4...servicemap-ui-v2.13.5) (2026-04-27)
 
 
