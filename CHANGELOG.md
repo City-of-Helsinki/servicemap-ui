@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.14.1](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.14.0...servicemap-ui-v2.14.1) (2026-05-13)
+
+
+### Bug Fixes
+
+* HttpClient handleFetch handle signal aborted Refs: PL-256 ([5f51089](https://github.com/City-of-Helsinki/servicemap-ui/commit/5f51089f4c60b971960dd83b62fbd14dd4b62249))
+* Sentry.js add more ignore patters Refs: PL-256 ([446d8c6](https://github.com/City-of-Helsinki/servicemap-ui/commit/446d8c6062247b3ca6d7ad411a00b2b88ca905c0))
+
 ## [2.14.0](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.13.5...servicemap-ui-v2.14.0) (2026-05-12)
 
 
