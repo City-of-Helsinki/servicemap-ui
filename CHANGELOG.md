@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.14.2](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.14.1...servicemap-ui-v2.14.2) (2026-05-13)
+
+
+### Bug Fixes
+
+* Map leaflet Sentry issues Refs: PL-256 ([65f1757](https://github.com/City-of-Helsinki/servicemap-ui/commit/65f1757393cdbdd0716f6c098144c9bf7f4c42c4))
+
 ## [2.14.1](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.14.0...servicemap-ui-v2.14.1) (2026-05-13)
 
 
