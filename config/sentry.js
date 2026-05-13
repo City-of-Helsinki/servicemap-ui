@@ -14,4 +14,11 @@ export const sharedIgnoreErrors = [
   // Scoped to the raw TypeError so wrapped APIFetchError instances (which may
   // indicate genuine API failures) still surface in Sentry.
   'TypeError: Load failed',
+  // HTTPClient wraps network-level failures into APIFetchError with the
+  // original TypeError message appended. These wrapped variants are
+  // non-actionable client-side connectivity errors (offline, radio switch,
+  // iOS backgrounding) and should not pollute error reporting.
+  /APIFetchError: Error while fetching .+: Failed to fetch/,
+  /APIFetchError: Error while fetching .+: NetworkError when attempting to fetch resource/,
+  /APIFetchError: Error while fetching .+: Load failed/,
 ];
