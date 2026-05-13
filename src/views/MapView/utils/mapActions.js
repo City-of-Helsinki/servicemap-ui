@@ -2,6 +2,7 @@ import pointOnFeature from '@turf/point-on-feature';
 import { useLocation } from 'react-router-dom';
 
 import { parseSearchParams } from '../../../utils';
+import { mapHasMapPane } from '../../../utils/mapUtility';
 import { isEmbed } from '../../../utils/path';
 import swapCoordinates from './swapCoordinates';
 
@@ -51,6 +52,7 @@ const fitUnitsToMap = (units, map) => {
   if (bounds.length > 0) {
     try {
       setTimeout(() => {
+        if (!mapHasMapPane(map)) return;
         map.invalidateSize();
         map.fitBounds(bounds, { padding: [15, 15], maxZoom: maxZoom - 1 });
       }, 1);

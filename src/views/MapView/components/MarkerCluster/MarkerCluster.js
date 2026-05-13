@@ -306,6 +306,7 @@ function MarkerCluster({
   // Open highlighted units' popup
   const openHighlightUnitPopup = (mapLayers) => {
     if (disableInteraction) return;
+    if (!map) return;
     const highlightedMarker = getHighlightedMarker(mapLayers);
     if (highlightedMarker && UnitHelper.isUnitPage()) {
       // Close all open popups
