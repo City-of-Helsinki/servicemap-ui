@@ -353,7 +353,9 @@ function SearchView() {
 
     if (map?.length && map !== mapType) {
       const mapTypeParam = map === 'guideMap' ? 'guidemap' : map; // keep alive old links with "guideMap"
-      dispatch(setMapType(mapTypeParam));
+      if (SettingsUtility.mapSettings.includes(mapTypeParam)) {
+        dispatch(setMapType(mapTypeParam));
+      }
     }
     handleCityAndOrganisationSettings(municipality, city, organization);
     handleAccessibilityParams(accessibility_setting);
