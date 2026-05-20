@@ -5,7 +5,11 @@ export { render } from '../src/entry-server.jsx';
 export { createAppStore } from '../src/store';
 export { fetchEventData, fetchSelectedUnitData } from './dataFetcher';
 export { default as getReadiness } from './readiness';
-export { generateSitemap, getRobotsFile, getSitemap } from './sitemapMiddlewares';
+export {
+  generateSitemap,
+  getRobotsFile,
+  getSitemap,
+} from './sitemapMiddlewares';
 export {
   getRequestFullUrl,
   languageSubdomainRedirect,

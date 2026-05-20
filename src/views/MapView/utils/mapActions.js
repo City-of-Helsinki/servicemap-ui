@@ -6,7 +6,9 @@ import { mapHasMapPane } from '../../../utils/mapUtility';
 import { isEmbed } from '../../../utils/path';
 import swapCoordinates from './swapCoordinates';
 
-/* eslint-disable global-require, no-underscore-dangle */
+/* eslint-disable no-underscore-dangle */
+const L =
+  typeof window !== 'undefined' ? (await import('leaflet')).default : null;
 
 const useMapFocusDisabled = () => {
   const location = useLocation();
@@ -19,8 +21,6 @@ const fitUnitsToMap = (units, map) => {
   if (typeof window === 'undefined') {
     return;
   }
-
-  const L = require('leaflet');
 
   const corner1 = map.options.maxBounds.getNorthWest();
   const corner2 = map.options.maxBounds.getSouthEast();
@@ -89,7 +89,6 @@ const getBoundsFromBbox = (bbox) => {
     return null;
   }
 
-  const L = require('leaflet');
   const sw = L.latLng(bbox.slice(0, 2));
   const ne = L.latLng(bbox.slice(2, 4));
   return L.latLngBounds(sw, ne);

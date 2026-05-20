@@ -76,7 +76,7 @@ function SimpleListItem(props) {
         onClick={isLinkOrButton ? handleItemClick : null}
         onKeyDown={
           isLinkOrButton
-            ? keyboardHandler(handleItemClick, [ 'enter', 'space' ])
+            ? keyboardHandler(handleItemClick, ['enter', 'space'])
             : null
         }
         classes={{

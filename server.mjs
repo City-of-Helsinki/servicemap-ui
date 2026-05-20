@@ -163,7 +163,7 @@ const createServer = async () => {
 
   const getEntry = async () => {
     if (isProd) {
-      if (!prodEntry) prodEntry = await import('./dist/server/server-entry.js');
+      if (!prodEntry) prodEntry = await import('./dist/server/server-entry.mjs');
       return prodEntry;
     }
     return vite.ssrLoadModule('./server/server-entry.js');

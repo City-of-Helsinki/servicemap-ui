@@ -6,10 +6,9 @@ const digitransitApiHeaders = () => ({
   'Content-Type': 'application/graphql',
 });
 
-/* eslint-disable global-require */
 // Fetch list of stops
 const fetchStops = async (map) => {
-  const L = require('leaflet');
+  const { default: L } = await import('leaflet');
 
   const fetchBounds = map.getBounds();
   const cornerBottom = fetchBounds.getSouthWest();

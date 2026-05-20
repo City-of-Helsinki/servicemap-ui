@@ -1,4 +1,3 @@
-/* eslint-disable global-require */
 import { css } from '@emotion/css';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -7,8 +6,10 @@ import { Marker } from 'react-leaflet';
 
 import { getIcon } from '../../../../components';
 
+const { divIcon } =
+  typeof window !== 'undefined' ? (await import('leaflet')).default : {};
+
 function UserMarker({ position, onClick }) {
-  const { divIcon } = require('leaflet');
   const userMarkerClass = css({
     display: 'flex',
     alignItems: 'center',

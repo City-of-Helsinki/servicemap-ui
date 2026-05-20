@@ -1,142 +1,79 @@
 import { sentryVitePlugin } from '@sentry/vite-plugin';
 import react from '@vitejs/plugin-react';
-import { resolve } from 'path';
 import { defineConfig } from 'vite';
-import viteCommonjs from 'vite-plugin-commonjs';
-import { nodePolyfills } from 'vite-plugin-node-polyfills';
+import { cjsInterop } from 'vite-plugin-cjs-interop';
 
 import { name } from './package.json';
 import { getGitCommit, getGitTag } from './scripts/utils';
 
-export default defineConfig(({ command, mode, ssrBuild }) => {
-  const isSsrBuild =
-    ssrBuild || (command === 'build' && process.env.BUILD_TARGET === 'server');
-  const isDev = command === 'serve';
-
-  return {
-    root: isDev ? '.' : undefined,
-    publicDir: isDev ? 'public' : false,
-    envPrefix: 'REACT_APP_',
-    esbuild: {
-      jsxInject: `import React from 'react'`,
-      define: {
-        global: 'globalThis',
+export default defineConfig(({ ssrBuild }) => ({
+  envPrefix: 'REACT_APP_',
+  plugins: [
+    react({
+      include: '**/*.{jsx,tsx,js,ts}',
+      babel: {
+        plugins: [
+          [ '@babel/plugin-transform-react-jsx', { runtime: 'automatic' } ],
+        ],
       },
-    },
-    resolve: {
-      alias: {
-        'http-status-typed': resolve(
-          __dirname,
-          'node_modules/http-status-typed/dist/index.min.js'
-        ),
-      },
-    },
-    plugins: [
-      react({
-        include: '**/*.{jsx,tsx,js,ts}',
-        babel: {
-          plugins: [
-            ['@babel/plugin-transform-react-jsx', { runtime: 'automatic' }],
-          ],
-        },
-      }),
-      ...(isSsrBuild
-        ? []
-        : [
-          viteCommonjs(),
-          sentryVitePlugin({
-            telemetry: false,
-            applicationKey: name,
-            sourcemaps: {
-              disable: true,
-            },
-            release: {
-              create: false,
-            }
-          }),
-        ]),
-      // Node.js polyfills for browser environment (only in development)
-      ...(isDev
-        ? [
-          nodePolyfills({
-            include: ['process', 'buffer', 'util', 'path'],
-            exclude: ['fs'],
-            globals: {
-              Buffer: true,
-              global: true,
-              process: true,
-            },
-          }),
-        ]
-        : []),
-    ],
-    define: {
-      'import.meta.env.REACT_APP_GIT_TAG': JSON.stringify(getGitTag()),
-      'import.meta.env.REACT_APP_GIT_COMMIT': JSON.stringify(getGitCommit()),
-      // Keep global defines for backward compatibility
-      GIT_TAG: JSON.stringify(getGitTag()),
-      GIT_COMMIT: JSON.stringify(getGitCommit()),
-    },
-    build: isSsrBuild
-      ? {
-        ssr: true,
-        minify: 'esbuild',
-        rollupOptions: {
-          input: resolve(__dirname, 'server/server.js'),
-          output: {
-            dir: 'dist',
-            entryFileNames: 'index.js',
-            format: 'cjs',
+    }),
+    // Fix CJS/ESM interop for packages that use lazy-getter or module.exports patterns
+    // that don't survive Vite's SSR externalization (named ESM imports would fail at runtime).
+    cjsInterop({
+      dependencies: [
+        'react-helmet-async',
+        'redux-thunk',
+        '@mui/styled-engine',
+      ],
+    }),
+    ...(!ssrBuild
+      ? [
+        sentryVitePlugin({
+          telemetry: false,
+          applicationKey: name,
+          sourcemaps: {
+            disable: true,
           },
-          // Keep external minimal - only truly external dependencies
-          external: [
-            /^node:/,
-            'react',
-            'react-dom',
-            'react-dom/server',
-            'react/jsx-runtime',
-          ],
-        },
-        outDir: 'dist',
-        emptyOutDir: false, // Handle directory clearing at script level for better control
-      }
-      : {
-        rollupOptions: {
-          input: resolve(__dirname, 'client/client.js'),
-          output: {
-            dir: 'dist/src',
-            entryFileNames: 'index.js',
-            format: 'iife',
-            name: 'ServiceMapApp',
-            sourcemapDebugIds: true,
+          release: {
+            create: false,
           },
-          external: ['http-status-typed'],
-        },
-        outDir: 'dist/src',
-        emptyOutDir: false, // Handle directory clearing at script level for better control
-        sourcemap: true,
+        }),
+      ]
+      : []),
+  ],
+  define: {
+    'import.meta.env.REACT_APP_GIT_TAG': JSON.stringify(getGitTag()),
+    'import.meta.env.REACT_APP_GIT_COMMIT': JSON.stringify(getGitCommit()),
+  },
+  build: {
+    sourcemap: true,
+  },
+  resolve: {
+    // @mui/icons-material's ESM entry uses a bare directory import for @mui/material/utils
+    // that Node.js strict ESM cannot resolve. Map it explicitly to the index file.
+    alias: {
+      '@mui/material/utils': '@mui/material/utils/index.js',
+    },
+  },
+  // @mui/icons-material and @mui/material (+ its deps) use directory-style imports in their
+  // ESM entries that Node.js strict ESM cannot resolve at runtime. Bundle them through Vite
+  // so the resolve aliases above apply and all sub-path imports are resolved at build time.
+  ssr: {
+    noExternal: [ '@mui/icons-material', '@mui/material', '@mui/system', '@mui/utils' ],
+  },
+  optimizeDeps: {
+    include: [ 'leaflet', 'react-leaflet' ],
+    esbuildOptions: {
+      loader: {
+        '.js': 'jsx',
       },
-    server: {
-      port: 5173,
-      middlewareMode: true,
     },
-    ssr: {
-      noExternal: true, // Bundle everything except what's in rollupOptions.external
-    },
-    optimizeDeps: {
-      include: ['leaflet', 'react-leaflet'],
-      esbuildOptions: {
-        loader: {
-          '.js': 'jsx',
-        },
-      },
-    },
-    assetsInclude: [
-      '**/*.woff',
-      '**/*.woff2',
-      '**/*.ttf',
-      '**/*.eot',
-      '**/*.ico',
-    ],
-  };
-});
+  },
+  assetsInclude: [
+    '**/*.woff',
+    '**/*.woff2',
+    '**/*.ttf',
+    '**/*.eot',
+    '**/*.ico',
+  ],
+}));

@@ -344,6 +344,18 @@ export default defineConfig({
 - Remove `vite-plugin-node-polyfills` (no polyfills needed)
 - Remove `esbuild.jsxInject` (handled by `@vitejs/plugin-react`)
 
+> **Implementation notes (actual vs. planned)**:
+>
+> - **`vite-plugin-cjs-interop` added**: Vite 7 changed the SSR execution model — `ssrLoadModule()` now runs in a true ESM context. CJS packages with `__esModule: true` (Babel-compiled CJS) are loaded by Node.js ESM as a namespace where `default` equals the full `module.exports` object, not the unwrapped value. `vite-plugin-cjs-interop` fixes this by transforming default imports to check `.__esModule` before unwrapping. Applied to: `react-helmet-async`, `redux-thunk`, `@mui/styled-engine`.
+>
+> - **`ssr.noExternal` for MUI packages**: `@mui/material`, `@mui/system`, `@mui/utils`, and `@mui/icons-material` all use bare directory imports (e.g. `import foo from '@mui/utils/deepmerge'` where `deepmerge` is a directory) in their ESM entries. Node.js strict ESM rejects directory imports at runtime. By adding these to `ssr.noExternal`, Vite bundles them into the SSR output during both dev (module runner resolves the directories) and production build (Rollup resolves them at build time). Without this, the production server crashes with `ERR_UNSUPPORTED_DIR_IMPORT`.
+>
+> - **`resolve.alias` for `@mui/material/utils`**: Even with `noExternal`, `@mui/icons-material/esm/utils/createSvgIcon.js` imports `@mui/material/utils` as a bare directory path (no `/index.js` suffix). Vite does not automatically add `/index.js` for this specific case when going cross-package. The alias `'@mui/material/utils': '@mui/material/utils/index.js'` makes the resolution explicit.
+>
+> - **`ssrBuild` flag for conditional Sentry plugin**: The `sentryVitePlugin` should not run during the SSR server build (it would upload sourcemaps for server-side code unnecessarily). `defineConfig(({ ssrBuild }) => ...)` is used to only include the Sentry plugin when `ssrBuild` is falsy (i.e., client builds).
+>
+> - **`ssr.noExternal: true` removed**: The old config used `ssr.noExternal: true` paired with `vite-plugin-commonjs` to bundle everything. Without `vite-plugin-commonjs`, `noExternal: true` causes `require is not defined` errors from deeply nested CJS transitive deps. Targeted `noExternal` (only MUI packages) is the correct modern approach.
+
 ### Phase 5: Update Build Scripts
 
 ```json
@@ -358,6 +370,16 @@ export default defineConfig({
   }
 }
 ```
+
+> **Implementation notes (actual vs. planned)**:
+>
+> - **`dev`/`start`/`preview` use `server.mjs`** (not `server.js`): The file was named `.mjs` instead of `.js` (see Phase 3 notes), so all scripts reference `server.mjs`.
+>
+> - **`build:server` entry is `server/server-entry.js`** (not `src/entry-server.jsx`): `src/entry-server.jsx` only exports `render()`. A dedicated `server/server-entry.js` re-exports everything `server.mjs` needs at runtime. The SSR build command is `vite build --ssr server/server-entry.js --outDir dist/server`.
+>
+> - **Production import uses `.mjs` extension**: `vite build --ssr` outputs ESM with a `.mjs` extension by default (not `.js`). `server.mjs` imports the production bundle as `./dist/server/server-entry.mjs`.
+>
+> - **Old watch/nodemon scripts removed**: `dev:server`, `dev:client`, `nodemon` and all `BUILD_TARGET` usages were removed. The single `node server.mjs` replaces the dual-watch setup.
 
 ### Phase 6: Update Dockerfile
 

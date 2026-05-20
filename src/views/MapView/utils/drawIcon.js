@@ -5,6 +5,9 @@ import berryIconContrast from '../../../assets/icons/LocationDefaultContrast.svg
 import berryEventIconContrast from '../../../assets/icons/LocationEventContrast.svg';
 import berryEventIcon from '../../../assets/icons/LocationEventDefault.svg';
 
+const L =
+  typeof window !== 'undefined' ? (await import('leaflet')).default : null;
+
 // TODO: If berries are not used anymore, clean unused functionalities here
 
 // Functions draw the marker icon into canvas and returns it as png
@@ -134,8 +137,6 @@ export const drawMarkerIcon = (
     return null;
   }
 
-  const L = require('leaflet'); // eslint-disable-line global-require
-
   let icon;
   let iconSize = [30, 30];
   let iconAnchor = [15, 15];
@@ -166,8 +167,6 @@ export const drawEntranceMarkerIcon = (contrast = false, className = '') => {
   if (typeof window === 'undefined') {
     return null;
   }
-
-  const L = require('leaflet'); // eslint-disable-line global-require
 
   // Generate marker icon
   const markerIcon = L.icon({

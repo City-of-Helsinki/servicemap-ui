@@ -1,13 +1,12 @@
-/* eslint-disable global-require */
 import config from '../../../../config';
 import SettingsUtility from '../../../utils/settings';
 import { getMapOptions } from '../config/mapConfig';
 
 let L;
-// Check if we are on client side because leafelt map works only on client side
+// Check if we are on client side because leaflet map works only on client side
 if (typeof window !== 'undefined') {
-  require('proj4leaflet');
-  L = require('leaflet');
+  await import('proj4leaflet');
+  L = (await import('leaflet')).default;
 }
 
 const CreateMap = (mapType, locale) => {

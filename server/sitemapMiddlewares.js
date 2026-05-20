@@ -55,7 +55,7 @@ export const generateSitemap = async () => {
     });
 
     // Write all page urls that we want to be found by search engines
-    const pages = [ 'area' ];
+    const pages = ['area'];
 
     pages.forEach((page) =>
       smStream.write({

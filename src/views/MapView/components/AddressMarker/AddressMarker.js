@@ -11,6 +11,9 @@ import { selectAddress } from '../../../../redux/selectors/address';
 import { getAddressText } from '../../../../utils/address';
 import useLocaleText from '../../../../utils/useLocaleText';
 
+const { divIcon } =
+  typeof window !== 'undefined' ? (await import('leaflet')).default : {};
+
 function AddressMarker({ embeded = false, position = null }) {
   const getLocaleText = useLocaleText();
   const theme = useTheme();
@@ -31,8 +34,6 @@ function AddressMarker({ embeded = false, position = null }) {
     outline: 'none',
   });
 
-  // eslint-disable-next-line global-require
-  const { divIcon } = require('leaflet');
   const addressIcon = divIcon({
     className: `${addressIconClass} AddressMarkerIcon`,
     'data-sm': 'AddressMarkerIcon',
