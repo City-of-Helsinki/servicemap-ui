@@ -1,5 +1,0 @@
-services:
-  app:
-    build: .
-    ports:
-      - "2048:2048"
