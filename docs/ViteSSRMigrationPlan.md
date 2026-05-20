@@ -456,10 +456,12 @@ Key changes from the current Dockerfile:
 ### Phase 7: Cleanup
 
 1. Remove `client/` directory (replaced by `src/entry-client.jsx`)
-2. Remove old `server/server.js` (replaced by root `server.js` + `server/` utilities)
-3. Remove `.babelrc` if no longer needed (Vite uses esbuild/SWC)
-4. Remove unused dependencies:
+2. Remove old `server/server.js` (replaced by root `server.mjs` + `server/` utilities)
+3. Remove `server/ieMiddleware.js` (IE support dropped; not referenced by `server.mjs`)
+4. Remove `.babelrc` (Vite uses esbuild/SWC; Babel config is only relevant to the `@vitejs/plugin-react` babel option in `vite.config.js` / `vitest.config.js`)
+5. Remove unused dependencies:
    - `isomorphic-style-loader`
+   - `@mui/styles` (JSS, deprecated — removed as part of Phase 1 prep but dependency lingered)
    - `core-js`
    - `regenerator-runtime`
    - `whatwg-fetch`
@@ -468,8 +470,10 @@ Key changes from the current Dockerfile:
    - `vite-plugin-commonjs`
    - `vite-plugin-node-polyfills`
    - `nodemon`
-5. Add dependencies if not present:
-   - `sirv` (production static file serving, lightweight alternative to `express.static`)
+6. Remove `__mocks__/withStyles.js` (mock for `isomorphic-style-loader/withStyles`, no longer needed)
+7. Update `vitest.config.js`: remove the dead `isomorphic-style-loader/withStyles` alias entry
+
+> **Implementation note**: `sirv` was not added. `server.mjs` uses `express.static` for production static file serving, which is already present via the `express` dependency.
 
 ---
 
