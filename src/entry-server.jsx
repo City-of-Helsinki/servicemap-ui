@@ -6,8 +6,11 @@ import { Provider } from 'react-redux';
 import { StaticRouter } from 'react-router-dom/server';
 
 import App from './App';
+import ogImage from './assets/images/servicemap-meta-img.png';
 import createEmotionCache from './createEmotionCache';
 import { setLocale } from './redux/actions/user';
+
+export { ogImage };
 
 export async function render(url, { store, nonce, locale }) {
   if (locale) {

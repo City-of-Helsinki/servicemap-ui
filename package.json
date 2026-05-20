@@ -63,8 +63,7 @@
     "vitest": "^4.1.0"
   },
   "scripts": {
-    "build": "rm -rf dist && pnpm build:client && pnpm build:server && pnpm update-runtime-env",
-    "build:test": "rm -rf dist && pnpm build:client --mode development && pnpm build:server --mode development",
+    "build": "rm -rf dist && pnpm update-runtime-env && pnpm build:client && pnpm build:server",
     "build:client": "vite build --outDir dist/client --ssrManifest",
     "build:server": "vite build --ssr server/server-entry.js --outDir dist/server",
     "dev": "pnpm update-runtime-env && node server.mjs",

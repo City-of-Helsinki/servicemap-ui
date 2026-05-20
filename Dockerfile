@@ -21,8 +21,6 @@ COPY --chown=default:root ./.git ./.git
 # ============================================================
 FROM appbase AS development
 
-WORKDIR /app
-
 # Set NODE_ENV to development in the development container
 ARG NODE_ENV=development
 ENV NODE_ENV $NODE_ENV

@@ -1,7 +1,7 @@
 // Production SSR bundle entry — bundled with `vite build --ssr server/server-entry.js`
 import config from '../config';
 
-export { render } from '../src/entry-server.jsx';
+export { ogImage, render } from '../src/entry-server.jsx';
 export { createAppStore } from '../src/store';
 export { fetchEventData, fetchSelectedUnitData } from './dataFetcher';
 export { default as getReadiness } from './readiness';

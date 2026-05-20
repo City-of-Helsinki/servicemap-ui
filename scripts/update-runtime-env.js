@@ -20,7 +20,7 @@ const configFile = USE_TEST_ENV ? 'test-env-config.js' : 'env-config.js';
 
 // Tests require the file directly from public/ (see src/setupTests.js).
 // All other contexts write to dist/ — created if it doesn't exist yet (e.g. before first build in dev).
-const outputDir = path.resolve(process.cwd(), USE_TEST_ENV ? 'public' : 'dist');
+const outputDir = path.resolve(process.cwd(), 'public');
 fs.mkdirSync(outputDir, { recursive: true });
 
 const configurationFile = path.join(outputDir, configFile);

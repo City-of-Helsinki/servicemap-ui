@@ -145,24 +145,29 @@ Following the [official Vite SSR guide](https://vite.dev/guide/ssr) and the [tem
 ```
 servicemap-ui/
 ├── index.html                    # Template with <!--app-head--> and <!--app-html-->
-├── server.js                     # Unified Express server (dev + prod)
+├── server.mjs                    # Unified Express server (dev + prod)
 ├── src/
 │   ├── entry-client.jsx          # Client hydration (replaces client/client.js)
 │   ├── entry-server.jsx          # Server render function (new)
 │   ├── App.js                    # Unchanged
 │   └── ...
-├── server/                       # Server-only utilities (kept)
-│   ├── middlewares.js            # Consolidated middleware (redirects, sitemap, etc.)
-│   ├── dataFetcher.js            # Data pre-fetching (kept, refactored)
-│   └── csp.js                    # CSP header generation (extracted)
+├── server/                       # Server-only utilities (kept as individual files)
+│   ├── server-entry.js           # SSR bundle entry — re-exports everything server.mjs needs
+│   ├── dataFetcher.js            # Data pre-fetching (unchanged)
+│   ├── utils.js                  # Language redirects, URL helpers (unchanged)
+│   ├── sitemapMiddlewares.js     # Sitemap generation (updated: CJS → ESM)
+│   ├── readiness.js              # Readiness endpoint handler
+│   └── createEmotionCache.js    # Shared Emotion cache factory
 ├── vite.config.js                # Simplified — single config
 └── dist/
     ├── client/                   # Production client assets
     │   ├── .vite/ssr-manifest.json
     │   └── assets/
     └── server/
-        └── entry-server.js       # Production server entry
+        └── server-entry.mjs      # Production SSR bundle (ESM, .mjs output)
 ```
+
+> **Implementation note**: The planned `server/middlewares.js` (consolidated middleware) and `server/csp.js` (extracted CSP logic) were not created. The server utilities remained as individual files. CSP header generation lives inline in `server.mjs`.
 
 ---
 
@@ -231,6 +236,14 @@ servicemap-ui/
      return { html, head: helmet, emotionCss, state: store.getState() };
    }
    ```
+
+> **Implementation notes (actual vs. planned)**:
+>
+> - **Return shape**: The actual return is `{ html, helmet, emotionCss }` — not `{ html, head: helmet, emotionCss, state }`. The `helmet` key is used directly (not aliased to `head`). `state` is not returned; `server.mjs` reads `store.getState()` itself after the render call.
+>
+> - **`locale` parameter**: `render()` accepts a `locale` option and dispatches `setLocale(locale)` before `renderToString`, preserving the locale-setting behaviour of the old server.
+>
+> - **`entry-client.jsx` has additional production concerns**: The plan sketch is minimal. The actual implementation also initialises Sentry (client-side browser tracing + replay), merges localStorage user settings over the server-preloaded state, and resets the theme to `'default'` to avoid a known dark-mode flash-of-unstyled-content bug on hydration.
 
 2. **Create `src/entry-client.jsx`** (refactored from `client/client.js`)
    ```jsx
@@ -379,7 +392,13 @@ export default defineConfig({
 >
 > - **Production import uses `.mjs` extension**: `vite build --ssr` outputs ESM with a `.mjs` extension by default (not `.js`). `server.mjs` imports the production bundle as `./dist/server/server-entry.mjs`.
 >
+> - **`build` script includes `rm -rf dist &&`**: The actual command is `rm -rf dist && pnpm build:client && pnpm build:server` to ensure a clean output directory before each build.
+>
+> - **`build:test` script added**: `rm -rf dist && pnpm build:client --mode development && pnpm build:server --mode development` — builds in development mode (no minification, source maps) for use in CI/integration tests without a full production build.
+>
 > - **Old watch/nodemon scripts removed**: `dev:server`, `dev:client`, `nodemon` and all `BUILD_TARGET` usages were removed. The single `node server.mjs` replaces the dual-watch setup.
+>
+> - **`lint` script updated**: The `lint` and `lint:fix` scripts no longer reference `client/` (deleted) and now lint `src/ server/` instead.
 
 ### Phase 6: Update Dockerfile
 
@@ -431,7 +450,7 @@ ENV NODE_ENV=production
 
 USER 1001
 
-EXPOSE 3000
+EXPOSE 8080
 
 CMD ["node", "server.js"]
 ```

@@ -76,10 +76,77 @@ const generateCSPHeaders = (nonce) => {
   return headers;
 };
 
+const extractHeadMarkupFromReactDom = (markup) => {
+  let remaining = markup;
+  let headMarkup = '';
+  const headTagPattern = new RegExp(
+    '^(?:<title[\\s\\S]*?<\\/title\\b[^>]*>|<meta\\b[^>]*\\/?\\s*>|<link\\b[^>]*\\/?\\s*>' +
+      '|<style[\\s\\S]*?<\\/style\\b[^>]*>|<script[\\s\\S]*?<\\/script\\b[^>]*>|<base\\b[^>]*\\/?\\s*>)',
+    'i'
+  );
+
+  while (true) {
+    const trimmed = remaining.replace(/^\s+/, '');
+    const match = trimmed.match(headTagPattern);
+    if (!match) {
+      remaining = trimmed;
+      break;
+    }
+    headMarkup += `${match[0]}\n`;
+    remaining = trimmed.slice(match[0].length);
+  }
+
+  return {
+    headMarkup: normalizeHeadMarkup(headMarkup),
+    appMarkup: remaining,
+  };
+};
+
+const normalizeHeadMarkup = (headMarkup) => {
+  const titleTags = [...headMarkup.matchAll(/<title[\s\S]*?<\/title>/gi)];
+  if (titleTags.length <= 1) return headMarkup;
+
+  const lastTitleTag = titleTags[titleTags.length - 1][0];
+  const markupWithoutTitles = headMarkup.replace(/<title[\s\S]*?<\/title>\s*/gi, '');
+  return `${lastTitleTag}\n${markupWithoutTitles}`;
+};
+
+const escapeHtml = (value) =>
+  String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+
+const buildFallbackHeadMarkup = (headMarkup, requestFullUrl, ogImageUrl) => {
+  const fallbackTags = [];
+
+  if (!/<meta\b[^>]*property=["']og:url["'][^>]*>/i.test(headMarkup)) {
+    fallbackTags.push(
+      `<meta property="og:url" data-react-helmet="true" content="${escapeHtml(requestFullUrl)}" />`
+    );
+  }
+
+  if (!/<meta\b[^>]*property=["']og:image["'][^>]*>/i.test(headMarkup)) {
+    fallbackTags.push(
+      `<meta property="og:image" data-react-helmet="true" content="${ogImageUrl}" />`
+    );
+  }
+
+  if (!/<meta\b[^>]*name=["']twitter:card["'][^>]*>/i.test(headMarkup)) {
+    fallbackTags.push(
+      '<meta name="twitter:card" data-react-helmet="true" content="summary" />'
+    );
+  }
+
+  return fallbackTags.join('\n');
+};
+
 const injectHtml = ({
   template,
   html,
-  helmet,
+  headMarkup,
+  ogImageUrl,
   emotionCss,
   preloadedState,
   locale,
@@ -87,27 +154,14 @@ const injectHtml = ({
   customValues,
   nonce,
 }) => {
-  const nodeEnvLines = [
-    'window.nodeEnvSettings = {};',
-    ...Object.keys(process.env)
-      .filter((key) => key.startsWith('REACT_APP_'))
-      .map((key) => {
-        const value = process.env[ key ];
-        if (value !== undefined && value !== null && value !== '' && value !== 'undefined') {
-          return `window.nodeEnvSettings.${key} = ${JSON.stringify(value)};`;
-        }
-        return '';
-      })
-      .filter(Boolean),
-    process.env.MODE !== undefined
-      ? `window.nodeEnvSettings.MODE = ${JSON.stringify(process.env.MODE)};`
-      : '',
-    `window.nodeEnvSettings.REACT_APP_INITIAL_MAP_POSITION = ${JSON.stringify(customValues.initialMapPosition)};`,
-    `window.nodeEnvSettings.appVersion = { tag: ${JSON.stringify(GIT_TAG)}, commit: ${JSON.stringify(GIT_COMMIT)} };`,
+  // Patch the request-specific map position into window._env_ (populated by env-config.js),
+  // then expose the Redux store for client-side hydration.
+  const inlineScript = [
+    `if (window._env_) {`,
+    `  window._env_.REACT_APP_INITIAL_MAP_POSITION = ${JSON.stringify(customValues.initialMapPosition)};`,
+    `}`,
     `window.__PRELOADED_STATE__ = ${JSON.stringify(preloadedState).replace(/</g, '\\u003c')};`,
-  ]
-    .filter(Boolean)
-    .join('\n      ');
+  ].join('\n      ');
 
   const readSpeakerScript =
     process.env.REACT_APP_READ_SPEAKER_URL &&
@@ -119,9 +173,8 @@ const injectHtml = ({
       : '';
 
   const headContent = `
-    ${helmet.title.toString()}
-    ${helmet.meta.toString()}
-    <meta property="og:url" data-react-helmet="true" content="${requestFullUrl}" />
+    ${headMarkup}
+    ${buildFallbackHeadMarkup(headMarkup, requestFullUrl, ogImageUrl)}
     ${emotionCss}
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
       integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
@@ -133,7 +186,7 @@ const injectHtml = ({
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#141823" />
     ${readSpeakerScript}
-    <script nonce="${nonce}">${nodeEnvLines}</script>`;
+    <script nonce="${nonce}">${inlineScript}</script>`;
 
   return template
     .replace(/lang="[^"]*"/, `lang="${locale || 'fi'}"`)
@@ -247,7 +300,7 @@ const createServer = async () => {
       const cspHeaders = generateCSPHeaders(nonce);
 
       const entry = await getEntry();
-      const { render, getRequestFullUrl, parseInitialMapPositionFromHostname } = entry;
+      const { render, getRequestFullUrl, parseInitialMapPositionFromHostname, ogImage } = entry;
 
       let template = fs.readFileSync(
         isProd
@@ -267,13 +320,20 @@ const createServer = async () => {
         initialMapPosition: parseInitialMapPositionFromHostname(req, Sentry),
       };
 
-      const { html, helmet, emotionCss } = await render(req.url, { store, nonce, locale });
+      const { html: rawHtml, helmet, emotionCss } = await render(req.url, { store, nonce, locale });
+      const { headMarkup: reactHeadMarkup, appMarkup } = extractHeadMarkupFromReactDom(rawHtml);
+      // React 19 hoists head tags into render output; fall back to Helmet context for older behaviour.
+      const helmetHeadMarkup = helmet
+        ? `${helmet.title.toString()}${helmet.meta.toString()}`
+        : '';
+      const headMarkup = reactHeadMarkup || helmetHeadMarkup;
       const preloadedState = store.getState();
 
       const fullHtml = injectHtml({
         template,
-        html,
-        helmet,
+        html: appMarkup,
+        headMarkup,
+        ogImageUrl: ogImage,
         emotionCss,
         preloadedState,
         locale,
