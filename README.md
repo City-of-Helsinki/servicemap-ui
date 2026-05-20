@@ -3,7 +3,7 @@
 ## Requirements 
 Using following:
 * Node LTS (v22)
-* yarn (v1)
+* pnpm (v11)
 If you are using NVM you can also use `nvm use` to get correct version.
 
 For development:
@@ -13,41 +13,41 @@ For development:
 
 In the project directory, you can run:
 
-### `yarn dev`
+### `pnpm dev`
 
 Start dev server and runs the app in the development mode.<br>
 
-### `yarn build`
+### `pnpm build`
 
 Builds the app for production to the `dist` folder.<br>
 
-### `yarn build:test`
+### `pnpm build:test`
 
 Builds the app in development mode to the `dist` folder.<br>
 
-### `yarn start`
+### `pnpm start`
 
 Runs the app by starting node server using build files.
 
-### `yarn test`
+### `pnpm test`
 
 Launches Vitest test runner.<br>
 
-### `yarn test:e2e`
+### `pnpm test:e2e`
 Launches [Playwright](playwright.config.js) test runner and performs browser tests. 
 
 ## How to use
 For development: 
-- Make sure yarn packages are installed by running `yarn install` in project root.
+- Make sure packages are installed by running `pnpm install` in project root.
 - Make sure you have environment variables set. `.env.example` should have all required values so you can copy it to `.env`.
-- Then you can start development server using `yarn dev`. Which watches files and updates on code changes.
+- Then you can start development server using `pnpm dev`. Which watches files and updates on code changes.
 - Open the application by loading `localhost:2048` in the browser
 
 To run in production mode:
-- Make sure yarn packages are installed by running `yarn install` in project root.
+- Make sure packages are installed by running `pnpm install` in project root.
 - Make sure you have environment variables set. `.env.example` should have all required values so you can copy it to `.env`.
-- Build files by running `yarn build`
-- Then you can run the app with `yarn start`
+- Build files by running `pnpm build`
+- Then you can run the app with `pnpm start`
 - Open the application by loading `localhost:2048` in the browser
 
 To run with docker compose:

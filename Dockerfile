@@ -1,40 +1,52 @@
-FROM registry.access.redhat.com/ubi9/nodejs-22:9.5
+# ============================================================
+# STAGE 1: Install dependencies
+# ============================================================
+FROM helsinki.azurecr.io/ubi9/nodejs-22-pnpm-builder-base AS appbase
 
-# Create app directory
 WORKDIR /servicemap-ui
 
-USER root
+COPY --chown=default:root package.json pnpm-lock.yaml pnpm-workspace.yaml index.html vite.config.js .eslintrc.json ./
+COPY --chown=default:root ./scripts ./scripts
+COPY --chown=default:root ./client ./client
+COPY --chown=default:root ./config ./config
+COPY --chown=default:root ./server ./server
+COPY --chown=default:root ./src ./src
 
-RUN curl --fail --silent --proto '=https' --tlsv1.2 https://dl.yarnpkg.com/rpm/yarn.repo \
-  --output /etc/yum.repos.d/yarn.repo
-RUN yum -y install yarn
+# corepack in the base image will automatically use the version of pnpm
+# defined in your package.json 'packageManager' field if present.
+RUN pnpm install --frozen-lockfile --ignore-scripts && pnpm store prune
 
-RUN chown -R default:root /servicemap-ui
+# ============================================================
+# STAGE 2: Build
+# ============================================================
+FROM appbase AS builder
 
-# Install app dependencies
-COPY --chown=default:root --chmod=444 package.json yarn.lock /servicemap-ui/
-
-# Install dependencies
-RUN yarn install --frozen-lockfile --ignore-scripts && yarn cache clean --force
-
-COPY --chown=default:root . /servicemap-ui/
-
-USER default
-
+#ARG REACT_APP_SENTRY_RELEASE
 ARG NODE_OPTIONS=--max-old-space-size=4096
 ENV NODE_OPTIONS=$NODE_OPTIONS
 
-RUN yarn build
+RUN pnpm build
 
-USER root
+# ============================================================
+# STAGE 3: Production Runtime
+# ============================================================
+# This app is SSR (Express + React server-side rendering) — it requires a
+# Node runtime, not a static file server like nginx.
+FROM registry.access.redhat.com/ubi9/nodejs-22-minimal AS production
 
-RUN chown root:root -R /servicemap-ui  && chmod -R 755 /servicemap-ui
+WORKDIR /servicemap-ui
 
-USER default
+# Copy built server bundle and client assets
+COPY --from=builder --chown=1001:root /servicemap-ui/dist ./dist
 
-# If you are building your code for production
-# RUN npm ci --only=production
+# Copy node_modules for externalized runtime dependencies (react, react-dom, etc.)
+COPY --from=appbase --chown=1001:root /servicemap-ui/node_modules ./node_modules
 
-# Bundle app source
+#ARG REACT_APP_SENTRY_RELEASE
+ENV NODE_ENV=production
+
+USER 1001
+
 EXPOSE 2048
-CMD [ "node", "dist/index.js" ]
+
+CMD ["node", "dist"]

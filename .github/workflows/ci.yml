@@ -13,8 +13,9 @@ on:
 
 jobs:
   common:
-    uses: City-of-Helsinki/.github/.github/workflows/ci-node.yml@main
-    secrets: inherit
+    uses: City-of-Helsinki/.github/.github/workflows/ci-pnpm-node.yml@main
+    secrets:
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
     with:
       node-version: 22.x
       extra-commands: |
@@ -87,11 +88,13 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22.x
+      - name: Enable pnpm
+        run: corepack enable
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: pnpm install --frozen-lockfile --ignore-scripts
       - name: Build application
-        run: yarn build
+        run: pnpm build
       - name: Install Playwright browsers
-        run: yarn test:e2e:install
+        run: pnpm test:e2e:install
       - name: Run E2E tests
-        run: yarn test:e2e
+        run: pnpm test:e2e
