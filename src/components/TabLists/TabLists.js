@@ -3,7 +3,7 @@
 import { css } from '@emotion/css';
 import styled from '@emotion/styled';
 import { Tab, Tabs, Typography } from '@mui/material';
-import { useTheme } from '@mui/styles';
+import { useTheme } from '@mui/material/styles';
 import { visuallyHidden } from '@mui/utils';
 import PropTypes from 'prop-types';
 import React, { useEffect, useRef, useState } from 'react';

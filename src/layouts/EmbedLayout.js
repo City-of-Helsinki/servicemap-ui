@@ -1,6 +1,6 @@
 import { Map, OpenInNew } from '@mui/icons-material';
 import { ButtonBase, Tooltip as MUITooltip, Typography } from '@mui/material';
-import { useTheme } from '@mui/styles';
+import { useTheme } from '@mui/material/styles';
 import { visuallyHidden } from '@mui/utils';
 import React, { Suspense, useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
