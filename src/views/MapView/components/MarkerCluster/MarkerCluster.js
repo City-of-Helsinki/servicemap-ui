@@ -3,7 +3,7 @@ import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
 
 import { css } from '@emotion/css';
 import styled from '@emotion/styled';
-import { useTheme } from '@mui/styles';
+import { useTheme } from '@mui/material/styles';
 import PropTypes from 'prop-types';
 import React, { useCallback, useEffect, useState } from 'react';
 import ReactDOMServer from 'react-dom/server';

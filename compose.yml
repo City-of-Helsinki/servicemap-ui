@@ -3,10 +3,15 @@ services:
     platform: linux/amd64
     ports:
       - "3000:8080"
-    build: .
+    build:
+      context: .
+      target: ${DOCKER_TARGET:-development}
     environment:
       - PORT=8080
     env_file:
       - .env
       - .env.local
+    volumes:
+      - ".:/app"
+      - "/app/node_modules"
     container_name: servicemap-ui

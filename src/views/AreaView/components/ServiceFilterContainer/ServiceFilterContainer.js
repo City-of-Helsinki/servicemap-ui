@@ -1,6 +1,6 @@
 import { Clear } from '@mui/icons-material';
 import { IconButton, Typography } from '@mui/material';
-import { useTheme } from '@mui/styles';
+import { useTheme } from '@mui/material/styles';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 

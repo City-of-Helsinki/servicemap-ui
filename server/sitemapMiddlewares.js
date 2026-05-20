@@ -1,11 +1,11 @@
+import fs from 'node:fs';
+import { createGzip } from 'node:zlib';
+
 import { SitemapStream, streamToPromise } from 'sitemap';
 
 import config from '../config';
 import { fetchIDs } from './dataFetcher';
 import { sitemapActive } from './utils';
-
-const fs = require('fs');
-const { createGzip } = require('zlib');
 
 const { supportedLanguages } = config;
 

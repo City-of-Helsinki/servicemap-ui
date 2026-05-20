@@ -4,7 +4,6 @@ import fs from 'fs';
 import * as path from 'path';
 
 const USE_TEST_ENV = process.env.NODE_ENV === 'test';
-const defaultNodeEnv = USE_TEST_ENV ? 'test' : 'development';
 
 // Load .env as defaults — process.env (e.g. Azure ConfigMap) always wins because
 // override is not set. At container startup the production stage also has .env,
@@ -13,14 +12,16 @@ dotenv.config({
   path: ['.env', '.env.local'],
 });
 
-process.env.NODE_ENV = process.env.NODE_ENV || defaultNodeEnv;
-
 // Prevent collision if app is running while tests are started
 const configFile = USE_TEST_ENV ? 'test-env-config.js' : 'env-config.js';
 
 // Tests require the file directly from public/ (see src/setupTests.js).
-// All other contexts write to dist/ — created if it doesn't exist yet (e.g. before first build in dev).
-const outputDir = path.resolve(process.cwd(), USE_TEST_ENV ? 'public' : 'dist');
+// Production serves static assets from dist/client/ (Vite SSR build output), so prefer that
+// directory when it exists. Fall back to public/ for dev and test contexts.
+const distClient = path.resolve(process.cwd(), 'dist/client');
+const outputDir = !USE_TEST_ENV && fs.existsSync(distClient)
+  ? distClient
+  : path.resolve(process.cwd(), 'public');
 fs.mkdirSync(outputDir, { recursive: true });
 
 const configurationFile = path.join(outputDir, configFile);
@@ -30,7 +31,7 @@ const start = async () => {
     // Only expose client-safe keys — filter out server-only vars
     // (PORT, SSR_FETCH_TIMEOUT, CSP_*, DOMAIN, SENTRY_DSN_SERVER, etc.)
     const envVariables = Object.fromEntries(
-      Object.entries(process.env).filter(([ key ]) => key.startsWith('REACT_APP_') || key === 'NODE_ENV' || key === 'MODE')
+      Object.entries(process.env).filter(([ key ]) => key.startsWith('REACT_APP_') || key === 'MODE')
     );
 
     fs.writeFile(
