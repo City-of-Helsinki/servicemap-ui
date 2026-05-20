@@ -437,9 +437,21 @@ CMD ["node", "server.js"]
 ```
 
 Key changes from the current Dockerfile:
-- Stage 1 (`appbase`) is unchanged — keeps `nodejs-22-pnpm-builder-base` with corepack/pnpm
-- Stage 2 (`builder`) no longer copies `client/` (replaced by `src/entry-client.jsx` already in `src/`)
+- Stage 1 (`appbase`) no longer copies `client/` (replaced by `src/entry-client.jsx` already in `src/`)
+- Stage 2 (`builder`) runs `pnpm build` to produce client and server bundles
 - Stage 3 (`production`) copies the new root-level `server.js` and `server/` utilities instead of `dist/index.js`; no longer needs `dist/src/` to be served separately (client assets live under `dist/client/`)
+
+> **Implementation notes (actual vs. planned)**:
+>
+> - **`server.mjs` instead of `server.js`**: Consistent with the Phase 3/5 notes, the actual file is `server.mjs`. The Dockerfile snippet above uses `server.js` / `CMD ["node", "server.js"]` but the real commands are `server.mjs` / `CMD ["node", "server.mjs"]`.
+>
+> - **`config/` must be copied to the production stage**: `server.mjs` imports `./config/index.js`, `./config/paths.js`, and `./config/sentry.js` directly at startup. These are plain source files — not part of the Vite build output in `dist/` — so they must be explicitly copied. Without this, Node.js throws `ERR_MODULE_NOT_FOUND` for `/app/config/index.js` at boot.
+>
+> - **Development stage added**: A `development` stage was added between `appbase` and the build stage, running `CMD ["pnpm", "dev"]`. This enables `docker compose` to target `development` for local development with the Vite dev server (HMR, no build step) while the same Dockerfile still produces the production image.
+>
+> - **Build stage renamed `builder` → `staticbuilder`**: Disambiguates it from the new `development` stage; the production stage copies from `staticbuilder`.
+>
+> - **`server.mjs` included in Stage 1 (`appbase`) COPY**: The dev stage inherits from `appbase` and runs `node server.mjs` directly (via `pnpm dev`), so `server.mjs` must be present in that layer. It is added to the root-file copy line alongside `index.html`, `vite.config.js`, etc.
 
 ### Phase 7: Cleanup
 
