@@ -1,6 +1,6 @@
 import { css } from '@emotion/css';
 import { List, ListItem, Typography } from '@mui/material';
-import { useTheme } from '@mui/styles';
+import { useTheme } from '@mui/material/styles';
 import { useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useMapEvents } from 'react-leaflet';

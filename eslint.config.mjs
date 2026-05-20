@@ -62,6 +62,7 @@ export default [
       'jsx-a11y/no-autofocus': 'off',
       'object-curly-spacing': ['warn', 'always'],
       'import-x/named': 'off',
+      'import-x/no-unresolved': ["error", { "ignore": ["^\\./dist/"] }],
       'simple-import-sort/imports': 'error',
       'simple-import-sort/exports': 'error',
       // eslint-plugin-react-hooks v7 recommended-latest adds rules that
