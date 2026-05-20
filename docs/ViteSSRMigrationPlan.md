@@ -279,7 +279,7 @@ servicemap-ui/
 
 ### Phase 3: Unified Server
 
-**Goal**: Create a single `server.js` that works in both dev and production modes.
+**Goal**: Create a single server entry that works in both dev and production modes.
 
 1. **Create root-level `server.js`**
    - In development: create Vite dev server in middleware mode, use `ssrLoadModule`
@@ -300,6 +300,18 @@ servicemap-ui/
    - Sentry integration (server-side)
    - Readiness endpoint
    - `window.nodeEnvSettings` injection for runtime env vars
+
+> **Implementation notes (actual vs. planned)**:
+>
+> - **`server.mjs` instead of `server.js`**: Without `"type": "module"` in `package.json` (kept as CJS by default), the file was created as `server.mjs` so Node.js treats it as native ESM without any package-level change.
+>
+> - **`server/server-entry.js` as a separate SSR bundle entry**: The plan assumed `dist/server/entry-server.js` would be sufficient for production. In practice, `src/entry-server.jsx` only exports `render()`. A dedicated `server/server-entry.js` was added to re-export everything `server.mjs` needs at runtime (render, createAppStore, data fetchers, utils, sitemap functions, readiness, supportedLanguages). Vite bundles this file with `--ssr` for production.
+>
+> - **Server utilities loaded via `vite.ssrLoadModule()` in dev / bundled in prod**: `server/utils.js`, `server/dataFetcher.js`, etc. use extension-less relative imports (`import config from '../config'`) which fail in strict Node.js ESM. The workaround is to load them through Vite (which handles resolution) rather than importing them directly in `server.mjs`.
+>
+> - **`server/sitemapMiddlewares.js` needed CJS→ESM fix**: The file had leftover `const fs = require('fs')` and `const { createGzip } = require('zlib')` calls. These were replaced with `import fs from 'node:fs'` and `import { createGzip } from 'node:zlib'` to make it loadable via `vite.ssrLoadModule()`.
+>
+> - **`src/entry-server.jsx` updated with locale dispatch**: The render function was extended to accept a `locale` parameter and dispatch `setLocale(locale)` to the Redux store before `renderToString`, matching the behaviour of the old `server/server.js`.
 
 ### Phase 4: Simplify Vite Config
 

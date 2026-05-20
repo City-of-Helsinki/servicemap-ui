@@ -7,8 +7,12 @@ import { StaticRouter } from 'react-router-dom/server';
 
 import App from './App';
 import createEmotionCache from './createEmotionCache';
+import { setLocale } from './redux/actions/user';
 
-export async function render(url, { store, nonce }) {
+export async function render(url, { store, nonce, locale }) {
+  if (locale) {
+    store.dispatch(setLocale(locale));
+  }
   const cache = createEmotionCache(nonce);
   const { extractCriticalToChunks, constructStyleTagsFromChunks } =
     createEmotionServer(cache);
