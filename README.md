@@ -41,20 +41,20 @@ For development:
 - Make sure packages are installed by running `pnpm install` in project root.
 - Make sure you have environment variables set. `.env.example` should have all required values so you can copy it to `.env`.
 - Then you can start development server using `pnpm dev`. Which watches files and updates on code changes.
-- Open the application by loading `localhost:2048` in the browser
+- Open the application by loading `localhost:3000` in the browser
 
 To run in production mode:
 - Make sure packages are installed by running `pnpm install` in project root.
 - Make sure you have environment variables set. `.env.example` should have all required values so you can copy it to `.env`.
 - Build files by running `pnpm build`
 - Then you can run the app with `pnpm start`
-- Open the application by loading `localhost:2048` in the browser
+- Open the application by loading `localhost:3000` in the browser
 
 To run with docker compose:
-- Install Docker if not installed, check that port `2048` is free, not occupied by running server.
+- Install Docker if not installed, check that port `3000` is free, not occupied by running server.
 - Make sure you have environment variables set. `.env.example` should have all required values so you can copy it to `.env`.
 - Run `docker compose up`
-- Open the application by loading `localhost:2048` in the browser
+- Open the application by loading `localhost:3000` in the browser
 
 
 ## Environment variables
@@ -64,7 +64,7 @@ This is a documentation (some day hopefully exhaustive) of environment variables
 These work in reverse when you want to delete a variable (duh).
 - Add a description of the variable at the end of this doc section.
 - Add variable to `.env.example` to act as an example.
-- Add variable to your local `.env` for your local environment at `localhost:2048`.
+- Add variable to your local `.env` for your local environment at `localhost:3000`.
 - Add variable to `.github/workflows/ci.yml` so it will be used during PR build.
 - Add variable to `server/server.js` for it to be picked up by the application code.
 - Add variable to `config/default.js` for it to be part of `config` object during runtime. 
