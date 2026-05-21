@@ -2,6 +2,8 @@ import '@testing-library/jest-dom/vitest';
 
 import { vi } from 'vitest';
 
+require('../public/test-env-config');
+
 // Manual Canvas mock for Vitest - more comprehensive approach
 const mockCanvas = () => {
   const context = {

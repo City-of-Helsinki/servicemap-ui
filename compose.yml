@@ -2,8 +2,11 @@ services:
   app:
     platform: linux/amd64
     ports:
-      - "2048:2048"
+      - "3000:8080"
     build: .
+    environment:
+      - PORT=8080
     env_file:
       - .env
+      - .env.local
     container_name: servicemap-ui

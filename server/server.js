@@ -44,7 +44,7 @@ import {
   unitRedirect,
 } from './utils';
 
-dotenv.config();
+dotenv.config({ path: ['.env', '.env.local'], override: true });
 
 // Initialize Sentry
 if (process.env.SENTRY_DSN_SERVER) {
@@ -212,9 +212,10 @@ app.get('/*', (req, res, next) => {
 if (process.env.SENTRY_DSN_SERVER) {
   Sentry.setupExpressErrorHandler(app);
 }
+
 console.log('Application version tag:', GIT_TAG, 'commit:', GIT_COMMIT);
-console.log(`Starting server on port ${process.env.PORT || 2048}`);
-app.listen(process.env.PORT || 2048);
+console.log(`Starting server on port ${process.env.PORT || 3000}`);
+app.listen(process.env.PORT || 3000);
 
 const htmlTemplate = (
   req,
@@ -254,6 +255,7 @@ const htmlTemplate = (
     </style>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#141823" />
+    <script src="/env-config.js" nonce="${nonce}"></script>
     ${
       process.env.REACT_APP_READ_SPEAKER_URL &&
       process.env.REACT_APP_READ_SPEAKER_URL !== 'false'
@@ -275,34 +277,10 @@ const htmlTemplate = (
     <style nonce="${nonce}">${[...css].join('')}</style>
 
     <script nonce="${nonce}">
-      // Inject environment variables for client-side access
-      window.nodeEnvSettings = {};
-      ${Object.keys(process.env)
-        .filter((key) => key.startsWith('REACT_APP_'))
-        .map((key) => {
-          const value = process.env[key];
-          if (
-            value !== undefined &&
-            value !== null &&
-            value !== '' &&
-            value !== 'undefined'
-          ) {
-            // Properly escape the value for JavaScript string literal
-            const escapedValue = JSON.stringify(value);
-            return `window.nodeEnvSettings.${key} = ${escapedValue};`;
-          }
-          return '';
-        })
-        .filter((line) => line !== '')
-        .join('\n      ')}
-      // Special cases for MODE and version info
-      ${process.env.MODE !== undefined ? `window.nodeEnvSettings.MODE = ${JSON.stringify(process.env.MODE)};` : ''}
-      window.nodeEnvSettings.REACT_APP_INITIAL_MAP_POSITION = ${JSON.stringify(customValues.initialMapPosition)};
-      
-      // Add version information like the old implementation
-      window.nodeEnvSettings.appVersion = {};
-      window.nodeEnvSettings.appVersion.tag = ${JSON.stringify(GIT_TAG)};
-      window.nodeEnvSettings.appVersion.commit = ${JSON.stringify(GIT_COMMIT)};
+      // Patch the one request-specific value that depends on hostname
+      if (window._env_) {
+        window._env_.REACT_APP_INITIAL_MAP_POSITION = ${JSON.stringify(customValues.initialMapPosition)};
+      }
 
       // WARNING: See the following for security issues around embedding JSON in HTML:
       // http://redux.js.org/recipes/ServerRendering.html#security-considerations

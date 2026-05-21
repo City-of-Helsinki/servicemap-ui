@@ -65,7 +65,7 @@ export const verify = (url) => {
 
   // For testing on localhost
   if (host.match(/^localhost/)) {
-    uri.port('2048');
+    uri.port('3000');
     return {
       url: uri.toString(),
       ratio,

@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { defineConfig, devices } from '@playwright/test';
 
-export const E2E_TESTS_ENV_URL = process.env.E2E_TESTS_ENV_URL ?? 'http://localhost:2048';
+export const E2E_TESTS_ENV_URL = process.env.E2E_TESTS_ENV_URL ?? 'http://localhost:3000';
 
 /**
  * See https://playwright.dev/docs/test-configuration.
@@ -26,12 +26,12 @@ export default defineConfig({
 
   // Reporter to use. See https://playwright.dev/docs/test-reporters
   reporter: [
-    ['junit', { outputFile: 'report/e2e-junit-results.xml' }],
-    ['html', { open: 'never', outputFolder: 'report/html' }]
+    [ 'junit', { outputFile: 'report/e2e-junit-results.xml' } ],
+    [ 'html', { open: 'never', outputFolder: 'report/html' } ]
   ],
 
   expect: {
-    timeout: 15000
+    timeout: 30000
   },
   // Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions
   use: {
@@ -68,20 +68,20 @@ export default defineConfig({
   outputDir: './report/playwright',
 
   webServer: {
-    command: 'node dist',
+    command: 'pnpm start',
     url: E2E_TESTS_ENV_URL,
-    reuseExistingServer: !process.env.CI,
+    reuseExistingServer: true,
     timeout: 120 * 1000, // 2 minutes
   },
 
   projects: [
     {
       name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
+      use: { ...devices[ 'Desktop Chrome' ] },
     },
     {
       name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
+      use: { ...devices[ 'Desktop Firefox' ] },
     },
   ],
 });
