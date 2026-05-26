@@ -129,7 +129,7 @@ function ContactInfo({
                   role="link"
                   onClick={() => {
                     // Navigate to accessibility tab by clicking tab
-                    if (accessiblityTabRef.current) {
+                    if (accessiblityTabRef?.current) {
                       accessiblityTabRef.current.click();
                       accessiblityTabRef.current.focus();
 
