@@ -337,10 +337,17 @@ const generateCSPHeaders = () => {
   csp['form-action'] = `'self'`;
   csp['img-src'] = `'self' data: https://www.hel.fi ${process.env.CSP_IMG_SRC}`;
   csp['manifest-src'] = `'self'`;
+  // Only allowlist the Matomo source when Matomo is actually enabled, matching
+  // the frontend condition in src/App.js, to keep the CSP as strict as possible.
+  const matomoEnabled =
+    process.env.REACT_APP_MATOMO_ENABLED === 'true' &&
+    !!process.env.REACT_APP_MATOMO_URL &&
+    !!process.env.REACT_APP_MATOMO_SITE_ID;
+  const matomoScriptSrc = matomoEnabled ? process.env.REACT_APP_MATOMO_URL : '';
   csp['script-src'] = `'self' \
     'nonce-${nonce}' \
     https://unpkg.com/leaflet@1.9.4/dist/leaflet.js \
-     ${process.env.CSP_SCRIPT_SRC}`;
+     ${matomoScriptSrc} ${process.env.CSP_SCRIPT_SRC || ''}`;
   csp['script-src-attr'] =
     `'unsafe-hashes' 'sha256-7Hm4kDnuwRKq0GkRVBPz6YL9PvbRT9e9rAqI5RnLzBQ='`;
   csp['style-src'] =
