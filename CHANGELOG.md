@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.15.0](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.14.3...servicemap-ui-v2.15.0) (2026-06-01)
+
+
+### Features
+
+* Dynamic runtime scripts, port changes Refs: PL-240 ([87b0c64](https://github.com/City-of-Helsinki/servicemap-ui/commit/87b0c6483fc211fe0985a9017cae19ffe3a1b9c7))
+* Migrate Yarn classic to pnpm Refs: PL-240 ([f7bb22f](https://github.com/City-of-Helsinki/servicemap-ui/commit/f7bb22f1b698b85b799378ca7f9fb33e12f1119d))
+
+
+### Bug Fixes
+
+* Dynamic envs only on production stage Refs: PL-240 ([e3fa1f4](https://github.com/City-of-Helsinki/servicemap-ui/commit/e3fa1f40e0691be799dc188c0bc350ba391339da))
+
 ## [2.14.3](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.14.2...servicemap-ui-v2.14.3) (2026-06-01)
 
 
