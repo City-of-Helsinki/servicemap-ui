@@ -16,7 +16,6 @@ COPY --chown=default:root ./src ./src
 RUN pnpm install --frozen-lockfile --ignore-scripts && pnpm store prune
 
 COPY --chown=default:root ./.git ./.git
-RUN pnpm update-runtime-env
 # ============================================================
 # STAGE 2: Build
 # ============================================================
@@ -39,11 +38,20 @@ WORKDIR /servicemap-ui
 # Copy built server bundle and client assets
 COPY --from=builder --chown=1001:root /app/dist ./dist
 
+# Copy .env so update-runtime-env.js can use it as a fallback at container startup
+# for any variable not present in the Azure ConfigMap. process.env (ConfigMap) wins.
+COPY --from=appbase --chown=1001:root /app/.env ./.env
+
 # Copy scripts needed at container startup (update-runtime-env.js)
 COPY --from=appbase --chown=1001:root /app/scripts ./scripts
 
 # Copy node_modules for externalized runtime dependencies (react, react-dom, etc.)
 COPY --from=appbase --chown=1001:root /app/node_modules ./node_modules
+
+# OpenShift runs containers with a random UID in group 0 (root group).
+# Make dist/ group-writable so update-runtime-env.js can overwrite env-config.js
+# regardless of the actual runtime UID.
+RUN chmod -R g+w /servicemap-ui/dist
 
 ENV NODE_ENV=production
 
@@ -51,4 +59,8 @@ USER 1001
 
 EXPOSE 8080
 
-CMD ["node", "dist"]
+# Re-run the env script at startup so Azure configmap variables overwrite the
+# baked-in build-time defaults in dist/env-config.js before the server starts.
+# The existing dist/env-config.js serves as the fallback for any variable that
+# is not present in the runtime environment.
+CMD ["sh", "-c", "node scripts/update-runtime-env.js && exec node dist"]
