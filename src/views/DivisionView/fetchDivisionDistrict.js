@@ -8,6 +8,7 @@ const fetchDivisionDistrict = async (ocdID) => {
     geometry: true,
   };
   const districtData = await districtFetch(options);
+  if (!districtData?.results) return [];
 
   const { results } = districtData;
   const districts = results || null;
