@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.14.3](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.14.2...servicemap-ui-v2.14.3) (2026-06-01)
+
+
+### Bug Fixes
+
+* CSP blocks webanalytics.digiaiiris.com script  ([3b78666](https://github.com/City-of-Helsinki/servicemap-ui/commit/3b786661d419127ae8232a77f7a6dabeb33ecb35))
+* Null check fix ([715bb02](https://github.com/City-of-Helsinki/servicemap-ui/commit/715bb027c18c2585e55c301e1111932f66e55b53))
+
 ## [2.14.2](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.14.1...servicemap-ui-v2.14.2) (2026-05-13)
 
 
