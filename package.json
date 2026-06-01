@@ -69,7 +69,7 @@
     "whatwg-fetch": "^3.5.0"
   },
   "scripts": {
-    "build": "rm -rf dist && pnpm build:client && pnpm build:server && cp public/env-config.js dist/",
+    "build": "rm -rf dist && pnpm build:client && pnpm build:server && pnpm update-runtime-env",
     "build:test": "rm -rf dist && pnpm build:client --mode development && pnpm build:server --mode development",
     "build:client": "vite build",
     "build:server": "BUILD_TARGET=server vite build --ssr",

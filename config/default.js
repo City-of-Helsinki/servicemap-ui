@@ -83,7 +83,7 @@ export function getSettings() {
   }
 
   // Server-side (SSR): apply process.env on top of defaults
-  dotenv.config({ path: ['.env', '.env.local'], override: true });
+  dotenv.config({ path: ['.env', '.env.local'] });
   return applyDefaults(process.env);
 }
 

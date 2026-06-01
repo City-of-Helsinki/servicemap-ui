@@ -44,7 +44,7 @@ import {
   unitRedirect,
 } from './utils';
 
-dotenv.config({ path: ['.env', '.env.local'], override: true });
+dotenv.config({ path: ['.env', '.env.local'] });
 
 // Initialize Sentry
 if (process.env.SENTRY_DSN_SERVER) {

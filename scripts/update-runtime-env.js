@@ -1,4 +1,4 @@
-#!/usr/bin/env ts-node-script
+#!/usr/bin/env node
 import dotenv from 'dotenv';
 import fs from 'fs';
 import * as path from 'path';
@@ -6,29 +6,31 @@ import * as path from 'path';
 const USE_TEST_ENV = process.env.NODE_ENV === 'test';
 const defaultNodeEnv = USE_TEST_ENV ? 'test' : 'development';
 
-/* @ts-ignore */
-import.meta.env = {};
-
-import.meta.env.NODE_ENV = process.env.NODE_ENV || defaultNodeEnv;
-
+// Load .env as defaults — process.env (e.g. Azure ConfigMap) always wins because
+// override is not set. At container startup the production stage also has .env,
+// so variables absent from the ConfigMap fall back to their committed defaults.
 dotenv.config({
-  processEnv: import.meta.env,
   path: ['.env', '.env.local'],
-  override: true,
 });
+
+process.env.NODE_ENV = process.env.NODE_ENV || defaultNodeEnv;
 
 // Prevent collision if app is running while tests are started
 const configFile = USE_TEST_ENV ? 'test-env-config.js' : 'env-config.js';
 
-// Always write to public/ — the build step copies this to dist/.
-const configurationFile = path.join(__dirname, '../public/' + configFile);
+// Tests require the file directly from public/ (see src/setupTests.js).
+// All other contexts write to dist/ — created if it doesn't exist yet (e.g. before first build in dev).
+const outputDir = path.resolve(process.cwd(), USE_TEST_ENV ? 'public' : 'dist');
+fs.mkdirSync(outputDir, { recursive: true });
+
+const configurationFile = path.join(outputDir, configFile);
 
 const start = async () => {
   try {
-    // Only expose client-safe keys — filter out server-only vars (PORT, SSR_FETCH_TIMEOUT, CSP_*, DOMAIN, etc.)
-    const allEnv = import.meta.env;
+    // Only expose client-safe keys — filter out server-only vars
+    // (PORT, SSR_FETCH_TIMEOUT, CSP_*, DOMAIN, SENTRY_DSN_SERVER, etc.)
     const envVariables = Object.fromEntries(
-      Object.entries(allEnv).filter(([ key ]) => key.startsWith('REACT_APP_') || key === 'NODE_ENV' || key === 'MODE')
+      Object.entries(process.env).filter(([ key ]) => key.startsWith('REACT_APP_') || key === 'NODE_ENV' || key === 'MODE')
     );
 
     fs.writeFile(
