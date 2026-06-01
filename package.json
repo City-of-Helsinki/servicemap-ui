@@ -65,7 +65,7 @@
     "sitemap": "^6.4.0",
     "urijs": "^1.19.11",
     "vite": "^7.3.2",
-    "vitest": "^3.2.4",
+    "vitest": "^4.1.0",
     "whatwg-fetch": "^3.5.0"
   },
   "scripts": {
