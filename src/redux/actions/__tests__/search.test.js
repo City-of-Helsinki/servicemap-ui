@@ -32,12 +32,14 @@ describe('fetchSearchResults', () => {
     it('does not dispatch fetchSuccess, dispatches fetchError to reset isFetching, and does not rethrow', async () => {
       const { default: ServiceMapAPI } =
         await import('../../../utils/newFetch/ServiceMapAPI');
-      ServiceMapAPI.mockImplementation(() => ({
-        setOnProgressUpdate: vi.fn(),
-        search: vi
-          .fn()
-          .mockRejectedValue(new AbortAPIError('fetch aborted', abortCause)),
-      }));
+      ServiceMapAPI.mockImplementation(function () {
+        return {
+          setOnProgressUpdate: vi.fn(),
+          search: vi
+            .fn()
+            .mockRejectedValue(new AbortAPIError('fetch aborted', abortCause)),
+        };
+      });
 
       // Should resolve without throwing
       await expect(
@@ -59,14 +61,16 @@ describe('fetchSearchResults', () => {
     it('rethrows an APIFetchError that is not an abort (e.g. missing base URL)', async () => {
       const { default: ServiceMapAPI } =
         await import('../../../utils/newFetch/ServiceMapAPI');
-      ServiceMapAPI.mockImplementation(() => ({
-        setOnProgressUpdate: vi.fn(),
-        search: vi
-          .fn()
-          .mockRejectedValue(
-            new APIFetchError('ServicemapAPI baseURL missing')
-          ),
-      }));
+      ServiceMapAPI.mockImplementation(function () {
+        return {
+          setOnProgressUpdate: vi.fn(),
+          search: vi
+            .fn()
+            .mockRejectedValue(
+              new APIFetchError('ServicemapAPI baseURL missing')
+            ),
+        };
+      });
 
       await expect(
         fetchSearchResults({ q: 'kirjasto' })(mockDispatch, mockGetState)
@@ -78,12 +82,14 @@ describe('fetchSearchResults', () => {
     it('rethrows the error', async () => {
       const { default: ServiceMapAPI } =
         await import('../../../utils/newFetch/ServiceMapAPI');
-      ServiceMapAPI.mockImplementation(() => ({
-        setOnProgressUpdate: vi.fn(),
-        search: vi
-          .fn()
-          .mockRejectedValue(new Error('unexpected network error')),
-      }));
+      ServiceMapAPI.mockImplementation(function () {
+        return {
+          setOnProgressUpdate: vi.fn(),
+          search: vi
+            .fn()
+            .mockRejectedValue(new Error('unexpected network error')),
+        };
+      });
 
       await expect(
         fetchSearchResults({ q: 'kirjasto' })(mockDispatch, mockGetState)
@@ -96,10 +102,12 @@ describe('fetchSearchResults', () => {
       const { default: ServiceMapAPI } =
         await import('../../../utils/newFetch/ServiceMapAPI');
       const mockUnit = { id: 1, object_type: 'unit', name: { fi: 'Kirjasto' } };
-      ServiceMapAPI.mockImplementation(() => ({
-        setOnProgressUpdate: vi.fn(),
-        search: vi.fn().mockResolvedValue([mockUnit]),
-      }));
+      ServiceMapAPI.mockImplementation(function () {
+        return {
+          setOnProgressUpdate: vi.fn(),
+          search: vi.fn().mockResolvedValue([mockUnit]),
+        };
+      });
 
       await fetchSearchResults({ q: 'kirjasto' })(mockDispatch, mockGetState);
 
@@ -112,10 +120,12 @@ describe('fetchSearchResults', () => {
     it('dispatches SEARCH_RESULTS_IS_FETCHING before the fetch starts', async () => {
       const { default: ServiceMapAPI } =
         await import('../../../utils/newFetch/ServiceMapAPI');
-      ServiceMapAPI.mockImplementation(() => ({
-        setOnProgressUpdate: vi.fn(),
-        search: vi.fn().mockResolvedValue([]),
-      }));
+      ServiceMapAPI.mockImplementation(function () {
+        return {
+          setOnProgressUpdate: vi.fn(),
+          search: vi.fn().mockResolvedValue([]),
+        };
+      });
 
       await fetchSearchResults({ q: 'kirjasto' })(mockDispatch, mockGetState);
 
@@ -129,10 +139,12 @@ describe('fetchSearchResults', () => {
       const { default: ServiceMapAPI } =
         await import('../../../utils/newFetch/ServiceMapAPI');
       const rawUnit = { id: 42, name: { fi: 'Testi' } };
-      ServiceMapAPI.mockImplementation(() => ({
-        setOnProgressUpdate: vi.fn(),
-        serviceNodeSearch: vi.fn().mockResolvedValue([rawUnit]),
-      }));
+      ServiceMapAPI.mockImplementation(function () {
+        return {
+          setOnProgressUpdate: vi.fn(),
+          serviceNodeSearch: vi.fn().mockResolvedValue([rawUnit]),
+        };
+      });
 
       await fetchSearchResults({ service_node: '100' })(
         mockDispatch,
@@ -152,9 +164,11 @@ describe('fetchSearchResults', () => {
         id: 'helsinki:abc',
         location: { id: 'tprek:9876', name: { fi: 'Paikka' } },
       };
-      LinkedEventsAPI.mockImplementation(() => ({
-        eventsByKeyword: vi.fn().mockResolvedValue([rawEvent]),
-      }));
+      LinkedEventsAPI.mockImplementation(function () {
+        return {
+          eventsByKeyword: vi.fn().mockResolvedValue([rawEvent]),
+        };
+      });
 
       await fetchSearchResults({ events: 'some-keyword' })(
         mockDispatch,

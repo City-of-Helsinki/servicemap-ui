@@ -28,7 +28,7 @@
     "@turf/point-on-feature": "^6.5.0",
     "@uiw/react-watermark": "1.0.0",
     "@vitejs/plugin-react": "^5.0.3",
-    "@vitest/coverage-istanbul": "^3.2.4",
+    "@vitest/coverage-istanbul": "^4.1.0",
     "compression": "^1.8.1",
     "core-js": "^3.25.1",
     "d3": "^7.9.0",
