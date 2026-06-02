@@ -24,7 +24,7 @@ export default defineConfig({
     reporters: ['verbose'],
     coverage: {
       reporter: ['clover', 'json', 'lcov', 'text'],
-      include: ['src/**/*'],
+      include: ['src/**/*.{js,jsx,ts,tsx}'],
       provider: 'istanbul',
       exclude: [...coverageConfigDefaults.exclude, './src/setupTests.js'],
     },
