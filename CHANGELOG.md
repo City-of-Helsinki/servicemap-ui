@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.15.1](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.15.0...servicemap-ui-v2.15.1) (2026-06-04)
+
+
+### Dependencies
+
+* Bump vitest from 3.2.4 to 4.1.0 ([79d3b8f](https://github.com/City-of-Helsinki/servicemap-ui/commit/79d3b8f4c4f2afb2bea999189e68db6fee1c5cef))
+* Upgrade vitest/coverage-istanbul, fix tests ([95b880a](https://github.com/City-of-Helsinki/servicemap-ui/commit/95b880ade67759f73a338290611bff2191f7820d))
+
 ## [2.15.0](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.14.3...servicemap-ui-v2.15.0) (2026-06-01)
 
 
