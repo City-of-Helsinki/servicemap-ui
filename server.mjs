@@ -10,6 +10,7 @@ import { fileURLToPath } from 'node:url';
 import * as Sentry from '@sentry/node';
 import compression from 'compression';
 import express from 'express';
+import rateLimit from 'express-rate-limit';
 import schedule from 'node-schedule';
 
 import appConfig from './config/index.js';
@@ -34,7 +35,9 @@ if (process.env.SENTRY_DSN_SERVER) {
       tags: { context: 'server', runtime: 'node' },
     },
   });
-  console.log(`Initialized Sentry server with DSN ${process.env.SENTRY_DSN_SERVER}`);
+  console.log(
+    `Initialized Sentry server with DSN ${process.env.SENTRY_DSN_SERVER}`
+  );
 }
 
 const { supportedLanguages } = appConfig;
@@ -49,28 +52,31 @@ const generateCSPHeaders = (nonce) => {
   const reportUri = process.env.CSP_REPORT_URI;
 
   if (reportUri) {
-    headers[ 'Reporting-Endpoints' ] = `csp-endpoint="${reportUri}"`;
-    csp[ 'report-to' ] = 'csp-endpoint';
-    csp[ 'report-uri' ] = reportUri;
+    headers['Reporting-Endpoints'] = `csp-endpoint="${reportUri}"`;
+    csp['report-to'] = 'csp-endpoint';
+    csp['report-uri'] = reportUri;
   }
 
-  csp[ 'base-uri' ] = `'self'`;
-  csp[ 'connect-src' ] = `'self' ${process.env.CSP_CONNECT_SRC}`;
-  csp[ 'default-src' ] = `'self'`;
-  csp[ 'font-src' ] = `'self' https://fonts.gstatic.com`;
-  csp[ 'form-action' ] = `'self'`;
-  csp[ 'img-src' ] = `'self' data: https://www.hel.fi ${process.env.CSP_IMG_SRC}`;
-  csp[ 'manifest-src' ] = `'self'`;
-  csp[ 'script-src' ] = `'self' 'nonce-${nonce}' https://unpkg.com/leaflet@1.9.4/dist/leaflet.js ${process.env.CSP_SCRIPT_SRC}`;
-  csp[ 'script-src-attr' ] = `'unsafe-hashes' 'sha256-7Hm4kDnuwRKq0GkRVBPz6YL9PvbRT9e9rAqI5RnLzBQ='`;
-  csp[ 'style-src' ] = `'self' 'unsafe-inline' https://unpkg.com/leaflet@1.9.4/dist/leaflet.css https://fonts.googleapis.com`;
+  csp['base-uri'] = `'self'`;
+  csp['connect-src'] = `'self' ${process.env.CSP_CONNECT_SRC}`;
+  csp['default-src'] = `'self'`;
+  csp['font-src'] = `'self' https://fonts.gstatic.com`;
+  csp['form-action'] = `'self'`;
+  csp['img-src'] = `'self' data: https://www.hel.fi ${process.env.CSP_IMG_SRC}`;
+  csp['manifest-src'] = `'self'`;
+  csp['script-src'] =
+    `'self' 'nonce-${nonce}' https://unpkg.com/leaflet@1.9.4/dist/leaflet.js ${process.env.CSP_SCRIPT_SRC}`;
+  csp['script-src-attr'] =
+    `'unsafe-hashes' 'sha256-7Hm4kDnuwRKq0GkRVBPz6YL9PvbRT9e9rAqI5RnLzBQ='`;
+  csp['style-src'] =
+    `'self' 'unsafe-inline' https://unpkg.com/leaflet@1.9.4/dist/leaflet.css https://fonts.googleapis.com`;
 
   headers[
     process.env.CSP_REPORT_ONLY === 'true'
       ? 'Content-Security-Policy-Report-Only'
       : 'Content-Security-Policy'
   ] = Object.entries(csp)
-    .map(([ k, v ]) => `${k} ${v};`)
+    .map(([k, v]) => `${k} ${v};`)
     .join(' ');
 
   return headers;
@@ -165,7 +171,7 @@ const injectHtml = ({
 
   const readSpeakerScript =
     process.env.REACT_APP_READ_SPEAKER_URL &&
-      process.env.REACT_APP_READ_SPEAKER_URL !== 'false'
+    process.env.REACT_APP_READ_SPEAKER_URL !== 'false'
       ? `<script type="text/javascript">
           window.rsConf = { params: '${process.env.REACT_APP_READ_SPEAKER_URL}', general: {usePost:true} };
         </script>
@@ -194,17 +200,32 @@ const injectHtml = ({
     .replace('<!--app-html-->', html);
 };
 
+// Cache the production HTML template — the file never changes at runtime.
+let cachedProdTemplate = null;
+
+// Limit SSR renders to protect against DoS; the render path hits the filesystem
+// and performs a full React tree render on every request.
+const ssrRateLimit = rateLimit({
+  windowMs: 60 * 1000,
+  limit: parseInt(process.env.SSR_RATE_LIMIT_MAX || '200', 10),
+  standardHeaders: true,
+  legacyHeaders: false,
+  skip: () => !isProd,
+});
+
 const createServer = async () => {
   const app = express();
   app.disable('x-powered-by');
   app.use(compression());
-  app.set('trust proxy', true);
+  app.set('trust proxy', 1);
 
   let vite;
   let prodEntry;
 
   if (isProd) {
-    app.use(express.static(path.join(__dirname, 'dist/client'), { index: false }));
+    app.use(
+      express.static(path.join(__dirname, 'dist/client'), { index: false })
+    );
   } else {
     const { createServer: createViteServer } = await import('vite');
     vite = await createViteServer({
@@ -216,7 +237,8 @@ const createServer = async () => {
 
   const getEntry = async () => {
     if (isProd) {
-      if (!prodEntry) prodEntry = await import('./dist/server/server-entry.mjs');
+      if (!prodEntry)
+        prodEntry = await import('./dist/server/server-entry.mjs');
       return prodEntry;
     }
     return vite.ssrLoadModule('./server/server-entry.js');
@@ -276,7 +298,10 @@ const createServer = async () => {
 
   // Treenode → service_node redirect
   app.use('/', (req, res, next) => {
-    if (req.query.treenode != null && process.env.DOMAIN?.includes(req.get('host'))) {
+    if (
+      req.query.treenode != null &&
+      process.env.DOMAIN?.includes(req.get('host'))
+    ) {
       res.redirect(301, req.originalUrl.replace(/treenode/g, 'service_node'));
       return;
     }
@@ -294,7 +319,7 @@ const createServer = async () => {
   });
 
   // SSR render
-  app.get('/*', async (req, res, next) => {
+  app.get('/*', ssrRateLimit, async (req, res, next) => {
     try {
       const nonce = crypto.randomBytes(16).toString('base64');
       const cspHeaders = generateCSPHeaders(nonce);
@@ -302,18 +327,24 @@ const createServer = async () => {
       const entry = await getEntry();
       const { render, getRequestFullUrl, parseInitialMapPositionFromHostname, ogImage } = entry;
 
-      let template = fs.readFileSync(
-        isProd
-          ? path.join(__dirname, 'dist/client/index.html')
-          : path.join(__dirname, 'index.html'),
-        'utf-8'
-      );
-      if (!isProd) {
+      let template;
+      if (isProd) {
+        if (!cachedProdTemplate) {
+          cachedProdTemplate = fs.readFileSync(
+            path.join(__dirname, 'dist/client/index.html'),
+            'utf-8'
+          );
+        }
+        template = cachedProdTemplate;
+      } else {
+        template = fs.readFileSync(path.join(__dirname, 'index.html'), 'utf-8');
         template = await vite.transformIndexHtml(req.originalUrl, template);
       }
 
-      const localeParam = req.params[ 0 ]?.slice(0, 2) ?? '';
-      const locale = supportedLanguages.includes(localeParam) ? localeParam : 'fi';
+      const localeParam = req.params[0]?.slice(0, 2) ?? '';
+      const locale = supportedLanguages.includes(localeParam)
+        ? localeParam
+        : 'fi';
 
       const store = req._context;
       const customValues = {
