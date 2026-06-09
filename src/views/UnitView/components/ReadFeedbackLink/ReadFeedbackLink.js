@@ -37,7 +37,6 @@ function ReadFeedbackLink({ unit }) {
           openInExternalDomainAriaLabel={intl.formatMessage({
             id: 'general.linkLeadsToExternalSite',
           })}
-          openInNewTabAriaLabel={intl.formatMessage({ id: 'general.new.tab' })}
         >
           {text}
         </StyledHdsLink>

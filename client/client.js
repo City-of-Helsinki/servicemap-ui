@@ -11,7 +11,7 @@ import { hydrateRoot } from 'react-dom/client';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { Provider } from 'react-redux';
 import { applyMiddleware, createStore } from 'redux';
-import thunk from 'redux-thunk';
+import { thunk } from 'redux-thunk';
 
 import config from '../config';
 import { sharedIgnoreErrors } from '../config/sentry';
