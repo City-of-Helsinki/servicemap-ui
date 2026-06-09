@@ -6,7 +6,7 @@ import { cjsInterop } from 'vite-plugin-cjs-interop';
 import { name } from './package.json';
 import { getGitCommit, getGitTag } from './scripts/utils';
 
-export default defineConfig(({ ssrBuild }) => ({
+export default defineConfig(({ isSsrBuild }) => ({
   envPrefix: 'REACT_APP_',
   plugins: [
     react({
@@ -26,7 +26,7 @@ export default defineConfig(({ ssrBuild }) => ({
         '@mui/styled-engine',
       ],
     }),
-    ...(!ssrBuild
+    ...(!isSsrBuild
       ? [
         sentryVitePlugin({
           telemetry: false,

@@ -104,10 +104,11 @@ const fitBbox = (map, bbox) => {
 };
 
 const panViewToBounds = (map, selectedGeometry, geometryGroup) => {
+  if (!L) return;
   const mapBounds = map.getBounds();
   // Get point inside geometry
   const geometryPoint = pointOnFeature(selectedGeometry).geometry.coordinates;
-  const pointLatLng = globalThis.L.latLng(geometryPoint);
+  const pointLatLng = L.latLng(geometryPoint);
   // If point is outside of map bounds, move map to area
   if (!mapBounds.contains(pointLatLng)) {
     try {

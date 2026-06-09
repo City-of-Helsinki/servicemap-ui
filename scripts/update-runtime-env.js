@@ -19,8 +19,12 @@ process.env.NODE_ENV = process.env.NODE_ENV || defaultNodeEnv;
 const configFile = USE_TEST_ENV ? 'test-env-config.js' : 'env-config.js';
 
 // Tests require the file directly from public/ (see src/setupTests.js).
-// All other contexts write to dist/ — created if it doesn't exist yet (e.g. before first build in dev).
-const outputDir = path.resolve(process.cwd(), 'public');
+// Production serves static assets from dist/client/ (Vite SSR build output), so prefer that
+// directory when it exists. Fall back to public/ for dev and test contexts.
+const distClient = path.resolve(process.cwd(), 'dist/client');
+const outputDir = !USE_TEST_ENV && fs.existsSync(distClient)
+  ? distClient
+  : path.resolve(process.cwd(), 'public');
 fs.mkdirSync(outputDir, { recursive: true });
 
 const configurationFile = path.join(outputDir, configFile);

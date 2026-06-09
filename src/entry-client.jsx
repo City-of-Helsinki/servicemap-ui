@@ -35,9 +35,10 @@ if (config.sentryDSN) {
       }),
     ],
     tracesSampleRate: parseFloat(config.sentryTracesSampleRate || '0'),
-    tracePropagationTargets: (config.sentryTracePropagationTargets || '').split(
-      ','
-    ),
+    tracePropagationTargets: (config.sentryTracePropagationTargets || '')
+      .split(',')
+      .map((entry) => entry.trim())
+      .filter(Boolean),
     replaysSessionSampleRate: parseFloat(
       config.sentryReplaysSessionSampleRate || '0'
     ),
@@ -57,9 +58,10 @@ const preloadedState = window.__PRELOADED_STATE__;
 delete window.__PRELOADED_STATE__;
 
 if (preloadedState) {
-  // Merge settings from localStorage over the server-preloaded settings.
-  const settings = SettingsUtility.getSettingsFromLocalStorage();
-  preloadedState.settings = settings;
+  // Merge settings from localStorage over the server-preloaded settings,
+  // preserving any server-provided keys not present in localStorage.
+  const localSettings = SettingsUtility.getSettingsFromLocalStorage();
+  preloadedState.settings = { ...preloadedState.settings, ...localSettings };
 
   // TODO: dark mode is broken after refresh — keep 'default' for now.
   const theme = 'default';

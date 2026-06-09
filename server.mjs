@@ -267,33 +267,57 @@ const createServer = async () => {
   });
 
   app.use('/sitemap.xml', async (req, res, next) => {
-    const { getSitemap } = await getEntry();
-    getSitemap(req, res, next);
+    try {
+      const { getSitemap } = await getEntry();
+      getSitemap(req, res, next);
+    } catch (err) {
+      next(err);
+    }
   });
 
   app.get('/robots.txt', async (req, res, next) => {
-    const { getRobotsFile } = await getEntry();
-    getRobotsFile(req, res, next);
+    try {
+      const { getRobotsFile } = await getEntry();
+      getRobotsFile(req, res, next);
+    } catch (err) {
+      next(err);
+    }
   });
 
   app.get('/readiness', async (req, res, next) => {
-    const { getReadiness } = await getEntry();
-    getReadiness(req, res, next);
+    try {
+      const { getReadiness } = await getEntry();
+      getReadiness(req, res, next);
+    } catch (err) {
+      next(err);
+    }
   });
 
   app.use('/', async (req, res, next) => {
-    const { languageSubdomainRedirect } = await getEntry();
-    languageSubdomainRedirect(req, res, next);
+    try {
+      const { languageSubdomainRedirect } = await getEntry();
+      languageSubdomainRedirect(req, res, next);
+    } catch (err) {
+      next(err);
+    }
   });
 
   app.use('/', async (req, res, next) => {
-    const { makeLanguageHandler } = await getEntry();
-    makeLanguageHandler(req, res, next);
+    try {
+      const { makeLanguageHandler } = await getEntry();
+      makeLanguageHandler(req, res, next);
+    } catch (err) {
+      next(err);
+    }
   });
 
   app.use('/', async (req, res, next) => {
-    const { unitRedirect } = await getEntry();
-    unitRedirect(req, res, next);
+    try {
+      const { unitRedirect } = await getEntry();
+      unitRedirect(req, res, next);
+    } catch (err) {
+      next(err);
+    }
   });
 
   // Treenode → service_node redirect
@@ -315,13 +339,21 @@ const createServer = async () => {
   });
 
   app.use(paths.event.regex, async (req, res, next) => {
-    const { fetchEventData } = await getEntry();
-    fetchEventData(req, res, next);
+    try {
+      const { fetchEventData } = await getEntry();
+      fetchEventData(req, res, next);
+    } catch (err) {
+      next(err);
+    }
   });
 
   app.use(paths.unit.regex, async (req, res, next) => {
-    const { fetchSelectedUnitData } = await getEntry();
-    fetchSelectedUnitData(req, res, next);
+    try {
+      const { fetchSelectedUnitData } = await getEntry();
+      fetchSelectedUnitData(req, res, next);
+    } catch (err) {
+      next(err);
+    }
   });
 
   // SSR render
