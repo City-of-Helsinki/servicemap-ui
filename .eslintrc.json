@@ -43,6 +43,7 @@
     "import/order": "off",
     "simple-import-sort/imports": "error",
     "simple-import-sort/exports": "error",
-    "import/named": "off"
+    "import/named": "off",
+    "import/no-unresolved": ["error", { "ignore": ["^\\./dist/"] }]
   }
 }
