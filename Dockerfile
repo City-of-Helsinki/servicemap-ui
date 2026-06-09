@@ -7,6 +7,7 @@ COPY --chown=default:root package.json pnpm-lock.yaml pnpm-workspace.yaml index.
 COPY --chown=default:root ./scripts ./scripts
 COPY --chown=default:root ./config ./config
 COPY --chown=default:root ./server ./server
+COPY --chown=default:root server.mjs ./
 COPY --chown=default:root ./public ./public
 COPY --chown=default:root ./src ./src
 
