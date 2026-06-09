@@ -10,7 +10,7 @@ import { fileURLToPath } from 'node:url';
 import * as Sentry from '@sentry/node';
 import compression from 'compression';
 import express from 'express';
-import rateLimit from 'express-rate-limit';
+import { rateLimit } from 'express-rate-limit';
 import schedule from 'node-schedule';
 
 import appConfig from './config/index.js';
@@ -302,7 +302,13 @@ const createServer = async () => {
       req.query.treenode != null &&
       process.env.DOMAIN?.includes(req.get('host'))
     ) {
-      res.redirect(301, req.originalUrl.replace(/treenode/g, 'service_node'));
+      const replaced = req.originalUrl.replace(/treenode/g, 'service_node');
+      // Extract only pathname+search to prevent open redirect: req.originalUrl can
+      // be an absolute-form URI if a client
+      // sends an absolute request line, which would bypass the string-replace and
+      // redirect to an external host.
+      const { pathname, search } = new URL(replaced, 'http://localhost');
+      res.redirect(301, pathname + search);
       return;
     }
     next();
