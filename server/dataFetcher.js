@@ -169,9 +169,14 @@ export const fetchSelectedUnitData = (req, res, next) => {
         response();
         return;
       }
+      const eventList = Array.isArray(data.data) ? data.data : [];
+      const eventCount =
+        typeof data.meta?.count === 'number'
+          ? data.meta.count
+          : eventList.length;
       const { fetchSuccess, fetchProgressUpdate } = events;
-      store.dispatch(fetchProgressUpdate(data.data.length, data.meta.count));
-      store.dispatch(fetchSuccess(data.data));
+      store.dispatch(fetchProgressUpdate(eventList.length, eventCount));
+      store.dispatch(fetchSuccess(eventList));
       response();
     };
     unitEventsFetch(
@@ -209,9 +214,14 @@ export const fetchSelectedUnitData = (req, res, next) => {
         response();
         return;
       }
+      const reservationList = Array.isArray(data.results) ? data.results : [];
+      const reservationCount =
+        typeof data.count === 'number' ? data.count : reservationList.length;
       const { fetchSuccess, fetchProgressUpdate } = reservations;
-      store.dispatch(fetchProgressUpdate(data.results.length, data.count));
-      store.dispatch(fetchSuccess(data.results));
+      store.dispatch(
+        fetchProgressUpdate(reservationList.length, reservationCount)
+      );
+      store.dispatch(fetchSuccess(reservationList));
       response();
     };
     reservationsFetch(

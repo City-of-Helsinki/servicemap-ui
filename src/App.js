@@ -54,6 +54,7 @@ function MetaTags() {
   const intl = useIntl();
   return (
     <Helmet>
+      <title>{intl.formatMessage({ id: 'app.title' })}</title>
       <meta
         property="og:site_name"
         content={intl.formatMessage({ id: 'app.title' })}
@@ -118,29 +119,29 @@ function App() {
   const cookieConsentProps = useCookieConsentSettings();
 
   return (
-    mounted && (
-      <CookieConsentContextProvider {...cookieConsentProps}>
-        <StyledEngineProvider>
-          <ThemeWrapper>
-            <IntlProvider {...intlData}>
-              <MetaTags />
-              {/* <StylesProvider generateClassName={generateClassName}> */}
-              <div className="App">
-                <Routes>
-                  <Route path="embedder/*" element={<EmbedderView />} />
-                  <Route path="embed/*" element={<EmbedLayout />} />
-                  <Route path="*" element={<DefaultLayout />} />
-                </Routes>
-                <Navigator />
-                <DataFetcher />
-                {!isEmbed() && featureFlags.smCookies && <CookieBanner />}
-              </div>
-              {/* </StylesProvider> */}
-            </IntlProvider>
-          </ThemeWrapper>
-        </StyledEngineProvider>
-      </CookieConsentContextProvider>
-    )
+    <StyledEngineProvider>
+      <ThemeWrapper>
+        <IntlProvider {...intlData}>
+          <MetaTags />
+          {/* <StylesProvider generateClassName={generateClassName}> */}
+          <div className="App">
+            <Routes>
+              <Route path="embedder/*" element={<EmbedderView />} />
+              <Route path="embed/*" element={<EmbedLayout />} />
+              <Route path="*" element={<DefaultLayout />} />
+            </Routes>
+            <Navigator />
+            <DataFetcher />
+            {mounted && !isEmbed() && featureFlags.smCookies && (
+              <CookieConsentContextProvider {...cookieConsentProps}>
+                <CookieBanner />
+              </CookieConsentContextProvider>
+            )}
+          </div>
+          {/* </StylesProvider> */}
+        </IntlProvider>
+      </ThemeWrapper>
+    </StyledEngineProvider>
   );
 }
 

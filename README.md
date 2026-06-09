@@ -2,7 +2,7 @@
 
 ## Requirements 
 Using following:
-* Node LTS (v22)
+* Node LTS (v24)
 * pnpm (v11)
 If you are using NVM you can also use `nvm use` to get correct version.
 

@@ -1,7 +1,7 @@
 # ============================================================
 # STAGE 1: Install dependencies
 # ============================================================
-FROM helsinki.azurecr.io/ubi9/nodejs-22-pnpm-builder-base AS appbase
+FROM helsinki.azurecr.io/ubi9/nodejs-24-pnpm-builder-base AS appbase
 
 COPY --chown=default:root package.json pnpm-lock.yaml pnpm-workspace.yaml index.html vite.config.js .eslintrc.json .env ./
 COPY --chown=default:root ./scripts ./scripts
@@ -31,7 +31,7 @@ RUN pnpm build
 # ============================================================
 # This app is SSR (Express + React server-side rendering) — it requires a
 # Node runtime, not a static file server like nginx.
-FROM registry.access.redhat.com/ubi9/nodejs-22-minimal AS production
+FROM registry.access.redhat.com/ubi9/nodejs-24-minimal AS production
 
 WORKDIR /servicemap-ui
 

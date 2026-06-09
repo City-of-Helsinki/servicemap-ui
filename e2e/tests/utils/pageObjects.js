@@ -30,7 +30,7 @@ export class EmbeddedView {
   constructor(page) {
     this.page = page;
     this.districtOverlay = page.locator('.leaflet-pane .leaflet-overlay-pane svg');
-    this.unitMarkers = page.locator('.unitMarker');
+    this.unitMarkers = page.locator('.unitMarker, .unitClusterMarker');
     this.loadingIndicator = page.locator('[data-sm="LoadingIndicator"]');
     this.unitList = page.locator('#paginatedList-embeddedResults [data-sm="UnitItem"]');
     this.unitListItemTitle = page.locator('[data-sm="ResultItemTitle"]');

@@ -1,5 +1,10 @@
 import { expect } from '@playwright/test';
 
+async function gotoAndSettlePage(page, servicePage) {
+  await page.goto(servicePage, { waitUntil: 'networkidle' });
+  await expect(page.locator('#app-title')).toBeFocused({ timeout: 2000 });
+}
+
 /**
  * Tests keyboard navigation of the pagination component
  * @param {import('@playwright/test').Page} page - The Playwright page object
@@ -90,15 +95,15 @@ async function testPaginationDefault(page) {
  */
 export default async function paginationTest(page, servicePage) {
 
-  await page.goto(servicePage, { waitUntil: 'networkidle' });
+  await gotoAndSettlePage(page, servicePage);
   await testKeyboardNavigation(page);
 
-  await page.goto(servicePage, { waitUntil: 'networkidle' });
+  await gotoAndSettlePage(page, servicePage);
   await testPaginationAttributes(page);
 
-  await page.goto(servicePage, { waitUntil: 'networkidle' });
+  await gotoAndSettlePage(page, servicePage);
   await testPageChangeFocus(page);
 
-  await page.goto(servicePage, { waitUntil: 'networkidle' });
+  await gotoAndSettlePage(page, servicePage);
   await testPaginationDefault(page);
 }

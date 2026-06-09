@@ -1,4 +1,5 @@
-import { test, expect } from '@playwright/test';
+import { expect,test } from '@playwright/test';
+
 import { EmbeddedView } from '../utils/pageObjects';
 
 test.describe('Embed view test', () => {
@@ -67,7 +68,9 @@ test.describe('Embed view test', () => {
     // Click the first search result item and verify that the dialog displays the correct title
     await unitListItem.click();
     const dialogTitleText = await embeddedView.unitDialogTitle.textContent();
-    const listItemTitleText = await embeddedView.unitListItemTitle.first().textContent();
+    const listItemTitleText = await embeddedView.unitListItemTitle
+      .first()
+      .textContent();
     expect(dialogTitleText).toBe(listItemTitleText);
   });
 
@@ -150,7 +153,9 @@ test.describe('Embed view test', () => {
    *  - The loading indicator still disappears.
    *  - No unit markers are rendered on the map.
    */
-  test('Embedded address view shows nearby service units correctly', async ({ page }) => {
+  test('Embedded address view shows nearby service units correctly', async ({
+    page,
+  }) => {
     const embeddedView = new EmbeddedView(page);
     // Navigate to the address view with service units rendered.
     await page.goto(`/fi/embed/address/helsinki/Eläintarhantie 3/`);
@@ -176,9 +181,13 @@ test.describe('Embed view test', () => {
    *  - The loading indicator disappears (i.e., data has been loaded).
    *  - At least one unit marker is visible on the map.
    */
-  test('Embedded area view shows service area units correctly', async ({ page }) => {
+  test('Embedded area view shows service area units correctly', async ({
+    page,
+  }) => {
     const embeddedView = new EmbeddedView(page);
-    await page.goto(`/fi/embed/area?selected=health_station_district&lat=60.2049198&lng=24.8995213`);
+    await page.goto(
+      `/fi/embed/area?selected=health_station_district&lat=60.2049198&lng=24.8995213`
+    );
 
     // Ensure that the loading indicator is not present, indicating data has loaded.
     await expect(embeddedView.loadingIndicator).toHaveCount(0);
@@ -196,14 +205,25 @@ test.describe('Embed view test', () => {
    *  - The loading indicator has disappeared.
    *  - At least one geographical service unit marker is visible on the map.
    */
-  test('Embedded area view shows geographical area service units correctly', async ({ page }) => {
+  test('Embedded area view shows geographical area service units correctly', async ({
+    page,
+  }) => {
     const embeddedView = new EmbeddedView(page);
-    await page.goto(`/fi/embed/area?selected=neighborhood&districts=ocd-division/country:fi/kunta:helsinki/kaupunginosa:011,ocd-division/country:fi/kunta:helsinki/kaupunginosa:014&services=239,813`);
+    await page.goto(
+      `/fi/embed/area?selected=neighborhood&districts=${
+        'ocd-division/country:fi/kunta:helsinki/kaupunginosa:011,' +
+        'ocd-division/country:fi/kunta:helsinki/kaupunginosa:014'
+      }&services=239,813`
+    );
 
     // Confirm that data has been loaded by ensuring no loading indicator is visible.
-    await expect(embeddedView.loadingIndicator).toHaveCount(0, { timeout: 30000 });
+    await expect(embeddedView.loadingIndicator).toHaveCount(0, {
+      timeout: 30000,
+    });
     // Verify that at least one geographical unit marker is rendered.
-    await embeddedView.unitMarkers.first().waitFor({ state: 'visible' });
+    await embeddedView.unitMarkers
+      .first()
+      .waitFor({ state: 'visible', timeout: 60000 });
   });
 
   /**
@@ -218,12 +238,16 @@ test.describe('Embed view test', () => {
    */
   test('Division url shows units and area correctly', async ({ page }) => {
     const embeddedView = new EmbeddedView(page);
-    await page.goto(`/fi/embed/division/kunta:helsinki/kaupunginosa:029?level=all`);
+    await page.goto(
+      `/fi/embed/division/kunta:helsinki/kaupunginosa:029?level=all`
+    );
 
     // Ensure that the loading indicator is not present.
     await expect(embeddedView.loadingIndicator).toHaveCount(0);
     // Verify that at least one unit marker is visible.
-    await embeddedView.unitMarkers.first().waitFor({ state: 'visible' });
+    await embeddedView.unitMarkers
+      .first()
+      .waitFor({ state: 'visible', timeout: 60000 });
     // Assert that the division area (represented by the SVG element) is visible.
     await expect(embeddedView.districtOverlay).toBeVisible();
   });

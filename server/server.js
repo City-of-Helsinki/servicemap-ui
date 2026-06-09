@@ -17,7 +17,7 @@ import { HelmetProvider } from 'react-helmet-async';
 import { Provider } from 'react-redux';
 import { StaticRouter } from 'react-router-dom/server';
 import { applyMiddleware, createStore } from 'redux';
-import thunk from 'redux-thunk';
+import { thunk } from 'redux-thunk';
 
 import config from '../config';
 import paths from '../config/paths';
@@ -148,9 +148,8 @@ app.get('/*', (req, res, next) => {
 
   // Locale for page
   const localeParam = req.params[0].slice(0, 2);
-  const locale = supportedLanguages.indexOf(localeParam > -1)
-    ? localeParam
-    : 'fi';
+  const locale =
+    supportedLanguages.indexOf(localeParam) > -1 ? localeParam : 'fi';
 
   const store = req._context;
   if (store && store.dispatch) {
@@ -178,8 +177,14 @@ app.get('/*', (req, res, next) => {
     </HelmetProvider>
   );
   const reactDom = ReactDOMServer.renderToString(jsx);
+  const { headMarkup: reactHeadMarkup, appMarkup } =
+    extractHeadMarkupFromReactDom(reactDom);
   const cssString = sheets.toString();
-  const { helmet } = helmetContext;
+  // React 19 hoists head tags into render output instead of Helmet context.
+  const helmetHeadMarkup = helmetContext.helmet
+    ? `${helmetContext.helmet.title.toString()}${helmetContext.helmet.meta.toString()}`
+    : '';
+  const headMarkup = reactHeadMarkup || helmetHeadMarkup;
 
   const preloadedState = store.getState();
 
@@ -195,18 +200,91 @@ app.get('/*', (req, res, next) => {
   res.end(
     htmlTemplate(
       req,
-      reactDom,
+      appMarkup,
       preloadedState,
       css,
       cssString,
       emotionCss,
       locale,
-      helmet,
+      headMarkup,
       customValues,
       nonce
     )
   );
 });
+
+const extractHeadMarkupFromReactDom = (markup) => {
+  let remaining = markup;
+  let headMarkup = '';
+  const headTagPattern = new RegExp(
+    '^(?:<title[\\s\\S]*?<\\/title\\b[^>]*>|<meta\\b[^>]*\\/?\\s*>|<link\\b[^>]*\\/?\\s*>' +
+      '|<style[\\s\\S]*?<\\/style\\b[^>]*>|<script[\\s\\S]*?<\\/script\\b[^>]*>|<base\\b[^>]*\\/?\\s*>)',
+    'i'
+  );
+
+  while (true) {
+    const trimmed = remaining.replace(/^\s+/, '');
+    const match = trimmed.match(headTagPattern);
+    if (!match) {
+      remaining = trimmed;
+      break;
+    }
+
+    headMarkup += `${match[0]}\n`;
+    remaining = trimmed.slice(match[0].length);
+  }
+
+  return {
+    headMarkup: normalizeHeadMarkup(headMarkup),
+    appMarkup: remaining,
+  };
+};
+
+const normalizeHeadMarkup = (headMarkup) => {
+  const titleTags = [...headMarkup.matchAll(/<title[\s\S]*?<\/title>/gi)];
+  if (titleTags.length <= 1) {
+    return headMarkup;
+  }
+
+  const lastTitleTag = titleTags[titleTags.length - 1][0];
+  const markupWithoutTitles = headMarkup.replace(
+    /<title[\s\S]*?<\/title>\s*/gi,
+    ''
+  );
+
+  return `${lastTitleTag}\n${markupWithoutTitles}`;
+};
+
+const escapeHtml = (value) =>
+  String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+
+const buildFallbackHeadMarkup = (req, headMarkup) => {
+  const fallbackTags = [];
+
+  if (!/<meta\b[^>]*property=["']og:url["'][^>]*>/i.test(headMarkup)) {
+    fallbackTags.push(
+      `<meta property="og:url" data-react-helmet="true" content="${escapeHtml(getRequestFullUrl(req))}" />`
+    );
+  }
+
+  if (!/<meta\b[^>]*property=["']og:image["'][^>]*>/i.test(headMarkup)) {
+    fallbackTags.push(
+      `<meta property="og:image" data-react-helmet="true" content="${ogImage}" />`
+    );
+  }
+
+  if (!/<meta\b[^>]*name=["']twitter:card["'][^>]*>/i.test(headMarkup)) {
+    fallbackTags.push(
+      '<meta name="twitter:card" data-react-helmet="true" content="summary" />'
+    );
+  }
+
+  return fallbackTags.join('\n');
+};
 
 // Setup Sentry error handler
 if (process.env.SENTRY_DSN_SERVER) {
@@ -219,13 +297,13 @@ app.listen(process.env.PORT || 3000);
 
 const htmlTemplate = (
   req,
-  reactDom,
+  appMarkup,
   preloadedState,
   css,
   cssString,
   emotionCss,
   locale,
-  helmet,
+  headMarkup,
   customValues,
   nonce
 ) => `
@@ -233,11 +311,8 @@ const htmlTemplate = (
 <html lang="${locale || 'fi'}">
   <head>
     <meta charset="utf-8">
-    ${helmet.title.toString()}
-    ${helmet.meta.toString()}
-    <meta property="og:url" data-react-helmet="true" content="${getRequestFullUrl(req)}" />
-    <meta property="og:image" data-react-helmet="true" content="${ogImage}" />
-    <meta name="twitter:card" data-react-helmet="true" content="summary" />
+    ${headMarkup}
+    ${buildFallbackHeadMarkup(req, headMarkup)}
     ${emotionCss}
     <!-- jss-insertion-point -->
     <style id="jss-server-side" nonce="${nonce}">${cssString}</style>
@@ -273,7 +348,7 @@ const htmlTemplate = (
   </head>
 
   <body>
-    <div id="app">${reactDom}</div>
+    <div id="app">${appMarkup}</div>
     <style nonce="${nonce}">${[...css].join('')}</style>
 
     <script nonce="${nonce}">

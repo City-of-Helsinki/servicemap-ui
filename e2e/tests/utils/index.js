@@ -12,13 +12,17 @@ export const getLocation = async (page) => {
  * @param {import('@playwright/test').Page} page - Playwright page object
  */
 export const acceptCookieConcent = async (page) => {
-  await page.waitForSelector('.hds-cc__all-cookies-button', { state: 'visible' });
-  
-  // Wait for the button to be stable before clicking
-  const cookieButton = page.locator('.hds-cc__all-cookies-button');
-  
+  const cookieButton = page.locator('.hds-cc__all-cookies-button').first();
+
+  // Some views do not show the banner every time (already accepted / disabled).
+  // In those cases we should continue the test instead of failing.
+  try {
+    await cookieButton.waitFor({ state: 'visible', timeout: 5000 });
+  } catch {
+    return;
+  }
+
   // Wait for element to be stable and ready to interact
-  await cookieButton.waitFor({ state: 'visible' });
   await page.waitForTimeout(500); // Give extra time for any animations/transitions
   // Try clicking with force since Firefox has stability issues
   try {
