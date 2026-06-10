@@ -124,7 +124,7 @@ class UnitHelper {
   };
 
   static unitElementClick = (navigator, unit) => {
-    if (!global.window) {
+    if (typeof window === 'undefined') {
       throw Error("Can't run unitElementClick without window");
     }
     if (!navigator || !navigator.push || !navigator.replace) {
