@@ -20,12 +20,14 @@ import { getGitCommit, getGitTag } from './scripts/utils.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-// Detect production mode by the presence of the pre-built SSR entry point rather than
-// relying on NODE_ENV alone. Review/staging environments may set NODE_ENV to a
-// non-"production" value (e.g. "staging") while still running the production image,
-// which does not include src/ and cannot serve via Vite dev middleware.
+// Detect production mode by the presence of the pre-built SSR entry point AND the
+// absence of an explicit development signal. NODE_ENV=development is set by the dev
+// script so that a leftover dist/ from a previous build never silently switches the
+// dev server into production mode (which would kill HMR).
+// Review/staging environments set NODE_ENV to e.g. "staging" (not "development") while
+// running the production image, so the file-existence check still gates them correctly.
 const builtEntryPath = path.join(__dirname, 'dist/server/server-entry.mjs');
-const isProd = fs.existsSync(builtEntryPath);
+const isProd = process.env.NODE_ENV !== 'development' && fs.existsSync(builtEntryPath);
 
 const GIT_TAG = getGitTag();
 const GIT_COMMIT = getGitCommit();
