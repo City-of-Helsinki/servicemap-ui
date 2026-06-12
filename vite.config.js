@@ -19,10 +19,11 @@ export default defineConfig(({ isSsrBuild }) => ({
     }),
     // Fix CJS/ESM interop for packages that use lazy-getter or module.exports patterns
     // that don't survive Vite's SSR externalization (named ESM imports would fail at runtime).
+    // Note: react-helmet-async and redux-thunk both ship proper ESM via their exports map
+    // and must NOT be listed here — cjsInterop would emit `import default` which has no
+    // default export in their ESM entries.
     cjsInterop({
       dependencies: [
-        'react-helmet-async',
-        'redux-thunk',
         '@mui/styled-engine',
       ],
     }),

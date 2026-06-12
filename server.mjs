@@ -119,7 +119,10 @@ const normalizeHeadMarkup = (headMarkup) => {
   if (titleTags.length <= 1) return headMarkup;
 
   const lastTitleTag = titleTags[titleTags.length - 1][0];
-  const markupWithoutTitles = headMarkup.replace(/<title[\s\S]*?<\/title>\s*/gi, '');
+  const markupWithoutTitles = headMarkup.replace(
+    /<title[\s\S]*?<\/title>\s*/gi,
+    ''
+  );
   return `${lastTitleTag}\n${markupWithoutTitles}`;
 };
 
@@ -369,7 +372,12 @@ const createServer = async () => {
       const cspHeaders = generateCSPHeaders(nonce);
 
       const entry = await getEntry();
-      const { render, getRequestFullUrl, parseInitialMapPositionFromHostname, ogImage } = entry;
+      const {
+        render,
+        getRequestFullUrl,
+        parseInitialMapPositionFromHostname,
+        ogImage,
+      } = entry;
 
       let template;
       if (isProd) {
@@ -395,8 +403,13 @@ const createServer = async () => {
         initialMapPosition: parseInitialMapPositionFromHostname(req, Sentry),
       };
 
-      const { html: rawHtml, helmet, emotionCss } = await render(req.url, { store, nonce, locale });
-      const { headMarkup: reactHeadMarkup, appMarkup } = extractHeadMarkupFromReactDom(rawHtml);
+      const {
+        html: rawHtml,
+        helmet,
+        emotionCss,
+      } = await render(req.url, { store, nonce, locale });
+      const { headMarkup: reactHeadMarkup, appMarkup } =
+        extractHeadMarkupFromReactDom(rawHtml);
       // React 19 hoists head tags into render output; fall back to Helmet context for older behaviour.
       const helmetHeadMarkup = helmet
         ? `${helmet.title.toString()}${helmet.meta.toString()}`

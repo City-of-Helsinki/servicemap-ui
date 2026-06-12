@@ -64,10 +64,10 @@
     "vitest": "^4.1.0"
   },
   "scripts": {
-    "build": "rm -rf dist && pnpm update-runtime-env && pnpm build:client && pnpm build:server",
+    "build": "rm -rf dist && pnpm fix-hds-shim && pnpm update-runtime-env && pnpm build:client && pnpm build:server",
     "build:client": "vite build --outDir dist/client --ssrManifest",
     "build:server": "vite build --ssr server/server-entry.js --outDir dist/server",
-    "dev": "pnpm update-runtime-env && node server.mjs",
+    "dev": "pnpm fix-hds-shim && pnpm update-runtime-env && node server.mjs",
     "lint": "eslint src/ server/ server.mjs --ext .js,.jsx,.mjs && prettier src/ server/ server.mjs --check",
     "lint:fix": "eslint src/ server/ server.mjs --ext .js,.jsx,.mjs --fix && prettier src/ server/ server.mjs --write",
     "preview": "NODE_ENV=production node server.mjs",
@@ -76,7 +76,8 @@
     "test:coverage": "pnpm test --coverage",
     "test:e2e:install": "playwright install",
     "test:e2e": "playwright test",
-    "update-runtime-env": "esrun scripts/update-runtime-env.js"
+    "update-runtime-env": "esrun scripts/update-runtime-env.js",
+    "fix-hds-shim": "node scripts/fix-hds-core-cookie-consent.js"
   },
   "browserslist": [
     ">0.2%",
