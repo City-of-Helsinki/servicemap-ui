@@ -27,7 +27,8 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 // Review/staging environments set NODE_ENV to e.g. "staging" (not "development") while
 // running the production image, so the file-existence check still gates them correctly.
 const builtEntryPath = path.join(__dirname, 'dist/server/server-entry.mjs');
-const isProd = process.env.NODE_ENV !== 'development' && fs.existsSync(builtEntryPath);
+const isProd =
+  process.env.NODE_ENV !== 'development' && fs.existsSync(builtEntryPath);
 
 const GIT_TAG = getGitTag();
 const GIT_COMMIT = getGitCommit();
