@@ -35,6 +35,7 @@ FROM appbase AS staticbuilder
 
 ARG NODE_OPTIONS=--max-old-space-size=4096
 ENV NODE_OPTIONS=$NODE_OPTIONS
+ENV NODE_ENV=production
 
 RUN pnpm build
 
