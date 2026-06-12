@@ -96,6 +96,7 @@ function UnitView(props) {
     checkCorrectUnit(stateUnit) ? stateUnit : null
   );
   const viewPosition = useRef(null);
+  const isFirstRender = useRef(true);
 
   const isMobile = useMobileStatus();
   const [openLinkDialog, setOpenLinkDialog] = useState(false);
@@ -160,23 +161,19 @@ function UnitView(props) {
     }
   };
 
+  const unitHasHearingMaps = (unit) =>
+    unit?.keywords?.fi?.some(
+      (keyword) => keyword.toLowerCase() === 'kuuluvuuskartta'
+    );
+
   const intializeUnitData = () => {
     const unitId = unitParam;
 
     // If no selected unit data, or selected unit data is old, fetch new data
-    if (
-      !stateUnit ||
-      !checkCorrectUnit(stateUnit) ||
-      !stateUnit.complete ||
-      !hearingMaps
-    ) {
+    if (!stateUnit || !checkCorrectUnit(stateUnit) || !stateUnit.complete) {
       fetchSelectedUnit(unitId, (unit) => {
         setUnit(unit);
-        if (
-          unit?.keywords?.fi?.some(
-            (keyword) => keyword.toLowerCase() === 'kuuluvuuskartta'
-          )
-        ) {
+        if (unitHasHearingMaps(unit)) {
           fetchHearingMaps(unitId);
         }
       });
@@ -185,6 +182,9 @@ function UnitView(props) {
       fetchUnitEvents(unitId);
     } else {
       // If selected unit data is correct, but some info is missing, fetch them
+      if (!hearingMaps && unitHasHearingMaps(stateUnit)) {
+        fetchHearingMaps(unitId);
+      }
       if (!accessibilitySentences) {
         fetchAccessibilitySentences(unitId);
       }
@@ -259,7 +259,14 @@ function UnitView(props) {
   }, []);
 
   useEffect(() => {
-    // If unit changes without the component unmounting, update data
+    // If unit changes without the component unmounting, update data.
+    // Skip the initial mount, which is already handled by the on-mount effect
+    // above. Without this guard both effects run on mount and every request
+    // (unit, events, accessibility, reservations) is sent twice.
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
     if (unit) {
       intializeUnitData();
     }
