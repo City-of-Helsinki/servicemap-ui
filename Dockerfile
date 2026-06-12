@@ -62,8 +62,9 @@ COPY --from=appbase --chown=1001:root /app/.env ./.env
 # Copy scripts needed at container startup (update-runtime-env.js)
 COPY --from=appbase --chown=1001:root /app/scripts ./scripts
 
-# Copy node_modules for externalized runtime dependencies (react, react-dom, etc.)
-COPY --from=appbase --chown=1001:root /app/node_modules ./node_modules
+# Copy node_modules from staticbuilder so the hds-core cookie-consent shim
+# (applied during pnpm build via fix-hds-shim) is present at runtime.
+COPY --from=staticbuilder --chown=1001:root /app/node_modules ./node_modules
 
 # OpenShift runs containers with a random UID in group 0 (root group).
 # Make dist/ group-writable so update-runtime-env.js can overwrite env-config.js

@@ -20,13 +20,21 @@ import { getGitCommit, getGitTag } from './scripts/utils.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-// Production mode = any NODE_ENV except "development".
-// The dev script explicitly sets NODE_ENV=development so that a leftover dist/
-// from a previous build never silently switches the local dev server into
+// Detect production mode by the presence of the pre-built SSR entry point AND the
+// absence of an explicit development signal. Relying on NODE_ENV alone is not
+// reliable in our deployment: the runtime environment (e.g. Azure ConfigMap /
+// OpenShift pod env) may not propagate the Dockerfile's ENV NODE_ENV=production,
+// which would silently flip the prod container into Vite dev middleware mode
+// and fail (EACCES on node_modules/.vite, missing source files).
+// NODE_ENV=development is set explicitly by the dev script so that a leftover
+// dist/ from a previous build never silently switches the local dev server into
 // production mode (which would kill HMR).
-// Staging/review environments use e.g. NODE_ENV=staging — they are correctly
-// treated as production here.
-const isProd = process.env.NODE_ENV !== 'development';
+// Review/staging environments set NODE_ENV to e.g. "staging" (not "development")
+// while running the production image, so the file-existence check still gates
+// them correctly.
+const builtEntryPath = path.join(__dirname, 'dist/server/server-entry.mjs');
+const isProd =
+  process.env.NODE_ENV !== 'development' && fs.existsSync(builtEntryPath);
 
 const GIT_TAG = getGitTag();
 const GIT_COMMIT = getGitCommit();
