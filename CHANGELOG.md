@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.16.0](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.15.2...servicemap-ui-v2.16.0) (2026-06-12)
+
+
+### Features
+
+* Updated react to version 19, hds to version 6 and node to 24 ([a649c3f](https://github.com/City-of-Helsinki/servicemap-ui/commit/a649c3fe7b78ea69c8c4be0a1c513a8aa296bfc8))
+
 ## [2.15.2](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.15.1...servicemap-ui-v2.15.2) (2026-06-05)
 
 
