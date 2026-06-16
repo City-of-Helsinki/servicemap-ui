@@ -38,8 +38,6 @@ export default class HttpClient {
 
   abortController;
 
-  timeout;
-
   onError;
 
   onProgressUpdate;
@@ -70,24 +68,41 @@ export default class HttpClient {
   };
 
   fetchNext = async (query, results) => {
-    const signal = this.abortController?.signal || null;
-    // Clear old timeout
-    this.clearTimeout();
-    // Create new timeout for next fetch
-    this.createTimeout();
+    // Use an externally provided AbortController when present (e.g. SearchBar
+    // suggestions), otherwise create a per-request one so each paginated fetch
+    // owns its timeout and can't be aborted by a sibling request finishing.
+    const abortController = this.abortController || new AbortController();
+    const { signal } = abortController;
+    const timeoutId = setTimeout(
+      () => abortController.abort(),
+      this.timeoutTimer
+    );
 
-    return fetch(query, { signal })
-      .then((response) => response.json())
-      .then(async (response) => {
-        const combinedResults = [...results, ...response.results];
-        if (this.onProgressUpdate) {
-          this.onProgressUpdate(combinedResults.length, response.count);
-        }
-        if (response.next) {
-          return this.fetchNext(response.next, combinedResults);
-        }
-        return combinedResults;
-      });
+    try {
+      const response = await fetch(query, { signal });
+      const json = await response.json();
+      const combinedResults = [...results, ...json.results];
+      if (this.onProgressUpdate) {
+        this.onProgressUpdate(combinedResults.length, json.count);
+      }
+      if (json.next) {
+        return await this.fetchNext(json.next, combinedResults);
+      }
+      return combinedResults;
+    } catch (e) {
+      // Let already-classified errors bubble to handleFetch untouched.
+      if (e instanceof APIFetchError) {
+        throw e;
+      }
+      // iOS/Safari throws TypeError("Load failed") instead of AbortError when a
+      // fetch is cancelled, so trust signal.aborted as the source of truth.
+      if (e.name === 'AbortError' || signal.aborted) {
+        throw new AbortAPIError(`Error ${query} fetch aborted`, e);
+      }
+      throw e;
+    } finally {
+      clearTimeout(timeoutId);
+    }
   };
 
   handleServiceMapResults = async (response, type) => {
@@ -142,12 +157,7 @@ export default class HttpClient {
   };
 
   handleFetch = async (endpoint, url, options = {}, type) => {
-    if (!this.abortController) {
-      this.abortController = new AbortController();
-    }
     this.status = 'fetching';
-
-    const signal = this.abortController?.signal || null;
 
     // Since we do not send any POST data to server we expect all fetches to be GET
     // and utilize search parameters for sending required data
@@ -156,18 +166,24 @@ export default class HttpClient {
         "Invalid options given to HTTPClient's handleFetch method"
       );
     }
-    // Create fetch promise
-    const promise = fetch(`${url}`, { ...options, signal });
 
-    // Create timeout for aborting fetch
-    if (!this.timeout) {
-      this.createTimeout();
-    }
+    // Use an externally provided AbortController when present (e.g. SearchBar
+    // suggestions), otherwise create a per-request one with its own timeout so
+    // concurrent requests don't share an abort signal or cancel one another.
+    const abortController = this.abortController || new AbortController();
+    const { signal } = abortController;
+    const timeoutId = setTimeout(
+      () => abortController.abort(),
+      this.timeoutTimer
+    );
 
-    // Preform fetch
-    return promise
-      .then((response) => {
-        if (type === 'post') return response;
+    try {
+      const response = await fetch(`${url}`, { ...options, signal });
+
+      let data;
+      if (type === 'post') {
+        data = response;
+      } else {
         // Surface HTTP errors with a clean message instead of letting
         // response.json() produce a misleading SyntaxError on error pages.
         if (!response.ok) {
@@ -175,39 +191,35 @@ export default class HttpClient {
             `Error while fetching ${endpoint}: HTTP ${response.status} ${response.statusText}`
           );
         }
-        return response.json();
-      })
-      .then(async (data) => {
-        const results = await this.handleResults(data, type);
-        this.clearTimeout();
-        this.status = 'done';
-        return results;
-      })
-      .catch((e) => {
-        // Already classified upstream (e.g. non-ok response) — don't rewrap.
-        if (e instanceof APIFetchError) {
-          this.status = 'error';
-          this.clearTimeout();
-          if (this.onError) this.onError(e);
-          throw e;
-        }
+        data = await response.json();
+      }
 
-        // iOS/Safari throws TypeError("Load failed") instead of DOMException("AbortError")
-        // when a fetch is cancelled via AbortSignal. Check signal.aborted as the
-        // authoritative source of truth so both browsers are handled uniformly.
-        if (e.name === 'AbortError' || signal?.aborted) {
-          this.throwAPIError(
-            `Error ${endpoint} fetch aborted`,
-            e,
-            AbortAPIError
-          );
-        } else {
-          this.throwAPIError(
-            `Error while fetching ${endpoint}: ${e.message}`,
-            e
-          );
-        }
-      });
+      const results = await this.handleResults(data, type);
+      this.status = 'done';
+      return results;
+    } catch (e) {
+      // Already classified upstream (e.g. non-ok response, fetchNext abort) —
+      // don't rewrap.
+      if (e instanceof APIFetchError) {
+        this.status = 'error';
+        if (this.onError) this.onError(e);
+        throw e;
+      }
+
+      // iOS/Safari throws TypeError("Load failed") instead of DOMException("AbortError")
+      // when a fetch is cancelled via AbortSignal. Check signal.aborted as the
+      // authoritative source of truth so both browsers are handled uniformly.
+      if (e.name === 'AbortError' || signal?.aborted) {
+        this.throwAPIError(`Error ${endpoint} fetch aborted`, e, AbortAPIError);
+      } else {
+        this.throwAPIError(`Error while fetching ${endpoint}: ${e.message}`, e);
+      }
+
+      // throwAPIError always throws; this satisfies consistent-return.
+      return undefined;
+    } finally {
+      clearTimeout(timeoutId);
+    }
   };
 
   // Create a POST fetch request to given endpoint with given data.
@@ -276,7 +288,7 @@ export default class HttpClient {
     );
   };
 
-  getConcurrent = async (endpoint, options) => {
+  getConcurrent = async (endpoint, options, concurrencyLimit = 30) => {
     if (!options?.page_size) {
       throw new APIFetchError(
         'Invalid page_size provided for concurrent search method'
@@ -300,25 +312,40 @@ export default class HttpClient {
       this.onProgressUpdate(firstPage.data.length, totalCount);
     }
 
-    // Create promises for remaining pages (2..N)
-    const promises = [];
-    for (let i = 2; i <= numberOfPages; i += 1) {
-      const promise = this.getSinglePage(endpoint, { ...options, page: i });
-      promises.push(
-        promise.then((res) => {
-          this.clearTimeout();
-          return res?.data ?? [];
-        })
+    // Fetch remaining pages (2..N) in batches so we don't open hundreds of
+    // simultaneous connections, which the API can reject under load.
+    const results = [...firstPage.data];
+    for (
+      let batchStart = 2;
+      batchStart <= numberOfPages;
+      batchStart += concurrencyLimit
+    ) {
+      const batchEnd = Math.min(
+        batchStart + concurrencyLimit - 1,
+        numberOfPages
       );
+      const batchPromises = [];
+      for (let page = batchStart; page <= batchEnd; page += 1) {
+        batchPromises.push(
+          this.getSinglePage(endpoint, { ...options, page }).then(
+            (res) => res?.data ?? []
+          )
+        );
+      }
+      // Batches run sequentially on purpose to cap concurrent requests.
+      // eslint-disable-next-line no-await-in-loop
+      const batchData = await Promise.all(batchPromises);
+      results.push(...batchData.flat());
+      if (this.onProgressUpdate) {
+        this.onProgressUpdate(results.length, totalCount);
+      }
     }
 
-    const otherPagesData = await Promise.all(promises);
-    return [...firstPage.data, ...otherPagesData.flat()];
+    return results;
   };
 
   throwAPIError = (msg, e, ErrorClass = APIFetchError) => {
     this.status = 'error';
-    this.clearTimeout();
     if (this.onError) {
       this.onError(e);
     }
@@ -326,29 +353,6 @@ export default class HttpClient {
   };
 
   getStatus = () => this.status;
-
-  abort = () => {
-    if (!this.abortController?.abort) {
-      throw new APIFetchError(
-        'Invalid AbortController when attempting to abort fetch'
-      );
-    }
-    this.clearTimeout();
-    this.abortController.abort();
-  };
-
-  createTimeout = () => {
-    this.timeout = setTimeout(() => {
-      this.abort();
-    }, this.timeoutTimer);
-  };
-
-  clearTimeout = () => {
-    if (this.timeout) {
-      clearTimeout(this.timeout);
-      this.timeout = null;
-    }
-  };
 
   setOnProgressUpdate = (onProgressUpdate) => {
     if (typeof onProgressUpdate !== 'function') {
