@@ -104,14 +104,19 @@ function TransitStopInfo({ stop = {}, onCloseClick, type = null }) {
     fetchStopData(stop)
       .then((stopData) => {
         if (stopData) {
-          let departureTimes = stopData.data.stop.stoptimesWithoutPatterns;
-          departureTimes.sort(
-            (a, b) =>
-              a.realtimeDeparture +
-              a.serviceDay -
-              (b.realtimeDeparture + b.serviceDay)
-          );
-          departureTimes = departureTimes.slice(0, 5);
+          // Copy before sorting: fetchStopData caches and shares this object
+          // across popups within its TTL, so sorting in place would mutate
+          // shared state.
+          const departureTimes = [
+            ...stopData.data.stop.stoptimesWithoutPatterns,
+          ]
+            .sort(
+              (a, b) =>
+                a.realtimeDeparture +
+                a.serviceDay -
+                (b.realtimeDeparture + b.serviceDay)
+            )
+            .slice(0, 5);
 
           setStopData({
             departureTimes,
