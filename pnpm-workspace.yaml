@@ -3,6 +3,9 @@ minimumReleaseAge: 10080
 minimumReleaseAgeExclude:
   - '@remix-run/router@1.23.3'
   - 'react-router@6.30.4'
+  - 'baseline-browser-mapping@2.10.40'
+  - 'caniuse-lite@1.0.30001800'
+  - 'electron-to-chromium@1.5.384'
 
 # Hoist all dependencies to the root of node_modules, for better compatibility with packages that expect flat node_modules
 shamefullyHoist: true
