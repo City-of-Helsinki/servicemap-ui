@@ -2,7 +2,7 @@ import { execSync } from 'child_process'
 
 export const getGitTag = () => {
   try {
-    return execSync('git describe --abbrev=0 --tags', { cwd: '.' })
+    return execSync('git describe --abbrev=0 --tags', { cwd: '.', stdio: 'pipe' })
       .toString()
       .replace(/\r?\n|\r/g, '')
   } catch (error) {
@@ -12,7 +12,7 @@ export const getGitTag = () => {
 
 export const getGitCommit = () => {
   try {
-    return execSync('git rev-parse --short HEAD', { cwd: '.' })
+    return execSync('git rev-parse --short HEAD', { cwd: '.', stdio: 'pipe' })
       .toString()
       .trim()
   } catch (error) {

@@ -1,9 +1,8 @@
-/* eslint-disable global-require */
 import { css } from '@emotion/css';
 import styled from '@emotion/styled';
 import { LocationDisabled, MyLocation } from '@mui/icons-material';
 import { ButtonBase } from '@mui/material';
-import { useTheme } from '@mui/styles';
+import { useTheme } from '@mui/material/styles';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
@@ -62,9 +61,9 @@ import MapUtility from './utils/mapUtility';
 import useMapUnits from './utils/useMapUnits';
 
 if (globalThis.window) {
-  require('leaflet');
-  require('leaflet.markercluster');
-  require('leaflet.heightgraph');
+  await import('leaflet');
+  await import('leaflet.markercluster');
+  await import('leaflet.heightgraph');
   globalThis.rL = ReactLeaflet;
 }
 

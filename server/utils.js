@@ -139,5 +139,4 @@ export const getRequestFullUrl = (req) =>
 export const sitemapActive = () =>
   config.production &&
   process.env.DOMAIN &&
-  process.env.NODE_ENV === 'production' &&
   process.env.SERVER_TYPE === 'production';

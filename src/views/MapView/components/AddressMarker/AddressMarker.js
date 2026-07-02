@@ -1,6 +1,6 @@
 import { css } from '@emotion/css';
 import { Typography } from '@mui/material';
-import { useTheme } from '@mui/styles';
+import { useTheme } from '@mui/material/styles';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
@@ -10,6 +10,9 @@ import { getIcon } from '../../../../components';
 import { selectAddress } from '../../../../redux/selectors/address';
 import { getAddressText } from '../../../../utils/address';
 import useLocaleText from '../../../../utils/useLocaleText';
+
+const { divIcon } =
+  typeof window !== 'undefined' ? (await import('leaflet')).default : {};
 
 function AddressMarker({ embeded = false, position = null }) {
   const getLocaleText = useLocaleText();
@@ -31,8 +34,6 @@ function AddressMarker({ embeded = false, position = null }) {
     outline: 'none',
   });
 
-  // eslint-disable-next-line global-require
-  const { divIcon } = require('leaflet');
   const addressIcon = divIcon({
     className: `${addressIconClass} AddressMarkerIcon`,
     'data-sm': 'AddressMarkerIcon',

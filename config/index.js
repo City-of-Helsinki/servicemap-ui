@@ -1,3 +1,3 @@
-import config from './default';
+import config from './default.js';
 
 export default config;
