@@ -9,6 +9,7 @@ shamefullyHoist: true
 
 overrides:
   '@typescript-eslint/typescript-estree>minimatch': '9.0.7'
+  esbuild: '^0.28.1'
 
 allowBuilds:
   '@sentry/cli': true
