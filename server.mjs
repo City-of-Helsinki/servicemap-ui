@@ -10,7 +10,7 @@ import { fileURLToPath } from 'node:url';
 import * as Sentry from '@sentry/node';
 import compression from 'compression';
 import express from 'express';
-import { rateLimit } from 'express-rate-limit';
+import { ipKeyGenerator, rateLimit } from 'express-rate-limit';
 import schedule from 'node-schedule';
 
 import appConfig from './config/index.js';
@@ -222,6 +222,14 @@ const ssrRateLimit = rateLimit({
   standardHeaders: true,
   legacyHeaders: false,
   skip: () => !isProd,
+  // Some proxy configurations surface req.ip as "IP:port"; strip the trailing
+  // port (and unwrap IPv6-mapped IPv4) before handing to the default keyer,
+  // which otherwise rejects the value as an invalid IP.
+  keyGenerator: (req) => {
+    const raw = req.ip || '';
+    const normalized = raw.replace(/^::ffff:/, '').replace(/:\d+$/, '');
+    return ipKeyGenerator(normalized || 'unknown');
+  },
 });
 
 const createServer = async () => {
