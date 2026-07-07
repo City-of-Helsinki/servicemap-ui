@@ -31,7 +31,6 @@ function AddressMarker({ embeded = false, position = null }) {
     outline: 'none',
   });
 
-  // eslint-disable-next-line global-require
   const { divIcon } = require('leaflet');
   const addressIcon = divIcon({
     className: `${addressIconClass} AddressMarkerIcon`,

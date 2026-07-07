@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 import config from '../../../../config';
 import { isRetina } from '../../../utils';
 

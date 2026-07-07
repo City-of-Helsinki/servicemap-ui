@@ -28,7 +28,6 @@ export const orderUnits = (unitData, sortingParameters) => {
       );
 
       unitResults.forEach((element) => {
-        // eslint-disable-next-line no-param-reassign
         element.shorcomingCount = UnitHelper.getShortcomingCount(
           element,
           selectedAccessibilitySettings

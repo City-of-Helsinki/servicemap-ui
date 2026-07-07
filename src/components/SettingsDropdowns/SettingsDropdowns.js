@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import styled from '@emotion/styled';
 import { Checkbox, ListItem, TextField, Typography } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';

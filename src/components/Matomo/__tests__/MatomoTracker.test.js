@@ -1,4 +1,3 @@
-/* eslint-disable no-underscore-dangle */
 import { TRACK_TYPES } from '../constants';
 import MatomoTracker from '../MatomoTracker';
 
@@ -11,7 +10,6 @@ describe('MatomoTracker', () => {
   });
 
   it('should initialise window._paq', () => {
-    // eslint-disable-next-line no-new
     new MatomoTracker({
       urlBase: MOCK_URL_BASE,
       siteId: 'test123',

@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/no-access-key */
 import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
 import { FormattedMessage } from 'react-intl';
@@ -56,7 +55,7 @@ function ReadSpeakerButton({
         href={
           `//app-eu.readspeaker.com/cgi-bin/rsent?customerid=11515&amp;lang=${locale}` +
           `&amp;readid=${readID}` +
-          (encodedURL ? `&amp;url=${encodedURL}` : '')
+          `${encodedURL ? `&amp;url=${encodedURL}` : ''}`
         }
       >
         <span className="rsbtn_left rsimg rspart">

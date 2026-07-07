@@ -24,7 +24,6 @@ const delay = (ms) =>
 const digitransitFetch = async (body) => {
   let response = null;
   for (let attempt = 0; attempt <= MAX_RETRIES; attempt += 1) {
-    // eslint-disable-next-line no-await-in-loop
     response = await fetch(`${config.digitransitAPI.root}`, {
       method: 'post',
       headers: digitransitApiHeaders(),
@@ -40,13 +39,12 @@ const digitransitFetch = async (body) => {
     }
 
     const backoff = BASE_DELAY * 2 ** attempt + Math.random() * BASE_DELAY;
-    // eslint-disable-next-line no-await-in-loop
+
     await delay(backoff);
   }
   return response;
 };
 
-/* eslint-disable global-require */
 // Fetch list of stops
 const fetchStops = async (map) => {
   const L = require('leaflet');

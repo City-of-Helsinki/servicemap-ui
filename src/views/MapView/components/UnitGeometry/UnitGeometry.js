@@ -58,7 +58,7 @@ function UnitGeometry({ data }) {
       e.originalEvent.preventDefault();
       e.originalEvent.stopPropagation();
       UnitHelper.unitElementClick(navigator, data);
-    } catch (e) {
+    } catch {
       console.warn('Unable to process UnitGeometry Polygon click event');
     }
   };

@@ -1,4 +1,3 @@
-/* eslint-disable import/no-anonymous-default-export */
 /* eslint-disable max-len */
 export default {
   'app.title': 'Servicekarta',

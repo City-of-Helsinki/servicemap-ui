@@ -1,4 +1,3 @@
-/* eslint-disable import/prefer-default-export */
 import featureFlags from '../../config/featureFlags';
 import { isMobileDevice } from '.';
 import { AbortAPIError } from './newFetch/HTTPClient';

@@ -1,4 +1,3 @@
-/* eslint-disable global-require, no-use-before-define */
 import { css } from '@emotion/css';
 import styled from '@emotion/styled';
 import { useTheme } from '@mui/styles';

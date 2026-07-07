@@ -1,5 +1,4 @@
 /* eslint-disable max-len */
-/* eslint-disable import/no-anonymous-default-export */
 export default {
   'app.title': 'Service map',
   'app.description': 'Find services near your home',

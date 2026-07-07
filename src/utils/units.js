@@ -1,6 +1,5 @@
 import { getLocaleString } from './useLocaleText';
 
-// eslint-disable-next-line import/prefer-default-export
 export const unitsSortAlphabetically =
   (locale, reverse = false) =>
   (a, b) => {

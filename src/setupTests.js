@@ -59,8 +59,7 @@ Object.defineProperty(HTMLCanvasElement.prototype, 'getContext', {
 });
 
 Object.defineProperty(HTMLCanvasElement.prototype, 'toDataURL', {
-  // eslint-disable-next-line no-useless-concat
-  value: vi.fn(() => 'data:image/png;base64,' + '00'),
+  value: vi.fn(() => 'data:image/png;base64,00'),
 });
 
 Object.defineProperty(HTMLCanvasElement.prototype, 'toBlob', {

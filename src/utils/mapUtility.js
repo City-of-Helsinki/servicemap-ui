@@ -73,7 +73,7 @@ const swapCoordinates = (coordinates) => [coordinates[1], coordinates[0]];
 const coordinateIsActive = (location) => {
   try {
     return !!getCoordinatesFromUrl(location);
-  } catch (e) {
+  } catch {
     console.warn('Unable to get coordinate from URL.');
   }
   return false;

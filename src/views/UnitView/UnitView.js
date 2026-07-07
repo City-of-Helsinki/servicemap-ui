@@ -1,5 +1,3 @@
-/* eslint-disable react/forbid-prop-types */
-/* eslint-disable no-underscore-dangle */
 import styled from '@emotion/styled';
 import { Hearing, Mail, OpenInFull, Share } from '@mui/icons-material';
 import { Button, Typography } from '@mui/material';

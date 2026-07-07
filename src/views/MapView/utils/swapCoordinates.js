@@ -1,4 +1,3 @@
-/* eslint-disable global-require */
 // This changes list of coordinates from lng-lat to lat-lng
 const swapCoordinates = (data) => {
   // Return early on server side

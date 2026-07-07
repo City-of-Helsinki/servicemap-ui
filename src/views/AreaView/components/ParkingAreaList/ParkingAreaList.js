@@ -193,29 +193,27 @@ function ParkingAreaList({ variant }) {
   })();
   return (
     <StyledListLevelThree data-sm="ParkingList" disablePadding>
-      {Object.entries(areaDataInfoMap).map(([key, area]) => {
-        return (
-          <Fragment key={key}>
-            <StyledAreaListItem key={key} divider className={key}>
-              <StyledFormControlLabel
-                control={
-                  <Checkbox
-                    color="primary"
-                    icon={<StyledCheckBoxIcon />}
-                    checked={selectedParkingAreaIds.includes(key)}
-                    onChange={() => handleParkingCheckboxChange(key)}
-                  />
-                }
-                label={
-                  <Typography id={`${key}Name`} aria-hidden>
-                    {renderAreaName(area)}
-                  </Typography>
-                }
-              />
-            </StyledAreaListItem>
-          </Fragment>
-        );
-      })}
+      {Object.entries(areaDataInfoMap).map(([key, area]) => (
+        <Fragment key={key}>
+          <StyledAreaListItem key={key} divider className={key}>
+            <StyledFormControlLabel
+              control={
+                <Checkbox
+                  color="primary"
+                  icon={<StyledCheckBoxIcon />}
+                  checked={selectedParkingAreaIds.includes(key)}
+                  onChange={() => handleParkingCheckboxChange(key)}
+                />
+              }
+              label={
+                <Typography id={`${key}Name`} aria-hidden>
+                  {renderAreaName(area)}
+                </Typography>
+              }
+            />
+          </StyledAreaListItem>
+        </Fragment>
+      ))}
 
       {renderedParkingCategoryIds.map((parkingCategoryId) => (
         <Fragment key={parkingCategoryId}>

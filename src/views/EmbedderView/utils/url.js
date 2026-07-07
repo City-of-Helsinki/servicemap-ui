@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 import URI from 'urijs';
 
 import embedderConfig from '../embedderConfig';
@@ -34,11 +33,11 @@ export const strip = (url) => {
   const uri = URI(url);
   const parameters = explode(url);
   const query = uri.search(true);
-  if (query.p != null) {
+  if (query.p !== undefined) {
     delete query.p;
   }
-  if (parameters.resource != null) {
-    if (query.bbox != null) {
+  if (parameters.resource !== undefined) {
+    if (query.bbox !== undefined) {
       delete query.bbox;
     }
   }

@@ -3,7 +3,7 @@ import { reservations } from './fetchDataActions';
 
 const { isFetching, fetchSuccess, fetchError } = reservations;
 
-export const fetchReservations = (id) => async (dispatch, getState) => {
+export const fetchReservations = (id) => async (dispatch) => {
   const onStart = () => {
     dispatch(isFetching(id));
   };

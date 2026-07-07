@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 import { Event } from '@mui/icons-material';
 import { NoSsr } from '@mui/material';
 import PropTypes from 'prop-types';

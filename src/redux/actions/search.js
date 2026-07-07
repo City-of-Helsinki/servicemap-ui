@@ -25,7 +25,7 @@ const smFetch = (dispatch, options) => {
     // General text search
     const { q, ...additionalOptions } = options;
     smAPI.setOnProgressUpdate(onProgressUpdateConcurrent);
-    results = smAPI.search(options.q, additionalOptions);
+    results = smAPI.search(q, additionalOptions);
   } else if (options.service_id) {
     // Service fetch
     const { service_id, ...additionalOptions } = options;

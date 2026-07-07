@@ -1,4 +1,3 @@
-/* eslint-disable no-underscore-dangle */
 import styled from '@emotion/styled';
 import { Close } from '@mui/icons-material';
 import { Button } from '@mui/material';

@@ -133,8 +133,6 @@ const handleFetch = async (
     })
     // Success handling
     .then(async (res) => {
-      // eslint-disable-next-line no-param-reassign
-      abortController = null;
       if (onSuccess) {
         return onSuccess(res); // Success callback
       }
@@ -150,8 +148,7 @@ const handleFetch = async (
           `Error while fetching data from ${url}${optionsAsString} - Message: ${err.message}`
         );
       }
-      // eslint-disable-next-line no-param-reassign
-      abortController = null;
+
       if (onError) {
         onError(err); // Error callback
       }

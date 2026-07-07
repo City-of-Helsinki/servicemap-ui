@@ -1,4 +1,3 @@
-/* eslint-disable no-underscore-dangle */
 import { css } from '@emotion/css';
 import styled from '@emotion/styled';
 import { Typography } from '@mui/material';

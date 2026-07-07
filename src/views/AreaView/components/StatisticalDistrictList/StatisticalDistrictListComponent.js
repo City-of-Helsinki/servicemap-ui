@@ -221,20 +221,16 @@ function StatisticalDistrictListComponent() {
     );
   };
 
-  return (
-    <>
-      {isFetchingDistricts ? (
-        <StyledLoadingContainer>
-          <Loading
-            reducer={{
-              isFetching: isFetchingDistricts,
-            }}
-          />
-        </StyledLoadingContainer>
-      ) : (
-        renderLayerCategories()
-      )}
-    </>
+  return isFetchingDistricts ? (
+    <StyledLoadingContainer>
+      <Loading
+        reducer={{
+          isFetching: isFetchingDistricts,
+        }}
+      />
+    </StyledLoadingContainer>
+  ) : (
+    renderLayerCategories()
   );
 }
 

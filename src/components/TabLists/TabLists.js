@@ -1,5 +1,3 @@
-/* eslint-disable react/forbid-prop-types */
-/* eslint-disable react/no-multi-comp */
 import { css } from '@emotion/css';
 import styled from '@emotion/styled';
 import { Tab, Tabs, Typography } from '@mui/material';
@@ -215,7 +213,7 @@ function TabLists({
     let disabled;
     try {
       disabled = filteredData[tabIndex].noOrderer;
-    } catch (e) {
+    } catch {
       disabled = true;
     }
 

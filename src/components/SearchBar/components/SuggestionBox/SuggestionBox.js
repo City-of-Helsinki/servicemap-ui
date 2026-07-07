@@ -128,7 +128,7 @@ function SuggestionBox(props) {
           }
           setLoading(false);
         })
-        .catch((e) => {
+        .catch(() => {
           // Do nothing
         });
     } else {

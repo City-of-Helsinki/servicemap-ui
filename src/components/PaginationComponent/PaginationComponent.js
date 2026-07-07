@@ -1,4 +1,3 @@
-/* eslint-disable no-underscore-dangle */
 import styled from '@emotion/styled';
 import { ArrowForwardIos } from '@mui/icons-material';
 import PropTypes from 'prop-types';

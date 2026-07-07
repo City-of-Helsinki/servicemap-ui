@@ -1,4 +1,3 @@
-/* eslint-disable react/forbid-prop-types */
 import styled from '@emotion/styled';
 import {
   BusinessCenter,

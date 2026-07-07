@@ -1,4 +1,3 @@
-/* eslint-disable global-require */
 import { css } from '@emotion/css';
 import styled from '@emotion/styled';
 import { LocationDisabled, MyLocation } from '@mui/icons-material';

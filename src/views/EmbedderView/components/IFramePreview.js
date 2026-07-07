@@ -57,17 +57,21 @@ function IFramePreview({
     widthUnit = width !== '100%' ? 'px' : '';
   }
 
+  let heightStyle;
+  if (hasContainer) {
+    heightStyle = '100%';
+  } else if (bottomList) {
+    heightStyle = `max(${height}px, ${minHeightWithBottomList})`;
+  } else {
+    heightStyle = `${height}px`;
+  }
   const styles = {
     position: hasContainer ? 'absolute' : null,
     top: hasContainer ? 0 : null,
     left: hasContainer ? 0 : null,
     // border: 'none',
     width: hasContainer ? '100%' : `${width}${widthUnit}`,
-    height: hasContainer
-      ? '100%'
-      : bottomList
-        ? `max(${height}px, ${minHeightWithBottomList})`
-        : `${height}px`,
+    height: heightStyle,
   };
   const element = hasContainer ? (
     <div style={wrapperStyleObject()}>

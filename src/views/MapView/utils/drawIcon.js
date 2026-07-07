@@ -134,7 +134,7 @@ export const drawMarkerIcon = (
     return null;
   }
 
-  const L = require('leaflet'); // eslint-disable-line global-require
+  const L = require('leaflet');
 
   let icon;
   let iconSize = [30, 30];
@@ -167,7 +167,7 @@ export const drawEntranceMarkerIcon = (contrast = false, className = '') => {
     return null;
   }
 
-  const L = require('leaflet'); // eslint-disable-line global-require
+  const L = require('leaflet');
 
   // Generate marker icon
   const markerIcon = L.icon({
