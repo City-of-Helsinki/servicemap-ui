@@ -13,6 +13,7 @@ shamefullyHoist: true
 overrides:
   '@typescript-eslint/typescript-estree>minimatch': '9.0.7'
   esbuild: '^0.28.1'
+  '@opentelemetry/core@^2': '^2.8.0'
 
 allowBuilds:
   '@sentry/cli': true
