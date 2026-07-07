@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 import { useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 import URI from 'urijs';
@@ -33,7 +32,7 @@ export const parseSearchParams = (searchParams) => {
       const key = decodeURIComponent(keyValuePair[0]);
       const value = decodeURIComponent(keyValuePair[1]);
       searchParamsObject[key] = key === 'q' ? value.replace('+', ' ') : value;
-    } catch (e) {
+    } catch {
       console.warn('Failed to decode URI component');
     }
   });
@@ -119,7 +118,7 @@ export function AddEventListener(elem, event, handler) {
     return () => {
       elem.removeEventListener(event, handler);
     };
-  } catch (e) {
+  } catch {
     return null;
   }
 }
@@ -152,7 +151,7 @@ export const alphabeticCompare = (a, b) => {
 
 export const arraysEqual = (a, b) => {
   if (a === b) return true;
-  if (a == null || b == null) return false;
+  if (!a || !b) return false;
   if (a.length !== b.length) return false;
 
   for (let i = 0; i < a.length; i += 1) {

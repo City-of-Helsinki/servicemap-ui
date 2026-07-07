@@ -33,7 +33,7 @@ const ViewTitle = ({ initialLoad, messageId, actionSetInitialLoad }) => {
         let shouldFocus = true;
         try {
           shouldFocus = !document.getElementById(COOKIE_MODAL_ROOT_ID);
-        } catch (e) {
+        } catch {
           console.warn(
             'Error while attempting to figure out if cookie modal exists'
           );

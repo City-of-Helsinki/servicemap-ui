@@ -1,4 +1,3 @@
-/* eslint-disable react/forbid-prop-types */
 import styled from '@emotion/styled';
 import { Search } from '@mui/icons-material';
 import { List, Typography } from '@mui/material';

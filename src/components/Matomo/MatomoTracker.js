@@ -1,4 +1,3 @@
-/* eslint-disable no-underscore-dangle */
 import { TRACK_TYPES } from './constants';
 
 class MatomoTracker {

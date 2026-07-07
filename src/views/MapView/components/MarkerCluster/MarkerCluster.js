@@ -409,7 +409,7 @@ function MarkerCluster({
   // Function for creating custom icon for cluster group
   // https://github.com/Leaflet/Leaflet.markercluster#customising-the-clustered-markers
   // NOTE: iconCreateFunction is running by leaflet, which is not support ES6 arrow func syntax
-  // eslint-disable-next-line
+
   const createClusterCustomIcon = function (cluster) {
     const cCount = cluster.getChildCount();
     const iconSize = getClusterIconSize(cCount);

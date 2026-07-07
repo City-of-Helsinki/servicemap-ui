@@ -21,7 +21,6 @@ function BoldedText({ text, shouldBeBold = null }) {
       {textArray.map((item, index) => {
         i += 1;
         return (
-          // eslint-disable-next-line react/no-array-index-key
           <React.Fragment key={`${item}-${i}`}>
             {index === 0 ? uppercaseFirst(item) : item}
             {index !== textArray.length - 1 && (

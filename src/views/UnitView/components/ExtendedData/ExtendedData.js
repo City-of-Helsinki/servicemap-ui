@@ -49,7 +49,7 @@ function ExtendedData({
     const title = document.getElementsByClassName('ExtendedData-title')[0];
     try {
       title.firstChild.focus();
-    } catch (e) {
+    } catch {
       console.error('ExtendedData component: Unable to focus to title button');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

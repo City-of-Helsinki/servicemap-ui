@@ -1,4 +1,3 @@
-/* eslint-disable react/no-multi-comp */
 import { Typography } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
 import PropTypes from 'prop-types';
@@ -70,7 +69,7 @@ function PaginatedList({
       if (focusTarget.current) {
         focusTarget.current.focus();
       }
-    } catch (e) {
+    } catch {
       console.error('Unable to focus on list title');
     }
   }, [currentPage]);

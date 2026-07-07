@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 import styled from '@emotion/styled';
 import {
   Divider,
@@ -29,7 +28,6 @@ function ResultItem({
   role = 'link',
   srLabel = null,
   selected = false,
-  padded = false,
   extendedClasses = null,
   unitId = null,
   simpleItem = false,
@@ -337,6 +335,5 @@ ResultItem.propTypes = {
   srLabel: PropTypes.string,
   selected: PropTypes.bool,
   unitId: PropTypes.number,
-  padded: PropTypes.bool,
   simpleItem: PropTypes.bool,
 };

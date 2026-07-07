@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 import styled from '@emotion/styled';
 import { Divider, List, Typography } from '@mui/material';
 import PropTypes from 'prop-types';

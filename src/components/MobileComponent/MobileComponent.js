@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-import React from 'react';
 
 import useMobileStatus from '../../utils/isMobile';
 
@@ -7,7 +6,7 @@ import useMobileStatus from '../../utils/isMobile';
 function MobileComponent({ children = null }) {
   const isMobile = useMobileStatus();
   if (isMobile && children) {
-    return <>{children}</>;
+    return children;
   }
   return null;
 }

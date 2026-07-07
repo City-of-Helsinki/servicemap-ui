@@ -129,7 +129,6 @@ function DefaultLayout() {
       dispatch(fetchErrors());
       dispatch(fetchNews());
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch]);
 
   /*
@@ -242,12 +241,7 @@ function DefaultLayout() {
       {!error && (
         <ErrorBoundary>
           <div id="topArea" aria-hidden={false} className={printClass}>
-            <h1
-              id="app-title"
-              tabIndex={-1}
-              className="sr-only app-title"
-              component="h1"
-            >
+            <h1 id="app-title" tabIndex={-1} className="sr-only app-title">
               <FormattedMessage id="app.title" />
             </h1>
             {/* Jump link to main content for screenreaders

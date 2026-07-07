@@ -208,10 +208,9 @@ function ParkingAreas() {
       });
     }
     if (type === 'hgv_street_parking_area' || type === 'hgv_parking_area') {
-      return (
-        `${area.extra?.area_key ?? ''}${getLocaleText(area.name)} - ` +
-        intl.formatMessage({ id: 'area.list.heavy_traffic' })
-      );
+      return `${area.extra?.area_key ?? ''}${getLocaleText(area.name)} - ${intl.formatMessage(
+        { id: 'area.list.heavy_traffic' }
+      )}`;
     }
     if (area.name) {
       if (area.municipality === 'helsinki') {

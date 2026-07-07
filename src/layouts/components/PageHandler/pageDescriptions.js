@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 const getPageDescriptions = (
   page,
   unit,

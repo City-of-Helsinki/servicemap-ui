@@ -1,6 +1,5 @@
 import styled from '@emotion/styled';
 import { Chip, Container, NoSsr, Typography } from '@mui/material';
-import PropTypes from 'prop-types';
 import React from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,7 +10,7 @@ import SettingsDropdowns from '../SettingsDropdowns';
 import SMAccordion from '../SMAccordion';
 import constants from './constants';
 
-function SettingsComponent({ variant = null }) {
+function SettingsComponent() {
   const intl = useIntl();
   const dispatch = useDispatch();
   const settings = useSelector(selectSettings);
@@ -110,9 +109,5 @@ const StyledChipContainer = styled('div')(({ theme }) => ({
   paddingBottom: theme.spacing(1),
   order: 2,
 }));
-
-SettingsComponent.propTypes = {
-  variant: PropTypes.string,
-};
 
 export default SettingsComponent;

@@ -1,4 +1,3 @@
-/* eslint-disable react/forbid-prop-types */
 import styled from '@emotion/styled';
 import { ButtonBase, Divider, ListItem, Typography } from '@mui/material';
 import PropTypes from 'prop-types';

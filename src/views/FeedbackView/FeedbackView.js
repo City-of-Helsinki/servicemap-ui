@@ -271,12 +271,8 @@ function FeedbackView({ navigator = null, intl, selectedUnit = null }) {
       <DesktopComponent>
         <ClientOnlyRouterPrompt
           when={!!(!modalOpen && (email || feedback || permission))}
-          onOK={() => {
-            return true;
-          }}
-          onCancel={() => {
-            return false;
-          }}
+          onOK={() => true}
+          onCancel={() => false}
           title={intl.formatMessage({ id: 'feedback.modal.leave' })}
           content={intl.formatMessage({ id: 'feedback.modal.leave' })}
         />

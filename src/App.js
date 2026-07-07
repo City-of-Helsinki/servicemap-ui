@@ -1,5 +1,3 @@
-/* eslint-disable react/jsx-props-no-spreading */
-/* eslint-disable react/forbid-prop-types */
 import '@formatjs/intl-pluralrules/dist/locale-data/en';
 import '@formatjs/intl-pluralrules/dist/locale-data/fi';
 import '@formatjs/intl-pluralrules/dist/locale-data/sv';

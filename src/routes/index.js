@@ -209,109 +209,105 @@ function Area() {
   );
 }
 
-export const EmbedRoutes = () => {
-  return (
-    <Routes>
-      <Route
-        path="unit/:unit"
-        element={
-          <>
-            <PageHandler embed page="unit" />
-            <UnitView embed />
-          </>
-        }
-      />
-      <Route
-        path="event/:event"
-        element={
-          <>
-            <PageHandler embed page="event" />
-            <EventDetailView embed />
-          </>
-        }
-      />
-      <Route
-        path="search"
-        element={
-          <>
-            <PageHandler embed page="search" />
-            <SearchView embed />
-          </>
-        }
-      />
-      <Route
-        path="service/:service"
-        element={
-          <>
-            <PageHandler embed page="service" />
-            <ServiceView embed />
-          </>
-        }
-      />
-      <Route
-        path="address/:municipality/:street"
-        element={
-          <>
-            <PageHandler embed page="address" />
-            <AddressView embed />
-          </>
-        }
-      />
-      <Route
-        path="division/:city?/:area?"
-        element={
-          <>
-            <PageHandler embed page="division" />
-            <DivisionView />
-          </>
-        }
-      />
-      <Route
-        path="area"
-        element={
-          <>
-            <PageHandler embed page="area" />
-            <AreaView embed />
-          </>
-        }
-      />
-    </Routes>
-  );
-};
+export const EmbedRoutes = () => (
+  <Routes>
+    <Route
+      path="unit/:unit"
+      element={
+        <>
+          <PageHandler embed page="unit" />
+          <UnitView embed />
+        </>
+      }
+    />
+    <Route
+      path="event/:event"
+      element={
+        <>
+          <PageHandler embed page="event" />
+          <EventDetailView embed />
+        </>
+      }
+    />
+    <Route
+      path="search"
+      element={
+        <>
+          <PageHandler embed page="search" />
+          <SearchView embed />
+        </>
+      }
+    />
+    <Route
+      path="service/:service"
+      element={
+        <>
+          <PageHandler embed page="service" />
+          <ServiceView embed />
+        </>
+      }
+    />
+    <Route
+      path="address/:municipality/:street"
+      element={
+        <>
+          <PageHandler embed page="address" />
+          <AddressView embed />
+        </>
+      }
+    />
+    <Route
+      path="division/:city?/:area?"
+      element={
+        <>
+          <PageHandler embed page="division" />
+          <DivisionView />
+        </>
+      }
+    />
+    <Route
+      path="area"
+      element={
+        <>
+          <PageHandler embed page="area" />
+          <AreaView embed />
+        </>
+      }
+    />
+  </Routes>
+);
 
-export const DefaultRoutes = () => {
-  return (
-    <Routes>
-      <Route path="unit/:unit/feedback" element={<UnitFeedback />} />
-      <Route path="unit/:unit/events" element={<UnitEvents />} />
-      <Route path="unit/:unit/reservations" element={<UnitReservations />} />
-      <Route path="unit/:unit/services" element={<UnitServices />} />
-      <Route
-        path="unit/:unit/educationServices/:period?"
-        element={<UnitEducationServices />}
-      />
-      <Route path="unit/:unit" element={<Unit />} />
-      <Route path="search" element={<Search />} />
-      <Route path="services" element={<ServiceTree />} />
-      <Route path="mobility" element={<MobilityTree />} />
-      <Route path="service/:service" element={<Service />} />
-      <Route path="event/:event" element={<Event />} />
-      <Route path="address/:municipality/:street" element={<Address />} />
-      <Route path="feedback" element={<Feedback />} />
-      <Route path="area" element={<Area />} />
-      <Route
-        path="division/:city?/:area?"
-        render={() => (
-          <>
-            <PageHandler page="division" />
-            <DivisionView />
-            <HomeView />
-          </>
-        )}
-      />
-      <Route path="info/:page?" element={<Info />} />
-      <Route path="" element={<Home />} />
-      <Route path="*" element={<ErrorTrigger error="badUrl" />} />
-    </Routes>
-  );
-};
+export const DefaultRoutes = () => (
+  <Routes>
+    <Route path="unit/:unit/feedback" element={<UnitFeedback />} />
+    <Route path="unit/:unit/events" element={<UnitEvents />} />
+    <Route path="unit/:unit/reservations" element={<UnitReservations />} />
+    <Route path="unit/:unit/services" element={<UnitServices />} />
+    <Route
+      path="unit/:unit/educationServices/:period?"
+      element={<UnitEducationServices />}
+    />
+    <Route path="unit/:unit" element={<Unit />} />
+    <Route path="search" element={<Search />} />
+    <Route path="services" element={<ServiceTree />} />
+    <Route path="mobility" element={<MobilityTree />} />
+    <Route path="service/:service" element={<Service />} />
+    <Route path="event/:event" element={<Event />} />
+    <Route path="address/:municipality/:street" element={<Address />} />
+    <Route path="feedback" element={<Feedback />} />
+    <Route path="area" element={<Area />} />
+    <Route
+      path="division/:city?/:area?"
+      render={() => (
+        <>
+          <PageHandler page="division" />
+          <DivisionView />
+          <HomeView />
+        </>
+      )}
+    />
+    <Route path="info/:page?" element={<Info />} />
+    <Route path="" element={<Home />} />
+    <Route path="*" element={<ErrorTrigger error="badUrl" />} />
+  </Routes>
+);

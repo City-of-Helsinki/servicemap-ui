@@ -14,7 +14,7 @@ class LocalStorageUtility {
       if (!this.storage) {
         this.storage = window.localStorage;
       }
-    } catch (e) {
+    } catch {
       // Error while setting storage
       // Can be caused by blocked cookies
       this.storage = null;

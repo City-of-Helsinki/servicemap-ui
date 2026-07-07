@@ -333,7 +333,7 @@ export default class HttpClient {
         );
       }
       // Batches run sequentially on purpose to cap concurrent requests.
-      // eslint-disable-next-line no-await-in-loop
+
       const batchData = await Promise.all(batchPromises);
       results.push(...batchData.flat());
       if (this.onProgressUpdate) {

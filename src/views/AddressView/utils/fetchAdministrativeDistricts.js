@@ -20,8 +20,6 @@ const SORTED_DIVISIONS = [
   'preschool_education_sv',
 ];
 
-/* eslint-disable global-require */
-
 const fetchAdministrativeDistricts = async (lnglat) => {
   const districts = [
     'postcode_area',

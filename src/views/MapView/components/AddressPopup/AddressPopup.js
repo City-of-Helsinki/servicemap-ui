@@ -83,7 +83,7 @@ function AddressPopup({ navigator }) {
         if (map) {
           setMapClickPoint(null);
         }
-      } catch (e) {
+      } catch {
         console.warn('Unable to close AddressPopup on coordinate selection');
       }
     }

@@ -1,4 +1,3 @@
-/* eslint-disable prefer-destructuring */
 import { useCallback } from 'react';
 
 import { uppercaseFirst } from '.';

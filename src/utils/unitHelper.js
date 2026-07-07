@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 import config from '../../config';
 import paths from '../../config/paths';
 import { drawUnitIcon } from '../views/MapView/utils/drawIcon';
@@ -49,7 +48,7 @@ class UnitHelper {
     if (!unit || !selectedShortcomings?.length) {
       return 0;
     }
-    // eslint-disable-next-line camelcase
+
     const shortcomings = unit.accessibility_shortcoming_count;
     // Check if unit has shortcoming info
     if (!shortcomings) {
@@ -124,7 +123,7 @@ class UnitHelper {
   };
 
   static unitElementClick = (navigator, unit) => {
-    if (!global.window) {
+    if (typeof window === 'undefined') {
       throw Error("Can't run unitElementClick without window");
     }
     if (!navigator || !navigator.push || !navigator.replace) {

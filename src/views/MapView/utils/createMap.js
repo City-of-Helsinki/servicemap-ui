@@ -1,4 +1,3 @@
-/* eslint-disable global-require */
 import config from '../../../../config';
 import SettingsUtility from '../../../utils/settings';
 import { getMapOptions } from '../config/mapConfig';

@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 import { parseSearchParams } from '../../utils';
 
 export const reverseBBoxCoordinates = (bbox) => {

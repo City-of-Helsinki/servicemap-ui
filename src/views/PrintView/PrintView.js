@@ -1,4 +1,3 @@
-/* eslint-disable no-underscore-dangle */
 import styled from '@emotion/styled';
 import {
   Paper,
@@ -242,8 +241,7 @@ function PrintView({ togglePrintView }) {
 
         let coordinates;
         if (unitPageUnit) {
-          // eslint-disable-next-line prefer-destructuring
-          coordinates = unitPageUnit.location.coordinates;
+          ({ coordinates } = unitPageUnit.location);
         }
 
         vid += 1;

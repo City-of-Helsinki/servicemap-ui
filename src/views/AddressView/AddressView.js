@@ -1,9 +1,7 @@
-/* eslint-disable global-require */
 import styled from '@emotion/styled';
 import { Map } from '@mui/icons-material';
 import { ButtonBase, Divider, List, Typography } from '@mui/material';
 import PropTypes from 'prop-types';
-/* eslint-disable camelcase */
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { FormattedMessage, useIntl } from 'react-intl';

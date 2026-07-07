@@ -1,4 +1,3 @@
-/* eslint-disable react/no-array-index-key */
 import { css } from '@emotion/css';
 import styled from '@emotion/styled';
 import { Close } from '@mui/icons-material';
@@ -144,15 +143,16 @@ function TransitStopInfo({ stop = {}, onCloseClick, type = null }) {
     );
 
     if (stopData.departureTimes?.length) {
-      return stopData.departureTimes.map((departure, index) => {
+      return stopData.departureTimes.map((departure) => {
         const time = new Date(
           (departure.realtimeDeparture + departure.serviceDay) * 1000
         );
         const hours = time.getHours();
         const minutes = time.getMinutes();
+        const key = `${departure.trip.route.shortName}-${departure.serviceDay}-${departure.realtimeDeparture}`;
 
         return (
-          <DepartureItemContainer key={index}>
+          <DepartureItemContainer key={key}>
             <StyledDeparturetime>
               {/* This adds 0 before single digit times */}
               {`${hours < 10 ? `0${hours}` : hours}:${minutes < 10 ? `0${minutes}` : minutes}`}

@@ -16,7 +16,7 @@ export const fetchServiceUnits =
     try {
       // TODO organizations should have similar handling here
       let municipality;
-      if (global.window) {
+      if (typeof window !== 'undefined') {
         const search = new URLSearchParams(window.location.search);
         municipality = search.get('municipality') || search.get('city');
       }

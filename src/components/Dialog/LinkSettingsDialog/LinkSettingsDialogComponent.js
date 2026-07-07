@@ -39,12 +39,7 @@ CopyTooltip.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-function LinkSettingsDialogComponent({
-  activateSetting,
-  resetAccessibilitySettings,
-  setOpen,
-  ...rest
-}) {
+function LinkSettingsDialogComponent({ setOpen, ...rest }) {
   const intl = useIntl();
   const getLocaleText = useLocaleText();
   const unit = useSelector(getSelectedUnit);
@@ -255,8 +250,6 @@ const StyledShareButton = styled(ButtonBase)(({ theme }) => ({
 }));
 
 LinkSettingsDialogComponent.propTypes = {
-  activateSetting: PropTypes.func.isRequired,
-  resetAccessibilitySettings: PropTypes.func.isRequired,
   setOpen: PropTypes.func.isRequired,
 };
 

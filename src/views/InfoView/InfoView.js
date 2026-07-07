@@ -1,5 +1,3 @@
-/* eslint-disable max-len */
-
 import styled from '@emotion/styled';
 import { ButtonBase, NoSsr, Typography } from '@mui/material';
 import PropTypes from 'prop-types';

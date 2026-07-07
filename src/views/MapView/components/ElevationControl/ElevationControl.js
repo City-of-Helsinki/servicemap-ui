@@ -71,7 +71,7 @@ function ElevationControl({ unit, isMobile }) {
     const onRoute = (event) => {
       control.mapMousemoveHandler(event, { showMapMarker: true });
     };
-    const outRoute = (event) => {
+    const outRoute = () => {
       control.mapMouseoutHandler(2000);
     };
 
@@ -161,7 +161,7 @@ function ElevationControl({ unit, isMobile }) {
       prevButton,
       'mousedown dblclick',
       L.DomEvent.stopPropagation
-    ).on(prevButton, 'click', (event) => {
+    ).on(prevButton, 'click', () => {
       if (geometryIndex > 0) {
         setGeometryIndex(geometryIndex - 1);
       }
@@ -171,7 +171,7 @@ function ElevationControl({ unit, isMobile }) {
       nextButton,
       'mousedown dblclick',
       L.DomEvent.stopPropagation
-    ).on(nextButton, 'click', (event) => {
+    ).on(nextButton, 'click', () => {
       if (
         unit?.geometry_3d &&
         geometryIndex < unit?.geometry_3d?.coordinates?.length - 1

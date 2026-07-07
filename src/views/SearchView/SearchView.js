@@ -1,5 +1,3 @@
-/* eslint-disable camelcase */
-
 import styled from '@emotion/styled';
 import { Divider, Link, NoSsr, Paper, Typography } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
@@ -41,7 +39,6 @@ import {
   selectSearchResults,
 } from '../../redux/selectors/results';
 import {
-  // eslint-disable-next-line max-len
   selectMapType,
   selectSelectedAccessibilitySettings,
   selectSelectedCities,
@@ -124,7 +121,7 @@ function SearchView() {
     try {
       const search = Object.keys(data).map((key) => `${key}:${data[key]}`);
       return search.join(',');
-    } catch (e) {
+    } catch {
       return '';
     }
   };
