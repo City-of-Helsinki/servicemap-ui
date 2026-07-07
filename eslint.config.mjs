@@ -34,7 +34,7 @@ export default [
     rules: {
       ...js.configs.recommended.rules,
       ...reactPlugin.configs.flat.recommended.rules,
-      ...reactHooksPlugin.configs['recommended-latest'].rules,
+      ...reactHooksPlugin.configs.flat['recommended-latest'].rules,
       ...jsxA11yPlugin.flatConfigs.recommended.rules,
       ...importXPlugin.flatConfigs.recommended.rules,
       // Preserved overrides from .eslintrc.json
@@ -53,6 +53,13 @@ export default [
       'import-x/named': 'off',
       'simple-import-sort/imports': 'error',
       'simple-import-sort/exports': 'error',
+      // eslint-plugin-react-hooks v7 recommended-latest adds rules that
+      // require a wider codebase pass. Disable here to keep the plugin
+      // bump scoped; adopt them in follow-up work.
+      'react-hooks/set-state-in-effect': 'off',
+      'react-hooks/refs': 'off',
+      'react-hooks/immutability': 'off',
+      'react-hooks/error-boundaries': 'off',
     },
   },
 
