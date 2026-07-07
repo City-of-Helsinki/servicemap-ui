@@ -19,7 +19,7 @@ const redirectables = [
         const pathName = pathArray.join('/');
 
         return `${pathName}${queryString ? `?${queryString}` : ''}`;
-      } catch (e) {
+      } catch {
         return null;
       }
     },
