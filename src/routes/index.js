@@ -298,13 +298,13 @@ export const DefaultRoutes = () => (
     <Route path="area" element={<Area />} />
     <Route
       path="division/:city?/:area?"
-      render={() => (
+      element={
         <>
           <PageHandler page="division" />
           <DivisionView />
           <HomeView />
         </>
-      )}
+      }
     />
     <Route path="info/:page?" element={<Info />} />
     <Route path="" element={<Home />} />

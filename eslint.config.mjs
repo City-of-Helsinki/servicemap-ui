@@ -10,19 +10,15 @@ import simpleImportSort from 'eslint-plugin-simple-import-sort';
 export default [
   { ignores: ['build/', 'dist/', 'node_modules/', 'coverage/'] },
 
-  // src JS/JSX
+  // Shared plugins/rules for src + server
   {
-    files: ['src/**/*.{js,jsx}'],
+    files: ['src/**/*.{js,jsx}', 'server/**/*.js'],
     languageOptions: {
       parser: tsParser,
       ecmaVersion: 'latest',
       sourceType: 'module',
       parserOptions: {
         ecmaFeatures: { jsx: true },
-      },
-      globals: {
-        ...globals.browser,
-        globalThis: 'readonly',
       },
     },
     settings: {
@@ -60,24 +56,26 @@ export default [
     },
   },
 
+  // src — browser globals
+  {
+    files: ['src/**/*.{js,jsx}'],
+    languageOptions: {
+      globals: {
+        ...globals.browser,
+        globalThis: 'readonly',
+      },
+    },
+  },
+
   // server — Node.js globals + build-time injected constants
   {
     files: ['server/**/*.js'],
     languageOptions: {
-      parser: tsParser,
-      ecmaVersion: 'latest',
-      sourceType: 'module',
-      parserOptions: {
-        ecmaFeatures: { jsx: true },
-      },
       globals: {
         ...globals.node,
         GIT_TAG: 'readonly',
         GIT_COMMIT: 'readonly',
       },
-    },
-    settings: {
-      react: { version: '19.0.0' },
     },
   },
 

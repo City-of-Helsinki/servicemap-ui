@@ -136,7 +136,7 @@ app.use('/', (req, res, next) => {
 app.use(paths.event.regex, fetchEventData);
 app.use(paths.unit.regex, fetchSelectedUnitData);
 
-app.get('/*', (req, res, next) => {
+app.get('/*', (req, res) => {
   const [nonce, cspHeaders] = generateCSPHeaders();
   const cache = createEmotionCache(nonce);
   const { extractCriticalToChunks, constructStyleTagsFromChunks } =

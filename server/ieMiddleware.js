@@ -155,6 +155,7 @@ function IETemplate() {
 class WrappedTemplate extends React.Component {
   // Remove the server-side injected CSS.
   componentDidMount() {
+    // eslint-disable-next-line no-undef
     const jssStyles = document.getElementById('jss-server-side');
     if (jssStyles && jssStyles.parentNode) {
       jssStyles.parentNode.removeChild(jssStyles);
