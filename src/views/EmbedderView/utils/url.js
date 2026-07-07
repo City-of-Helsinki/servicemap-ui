@@ -36,7 +36,7 @@ export const strip = (url) => {
   if (query.p !== undefined) {
     delete query.p;
   }
-  if (parameters.resource !== undefined) {
+  if (parameters.resource != null) {
     if (query.bbox !== undefined) {
       delete query.bbox;
     }
