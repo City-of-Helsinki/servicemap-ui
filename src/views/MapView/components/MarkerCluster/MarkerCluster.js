@@ -700,6 +700,7 @@ function MarkerCluster({
             }
           };
           markerElem.on('popupopen', (e) =>
+            // eslint-disable-next-line @eslint-react/web-api-no-leaked-event-listener
             e.popup.getElement().addEventListener('click', popupClickHandler)
           );
           markerElem.on('popupclose', (e) =>
