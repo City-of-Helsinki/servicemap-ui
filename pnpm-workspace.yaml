@@ -18,6 +18,11 @@ overrides:
   'brace-expansion@^2': '^5.0.6'
   'qs@~6.14.0': '^6.15.2'
 
+# Allow plugins that lag on peer ranges to load under ESLint 10.
+peerDependencyRules:
+  allowedVersions:
+    eslint: '10'
+
 allowBuilds:
   '@sentry/cli': true
   core-js: false

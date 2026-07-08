@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import { Divider, NoSsr, Typography } from '@mui/material';
+import DOMPurify from 'dompurify'
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -24,7 +25,8 @@ function DescriptionText({ description, html = false, title, titleComponent }) {
             </StyledTypographyParagraph>
           ) : (
             <StyledTypographyParagraph
-              dangerouslySetInnerHTML={{ __html: hideBRFromSR(description) }}
+              // eslint-disable-next-line @eslint-react/dom-no-dangerously-set-innerhtml
+              dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(hideBRFromSR(description)) }}
               variant="body2"
             />
           )}

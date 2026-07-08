@@ -15,6 +15,7 @@ export function CloseSuggestionButton({
 }) {
   const tabIndex = srOnly ? '-1' : '0';
 
+  // eslint-disable-next-line @eslint-react/error-boundaries
   try {
     if (srOnly) {
       if (!onKeyPress) {
