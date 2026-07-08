@@ -27,7 +27,10 @@ function DescriptionText({ description, html = false, title, titleComponent }) {
             <StyledTypographyParagraph
               // eslint-disable-next-line @eslint-react/dom-no-dangerously-set-innerhtml
               dangerouslySetInnerHTML={{
-                __html: DOMPurify.sanitize(hideBRFromSR(description)),
+                __html:
+                  typeof window !== 'undefined'
+                    ? DOMPurify.sanitize(hideBRFromSR(description))
+                    : '',
               }}
               variant="body2"
             />
