@@ -1,5 +1,25 @@
 # Changelog
 
+## [2.17.0](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.16.0...servicemap-ui-v2.17.0) (2026-07-14)
+
+
+### Features
+
+* Cities add siuntio inkoo Refs: PL-217 ([#1377](https://github.com/City-of-Helsinki/servicemap-ui/issues/1377)) ([40e21fe](https://github.com/City-of-Helsinki/servicemap-ui/commit/40e21fec4c85f52a328288d1df9979dd4e62e864))
+
+
+### Bug Fixes
+
+* Auto retry for digitransit fetches and short-lived cache for stops ([319efd9](https://github.com/City-of-Helsinki/servicemap-ui/commit/319efd9baed7fb7f599e4721b4a5461dcd44b787))
+* Better fetch timeout handling ([1cc6c32](https://github.com/City-of-Helsinki/servicemap-ui/commit/1cc6c32b7f9f609ce9b2d5b12d6732336e2e16b0))
+* Double requests Refs: PL-253 ([1da6a8c](https://github.com/City-of-Helsinki/servicemap-ui/commit/1da6a8cea610c86b7bdb401f919df0871f64e29c))
+
+
+### Dependencies
+
+* Bump @babel/core from 7.29.0 to 7.29.6 ([#1374](https://github.com/City-of-Helsinki/servicemap-ui/issues/1374)) ([1ca54f5](https://github.com/City-of-Helsinki/servicemap-ui/commit/1ca54f5c1e639f50448bf14fa219019ace830d31))
+* Bump vite from 7.3.2 to 7.3.5 ([#1373](https://github.com/City-of-Helsinki/servicemap-ui/issues/1373)) ([d8619c3](https://github.com/City-of-Helsinki/servicemap-ui/commit/d8619c3da0b7693aed7aad570690cf417e4cb79f))
+
 ## [2.16.0](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.15.2...servicemap-ui-v2.16.0) (2026-06-12)
 
 
