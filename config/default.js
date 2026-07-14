@@ -37,7 +37,7 @@ const defaults = {
   REACT_APP_SLOW_FETCH_MESSAGE_TIMEOUT: '2500',
   REACT_APP_INITIAL_MAP_POSITION: '60.170377597530016,24.941309323934886',
   REACT_APP_MAPS: 'servicemap,ortographic,accessible_map,guidemap,plainmap',
-  REACT_APP_CITIES: 'helsinki,espoo,vantaa,kauniainen,kirkkonummi',
+  REACT_APP_CITIES: 'helsinki,espoo,vantaa,inkoo,kauniainen,kirkkonummi,siuntio',
   // eslint-disable-next-line max-len
   REACT_APP_ORGANIZATIONS: '[{ "id": "83e74666-0836-4c1d-948a-4b34a8b90301", "name": { "fi": "Helsingin kaupunki", "sv": "Helsingfors stad", "en": "City of Helsinki" } },{ "id": "520a4492-cb78-498b-9c82-86504de88dce", "name": { "fi": "Espoon kaupunki", "sv": "Esbo stad", "en": "City of Espoo" } },{ "id": "6d78f89c-9fd7-41d9-84e0-4b78c0fa25ce", "name": { "fi": "Vantaan kaupunki", "sv": "Vanda stad", "en": "City of Vantaa" } },{ "id": "6f0458d4-42a3-434a-b9be-20c19fcfa5c3", "name": { "fi": "Kauniaisten kaupunki", "sv": "Grankulla stad", "en": "Town of Kauniainen" } },{ "id": "015fd5cd-b280-4d24-a5b4-0ba6ecb4c8a4", "name": { "fi": "Kirkkonummi", "sv": "Kyrkslätt", "en": "Kirkkonummi" } },{ "id": "0c8e4f99-3d52-47b9-84df-395716bd8b11", "name": { "fi": "Länsi-Uudenmaan hyvinvointialue", "sv": "Västra Nylands välfärdsområde", "en": "Western Uusimaa Wellbeing Services County" } },{ "id": "5de91045-92ab-484b-9f96-7010ff7fb35e", "name": { "fi": "Vantaan ja Keravan hyvinvointialue", "sv": "Vanda och Kervo välfärdsområde", "en": "Wellbeing services county of Vantaa and Kerava" } }]',
   REACT_APP_SHOW_AREA_SELECTION: 'true',
