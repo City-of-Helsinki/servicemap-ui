@@ -1,6 +1,6 @@
 {
   "name": "servicemap-ui",
-  "version": "2.17.0",
+  "version": "2.17.1",
   "private": true,
   "packageManager": "pnpm@11.9.0",
   "engines": {

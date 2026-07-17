@@ -1,5 +1,24 @@
 # Changelog
 
+## [2.17.1](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.17.0...servicemap-ui-v2.17.1) (2026-07-17)
+
+
+### Bug Fixes
+
+* Build fails in ci ([9934c6e](https://github.com/City-of-Helsinki/servicemap-ui/commit/9934c6ed9f0bda887ff9445048091dc8534392fa))
+
+
+### Dependencies
+
+* Brace-expansion override Refs: RATY-357 ([e65f90c](https://github.com/City-of-Helsinki/servicemap-ui/commit/e65f90cde2ba144895cd0302f62592c681e912c9))
+* Bump eslint to version 10 Refs: RATY-357 ([d64e161](https://github.com/City-of-Helsinki/servicemap-ui/commit/d64e161117e2a910a24f8a68d7966de78ad7c075))
+* Bump eslint-plugin-react-hooks Refs: RATY-357 ([f22e463](https://github.com/City-of-Helsinki/servicemap-ui/commit/f22e4638c39a2b582c4e70d3bca2ababeca8d77c))
+* Bump js-yaml Refs: RATY-357 ([b5353e6](https://github.com/City-of-Helsinki/servicemap-ui/commit/b5353e6e5a3a0bae197847ddb313984a2a3416db))
+* Bump sentry, opentelemetry/core override Refs: RATY-357 ([1e68142](https://github.com/City-of-Helsinki/servicemap-ui/commit/1e681426bc52acf7b35273031098f8566b8e4900))
+* Bump ws Refs: RATY-357 ([02af94d](https://github.com/City-of-Helsinki/servicemap-ui/commit/02af94d74114c730cda224c9221ccab652c78f5b))
+* Qs override Refs: RATY-357 ([99ea9ad](https://github.com/City-of-Helsinki/servicemap-ui/commit/99ea9ad5c8af8bbe5919c39cedb9f23c106e5ef4))
+* Replace eslint react plugin Refs: RATY-357 ([eb636d1](https://github.com/City-of-Helsinki/servicemap-ui/commit/eb636d1cf9a5f398689fbd0d383c662715fc14aa))
+
 ## [2.17.0](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.16.0...servicemap-ui-v2.17.0) (2026-07-14)
 
 
