@@ -3,7 +3,7 @@
 # ============================================================
 FROM helsinki.azurecr.io/ubi9/nodejs-24-pnpm-builder-base AS appbase
 
-COPY --chown=default:root package.json pnpm-lock.yaml pnpm-workspace.yaml index.html vite.config.js .eslintrc.json .env ./
+COPY --chown=default:root package.json pnpm-lock.yaml pnpm-workspace.yaml index.html vite.config.js eslint.config.mjs .env ./
 COPY --chown=default:root ./scripts ./scripts
 COPY --chown=default:root ./client ./client
 COPY --chown=default:root ./config ./config
