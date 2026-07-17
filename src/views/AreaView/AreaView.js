@@ -110,13 +110,15 @@ function AreaView({ embed = false }) {
       unit_include: 'name,location',
     };
     await districtFetch(options).then((data) => {
-      dispatch(
-        setDistrictAddressData({
-          address: selectedAddress,
-          districts: data.results,
-        })
-      );
-    });
+      if (data?.results) {
+        dispatch(
+          setDistrictAddressData({
+            address: selectedAddress,
+            districts: data.results,
+          })
+        );
+      }
+    }).catch(() => {});
   };
 
   useEffect(() => {
