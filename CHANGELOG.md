@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.17.2](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.17.1...servicemap-ui-v2.17.2) (2026-07-27)
+
+
+### Bug Fixes
+
+* Update nature reserve info url ([7bae693](https://github.com/City-of-Helsinki/servicemap-ui/commit/7bae6933e60d62299532d6cb72f1a922416b9ac2))
+
 ## [2.17.1](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.17.0...servicemap-ui-v2.17.1) (2026-07-17)
 
 
