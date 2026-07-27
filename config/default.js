@@ -20,7 +20,7 @@ const defaults = {
   // eslint-disable-next-line max-len
   REACT_APP_PLAIN_MAP_URL: 'https://maps-proxy.api.hel.ninja/avoin/wmts/1.0.0/selkokartta/default/ETRS-TM35FIN/{z}/{y}/{x}.png',
   REACT_APP_OUTDOOR_EXERCISE_URL: 'https://ulkoliikunta.fi',
-  REACT_APP_NATURE_AREA_URL: 'https://kartta.hel.fi/ltj/feature-report/',
+  REACT_APP_NATURE_AREA_URL: 'https://kartta.hel.fi/applications/HelLTJ/api/global/public/report/ltj/feature-report/',
   REACT_APP_VANTAA_NATURE_AREA_URL: 'https://www.vantaa.fi/fi/palveluhakemisto/palvelu/luonnonsuojelualueet',
   REACT_APP_ACCESSIBILITY_STATEMENT_URL_FI: 'https://kaupunkialustana.hel.fi/palvelukartan-saavutettavuusseloste/',
   REACT_APP_ACCESSIBILITY_STATEMENT_URL_SV: 'https://kaupunkialustana.hel.fi/sv/servicekartans-tillganglighetsutlatande/',
