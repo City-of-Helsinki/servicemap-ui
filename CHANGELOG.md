@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.17.3](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.17.2...servicemap-ui-v2.17.3) (2026-07-28)
+
+
+### Bug Fixes
+
+* Optimize fetch parameters and update dependencies ([d520f24](https://github.com/City-of-Helsinki/servicemap-ui/commit/d520f24b851241dd7807484c2b4fc92bb38cd323))
+
 ## [2.17.2](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.17.1...servicemap-ui-v2.17.2) (2026-07-27)
 
 
