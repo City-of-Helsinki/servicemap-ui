@@ -46,7 +46,7 @@ export default class ServiceMapAPI extends HttpClient {
     const options = {
       // TODO: adjust these values for best results and performance
       q: query,
-      page_size: 400,
+      page_size: 50,
       limit: 2500,
       unit_limit: 2500,
       service_limit: 500,
@@ -109,7 +109,7 @@ export default class ServiceMapAPI extends HttpClient {
         : { mobility_node: idList };
     const options = {
       page: 1,
-      page_size: 200,
+      page_size: 50,
       only: onlyValues,
       geometry: true,
       ...idOptions,
@@ -162,7 +162,7 @@ export default class ServiceMapAPI extends HttpClient {
     const options = {
       service: serviceId,
       page: 1,
-      page_size: 200,
+      page_size: 50,
       only: onlyValues,
       geometry: true,
       ...additionalOptions,
@@ -181,7 +181,7 @@ export default class ServiceMapAPI extends HttpClient {
 
     const options = {
       service: idList,
-      page_size: 200,
+      page_size: 50,
       geometry: true,
       only: [
         'street_address',
@@ -303,7 +303,7 @@ export default class ServiceMapAPI extends HttpClient {
 
     const options = {
       page: 1,
-      page_size: 200,
+      page_size: 50,
       division: nodeID,
       only: onlyValues,
       include: 'services',
@@ -347,7 +347,7 @@ export default class ServiceMapAPI extends HttpClient {
       ];
 
     const options = {
-      page_size: 200,
+      page_size: 50,
       only: onlyValues,
       include: 'services,accessibility_properties,department',
       geometry: true,

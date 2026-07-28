@@ -3,6 +3,7 @@ minimumReleaseAge: 10080
 minimumReleaseAgeExclude:
   - '@remix-run/router@1.23.3'
   - 'react-router@6.30.4'
+  - 'brace-expansion@5.0.8'
   - 'baseline-browser-mapping@2.10.40'
   - 'caniuse-lite@1.0.30001800'
   - 'electron-to-chromium@1.5.384'
@@ -14,8 +15,12 @@ overrides:
   '@typescript-eslint/typescript-estree>minimatch': '9.0.7'
   esbuild: '^0.28.1'
   '@opentelemetry/core@^2': '^2.8.0'
-  'brace-expansion@^1': '^5.0.6'
-  'brace-expansion@^2': '^5.0.6'
+  'brace-expansion@^1': '^5.0.8'
+  'brace-expansion@^2': '^5.0.8'
+  'simple-update-notifier>semver': '^7.5.2'
+  'ajv>fast-uri': '^3.1.4'
+  postcss: '^8.5.18'
+  body-parser: '^1.20.6'
   'qs@~6.14.0': '^6.15.2'
 
 # Allow plugins that lag on peer ranges to load under ESLint 10.

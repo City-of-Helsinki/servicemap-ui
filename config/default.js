@@ -208,7 +208,7 @@ const defaultConfig = {
   "topBarHeight": 96,
   "topBarHeightMobile": 78,
   "bottomNavHeight": 78,
-  "searchTimeout": 15000,
+  "searchTimeout": 30000,
   "defaultLocale": 'fi',
   "supportedLanguages": [
     "fi", "sv", "en"

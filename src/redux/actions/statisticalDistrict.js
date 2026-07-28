@@ -111,8 +111,12 @@ export const fetchStatisticalDistricts = () => async (dispatch) => {
 };
 
 // Fetch services for statistical distrcts
-export const fetchServices = () => async (dispatch) => {
+export const fetchServices = () => async (dispatch, getState) => {
   const onProgressUpdateConcurrent = (total, max) => {
+    const currentCount = getState()?.statisticalDistrict?.services?.count || 0;
+    if (total < currentCount) {
+      return;
+    }
     dispatch(
       statisticalDistrictServices.fetchProgressUpdateConcurrent(total, max)
     );
@@ -136,16 +140,30 @@ export const fetchStatisticalDistrictServiceUnits =
     }
 
     const oldUnits = getStatisticalDistrictUnits(getState());
+    let lastTotal = 0;
+    let maxInitialized = false;
 
     const progressUpdate = (count, max) => {
-      if (!count) {
-        // Start progress bar by setting max value
+      if (!maxInitialized) {
+        // Initialize max once; getConcurrent reports cumulative counts.
         dispatch(statisticalDistrictUnits.fetchAdditiveProgressUpdate({ max }));
-      } else {
-        // Update progress
-        dispatch(
-          statisticalDistrictUnits.fetchAdditiveProgressUpdate({ count })
-        );
+        maxInitialized = true;
+      }
+
+      if (typeof count === 'number') {
+        const increment = count - lastTotal;
+        if (increment > 0) {
+          lastTotal = count;
+          // Additive reducer expects deltas, not cumulative totals.
+          dispatch(
+            statisticalDistrictUnits.fetchAdditiveProgressUpdate({
+              count: increment,
+            })
+          );
+        } else {
+          // Ignore stale/duplicate updates.
+          lastTotal = Math.max(lastTotal, count);
+        }
       }
     };
     try {

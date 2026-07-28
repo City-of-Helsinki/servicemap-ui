@@ -35,7 +35,7 @@ export const APIHandlers = {
     url: `${config.serviceMapAPI.root}${config.serviceMapAPI.version}/search/`,
     options: {
       page: 1,
-      page_size: 200,
+      page_size: 50,
       only: [
         'unit.street_address',
         'unit.location',
@@ -80,7 +80,7 @@ export const APIHandlers = {
     url: `${config.serviceMapAPI.root}${config.serviceMapAPI.version}/unit/`,
     options: {
       page: 1,
-      page_size: 200,
+      page_size: 50,
       only: 'street_address,location,name,municipality,accessibility_shortcoming_count,contract_type',
       geometry: true,
       include: 'services,accessibility_properties,department',

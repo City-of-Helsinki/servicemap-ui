@@ -135,6 +135,46 @@ describe('fetchSearchResults', () => {
       expect(dispatchedTypes[0]).toBe('SEARCH_RESULTS_IS_FETCHING');
     });
 
+    it('skips stale concurrent progress updates and dispatches only non-stale totals', async () => {
+      const { default: ServiceMapAPI } =
+        await import('../../../utils/newFetch/ServiceMapAPI');
+      let onProgressUpdate;
+      ServiceMapAPI.mockImplementation(function () {
+        return {
+          setOnProgressUpdate: vi.fn((callback) => {
+            onProgressUpdate = callback;
+          }),
+          search: vi.fn().mockImplementation(async () => {
+            // Stale update (smaller than current state count) should be dropped.
+            onProgressUpdate(3, 10);
+            // Fresh cumulative update should be dispatched.
+            onProgressUpdate(6, 10);
+            return [];
+          }),
+        };
+      });
+
+      const getStateWithCurrentCount = () => ({
+        searchResults: { isFetching: false, previousSearch: null, count: 5 },
+        user: { locale: 'fi' },
+      });
+
+      await fetchSearchResults({ q: 'kirjasto' })(
+        mockDispatch,
+        getStateWithCurrentCount
+      );
+
+      const progressCalls = mockDispatch.mock.calls
+        .map((call) => call[0])
+        .filter(
+          (action) =>
+            action?.type === 'SEARCH_RESULTS_FETCH_PROGRESS_UPDATE_CONCURRENT'
+        );
+
+      expect(progressCalls).toHaveLength(1);
+      expect(progressCalls[0]).toMatchObject({ count: 6, max: 10 });
+    });
+
     it('sets object_type to "unit" on results from a service_node search', async () => {
       const { default: ServiceMapAPI } =
         await import('../../../utils/newFetch/ServiceMapAPI');

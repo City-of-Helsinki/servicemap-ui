@@ -185,13 +185,25 @@ export const fetchDistricts =
 
 export const fetchDistrictUnitList = (nodeID) => async (dispatch, getState) => {
   try {
+    let lastTotal = 0;
+    let maxInitialized = false;
     const progressUpdate = (count, max) => {
-      if (!count) {
-        // Start progress bar by setting max value
+      if (!maxInitialized) {
+        // Initialize max once; getConcurrent reports cumulative counts.
         dispatch(updateFetchProggress({ max }));
-      } else {
-        // Update progress
-        dispatch(updateFetchProggress({ count }));
+        maxInitialized = true;
+      }
+
+      if (typeof count === 'number') {
+        // getConcurrent reports cumulative totals; reducer expects deltas.
+        const increment = count - lastTotal;
+        if (increment > 0) {
+          lastTotal = count;
+          dispatch(updateFetchProggress({ count: increment }));
+        } else {
+          // Ignore stale/duplicate updates.
+          lastTotal = Math.max(lastTotal, count);
+        }
       }
     };
     const smAPI = new ServiceMapAPI();
