@@ -104,7 +104,7 @@ function AreaView({ embed = false }) {
       lat: `${selectedAddress.location.coordinates[1]}`,
       lon: `${selectedAddress.location.coordinates[0]}`,
       page: 1,
-      page_size: 200,
+      page_size: 50,
       type: `${dataStructure.map((item) => item.districts.map((obj) => obj.id)).join(',')}`,
       geometry: true,
       unit_include: 'name,location',

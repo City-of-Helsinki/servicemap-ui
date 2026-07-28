@@ -56,7 +56,9 @@ export const dataSetReducer = (state, action, prefix) => {
     case `${prefix}_FETCH_PROGRESS_UPDATE_CONCURRENT`:
       return {
         ...state,
-        count: state.count + action.count,
+        // Concurrent progress updates provide cumulative totals.
+        // Keep count monotonic to ignore stale out-of-order updates.
+        count: Math.max(state.count, action.count || 0),
         max: action.max,
       };
     case `${prefix}_SET_NEW_DATA`:

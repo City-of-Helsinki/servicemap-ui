@@ -13,11 +13,15 @@ import { searchResults } from './fetchDataActions';
 const { isFetching, fetchSuccess, fetchProgressUpdateConcurrent, fetchError } =
   searchResults;
 
-const smFetch = (dispatch, options) => {
+const smFetch = async (dispatch, getState, options) => {
   let results = [];
   const smAPI = new ServiceMapAPI();
 
   const onProgressUpdateConcurrent = (total, max) => {
+    const currentCount = selectSearchResults(getState())?.count || 0;
+    if (total < currentCount) {
+      return;
+    }
     dispatch(fetchProgressUpdateConcurrent(total, max));
   };
 
@@ -103,7 +107,7 @@ const fetchSearchResults =
     };
     let results;
     try {
-      results = await smFetch(dispatch, fetchOptions);
+      results = await smFetch(dispatch, getState, fetchOptions);
     } catch (e) {
       // Only silently handle genuine abort errors (user navigated away or 10s timeout
       // fired). Other APIFetchErrors — missing base URL, invalid input, etc. — should
