@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.17.4](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.17.3...servicemap-ui-v2.17.4) (2026-07-31)
+
+
+### Bug Fixes
+
+* Handle abort of previous fetch requests in search functionality ([5a27a91](https://github.com/City-of-Helsinki/servicemap-ui/commit/5a27a91715d827ab71d612db7beaacac57d9eb72))
+* Replace react-router-dom with react-router ([555fe8a](https://github.com/City-of-Helsinki/servicemap-ui/commit/555fe8aad07202a6a25d89b39797e46f43a3303e))
+
+
+### Dependencies
+
+* Bump react-router from 6.30.4 to 8.3.0 ([2d28c37](https://github.com/City-of-Helsinki/servicemap-ui/commit/2d28c375cd540c121313304dfe7cd15761f25020))
+
 ## [2.17.3](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.17.2...servicemap-ui-v2.17.3) (2026-07-28)
 
 
