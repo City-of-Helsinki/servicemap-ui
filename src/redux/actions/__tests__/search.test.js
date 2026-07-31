@@ -226,7 +226,17 @@ describe('fetchSearchResults', () => {
   });
 
   describe('when a fetch is already in progress', () => {
-    it('throws without dispatching', async () => {
+    it('starts a new fetch instead of throwing', async () => {
+      const { default: ServiceMapAPI } =
+        await import('../../../utils/newFetch/ServiceMapAPI');
+      ServiceMapAPI.mockImplementation(function () {
+        return {
+          setOnProgressUpdate: vi.fn(),
+          setAbortController: vi.fn(),
+          search: vi.fn().mockResolvedValue([]),
+        };
+      });
+
       const busyGetState = () => ({
         searchResults: { isFetching: true, previousSearch: 'kirjasto' },
         user: { locale: 'fi' },
@@ -234,11 +244,65 @@ describe('fetchSearchResults', () => {
 
       await expect(
         fetchSearchResults({ q: 'kirjasto' })(mockDispatch, busyGetState)
-      ).rejects.toThrow(
-        'Unable to fetch search results because previous fetch is still active'
+      ).resolves.toBeUndefined();
+
+      const dispatchedTypes = mockDispatch.mock.calls
+        .filter((call) => typeof call[0] === 'object')
+        .map((call) => call[0]?.type);
+
+      expect(dispatchedTypes).toContain('SEARCH_RESULTS_IS_FETCHING');
+      expect(dispatchedTypes).toContain('SEARCH_RESULTS_FETCH_DATA_SUCCESS');
+    });
+
+    it('ignores stale result from an older overlapping fetch', async () => {
+      const { default: ServiceMapAPI } =
+        await import('../../../utils/newFetch/ServiceMapAPI');
+
+      let firstResolve;
+      let secondResolve;
+      let callIndex = 0;
+
+      const firstPromise = new Promise((resolve) => {
+        firstResolve = resolve;
+      });
+      const secondPromise = new Promise((resolve) => {
+        secondResolve = resolve;
+      });
+
+      ServiceMapAPI.mockImplementation(function () {
+        return {
+          setOnProgressUpdate: vi.fn(),
+          setAbortController: vi.fn(),
+          search: vi.fn().mockImplementation(() => {
+            callIndex += 1;
+            return callIndex === 1 ? firstPromise : secondPromise;
+          }),
+        };
+      });
+
+      const firstThunkPromise = fetchSearchResults({ q: 'vanha' })(
+        mockDispatch,
+        mockGetState
+      );
+      const secondThunkPromise = fetchSearchResults({ q: 'uusi' })(
+        mockDispatch,
+        mockGetState
       );
 
-      expect(mockDispatch).not.toHaveBeenCalled();
+      secondResolve([{ id: 2, name: { fi: 'Uusi' }, object_type: 'unit' }]);
+      await secondThunkPromise;
+
+      firstResolve([{ id: 1, name: { fi: 'Vanha' }, object_type: 'unit' }]);
+      await firstThunkPromise;
+
+      const successActions = mockDispatch.mock.calls
+        .map((call) => call[0])
+        .filter(
+          (action) => action?.type === 'SEARCH_RESULTS_FETCH_DATA_SUCCESS'
+        );
+
+      expect(successActions).toHaveLength(1);
+      expect(successActions[0].data[0].id).toBe(2);
     });
   });
 });

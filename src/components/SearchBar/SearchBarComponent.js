@@ -20,10 +20,7 @@ import paths from '../../../config/paths';
 import fetchSearchResults from '../../redux/actions/search';
 import { changeSelectedUnit } from '../../redux/actions/selectedUnit';
 import { selectNavigator } from '../../redux/selectors/general';
-import {
-  selectResultsIsFetching,
-  selectResultsPreviousSearch,
-} from '../../redux/selectors/results';
+import { selectResultsPreviousSearch } from '../../redux/selectors/results';
 import { keyboardHandler, uppercaseFirst, useQuery } from '../../utils';
 import useLocaleText from '../../utils/useLocaleText';
 import BackButton from '../BackButton';
@@ -58,7 +55,6 @@ function SearchBar({
   const theme = useTheme();
   const dispatch = useDispatch();
   const navigator = useSelector(selectNavigator);
-  const isFetching = useSelector(selectResultsIsFetching);
   const previousSearch = useSelector(selectResultsPreviousSearch);
 
   const setSearchbarValue = (value) => {
@@ -168,7 +164,8 @@ function SearchBar({
   };
 
   const handleSubmit = (search) => {
-    if (isFetching) return;
+    // Do not block new submits while fetching: search action now aborts the
+    // previous request and ignores stale responses.
     let searchQuery;
     if (focusedSuggestion !== null) {
       const suggestion = document.getElementById(

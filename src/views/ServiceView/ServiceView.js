@@ -55,7 +55,7 @@ function ServiceView(props) {
   const [mapMoved, setMapMoved] = useState(false);
   const [icon, setIcon] = useState(null);
 
-  // Check if view will fetch data because search params has changed
+  // Check if view will fetch data because search params have changed
   const shouldFetch = () => {
     const { current, isFetching } = serviceReducer;
     return !isFetching && (!current || `${current.id}` !== params?.service);
