@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router';
 
 import { ErrorTrigger } from '../components';
 import PageHandler from '../layouts/components/PageHandler';

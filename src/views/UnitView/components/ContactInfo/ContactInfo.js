@@ -3,7 +3,7 @@ import { ButtonBase, Divider, ListItem, Typography } from '@mui/material';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router';
 
 import { SMAccordion } from '../../../../components';
 import { parseSearchParams, stringifySearchParams } from '../../../../utils';

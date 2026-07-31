@@ -15,7 +15,7 @@ import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { HelmetProvider } from 'react-helmet-async';
 import { Provider } from 'react-redux';
-import { StaticRouter } from 'react-router-dom/server';
+import { StaticRouter } from 'react-router';
 import { applyMiddleware, createStore } from 'redux';
 import { thunk } from 'redux-thunk';
 
