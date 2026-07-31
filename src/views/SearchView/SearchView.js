@@ -222,10 +222,12 @@ function SearchView() {
     }
   }
 
-  // Check if view will fetch data because sreach params has changed
+  // Check if view will fetch data because search params have changed
   const shouldFetch = () => {
-    const { isFetching, previousSearch } = searchFetchState;
-    if (isFetching || isRedirectFetching) {
+    const { previousSearch } = searchFetchState;
+    // Search action aborts previous in-flight requests, so don't block a new
+    // search here when params change.
+    if (isRedirectFetching) {
       return false;
     }
     const data = getSearchParamData();

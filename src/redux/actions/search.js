@@ -13,11 +13,26 @@ import { searchResults } from './fetchDataActions';
 const { isFetching, fetchSuccess, fetchProgressUpdateConcurrent, fetchError } =
   searchResults;
 
-const smFetch = async (dispatch, getState, options) => {
+let activeSearchController = null;
+let latestSearchRequestId = 0;
+
+const smFetch = async (
+  dispatch,
+  getState,
+  options,
+  requestId,
+  abortController
+) => {
   let results = [];
   const smAPI = new ServiceMapAPI();
+  if (typeof smAPI.setAbortController === 'function') {
+    smAPI.setAbortController(abortController);
+  }
 
   const onProgressUpdateConcurrent = (total, max) => {
+    if (requestId !== latestSearchRequestId) {
+      return;
+    }
     const currentCount = selectSearchResults(getState())?.count || 0;
     if (total < currentCount) {
       return;
@@ -68,6 +83,9 @@ const smFetch = async (dispatch, getState, options) => {
     results = smAPI.units(unitFetchOptions);
   } else if (options.events) {
     const eventsAPI = new LinkedEventsAPI();
+    if (typeof eventsAPI.setAbortController === 'function') {
+      eventsAPI.setAbortController(abortController);
+    }
     results = eventsAPI.eventsByKeyword(options.events);
   } else if (options.level) {
     results = smAPI.units(options);
@@ -79,16 +97,19 @@ const smFetch = async (dispatch, getState, options) => {
 const fetchSearchResults =
   (options = null) =>
   async (dispatch, getState) => {
-    const searchFetchState = selectSearchResults(getState());
     const locale = getLocale(getState());
 
     const searchQuery = optionsToSearchQuery(options);
 
-    if (searchFetchState.isFetching) {
-      throw Error(
-        'Unable to fetch search results because previous fetch is still active'
-      );
+    // Cancel previous in-flight search to avoid stale progress/success updates
+    // racing with the latest search results.
+    if (activeSearchController) {
+      activeSearchController.abort();
     }
+    const requestId = latestSearchRequestId + 1;
+    latestSearchRequestId = requestId;
+    const abortController = new AbortController();
+    activeSearchController = abortController;
 
     dispatch(isFetching(searchQuery));
 
@@ -107,14 +128,33 @@ const fetchSearchResults =
     };
     let results;
     try {
-      results = await smFetch(dispatch, getState, fetchOptions);
+      results = await smFetch(
+        dispatch,
+        getState,
+        fetchOptions,
+        requestId,
+        abortController
+      );
     } catch (e) {
       // Only silently handle genuine abort errors (user navigated away or 10s timeout
       // fired). Other APIFetchErrors — missing base URL, invalid input, etc. — should
       // still surface so they are visible in Sentry.
       if (!(e instanceof AbortAPIError)) throw e;
-      // Reset isFetching so subsequent searches are not permanently blocked.
-      dispatch(fetchError(null));
+      // Only reset fetch state if this is still the latest request.
+      if (requestId === latestSearchRequestId) {
+        dispatch(fetchError(null));
+      }
+      return;
+    } finally {
+      if (
+        requestId === latestSearchRequestId &&
+        activeSearchController === abortController
+      ) {
+        activeSearchController = null;
+      }
+    }
+
+    if (requestId !== latestSearchRequestId) {
       return;
     }
 
@@ -170,6 +210,12 @@ const fetchSearchResults =
           }
         });
       }
+    }
+
+    // A newer search may have started while we were normalizing results.
+    // Prevent stale payload from replacing fresh search results.
+    if (requestId !== latestSearchRequestId) {
+      return;
     }
 
     dispatch(fetchSuccess(results));
