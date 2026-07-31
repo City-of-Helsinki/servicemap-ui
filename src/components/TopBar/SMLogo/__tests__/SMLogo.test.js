@@ -1,7 +1,7 @@
 // Link.react.test.js
 import userEvent from '@testing-library/user-event';
 import React from 'react';
-import * as reactRouterDom from 'react-router-dom';
+import * as reactRouter from 'react-router';
 
 import englishTranslations from '../../../../i18n/en';
 import { initialState } from '../../../../redux/reducers/user';
@@ -23,7 +23,7 @@ const renderWithProviders = getRenderWithProviders({
 
 describe('<SMLogo />', () => {
   beforeEach(() => {
-    vi.spyOn(reactRouterDom, 'useLocation').mockReturnValue(mockUseLocation);
+    vi.spyOn(reactRouter, 'useLocation').mockReturnValue(mockUseLocation);
   });
 
   afterEach(() => {

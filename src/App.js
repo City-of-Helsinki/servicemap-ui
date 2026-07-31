@@ -23,10 +23,10 @@ import {
   createBrowserRouter,
   createRoutesFromElements,
   Route,
-  RouterProvider,
   Routes,
   useLocation,
-} from 'react-router-dom';
+} from 'react-router';
+import { RouterProvider } from 'react-router/dom';
 
 import config from '../config';
 import featureFlags from '../config/featureFlags';

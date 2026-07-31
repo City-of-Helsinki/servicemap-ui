@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react';
 import React from 'react';
 import { Provider } from 'react-redux';
-import { MemoryRouter } from 'react-router-dom';
+import { MemoryRouter } from 'react-router';
 import { createStore } from 'redux';
 
 const minimalReducer = () => ({
@@ -9,8 +9,8 @@ const minimalReducer = () => ({
   mapRef: null,
 });
 
-// Mock react-router-dom's useParams so we control the unit param in each test
-vi.mock('react-router-dom', async (importOriginal) => {
+// Mock react-router's useParams so we control the unit param in each test
+vi.mock('react-router', async (importOriginal) => {
   const actual = await importOriginal();
   return { ...actual, useParams: vi.fn() };
 });
@@ -50,7 +50,7 @@ vi.mock('../../../redux/actions/selectedUnitAccessibility', () => ({
     mockFetchAccessibilitySentences(...args),
 }));
 
-const { useParams } = await import('react-router-dom');
+const { useParams } = await import('react-router');
 const { default: UnitFetcher } = await import('../UnitFetcher');
 
 const renderComponent = (store = createStore(minimalReducer)) => {

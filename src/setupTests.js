@@ -102,9 +102,9 @@ Object.defineProperty(window, 'matchMedia', {
   }),
 });
 
-// Mock react-router-dom for Vitest
-vi.mock('react-router-dom', async () => {
-  const actual = await vi.importActual('react-router-dom');
+// Mock react-router for Vitest
+vi.mock('react-router', async () => {
+  const actual = await vi.importActual('react-router');
   return {
     ...actual,
     useLocation: vi.fn(() => ({

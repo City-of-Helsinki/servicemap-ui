@@ -1,6 +1,6 @@
 // Link.react.test.js
 import React from 'react';
-import * as reactRouterDom from 'react-router-dom';
+import * as reactRouter from 'react-router';
 
 import { initialState } from '../../../../redux/reducers/user';
 import { getRenderWithProviders } from '../../../../testUtils';
@@ -21,7 +21,7 @@ const renderWithProviders = getRenderWithProviders({
 
 describe('<LanguageMenu />', () => {
   beforeEach(() => {
-    vi.spyOn(reactRouterDom, 'useLocation').mockReturnValue(mockUseLocation);
+    vi.spyOn(reactRouter, 'useLocation').mockReturnValue(mockUseLocation);
   });
 
   afterEach(() => {

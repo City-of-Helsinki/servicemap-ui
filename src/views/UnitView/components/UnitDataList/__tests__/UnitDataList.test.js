@@ -1,5 +1,5 @@
 import React from 'react';
-import * as reactRouterDom from 'react-router-dom';
+import * as reactRouter from 'react-router';
 
 import { getRenderWithProviders } from '../../../../../testUtils';
 import UnitDataList from '../UnitDataList';
@@ -137,7 +137,7 @@ const renderWithProviders = getRenderWithProviders({
 
 describe('<UnitDataList />', () => {
   beforeEach(() => {
-    vi.spyOn(reactRouterDom, 'useLocation').mockReturnValue(mockUseLocation);
+    vi.spyOn(reactRouter, 'useLocation').mockReturnValue(mockUseLocation);
   });
 
   afterEach(() => {
