@@ -233,7 +233,47 @@ function MapView(props) {
           console.warn('Error while attempting to focus on coordinate:', e);
         }
       }
+
+      // Leaflet caches the container size at creation time to position markers/tiles.
+      // In embed iframes the container can still be resizing (e.g. a parent page
+      // auto-sizing the iframe) when the map is created, so markers can be
+      // positioned off-screen until something forces a recalculation. Observing
+      // the container and invalidating size on every dimension change fixes this
+      // regardless of when/why the size settles.
+      if (typeof ResizeObserver === 'undefined') {
+        // No ResizeObserver support: fall back to window resize events, which
+        // also fire when an embedding iframe itself is resized.
+        const invalidate = () => {
+          if (mapHasMapPane(mapElement)) {
+            mapElement.invalidateSize();
+          }
+        };
+        const frame = requestAnimationFrame(invalidate);
+        window.addEventListener('resize', invalidate);
+        return () => {
+          cancelAnimationFrame(frame);
+          window.removeEventListener('resize', invalidate);
+        };
+      }
+
+      const container = mapElement.getContainer();
+      let frame;
+      const resizeObserver = new ResizeObserver(() => {
+        cancelAnimationFrame(frame);
+        frame = requestAnimationFrame(() => {
+          if (mapHasMapPane(mapElement)) {
+            mapElement.invalidateSize();
+          }
+        });
+      });
+      resizeObserver.observe(container);
+
+      return () => {
+        cancelAnimationFrame(frame);
+        resizeObserver.disconnect();
+      };
     }
+    return undefined;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mapElement]);
 
