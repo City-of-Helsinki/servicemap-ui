@@ -56,7 +56,11 @@ import {
   selectDistrictLoadingReducer,
   selectServiceUnitSearchResultLoadingReducer,
 } from './utils/loadingReducerSelector';
-import { focusToPosition, getBoundsFromBbox } from './utils/mapActions';
+import {
+  focusToPosition,
+  getBoundsFromBbox,
+  refreshMapSize,
+} from './utils/mapActions';
 import MapUtility from './utils/mapUtility';
 import useMapUnits from './utils/useMapUnits';
 
@@ -235,43 +239,34 @@ function MapView(props) {
       }
 
       // Leaflet caches the container size at creation time to position markers/tiles.
-      // In embed iframes the container can still be resizing (e.g. a parent page
-      // auto-sizing the iframe) when the map is created, so markers can be
-      // positioned off-screen until something forces a recalculation. Observing
-      // the container and invalidating size on every dimension change fixes this
-      // regardless of when/why the size settles.
+      // In embed iframes the container can still be settling (e.g. the parent page
+      // just inserted the iframe) when the map is created, so markers can be
+      // positioned off-screen until something forces a recalculation.
+      const invalidate = () => refreshMapSize(mapElement);
+
       if (typeof ResizeObserver === 'undefined') {
         // No ResizeObserver support: fall back to window resize events, which
         // also fire when an embedding iframe itself is resized.
-        const invalidate = () => {
-          if (mapHasMapPane(mapElement)) {
-            mapElement.invalidateSize();
-          }
-        };
-        const frame = requestAnimationFrame(invalidate);
         window.addEventListener('resize', invalidate);
+        invalidate();
         return () => {
-          cancelAnimationFrame(frame);
           window.removeEventListener('resize', invalidate);
         };
       }
 
-      const container = mapElement.getContainer();
-      let frame;
-      const resizeObserver = new ResizeObserver(() => {
-        cancelAnimationFrame(frame);
-        frame = requestAnimationFrame(() => {
-          if (mapHasMapPane(mapElement)) {
-            mapElement.invalidateSize();
-          }
-        });
+      // ResizeObserver already coalesces notifications per frame, and it delivers
+      // an initial callback on observe, so invalidate directly instead of
+      // deferring to requestAnimationFrame, which never runs while the embedding
+      // iframe is not being rendered.
+      const resizeObserver = new ResizeObserver((entries) => {
+        // Invalidating a collapsed container would pan the map by half its size.
+        const { width, height } = entries[0]?.contentRect || {};
+        if (!width || !height) return;
+        invalidate();
       });
-      resizeObserver.observe(container);
+      resizeObserver.observe(mapElement.getContainer());
 
-      return () => {
-        cancelAnimationFrame(frame);
-        resizeObserver.disconnect();
-      };
+      return () => resizeObserver.disconnect();
     }
     return undefined;
     // eslint-disable-next-line react-hooks/exhaustive-deps
