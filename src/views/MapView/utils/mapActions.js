@@ -12,6 +12,15 @@ const useMapFocusDisabled = () => {
   return isEmbed() && !!searchParams.bbox;
 };
 
+// Leaflet derives view and marker pixel positions from the container size it
+// cached at init. In an embed iframe the container is often still settling then,
+// so refresh the size before every focus action to avoid focusing a stale size.
+const refreshMapSize = (map) => {
+  if (map && mapHasMapPane(map)) {
+    map.invalidateSize();
+  }
+};
+
 const fitUnitsToMap = (units, map) => {
   // Return early on server side
   if (typeof window === 'undefined') {
@@ -51,7 +60,7 @@ const fitUnitsToMap = (units, map) => {
     try {
       setTimeout(() => {
         if (!mapHasMapPane(map)) return;
-        map.invalidateSize();
+        refreshMapSize(map);
         map.fitBounds(bounds, { padding: [15, 15], maxZoom: maxZoom - 1 });
       }, 1);
     } catch (err) {
@@ -63,11 +72,13 @@ const fitUnitsToMap = (units, map) => {
 const focusToPosition = (map, coordinates, zoomOption) => {
   const zoom =
     typeof zoomOption === 'number' ? zoomOption : map.options.maxZoom - 1;
+  refreshMapSize(map);
   map.setView([coordinates[1], coordinates[0]], zoom);
 };
 
 const focusDistrict = (map, coordinates) => {
   const bounds = coordinates.map((area) => swapCoordinates(area));
+  refreshMapSize(map);
   map.fitBounds(bounds);
 };
 
@@ -76,6 +87,7 @@ const focusDistricts = (map, districts) => {
   const bounds = filteredData.map((district) =>
     district.boundary.coordinates.map((area) => swapCoordinates(area))
   );
+  refreshMapSize(map);
   map.fitBounds(bounds);
 };
 
@@ -99,6 +111,7 @@ const fitBbox = (map, bbox) => {
   }
   const bounds = getBoundsFromBbox(bbox);
 
+  refreshMapSize(map);
   map.fitBounds(bounds);
 };
 
@@ -130,5 +143,6 @@ export {
   focusToPosition,
   getBoundsFromBbox,
   panViewToBounds,
+  refreshMapSize,
   useMapFocusDisabled,
 };
