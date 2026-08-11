@@ -28,7 +28,7 @@ function DistanceMeasure(props) {
           'leaflet-marker-draggable'
         );
         if (measureMarkers.length) {
-          measureMarkers.forEach((marker) => {
+          Array.from(measureMarkers).forEach((marker) => {
             marker.classList.add('leaflet-interactive');
           });
         }

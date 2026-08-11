@@ -113,7 +113,7 @@ function AreaView({ embed = false }) {
       dispatch(
         setDistrictAddressData({
           address: selectedAddress,
-          districts: data.results,
+          districts: data?.results ?? [],
         })
       );
     });
