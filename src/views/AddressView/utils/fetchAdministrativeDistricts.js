@@ -49,7 +49,7 @@ const fetchAdministrativeDistricts = async (lnglat) => {
       'name,root_service_nodes,location,street_address,accessibility_shortcoming_count,municipality,address_zip',
   };
   const districtData = await districtFetch(options);
-  const data = districtData.results.reduce((result, item) => {
+  const data = (districtData?.results ?? []).reduce((result, item) => {
     if (item.unit) {
       item.unit.object_type = 'unit';
     }
