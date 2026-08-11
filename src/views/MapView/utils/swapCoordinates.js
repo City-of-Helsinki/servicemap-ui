@@ -7,18 +7,43 @@ const swapCoordinates = (data) => {
   if (typeof window === 'undefined') {
     return data;
   }
-  const coordinates = data;
-  for (let i = 0; i < data.length; i += 1) {
+
+  if (!Array.isArray(data)) {
+    return [];
+  }
+
+  const coordinates = [];
+  for (const ring of data) {
+    if (!Array.isArray(ring)) {
+      continue;
+    }
     const geoJSONBounds = [];
-    data[i].forEach((coordinate) => {
+    ring.forEach((coordinate) => {
+      if (
+        !Array.isArray(coordinate) ||
+        coordinate.length < 2 ||
+        !Number.isFinite(coordinate[0]) ||
+        !Number.isFinite(coordinate[1])
+      ) {
+        return;
+      }
       const geoJSONCoord = L.GeoJSON.coordsToLatLng(coordinate);
+      if (
+        !geoJSONCoord ||
+        !Number.isFinite(geoJSONCoord.lat) ||
+        !Number.isFinite(geoJSONCoord.lng)
+      ) {
+        return;
+      }
       if (coordinate[0] < coordinate[1]) {
         geoJSONBounds.push([geoJSONCoord.lat, geoJSONCoord.lng]);
       } else {
         geoJSONBounds.push([geoJSONCoord.lng, geoJSONCoord.lat]);
       }
     });
-    coordinates[i] = geoJSONBounds;
+    if (geoJSONBounds.length >= 2) {
+      coordinates.push(geoJSONBounds);
+    }
   }
   return coordinates;
 };

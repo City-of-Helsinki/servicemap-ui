@@ -29,6 +29,7 @@ export default defineConfig({
       exclude: [
         ...coverageConfigDefaults.exclude,
         './src/setupTests.js',
+        './src/i18n/**/*',
         './src/serviceWorker.js',
         './src/entry-client.jsx',
         './src/entry-server.jsx',
@@ -39,6 +40,9 @@ export default defineConfig({
         './src/views/MapView/components/MarkerCluster/MarkerCluster.js',
         './src/views/MapView/components/Districts/ParkingAreas.js',
         './src/views/MapView/components/TransitStops/TransitStops.js',
+        './src/views/UnitView/UnitView.js',
+        './src/views/MapView/components/Districts/Districts.js',
+        './src/views/AreaView/components/GeographicalDistrictList/GeographicalDistrictList.js',
       ],
     },
     exclude: [...configDefaults.exclude, 'e2e'],

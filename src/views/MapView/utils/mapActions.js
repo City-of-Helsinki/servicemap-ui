@@ -79,17 +79,38 @@ const focusToPosition = (map, coordinates, zoomOption) => {
 
 const focusDistrict = (map, coordinates) => {
   const bounds = coordinates.map((area) => swapCoordinates(area));
+  const safeBounds = bounds.filter(
+    (boundary) => Array.isArray(boundary) && boundary.length
+  );
+  if (!safeBounds.length) {
+    return;
+  }
   refreshMapSize(map);
-  map.fitBounds(bounds);
+  map.fitBounds(safeBounds);
+};
+
+const getBoundaryPolygons = (boundary) => {
+  if (!Array.isArray(boundary?.coordinates)) {
+    return [];
+  }
+  return boundary.type === 'Polygon'
+    ? [boundary.coordinates]
+    : boundary.coordinates;
 };
 
 const focusDistricts = (map, districts) => {
   const filteredData = districts.filter((obj) => obj.boundary);
   const bounds = filteredData.map((district) =>
-    district.boundary.coordinates.map((area) => swapCoordinates(area))
+    getBoundaryPolygons(district.boundary).map((area) => swapCoordinates(area))
   );
+  const safeBounds = bounds.filter(
+    (boundary) => Array.isArray(boundary) && boundary.length
+  );
+  if (!safeBounds.length) {
+    return;
+  }
   refreshMapSize(map);
-  map.fitBounds(bounds);
+  map.fitBounds(safeBounds);
 };
 
 const getBoundsFromBbox = (bbox) => {
@@ -116,23 +137,23 @@ const fitBbox = (map, bbox) => {
 };
 
 const panViewToBounds = (map, selectedGeometry, geometryGroup) => {
-  if (!L) return;
-  const mapBounds = map.getBounds();
-  // Get point inside geometry
-  const geometryPoint = pointOnFeature(selectedGeometry).geometry.coordinates;
-  const pointLatLng = L.latLng(geometryPoint);
-  // If point is outside of map bounds, move map to area
-  if (!mapBounds.contains(pointLatLng)) {
-    try {
+  try {
+    if (!L) return;
+    const mapBounds = map.getBounds();
+    // Get point inside geometry
+    const geometryPoint = pointOnFeature(selectedGeometry).geometry.coordinates;
+    const pointLatLng = L.latLng(geometryPoint);
+    // If point is outside of map bounds, move map to area
+    if (!mapBounds.contains(pointLatLng)) {
       if (geometryGroup?.length) {
         // If a group of geomteries is given, fit them all to map
         map.fitBounds(geometryGroup);
       } else {
         map.fitBounds(selectedGeometry.coordinates);
       }
-    } catch (err) {
-      console.warn('Fit districts to map failed', err);
     }
+  } catch (err) {
+    console.warn('Fit districts to map failed', err);
   }
 };
 
@@ -142,6 +163,7 @@ export {
   focusDistrict,
   focusDistricts,
   focusToPosition,
+  getBoundaryPolygons,
   getBoundsFromBbox,
   panViewToBounds,
   refreshMapSize,

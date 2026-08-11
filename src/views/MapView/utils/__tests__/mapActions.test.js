@@ -100,11 +100,19 @@ describe('mapActions', () => {
       const map = createMockMap();
       focusDistrict(map, [
         [
-          [24.9, 60.1],
-          [24.95, 60.2],
+          [
+            [24.9, 60.1],
+            [24.95, 60.2],
+          ],
         ],
       ]);
       expect(map.fitBounds).toHaveBeenCalled();
+    });
+
+    it('does nothing when all district bounds are invalid', () => {
+      const map = createMockMap();
+      focusDistrict(map, [['invalid ring']]);
+      expect(map.fitBounds).not.toHaveBeenCalled();
     });
   });
 
@@ -115,6 +123,27 @@ describe('mapActions', () => {
         { boundary: null },
         {
           boundary: {
+            type: 'MultiPolygon',
+            coordinates: [
+              [
+                [
+                  [24.9, 60.1],
+                  [24.95, 60.2],
+                ],
+              ],
+            ],
+          },
+        },
+      ]);
+      expect(map.fitBounds).toHaveBeenCalled();
+    });
+
+    it('fits bounds for Polygon geometry', () => {
+      const map = createMockMap();
+      focusDistricts(map, [
+        {
+          boundary: {
+            type: 'Polygon',
             coordinates: [
               [
                 [24.9, 60.1],
@@ -124,7 +153,26 @@ describe('mapActions', () => {
           },
         },
       ]);
-      expect(map.fitBounds).toHaveBeenCalled();
+
+      expect(map.fitBounds).toHaveBeenCalledWith([
+        [
+          [
+            [
+              [60.1, 24.9],
+              [60.2, 24.95],
+            ],
+          ],
+        ],
+      ]);
+    });
+
+    it('does nothing when no district has a valid boundary', () => {
+      const map = createMockMap();
+      focusDistricts(map, [
+        { boundary: null },
+        { boundary: { coordinates: [] } },
+      ]);
+      expect(map.fitBounds).not.toHaveBeenCalled();
     });
   });
 
@@ -185,6 +233,17 @@ describe('mapActions', () => {
 
       expect(() => fitUnitsToMap(units, map)).not.toThrow();
       vi.runAllTimers();
+      vi.useRealTimers();
+    });
+
+    it('does not fit units without coordinates', () => {
+      vi.useFakeTimers();
+      const map = createMockMap();
+
+      fitUnitsToMap([{ object_type: 'unit' }], map);
+      vi.runAllTimers();
+
+      expect(map.fitBounds).not.toHaveBeenCalled();
       vi.useRealTimers();
     });
   });

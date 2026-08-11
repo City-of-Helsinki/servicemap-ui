@@ -36,6 +36,7 @@ import {
   getCategoryDistricts,
 } from '../../../AreaView/utils/districtDataHelper';
 import { drawMarkerIcon } from '../../utils/drawIcon';
+import { getBoundaryPolygons } from '../../utils/mapActions';
 import swapCoordinates from '../../utils/swapCoordinates';
 import AddressMarker from '../AddressMarker';
 import ParkingAreas from './ParkingAreas';
@@ -68,32 +69,52 @@ function Districts({
   const selectedParkingAreaIds = useSelector(selectSelectedParkingAreaIds);
   const [areaPopup, setAreaPopup] = useState(null);
 
+  const getSafeBoundary = (boundary) =>
+    getBoundaryPolygons(boundary)
+      .map((coords) => swapCoordinates(coords))
+      .filter((coords) => Array.isArray(coords) && coords.length);
+
+  const focusMapToDistrict = (district) => {
+    if (!district?.boundary?.coordinates) {
+      return;
+    }
+
+    try {
+      const safeBounds = getSafeBoundary(district.boundary);
+      if (safeBounds.length) {
+        map.fitBounds(safeBounds);
+      }
+    } catch (err) {
+      console.warn('Unable to fit district bounds', err);
+    }
+  };
+
+  const openNatureAreaPopup = (event, district) => {
+    if (
+      district.type !== 'nature_reserve' ||
+      config.natureAreaURL === 'undefined'
+    ) {
+      return;
+    }
+
+    const link =
+      district.municipality === 'vantaa'
+        ? config.vantaaNatureAreaURL
+        : `${config.natureAreaURL}${district.origin_id}`;
+
+    setAreaPopup({
+      district,
+      link,
+      name: district.name,
+      position: event.latlng,
+    });
+  };
+
   const districtOnClick = (e, district) => {
     if (measuringMode) return;
 
-    // Focus to selected district
-    if (district?.boundary?.coordinates) {
-      map.fitBounds(district.boundary.coordinates);
-    }
-
-    if (
-      district.type === 'nature_reserve' &&
-      config.natureAreaURL !== 'undefined'
-    ) {
-      let link;
-      if (district.municipality === 'vantaa') {
-        link = `${config.vantaaNatureAreaURL}`;
-      } else {
-        link = `${config.natureAreaURL}${district.origin_id}`;
-      }
-
-      setAreaPopup({
-        district,
-        link,
-        name: district.name,
-        position: e.latlng,
-      });
-    }
+    focusMapToDistrict(district);
+    openNatureAreaPopup(e, district);
 
     if (embedded) return;
     // Disable normal map click event
@@ -102,7 +123,7 @@ function Districts({
     if (geographicalDistricts.includes(district.type)) {
       // Add/remove district from selected geographical districts
       let newArray;
-      if (selectedSubdistricts.some((item) => item === district.ocd_id)) {
+      if (selectedSubdistricts.includes(district.ocd_id)) {
         newArray = selectedSubdistricts.filter((i) => i !== district.ocd_id);
       } else {
         newArray = [...selectedSubdistricts, district.ocd_id];
@@ -164,9 +185,10 @@ function Districts({
       return null;
     }
 
-    const areas = highlightedDistrict.boundary.coordinates.map((coords) =>
-      swapCoordinates(coords)
-    );
+    const areas = getSafeBoundary(highlightedDistrict.boundary);
+    if (!areas.length) {
+      return null;
+    }
 
     return (
       <Polygon
@@ -179,6 +201,48 @@ function Districts({
     );
   };
 
+  const isDistrictVisible = (district) => {
+    if (!embedded || !geographicalDistricts.includes(district.type)) {
+      return true;
+    }
+    return (
+      !selectedSubdistricts.length ||
+      selectedSubdistricts.includes(district.ocd_id)
+    );
+  };
+
+  const getDistrictDimmed = (district) => {
+    if (geographicalDistricts.includes(district.type)) {
+      return (
+        selectedSubdistricts.length &&
+        !selectedSubdistricts.includes(district.ocd_id)
+      );
+    }
+    return addressDistrict && district.id !== addressDistrict.id;
+  };
+
+  const getDistrictTooltipTitle = (district, numberOfUnits, areaTypeLabel) => {
+    if (numberOfUnits > 1) {
+      return `${areaTypeLabel} - ${intl.formatMessage(
+        { id: 'map.unit.cluster.popup.info' },
+        { count: numberOfUnits }
+      )}`;
+    }
+    if (getCategoryDistricts('protection').includes(district.type)) {
+      return `${areaTypeLabel} ${district.origin_id} - ${getLocaleText(district.name)}`;
+    }
+    if (!district.name) {
+      return null;
+    }
+    if (district.extra?.area_key) {
+      return `${intl.formatMessage(
+        { id: 'parkingArea.popup.residentName' },
+        { letter: district.extra.area_key }
+      )} (${getLocaleText(district.name)}) - ${areaTypeLabel}`;
+    }
+    return `${getLocaleText(district.name)} - ${areaTypeLabel}`;
+  };
+
   const renderMultipleDistricts = () => {
     const areasWithBoundary = districtData.filter((obj) => obj.boundary);
     if (!areasWithBoundary.length) {
@@ -189,31 +253,14 @@ function Districts({
     );
     const filteredData = areasWithBoundary
       .filter(cityFilter)
-      .filter((district) => {
-        // In embed view, limit the rendered districts only to the selected ones
-        if (!embedded || !geographicalDistricts.includes(district.type)) {
-          return true;
-        }
-        if (!selectedSubdistricts.length) {
-          return true;
-        }
-        return selectedSubdistricts.some((item) => item === district.ocd_id);
-      });
+      .filter(isDistrictVisible);
 
     return filteredData.map((district) => {
-      let dimmed;
-      if (geographicalDistricts.includes(district.type)) {
-        if (selectedSubdistricts.length) {
-          dimmed = !selectedSubdistricts.some(
-            (item) => item === district.ocd_id
-          );
-        }
-      } else {
-        dimmed = addressDistrict && district.id !== addressDistrict.id;
+      const dimmed = getDistrictDimmed(district);
+      const safeArea = getSafeBoundary(district.boundary);
+      if (!safeArea.length) {
+        return null;
       }
-      const area = district.boundary.coordinates.map((coords) =>
-        swapCoordinates(coords)
-      );
 
       // Count units in single area
       let numberOfUnits =
@@ -223,28 +270,14 @@ function Districts({
         numberOfUnits += 1;
       }
 
-      let tooltipTitle;
       const areaTypeLabel = intl.formatMessage({
         id: `area.list.${district.type}`,
       });
-
-      if (numberOfUnits > 1) {
-        tooltipTitle = `${areaTypeLabel} - ${intl.formatMessage(
-          { id: 'map.unit.cluster.popup.info' },
-          { count: numberOfUnits }
-        )}`;
-      } else if (getCategoryDistricts('protection').includes(district.type)) {
-        tooltipTitle = `${areaTypeLabel} ${district.origin_id} - ${getLocaleText(district.name)}`;
-      } else if (district.name) {
-        if (district.extra?.area_key) {
-          tooltipTitle = `${intl.formatMessage(
-            { id: 'parkingArea.popup.residentName' },
-            { letter: district.extra.area_key }
-          )} (${getLocaleText(district.name)}) - ${areaTypeLabel}`;
-        } else {
-          tooltipTitle = `${getLocaleText(district.name)} - ${areaTypeLabel}`;
-        }
-      }
+      const tooltipTitle = getDistrictTooltipTitle(
+        district,
+        numberOfUnits,
+        areaTypeLabel
+      );
 
       const mainColor = useContrast ? '#fff' : '#ff8400';
 
@@ -252,7 +285,7 @@ function Districts({
         <Polygon
           interactive={!unitsFetching}
           key={district.id}
-          positions={area}
+          positions={safeArea}
           color={mainColor}
           dashArray={useContrast ? '2, 10, 10, 10' : null}
           dashOffset="20"

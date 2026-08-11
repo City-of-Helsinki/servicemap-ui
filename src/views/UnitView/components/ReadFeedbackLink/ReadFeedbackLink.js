@@ -28,7 +28,7 @@ function ReadFeedbackLink({ unit }) {
   const text = intl.formatMessage({ id: 'unit.readFeedbackLink' });
   return (
     <StyledVerticalMarginContainer>
-      <StyledAlignLeftParagraph variant="body1">
+      <StyledAlignLeftParagraph component="div" variant="body1">
         <StyledHdsLink
           href={url}
           size="M"

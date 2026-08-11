@@ -27,6 +27,7 @@ import { filterByCitySettings } from '../../../../utils/filters';
 import { orderUnits } from '../../../../utils/orderUnits';
 import useLocaleText from '../../../../utils/useLocaleText';
 import { panViewToBounds } from '../../../MapView/utils/mapActions';
+import swapCoordinates from '../../../MapView/utils/swapCoordinates';
 import { StyledBoldText, StyledCheckBoxIcon } from '../styled/styled';
 
 function GeographicalDistrictList({ district }) {
@@ -52,7 +53,12 @@ function GeographicalDistrictList({ district }) {
         (district) => district.boundary.coordinates
       );
       if (districtsToFocus.length === 1) {
-        map.fitBounds(coordinateArray[0]);
+        const safeBounds = swapCoordinates(coordinateArray[0]).filter(
+          (coords) => Array.isArray(coords) && coords.length
+        );
+        if (safeBounds.length) {
+          map.fitBounds(safeBounds);
+        }
       } else {
         panViewToBounds(map, district.boundary, coordinateArray);
       }

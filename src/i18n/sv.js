@@ -574,6 +574,11 @@ export default {
   'unit.homepage': 'Hemsida',
   'unit.homepage.missing': 'Ingen hemsida har meddelats',
   'unit.picture': 'Bild av verksamhetsstället',
+  'unit.picture.info': 'Bildinformation',
+  'unit.picture.source': 'Källa:',
+  'unit.picture.permission': 'Användningstillstånd:',
+  'unit.picture.locationOnly.sv':
+    'Bilden får användas i samband med motivet under förutsättning att fotografens eller ägarens namn anges. Annan användning är inte tillåten.',
   'unit.description': 'Information om verksamhetsstället',
   'unit.price': 'Priser',
   'unit.address': 'Adress',
