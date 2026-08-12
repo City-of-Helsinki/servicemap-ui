@@ -1,5 +1,20 @@
 # Changelog
 
+## [2.17.5](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.17.4...servicemap-ui-v2.17.5) (2026-08-12)
+
+
+### Bug Fixes
+
+* **map:** Observe container resize to fix missing embed markers ([8f15e6f](https://github.com/City-of-Helsinki/servicemap-ui/commit/8f15e6f2ad7304c66982dd91ddb78800ffeddb81))
+* **map:** Refresh map size before every focus action ([93ed473](https://github.com/City-of-Helsinki/servicemap-ui/commit/93ed4737c0560e720a04c3635d79b84b378e98a9))
+* Resize and marker fixes for embedded maps ([4fbf115](https://github.com/City-of-Helsinki/servicemap-ui/commit/4fbf1156c78ac19f8ae2f13c30f88263c2449718))
+
+
+### Dependencies
+
+* Bump dompurify from 3.4.12 to 3.4.13 ([2ab1ac1](https://github.com/City-of-Helsinki/servicemap-ui/commit/2ab1ac1d253ddefa0834ffd4bb674a38d76dc9aa))
+* Dompurify minimumReleaseAgeExclude Refs: RATY-357 ([503403c](https://github.com/City-of-Helsinki/servicemap-ui/commit/503403c9541f4b358a807d5820910d7216c5d729))
+
 ## [2.17.4](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.17.3...servicemap-ui-v2.17.4) (2026-07-31)
 
 
