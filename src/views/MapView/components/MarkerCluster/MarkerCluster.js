@@ -339,7 +339,9 @@ function MarkerCluster({
       showCoverageOnHover: false,
       iconCreateFunction: createClusterCustomIcon,
       maxClusterRadius: 40,
-      removeOutsideVisibleBounds: true,
+      // Embeds show few markers; disabling the bounds-culling avoids markers
+      // disappearing when the iframe viewport changes size after initialisation.
+      removeOutsideVisibleBounds: !embeded,
       zoomToBoundsOnClick: true,
     });
 
