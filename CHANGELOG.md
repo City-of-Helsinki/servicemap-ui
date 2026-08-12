@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.17.6](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.17.5...servicemap-ui-v2.17.6) (2026-08-12)
+
+
+### Bug Fixes
+
+* Improve map initialization and resize handling for embedded views ([e93881f](https://github.com/City-of-Helsinki/servicemap-ui/commit/e93881f3139c66d45ad9d4c4025369c9e7f79ec4))
+
 ## [2.17.5](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.17.4...servicemap-ui-v2.17.5) (2026-08-12)
 
 
