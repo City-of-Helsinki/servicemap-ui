@@ -733,6 +733,9 @@ function MarkerCluster({
 
     // Add markers in bulk
     cluster.addLayers(markers);
+    // onAdd captures _currentShownBounds at creation time; re-evaluate now so
+    // markers outside that initial snapshot are still visible.
+    cluster._moveEnd();
 
     // Hide all markers from screen readers
     document.querySelectorAll('.leaflet-marker-icon').forEach((item) => {

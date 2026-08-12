@@ -228,29 +228,55 @@ function MapView(props) {
     if (mapElement) {
       setMapUtility(new MapUtility({ leaflet: mapElement }));
 
-      const hasLocation = coordinateIsActive(location);
-      if (hasLocation) {
-        try {
-          const position = swapCoordinates(getCoordinatesFromUrl(location));
-          focusToPosition(mapElement, position);
-        } catch (e) {
-          console.warn('Error while attempting to focus on coordinate:', e);
-        }
-      }
-
       // Leaflet caches the container size at creation time to position markers/tiles.
       // In embed iframes the container can still be settling (e.g. the parent page
-      // just inserted the iframe) when the map is created, so markers can be
-      // positioned off-screen until something forces a recalculation.
+      // just inserted the iframe) when the map is created, so the initial
+      // setView/fitBounds may use wrong dimensions (e.g. 0×0). invalidateSize()
+      // alone only corrects the center offset — it does NOT recalculate zoom.
+      // Re-applying the view with the actual container size fixes both center and
+      // zoom, which ensures markers are rendered at the correct positions.
+      const applyInitialView = () => {
+        const hasLocation = coordinateIsActive(location);
+        if (hasLocation) {
+          try {
+            const position = swapCoordinates(getCoordinatesFromUrl(location));
+            focusToPosition(mapElement, position);
+          } catch (e) {
+            console.warn('Error while attempting to focus on coordinate:', e);
+          }
+          return;
+        }
+        const bbox = parseBboxFromLocation(location);
+        if (bbox) {
+          refreshMapSize(mapElement);
+          mapElement.fitBounds(getBoundsFromBbox(bbox));
+        } else {
+          refreshMapSize(mapElement);
+        }
+      };
+
       const invalidate = () => refreshMapSize(mapElement);
 
       if (typeof ResizeObserver === 'undefined') {
         // No ResizeObserver support: fall back to window resize events, which
         // also fire when an embedding iframe itself is resized.
-        window.addEventListener('resize', invalidate);
-        invalidate();
+        let initialViewApplied = false;
+        const handleResize = () => {
+          const { width, height } = mapElement
+            .getContainer()
+            .getBoundingClientRect();
+          if (!width || !height) return;
+          if (!initialViewApplied) {
+            initialViewApplied = true;
+            applyInitialView();
+          } else {
+            invalidate();
+          }
+        };
+        window.addEventListener('resize', handleResize);
+        handleResize();
         return () => {
-          window.removeEventListener('resize', invalidate);
+          window.removeEventListener('resize', handleResize);
         };
       }
 
@@ -258,11 +284,20 @@ function MapView(props) {
       // an initial callback on observe, so invalidate directly instead of
       // deferring to requestAnimationFrame, which never runs while the embedding
       // iframe is not being rendered.
+      // On the first callback with a non-zero container size, re-apply the full
+      // initial view so that zoom is also recalculated with the correct dimensions.
+      // Subsequent callbacks (user-triggered resizes) only need invalidateSize().
+      let initialViewApplied = false;
       const resizeObserver = new ResizeObserver((entries) => {
         // Invalidating a collapsed container would pan the map by half its size.
         const { width, height } = entries[0]?.contentRect || {};
         if (!width || !height) return;
-        invalidate();
+        if (!initialViewApplied) {
+          initialViewApplied = true;
+          applyInitialView();
+        } else {
+          invalidate();
+        }
       });
       resizeObserver.observe(mapElement.getContainer());
 
