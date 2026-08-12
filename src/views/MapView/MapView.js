@@ -4,7 +4,7 @@ import { LocationDisabled, MyLocation } from '@mui/icons-material';
 import { ButtonBase } from '@mui/material';
 import { useTheme } from '@mui/styles';
 import PropTypes from 'prop-types';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useIntl } from 'react-intl';
 import * as ReactLeaflet from 'react-leaflet';
 import { useMapEvents } from 'react-leaflet';
@@ -56,11 +56,7 @@ import {
   selectDistrictLoadingReducer,
   selectServiceUnitSearchResultLoadingReducer,
 } from './utils/loadingReducerSelector';
-import {
-  focusToPosition,
-  getBoundsFromBbox,
-  refreshMapSize,
-} from './utils/mapActions';
+import { focusToPosition, getBoundsFromBbox } from './utils/mapActions';
 import MapUtility from './utils/mapUtility';
 import useMapUnits from './utils/useMapUnits';
 
@@ -112,6 +108,8 @@ function MapView(props) {
   const [mapUtility, setMapUtility] = useState(null);
   const [measuringMarkers, setMeasuringMarkers] = useState([]);
   const [measuringLine, setMeasuringLine] = useState([]);
+  // Defers MapContainer creation until the wrapper div has non-zero dimensions.
+  const [containerReady, setContainerReady] = useState(false);
 
   const theme = useTheme();
   const embedded = isEmbed({ url: location.pathname });
@@ -228,80 +226,15 @@ function MapView(props) {
     if (mapElement) {
       setMapUtility(new MapUtility({ leaflet: mapElement }));
 
-      // Leaflet caches the container size at creation time to position markers/tiles.
-      // In embed iframes the container can still be settling (e.g. the parent page
-      // just inserted the iframe) when the map is created, so the initial
-      // setView/fitBounds may use wrong dimensions (e.g. 0×0). invalidateSize()
-      // alone only corrects the center offset — it does NOT recalculate zoom.
-      // Re-applying the view with the actual container size fixes both center and
-      // zoom, which ensures markers are rendered at the correct positions.
-      const applyInitialView = () => {
-        const hasLocation = coordinateIsActive(location);
-        if (hasLocation) {
-          try {
-            const position = swapCoordinates(getCoordinatesFromUrl(location));
-            focusToPosition(mapElement, position);
-          } catch (e) {
-            console.warn('Error while attempting to focus on coordinate:', e);
-          }
-          return;
+      const hasLocation = coordinateIsActive(location);
+      if (hasLocation) {
+        try {
+          const position = swapCoordinates(getCoordinatesFromUrl(location));
+          focusToPosition(mapElement, position);
+        } catch (e) {
+          console.warn('Error while attempting to focus on coordinate:', e);
         }
-        const bbox = parseBboxFromLocation(location);
-        if (bbox) {
-          refreshMapSize(mapElement);
-          mapElement.fitBounds(getBoundsFromBbox(bbox));
-        } else {
-          refreshMapSize(mapElement);
-        }
-      };
-
-      const invalidate = () => refreshMapSize(mapElement);
-
-      if (typeof ResizeObserver === 'undefined') {
-        // No ResizeObserver support: fall back to window resize events, which
-        // also fire when an embedding iframe itself is resized.
-        let initialViewApplied = false;
-        const handleResize = () => {
-          const { width, height } = mapElement
-            .getContainer()
-            .getBoundingClientRect();
-          if (!width || !height) return;
-          if (!initialViewApplied) {
-            initialViewApplied = true;
-            applyInitialView();
-          } else {
-            invalidate();
-          }
-        };
-        window.addEventListener('resize', handleResize);
-        handleResize();
-        return () => {
-          window.removeEventListener('resize', handleResize);
-        };
       }
-
-      // ResizeObserver already coalesces notifications per frame, and it delivers
-      // an initial callback on observe, so invalidate directly instead of
-      // deferring to requestAnimationFrame, which never runs while the embedding
-      // iframe is not being rendered.
-      // On the first callback with a non-zero container size, re-apply the full
-      // initial view so that zoom is also recalculated with the correct dimensions.
-      // Subsequent callbacks (user-triggered resizes) only need invalidateSize().
-      let initialViewApplied = false;
-      const resizeObserver = new ResizeObserver((entries) => {
-        // Invalidating a collapsed container would pan the map by half its size.
-        const { width, height } = entries[0]?.contentRect || {};
-        if (!width || !height) return;
-        if (!initialViewApplied) {
-          initialViewApplied = true;
-          applyInitialView();
-        } else {
-          invalidate();
-        }
-      });
-      resizeObserver.observe(mapElement.getContainer());
-
-      return () => resizeObserver.disconnect();
     }
     return undefined;
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -314,12 +247,44 @@ function MapView(props) {
     }
   }, [measuringMode]);
 
+  // Observe the wrapper div before MapContainer is created. MapContainer is
+  // only rendered once the wrapper has non-zero dimensions, so Leaflet never
+  // initialises with a 0×0 container.
+  const wrapperObserverRef = useRef(null);
+  const wrapperRef = useCallback((node) => {
+    if (wrapperObserverRef.current) {
+      wrapperObserverRef.current.disconnect();
+      wrapperObserverRef.current = null;
+    }
+    if (!node) return;
+    if (typeof ResizeObserver === 'undefined') {
+      setContainerReady(true);
+      return;
+    }
+    const observer = new ResizeObserver(([entry]) => {
+      const { width, height } = entry.contentRect;
+      if (width && height) {
+        setContainerReady(true);
+        observer.disconnect();
+        wrapperObserverRef.current = null;
+      }
+    });
+    wrapperObserverRef.current = observer;
+    observer.observe(node);
+  }, []);
+
   const unitHasLocationAndGeometry = (un) => un?.location && un?.geometry;
 
   const unitHasLineStringLocationAndGeometry = (un) =>
     un?.location && un?.geometry && un?.geometry?.type === 'MultiLineString';
 
   // Render
+
+  const wrapperClass = css({
+    height: '100%',
+    flex: '1 0 auto',
+    zIndex: theme.zIndex.forward,
+  });
 
   const renderUnitGeometry = () => {
     if (highlightedDistrict) return null;
@@ -334,10 +299,11 @@ function MapView(props) {
     return null;
   };
 
-  if (globalThis.rL && mapObject) {
+  if (containerReady && globalThis.rL && mapObject) {
     const { MapContainer, TileLayer, WMSTileLayer } = globalThis.rL || {};
     let center = mapOptions.initialPosition;
     let zoom = isMobile ? mapObject.options.mobileZoom : mapObject.options.zoom;
+    const defaultBounds = parseBboxFromLocation(location);
     // If changing map type, use viewport values of previous map
     if (prevMap && mapHasMapPane(prevMap)) {
       center = prevMap.getCenter() || prevMap.options.center;
@@ -347,17 +313,25 @@ function MapView(props) {
       zoom = prevMap.getZoom()
         ? prevMap.getZoom() + zoomDifference
         : prevMap.options.zoom + zoomDifference;
+    } else if (
+      !defaultBounds &&
+      currentPage === 'unit' &&
+      highlightedUnit?.location?.coordinates
+    ) {
+      // Start map at unit position so MarkerCluster's initial bounds include the unit.
+      const [lng, lat] = highlightedUnit.location.coordinates;
+      center = [lat, lng];
+      zoom = mapObject.options.unitZoom;
     }
 
     const userLocationAriaLabel = intl.formatMessage({
       id: !userLocation ? 'location.notAllowed' : 'location.center',
     });
     const eventSearch = parseSearchParams(location.search).events;
-    const defaultBounds = parseBboxFromLocation(location);
 
     const mapClass = css({
       height: '100%',
-      flex: '1 0 auto',
+      width: '100%',
       '& .leaflet-bottom.leaflet-right .leaflet-control button,a': {
         '&:hover': {
           color: '#347865 !important',
@@ -372,7 +346,6 @@ function MapView(props) {
         outline: '2px solid transparent',
         boxShadow: `0 0 0 4px ${theme.palette.focusBorder.main}`,
       },
-      zIndex: theme.zIndex.forward,
     });
     const mapNoSidebarClass = css({
       '&:focus': {
@@ -385,148 +358,150 @@ function MapView(props) {
     });
 
     return (
-      <MapContainer
-        tap={false} // This should fix leaflet safari double click bug
-        className={`${mapClass} ${embedded ? mapNoSidebarClass : ''} `}
-        key={mapObject.options.name}
-        zoomControl={false}
-        bounds={getBoundsFromBbox(defaultBounds)}
-        doubleClickZoom={false}
-        crs={mapObject.crs}
-        center={!defaultBounds ? center : null}
-        zoom={zoom}
-        minZoom={mapObject.options.minZoom}
-        maxZoom={mapObject.options.maxZoom}
-        unitZoom={mapObject.options.unitZoom}
-        detailZoom={mapObject.options.detailZoom}
-        maxBounds={mapObject.options.mapBounds || mapOptions.defaultMaxBounds}
-        maxBoundsViscosity={1.0}
-        ref={(map) => {
-          setMapElement(map);
-          setMapRef(map);
-        }}
-      >
-        {eventSearch ? (
-          <EventMarkers searchData={unitData} />
-        ) : (
-          <MarkerCluster
-            data={unitData}
-            measuringMode={measuringMode}
-            disableInteraction={disableInteraction}
-          />
-        )}
-        {renderUnitGeometry()}
-        {mapObject.options.name === 'ortographic' &&
-        mapObject.options.wmsUrl !== 'undefined' ? (
-          // Use WMS service for ortographic maps, because HSY's WMTS tiling does not work
-          <WMSTileLayer
-            url={mapObject.options.wmsUrl}
-            layers={mapObject.options.wmsLayerName}
-            attribution={intl.formatMessage({
-              id: mapObject.options.attribution,
-            })}
-          />
-        ) : (
-          <TileLayer
-            url={mapObject.options.url}
-            attribution={intl.formatMessage({
-              id: mapObject.options.attribution,
-            })}
-          />
-        )}
-        {showLoadingScreen ? (
-          <StyledLoadingScreenContainer>
-            <Loading
-              reducer={loadingReducer}
-              hideNumbers={hideLoadingNumbers}
+      <div ref={wrapperRef} className={wrapperClass}>
+        <MapContainer
+          tap={false} // This should fix leaflet safari double click bug
+          className={`${mapClass} ${embedded ? mapNoSidebarClass : ''} `}
+          key={mapObject.options.name}
+          zoomControl={false}
+          bounds={getBoundsFromBbox(defaultBounds)}
+          doubleClickZoom={false}
+          crs={mapObject.crs}
+          center={!defaultBounds ? center : null}
+          zoom={zoom}
+          minZoom={mapObject.options.minZoom}
+          maxZoom={mapObject.options.maxZoom}
+          unitZoom={mapObject.options.unitZoom}
+          detailZoom={mapObject.options.detailZoom}
+          maxBounds={mapObject.options.mapBounds || mapOptions.defaultMaxBounds}
+          maxBoundsViscosity={1.0}
+          ref={(map) => {
+            setMapElement(map);
+            setMapRef(map);
+          }}
+        >
+          {eventSearch ? (
+            <EventMarkers searchData={unitData} />
+          ) : (
+            <MarkerCluster
+              data={unitData}
+              measuringMode={measuringMode}
+              disableInteraction={disableInteraction}
             />
-          </StyledLoadingScreenContainer>
-        ) : null}
-        <StatisticalDistricts />
-        <Districts mapOptions={mapOptions} embedded={embedded} />
-        <TransitStops mapObject={mapObject} />
+          )}
+          {renderUnitGeometry()}
+          {mapObject.options.name === 'ortographic' &&
+          mapObject.options.wmsUrl !== 'undefined' ? (
+            // Use WMS service for ortographic maps, because HSY's WMTS tiling does not work
+            <WMSTileLayer
+              url={mapObject.options.wmsUrl}
+              layers={mapObject.options.wmsLayerName}
+              attribution={intl.formatMessage({
+                id: mapObject.options.attribution,
+              })}
+            />
+          ) : (
+            <TileLayer
+              url={mapObject.options.url}
+              attribution={intl.formatMessage({
+                id: mapObject.options.attribution,
+              })}
+            />
+          )}
+          {showLoadingScreen ? (
+            <StyledLoadingScreenContainer>
+              <Loading
+                reducer={loadingReducer}
+                hideNumbers={hideLoadingNumbers}
+              />
+            </StyledLoadingScreenContainer>
+          ) : null}
+          <StatisticalDistricts />
+          <Districts mapOptions={mapOptions} embedded={embedded} />
+          <TransitStops mapObject={mapObject} />
 
-        {!embedded && !measuringMode && (
-          // Draw address popoup on mapclick to map
-          <AddressPopup navigator={navigator} />
-        )}
-
-        {currentPage === 'address' && <AddressMarker embedded={embedded} />}
-
-        {currentPage === 'unit' &&
-          highlightedUnit?.entrances?.length &&
-          unitHasLocationAndGeometry(highlightedUnit) && <EntranceMarker />}
-
-        {!disableInteraction &&
-          currentPage === 'unit' &&
-          unitHasLineStringLocationAndGeometry(highlightedUnit) && (
-            <ElevationControl unit={highlightedUnit} isMobile={isMobile} />
+          {!embedded && !measuringMode && (
+            // Draw address popoup on mapclick to map
+            <AddressPopup navigator={navigator} />
           )}
 
-        {!hideUserMarker && userLocation && (
-          <UserMarker
-            position={[userLocation.latitude, userLocation.longitude]}
-            onClick={() => {
-              navigateToAddress({
-                lat: userLocation.latitude,
-                lng: userLocation.longitude,
-              });
-            }}
-          />
-        )}
+          {currentPage === 'address' && <AddressMarker embedded={embedded} />}
 
-        {measuringMode && (
-          <DistanceMeasure
-            markerArray={measuringMarkers}
-            setMarkerArray={setMeasuringMarkers}
-            lineArray={measuringLine}
-            setLineArray={setMeasuringLine}
-          />
-        )}
+          {currentPage === 'unit' &&
+            highlightedUnit?.entrances?.length > 0 &&
+            unitHasLocationAndGeometry(highlightedUnit) && <EntranceMarker />}
 
-        <CustomControls position="topleft">
-          {!isMobile && !embedded && toggleSidebar ? (
-            <HideSidebarButton
-              sidebarHidden={sidebarHidden}
-              toggleSidebar={toggleSidebar}
+          {!disableInteraction &&
+            currentPage === 'unit' &&
+            unitHasLineStringLocationAndGeometry(highlightedUnit) && (
+              <ElevationControl unit={highlightedUnit} isMobile={isMobile} />
+            )}
+
+          {!hideUserMarker && userLocation && (
+            <UserMarker
+              position={[userLocation.latitude, userLocation.longitude]}
+              onClick={() => {
+                navigateToAddress({
+                  lat: userLocation.latitude,
+                  lng: userLocation.longitude,
+                });
+              }}
             />
-          ) : null}
-        </CustomControls>
+          )}
 
-        <CustomControls position="topright">
-          <MapLegend data={unitData} userLocation={userLocation} />
-        </CustomControls>
+          {measuringMode && (
+            <DistanceMeasure
+              markerArray={measuringMarkers}
+              setMarkerArray={setMeasuringMarkers}
+              lineArray={measuringLine}
+              setLineArray={setMeasuringLine}
+            />
+          )}
 
-        {!disableInteraction ? (
-          <CustomControls position="bottomright">
-            {!embedded ? (
-              /* Custom user location map button */
-              <div key="userLocation" className="UserLocation">
-                <StyledShowLocationButton
-                  aria-hidden
-                  aria-label={userLocationAriaLabel}
-                  disabled={!userLocation}
-                  onClick={() => focusOnUser()}
-                  focusVisibleClassName={locationButtonFocusClass}
-                >
-                  {userLocation ? (
-                    <StyledMyLocation />
-                  ) : (
-                    <StyledLocationDisabled />
-                  )}
-                </StyledShowLocationButton>
-              </div>
+          <CustomControls position="topleft">
+            {!isMobile && !embedded && toggleSidebar ? (
+              <HideSidebarButton
+                sidebarHidden={sidebarHidden}
+                toggleSidebar={toggleSidebar}
+              />
             ) : null}
-
-            <PanControl key="panControl" />
           </CustomControls>
-        ) : null}
-        <CoordinateMarker position={getCoordinatesFromUrl(location)} />
-        <EmbeddedActions />
-      </MapContainer>
+
+          <CustomControls position="topright">
+            <MapLegend data={unitData} userLocation={userLocation} />
+          </CustomControls>
+
+          {!disableInteraction ? (
+            <CustomControls position="bottomright">
+              {!embedded ? (
+                /* Custom user location map button */
+                <div key="userLocation" className="UserLocation">
+                  <StyledShowLocationButton
+                    aria-hidden
+                    aria-label={userLocationAriaLabel}
+                    disabled={!userLocation}
+                    onClick={() => focusOnUser()}
+                    focusVisibleClassName={locationButtonFocusClass}
+                  >
+                    {userLocation ? (
+                      <StyledMyLocation />
+                    ) : (
+                      <StyledLocationDisabled />
+                    )}
+                  </StyledShowLocationButton>
+                </div>
+              ) : null}
+
+              <PanControl key="panControl" />
+            </CustomControls>
+          ) : null}
+          <CoordinateMarker position={getCoordinatesFromUrl(location)} />
+          <EmbeddedActions />
+        </MapContainer>
+      </div>
     );
   }
-  return null;
+  return <div ref={wrapperRef} className={wrapperClass} />;
 }
 
 export default MapView;
