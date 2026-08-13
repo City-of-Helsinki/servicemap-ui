@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.17.7](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.17.6...servicemap-ui-v2.17.7) (2026-08-13)
+
+
+### Bug Fixes
+
+* Disable bounds-culling for embedded map views ([7ece77d](https://github.com/City-of-Helsinki/servicemap-ui/commit/7ece77dd5325af9b70179115526ce6ac66abe78c))
+
 ## [2.17.6](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.17.5...servicemap-ui-v2.17.6) (2026-08-12)
 
 
