@@ -24,7 +24,6 @@ function BackButton(props) {
     onClick = null,
     style = {},
     variant = null,
-    srHidden = false,
     ariaLabel = null,
     text = null,
     focusVisibleClassName = null,
@@ -74,7 +73,6 @@ function BackButton(props) {
       role="link"
       className={`SMBackButton ${className}`}
       style={style}
-      aria-hidden={srHidden}
       aria-label={ariaLabel || buttonTitle}
       onClick={(e) => onClickAction(e)}
     >
@@ -97,7 +95,6 @@ function BackButton(props) {
         data-sm="BackButton"
         className={`SMBackButton ${className}`}
         style={style}
-        aria-hidden={srHidden}
         aria-label={ariaLabel || buttonText}
         focusVisibleClassName={focusVisibleClassName}
         onClick={(e) => onClickAction(e)}
@@ -121,7 +118,6 @@ function BackButton(props) {
 
   return (
     <Button
-      aria-hidden={srHidden}
       aria-label={ariaLabel || buttonText}
       data-sm="BackButton"
       className="SMBackButton"
@@ -176,7 +172,6 @@ BackButton.propTypes = {
   style: PropTypes.objectOf(PropTypes.any),
   onClick: PropTypes.func,
   variant: PropTypes.oneOf(['container', 'icon', 'topBackButton', null]),
-  srHidden: PropTypes.bool,
   ariaLabel: PropTypes.string,
   text: PropTypes.string,
   focusVisibleClassName: PropTypes.string,

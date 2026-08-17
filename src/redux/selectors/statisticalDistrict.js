@@ -75,13 +75,13 @@ export const getSelectedStatisticalDistricts = createSelector(
               selectedProportion,
               proportionScales
             );
-          const number = parseInt(value);
+          const number = Number.parseInt(value);
           const selectedValue = Number.isNaN(number) ? undefined : number;
           return {
             ...d,
             selectedProportion:
               typeof selectedProportion === 'string'
-                ? parseInt(selectedProportion)
+                ? Number.parseInt(selectedProportion)
                 : selectedProportion,
             selectedScaleAdjustedProportion,
             selectedValue,

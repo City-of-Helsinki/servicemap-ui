@@ -262,7 +262,7 @@ function DefaultLayout() {
             <Typography style={visuallyHidden}>
               {intl.formatMessage({ id: 'map.ariaLabel' })}
             </Typography>
-            <div aria-hidden tabIndex={-1} style={styles.map}>
+            <div style={styles.map}>
               <Suspense fallback={<Loading />}>
                 <MapView
                   sidebarHidden={sidebarHidden}

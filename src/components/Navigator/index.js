@@ -3,7 +3,7 @@ import React, { useCallback } from 'react';
 import { connect } from 'react-redux';
 
 import { setNavigatorRef } from '../../redux/actions/navigator';
-import Navigator from './Navigator';
+import WrappedNavigator from './Navigator';
 
 /**
  * Wrapper component for Navigator for saving ref to redux state
@@ -16,7 +16,7 @@ const NavigatorWrapper = ({ setNavigatorRef }) => {
     [setNavigatorRef]
   );
 
-  return <Navigator ref={saveNavigatorRef} />;
+  return <WrappedNavigator ref={saveNavigatorRef} />;
 };
 
 NavigatorWrapper.propTypes = {

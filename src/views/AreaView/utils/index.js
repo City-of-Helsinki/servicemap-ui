@@ -1,6 +1,7 @@
 export const sortByOriginID = (districts) => {
   districts.sort(
-    (a, b) => parseInt(a.origin_id, 10) - parseInt(b.origin_id, 10)
+    (a, b) =>
+      Number.parseInt(a.origin_id, 10) - Number.parseInt(b.origin_id, 10)
   );
 };
 

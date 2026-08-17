@@ -205,7 +205,7 @@ const fetchSearchResults =
           if (eventUnit) {
             eventUnit.object_type = 'unit';
             if (typeof eventUnit.id === 'string') {
-              eventUnit.id = parseInt(eventUnit.id.match(/[0-9]+/g), 10);
+              eventUnit.id = Number.parseInt(eventUnit.id.match(/[0-9]+/g), 10);
             }
           }
         });

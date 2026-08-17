@@ -88,7 +88,7 @@ function UnitView(props) {
   const { unit: unitParam } = useParams();
 
   const checkCorrectUnit = (unit) =>
-    unit && unit.id === parseInt(unitParam, 10);
+    unit && unit.id === Number.parseInt(unitParam, 10);
 
   const [unit, setUnit] = useState(
     checkCorrectUnit(stateUnit) ? stateUnit : null

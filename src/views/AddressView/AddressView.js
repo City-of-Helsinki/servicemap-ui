@@ -350,7 +350,7 @@ function AddressView({ embed = false }) {
 
   useEffect(() => {
     const searchParams = parseSearchParams(location.search);
-    const selectedTab = parseInt(searchParams.t, 10) || 0;
+    const selectedTab = Number.parseInt(searchParams.t, 10) || 0;
     if (tabs[selectedTab].onClick) {
       tabs[selectedTab].onClick();
     }

@@ -49,13 +49,13 @@ export const getAddressText = (
   showPostalCode = true
 ) => {
   if (typeof getLocaleText !== 'function') {
-    throw Error('getAddressText requires getLocaleText function');
+    throw new TypeError('getAddressText requires getLocaleText function');
   }
 
   if (address) {
     const nameObject = address.full_name || address.name;
     if (!nameObject)
-      throw Error('getAddressText received address with no name');
+      throw new TypeError('getAddressText received address with no name');
 
     const addressName = getLocaleText(nameObject);
     const municipality = getLocaleText(address.municipality.name);

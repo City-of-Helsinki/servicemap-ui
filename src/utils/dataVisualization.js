@@ -87,14 +87,14 @@ class DataVisualization {
 
   getYearByAge = (category) =>
     this.isByAge(category)
-      ? parseInt(
+      ? Number.parseInt(
           category.slice(0, category.indexOf(this.POPULATION_BY_AGE_STRING))
         )
       : undefined;
 
   getYearForecast = (category) =>
     this.isForecast(category)
-      ? parseInt(
+      ? Number.parseInt(
           category.slice(0, category.indexOf(this.POPULATION_BY_AGE_STRING))
         )
       : undefined;

@@ -18,7 +18,7 @@ import { selectBreadcrumb } from '../../redux/selectors/general';
 import { selectResultsPreviousSearch } from '../../redux/selectors/results';
 import { generatePath as generatePathUtil, isEmbed } from '../../utils/path';
 
-const Navigator = forwardRef((props, ref) => {
+const NavigatorComponent = forwardRef((props, ref) => {
   const { breadcrumb, breadcrumbPush, breadcrumbPop } = props;
 
   const location = useLocation();
@@ -97,11 +97,13 @@ const Navigator = forwardRef((props, ref) => {
           const path = generatePath(target, data);
           navigate(path);
           breadcrumbPush({ location, focusTarget });
-        } else if (typeof target === 'object') {
+        } else if (target !== null && typeof target === 'object') {
           navigate(target);
           breadcrumbPush({ location, focusTarget });
         } else {
-          throw Error(`Invalid target given to navigator push: ${target}`);
+          throw new TypeError(
+            `Invalid target given to navigator push: ${target}`
+          );
         }
       } catch (e) {
         console.warn('Warning:', e.message);
@@ -120,10 +122,10 @@ const Navigator = forwardRef((props, ref) => {
       try {
         if (typeof target === 'string') {
           navigate(generatePath(target, data), { replace: true });
-        } else if (typeof target === 'object') {
+        } else if (target !== null && typeof target === 'object') {
           navigate(target, { replace: true });
         } else {
-          throw Error('Invalid target given to navigator replace');
+          throw new TypeError('Invalid target given to navigator replace');
         }
       } catch (e) {
         console.warn('Warning:', e.message);
@@ -138,7 +140,7 @@ const Navigator = forwardRef((props, ref) => {
 
     url.searchParams.set('showMap', 'true');
     // TODO: better way to normalize spaces in url
-    const searchString = url.search.replace('+', ' ');
+    const searchString = url.search.replaceAll('+', ' ');
     navigate(url.pathname + searchString);
   }, [navigate]);
 
@@ -222,7 +224,7 @@ const Navigator = forwardRef((props, ref) => {
   return null;
 });
 
-Navigator.propTypes = {
+NavigatorComponent.propTypes = {
   breadcrumb: PropTypes.arrayOf(PropTypes.any).isRequired,
   breadcrumbPush: PropTypes.func.isRequired,
   breadcrumbPop: PropTypes.func.isRequired,
@@ -243,4 +245,6 @@ export default connect(
   },
   null,
   { forwardRef: true }
-)(Navigator);
+)(NavigatorComponent);
+
+export { NavigatorComponent as UnconnectedNavigator };

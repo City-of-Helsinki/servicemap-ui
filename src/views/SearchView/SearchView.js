@@ -58,7 +58,7 @@ import {
   parseBboxFromLocation,
 } from '../../utils/mapUtility';
 import { isEmbed } from '../../utils/path';
-import optionsToSearchQuery from '../../utils/search';
+import optionsToSearchQuery, { removeTrailingNumber } from '../../utils/search';
 import SettingsUtility from '../../utils/settings';
 import fetchAddressData from '../AddressView/utils/fetchAddressData';
 import { fitUnitsToMap } from '../MapView/utils/mapActions';
@@ -214,11 +214,9 @@ function SearchView() {
   function fetchSearchResultsWithoutNumber(searchQuery) {
     // Check if search query ends with number and fetch data without it.
     // This is for searching addresses with street number in case of no results.
-    if (searchQuery && searchQuery.match(/\d$/)) {
-      const newSearchQuery = searchQuery.replace(/\d+$/, '');
-      if (newSearchQuery && newSearchQuery !== searchQuery) {
-        dispatch(fetchSearchResults({ q: newSearchQuery }));
-      }
+    const newSearchQuery = removeTrailingNumber(searchQuery);
+    if (newSearchQuery && newSearchQuery !== searchQuery) {
+      dispatch(fetchSearchResults({ q: newSearchQuery }));
     }
   }
 
@@ -320,7 +318,7 @@ function SearchView() {
 
   async function handleAddressParam(hcity, hstreet) {
     if (hcity && hstreet) {
-      fetchAddressData(hcity, hstreet.replace('+', ' ')).then((address) => {
+      fetchAddressData(hcity, hstreet.replaceAll('+', ' ')).then((address) => {
         if (address?.length) {
           handleUserAddressChange(address[0]);
         }

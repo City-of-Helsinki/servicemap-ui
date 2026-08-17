@@ -276,7 +276,7 @@ function AreaView({ embed = false }) {
       if (searchParams.services) {
         const services = searchParams.services.split(',');
         const convertedServices = services.map((service) =>
-          parseInt(service, 10)
+          Number.parseInt(service, 10)
         );
         dispatch(setSelectedDistrictServices(convertedServices));
       }

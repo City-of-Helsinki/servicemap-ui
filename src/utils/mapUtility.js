@@ -28,7 +28,7 @@ const isFloat = (val) => {
     return false;
   }
 
-  const parsed = parseFloat(val);
+  const parsed = Number.parseFloat(val);
   return !Number.isNaN(parsed);
 };
 

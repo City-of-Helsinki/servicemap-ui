@@ -305,11 +305,7 @@ function SearchBar({
         autoComplete="off"
       >
         {(!hideBackButton || (isActive && isMobile)) && (
-          <StyledBackButton
-            onClick={backButtonEvent}
-            variant="icon"
-            srHidden={!!hideBackButton}
-          />
+          <StyledBackButton onClick={backButtonEvent} variant="icon" />
         )}
         <StyledInputBase
           inputProps={{

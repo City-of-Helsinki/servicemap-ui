@@ -11,6 +11,14 @@ import { parseSearchParams, stringifySearchParams } from '../../../utils';
 import PaginationComponent from '../../PaginationComponent';
 import ResultList from '../ResultList';
 
+export const getSearchPageNumber = (search) => {
+  const searchPageNum = Number.parseInt(
+    new URLSearchParams(search).get('p'),
+    10
+  );
+  return !Number.isNaN(searchPageNum) ? searchPageNum : 1;
+};
+
 function PaginatedList({
   beforePagination = null,
   customComponent = null,
@@ -24,11 +32,7 @@ function PaginatedList({
 }) {
   const navigator = useSelector(selectNavigator);
   const location = useLocation();
-  const searchPageNum = parseInt(
-    new URLSearchParams(location.search).get('p'),
-    10
-  ); // Get query parameter
-  const defaultPageNum = !Number.isNaN(searchPageNum) ? searchPageNum : 1;
+  const defaultPageNum = getSearchPageNumber(location.search);
   const [currentPage, setCurrentPage] = useState(defaultPageNum);
   const [windowHeight, setWindowHeight] = useState(0);
   const intl = useIntl();

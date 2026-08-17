@@ -250,7 +250,7 @@ function AccessibilityInfo({ titleAlways = false, headingLevel }) {
   };
 
   if (headingLevel < 1 || headingLevel > 5) {
-    throw Error('Heading level is invalid');
+    throw new Error('Heading level is invalid');
   }
   const shortcomings = parseAccessibilityShortcomings();
   const { data } = accessibilitySentences;

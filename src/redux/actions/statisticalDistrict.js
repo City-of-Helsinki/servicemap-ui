@@ -235,8 +235,8 @@ const calculateProportionScales = (data, section, isForecast) => {
         const max = Math.max(...proportions);
         proportionScales = {
           min: 0.0,
-          average: parseFloat((max / 2).toFixed(2)),
-          max: parseFloat(max.toFixed(2)),
+          average: Number.parseFloat((max / 2).toFixed(2)),
+          max: Number.parseFloat(max.toFixed(2)),
         };
       }
     }

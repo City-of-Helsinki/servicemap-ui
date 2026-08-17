@@ -10,7 +10,9 @@ const halfDay = 43200000; // Half day in milliseconds
 const updateWeights = (jsonData) => {
   const today = new Date();
   const nextUpdate = LocalStorageUtility.getItem(nextUpdateKey) || false;
-  const nextUpdateDate = nextUpdate ? new Date(parseInt(nextUpdate, 10)) : null;
+  const nextUpdateDate = nextUpdate
+    ? new Date(Number.parseInt(nextUpdate, 10))
+    : null;
 
   if (!nextUpdateDate) {
     LocalStorageUtility.saveItem(nextUpdateKey, today.getTime());

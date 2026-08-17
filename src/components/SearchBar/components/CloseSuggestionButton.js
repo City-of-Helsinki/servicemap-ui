@@ -19,7 +19,7 @@ export function CloseSuggestionButton({
   try {
     if (srOnly) {
       if (!onKeyPress) {
-        throw Error('Missing onKeyPress prop for CloseSuggestionButton');
+        throw new Error('Missing onKeyPress prop for CloseSuggestionButton');
       }
       return (
         <Typography
@@ -35,7 +35,7 @@ export function CloseSuggestionButton({
       );
     }
     if (!onKeyDown) {
-      throw Error('Missing onKeyDown prop for CloseSuggestionButton');
+      throw new Error('Missing onKeyDown prop for CloseSuggestionButton');
     }
     return (
       <div

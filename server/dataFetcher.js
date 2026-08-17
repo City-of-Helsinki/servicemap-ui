@@ -59,7 +59,7 @@ export const fetchEventData = (req, res, next) => {
   try {
     const id = getParamID(req, paths.event.regex);
     if (!id) {
-      throw Error('Current path not valid for event fetching');
+      throw new Error('Current path not valid for event fetching');
     }
 
     const { controller, timeout } = abortTimeout(next);
@@ -118,7 +118,7 @@ export const fetchSelectedUnitData = (req, res, next) => {
     const id = getParamID(req, paths.unit.regex);
 
     if (!id) {
-      throw Error('Current path not valid for unit page fetching');
+      throw new Error('Current path not valid for unit page fetching');
     }
 
     const store = req._context;
