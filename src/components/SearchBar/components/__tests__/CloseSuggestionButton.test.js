@@ -19,6 +19,28 @@ const mockProps = {
 const renderWithProviders = getRenderWithProviders({});
 
 describe('<CloseSuggestionButton />', () => {
+  it('logs an error when the visible button has no key handler', () => {
+    const error = vi.spyOn(console, 'error').mockImplementation(() => {});
+
+    renderWithProviders(
+      <CloseSuggestionButton {...mockProps} onKeyDown={undefined} />
+    );
+
+    expect(error).toHaveBeenCalled();
+    error.mockRestore();
+  });
+
+  it('logs an error when the screen-reader button has no key handler', () => {
+    const error = vi.spyOn(console, 'error').mockImplementation(() => {});
+
+    renderWithProviders(
+      <CloseSuggestionButton {...mockProps} onKeyPress={undefined} srOnly />
+    );
+
+    expect(error).toHaveBeenCalled();
+    error.mockRestore();
+  });
+
   it('should work', () => {
     const { container } = renderWithProviders(
       <CloseSuggestionButton {...mockProps} />

@@ -51,7 +51,7 @@ const showCitiesAndOrganisations = (embedUrl) => {
   if (typeof embedUrl !== 'string') {
     return false;
   }
-  const originalUrl = embedUrl.replace('/embed', '');
+  const originalUrl = embedUrl.replaceAll('/embed', '');
   return hideCitiesAndOrgsIn.every((r) => !r.test(originalUrl));
 };
 
@@ -241,8 +241,9 @@ function EmbedderView() {
             ></iframe>
           </div>`;
         } else {
-          height = parseInt(
-            parseInt(customWidth, 10) * (parseInt(ratioHeight, 10) / 100.0),
+          height = Number.parseInt(
+            Number.parseInt(customWidth, 10) *
+              (Number.parseInt(ratioHeight, 10) / 100.0),
             10
           );
         }
@@ -280,7 +281,7 @@ function EmbedderView() {
     if (typeof embedUrl !== 'string') {
       return false;
     }
-    const originalUrl = embedUrl.replace('/embed', '');
+    const originalUrl = embedUrl.replaceAll('/embed', '');
     let show = true;
     hideServicesIn.forEach((r) => {
       if (show) {

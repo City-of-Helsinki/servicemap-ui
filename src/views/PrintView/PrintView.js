@@ -138,7 +138,7 @@ function PrintView({ togglePrintView }) {
   const getID = () => {
     const parts = location.pathname.split('/');
     const index = parts.indexOf('unit');
-    const id = parseInt(parts[index + 1], 10);
+    const id = Number.parseInt(parts[index + 1], 10);
     return id;
   };
   const unitID = getID();

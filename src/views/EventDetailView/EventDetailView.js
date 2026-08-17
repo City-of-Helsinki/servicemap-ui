@@ -111,7 +111,7 @@ function EventDetailView(props) {
               typeof unit.id === 'string' ? unit.id.split(':').pop() : unit.id;
             if (
               !UnitHelper.isValidUnit(selectedUnit) ||
-              parseInt(unitId, 10) !== selectedUnit.id
+              Number.parseInt(unitId, 10) !== selectedUnit.id
             ) {
               fetchSelectedUnit(unitId, (data) => {
                 centerMap(data);
@@ -130,7 +130,7 @@ function EventDetailView(props) {
           typeof unit.id === 'string' ? unit.id.split(':').pop() : unit.id;
         if (
           !UnitHelper.isValidUnit(selectedUnit) ||
-          parseInt(unitId, 10) !== selectedUnit.id
+          Number.parseInt(unitId, 10) !== selectedUnit.id
         ) {
           fetchSelectedUnit(unitId);
         }

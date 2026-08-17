@@ -426,7 +426,7 @@ function MarkerCluster({
     const iconClasses = unitClasses.join(' ');
     const icon = globalThis.L.divIcon({
       html: `
-        <div class="${bgCircleClass} ${markerCircleClass} ${iconClasses}" aria-hidden="true" tabindex="-1">
+        <div class="${bgCircleClass} ${markerCircleClass} ${iconClasses}" aria-hidden="true">
           <div
             class="${outerCircleClass} ${markerCircleClass}"
             aria-hidden="true"

@@ -14,7 +14,6 @@ exports[`<InfoView /> > should render content 1`] = `
           class="css-aly0ju"
         >
           <button
-            aria-hidden="false"
             aria-label="Go to home page"
             class="MuiButtonBase-root SMBackButton css-28cnn6-MuiButtonBase-root"
             data-sm="BackButton"

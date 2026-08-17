@@ -124,13 +124,13 @@ class UnitHelper {
 
   static unitElementClick = (navigator, unit) => {
     if (typeof window === 'undefined') {
-      throw Error("Can't run unitElementClick without window");
+      throw new TypeError("Can't run unitElementClick without window");
     }
     if (!navigator || !navigator.push || !navigator.replace) {
-      throw Error('Invalid navigator argument given.');
+      throw new TypeError('Invalid navigator argument given.');
     }
     if (!unit || (typeof unit !== 'number' && !unit.id)) {
-      throw Error('Invalid unit argument given.');
+      throw new TypeError('Invalid unit argument given.');
     }
     const id = typeof unit === 'number' ? unit : unit.id;
     const embeded = isEmbed();

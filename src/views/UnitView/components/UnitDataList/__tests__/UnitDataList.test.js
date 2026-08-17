@@ -159,7 +159,7 @@ describe('<UnitDataList />', () => {
   it('renders correct event count number in button', () => {
     const { getByText } = renderWithProviders(<UnitDataList {...mockProps} />);
     const moreButton = getByText('Show more events', { exact: false });
-    const numberInButtonText = parseInt(
+    const numberInButtonText = Number.parseInt(
       moreButton.textContent.match(/\d+/)[0],
       10
     );
@@ -170,7 +170,7 @@ describe('<UnitDataList />', () => {
   it('renders correct services count number in schoool services button', () => {
     const { getByText } = renderWithProviders(<UnitDataList {...mockProps2} />);
     const moreButton = getByText('Show more services', { exact: false });
-    const numberInButtonText = parseInt(
+    const numberInButtonText = Number.parseInt(
       moreButton.textContent.match(/\d+/)[0],
       10
     );

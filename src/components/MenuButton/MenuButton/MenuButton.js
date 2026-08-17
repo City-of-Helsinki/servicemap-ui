@@ -98,7 +98,6 @@ class MenuButton extends React.Component {
                 onBlur={this.closeMenuOnFocusExit}
                 component="span"
                 tabIndex={0}
-                aria-hidden={v.ariaHidden}
               >
                 <span>{v.icon}</span>
                 <Typography
@@ -113,12 +112,9 @@ class MenuButton extends React.Component {
             </React.Fragment>
           ))}
           {children}
-          <div
-            aria-hidden
-            role="button"
-            tabIndex="0"
-            onFocus={() => this.handleClose()}
-          />
+          {/* Focus sentinel intentionally has no interactive role. */}
+          {/* eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex */}
+          <div tabIndex="0" onFocus={() => this.handleClose()} />
         </StyledMenuPanel>
       </ClickAwayListener>
     );

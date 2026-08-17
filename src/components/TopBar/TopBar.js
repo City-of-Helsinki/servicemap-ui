@@ -349,7 +349,7 @@ const StyledNav = styled('nav')(() => ({
   height: '100%',
 }));
 const StyledNavigationButtonsContainer = styled('div')(({ theme, medium }) => ({
-  paddingLeft: (medium ? 0 : 88) + parseInt(theme.spacing(2.5), 10),
+  paddingLeft: (medium ? 0 : 88) + Number.parseInt(theme.spacing(2.5), 10),
   display: 'flex',
   flex: '1 1 auto',
 }));

@@ -15,6 +15,12 @@ import useMobileStatus from '../../utils/isMobile';
 import PaginatedList from '../Lists/PaginatedList';
 import ResultOrderer from '../ResultOrderer';
 
+export const getTabIndexFromSearch = (filteredData, searchParams) => {
+  let index = filteredData.findIndex((tab) => tab.id === searchParams.t);
+  if (index === -1) index = Number.parseInt(searchParams.t, 10) || 0;
+  return filteredData.length <= index ? 0 : index;
+};
+
 function TabLists({
   data,
   onTabChange = null,
@@ -30,14 +36,7 @@ function TabLists({
   const filteredData = data.filter(
     (item) => item.component || (item.data && item.data.length > 0)
   );
-  const getTabfromUrl = () => {
-    let index = filteredData.findIndex((tab) => tab.id === searchParams.t);
-    if (index === -1) index = parseInt(searchParams.t, 10) || 0;
-    if (filteredData.length <= index) {
-      return 0;
-    }
-    return index;
-  };
+  const getTabfromUrl = () => getTabIndexFromSearch(filteredData, searchParams);
 
   const sidebarClass = 'SidebarWrapper';
 

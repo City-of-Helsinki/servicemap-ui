@@ -12,4 +12,17 @@ const optionsToSearchQuery = (options) =>
   options.id ||
   options.events;
 
+export const removeTrailingNumber = (searchQuery) => {
+  if (!searchQuery) return searchQuery;
+
+  let numberStart = searchQuery.length;
+  while (numberStart > 0) {
+    const characterCode = searchQuery.codePointAt(numberStart - 1);
+    if (characterCode < 48 || characterCode > 57) break;
+    numberStart -= 1;
+  }
+
+  return searchQuery.slice(0, numberStart);
+};
+
 export default optionsToSearchQuery;

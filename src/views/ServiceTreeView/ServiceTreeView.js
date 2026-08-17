@@ -323,7 +323,7 @@ function ServiceTreeView({ intl, variant }) {
   };
 
   const drawOuterLines = (level, last, id) =>
-    [...Array(level)].map((none, i) => (
+    Array.from({ length: level }).map((none, i) => (
       <StyledOuterLines key={`outerLine${level + i}`}>
         {generateDrawPath(last, level === i + 1, i, id)}
       </StyledOuterLines>

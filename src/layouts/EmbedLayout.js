@@ -177,7 +177,7 @@ function EmbedLayout() {
   const renderEmbedOverlay = () => {
     const openApp = () => {
       const url = window.location.href;
-      window.open(url.replace('/embed', ''));
+      window.open(url.replaceAll('/embed', ''));
     };
     return (
       <ButtonBase
@@ -221,7 +221,7 @@ function EmbedLayout() {
 
         {selectedUnitData ? renderEmbeddedUnitInfo() : null}
 
-        <div aria-hidden tabIndex="-1" style={styles.map}>
+        <div style={styles.map}>
           <Suspense fallback={<Loading />}>
             <MapView />
           </Suspense>

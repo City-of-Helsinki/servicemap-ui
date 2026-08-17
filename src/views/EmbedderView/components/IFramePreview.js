@@ -40,8 +40,9 @@ function IFramePreview({
   }
   if (heightMode === 'ratio') {
     if (widthMode !== 'auto') {
-      height = parseInt(
-        parseInt(customWidth, 10) * (parseInt(ratioHeight, 10) / 100.0),
+      height = Number.parseInt(
+        Number.parseInt(customWidth, 10) *
+          (Number.parseInt(ratioHeight, 10) / 100.0),
         10
       );
     }

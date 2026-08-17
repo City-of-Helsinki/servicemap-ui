@@ -43,14 +43,14 @@ if (config.sentryDSN) {
         behaviour: 'drop-error-if-contains-third-party-frames',
       }),
     ],
-    tracesSampleRate: parseFloat(config.sentryTracesSampleRate || '0'),
+    tracesSampleRate: Number.parseFloat(config.sentryTracesSampleRate || '0'),
     tracePropagationTargets: (config.sentryTracePropagationTargets || '').split(
       ','
     ),
-    replaysSessionSampleRate: parseFloat(
+    replaysSessionSampleRate: Number.parseFloat(
       config.sentryReplaysSessionSampleRate || '0'
     ),
-    replaysOnErrorSampleRate: parseFloat(
+    replaysOnErrorSampleRate: Number.parseFloat(
       config.sentryReplaysOnErrorSampleRate || '0'
     ),
     initialScope: {

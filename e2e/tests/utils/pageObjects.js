@@ -330,7 +330,7 @@ export class UnitPage {
     // Links
     this.infoTabLinks = page.locator('#tab-content-0 li[role="link"]');
     this.accessibilityTabLinks = page.locator('#tab-content-1 li[role="link"]');
-    this.eventLinks = page.locator('main li[role="link"]');
+    this.eventLinks = page.locator('#paginatedList-events li[role="link"]');
     this.backButton = page.locator('[data-sm="BackButton"]');
     this.showMoreEventsButton = page.locator('#UniteventsButton');
 
