@@ -90,8 +90,8 @@ function App() {
   // Remove the server-side injected CSS.
   useEffect(() => {
     const jssStyles = document.getElementById('jss-server-side');
-    if (jssStyles && jssStyles.parentNode) {
-      jssStyles.parentNode.removeChild(jssStyles);
+    if (jssStyles) {
+      jssStyles.remove();
     }
   }, []);
 

@@ -174,7 +174,8 @@ function EmbedderView() {
       console.warn('Error while trying to get title text', e.message);
     }
 
-    return `${appTitle}${text ? ` - ${text}` : ''}`;
+    const suffix = text ? ` - ${text}` : '';
+    return `${appTitle}${suffix}`;
   };
 
   const iframeTitle = getTitleText();

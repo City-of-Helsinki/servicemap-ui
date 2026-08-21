@@ -43,7 +43,7 @@ function AccessibilityInfo({ titleAlways = false, headingLevel }) {
     const accessibilityShortcomings = unit.accessibility_description;
 
     if (!accessibilityShortcomings) {
-      return null;
+      return [];
     }
 
     const accessibilitySettings = SettingsUtility.accessibilityRelatedSettings;
@@ -70,7 +70,7 @@ function AccessibilityInfo({ titleAlways = false, headingLevel }) {
     });
 
     if (!shortcomingSettings.length) {
-      return 'noSettings';
+      return [];
     }
 
     // Create shortcoming data
@@ -103,7 +103,7 @@ function AccessibilityInfo({ titleAlways = false, headingLevel }) {
   const renderAccessibilityShortcomings = (heading, shortcomings) => {
     const data = shortcomings;
 
-    if (!data || data === 'noSettings' || data.length === 0) {
+    if (!data || data.length === 0) {
       return null;
     }
 

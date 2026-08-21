@@ -30,7 +30,7 @@ function DistrictToggleButton({
           role: 'button',
           'aria-setsize': selectionSize ? selectionSize.toString() : null,
           'aria-pressed': selected,
-          'aria-labelledby': `${`${district.id}Name`} ${`${district.id}Period`}`,
+          'aria-labelledby': `${district.id}Name ${district.id}Period`,
         }}
         onChange={(e) => onToggle(e)}
         checked={selected}

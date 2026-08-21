@@ -63,6 +63,10 @@ import { parseUnitViewUrlParams } from './utils/unitViewUrlParamAndSettingsHandl
 // Lazy load MapView to avoid server-side loading issues with react-leaflet
 const MapView = React.lazy(() => import('../MapView'));
 
+function splitLineBreakGetFirstItem(extraElement) {
+  return extraElement?.split('\n')?.[0];
+}
+
 function UnitView(props) {
   const {
     embed = false,
@@ -300,9 +304,6 @@ function UnitView(props) {
       };
     }
     const { extra } = unit;
-    function splitLineBreakGetFirstItem(extraElement) {
-      return extraElement?.split('\n')?.[0];
-    }
 
     if (extra) {
       const pictureUrl = splitLineBreakGetFirstItem(

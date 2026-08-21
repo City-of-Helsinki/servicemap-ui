@@ -20,8 +20,10 @@ function DistrictItemComponent({
   }
 
   const titleText = intl.formatMessage({ id: `area.list.${area.type}` });
-  const getCustomRescueAreaTitle = (area) =>
-    `${!title ? `${titleText} ` : ''}${area.origin_id} - ${getLocaleText(area.name)}`;
+  const getCustomRescueAreaTitle = (area) => {
+    const prefix = !title ? `${titleText} ` : '';
+    return `${prefix}${area.origin_id} - ${getLocaleText(area.name)}`;
+  };
 
   return (
     <Fragment key={area.id}>

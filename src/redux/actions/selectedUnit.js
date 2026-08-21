@@ -29,5 +29,5 @@ export const fetchSelectedUnit = (id, callback) => async (dispatch) => {
   const onError = (e) => dispatch(fetchError(e.message));
 
   // Fetch data
-  selectedUnitFetch(null, onStart, onSuccess, onError, null, id);
+  selectedUnitFetch(null, { onStart, onSuccess, onError }, id);
 };

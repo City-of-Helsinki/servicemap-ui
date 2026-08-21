@@ -159,25 +159,20 @@ const handleFetch = async (
  *  Fetch wrapper for handling fetch initialization
  *
  * @param {object} data - URL search params for fetch
- * @param {function} onStart - callback to run just before fetch
- * @param {function} onSuccess - callback for fetch success
- * @param {function} onError - callback for fetch error
- * @param {function} onNext - callback for fetch next (fetching next set of data)
+ * @param {object} callbacks - { onStart, onSuccess, onError, onNext } fetch lifecycle callbacks
  * @param {string} key - key value to access apihandler object
  * @param {number|string} id - optional id if url requires it
  * @param {AbortController} abortController - AbortController for fetch
  */
 const fetchWrapper = async (
   data,
-  onStart,
-  onSuccess,
-  onError,
-  onNext,
+  callbacks = {},
   key,
   id,
   abortController,
   overrideUrl
 ) => {
+  const { onStart, onSuccess, onError, onNext } = callbacks;
   if (!Object.keys(APIHandlers).includes(key)) {
     throw new Error('Invalid key provided to fetchWrapper');
   }

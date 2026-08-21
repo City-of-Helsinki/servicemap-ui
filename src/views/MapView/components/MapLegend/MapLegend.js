@@ -103,8 +103,12 @@ const MapLegend = ({ data, userLocation }) => {
                 <StyledIconWrapper aria-hidden="true">
                   <img
                     src={
-                      drawMarkerIcon(isContrastMode, 'legend-unit-icon', false)
-                        .options.iconUrl
+                      drawMarkerIcon(
+                        false,
+                        undefined,
+                        isContrastMode,
+                        'legend-unit-icon'
+                      ).options.iconUrl
                     }
                     alt=""
                   />
@@ -120,8 +124,12 @@ const MapLegend = ({ data, userLocation }) => {
                 <StyledIconWrapper aria-hidden="true">
                   <StyledEventIcon
                     src={
-                      drawMarkerIcon(isContrastMode, 'legend-event-icon', true)
-                        .options.iconUrl
+                      drawMarkerIcon(
+                        true,
+                        undefined,
+                        isContrastMode,
+                        'legend-event-icon'
+                      ).options.iconUrl
                     }
                     alt=""
                   />

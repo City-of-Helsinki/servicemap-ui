@@ -24,17 +24,7 @@ export const fetchReservations = (id) => async (dispatch) => {
   };
 
   try {
-    await reservationsFetch(
-      null,
-      onStart,
-      onSuccess,
-      onError,
-      null,
-      id,
-      null,
-      null,
-      null
-    );
+    await reservationsFetch(null, { onStart, onSuccess, onError }, id);
   } catch (e) {
     onError(e);
   }

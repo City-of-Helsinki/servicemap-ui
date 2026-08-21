@@ -9,7 +9,7 @@ import {
 import { parseSearchParams } from './index';
 import { getUnitCount } from './units';
 
-const PRIVATE_ORGANIZATION_TYPES = [10, 'PRIVATE_ENTERPRISE'];
+const PRIVATE_ORGANIZATION_TYPES = new Set([10, 'PRIVATE_ENTERPRISE']);
 
 export const filterEmptyServices = (cities, organizationIds) => (obj) => {
   if (!obj || obj.object_type !== 'service' || !obj.unit_count) {
@@ -45,7 +45,7 @@ const filterByOrganizationIds = (organizationIds) => {
     // we do not want private services
     if (
       contractTypeId === 'PRIVATE_SERVICE' ||
-      PRIVATE_ORGANIZATION_TYPES.includes(result.organizer_type)
+      PRIVATE_ORGANIZATION_TYPES.has(result.organizer_type)
     ) {
       return false;
     }

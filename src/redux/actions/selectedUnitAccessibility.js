@@ -132,7 +132,7 @@ export const fetchAccessibilitySentences = (id) => async (dispatch) => {
   const onError = (e) => dispatch(fetchError(e.message));
 
   // Fetch data
-  accessibilitySentencesFetch({}, onStart, onSuccess, onError, null, id);
+  accessibilitySentencesFetch({}, { onStart, onSuccess, onError }, id);
 };
 
 export default fetchAccessibilitySentences;

@@ -128,7 +128,7 @@ function Districts({
             unit.location.coordinates[1],
             unit.location.coordinates[0],
           ]}
-          icon={drawMarkerIcon(useContrast)}
+          icon={drawMarkerIcon(undefined, undefined, useContrast)}
           keyboard={false}
           eventHandlers={{
             click: () => {
@@ -224,30 +224,25 @@ function Districts({
       }
 
       let tooltipTitle;
+      const areaTypeLabel = intl.formatMessage({
+        id: `area.list.${district.type}`,
+      });
 
       if (numberOfUnits > 1) {
-        tooltipTitle = `${intl.formatMessage({
-          id: `area.list.${district.type}`,
-        })} - ${intl.formatMessage(
+        tooltipTitle = `${areaTypeLabel} - ${intl.formatMessage(
           { id: 'map.unit.cluster.popup.info' },
           { count: numberOfUnits }
         )}`;
       } else if (getCategoryDistricts('protection').includes(district.type)) {
-        tooltipTitle =
-          `${intl.formatMessage({ id: `area.list.${district.type}` })} ` +
-          `${district.origin_id} - ${getLocaleText(district.name)}`;
+        tooltipTitle = `${areaTypeLabel} ${district.origin_id} - ${getLocaleText(district.name)}`;
       } else if (district.name) {
         if (district.extra?.area_key) {
           tooltipTitle = `${intl.formatMessage(
             { id: 'parkingArea.popup.residentName' },
             { letter: district.extra.area_key }
-          )} (${getLocaleText(district.name)}) - ${intl.formatMessage({
-            id: `area.list.${district.type}`,
-          })}`;
+          )} (${getLocaleText(district.name)}) - ${areaTypeLabel}`;
         } else {
-          tooltipTitle =
-            `${getLocaleText(district.name)} - ` +
-            `${intl.formatMessage({ id: `area.list.${district.type}` })}`;
+          tooltipTitle = `${getLocaleText(district.name)} - ${areaTypeLabel}`;
         }
       }
 

@@ -239,8 +239,8 @@ function TabLists({
         >
           {filteredData.map((item, index) => {
             if (item.data && item.data.length > 0) {
-              const label =
-                `${item.title} ${item.component ? '' : `(${item.data.length})`}`.trim();
+              const countText = item.component ? '' : `(${item.data.length})`;
+              const label = `${item.title} ${countText}`.trim();
               const tabId = `${item.title}-${item.data.length}`;
 
               return (

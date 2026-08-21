@@ -43,7 +43,7 @@ export const selectParkingUnitUnits = createMemoizedArraySelector(
   [selectParkingUnitsMap],
   (parkingUnitsMap) =>
     Object.values(parkingUnitsMap)
-      .flatMap((x) => x)
+      .flat()
       .filter((unit) => unit.object_type === 'unit')
 );
 

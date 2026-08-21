@@ -12,6 +12,17 @@ import useLocaleText from '../../../utils/useLocaleText';
 import SMLink from '../../Link';
 import UnitIcon from '../../SMIcon/UnitIcon';
 
+function getDivisionTitle(intl, area, disableTitle, customTitle, aStart, aEnd) {
+  if (customTitle) {
+    return customTitle;
+  }
+  const baseTitle = disableTitle
+    ? null
+    : intl.formatMessage({ id: `area.list.${area.type}` });
+  const yearsSuffix = aStart && aEnd ? ` ${aStart}-${aEnd}` : '';
+  return `${baseTitle}${yearsSuffix}`;
+}
+
 function DivisionItem({
   data,
   distance = null,
@@ -46,30 +57,29 @@ function DivisionItem({
   const emergencyOnClick = () =>
     navigator.push('unit', { id: emergencyUnitId });
 
-  let title = disableTitle
-    ? null
-    : intl.formatMessage({ id: `area.list.${area.type}` });
-  if (customTitle) {
-    title = customTitle;
-  } else {
-    title = `${title}${aStart && aEnd ? ` ${aStart}-${aEnd}` : ''}`;
-  }
+  const title = getDivisionTitle(
+    intl,
+    area,
+    disableTitle,
+    customTitle,
+    aStart,
+    aEnd
+  );
 
   // Screen reader text
+  const distanceUnitLabel =
+    distance?.type === 'm'
+      ? intl.formatMessage({ id: 'general.distance.meters' })
+      : intl.formatMessage({ id: 'general.distance.kilometers' });
+  const distanceText = distance
+    ? `${distance.distance} ${distanceUnitLabel}`
+    : '';
   const srText = `
     ${(!disableTitle && title) || ''}
     ${name || ''} 
     ${address || ''}
     .
-    ${
-      distance
-        ? `${distance.distance} ${
-            distance.type === 'm'
-              ? intl.formatMessage({ id: 'general.distance.meters' })
-              : intl.formatMessage({ id: 'general.distance.kilometers' })
-          }`
-        : ''
-    } 
+    ${distanceText} 
   `;
 
   const emergencyCareLink = (txt) => (

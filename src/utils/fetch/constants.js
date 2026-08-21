@@ -6,8 +6,12 @@ import config from '../../../config';
 // API handlers
 export const APIHandlers = {
   accessibilitySentences: {
-    url: (id) =>
-      `${config.accessibilitySentenceAPI.root}/${config.usePtvAccessibilityApi ? `${id}/sentences/` : `unit/${id}`}`,
+    url: (id) => {
+      const path = config.usePtvAccessibilityApi
+        ? `${id}/sentences/`
+        : `unit/${id}`;
+      return `${config.accessibilitySentenceAPI.root}/${path}`;
+    },
     options: {},
     envName: config.accessibilitySentenceAPI.id,
   },

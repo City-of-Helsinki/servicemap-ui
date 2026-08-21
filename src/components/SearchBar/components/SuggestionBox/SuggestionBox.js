@@ -37,6 +37,21 @@ import {
 
 const suggestionCount = 8;
 
+const renderNoResults = () => (
+  <StyledInfoText align="left">
+    <FormattedMessage id="search.suggestions.error" />
+  </StyledInfoText>
+);
+
+const renderLoading = () => (
+  <StyledInfoText align="left">
+    <FormattedMessage
+      data-cm="SuggestionsLoading"
+      id="search.suggestions.loading"
+    />
+  </StyledInfoText>
+);
+
 function SuggestionBox(props) {
   const {
     closeMobileSuggestions = null,
@@ -139,21 +154,6 @@ function SuggestionBox(props) {
       }
     }
   };
-
-  const renderNoResults = () => (
-    <StyledInfoText align="left">
-      <FormattedMessage id="search.suggestions.error" />
-    </StyledInfoText>
-  );
-
-  const renderLoading = () => (
-    <StyledInfoText align="left">
-      <FormattedMessage
-        data-cm="SuggestionsLoading"
-        id="search.suggestions.loading"
-      />
-    </StyledInfoText>
-  );
 
   const renderSuggestionList = (type = 'suggestion') => {
     const suggestionConfig = {
@@ -343,7 +343,6 @@ function SuggestionBox(props) {
     let srText = null;
     if (loading) {
       component = renderLoading();
-      srText = null;
     } else if (suggestions) {
       component = renderSuggestionList('suggestion');
       srText = intl.formatMessage(

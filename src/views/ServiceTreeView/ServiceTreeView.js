@@ -351,7 +351,11 @@ function ServiceTreeView({ intl, variant }) {
 
     // Calculate count
     const countItem = unitCounts.find((countItem) => countItem.id === item.id);
-    return `${getLocaleText(item.name)} ${countItem !== null && countItem !== undefined ? `(${countItem.count})` : ''}`;
+    const countText =
+      countItem !== null && countItem !== undefined
+        ? `(${countItem.count})`
+        : '';
+    return `${getLocaleText(item.name)} ${countText}`;
   }
 
   const expandingComponent = (item, level, last = []) => {

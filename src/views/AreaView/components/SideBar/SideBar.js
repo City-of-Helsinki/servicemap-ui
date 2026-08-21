@@ -63,7 +63,7 @@ function SideBar({ selectedAddress = null, setSelectedAddress }) {
   const map = useSelector(selectMapRef);
   const searchParams = parseSearchParams(location.search);
   const selectedArea = searchParams.selected;
-  const selectedAreaType = selectedArea?.split(/([\d]+)/)[0];
+  const selectedAreaType = selectedArea?.split(/(\d+)/)[0];
   // Selected category handling
   const [areaSelection, setAreaSelection] = useState(null);
 

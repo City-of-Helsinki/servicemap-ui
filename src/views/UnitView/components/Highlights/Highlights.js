@@ -17,10 +17,10 @@ function Highlights({ unit }) {
   const connections = unitSectionFilter(unit.connections, 'HIGHLIGHT');
 
   // Add link to ulkoliikunta.fi as custom highligh to certain services
-  const outdoorSportIDs = [695, 406, 426, 731, 730, 191];
+  const outdoorSportIDs = new Set([695, 406, 426, 731, 730, 191]);
   const showOutdoorsLink =
     config.outdoorExerciseURL !== 'undefined' &&
-    unit.services.some((service) => outdoorSportIDs.includes(service.id));
+    unit.services.some((service) => outdoorSportIDs.has(service.id));
 
   if (!connections?.length && !showOutdoorsLink) {
     return null;

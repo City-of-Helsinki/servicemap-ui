@@ -52,9 +52,6 @@ export const fetchUnitEvents =
     // Fetch data
     unitEventsFetch(
       { location: `tprek:${unitId}`, page_size: pageSize || 5 },
-      onStart,
-      onSuccess,
-      onError,
-      onNext
+      { onStart, onSuccess, onError, onNext }
     );
   };

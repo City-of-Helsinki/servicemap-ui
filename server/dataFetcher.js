@@ -92,10 +92,7 @@ export const fetchEventData = (req, res, next) => {
         const unitId = unit.id.split(':').pop();
         selectedUnitFetch(
           null,
-          null,
-          fetchSuccess,
-          onError,
-          null,
+          { onSuccess: fetchSuccess, onError },
           unitId,
           controller
         );
@@ -106,7 +103,7 @@ export const fetchEventData = (req, res, next) => {
     const options = {
       include: 'location,location.accessibility_shortcoming_count',
     };
-    eventFetch(options, null, fetchEnd, onError, null, id, controller);
+    eventFetch(options, { onSuccess: fetchEnd, onError }, id, controller);
   } catch (e) {
     console.log('Error in fetchEventData', e.message);
     next();
@@ -155,10 +152,7 @@ export const fetchSelectedUnitData = (req, res, next) => {
     };
     selectedUnitFetch(
       null,
-      null,
-      selectedUnitFetchEnd,
-      fetchOnError,
-      null,
+      { onSuccess: selectedUnitFetchEnd, onError: fetchOnError },
       id,
       controller
     );
@@ -181,10 +175,7 @@ export const fetchSelectedUnitData = (req, res, next) => {
     };
     unitEventsFetch(
       { location: `tprek:${id}` },
-      null,
-      eventFetchEnd,
-      fetchOnError,
-      null,
+      { onSuccess: eventFetchEnd, onError: fetchOnError },
       null,
       controller
     );
@@ -200,10 +191,7 @@ export const fetchSelectedUnitData = (req, res, next) => {
     };
     accessibilitySentencesFetch(
       null,
-      null,
-      accessibilitySentenceFetchEnd,
-      fetchOnError,
-      null,
+      { onSuccess: accessibilitySentenceFetchEnd, onError: fetchOnError },
       id,
       controller
     );
@@ -226,10 +214,7 @@ export const fetchSelectedUnitData = (req, res, next) => {
     };
     reservationsFetch(
       null,
-      null,
-      reservationFetchEnd,
-      fetchOnError,
-      null,
+      { onSuccess: reservationFetchEnd, onError: fetchOnError },
       id,
       controller
     );
@@ -246,12 +231,11 @@ export const fetchIDs = async (type) => {
   const onSuccess = (data) => {
     returnData = data;
   };
-  const onNext = () => {};
   const onError = (e) => {
     console.log('error:', e);
   };
   try {
-    await idFetch(null, null, onSuccess, onError, onNext, type, null);
+    await idFetch(null, { onSuccess, onError }, type, null);
     return returnData;
   } catch (e) {
     console.log('Error in sitemap id fetch', e.message);

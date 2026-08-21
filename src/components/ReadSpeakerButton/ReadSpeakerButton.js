@@ -41,6 +41,11 @@ function ReadSpeakerButton({
   if (!locale || !readID) {
     return null;
   }
+  const urlParam = encodedURL ? `&amp;url=${encodedURL}` : '';
+  const readSpeakerHref =
+    `//app-eu.readspeaker.com/cgi-bin/rsent?customerid=11515&amp;lang=${locale}` +
+    `&amp;readid=${readID}` +
+    urlParam;
   return (
     <div
       aria-hidden="true"
@@ -52,11 +57,7 @@ function ReadSpeakerButton({
         className="rsbtn_play"
         // accessKey="L"
         title={intl.formatMessage({ id: 'general.readspeaker.title' })}
-        href={
-          `//app-eu.readspeaker.com/cgi-bin/rsent?customerid=11515&amp;lang=${locale}` +
-          `&amp;readid=${readID}` +
-          `${encodedURL ? `&amp;url=${encodedURL}` : ''}`
-        }
+        href={readSpeakerHref}
       >
         <span className="rsbtn_left rsimg rspart">
           <span className="rsbtn_text">

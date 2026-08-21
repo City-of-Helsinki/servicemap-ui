@@ -119,7 +119,7 @@ function EventDetailView(props) {
             }
           }
         };
-        eventFetch(options, onStart, onSuccess, onError, null, params.event);
+        eventFetch(options, { onStart, onSuccess, onError }, params.event);
       }
     } else if (!selectedUnit || event.location.id !== selectedUnit.id) {
       // Attempt fetching selected unit if it doesn't exist or isn't correct one

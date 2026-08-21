@@ -685,9 +685,10 @@ function MarkerCluster({
           [unit.location.coordinates[1], unit.location.coordinates[0]],
           {
             icon: drawMarkerIcon(
+              tooltipPermanent && unitHasEvents,
+              undefined,
               useContrast,
-              markerClasses,
-              tooltipPermanent && unitHasEvents
+              markerClasses
             ),
             customUnitData: unit,
             keyboard: false,

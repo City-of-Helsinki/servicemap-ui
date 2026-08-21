@@ -3,22 +3,10 @@ import fetchWrapper from './fetch';
 
 const wrapperClosure =
   (key, options = {}) =>
-  async (
-    data,
-    onStart,
-    onSuccess,
-    onError,
-    onNext,
-    id,
-    abortController,
-    url
-  ) => {
+  async (data, callbacks = {}, id, abortController, url) => {
     const response = await fetchWrapper(
       { ...options, ...data },
-      onStart,
-      onSuccess,
-      onError,
-      onNext,
+      callbacks,
       key,
       id,
       abortController,

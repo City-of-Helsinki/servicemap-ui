@@ -48,6 +48,14 @@ import {
 } from '../MapView/utils/mapActions';
 import fetchAddressData from './utils/fetchAddressData';
 import fetchAddressUnits from './utils/fetchAddressUnits';
+
+function collectUnitsFromDistrict(district) {
+  return [district.unit, ...(district.units || [])]
+    .filter((x) => !!x)
+    .filter(
+      (unit, index, self) => index === self.findIndex((x) => x.id === unit.id)
+    ); // Distinct by id
+}
 import fetchAdministrativeDistricts from './utils/fetchAdministrativeDistricts';
 
 const hiddenDivisions = {
@@ -244,15 +252,6 @@ function AddressView({ embed = false }) {
     );
     const unitlessDistricts = [...rescueAreas, ...majorDistricts];
 
-    function collectUnitsFromDistrict(district) {
-      return [district.unit, ...(district.units || [])]
-        .filter((x) => !!x)
-        .filter(
-          (unit, index, self) =>
-            index === self.findIndex((x) => x.id === unit.id)
-        ); // Distinct by id
-    }
-
     const setsOfUnitsFromDistricts = adminDistricts
       .filter((d) => !hiddenDivisions[d.type])
       .map((district) => ({
@@ -295,8 +294,11 @@ function AddressView({ embed = false }) {
             units.map((data, index) => {
               const key = `${data.area.id}-${data.id}`;
               const distance = getDistance(data);
+              const areaTypeLabel = intl.formatMessage({
+                id: `area.list.${data.area.type}`,
+              });
               const customTitle = rescueAreaIDs.includes(data.area.type)
-                ? `${intl.formatMessage({ id: `area.list.${data.area.type}` })} ${getCustomRescueAreaTitle(data.area)}`
+                ? `${areaTypeLabel} ${getCustomRescueAreaTitle(data.area)}`
                 : null;
               return (
                 <DivisionItem

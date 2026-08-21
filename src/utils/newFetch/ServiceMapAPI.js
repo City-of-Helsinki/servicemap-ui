@@ -377,10 +377,9 @@ export default class ServiceMapAPI extends HttpClient {
 
     const baseUrlOverride = config.serviceMapAPI.root;
 
-    const urlOverride =
-      baseUrlOverride.substring(baseUrlOverride.length - 1) === '/'
-        ? baseUrlOverride.substring(0, baseUrlOverride.length - 1)
-        : baseUrlOverride;
+    const urlOverride = baseUrlOverride.endsWith('/')
+      ? baseUrlOverride.substring(0, baseUrlOverride.length - 1)
+      : baseUrlOverride;
     return this.post('stats', data, urlOverride);
   };
 }

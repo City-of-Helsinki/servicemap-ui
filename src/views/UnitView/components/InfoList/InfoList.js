@@ -46,7 +46,7 @@ function InfoList({ data, title, titleComponent = 'h3', intl }) {
     if (data.email) {
       fullText += `, ${data.email}`;
     }
-    if (fullText.charAt(0) === ',') {
+    if (fullText.startsWith(',')) {
       fullText = fullText.slice(2);
     }
     // Add extra text

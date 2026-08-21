@@ -14,6 +14,18 @@ import {
 } from '../../../../components';
 import useLocaleText from '../../../../utils/useLocaleText';
 
+const renderServiceItem = (service) => (
+  <ServiceItem key={service.id} service={service} />
+);
+
+const renderEventItem = (event) => (
+  <EventItem simpleItem key={event.id} event={event} />
+);
+
+const renderReservationItem = (item) => (
+  <ReservationItem key={item.pk} reservation={item} />
+);
+
 function ExtendedData({
   currentUnit = null,
   events,
@@ -78,9 +90,7 @@ function ExtendedData({
         <PaginatedList
           id="services"
           data={data || []}
-          customComponent={(service) => (
-            <ServiceItem key={service.id} service={service} />
-          )}
+          customComponent={renderServiceItem}
           srTitle={srTitle}
           title={titleText}
           titleComponent="h3"
@@ -107,9 +117,7 @@ function ExtendedData({
         <PaginatedList
           id="educationServices"
           data={data || []}
-          customComponent={(service) => (
-            <ServiceItem key={service.id} service={service} />
-          )}
+          customComponent={renderServiceItem}
           srTitle={srTitle}
           title={titleText}
           titleComponent="h3"
@@ -130,9 +138,7 @@ function ExtendedData({
           <PaginatedList
             id="events"
             data={data || []}
-            customComponent={(event) => (
-              <EventItem simpleItem key={event.id} event={event} />
-            )}
+            customComponent={renderEventItem}
             srTitle={srTitle}
             title={titleText}
             titleComponent="h3"
@@ -154,9 +160,7 @@ function ExtendedData({
           <PaginatedList
             id="reservations"
             data={data || []}
-            customComponent={(item) => (
-              <ReservationItem key={item.pk} reservation={item} />
-            )}
+            customComponent={renderReservationItem}
             srTitle={srTitle}
             title={titleText}
             titleComponent="h3"

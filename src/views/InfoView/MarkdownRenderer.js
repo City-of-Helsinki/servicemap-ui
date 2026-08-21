@@ -4,41 +4,41 @@ import PropTypes from 'prop-types';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
-const MarkdownRenderer = ({ markdown }) => {
-  // Custom components for react-markdown
-  const components = {
-    h1: ({ children }) => (
-      <Typography component="h3" variant="body2">
-        {children}
-      </Typography>
-    ),
-    h2: ({ children }) => (
-      <Typography component="h3" variant="body2">
-        {children}
-      </Typography>
-    ),
-    h3: ({ children }) => (
-      <Typography component="h4" variant="body2">
-        {children}
-      </Typography>
-    ),
-    p: ({ children }) => <StyledText variant="body2">{children}</StyledText>,
-    ul: ({ children }) => <ul>{children}</ul>,
-    ol: ({ children }) => <ol>{children}</ol>,
-    li: ({ children }) => (
-      <li>
-        <Typography variant="body2">{children}</Typography>
-      </li>
-    ),
-    a: ({ href, children }) => (
-      <Link target="_blank" href={href}>
-        <Typography variant="string">{children}</Typography>
-      </Link>
-    ),
-  };
+// Custom components for react-markdown
+const markdownComponents = {
+  h1: ({ children }) => (
+    <Typography component="h3" variant="body2">
+      {children}
+    </Typography>
+  ),
+  h2: ({ children }) => (
+    <Typography component="h3" variant="body2">
+      {children}
+    </Typography>
+  ),
+  h3: ({ children }) => (
+    <Typography component="h4" variant="body2">
+      {children}
+    </Typography>
+  ),
+  p: ({ children }) => <StyledText variant="body2">{children}</StyledText>,
+  ul: ({ children }) => <ul>{children}</ul>,
+  ol: ({ children }) => <ol>{children}</ol>,
+  li: ({ children }) => (
+    <li>
+      <Typography variant="body2">{children}</Typography>
+    </li>
+  ),
+  a: ({ href, children }) => (
+    <Link target="_blank" href={href}>
+      <Typography variant="string">{children}</Typography>
+    </Link>
+  ),
+};
 
+const MarkdownRenderer = ({ markdown }) => {
   return (
-    <ReactMarkdown remarkPlugins={[remarkGfm]} components={components}>
+    <ReactMarkdown remarkPlugins={[remarkGfm]} components={markdownComponents}>
       {markdown}
     </ReactMarkdown>
   );

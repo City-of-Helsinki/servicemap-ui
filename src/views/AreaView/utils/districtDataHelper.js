@@ -76,7 +76,7 @@ export const dataStructure = [
         titleID: 'area.list.education.finnish',
         districts: [
           'lower_comprehensive_school_district_fi',
-          'upper_comprehensive_school_district_fi', // TODO: Hmmm
+          'upper_comprehensive_school_district_fi',
         ],
       },
       {

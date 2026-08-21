@@ -33,7 +33,7 @@ const getSelectedValue = (item, section, forecast) => {
     const category = dataVisualization.getCategory(item?.data, forecast);
     return category?.[section];
   } catch {
-    return false;
+    return undefined;
   }
 };
 
