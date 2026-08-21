@@ -41,7 +41,6 @@ function LanguageMenuComponent({ mobile = false }) {
             onClick={() => changeLang(currentLocale)}
           >
             <StyledTypography
-              mobile={+!!mobile}
               bold={+(currentLocale === locale)}
               color="inherit"
               variant="body2"

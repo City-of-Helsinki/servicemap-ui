@@ -46,15 +46,95 @@ import {
 } from './utils/districtDataHelper';
 
 function getAreaType(selectedArea) {
-  return selectedArea?.split(/([\d]+)/)[0];
+  return selectedArea?.split(/(\d+)/)[0];
 }
 
 function getAreaPeriod(selectedArea) {
-  const arr = selectedArea?.split(/([\d]+)/);
+  const arr = selectedArea?.split(/(\d+)/);
   if (arr?.[1]) {
     return [arr?.[1], arr?.[2], arr?.[3]].join('');
   }
   return undefined;
+}
+
+function switchToGeographicalTabIfNeeded(selectedAreaType) {
+  if (geographicalDistricts.includes(selectedAreaType)) {
+    const geoTab = document.getElementById('Tab1');
+    if (geoTab) geoTab.click();
+  }
+}
+
+function selectAreaFromParams(
+  dispatch,
+  embed,
+  selectedArea,
+  selectedAreaType,
+  selectedAreaPeriod
+) {
+  if (selectedArea && !dataStructure.some((obj) => obj.id === selectedArea)) {
+    dispatch(fetchDistricts(selectedAreaType, false, selectedAreaPeriod));
+    if (!embed) {
+      const category = dataStructure.find((data) =>
+        data.districts.some((obj) => obj.id === selectedAreaType)
+      );
+      dispatch(handleOpenItems(category.id));
+    } else {
+      dispatch(fetchDistricts(selectedAreaType, true, selectedAreaPeriod));
+    }
+    dispatch(setSelectedDistrictType(selectedArea));
+  } else if (!embed) {
+    dispatch(fetchDistricts());
+  }
+}
+
+function selectParkingSpacesFromParams(dispatch, searchParams) {
+  if (!searchParams.parkingSpaces) {
+    return;
+  }
+  const parkingAreas = searchParams.parkingSpaces.split(',');
+  dispatch(setSelectedParkingAreas(parkingAreas));
+  parkingAreas.forEach((area) => {
+    dispatch(fetchParkingAreaGeometry(area));
+  });
+}
+
+function fetchUnitParkingFromParams(dispatch, searchParams) {
+  if (searchParams.parkingGarages) {
+    dispatch(fetchParkingGarages());
+  }
+  if (searchParams.sharedCarParking) {
+    dispatch(fetchSharedCarParking());
+  }
+  if (searchParams.accessibleStreetParking) {
+    dispatch(fetchAccessibleStreetParking());
+  }
+}
+
+function selectSubdistrictsFromParams(
+  dispatch,
+  searchParams,
+  mapFocusDisabled,
+  setFocusTo,
+  setFocusInitiated
+) {
+  if (!searchParams.districts) {
+    return;
+  }
+  dispatch(setSelectedSubdistricts(searchParams.districts.split(',')));
+  if (!mapFocusDisabled) {
+    setFocusTo('subdistricts');
+    setFocusInitiated(true);
+  }
+}
+
+function selectServicesFromParams(dispatch, searchParams) {
+  if (!searchParams.services) {
+    return;
+  }
+  const convertedServices = searchParams.services
+    .split(',')
+    .map((service) => Number.parseInt(service, 10));
+  dispatch(setSelectedDistrictServices(convertedServices));
 }
 
 function AreaView({ embed = false }) {
@@ -204,89 +284,48 @@ function AreaView({ embed = false }) {
   }, [selectedDistrictData, addressDistrict, parkingAreas]);
 
   useEffect(() => {
-    if (
+    const hasUrlParams =
       searchParams.selected ||
       searchParams.parkingSpaces ||
       searchParams.parkingGarages ||
       searchParams.sharedCarParking ||
-      searchParams.accessibleStreetParking
-    ) {
-      // Arriving to page, with url parameters
-      if (!embed) {
-        /* Remove selected area parameter from url, otherwise it will override
-        user area selection when returning to area view */
-        navigate(location.pathname, { replace: true });
-        dispatch(setSelectedDistrictType(null));
-        // Switch to geographical tab if geographical area
-        if (geographicalDistricts.includes(selectedAreaType)) {
-          const geoTab = document.getElementById('Tab1');
-          if (geoTab) geoTab.click();
-        }
-      }
+      searchParams.accessibleStreetParking;
+    if (!hasUrlParams) {
+      return;
+    }
 
-      // Fetch and select area from url parameters
-      if (
-        selectedArea &&
-        !dataStructure.some((obj) => obj.id === selectedArea)
-      ) {
-        dispatch(fetchDistricts(selectedAreaType, false, selectedAreaPeriod));
-        if (!embed) {
-          const category = dataStructure.find((data) =>
-            data.districts.some((obj) => obj.id === selectedAreaType)
-          );
-          dispatch(handleOpenItems(category.id));
-        } else {
-          dispatch(fetchDistricts(selectedAreaType, true, selectedAreaPeriod));
-        }
-        dispatch(setSelectedDistrictType(selectedArea));
-      } else if (!embed) {
-        dispatch(fetchDistricts());
-      }
+    // Arriving to page, with url parameters
+    if (!embed) {
+      /* Remove selected area parameter from url, otherwise it will override
+      user area selection when returning to area view */
+      navigate(location.pathname, { replace: true });
+      dispatch(setSelectedDistrictType(null));
+      switchToGeographicalTabIfNeeded(selectedAreaType);
+    }
 
-      // Set selected parking spaces from url parameters
-      if (searchParams.parkingSpaces) {
-        const parkingAreas = searchParams.parkingSpaces.split(',');
-        dispatch(setSelectedParkingAreas(parkingAreas));
-        parkingAreas.forEach((area) => {
-          dispatch(fetchParkingAreaGeometry(area));
-        });
-      }
+    selectAreaFromParams(
+      dispatch,
+      embed,
+      selectedArea,
+      selectedAreaType,
+      selectedAreaPeriod
+    );
+    selectParkingSpacesFromParams(dispatch, searchParams);
+    fetchUnitParkingFromParams(dispatch, searchParams);
+    selectSubdistrictsFromParams(
+      dispatch,
+      searchParams,
+      mapFocusDisabled,
+      setFocusTo,
+      setFocusInitiated
+    );
+    selectServicesFromParams(dispatch, searchParams);
 
-      // Fetch unit parking data from url parameters
-      if (searchParams.parkingGarages) {
-        dispatch(fetchParkingGarages());
-      }
-      if (searchParams.sharedCarParking) {
-        dispatch(fetchSharedCarParking());
-      }
-      if (searchParams.accessibleStreetParking) {
-        dispatch(fetchAccessibleStreetParking());
-      }
-
-      // Set selected geographical districts from url parameters and handle map focus
-      if (searchParams.districts) {
-        dispatch(setSelectedSubdistricts(searchParams.districts.split(',')));
-        if (!mapFocusDisabled) {
-          setFocusTo('subdistricts');
-          setFocusInitiated(true);
-        }
-      }
-
-      // Set selected geographical services from url parameters
-      if (searchParams.services) {
-        const services = searchParams.services.split(',');
-        const convertedServices = services.map((service) =>
-          Number.parseInt(service, 10)
-        );
-        dispatch(setSelectedDistrictServices(convertedServices));
-      }
-
-      // Set address from url paramters
-      if (searchParams.lat && searchParams.lng) {
-        fetchAddress({ lat: searchParams.lat, lng: searchParams.lng }).then(
-          (data) => setSelectedAddress(data)
-        );
-      }
+    // Set address from url paramters
+    if (searchParams.lat && searchParams.lng) {
+      fetchAddress({ lat: searchParams.lat, lng: searchParams.lng }).then(
+        (data) => setSelectedAddress(data)
+      );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

@@ -6,7 +6,7 @@ const { isFetching, fetchError, fetchSuccess } = redirectService;
 
 // Thunk fetch
 const fetchRedirectService =
-  (options = null, onSuccessFunc) =>
+  (onSuccessFunc, options = null) =>
   async (dispatch) => {
     const onStart = () => dispatch(isFetching());
 

@@ -38,18 +38,12 @@ export function CloseSuggestionButton({
       throw new Error('Missing onKeyDown prop for CloseSuggestionButton');
     }
     return (
-      <div
-        role="button"
-        tabIndex={tabIndex}
-        onClick={onClick}
-        onKeyDown={onKeyDown}
-        {...rest}
-      >
+      <button type="button" onClick={onClick} onKeyDown={onKeyDown} {...rest}>
         <Typography variant="body2">
           <FormattedMessage id="search.suggestions.hideButton" />
         </Typography>
         {icon || null}
-      </div>
+      </button>
     );
   } catch (e) {
     console.error(e);

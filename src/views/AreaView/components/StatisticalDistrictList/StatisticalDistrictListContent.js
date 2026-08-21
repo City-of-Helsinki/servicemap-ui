@@ -83,7 +83,7 @@ function StatisticalDistrictListContent() {
       dispatch(replaceAreaSelection(newAreaSelections));
     } else {
       const toBeRemovedSelections = cityFilteredData
-        .filter((v) => v[0].municipality === city)[0]
+        .find((v) => v[0].municipality === city)
         .map((district) => district.id);
       const newAreaSelections = {
         ...areaSelections,

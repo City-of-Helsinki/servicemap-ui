@@ -124,10 +124,10 @@ export const drawUnitIcon = (berryColor, curve) => {
 };
 
 export const drawMarkerIcon = (
-  contrast = false,
-  className = '',
   eventIcon,
-  popupAnchor
+  popupAnchor,
+  contrast = false,
+  className = ''
 ) => {
   // Return null on server side
   if (typeof window === 'undefined') {
@@ -212,9 +212,8 @@ export class NumberCircleMaker {
   };
 
   drawNumberedCircle = (ctx, num) => {
-    let number = num;
     this.initContext(ctx);
-    number = num.toString();
+    const number = num.toString();
     ctx.fillStyle = '#ffffff';
     const numberDimensions = ctx.measureText(num);
     const { width } = numberDimensions;

@@ -117,10 +117,10 @@ const EventMarkers = ({ searchData }) => {
       <Marker
         key={unit.id}
         icon={drawMarkerIcon(
-          useContrast,
-          `unit-marker-${unit.id}`,
           null,
-          [0, -15]
+          [0, -15],
+          useContrast,
+          `unit-marker-${unit.id}`
         )}
         onMouseOver={(e) => {
           e.target.openPopup();

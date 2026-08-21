@@ -61,10 +61,9 @@ export const fetchService = (serviceId) => async (dispatch) => {
     dispatch(fetchServiceUnits(serviceId));
   };
   const onError = (e) => dispatch(fetchError(e.message));
-  const onNext = null;
 
   // Fetch data
-  serviceFetch(null, onStart, onSuccess, onError, onNext, serviceId);
+  serviceFetch(null, { onStart, onSuccess, onError }, serviceId);
 };
 
 export const setNewCurrentService = (service) => async (dispatch) => {

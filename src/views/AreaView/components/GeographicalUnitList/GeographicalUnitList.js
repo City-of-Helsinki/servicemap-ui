@@ -189,7 +189,9 @@ const GeographicalUnitList = ({ initialOpenItems }) => {
                       {`${uppercaseFirst(getLocaleText(category.name))} (${category.units.length})`}
                     </Typography>
                     <StyledCaptionText aria-hidden variant="caption">
-                      {`${category.period ? `${category.period[0]}-${category.period[1]}` : ''}`}
+                      {category.period
+                        ? `${category.period[0]}-${category.period[1]}`
+                        : ''}
                     </StyledCaptionText>
                   </div>
                 }

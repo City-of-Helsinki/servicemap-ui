@@ -149,13 +149,15 @@ function TransitStopInfo({ stop = {}, onCloseClick, type = null }) {
         );
         const hours = time.getHours();
         const minutes = time.getMinutes();
+        const paddedHours = hours < 10 ? `0${hours}` : hours;
+        const paddedMinutes = minutes < 10 ? `0${minutes}` : minutes;
         const key = `${departure.trip.route.shortName}-${departure.serviceDay}-${departure.realtimeDeparture}`;
 
         return (
           <DepartureItemContainer key={key}>
             <StyledDeparturetime>
               {/* This adds 0 before single digit times */}
-              {`${hours < 10 ? `0${hours}` : hours}:${minutes < 10 ? `0${minutes}` : minutes}`}
+              {`${paddedHours}:${paddedMinutes}`}
             </StyledDeparturetime>
             <StyledDepartureVehicle>
               {icon}

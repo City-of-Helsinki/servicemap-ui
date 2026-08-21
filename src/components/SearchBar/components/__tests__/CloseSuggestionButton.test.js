@@ -110,9 +110,8 @@ describe('<CloseSuggestionButton />', () => {
       </>
     );
 
-    expect(getAllByRole('button')[0]).toHaveAttribute('role', 'button');
+    expect(getAllByRole('button')[0].tagName).toBe('BUTTON');
     expect(getAllByRole('button')[0]).not.toHaveAttribute('aria-hidden');
-    expect(getAllByRole('button')[0]).toHaveAttribute('tabindex', '0');
 
     // SrOnly element
     expect(getAllByRole('button')[1]).toHaveAttribute('role', 'button');

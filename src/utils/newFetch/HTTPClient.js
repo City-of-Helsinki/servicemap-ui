@@ -156,7 +156,7 @@ export default class HttpClient {
     return response;
   };
 
-  handleFetch = async (endpoint, url, options = {}, type) => {
+  handleFetch = async (endpoint, url, type, options = {}) => {
     this.status = 'fetching';
 
     // Since we do not send any POST data to server we expect all fetches to be GET
@@ -239,8 +239,8 @@ export default class HttpClient {
     return this.handleFetch(
       endpoint,
       `${overrideBaseUrl || this.baseURL}/${endpoint}`,
-      postOptions,
-      'post'
+      'post',
+      postOptions
     );
   };
 
@@ -260,7 +260,7 @@ export default class HttpClient {
     const appendSlash = endpoint.lastIndexOf('/') !== endpoint.length - 1;
 
     const url = `${this.baseURL}/${endpoint}${appendSlash ? '/' : ''}?${searchParams}`;
-    return this.handleFetch(endpoint, url, fetchOptions, type);
+    return this.handleFetch(endpoint, url, type, fetchOptions);
   };
 
   post = async (endpoint, data, overrideBaseUrl) =>

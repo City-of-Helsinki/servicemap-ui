@@ -85,99 +85,92 @@ export function SearchIcon({ ...rest }) {
   return <SMIcon icon="icon-icon-search" {...rest} />;
 }
 
+// Icon lookup map used by getIcon
+const iconMap = {
+  foot: (props) => <OnFootIcon {...props} />,
+  colorblind: (props) => <ColorblindIcon {...props} />,
+  hearingAid: (props) => <HearingIcon {...props} />,
+  visuallyImpaired: (props) => <VisualImpairmentIcon {...props} />,
+  reduced_mobility: (props) => <ReducedMobilityIcon {...props} />,
+  rollator: (props) => <RollatorIcon {...props} />,
+  wheelchair: (props) => <WheelchairIcon {...props} />,
+  stroller: (props) => <StrollerIcon {...props} />,
+
+  // Map types
+  servicemap: (props) => (
+    <img aria-hidden alt="" src={defaulMapIcon} {...props} />
+  ),
+  ortographic: (props) => (
+    <img aria-hidden alt="" src={aerialMapIcon} {...props} />
+  ),
+  guideMap: (props) => <img aria-hidden alt="" src={guideMapIcon} {...props} />,
+  accessible_map: (props) => (
+    <img aria-hidden alt="" src={defaulMapIcon} {...props} />
+  ),
+  plainmap: (props) => (
+    <img aria-hidden alt="" src={defaulMapIcon} {...props} />
+  ),
+
+  // Front page buttons
+  location: () => locationIcon(),
+  accessibility: () => accessibilityIcon(),
+  serviceList: () => serviceListIcon(),
+  feedback: () => feedbackIcon(),
+  help: () => helpIcon(),
+
+  // Social media links
+  facebook: (props) => <img aria-hidden alt="" src={facebookIcon} {...props} />,
+  instagram: (props) => (
+    <img aria-hidden alt="" src={instagramIcon} {...props} />
+  ),
+  pinterest: (props) => (
+    <img aria-hidden alt="" src={pinterestIcon} {...props} />
+  ),
+  snapchat: (props) => <img aria-hidden alt="" src={snapchatIcon} {...props} />,
+  twitter: (props) => <img aria-hidden alt="" src={twitterIcon} {...props} />,
+  youtube: (props) => <img aria-hidden alt="" src={youtubeIcon} {...props} />,
+  vimeo: (props) => <img aria-hidden alt="" src={vimeoIcon} {...props} />,
+
+  service: (props) => <img aria-hidden alt="" src={serviceIcon} {...props} />,
+  serviceDark: (props) => (
+    <img aria-hidden alt="" src={serviceIconDark} {...props} />
+  ),
+  locationMarker: (props) => (
+    <img aria-hidden alt="" src={userLocationIcon} {...props} />
+  ),
+  addresslocationMarker: (props) => (
+    <img aria-hidden alt="" src={addressLocationIcon} {...props} />
+  ),
+
+  noWheelchair: (props) => (
+    <img aria-hidden alt="" src={noWheelchairIcon} {...props} />
+  ),
+
+  servicemapLogoIcon: (props) => (
+    <img aria-hidden alt="" src={servicemapLogoIcon} {...props} />
+  ),
+  closeIcon: (props) => <img aria-hidden alt="" src={closeIcon} {...props} />,
+  coordinateMarker: (props) => (
+    <img aria-hidden alt="" src={coordinateMarker} {...props} />
+  ),
+  coordinateMarkerContrast: (props) => (
+    <img aria-hidden alt="" src={coordinateMarkerContrast} {...props} />
+  ),
+
+  kirkkonummiIcon: (props) => (
+    <img aria-hidden alt="" src={kirkkonummiIcon} {...props} />
+  ),
+
+  iconArrowPrevious: (props) => (
+    <img aria-hidden alt="" src={arrowPreviousIcon} {...props} />
+  ),
+  iconArrowNext: (props) => (
+    <img aria-hidden alt="" src={arrowNextIcon} {...props} />
+  ),
+};
+
 // Function to get right icon based on key mapping
 export const getIcon = (key, props) => {
-  switch (key) {
-    case 'foot':
-      return <OnFootIcon {...props} />;
-    case 'colorblind':
-      return <ColorblindIcon {...props} />;
-    case 'hearingAid':
-      return <HearingIcon {...props} />;
-    case 'visuallyImpaired':
-      return <VisualImpairmentIcon {...props} />;
-    case 'reduced_mobility':
-      return <ReducedMobilityIcon {...props} />;
-    case 'rollator':
-      return <RollatorIcon {...props} />;
-    case 'wheelchair':
-      return <WheelchairIcon {...props} />;
-    case 'stroller':
-      return <StrollerIcon {...props} />;
-
-    // Map types
-    case 'servicemap':
-      return <img aria-hidden alt="" src={defaulMapIcon} {...props} />;
-    case 'ortographic':
-      return <img aria-hidden alt="" src={aerialMapIcon} {...props} />;
-    case 'guideMap':
-      return <img aria-hidden alt="" src={guideMapIcon} {...props} />;
-    case 'accessible_map':
-      return <img aria-hidden alt="" src={defaulMapIcon} {...props} />;
-    case 'plainmap':
-      return <img aria-hidden alt="" src={defaulMapIcon} {...props} />;
-
-    // Front page buttons
-    case 'location':
-      return locationIcon();
-    case 'accessibility':
-      return accessibilityIcon();
-    case 'serviceList':
-      return serviceListIcon();
-    case 'feedback':
-      return feedbackIcon();
-    case 'help':
-      return helpIcon();
-
-    // Social media links
-    case 'facebook':
-      return <img aria-hidden alt="" src={facebookIcon} {...props} />;
-    case 'instagram':
-      return <img aria-hidden alt="" src={instagramIcon} {...props} />;
-    case 'pinterest':
-      return <img aria-hidden alt="" src={pinterestIcon} {...props} />;
-    case 'snapchat':
-      return <img aria-hidden alt="" src={snapchatIcon} {...props} />;
-    case 'twitter':
-      return <img aria-hidden alt="" src={twitterIcon} {...props} />;
-    case 'youtube':
-      return <img aria-hidden alt="" src={youtubeIcon} {...props} />;
-    case 'vimeo':
-      return <img aria-hidden alt="" src={vimeoIcon} {...props} />;
-
-    case 'service':
-      return <img aria-hidden alt="" src={serviceIcon} {...props} />;
-
-    case 'serviceDark':
-      return <img aria-hidden alt="" src={serviceIconDark} {...props} />;
-    case 'locationMarker':
-      return <img aria-hidden alt="" src={userLocationIcon} {...props} />;
-    case 'addresslocationMarker':
-      return <img aria-hidden alt="" src={addressLocationIcon} {...props} />;
-
-    case 'noWheelchair':
-      return <img aria-hidden alt="" src={noWheelchairIcon} {...props} />;
-
-    case 'servicemapLogoIcon':
-      return <img aria-hidden alt="" src={servicemapLogoIcon} {...props} />;
-    case 'closeIcon':
-      return <img aria-hidden alt="" src={closeIcon} {...props} />;
-    case 'coordinateMarker':
-      return <img aria-hidden alt="" src={coordinateMarker} {...props} />;
-    case 'coordinateMarkerContrast':
-      return (
-        <img aria-hidden alt="" src={coordinateMarkerContrast} {...props} />
-      );
-
-    case 'kirkkonummiIcon':
-      return <img aria-hidden alt="" src={kirkkonummiIcon} {...props} />;
-
-    case 'iconArrowPrevious':
-      return <img aria-hidden alt="" src={arrowPreviousIcon} {...props} />;
-    case 'iconArrowNext':
-      return <img aria-hidden alt="" src={arrowNextIcon} {...props} />;
-
-    default:
-      return null;
-  }
+  const renderIcon = iconMap[key];
+  return renderIcon ? renderIcon(props) : null;
 };

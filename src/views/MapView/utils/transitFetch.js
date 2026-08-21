@@ -186,8 +186,10 @@ const fetchStops = async (map) => {
 const STOP_DATA_TTL = 30 * 1000; // ms
 const stopDataCache = new Map(); // cache key -> { timestamp, promise }
 
-const getStopCacheKey = (stop) =>
-  `${stop.gtfsId}${stop.secondaryId ? `+${stop.secondaryId}` : ''}`;
+const getStopCacheKey = (stop) => {
+  const secondarySuffix = stop.secondaryId ? `+${stop.secondaryId}` : '';
+  return `${stop.gtfsId}${secondarySuffix}`;
+};
 
 const fetchStopDataUncached = async (stop) => {
   const requestBody = (id) => `{
