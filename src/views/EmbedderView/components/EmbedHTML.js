@@ -25,6 +25,10 @@ function EmbedHTML({ createEmbedHTML, url, setBoundsRef, restrictBounds }) {
   const embedUrl = setBboxToUrl(url, restrictBounds ? bbox : null);
 
   const handleEventMessage = (event) => {
+    if (event.origin !== window.location.origin) {
+      return;
+    }
+
     // Update bbox on map move
     if (event.data.bbox) {
       setBoundsRef(event.data.bbox);
