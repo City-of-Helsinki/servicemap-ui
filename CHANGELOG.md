@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.17.8](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.17.7...servicemap-ui-v2.17.8) (2026-08-25)
+
+
+### Bug Fixes
+
+* Add null checks for districtFetch results ([19fa7e0](https://github.com/City-of-Helsinki/servicemap-ui/commit/19fa7e025bce4c6ab40d278c70f0218565fab5d4))
+* Back button fix ([30e7c7d](https://github.com/City-of-Helsinki/servicemap-ui/commit/30e7c7d7510331bf0aacb9a0886e41823a2cc2b6))
+* Sentry type error fixes ([68eaa77](https://github.com/City-of-Helsinki/servicemap-ui/commit/68eaa77243d8f16c7f4f10e69b1cd364fa18d5c4))
+* Sonar maintainability fixes ([7a192b4](https://github.com/City-of-Helsinki/servicemap-ui/commit/7a192b46280c5e03f32e2bcb3fdd5fc1497b5d18))
+* Sonar reliability issues ([47225fb](https://github.com/City-of-Helsinki/servicemap-ui/commit/47225fb25466999c03fcae0dae07938d824b6c19))
+* Sonar security fixes ([49c6f77](https://github.com/City-of-Helsinki/servicemap-ui/commit/49c6f77179ef2215a409f7ff0ee4ac345d455626))
+
 ## [2.17.7](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.17.6...servicemap-ui-v2.17.7) (2026-08-13)
 
 
