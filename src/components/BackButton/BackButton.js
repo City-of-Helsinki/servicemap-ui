@@ -1,12 +1,6 @@
 import styled from '@emotion/styled';
 import { ArrowBack } from '@mui/icons-material';
-import {
-  Button,
-  ButtonBase,
-  IconButton,
-  Typography,
-  useMediaQuery,
-} from '@mui/material';
+import { Button, ButtonBase, IconButton, Typography } from '@mui/material';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { useIntl } from 'react-intl';
@@ -137,18 +131,16 @@ const StyledContainerText = styled(Typography)(({ theme }) => ({
   paddingLeft: theme.spacing(1),
 }));
 
-const StyledTopBackButtonContainer = styled('div')(({ theme }) => {
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-  const marginTop = isMobile ? theme.spacing(-1) : 'auto';
-  const marginBottom = isMobile ? theme.spacing(-0.5) : theme.spacing(-1);
-
-  return {
-    color: '#fff',
-    backgroundColor: theme.palette.primary.main,
-    marginTop,
-    marginBottom,
-  };
-});
+const StyledTopBackButtonContainer = styled('div')(({ theme }) => ({
+  color: '#fff',
+  backgroundColor: theme.palette.primary.main,
+  marginTop: 'auto',
+  marginBottom: theme.spacing(-1),
+  [theme.breakpoints.down('sm')]: {
+    marginTop: theme.spacing(-1),
+    marginBottom: theme.spacing(-0.5),
+  },
+}));
 
 const StyledButton = styled(ButtonBase)(({ theme }) => ({
   zIndex: 0,
