@@ -3,7 +3,7 @@ import createEmotionServer from '@emotion/server/create-instance';
 import { renderToString } from 'react-dom/server';
 import { HelmetProvider } from 'react-helmet-async';
 import { Provider } from 'react-redux';
-import { StaticRouter } from 'react-router-dom/server';
+import { StaticRouter } from 'react-router';
 
 import App from './App';
 import ogImage from './assets/images/servicemap-meta-img.png';

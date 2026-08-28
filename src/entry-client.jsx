@@ -1,4 +1,3 @@
-/* eslint-disable no-underscore-dangle */
 import { CacheProvider } from '@emotion/react';
 import * as Sentry from '@sentry/react';
 import { hydrateRoot } from 'react-dom/client';
