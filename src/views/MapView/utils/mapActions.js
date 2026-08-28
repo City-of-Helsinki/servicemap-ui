@@ -6,7 +6,6 @@ import { mapHasMapPane } from '../../../utils/mapUtility';
 import { isEmbed } from '../../../utils/path';
 import swapCoordinates from './swapCoordinates';
 
-/* eslint-disable no-underscore-dangle */
 const L =
   typeof window !== 'undefined' ? (await import('leaflet')).default : null;
 
