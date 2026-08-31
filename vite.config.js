@@ -25,6 +25,7 @@ export default defineConfig(({ isSsrBuild }) => ({
     cjsInterop({
       dependencies: [
         '@mui/styled-engine',
+        'lodash',
       ],
     }),
     ...(!isSsrBuild
@@ -59,8 +60,10 @@ export default defineConfig(({ isSsrBuild }) => ({
   // @mui/icons-material and @mui/material (+ its deps) use directory-style imports in their
   // ESM entries that Node.js strict ESM cannot resolve at runtime. Bundle them through Vite
   // so the resolve aliases above apply and all sub-path imports are resolved at build time.
+  // hds-react's ESM entry imports './index.css-text' without an extension, which Node.js
+  // strict ESM also cannot resolve; bundling it avoids that runtime error.
   ssr: {
-    noExternal: [ '@mui/icons-material', '@mui/material', '@mui/system', '@mui/utils' ],
+    noExternal: [ '@mui/icons-material', '@mui/material', '@mui/system', '@mui/utils', 'hds-react' ],
   },
   optimizeDeps: {
     include: [ 'leaflet', 'react-leaflet' ],
