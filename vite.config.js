@@ -26,6 +26,8 @@ export default defineConfig(({ isSsrBuild }) => ({
       dependencies: [
         '@mui/styled-engine',
         'lodash',
+        'crc-32',
+        '@apollo/client',
       ],
     }),
     ...(!isSsrBuild
