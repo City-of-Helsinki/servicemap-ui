@@ -18,6 +18,13 @@ const delay = (ms) =>
     setTimeout(resolve, ms);
   });
 
+// Cancels an unread response body. Browsers keep a fetch's underlying request
+// "in-flight" until its body is consumed or cancelled, so any response that
+// isn't read (e.g. before throwing on a non-ok status) must be drained here to
+// avoid leaking a permanently pending network request (which e.g. blocks
+// Playwright's 'networkidle' wait indefinitely).
+const drainBody = (response) => response?.body?.cancel().catch(() => {});
+
 // POST a GraphQL query to the Digitransit proxy, retrying transient rate-limit
 // responses. Non-retryable responses (and the last retry) are returned as-is so
 // callers keep their existing response.ok handling.
@@ -37,6 +44,9 @@ const digitransitFetch = async (body) => {
     ) {
       return response;
     }
+
+    // This response is being discarded in favor of a retry; drain its body.
+    await drainBody(response);
 
     const backoff = BASE_DELAY * 2 ** attempt + Math.random() * BASE_DELAY;
 
@@ -95,6 +105,7 @@ const fetchStops = async (map) => {
           }
         }`).then((response) => {
         if (!response.ok) {
+          drainBody(response);
           throw new Error(
             `API error: ${response.status} ${response.statusText}`
           );
@@ -218,6 +229,7 @@ const fetchStopDataUncached = async (stop) => {
     const response = await digitransitFetch(requestBody(stop.gtfsId));
 
     if (!response.ok) {
+      drainBody(response);
       throw new Error(`API error: ${response.status} ${response.statusText}`);
     }
 
@@ -227,6 +239,7 @@ const fetchStopDataUncached = async (stop) => {
       const response2 = await digitransitFetch(requestBody(stop.secondaryId));
 
       if (!response2.ok) {
+        drainBody(response2);
         return data; // Return primary data only
       }
 
@@ -285,6 +298,7 @@ const fetchBikeStations = async () => {
     }`);
 
     if (!response.ok) {
+      drainBody(response);
       throw new Error(`API error: ${response.status} ${response.statusText}`);
     }
 
