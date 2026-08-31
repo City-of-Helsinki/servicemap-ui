@@ -103,9 +103,9 @@ const fetchStops = async (map) => {
               }
             }
           }
-        }`).then((response) => {
+        }`).then(async (response) => {
         if (!response.ok) {
-          drainBody(response);
+          await drainBody(response);
           throw new Error(
             `API error: ${response.status} ${response.statusText}`
           );
