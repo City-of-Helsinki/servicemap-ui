@@ -31,6 +31,7 @@ describe('transitFetch - drainBody cleanup', () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
+    // eslint-disable-next-line no-undef
     fetchSpy = vi.spyOn(global, 'fetch');
   });
 
