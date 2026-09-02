@@ -6,9 +6,6 @@ Using following:
 * pnpm (v11)
 If you are using NVM you can also use `nvm use` to get correct version.
 
-For development:
-* Eslint extended from `airbnb` configuration.
-
 ## Available Scripts
 
 In the project directory, you can run:
@@ -21,13 +18,13 @@ Start dev server and runs the app in the development mode.<br>
 
 Builds the app for production to the `dist` folder.<br>
 
-### `pnpm build:test`
-
-Builds the app in development mode to the `dist` folder.<br>
-
 ### `pnpm start`
 
-Runs the app by starting node server using build files.
+Runs the app in production mode by starting the Express/Vite SSR server (`server.mjs`) using the built files in `dist`.
+
+### `pnpm preview`
+
+Same as `pnpm start` but intended for locally previewing a production build.
 
 ### `pnpm test`
 
@@ -50,10 +47,11 @@ To run in production mode:
 - Then you can run the app with `pnpm start`
 - Open the application by loading `localhost:3000` in the browser
 
-To run with docker compose:
-- Install Docker if not installed, check that port `3000` is free, not occupied by running server.
+To run with Docker:
+- Install Docker if not installed, check that port `3000` is free and not occupied by another running server.
 - Make sure you have environment variables set. `.env.example` should have all required values so you can copy it to `.env`.
-- Run `docker compose up`
+- The [Dockerfile](Dockerfile) has multiple stages: `development` (runs `pnpm dev`) and `production` (serves the built app via `server.mjs`). The compose configuration maps the container's port 8080 to the host's port 3000.
+- Start container: `docker compose build && docker compose up`
 - Open the application by loading `localhost:3000` in the browser
 
 
@@ -66,7 +64,6 @@ These work in reverse when you want to delete a variable (duh).
 - Add variable to `.env.example` to act as an example.
 - Add variable to your local `.env` for your local environment at `localhost:3000`.
 - Add variable to `.github/workflows/ci.yml` so it will be used during PR build.
-- Add variable to `server/server.js` for it to be picked up by the application code.
 - Add variable to `config/default.js` for it to be part of `config` object during runtime. 
 - Add variable value to `testing-ui`, `staging-ui` and `production-ui` variable groups WHEN IT IS APPROPRIATE.
   - https://dev.azure.com/City-of-Helsinki/palvelukartta/_library?itemType=VariableGroups 
