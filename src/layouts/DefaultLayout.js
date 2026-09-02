@@ -23,6 +23,7 @@ import { getPage } from '../redux/selectors/user';
 import { DefaultRoutes } from '../routes';
 import { viewTitleID } from '../utils/accessibility';
 import useMobileStatus from '../utils/isMobile';
+import useIsClient from '../utils/useIsClient';
 import PrintView from '../views/PrintView';
 
 // Lazy load MapView to avoid server-side loading issues with react-leaflet
@@ -119,6 +120,7 @@ function DefaultLayout() {
 
   const intl = useIntl();
   const isMobile = useMobileStatus();
+  const isClient = useIsClient();
   const location = useLocation();
   const isSmallScreen = useMediaQuery(`(max-width:${smallScreenBreakpoint}px)`);
   const fullMobileMap = new URLSearchParams(location.search).get('showMap'); // If mobile map view
@@ -263,13 +265,17 @@ function DefaultLayout() {
               {intl.formatMessage({ id: 'map.ariaLabel' })}
             </Typography>
             <div style={styles.map}>
-              <Suspense fallback={<Loading />}>
-                <MapView
-                  sidebarHidden={sidebarHidden}
-                  toggleSidebar={toggleSidebar}
-                  isMobile={!!isMobile}
-                />
-              </Suspense>
+              {isClient ? (
+                <Suspense fallback={<Loading />}>
+                  <MapView
+                    sidebarHidden={sidebarHidden}
+                    toggleSidebar={toggleSidebar}
+                    isMobile={!!isMobile}
+                  />
+                </Suspense>
+              ) : (
+                <Loading />
+              )}
             </div>
           </div>
 

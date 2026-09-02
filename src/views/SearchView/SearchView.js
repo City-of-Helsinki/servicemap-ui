@@ -418,7 +418,7 @@ function SearchView() {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [JSON.stringify(unorderedSearchResults), searchResults]);
+  }, [JSON.stringify(unorderedSearchResults), searchResults, map]);
 
   const navigatorAvailable = !!navigator;
 
