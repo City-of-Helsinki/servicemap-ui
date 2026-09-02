@@ -97,7 +97,7 @@ function ServiceView(props) {
       focusMap(unitData);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [unitData]);
+  }, [unitData, map]);
 
   if (embed) {
     return null;

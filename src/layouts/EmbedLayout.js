@@ -18,6 +18,7 @@ import { selectMapRef, selectNavigator } from '../redux/selectors/general';
 import { EmbedRoutes } from '../routes';
 import { parseSearchParams } from '../utils';
 import { resolveCityAndOrganizationFilter } from '../utils/filters';
+import useIsClient from '../utils/useIsClient';
 import useLocaleText from '../utils/useLocaleText';
 import { focusToPosition } from '../views/MapView/utils/mapActions';
 import useMapUnits from '../views/MapView/utils/useMapUnits';
@@ -94,6 +95,7 @@ const createContentStyles = (theme, unitListPosition) => {
 function EmbedLayout() {
   const intl = useIntl();
   const theme = useTheme();
+  const isClient = useIsClient();
   const location = useLocation();
   const navigator = useSelector(selectNavigator);
   const getLocaleText = useLocaleText();
@@ -222,9 +224,13 @@ function EmbedLayout() {
         {selectedUnitData ? renderEmbeddedUnitInfo() : null}
 
         <div style={styles.map}>
-          <Suspense fallback={<Loading />}>
-            <MapView />
-          </Suspense>
+          {isClient ? (
+            <Suspense fallback={<Loading />}>
+              <MapView />
+            </Suspense>
+          ) : (
+            <Loading />
+          )}
         </div>
       </div>
     </>

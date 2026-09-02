@@ -253,7 +253,7 @@ function AreaView({ embed = false }) {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedDistrictData, focusTo]);
+  }, [selectedDistrictData, focusTo, map]);
 
   useEffect(() => {
     // Fit parking units to map when data is loaded
@@ -269,7 +269,7 @@ function AreaView({ embed = false }) {
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [parkingUnitsMap]);
+  }, [parkingUnitsMap, map]);
 
   useEffect(() => {
     if (
@@ -281,7 +281,7 @@ function AreaView({ embed = false }) {
       focusDistricts(map, [...selectedDistrictData, ...parkingAreas]);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedDistrictData, addressDistrict, parkingAreas]);
+  }, [selectedDistrictData, addressDistrict, parkingAreas, map]);
 
   useEffect(() => {
     const hasUrlParams =

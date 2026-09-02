@@ -46,6 +46,7 @@ import { parseSearchParams } from '../../utils';
 import useMobileStatus from '../../utils/isMobile';
 import { mapHasMapPane } from '../../utils/mapUtility';
 import UnitHelper from '../../utils/unitHelper';
+import useIsClient from '../../utils/useIsClient';
 import useLocaleText from '../../utils/useLocaleText';
 import AccessibilityInfo from './components/AccessibilityInfo';
 import ContactInfo from './components/ContactInfo';
@@ -101,6 +102,7 @@ function UnitView(props) {
   const isFirstRender = useRef(true);
 
   const isMobile = useMobileStatus();
+  const isClient = useIsClient();
   const [openLinkDialog, setOpenLinkDialog] = useState(false);
   const getLocaleText = useLocaleText();
   const dispatch = useDispatch();
@@ -529,9 +531,13 @@ function UnitView(props) {
         </Typography>
       </StyledMapButton>
       <StyledMapContainer>
-        <Suspense fallback={<Loading />}>
-          <MapView disableInteraction />
-        </Suspense>
+        {isClient ? (
+          <Suspense fallback={<Loading />}>
+            <MapView disableInteraction />
+          </Suspense>
+        ) : (
+          <Loading />
+        )}
       </StyledMapContainer>
     </StyledUnitLocationContainer>
   );
