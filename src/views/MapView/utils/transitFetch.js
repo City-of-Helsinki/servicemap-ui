@@ -23,7 +23,11 @@ const delay = (ms) =>
 // isn't read (e.g. before throwing on a non-ok status) must be drained here to
 // avoid leaking a permanently pending network request (which e.g. blocks
 // Playwright's 'networkidle' wait indefinitely).
-const drainBody = (response) => response?.body?.cancel().catch(() => {});
+const drainBody = async (response) => {
+  if (response?.body?.cancel) {
+    await response.body.cancel().catch(() => {});
+  }
+};
 
 // POST a GraphQL query to the Digitransit proxy, retrying transient rate-limit
 // responses. Non-retryable responses (and the last retry) are returned as-is so
@@ -229,7 +233,7 @@ const fetchStopDataUncached = async (stop) => {
     const response = await digitransitFetch(requestBody(stop.gtfsId));
 
     if (!response.ok) {
-      drainBody(response);
+      await drainBody(response);
       throw new Error(`API error: ${response.status} ${response.statusText}`);
     }
 
@@ -239,7 +243,7 @@ const fetchStopDataUncached = async (stop) => {
       const response2 = await digitransitFetch(requestBody(stop.secondaryId));
 
       if (!response2.ok) {
-        drainBody(response2);
+        await drainBody(response2);
         return data; // Return primary data only
       }
 
@@ -298,7 +302,7 @@ const fetchBikeStations = async () => {
     }`);
 
     if (!response.ok) {
-      drainBody(response);
+      await drainBody(response);
       throw new Error(`API error: ${response.status} ${response.statusText}`);
     }
 
