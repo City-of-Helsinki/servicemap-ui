@@ -1,5 +1,30 @@
 # Changelog
 
+## [2.18.0](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.17.8...servicemap-ui-v2.18.0) (2026-09-05)
+
+
+### Features
+
+* Bump hds, remove cookie shim Refs: PL-292 ([4103444](https://github.com/City-of-Helsinki/servicemap-ui/commit/41034441ed13cda78152f53239c629a60742ec42))
+* Vite ssr migration Refs: PL-292 ([64715dc](https://github.com/City-of-Helsinki/servicemap-ui/commit/64715dc6b269db982908fc3eff325555ba42e2c4))
+
+
+### Bug Fixes
+
+* FetchStops await drainBody Refs: PL-292 ([59ccde8](https://github.com/City-of-Helsinki/servicemap-ui/commit/59ccde8c3f8836f37813308a1cd74369b6a99069))
+* Hydration mismatches and map rendering Refs: PL-292 ([92db277](https://github.com/City-of-Helsinki/servicemap-ui/commit/92db2775c131b4943273ce0db21dfc750623dbe9))
+* TransitFetch should await drainBody Refs: PL-292 ([72e5a22](https://github.com/City-of-Helsinki/servicemap-ui/commit/72e5a22b591a6f91b86b3053368ede0b4bacc28b))
+
+
+### Dependencies
+
+* Update vulnerable ip-adress package Refs: PL-292 ([c586e75](https://github.com/City-of-Helsinki/servicemap-ui/commit/c586e753069afcec0de57b98bc34d7bb47b810c7))
+
+
+### Documentation
+
+* Update Vite SSR changes in README.md Refs: PL-292 ([8e6ab0b](https://github.com/City-of-Helsinki/servicemap-ui/commit/8e6ab0bafc77d91fd2e1c0215cea578d6ec08cb1))
+
 ## [2.17.8](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.17.7...servicemap-ui-v2.17.8) (2026-08-25)
 
 
