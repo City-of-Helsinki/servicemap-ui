@@ -564,6 +564,11 @@ export default {
   'unit.homepage': 'Kotisivu',
   'unit.homepage.missing': 'Kotisivua ei ilmoitettu',
   'unit.picture': 'Kuva toimipisteestä: ',
+  'unit.picture.info': 'Kuvan tiedot',
+  'unit.picture.source': 'Lähde:',
+  'unit.picture.permission': 'Käyttöoikeus:',
+  'unit.picture.locationOnly.fi':
+    'Kuvaa saa käyttää kohteen yhteydessä kuvaajan tai omistajan nimi mainiten. Muu käyttö ei ole sallittua.',
   'unit.description': 'Tietoa toimipisteestä',
   'unit.price': 'Hinnat',
   'unit.address': 'Osoite',
