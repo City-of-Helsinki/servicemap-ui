@@ -52,6 +52,15 @@ export const findUserLocation = () => async (dispatch) => {
   if (window.navigator.webdriver) {
     return;
   }
+
+  if (typeof navigator.geolocation?.getCurrentPosition !== 'function') {
+    console.warn('Geolocation API is not available in this environment');
+    dispatch(
+      setUserPosition({ coordinates: null, allowed: false, addressData: null })
+    );
+    return;
+  }
+
   const success = (position) => {
     if (position.coords.accuracy < 1000) {
       fetchAddress({
