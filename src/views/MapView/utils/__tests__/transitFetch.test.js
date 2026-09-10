@@ -39,7 +39,7 @@ describe('transitFetch - drainBody cleanup', () => {
     fetchSpy.mockRestore();
   });
 
-  it('drainBody should be awaited and settle completion on error responses', async () => {
+  it('drainBody should be awaited before throwing on error responses', async () => {
     let drainPromiseResolved = false;
 
     const mockCancel = vi.fn(() => {
@@ -54,8 +54,8 @@ describe('transitFetch - drainBody cleanup', () => {
 
     const mockResponse = {
       ok: false,
-      status: 403,
-      statusText: 'Forbidden',
+      status: 500,
+      statusText: 'Internal Server Error',
       body: {
         cancel: mockCancel,
       },

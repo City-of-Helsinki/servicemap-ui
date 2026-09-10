@@ -1,8 +1,13 @@
 import styled from '@emotion/styled';
-import { Hearing, Mail, OpenInFull, Share } from '@mui/icons-material';
-import { Button, Typography } from '@mui/material';
+import {
+  Hearing,
+  InfoOutlined,
+  Mail,
+  OpenInFull,
+  Share,
+} from '@mui/icons-material';
+import { Button, IconButton, Popover, Typography } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
-import Watermark from '@uiw/react-watermark';
 import PropTypes from 'prop-types';
 import React, { Suspense, useEffect, useRef, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
@@ -65,7 +70,11 @@ import { parseUnitViewUrlParams } from './utils/unitViewUrlParamAndSettingsHandl
 const MapView = React.lazy(() => import('../MapView'));
 
 function splitLineBreakGetFirstItem(extraElement) {
-  return extraElement?.split('\n')?.[0];
+  return extraElement?.split(/\r?\n/)?.[0];
+}
+
+function hasPhotoMetadata(metadata) {
+  return Boolean(metadata?.trim());
 }
 
 function UnitView(props) {
@@ -104,6 +113,7 @@ function UnitView(props) {
   const isMobile = useMobileStatus();
   const isClient = useIsClient();
   const [openLinkDialog, setOpenLinkDialog] = useState(false);
+  const [photoInfoAnchorEl, setPhotoInfoAnchorEl] = useState(null);
   const getLocaleText = useLocaleText();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -267,6 +277,7 @@ function UnitView(props) {
     // Skip the initial mount, which is already handled by the on-mount effect
     // above. Without this guard both effects run on mount and every request
     // (unit, events, accessibility, reservations) is sent twice.
+    setPhotoInfoAnchorEl(null);
     if (isFirstRender.current) {
       isFirstRender.current = false;
       return;
@@ -299,40 +310,55 @@ function UnitView(props) {
   };
 
   const getPictureUrlAndCaption = () => {
-    if (unit.picture_url) {
-      return {
-        pictureUrl: unit.picture_url,
-        pictureCaption: unit.picture_caption,
-      };
-    }
     const { extra } = unit;
+    const pictureUrlFromExtra = splitLineBreakGetFirstItem(
+      extra?.['kaupunkialusta.photoUrl']
+    );
+    const pictureUrl = unit.picture_url || pictureUrlFromExtra;
 
-    if (extra) {
-      const pictureUrl = splitLineBreakGetFirstItem(
-        extra?.['kaupunkialusta.photoUrl']
-      );
-      const pictureCaption = {
-        fi: splitLineBreakGetFirstItem(extra?.['kaupunkialusta.photoFi']),
-        en: splitLineBreakGetFirstItem(extra?.['kaupunkialusta.photoEn']),
-        sv: splitLineBreakGetFirstItem(extra?.['kaupunkialusta.photoSv']),
-      };
-
-      if (pictureUrl) {
-        const photoSource = splitLineBreakGetFirstItem(
-          extra?.['kaupunkialusta.photoSource']
-        );
-        const photoPermission = splitLineBreakGetFirstItem(
-          extra?.['kaupunkialusta.photoPermission']
-        );
-        return {
-          pictureUrl,
-          pictureCaption,
-          photoSource,
-          photoPermission,
-        };
-      }
+    if (!pictureUrl) {
+      return {};
     }
-    return {};
+
+    const pictureCaptionFromExtra = {
+      fi: splitLineBreakGetFirstItem(extra?.['kaupunkialusta.photoFi']),
+      en: splitLineBreakGetFirstItem(extra?.['kaupunkialusta.photoEn']),
+      sv: splitLineBreakGetFirstItem(extra?.['kaupunkialusta.photoSv']),
+    };
+
+    const photoSource = splitLineBreakGetFirstItem(
+      extra?.['kaupunkialusta.photoSource']
+    );
+    const photoPermission = splitLineBreakGetFirstItem(
+      extra?.['kaupunkialusta.photoPermission']
+    );
+
+    const getPhotoPermission = (permission) => {
+      if (permission !== 'Location only') {
+        return permission;
+      }
+      const locale = intl.locale?.split('-')[0];
+      const messageId =
+        {
+          fi: 'unit.picture.locationOnly.fi',
+          sv: 'unit.picture.locationOnly.sv',
+          en: 'unit.picture.locationOnly.en',
+        }[locale] || 'unit.picture.locationOnly.en';
+      return intl.formatMessage({ id: messageId });
+    };
+
+    const hasPictureCaptionFromExtra = Object.values(
+      pictureCaptionFromExtra
+    ).some(Boolean);
+
+    return {
+      pictureUrl,
+      pictureCaption:
+        unit.picture_caption ||
+        (hasPictureCaptionFromExtra ? pictureCaptionFromExtra : null),
+      photoSource,
+      photoPermission: getPhotoPermission(photoPermission),
+    };
   };
 
   const renderPicture = () => {
@@ -342,27 +368,99 @@ function UnitView(props) {
       return null;
     }
     const styledImage = <StyledImage alt={getImageAlt()} src={pictureUrl} />;
+    const hasPhotoInfo =
+      hasPhotoMetadata(photoSource) || hasPhotoMetadata(photoPermission);
+    const photoInfoPopupId = 'unit-picture-info-popup';
+    const photoInfoTitleId = 'unit-picture-info-title';
+    const photoInfoDescriptionId = 'unit-picture-info-description';
     return (
       <StyledImageContainer>
-        {!photoSource && styledImage}
-        {photoSource && (
-          <Watermark
-            content={`${photoSource} @ ${photoPermission}`}
-            fontWeight="1000"
-            fontColor="white"
-            rotate="0"
-            width="50"
-            offsetLeft="0"
-            offsetTop="20"
-            fontSize="8"
-            style={{ background: '#fff', height: '100%' }}
-          >
-            {styledImage}
-          </Watermark>
-        )}
-        {pictureCaption && (
-          <StyledImageCaption variant="body2">
-            {getLocaleText(pictureCaption)}
+        <StyledWatermarkedImageContainer>
+          {styledImage}
+        </StyledWatermarkedImageContainer>
+        {(pictureCaption || hasPhotoInfo) && (
+          <StyledImageCaption>
+            {pictureCaption && (
+              <StyledPhotoCaption variant="body2">
+                {typeof pictureCaption === 'string'
+                  ? pictureCaption
+                  : getLocaleText(pictureCaption)}
+              </StyledPhotoCaption>
+            )}
+            {hasPhotoInfo && (
+              <>
+                <StyledPhotoInfoButton
+                  aria-label={intl.formatMessage({ id: 'unit.picture.info' })}
+                  aria-haspopup="dialog"
+                  aria-controls={photoInfoPopupId}
+                  aria-expanded={Boolean(photoInfoAnchorEl)}
+                  onClick={(event) => setPhotoInfoAnchorEl(event.currentTarget)}
+                  size="small"
+                >
+                  <InfoOutlined fontSize="small" />
+                </StyledPhotoInfoButton>
+                <Popover
+                  anchorEl={photoInfoAnchorEl}
+                  anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                  onClose={() => setPhotoInfoAnchorEl(null)}
+                  open={Boolean(photoInfoAnchorEl)}
+                  slotProps={{
+                    paper: {
+                      'aria-describedby': photoInfoDescriptionId,
+                      'aria-labelledby': photoInfoTitleId,
+                      id: photoInfoPopupId,
+                      role: 'dialog',
+                      sx: {
+                        width: 'min(400px, calc(100vw - 40px))',
+                        maxWidth: 'calc(100vw - 40px)',
+                        overflow: 'visible',
+                        marginBottom: 1,
+                        '&::after': {
+                          content: '""',
+                          position: 'absolute',
+                          bottom: -8,
+                          right: 8,
+                          width: 16,
+                          height: 16,
+                          backgroundColor: '#fff',
+                          clipPath: 'polygon(0 0, 100% 0, 50% 100%)',
+                        },
+                      },
+                    },
+                  }}
+                  transformOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                >
+                  <StyledPhotoInfoPopup id={photoInfoDescriptionId}>
+                    <StyledPhotoInfoTitle
+                      id={photoInfoTitleId}
+                      variant="subtitle2"
+                    >
+                      <FormattedMessage id="unit.picture.info" />
+                    </StyledPhotoInfoTitle>
+                    {hasPhotoMetadata(photoSource) && (
+                      <StyledPhotoInfoItem>
+                        <StyledPhotoInfoLabel variant="body2">
+                          <FormattedMessage id="unit.picture.source" />
+                        </StyledPhotoInfoLabel>
+                        <StyledPhotoInfoValue variant="body2">
+                          {photoSource}
+                        </StyledPhotoInfoValue>
+                      </StyledPhotoInfoItem>
+                    )}
+                    {hasPhotoMetadata(photoPermission) && (
+                      <StyledPhotoInfoItem>
+                        <StyledPhotoInfoLabel variant="body2">
+                          <FormattedMessage id="unit.picture.permission" />
+                        </StyledPhotoInfoLabel>
+                        <StyledPhotoInfoValue variant="body2">
+                          {photoPermission}
+                        </StyledPhotoInfoValue>
+                      </StyledPhotoInfoItem>
+                    )}
+                  </StyledPhotoInfoPopup>
+                </Popover>
+              </>
+            )}
           </StyledImageCaption>
         )}
       </StyledImageContainer>
@@ -704,23 +802,70 @@ const StyledImage = styled.img(() => ({
   width: '100%',
 }));
 
-const StyledImageCaption = styled(Typography)(({ theme }) => ({
+const StyledWatermarkedImageContainer = styled.div(() => ({
+  position: 'relative',
+  height: '100%',
+}));
+
+const StyledPhotoInfoButton = styled(IconButton)(() => ({
+  marginLeft: 'auto',
+  marginRight: '8px',
+  flexShrink: 0,
+  color: '#000',
+  '&:hover': {
+    backgroundColor: 'rgba(0, 0, 0, 0.08)',
+  },
+}));
+
+const StyledPhotoInfoPopup = styled.div(({ theme }) => ({
+  width: '100%',
+  minWidth: 0,
+  maxWidth: '100%',
+  boxSizing: 'border-box',
+  padding: theme.spacing(1.5),
+  display: 'flex',
+  flexDirection: 'column',
+  gap: theme.spacing(0.5),
+}));
+
+const StyledPhotoInfoTitle = styled(Typography)(() => ({
+  fontWeight: 700,
+}));
+
+const StyledPhotoInfoItem = styled.div(({ theme }) => ({
+  marginTop: theme.spacing(0.5),
+}));
+
+const StyledPhotoInfoLabel = styled(Typography)(() => ({
+  fontWeight: 700,
+}));
+
+const StyledPhotoInfoValue = styled(Typography)(() => ({
+  whiteSpace: 'pre-line',
+}));
+
+const StyledImageCaption = styled.div(() => ({
   width: '100%',
   minHeight: 31,
+  zIndex: 100,
   fontSize: '0.75rem',
   lineHeight: '15px',
   position: 'absolute',
   display: 'flex',
   alignItems: 'center',
-  padding: theme.spacing(1),
-  paddingLeft: theme.spacing(2),
-  paddingRight: theme.spacing(2),
+  padding: 0,
   bottom: 0,
   left: 0,
-  color: '#000',
   backgroundColor: '#F0F0F0',
   boxSizing: 'border-box',
   textAlign: 'left',
+}));
+
+const StyledPhotoCaption = styled(Typography)(({ theme }) => ({
+  color: '#000',
+  padding: theme.spacing(1),
+  paddingLeft: theme.spacing(2),
+  paddingRight: theme.spacing(1),
 }));
 
 const StyledUnitLocationContainer = styled.div(() => ({

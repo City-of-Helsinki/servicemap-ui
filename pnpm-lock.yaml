@@ -72,9 +72,6 @@ importers:
       '@turf/point-on-feature':
         specifier: ^6.5.0
         version: 6.5.0
-      '@uiw/react-watermark':
-        specifier: 1.0.0
-        version: 1.0.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       '@vitejs/plugin-react':
         specifier: ^5.0.3
         version: 5.2.0(vite@7.3.5(@types/node@25.5.0)(jiti@2.6.1))
@@ -2339,15 +2336,6 @@ packages:
   '@typescript-eslint/visitor-keys@8.62.1':
     resolution: {integrity: sha512-4g3BLxfdTMy8iZG0MaBkadnlRrCJ74cQiFbyEVMrkwIoqdyaXXQM22cotDvrl4x28wgIZ9rEJRoM+mmhSJpJ1g==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
-
-  '@uiw/react-watermark@1.0.0':
-    resolution: {integrity: sha512-xtiuzCKCN8kbXFIjLMUFYLt08o7Ux6+re4a3NCcrZXmKwtC/X7bVdczIYmjI9+aHWS39WFLUfV7bqkiQv7AOTQ==}
-    peerDependencies:
-      react: '>=16.9.0'
-      react-dom: '>=16.9.0'
-
-  '@uiw/watermark.js@1.0.0':
-    resolution: {integrity: sha512-aHxL9rU1ynDa7MiualJsX+B3UDAUDGIi3IxcMmBrZWCVHbTDFN1SseJfLF/4GTS6c3Eq8a+cj/pXYY+bNieMnw==}
 
   '@ungap/structured-clone@1.3.0':
     resolution: {integrity: sha512-WmoN8qaIAo7WTYWbAZuG8PYEhn5fkz7dZrqTBZ7dtt//lL2Gwms1IcnQ5yHqjDfX8Ft5j4YzDM23f87zBfDe9g==}
@@ -7689,14 +7677,6 @@ snapshots:
     dependencies:
       '@typescript-eslint/types': 8.62.1
       eslint-visitor-keys: 5.0.1
-
-  '@uiw/react-watermark@1.0.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
-    dependencies:
-      '@uiw/watermark.js': 1.0.0
-      react: 19.2.7
-      react-dom: 19.2.7(react@19.2.7)
-
-  '@uiw/watermark.js@1.0.0': {}
 
   '@ungap/structured-clone@1.3.0': {}
 

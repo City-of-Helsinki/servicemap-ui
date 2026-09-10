@@ -567,6 +567,11 @@ export default {
   'unit.homepage': 'Home page',
   'unit.homepage.missing': 'No home page provided',
   'unit.picture': 'Picture of service point: ',
+  'unit.picture.info': 'Picture information',
+  'unit.picture.source': 'Source:',
+  'unit.picture.permission': 'Permission:',
+  'unit.picture.locationOnly.en':
+    "The photograph may be used in connection with the subject, provided the photographer's or owner's name is credited. Any other use is prohibited.",
   'unit.description': 'Service point description',
   'unit.price': 'Charges',
   'unit.address': 'Address',
