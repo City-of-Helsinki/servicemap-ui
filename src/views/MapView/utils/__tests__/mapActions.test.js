@@ -88,6 +88,15 @@ describe('mapActions', () => {
       expect(map.setView).toHaveBeenCalledWith([60.1, 24.9], 12);
     });
 
+    it('does not set the view when the map has no map pane', () => {
+      mapHasMapPane.mockReturnValueOnce(false);
+      const map = createMockMap();
+
+      focusToPosition(map, [24.9, 60.1]);
+
+      expect(map.setView).not.toHaveBeenCalled();
+    });
+
     it('falls back to maxZoom - 1 when no zoom is given', () => {
       const map = createMockMap();
       focusToPosition(map, [24.9, 60.1]);
@@ -105,6 +114,15 @@ describe('mapActions', () => {
         ],
       ]);
       expect(map.fitBounds).toHaveBeenCalled();
+    });
+
+    it('does not fit bounds when the map has no map pane', () => {
+      mapHasMapPane.mockReturnValueOnce(false);
+      const map = createMockMap();
+
+      focusDistrict(map, []);
+
+      expect(map.fitBounds).not.toHaveBeenCalled();
     });
   });
 
@@ -126,6 +144,15 @@ describe('mapActions', () => {
       ]);
       expect(map.fitBounds).toHaveBeenCalled();
     });
+
+    it('does not fit bounds when the map has no map pane', () => {
+      mapHasMapPane.mockReturnValueOnce(false);
+      const map = createMockMap();
+
+      focusDistricts(map, []);
+
+      expect(map.fitBounds).not.toHaveBeenCalled();
+    });
   });
 
   describe('getBoundsFromBbox', () => {
@@ -145,6 +172,15 @@ describe('mapActions', () => {
   describe('fitBbox', () => {
     it('does nothing when map is missing', () => {
       expect(() => fitBbox(null, [24, 60, 25, 61])).not.toThrow();
+    });
+
+    it('does nothing when the map has no map pane', () => {
+      mapHasMapPane.mockReturnValueOnce(false);
+      const map = createMockMap();
+
+      fitBbox(map, [24, 60, 25, 61]);
+
+      expect(map.fitBounds).not.toHaveBeenCalled();
     });
 
     it('does nothing when bbox does not have 4 values', () => {
@@ -194,6 +230,15 @@ describe('mapActions', () => {
       const map = createMockMap();
       panViewToBounds(map, { coordinates: [] }, [1, 2]);
       expect(map.fitBounds).toHaveBeenCalledWith([1, 2]);
+    });
+
+    it('does not move the map when it has no map pane', () => {
+      mapHasMapPane.mockReturnValueOnce(false);
+      const map = createMockMap();
+
+      panViewToBounds(map, { coordinates: [] });
+
+      expect(map.fitBounds).not.toHaveBeenCalled();
     });
 
     it('fits the map to the geometry coordinates when no group is given', () => {
