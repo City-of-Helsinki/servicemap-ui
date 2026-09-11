@@ -60,7 +60,7 @@
     "urijs": "^1.19.11",
     "vite": "^7.3.5",
     "vite-plugin-cjs-interop": "^3.3.0",
-    "vitest": "^4.1.0"
+    "vitest": "^4.1.11"
   },
   "scripts": {
     "build": "rm -rf dist && pnpm update-runtime-env && pnpm build:client && pnpm build:server",
