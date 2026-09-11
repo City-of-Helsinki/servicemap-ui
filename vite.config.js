@@ -25,7 +25,6 @@ export default defineConfig(({ isSsrBuild }) => ({
     cjsInterop({
       dependencies: [
         '@mui/styled-engine',
-        'lodash',
         'crc-32',
         '@apollo/client',
       ],
@@ -53,10 +52,15 @@ export default defineConfig(({ isSsrBuild }) => ({
     sourcemap: true,
   },
   resolve: {
-    // @mui/icons-material's ESM entry uses a bare directory import for @mui/material/utils
-    // that Node.js strict ESM cannot resolve. Map it explicitly to the index file.
     alias: {
+      // @mui/icons-material's ESM entry uses a bare directory import for @mui/material/utils
+      // that Node.js strict ESM cannot resolve. Map it explicitly to the index file.
       '@mui/material/utils': '@mui/material/utils/index.js',
+      // lodash's CJS build has no `__esModule` marker, so Vite's SSR externalization
+      // (a native Node ESM import) never exposes named exports like `debounce` — every
+      // consumer (e.g. hds-react) crashes with "n is not a function" at request time.
+      // lodash-es ships true ESM with real named exports, so alias every lodash import to it.
+      lodash: 'lodash-es',
     },
   },
   // @mui/icons-material and @mui/material (+ its deps) use directory-style imports in their
