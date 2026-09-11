@@ -25,8 +25,8 @@
     "@turf/distance": "^6.5.0",
     "@turf/flip": "^6.5.0",
     "@turf/point-on-feature": "^6.5.0",
-    "@vitejs/plugin-react": "^5.0.3",
-    "@vitest/coverage-istanbul": "^4.1.0",
+    "@vitejs/plugin-react": "^5.2.0",
+    "@vitest/coverage-istanbul": "^5.0.0",
     "compression": "^1.8.1",
     "d3": "^7.9.0",
     "dompurify": "^3.4.13",
@@ -59,8 +59,8 @@
     "sitemap": "^6.4.0",
     "urijs": "^1.19.11",
     "vite": "^7.3.5",
-    "vite-plugin-cjs-interop": "^3.3.0",
-    "vitest": "^4.1.0"
+    "vite-plugin-cjs-interop": "^4.0.3",
+    "vitest": "^5.0.0"
   },
   "scripts": {
     "build": "rm -rf dist && pnpm update-runtime-env && pnpm build:client && pnpm build:server",
@@ -91,7 +91,7 @@
     "@babel/plugin-transform-runtime": "^7.26.10",
     "@babel/preset-env": "^7.26.9",
     "@babel/preset-react": "^7.26.3",
-    "@commitlint/cli": "^20.1.0",
+    "@commitlint/cli": "^21.2.2",
     "@commitlint/config-conventional": "^20.0.0",
     "@emotion/server": "^11.10.0",
     "@eslint-react/eslint-plugin": "^5.10.0",

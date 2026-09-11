@@ -308,7 +308,11 @@ function MarkerCluster({
     if (disableInteraction) return;
     if (!map) return;
     const highlightedMarker = getHighlightedMarker(mapLayers);
-    if (highlightedMarker && UnitHelper.isUnitPage()) {
+    if (
+      highlightedMarker &&
+      UnitHelper.isUnitPage() &&
+      map.hasLayer(highlightedMarker)
+    ) {
       // Close all open popups
       map.eachLayer((layer) => {
         layer.closePopup();
