@@ -42,6 +42,24 @@ export default class HttpClient {
 
   onProgressUpdate;
 
+  parseJsonResponse = async (response, url) => {
+    const contentType = response.headers?.get?.('content-type') || '';
+    if (contentType && !contentType.includes('application/json')) {
+      throw new APIFetchError(
+        `Expected JSON from ${url}, received ${contentType} (HTTP ${response.status})`
+      );
+    }
+
+    try {
+      return await response.json();
+    } catch (error) {
+      throw new APIFetchError(
+        `Invalid JSON from ${url} (HTTP ${response.status})`,
+        error
+      );
+    }
+  };
+
   constructor(baseURL, apiName) {
     this.baseURL = baseURL;
     this.apiName = apiName;
@@ -80,7 +98,7 @@ export default class HttpClient {
 
     try {
       const response = await fetch(query, { signal });
-      const json = await response.json();
+      const json = await this.parseJsonResponse(response, query);
       const combinedResults = [...results, ...json.results];
       if (this.onProgressUpdate) {
         this.onProgressUpdate(combinedResults.length, json.count);
@@ -191,7 +209,7 @@ export default class HttpClient {
             `Error while fetching ${endpoint}: HTTP ${response.status} ${response.statusText}`
           );
         }
-        data = await response.json();
+        data = await this.parseJsonResponse(response, url);
       }
 
       const results = await this.handleResults(data, type);
