@@ -2,7 +2,8 @@
 minimumReleaseAge: 10080
 
 minimumReleaseAgeExclude:
-  - nanoid@3.3.18
+  - nanoid@3.3.19
+  - obug@2.2.1
 
 # Hoist all dependencies to the root of node_modules, for better compatibility with packages that expect flat node_modules
 shamefullyHoist: true
