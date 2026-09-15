@@ -71,6 +71,7 @@ const fitUnitsToMap = (units, map) => {
 };
 
 const focusToPosition = (map, coordinates, zoomOption) => {
+  if (!map || !mapHasMapPane(map)) return;
   const zoom =
     typeof zoomOption === 'number' ? zoomOption : map.options.maxZoom - 1;
   refreshMapSize(map);
@@ -78,12 +79,14 @@ const focusToPosition = (map, coordinates, zoomOption) => {
 };
 
 const focusDistrict = (map, coordinates) => {
+  if (!map || !mapHasMapPane(map)) return;
   const bounds = coordinates.map((area) => swapCoordinates(area));
   refreshMapSize(map);
   map.fitBounds(bounds);
 };
 
 const focusDistricts = (map, districts) => {
+  if (!map || !mapHasMapPane(map)) return;
   const filteredData = districts.filter((obj) => obj.boundary);
   const bounds = filteredData.map((district) =>
     district.boundary.coordinates.map((area) => swapCoordinates(area))
@@ -106,7 +109,7 @@ const getBoundsFromBbox = (bbox) => {
 };
 
 const fitBbox = (map, bbox) => {
-  if (!map || !bbox || bbox.length !== 4) {
+  if (!map || bbox?.length !== 4 || !mapHasMapPane(map)) {
     return;
   }
   const bounds = getBoundsFromBbox(bbox);
@@ -116,7 +119,7 @@ const fitBbox = (map, bbox) => {
 };
 
 const panViewToBounds = (map, selectedGeometry, geometryGroup) => {
-  if (!L) return;
+  if (!L || !map || !mapHasMapPane(map)) return;
   const mapBounds = map.getBounds();
   // Get point inside geometry
   const geometryPoint = pointOnFeature(selectedGeometry).geometry.coordinates;
