@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.18.1](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.18.0...servicemap-ui-v2.18.1) (2026-09-16)
+
+
+### Bug Fixes
+
+* Dependabot alert and sentry issues fixes ([f8297d4](https://github.com/City-of-Helsinki/servicemap-ui/commit/f8297d41828deb47bb38404a659abce74edc135d))
+
+
+### Dependencies
+
+* Bump vitest from 4.1.7 to 4.1.11 ([4fc18e8](https://github.com/City-of-Helsinki/servicemap-ui/commit/4fc18e84e0b0746112a9ece518a9c7c41586ef4d))
+* Vitest upgrade fixes Refs: RATY-357 ([9ef2869](https://github.com/City-of-Helsinki/servicemap-ui/commit/9ef2869809621c97c0d5cd5694a54f3de5679682))
+
 ## [2.18.0](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.17.8...servicemap-ui-v2.18.0) (2026-09-14)
 
 
