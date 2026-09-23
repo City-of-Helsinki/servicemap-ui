@@ -8,8 +8,8 @@ import { useLocation } from 'react-router';
 
 import { SMButton } from '../../../../components';
 import { getAddressText, useNavigationParams } from '../../../../utils/address';
+import fetchAddress from '../../../../utils/fetchAddress';
 import useLocaleText from '../../../../utils/useLocaleText';
-import fetchAddress from '../../utils/fetchAddress';
 
 function AddressPopup({ navigator }) {
   const { Popup } = globalThis.rL;
