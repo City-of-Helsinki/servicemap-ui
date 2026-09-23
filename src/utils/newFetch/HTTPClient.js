@@ -42,7 +42,7 @@ export default class HttpClient {
 
   onProgressUpdate;
 
-  parseJsonResponse = async (response, url) => {
+  parseJsonResponse = async (response, url, signal) => {
     const contentType = response.headers?.get?.('content-type') || '';
     if (contentType && !contentType.includes('application/json')) {
       throw new APIFetchError(
@@ -53,6 +53,15 @@ export default class HttpClient {
     try {
       return await response.json();
     } catch (error) {
+      // response.json() can throw AbortError when the signal fires mid-body-read
+      // (e.g. 10s timeout or user navigation). Safari/iOS throws TypeError("Load failed")
+      // instead, so also check signal.aborted as the authoritative source of truth.
+      if (error.name === 'AbortError' || signal?.aborted) {
+        throw new AbortAPIError(
+          `Fetch aborted while reading response body from ${url}`,
+          error
+        );
+      }
       throw new APIFetchError(
         `Invalid JSON from ${url} (HTTP ${response.status})`,
         error
@@ -98,7 +107,7 @@ export default class HttpClient {
 
     try {
       const response = await fetch(query, { signal });
-      const json = await this.parseJsonResponse(response, query);
+      const json = await this.parseJsonResponse(response, query, signal);
       const combinedResults = [...results, ...json.results];
       if (this.onProgressUpdate) {
         this.onProgressUpdate(combinedResults.length, json.count);
@@ -209,7 +218,7 @@ export default class HttpClient {
             `Error while fetching ${endpoint}: HTTP ${response.status} ${response.statusText}`
           );
         }
-        data = await this.parseJsonResponse(response, url);
+        data = await this.parseJsonResponse(response, url, signal);
       }
 
       const results = await this.handleResults(data, type);
