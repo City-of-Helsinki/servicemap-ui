@@ -1,4 +1,4 @@
-import { addressFetch } from '../../../utils/fetch';
+import { addressFetch } from './fetch';
 
 const fetchAddress = async (latlng) => {
   const options = {

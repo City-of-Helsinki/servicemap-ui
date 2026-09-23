@@ -19,6 +19,7 @@ import { selectMapType } from '../../redux/selectors/settings';
 import { getLocale, getPage } from '../../redux/selectors/user';
 import { parseSearchParams } from '../../utils';
 import { useNavigationParams } from '../../utils/address';
+import fetchAddress from '../../utils/fetchAddress';
 import { applyCityAndOrganizationFilter } from '../../utils/filters';
 import {
   coordinateIsActive,
@@ -50,7 +51,6 @@ import UserMarker from './components/UserMarker';
 import { mapOptions } from './config/mapConfig';
 import adjustControlElements from './utils';
 import CreateMap from './utils/createMap';
-import fetchAddress from './utils/fetchAddress';
 import {
   resolveCombinedReducerData,
   selectDistrictLoadingReducer,

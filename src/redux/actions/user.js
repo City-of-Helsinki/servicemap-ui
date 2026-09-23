@@ -1,4 +1,4 @@
-import fetchAddress from '../../views/MapView/utils/fetchAddress';
+import fetchAddress from '../../utils/fetchAddress';
 
 export const setLocale = (locale) => ({
   type: 'SET_LOCALE',

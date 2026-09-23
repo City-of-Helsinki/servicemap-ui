@@ -31,8 +31,8 @@ import { selectMapRef } from '../../redux/selectors/general';
 import { parseSearchParams } from '../../utils';
 import { getAddressText } from '../../utils/address';
 import { districtFetch } from '../../utils/fetch';
+import fetchAddress from '../../utils/fetchAddress';
 import useLocaleText from '../../utils/useLocaleText';
-import fetchAddress from '../MapView/utils/fetchAddress';
 import {
   fitUnitsToMap,
   focusDistrict,
