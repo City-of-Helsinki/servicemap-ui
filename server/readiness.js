@@ -7,7 +7,7 @@ const getReadiness = (req, res) => {
   res.json({
     status: 'ok',
     release: process.env.SENTRY_RELEASE,
-    packageVersion: version,
+    version,
   });
 };
 
