@@ -1,5 +1,14 @@
 # Changelog
 
+## [2.18.2](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.18.1...servicemap-ui-v2.18.2) (2026-09-24)
+
+
+### Bug Fixes
+
+* Lazy load of MapView, TDZ error due to circular dependency ([2c0cbbe](https://github.com/City-of-Helsinki/servicemap-ui/commit/2c0cbbe896819599da4d1e32a5a76db8a938b126))
+* Misclassified APIFetchError for aborted fetches ([306e70d](https://github.com/City-of-Helsinki/servicemap-ui/commit/306e70db948646616011ee4915060f554838d90a))
+* Readiness use version Refs: RATY-355 ([acf87af](https://github.com/City-of-Helsinki/servicemap-ui/commit/acf87afc02617bae13ff17a3891b6de414d52d76))
+
 ## [2.18.1](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.18.0...servicemap-ui-v2.18.1) (2026-09-16)
 
 
