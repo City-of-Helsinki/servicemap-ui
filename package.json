@@ -2,6 +2,7 @@
   "name": "servicemap-ui",
   "version": "2.18.2",
   "private": true,
+  "license": "MIT",
   "packageManager": "pnpm@11.9.0",
   "engines": {
     "node": ">=22.13.1",
