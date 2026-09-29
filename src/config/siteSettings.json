@@ -132,16 +132,6 @@
       ]
     }
   ],
-  "robotCookies": [
-    {
-      "name": "ally-supports-cache",
-      "storageType": 2
-    },
-    {
-      "name": "nextauth.message",
-      "storageType": 2
-    }
-  ],
   "translations": {
     "bannerAriaLabel": {
       "fi": "Evästeasetukset",

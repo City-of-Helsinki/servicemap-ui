@@ -1,4 +1,5 @@
 import isClient from './index';
+import { isEmbed } from './path';
 
 const APP_KEY = 'SM';
 
@@ -7,6 +8,13 @@ class LocalStorageUtility {
 
   static setStorage() {
     if (!isClient()) {
+      return;
+    }
+
+    // Embedded views must not use storage, since the embedding site
+    // shows no cookie consent banner
+    if (isEmbed()) {
+      this.storage = null;
       return;
     }
 
