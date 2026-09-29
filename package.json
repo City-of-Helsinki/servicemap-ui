@@ -32,7 +32,6 @@
     "esrun": "^3.2.30",
     "express": "^4.21.2",
     "express-rate-limit": "^8.6.2",
-    "express-sitemap": "^1.8.0",
     "hds-design-tokens": "^6.0.5",
     "hds-react": "^6.0.5",
     "http-status-typed": "^2.0.1",
