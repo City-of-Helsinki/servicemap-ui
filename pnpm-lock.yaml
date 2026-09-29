@@ -90,9 +90,6 @@ importers:
       express-rate-limit:
         specifier: ^8.6.2
         version: 8.6.2(express@4.22.1)
-      express-sitemap:
-        specifier: ^1.8.0
-        version: 1.8.0
       hds-design-tokens:
         specifier: ^6.0.5
         version: 6.0.5
@@ -3340,10 +3337,6 @@ packages:
     peerDependencies:
       express: '>= 4.11'
 
-  express-sitemap@1.8.0:
-    resolution: {integrity: sha512-J5a5Zyhr+2xszhf0pIxUFHwz+Bwy8fgts4WIx+b+TJsw+ZyMZUXb4O2PYcPS+4Vwbv74Pz1pu5GMMrwd8XlndQ==}
-    engines: {node: '>=4'}
-
   express@4.22.1:
     resolution: {integrity: sha512-F2X8g9P1X7uCPZMA3MVf9wcTqlyNp7IhH5qPCI0izhaOIYXaW9L535tGA3qmjRzpH+bZczqq7hVKxTR4NWnu+g==}
     engines: {node: '>= 0.10.0'}
@@ -4738,10 +4731,6 @@ packages:
     resolution: {integrity: sha512-RJRdvCo6IAnPdsvP/7m6bsQqNnn1FCBX5ZNtFL98MmFF/4xAIJTIg1YbHW5DC2W5SKZanrC6i4HsJqlajw/dZw==}
     engines: {node: '>= 0.4'}
 
-  setheaders@0.3.0:
-    resolution: {integrity: sha512-22fxNYMA7TdkNVL04AkXcWUKYtw96W7HU8Q6LTHanrlDJE2/u6rH/84gXWXpH1g8WE/eUxldhwuRer0QItwHVQ==}
-    engines: {node: '>=4'}
-
   setprototypeof@1.2.0:
     resolution: {integrity: sha512-E5LDX7Wrp85Kil5bhZv46j8jOeboKq5JMmYM3gVGdGH8xFpPWXUMsNrlODCrkoxMEeNi/XZIwuRvY4XNwYMJpw==}
 
@@ -4901,10 +4890,6 @@ packages:
 
   through@2.3.8:
     resolution: {integrity: sha512-w89qg7PI8wAdvX60bMDP+bFoD5Dvhm9oLheFp5O4a2QF0cSBGsBX4qZmadPMvVqlLJBBci+WqGGOAPvcDeNSVg==}
-
-  tickle@1.4.0:
-    resolution: {integrity: sha512-cqA1nH1ZSf43oLdyeeAbrZMmH2J9D/0pxpHaubWPKW7dWLC+tBG+BAWsy4I9K9nBqpygQqDe2rH9v8H9+KoZvw==}
-    engines: {node: '>=4.0'}
 
   tiny-case@1.0.3:
     resolution: {integrity: sha512-Eet/eeMhkO6TX8mnUteS9zgPbUMQa4I6Kkp5ORiBD5476/m+PIRiumP5tmh5ioJpH7k51Kehawy2UDfsnxxY8Q==}
@@ -8739,11 +8724,6 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  express-sitemap@1.8.0:
-    dependencies:
-      setheaders: 0.3.0
-      tickle: 1.4.0
-
   express@4.22.1:
     dependencies:
       accepts: 1.3.8
@@ -10520,8 +10500,6 @@ snapshots:
       es-errors: 1.3.0
       es-object-atoms: 1.1.1
 
-  setheaders@0.3.0: {}
-
   setprototypeof@1.2.0: {}
 
   shallowequal@1.1.0: {}
@@ -10693,8 +10671,6 @@ snapshots:
       xtend: 2.1.2
 
   through@2.3.8: {}
-
-  tickle@1.4.0: {}
 
   tiny-case@1.0.3: {}
 
