@@ -1,11 +1,3 @@
-import '@formatjs/intl-pluralrules/dist/locale-data/en';
-import '@formatjs/intl-pluralrules/dist/locale-data/fi';
-import '@formatjs/intl-pluralrules/dist/locale-data/sv';
-import '@formatjs/intl-pluralrules/polyfill';
-import '@formatjs/intl-relativetimeformat/dist/locale-data/en';
-import '@formatjs/intl-relativetimeformat/dist/locale-data/fi';
-import '@formatjs/intl-relativetimeformat/dist/locale-data/sv';
-import '@formatjs/intl-relativetimeformat/polyfill';
 import './hsl-icons.css';
 import './index.css';
 import './print.css';

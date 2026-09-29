@@ -12,8 +12,6 @@
     "@emotion/css": "^11.11.2",
     "@emotion/react": "^11.10.8",
     "@emotion/styled": "^11.10.8",
-    "@formatjs/intl-pluralrules": "^1.5.9",
-    "@formatjs/intl-relativetimeformat": "^4.5.16",
     "@mui/icons-material": "^6.1.4",
     "@mui/material": "^6.1.4",
     "@mui/utils": "^6.1.4",
@@ -29,16 +27,12 @@
     "@vitejs/plugin-react": "^5.2.0",
     "@vitest/coverage-istanbul": "^5.0.0",
     "compression": "^1.8.1",
-    "d3": "^7.9.0",
     "dompurify": "^3.4.13",
     "dotenv": "^16.6.1",
-    "esrun": "^3.2.30",
     "express": "^4.21.2",
     "express-rate-limit": "^8.6.2",
-    "express-sitemap": "^1.8.0",
     "hds-design-tokens": "^6.0.5",
     "hds-react": "^6.0.5",
-    "http-status-typed": "^2.0.1",
     "leaflet": "1.9.4",
     "leaflet.heightgraph": "^1.4.0",
     "leaflet.markercluster": "^1.5.3",
@@ -77,12 +71,11 @@
     "test:coverage": "pnpm test --coverage",
     "test:e2e:install": "playwright install",
     "test:e2e": "playwright test",
-    "update-runtime-env": "esrun scripts/update-runtime-env.js"
+    "update-runtime-env": "node scripts/update-runtime-env.mjs"
   },
   "browserslist": [
     ">0.2%",
     "not dead",
-    "not ie > 0",
     "not op_mini all"
   ],
   "devDependencies": {
