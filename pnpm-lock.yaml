@@ -30,12 +30,6 @@ importers:
       '@emotion/styled':
         specifier: ^11.10.8
         version: 11.14.1(@emotion/react@11.14.0(@types/react@19.2.16)(react@19.2.7))(@types/react@19.2.16)(react@19.2.7)
-      '@formatjs/intl-pluralrules':
-        specifier: ^1.5.9
-        version: 1.5.9
-      '@formatjs/intl-relativetimeformat':
-        specifier: ^4.5.16
-        version: 4.5.16
       '@mui/icons-material':
         specifier: ^6.1.4
         version: 6.5.0(@mui/material@6.5.0(@emotion/react@11.14.0(@types/react@19.2.16)(react@19.2.7))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.16)(react@19.2.7))(@types/react@19.2.16)(react@19.2.7))(@types/react@19.2.16)(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(@types/react@19.2.16)(react@19.2.7)
@@ -1488,16 +1482,6 @@ packages:
 
   '@formatjs/intl-localematcher@0.6.2':
     resolution: {integrity: sha512-XOMO2Hupl0wdd172Y06h6kLpBz6Dv+J4okPLl4LPtzbr8f66WbIoy4ev98EBuZ6ZK4h5ydTN6XneT4QVpD7cdA==}
-
-  '@formatjs/intl-pluralrules@1.5.9':
-    resolution: {integrity: sha512-37E1ZG+Oqo3qrpUfumzNcFTV+V+NCExmTkkQ9Zw4FSlvJ4WhbbeYdieVapUVz9M0cLy8XrhCkfuM/Kn03iKReg==}
-
-  '@formatjs/intl-relativetimeformat@4.5.16':
-    resolution: {integrity: sha512-IQ0haY97oHAH5OYUdykNiepdyEWj3SAT+Fp9ZpR85ov2JNiFx+12WWlxlVS8ehdyncC2ZMt/SwFIy2huK2+6/A==}
-
-  '@formatjs/intl-utils@2.3.0':
-    resolution: {integrity: sha512-KWk80UPIzPmUg+P0rKh6TqspRw0G6eux1PuJr+zz47ftMaZ9QDwbGzHZbtzWkl5hgayM/qrKRutllRC7D/vVXQ==}
-    deprecated: the package is rather renamed to @formatjs/ecma-abstract with some changes in functionality (primarily selectUnit is removed and we don't plan to make any further changes to this package
 
   '@formatjs/intl@3.1.8':
     resolution: {integrity: sha512-LWXgwI5zTMatvR8w8kCNh/priDTOF/ZssokMBHJ7ZWXFoYLVOYo0EJERD9Eajv+xsfQO1QkuAt77KWQ1OI4mOQ==}
@@ -6961,16 +6945,6 @@ snapshots:
   '@formatjs/intl-localematcher@0.6.2':
     dependencies:
       tslib: 2.8.1
-
-  '@formatjs/intl-pluralrules@1.5.9':
-    dependencies:
-      '@formatjs/intl-utils': 2.3.0
-
-  '@formatjs/intl-relativetimeformat@4.5.16':
-    dependencies:
-      '@formatjs/intl-utils': 2.3.0
-
-  '@formatjs/intl-utils@2.3.0': {}
 
   '@formatjs/intl@3.1.8(typescript@5.9.3)':
     dependencies:

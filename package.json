@@ -12,8 +12,6 @@
     "@emotion/css": "^11.11.2",
     "@emotion/react": "^11.10.8",
     "@emotion/styled": "^11.10.8",
-    "@formatjs/intl-pluralrules": "^1.5.9",
-    "@formatjs/intl-relativetimeformat": "^4.5.16",
     "@mui/icons-material": "^6.1.4",
     "@mui/material": "^6.1.4",
     "@mui/utils": "^6.1.4",
