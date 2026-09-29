@@ -96,9 +96,6 @@ importers:
       hds-react:
         specifier: ^6.0.5
         version: 6.0.5(@types/react@19.2.16)(postcss@8.5.28)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
-      http-status-typed:
-        specifier: ^2.0.1
-        version: 2.0.1
       leaflet:
         specifier: 1.9.4
         version: 1.9.4
@@ -3582,9 +3579,6 @@ packages:
   http-proxy-agent@7.0.2:
     resolution: {integrity: sha512-T1gkAiYYDWYx3V5Bmyu7HcfcvL7mUrTWiM6yOfa3PIphViJ/gFPbvidQ+veqSOHci/PxBcDabeUNCzpOODJZig==}
     engines: {node: '>= 14'}
-
-  http-status-typed@2.0.1:
-    resolution: {integrity: sha512-+x68kTk7b9gpvoOYbspoui+DtJyoXL4hdQ3ydNKyjYP6TZdI6P/h2nr5lmlXehphE+U2dEiHMrtNdnN/w7poyA==}
 
   https-proxy-agent@5.0.1:
     resolution: {integrity: sha512-dFcAjpTQFgoLMzC2VwU+C/CbS7uRL0lWmxDITmqm7C+7F0Odmj6s9l6alZc6AELXhrnggM2CeWSXHGOdX2YtwA==}
@@ -9052,8 +9046,6 @@ snapshots:
       debug: 4.4.3
     transitivePeerDependencies:
       - supports-color
-
-  http-status-typed@2.0.1: {}
 
   https-proxy-agent@5.0.1:
     dependencies:
