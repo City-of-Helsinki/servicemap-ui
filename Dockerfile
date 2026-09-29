@@ -55,11 +55,11 @@ COPY --from=staticbuilder --chown=1001:root /app/server ./server
 COPY --from=staticbuilder --chown=1001:root /app/config ./config
 COPY --from=staticbuilder --chown=1001:root /app/package.json ./package.json
 
-# Copy .env so update-runtime-env.js can use it as a fallback at container startup
+# Copy .env so update-runtime-env.mjs can use it as a fallback at container startup
 # for any variable not present in the Azure ConfigMap. process.env (ConfigMap) wins.
 COPY --from=appbase --chown=1001:root /app/.env ./.env
 
-# Copy scripts needed at container startup (update-runtime-env.js)
+# Copy scripts needed at container startup (update-runtime-env.mjs)
 COPY --from=appbase --chown=1001:root /app/scripts ./scripts
 
 # Copy node_modules from staticbuilder so the hds-core cookie-consent shim
@@ -67,7 +67,7 @@ COPY --from=appbase --chown=1001:root /app/scripts ./scripts
 COPY --from=staticbuilder --chown=1001:root /app/node_modules ./node_modules
 
 # OpenShift runs containers with a random UID in group 0 (root group).
-# Make dist/ group-writable so update-runtime-env.js can overwrite env-config.js
+# Make dist/ group-writable so update-runtime-env.mjs can overwrite env-config.js
 # regardless of the actual runtime UID.
 RUN chmod -R g+w /servicemap-ui/dist
 
@@ -81,4 +81,4 @@ EXPOSE 8080
 # baked-in build-time defaults in dist/env-config.js before the server starts.
 # The existing dist/env-config.js serves as the fallback for any variable that
 # is not present in the runtime environment.
-CMD ["sh", "-c", "node scripts/update-runtime-env.js && exec node server.mjs"]
+CMD ["sh", "-c", "node scripts/update-runtime-env.mjs && exec node server.mjs"]

@@ -81,9 +81,6 @@ importers:
       dotenv:
         specifier: ^16.6.1
         version: 16.6.1
-      esrun:
-        specifier: ^3.2.30
-        version: 3.2.30
       express:
         specifier: ^4.21.2
         version: 4.22.1
@@ -1122,9 +1119,6 @@ packages:
     engines: {node: ^14 || ^16 || >=18}
     peerDependencies:
       postcss-selector-parser: ^6.0.10
-
-  '@digitak/grubber@3.1.4':
-    resolution: {integrity: sha512-pqsnp2BUYlDoTXWG34HWgEJse/Eo1okRgNex8IG84wHrJp8h3SakeR5WhB4VxSA2+/D+frNYJ0ch3yXzsfNDoA==}
 
   '@emnapi/core@1.10.0':
     resolution: {integrity: sha512-yq6OkJ4p82CAfPl0u9mQebQHKPJkY7WrIuk205cTYnYe+k2Z8YBh11FrbRG/H6ihirqcacOgl2BIO8oyMQLeXw==}
@@ -3300,11 +3294,6 @@ packages:
   esrecurse@4.3.0:
     resolution: {integrity: sha512-KmfKL3b6G+RXvP8N1vr3Tq1kL/oCFgn2NYXEtqP8/L3pKapUA4G8cFVaoF3SU323CD4XypR/ffioHmkti6/Tag==}
     engines: {node: '>=4.0'}
-
-  esrun@3.2.30:
-    resolution: {integrity: sha512-VHyce0Yf5gbkTsxI33cIgDvOQVIPZQCC88QSjzzP2WjghoWG3LKfH4kY0rAZujFbuJyUhgttiHdWOVHFKzCt8g==}
-    engines: {node: '>=14.0'}
-    hasBin: true
 
   estraverse@5.3.0:
     resolution: {integrity: sha512-MMdARuVEQziNTeJD8DgMqmhwR11BRQ/cBP+pLtYdSTnf3MIO8fFeiINEbX36ZdNlfU/7A9f3gUw49B3oQsvwBA==}
@@ -6422,8 +6411,6 @@ snapshots:
     dependencies:
       postcss-selector-parser: 6.1.4
 
-  '@digitak/grubber@3.1.4': {}
-
   '@emnapi/core@1.10.0':
     dependencies:
       '@emnapi/wasi-threads': 1.2.1
@@ -8689,12 +8676,6 @@ snapshots:
   esrecurse@4.3.0:
     dependencies:
       estraverse: 5.3.0
-
-  esrun@3.2.30:
-    dependencies:
-      '@digitak/grubber': 3.1.4
-      chokidar: 3.6.0
-      esbuild: 0.28.1
 
   estraverse@5.3.0: {}
 
