@@ -34,7 +34,6 @@
     "express-rate-limit": "^8.6.2",
     "hds-design-tokens": "^6.0.5",
     "hds-react": "^6.0.5",
-    "http-status-typed": "^2.0.1",
     "leaflet": "1.9.4",
     "leaflet.heightgraph": "^1.4.0",
     "leaflet.markercluster": "^1.5.3",
