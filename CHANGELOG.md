@@ -1,5 +1,21 @@
 # Changelog
 
+## [2.18.3](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.18.2...servicemap-ui-v2.18.3) (2026-10-05)
+
+
+### Bug Fixes
+
+* Remove cookies from embedded mode ([9de3584](https://github.com/City-of-Helsinki/servicemap-ui/commit/9de35848d6fbc0544829085e4ba867a289a8a64e))
+
+
+### Dependencies
+
+* Remove esrun Refs: PL-326 ([932b445](https://github.com/City-of-Helsinki/servicemap-ui/commit/932b445b90db3aae1f775194c8241de4179c9c19))
+* Remove unnecessary d3 Refs: PL-326 ([dd0d6d8](https://github.com/City-of-Helsinki/servicemap-ui/commit/dd0d6d8e72b37b594131a0f5efc38de172ff5e67))
+* Remove unnecessary express-sitemap Refs: PL-326 ([f1805f7](https://github.com/City-of-Helsinki/servicemap-ui/commit/f1805f71d8e07e095e563db9215463eb72c97a0b))
+* Remove unnecessary formatjs Refs: PL-326 ([8f37e3a](https://github.com/City-of-Helsinki/servicemap-ui/commit/8f37e3a6bf5ee9d46d953ea36f97571ee33904eb))
+* Remove unnecessary http-status-typed Refs: PL-326 ([e688290](https://github.com/City-of-Helsinki/servicemap-ui/commit/e6882901f7bb462d542f5f8e6c7317ac1f33dad0))
+
 ## [2.18.2](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.18.1...servicemap-ui-v2.18.2) (2026-09-24)
 
 
