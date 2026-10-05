@@ -27,7 +27,7 @@
     "@vitejs/plugin-react": "^5.2.0",
     "@vitest/coverage-istanbul": "^5.0.0",
     "compression": "^1.8.1",
-    "dompurify": "^3.4.13",
+    "dompurify": "^3.4.16",
     "dotenv": "^16.6.1",
     "express": "^4.21.2",
     "express-rate-limit": "^8.6.2",
