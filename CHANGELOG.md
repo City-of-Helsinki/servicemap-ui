@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.18.4](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.18.3...servicemap-ui-v2.18.4) (2026-10-11)
+
+
+### Dependencies
+
+* Bump dompurify from 3.4.13 to 3.4.16 ([5927e86](https://github.com/City-of-Helsinki/servicemap-ui/commit/5927e868d56dbbd76d939bc160bf282cceb37956))
+
 ## [2.18.3](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.18.2...servicemap-ui-v2.18.3) (2026-10-05)
 
 
