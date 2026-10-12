@@ -1,5 +1,14 @@
 # Changelog
 
+## [2.18.4](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.18.3...servicemap-ui-v2.18.4) (2026-10-12)
+
+
+### Dependencies
+
+* Bump compression from 1.8.1 to 1.8.2 ([1a70b34](https://github.com/City-of-Helsinki/servicemap-ui/commit/1a70b340452c381c055d85fdb88f521b703f5f54))
+* Bump dompurify from 3.4.13 to 3.4.16 ([5927e86](https://github.com/City-of-Helsinki/servicemap-ui/commit/5927e868d56dbbd76d939bc160bf282cceb37956))
+* Compression minimumReleaseAgeExclude Refs: RATY-357 ([ae6671f](https://github.com/City-of-Helsinki/servicemap-ui/commit/ae6671f93cd68eb3c8533ec51e866e5aa44216cb))
+
 ## [2.18.3](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.18.2...servicemap-ui-v2.18.3) (2026-10-05)
 
 
