@@ -1,5 +1,12 @@
 # Don't allow dependencies to be used before they have been released for at least 1 week
 minimumReleaseAge: 10080
+minimumReleaseAgeExclude:
+  - baseline-browser-mapping@2.11.28
+  - caniuse-lite@1.0.30001815
+  - electron-to-chromium@1.5.452
+  - node-releases@2.0.58
+  - resolve@1.22.13
+  - update-browserslist-db@1.3.4
 
 # Hoist all dependencies to the root of node_modules, for better compatibility with packages that expect flat node_modules
 shamefullyHoist: true
