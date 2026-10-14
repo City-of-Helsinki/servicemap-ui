@@ -86,4 +86,31 @@ These work in reverse when you want to delete a variable (duh).
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE).
+The source code in this repository is licensed under the MIT License; see
+[LICENSE](./LICENSE). The licenses of the third-party code included in the
+production client bundle are listed in `third-party-licenses.txt`, which is
+generated during `pnpm build` and served from the root of the deployed
+application. The same information is emitted alongside it as
+`oss-licenses.json`, for license audit tooling.
+
+The MIT License covers source code only. The following files are **not**
+covered by it and remain with their respective rights holders:
+
+| Files                                        | Rights holder and terms                                                                                                                                                                           |
+| -------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `src/assets/fonts/hsl-pikto-frame-webfont.*` | The HSL-Pikto Frame pictogram font. Its embedded metadata reads "Copyright © 2015 by Kokoro & Moi. All rights reserved."                                                                          |
+| `src/assets/images/`                         | Logos of the service and the City of Helsinki, photographs and a map background image used by the user interface; not offered for reuse under the MIT License.                                    |
+| `src/assets/icons/`                          | Icons created for this service, not offered for reuse under the MIT License, and the logos of social media services and of the municipality of Kirkkonummi, which are trademarks of their owners. |
+
+Some third-party resources are loaded at runtime from external services. Apart
+from Leaflet, they are not bundled, so they do not appear in the generated
+files:
+
+- [Leaflet](https://leafletjs.com/) 1.9.4 (BSD-2-Clause), loaded by
+  [server.mjs](./server.mjs) from unpkg with subresource integrity hashes. The
+  same version is also bundled, so its notice is included in the generated
+  files.
+- The [Lato](https://fonts.google.com/specimen/Lato) typeface (SIL Open Font
+  License 1.1), loaded from Google Fonts.
+- The ReadSpeaker text-to-speech service, a commercial service whose script is
+  loaded from the URL in `REACT_APP_READ_SPEAKER_URL` when that variable is set.

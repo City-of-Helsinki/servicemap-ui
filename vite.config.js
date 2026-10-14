@@ -1,9 +1,11 @@
+import { thirdPartyLicenses } from '@city-of-helsinki/license-notices';
 import { sentryVitePlugin } from '@sentry/vite-plugin';
 import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
 import { cjsInterop } from 'vite-plugin-cjs-interop';
 
 import { name } from './package.json';
+import { thirdPartyLicensesConfig } from './scripts/thirdPartyLicenses.config';
 import { getGitCommit, getGitTag } from './scripts/utils';
 
 export default defineConfig(({ isSsrBuild }) => ({
@@ -41,6 +43,9 @@ export default defineConfig(({ isSsrBuild }) => ({
             create: false,
           },
         }),
+        // Only the client bundle is served to browsers. The SSR bundle runs on
+        // the server and is never distributed, so it needs no notices.
+        thirdPartyLicenses(thirdPartyLicensesConfig),
       ]
       : []),
   ],
