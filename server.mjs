@@ -183,7 +183,7 @@ const injectHtml = ({
   const readSpeakerScript =
     process.env.REACT_APP_READ_SPEAKER_URL &&
     process.env.REACT_APP_READ_SPEAKER_URL !== 'false'
-      ? `<script type="text/javascript">
+      ? `<script nonce="${nonce}" type="text/javascript">
           window.rsConf = { params: '${process.env.REACT_APP_READ_SPEAKER_URL}', general: {usePost:true} };
         </script>
         <script src="${process.env.REACT_APP_READ_SPEAKER_URL}" type="text/javascript"></script>`
