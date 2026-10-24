@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.19.0](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.18.4...servicemap-ui-v2.19.0) (2026-10-24)
+
+
+### Features
+
+* Generate third-party license notices at build time Refs: PL-318 ([cf50594](https://github.com/City-of-Helsinki/servicemap-ui/commit/cf50594d168e6987810fe7c7a8d1d6f3a935e715))
+
 ## [2.18.4](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.18.3...servicemap-ui-v2.18.4) (2026-10-12)
 
 
