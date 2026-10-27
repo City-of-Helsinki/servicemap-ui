@@ -1,5 +1,25 @@
 # Changelog
 
+## [2.19.0](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.18.4...servicemap-ui-v2.19.0) (2026-10-27)
+
+
+### Features
+
+* Generate third-party license notices at build time Refs: PL-318 ([cf50594](https://github.com/City-of-Helsinki/servicemap-ui/commit/cf50594d168e6987810fe7c7a8d1d6f3a935e715))
+
+
+### Bug Fixes
+
+* Add nonce attribute to read speaker script for CSP compliance ([caf67e0](https://github.com/City-of-Helsinki/servicemap-ui/commit/caf67e0b34d8578def31b2f462adc273e1f9288f))
+* Dependabot alerts ([4b28bc4](https://github.com/City-of-Helsinki/servicemap-ui/commit/4b28bc49f70636aba1c43ca71a349d344cba1db7))
+* Use latest Node.js 24 LTS Refs: PL-337 ([3d6b8d2](https://github.com/City-of-Helsinki/servicemap-ui/commit/3d6b8d23f2270e91660dd2b27414916686cd3944))
+
+
+### Dependencies
+
+* Bump dompurify from 3.4.16 to 3.4.17 ([ae4afd1](https://github.com/City-of-Helsinki/servicemap-ui/commit/ae4afd147c55d3e4cbb6a33643964151eddf43a6))
+* Bump vite from 7.3.5 to 7.3.7 ([eccabcf](https://github.com/City-of-Helsinki/servicemap-ui/commit/eccabcf357cc1cd9faa0410a004bf7c314d86018))
+
 ## [2.18.4](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.18.3...servicemap-ui-v2.18.4) (2026-10-12)
 
 
