@@ -92,7 +92,7 @@
     "@emotion/server": "^11.10.0",
     "@eslint-react/eslint-plugin": "^5.28.2",
     "@eslint/js": "^10.0.0",
-    "@playwright/test": "^1.60.0",
+    "@playwright/test": "^1.65.0",
     "@sentry/vite-plugin": "^4.6.0",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
