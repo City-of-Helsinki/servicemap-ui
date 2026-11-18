@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.19.1](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.19.0...servicemap-ui-v2.19.1) (2026-11-18)
+
+
+### Bug Fixes
+
+* Update env-config.js script version to v2 ([413db92](https://github.com/City-of-Helsinki/servicemap-ui/commit/413db92bea9f9a1621757057db976242cfd28095))
+
+
+### Dependencies
+
+* Bump qs from 6.16.0 to 6.17.1 ([162f69c](https://github.com/City-of-Helsinki/servicemap-ui/commit/162f69c9af46e056d476a8655077dd0ce143f3fe))
+* Upgrade playwright ([60044db](https://github.com/City-of-Helsinki/servicemap-ui/commit/60044dbffce5bad6cc573f320119b39a0faf5927))
+
 ## [2.19.0](https://github.com/City-of-Helsinki/servicemap-ui/compare/servicemap-ui-v2.18.4...servicemap-ui-v2.19.0) (2026-10-27)
 
 
